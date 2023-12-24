@@ -11,6 +11,8 @@ const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
 
 const app = express();
+
+app.use(express.json());
 const port = 3009;
 app.use(session({
   secret: 'your-secret-key', // Replace with a secret key for session management
@@ -80,28 +82,37 @@ const setupGmailClient = (req, res, next) => {
 
 
 // Middleware for user authentication
-const authenticateUser = (req, res, next) => {
-  const { username, password } = req.body;
+function authenticateUser(req, res, next) {
+  const authorizationHeader = req.headers.authorization;
 
-  if (!username || !password) {
-    return res.status(401).send('Unauthorized: Missing credentials');
+  if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+    return res.status(401).send('Unauthorized: Missing or invalid Bearer token');
   }
 
-  const sql = 'SELECT * FROM login WHERE username = ? AND password = ?';
-  db.query(sql, [username, password], (err, result) => {
+  const token = authorizationHeader.substring('Bearer '.length);
+
+  const sql = 'SELECT * FROM Login WHERE Token = ?';
+  db.query(sql, [token], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Internal Server Error');
     }
 
     if (result.length === 0) {
-      return res.status(401).send('Unauthorized: Invalid credentials');
+      return res.status(401).send('Unauthorized: Invalid token');
     }
 
-    // User authenticated
+    // If the token is valid, add user information to the request for later use
+    req.user = {
+      username: result[0].username,
+      // Add any other relevant user information
+    };
+
+    // Proceed to the next middleware or route
     next();
   });
-};
+}
+
 
 function parseInsuranceEmail(content) {
   const regex = /Name of the Insured : (.+?)\s+Policy Number : (.+?)\s+Date of Loss : (.+?)\s+Claim No : (.+?)\s+Vehicle Particulars : (.+?)\s+/;
@@ -213,15 +224,6 @@ app.get('/read-emails', checkAuth, setupGmailClient, async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-// app.use(authenticateUser);
-
 // Create
 app.post('/claim-details', authenticateUser, (req, res) => {
   const sql = 'INSERT INTO claim_details SET ?';
@@ -262,11 +264,12 @@ app.post('/driver-details', authenticateUser, (req, res) => {
 app.post("/login",(req,res)=>{
   const { username, password } = req.body;
 
+  // console.log(username,password);
   if (!username || !password) {
     return res.status(401).send('Unauthorized: Missing credentials');
   }
 
-  const sql = 'SELECT * FROM login WHERE username = ? AND password = ?';
+  const sql = 'SELECT * FROM Login WHERE username = ? AND password = ?';
   db.query(sql, [username, password], (err, result) => {
     if (err) {
       console.error(err);
@@ -275,6 +278,9 @@ app.post("/login",(req,res)=>{
 
     if (result.length === 0) {
       return res.status(401).send('Unauthorized: Invalid credentials');
+    }
+    else{
+      return res.send({msg:"Successfully Logged In!",data : result})
     }
   })
 
@@ -292,6 +298,44 @@ app.get('/claim-details/:claimNo', authenticateUser, (req, res) => {
     res.send(result);
   });
 });
+
+app.get('/getAllClaims',authenticateUser, (req, res) => {
+  const sql = 'SELECT * FROM ClaimDetails';
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send(result);
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  console.log(username,password);
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
+
+  const sql = 'SELECT * FROM Login WHERE username = ? AND password = ?';
+  db.query(sql, [username, password], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (result.length === 1) {
+      // Authentication successful
+      return res.status(200).json({ message: 'Login successful' });
+    } else {
+      // Authentication failed
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+  });
+});
+
 
 app.get('/vehicle-details/:claimNo', authenticateUser, (req, res) => {
   const sql = 'SELECT * FROM vehicle_details WHERE claim_no = ?';
