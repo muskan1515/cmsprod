@@ -1,11 +1,61 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+const fs = require('fs')
+
+const db = require("./Config/dbConfig");
+
+const session = require('express-session');
+
+const { google } = require('googleapis');
+const { OAuth2Client } = require('google-auth-library');
 
 const app = express();
-const port = 3000;
+const port = 3009;
+app.use(session({
+  secret: 'your-secret-key', // Replace with a secret key for session management
+  resave: false,
+  saveUninitialized: true,
+}));
 
-app.use(bodyParser.json());
+
+
+const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+
+// Load the credentials from your client_secret.json file obtained from the Google Cloud Console
+const credentials = JSON.parse(fs.readFileSync('./OAuthCredentials..json'));
+
+// Create an OAuth2 client
+const oAuth2Client = new OAuth2Client(
+  credentials.web.client_id,
+  credentials.web.client_secret,
+  credentials.web.redirect_uris[0]
+);
+
+const authUrl = oAuth2Client.generateAuthUrl({
+  access_type: 'offline',
+  scope: SCOPES,
+});
+
+const checkAuth = (req, res, next) => {
+  if (!req.session.tokens) {
+    return res.redirect(authUrl);
+  }
+
+  oAuth2Client.setCredentials(req.session.tokens);
+  next();
+};
+
+// Middleware to set up the Gmail API client
+const setupGmailClient = (req, res, next) => {
+  req.gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+  next();
+};
+
+
+// Set up the Express.js routes
+
+
 
 // const db = mysql.createConnection({
 //   host: 'your_mysql_host',
@@ -14,19 +64,20 @@ app.use(bodyParser.json());
 //   database: 'your_database_name',
 // });
 
-const db = mysql.createConnection({
-  user: 'vijay0207',
-  host: '100.26.46.58',
-  database: 'claims',
-  password: 'Whyuwant@2827',
-});
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL:', err);
-    return;
-  }
-  console.log('Connected to MySQL');
-});
+// const db = mysql.createConnection({
+//   user: 'vijay0207',
+//   host: '100.26.46.58',
+//   database: 'claims',
+//   password: 'Whyuwant@2827',
+// });
+// db.connect((err) => {
+//   if (err) {
+//     console.error('Error connecting to MySQL:', err);
+//     return;
+//   }
+//   console.log('Connected to MySQL');
+// });
+
 
 // Middleware for user authentication
 const authenticateUser = (req, res, next) => {
@@ -52,7 +103,124 @@ const authenticateUser = (req, res, next) => {
   });
 };
 
-app.use(authenticateUser);
+function parseInsuranceEmail(content) {
+  const regex = /Name of the Insured : (.+?)\s+Policy Number : (.+?)\s+Date of Loss : (.+?)\s+Claim No : (.+?)\s+Vehicle Particulars : (.+?)\s+/;
+  const matches = content.match(regex);
+
+  if (!matches) {
+    return null; // Return null if the regex doesn't match the content structure
+  }
+
+  const [, insuredName, policyNumber, dateOfLoss, claimNumber, vehicleParticulars] = matches;
+
+  console.log( {
+    InsuredName: insuredName.trim(),
+    PolicyNumber: policyNumber.trim(),
+    DateOfLoss: dateOfLoss.trim(),
+    ClaimNumber: claimNumber.trim(),
+    VehicleParticulars: vehicleParticulars.trim(),
+  });
+  return {
+    InsuredName: insuredName.trim(),
+    PolicyNumber: policyNumber.trim(),
+    DateOfLoss: dateOfLoss.trim(),
+    ClaimNumber: claimNumber.trim(),
+    VehicleParticulars: vehicleParticulars.trim(),
+  };
+}
+
+
+
+app.get('/auth', (req, res) => {
+  res.redirect(authUrl);
+});
+
+// OAuth callback endpoint
+app.get('/auth/callback', async (req, res) => {
+  const code = req.query.code;
+
+  const { tokens } = await oAuth2Client.getToken(code);
+  // Save tokens to the session (you can use a database in a production environment)
+  req.session.tokens = tokens;
+
+  res.redirect('/read-emails');
+});
+app.get('/read-emails', checkAuth, setupGmailClient, async (req, res) => {
+  try {
+    const fromEmail = "ivijayrajsingh@gmail.com";
+    const twentyMinutesAgo = new Date();
+    twentyMinutesAgo.setMinutes(twentyMinutesAgo.getMinutes() - 20);
+
+    // Format the date in the required format for the Gmail API (YYYY/MM/DD)
+    const formattedDate = twentyMinutesAgo.toISOString().slice(0, 10).replace(/-/g, '/');
+
+    // Use the Gmail API to list messages matching the specified from email, label, and time frame
+    const response = await req.gmail.users.messages.list({
+      userId: 'me',
+      q: `from:${fromEmail} after:${formattedDate}`,
+      labelIds: ['INBOX'],
+    });
+
+    const messages = response.data.messages || [];
+    if (messages.length === 0) {
+      return res.json({ messages: [] });
+    }
+
+    // Retrieve the content of all matching messages as key-value pairs
+    const emailContents = await Promise.all(
+      messages.map(async (message) => {
+        const messageId = message.id;
+        const email = await req.gmail.users.messages.get({
+          userId: 'me',
+          id: messageId,
+        });
+
+        // Find the part that represents the text content (you may need to adjust this based on your specific use case)
+        const textPart = email.data.payload.parts.find(part => part.mimeType === 'text/plain' || part.mimeType === 'text/html');
+
+        if (textPart) {
+          // Decode the content (it may be base64 encoded)
+          const decodedContent = Buffer.from(textPart.body.data, 'base64').toString('utf-8');
+
+          // Extract the Reference Number, Department, Date
+          const referenceNumberMatch = decodedContent.match(/\*Reference Number:\* (.+?)\r\n/);
+          const referenceNumber = referenceNumberMatch ? referenceNumberMatch[1].trim() : 'Reference Number not found';
+
+          const departmentMatch = decodedContent.match(/\*Department:\* (.+?)\r\n/);
+          const department = departmentMatch ? departmentMatch[1].trim() : 'Department not found';
+
+          const dateMatch = decodedContent.match(/\*Date:\* (.+?)\r\n/);
+          const date = dateMatch ? dateMatch[1].trim() : 'Date not found';
+
+          // Remove everything above "Name of the Insured"
+          const startIndex = decodedContent.indexOf('Name of the Insured');
+          const trimmedContent = startIndex !== -1 ? decodedContent.substring(startIndex) : decodedContent;
+
+          console.log(trimmedContent);
+          return { [messageId]: { content: trimmedContent, referenceNumber, department, date } };
+        } else {
+          return { [messageId]: 'No text/plain or text/html part found.' };
+        }
+      })
+    );
+
+    const emailContentsObject = Object.assign({}, ...emailContents); // Combine key-value pairs into an object
+
+    res.json({ emailContents: emailContentsObject });
+  } catch (error) {
+    console.error('Error fetching emails:', error);
+    res.status(500).send('Error fetching emails');
+  }
+});
+
+
+
+
+
+
+
+
+// app.use(authenticateUser);
 
 // Create
 app.post('/claim-details', authenticateUser, (req, res) => {
@@ -90,6 +258,27 @@ app.post('/driver-details', authenticateUser, (req, res) => {
     res.send(`Driver Details added with ID: ${result.insertId}`);
   });
 });
+
+app.post("/login",(req,res)=>{
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(401).send('Unauthorized: Missing credentials');
+  }
+
+  const sql = 'SELECT * FROM login WHERE username = ? AND password = ?';
+  db.query(sql, [username, password], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (result.length === 0) {
+      return res.status(401).send('Unauthorized: Invalid credentials');
+    }
+  })
+
+})
 
 // Read
 app.get('/claim-details/:claimNo', authenticateUser, (req, res) => {
