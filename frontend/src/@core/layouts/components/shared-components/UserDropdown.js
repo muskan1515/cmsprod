@@ -44,6 +44,7 @@ const UserDropdown = () => {
   }
 
   const handleDropdownClose = url => {
+    localStorage.removeItem("data");
     if (url) {
       router.push(url)
     }
