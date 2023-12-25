@@ -19,66 +19,7 @@ const navigation = () => {
 
   },[])
 
-  return data ? [
-    {
-      title: 'Dashboard',
-      icon: HomeOutline,
-      path: '/'
-    },
-    {
-      title: 'Add Claim',
-      icon: AccountPlusOutline,
-      path: '/add-claim'
-    },
-    
-    // {
-    //   title: 'Login',
-    //   icon: Login,
-    //   path: '/pages/login',
-    //   openInNewTab: true
-    // },
-    // {
-    //   title: 'Register',
-    //   icon: AccountPlusOutline,
-    //   path: '/pages/register',
-    //   openInNewTab: true
-    // },
-    // {
-    //   title: '',
-    //   icon: AlertCircleOutline,
-    //   path: '/pages/error',
-    //   openInNewTab: true
-    // },
-    // {
-    //   sectionTitle: 'User Interface'
-    // },
-    // {
-    //   title: '',
-    //   icon: FormatLetterCase,
-    //   path: '/typography'
-    // },
-    // {
-    //   title: '',
-    //   path: '/icons',
-    //   icon: GoogleCirclesExtended
-    // },
-    // {
-    //   title: '',
-    //   icon: CreditCardOutline,
-    //   path: '/cards'
-    // },
-    // {
-    //   title: '',
-    //   icon: Table,
-    //   path: '/tables'
-    // },
-    // {
-    //   icon: CubeOutline,
-    //   title: '',
-    //   path: '/form-layouts'
-    // }
-  ] :
-  [
+  return  [
     {
       title: 'Dashboard',
       icon: HomeOutline,
