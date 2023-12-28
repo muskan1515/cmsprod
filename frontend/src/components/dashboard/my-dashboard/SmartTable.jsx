@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-// import SVGArrowDown from "./icons/SVGArrowDown";
-// import SVGArrowUp from "./icons/SVGArrowUp";
-// import SVGChevronLeft from "./icons/SVGChevronLeft";
-// import SVGChevronRight from "./icons/SVGChevronRight";
+import SVGArrowDown from "./icons/SVGArrowDown";
+import SVGArrowUp from "./icons/SVGArrowUp";
+import SVGChevronLeft from "./icons/SVGChevronLeft";
+import SVGChevronRight from "./icons/SVGChevronRight";
 
 function SmartTable(props) {
   const [loading, setLoading] = useState(false);
