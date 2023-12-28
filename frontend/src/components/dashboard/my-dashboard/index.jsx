@@ -4,7 +4,7 @@ import MobileMenu from "../../common/header/MobileMenu";
 import Activities from "./Activities";
 import AllStatistics from "./AllStatistics";
 import StatisticsChart from "./StatisticsChart";
-import Sidebar from "../../common/header/dashboard/SideBar";
+// import Sidebar from "../../common/header/dashboard/SideBar";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
 
