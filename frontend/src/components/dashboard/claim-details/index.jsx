@@ -2,7 +2,8 @@ import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
-import DetailedInfo from "./DetailedInfo";
+import Form from "./Form";
+import Form_01 from "./Form_01";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -76,6 +77,38 @@ const index = () => {
                           }}
                         ></div>
                         <CreateList />
+                      </div>
+                      <div className="row">
+                        <div className="col-lg-12">
+                          {/* <h4 className="mb10">Case Details</h4> */}
+                        </div>
+                        <div
+                          className=" bg-dark"
+                          style={{
+                            width: "100%",
+                            height: "3px",
+                            color: "blue",
+                            border: "1px solid",
+                            marginBottom: "5px",
+                          }}
+                        ></div>
+                        <Form />
+                      </div>
+                      <div className="row">
+                        <div className="col-lg-12">
+                          {/* <h4 className="mb10">Case Details</h4> */}
+                        </div>
+                        <div
+                          className=" bg-dark"
+                          style={{
+                            width: "100%",
+                            height: "3px",
+                            color: "blue",
+                            border: "1px solid",
+                            marginBottom: "5px",
+                          }}
+                        ></div>
+                        <Form_01 />
                       </div>
                     </div>
                     {/* <div className="my_dashboard_review mt30">

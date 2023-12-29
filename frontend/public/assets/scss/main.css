@@ -15810,7 +15810,7 @@ legend span {
   overflow-y: scroll;
   position: fixed;
   top: 0;
-  width: 25%;
+  width: 100%;
   z-index: 9;
 }
 
