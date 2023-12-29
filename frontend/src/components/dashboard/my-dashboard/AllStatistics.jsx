@@ -92,10 +92,10 @@ const AllStatistics = () => {
             style={{ backgroundColor: "lightblue" }}
           >
             <div className="detais">
-              <div className="timer fw-bold" style={{ fontSize: "26px" }}>
+              <div className="timer fw-bold" style={{ fontSize: "35px" }}>
                 {item.timer}
               </div>
-              <p style={{ fontSize: "12px" }}>{item.name}</p>
+              <p style={{ fontSize: "13px" }}>{item.name}</p>
             </div>
             {/* <div className="icon">
               <span className={item.icon}></span>

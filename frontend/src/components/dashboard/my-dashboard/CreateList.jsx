@@ -8,7 +8,7 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
-              placeholder="Enter Reference No."
+              placeholder="Enter Policy No."
             />
           </div>
           <div className="col-lg-3">
@@ -16,7 +16,7 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
-              placeholder="Enter Reference No."
+              placeholder="Enter Registration No."
             />
           </div>
           <div className="col-lg-3">
@@ -24,7 +24,7 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
-              placeholder="Enter Reference No."
+              placeholder="Enter PB Reference ID"
             />
           </div>
           <div className="col-lg-2">

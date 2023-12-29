@@ -66,11 +66,28 @@ const index = () => {
                 <AllStatistics />
               </div>
               {/* End .row Dashboard top statistics */}
-
+              <div
+                className=" bg-dark"
+                style={{
+                  width: "100%",
+                  height: "3px",
+                  color: "blue",
+                  border: "1px solid",
+                  marginBottom:"5px"
+                }}
+              ></div>
               <div className="row">
-                <CreateList/>
+                <CreateList />
               </div>
-
+              <div
+                className="bg-dark"
+                style={{
+                  width: "100%",
+                  height: "4px",
+                  color: "blue",
+                  border: "1px solid blue",
+                }}
+              ></div>
               <div className="row">
                 {/* <div className="col-xl-7">
                   <div className="application_statics">
@@ -92,7 +109,7 @@ const index = () => {
               <div className="row mt50">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    <p>© 2020 Find House. Made with love.</p>
+                    {/* <p>© 2020 Find House. Made with love.</p> */}
                   </div>
                 </div>
               </div>

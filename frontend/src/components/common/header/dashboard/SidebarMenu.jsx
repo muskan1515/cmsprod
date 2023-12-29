@@ -85,8 +85,8 @@ const SidebarMenu = () => {
                         : ""
                     }`}
                   >
-                    <Link href="/my-dashboard">
-                      <i className="flaticon-layers"></i>
+                    <Link href="/my-dashboard" title="Dashboard">
+                      <i className="flaticon-home"></i>
                       {/* <span> Dashboard</span> */}
                     </Link>
                   </li>
@@ -97,12 +97,12 @@ const SidebarMenu = () => {
                         : ""
                     }`}
                   >
-                    <Link href="/create-listing">
+                    <Link href="/create-listing" title="Add Claims">
                       <i className="flaticon-plus"></i>
                       {/* <span> Create Listing</span> */}
                     </Link>
                   </li>
-                  <li
+                  {/* <li
                     className={`treeview ${
                       isSinglePageActive("/my-message", route.pathname)
                         ? "active"
@@ -111,9 +111,9 @@ const SidebarMenu = () => {
                   >
                     <Link href="/my-message">
                       <i className="flaticon-envelope"></i>
-                      {/* <span> Message</span> */}
+                      <span> Message</span>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
               {/* End Main */}

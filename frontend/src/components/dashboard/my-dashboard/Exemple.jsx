@@ -1,3 +1,4 @@
+import Link from "next/link";
 import SmartTable from "./SmartTable";
 
 const headCells = [
@@ -5,7 +6,7 @@ const headCells = [
     id: "email",
     numeric: false,
     label: "PB Reference ID",
-    width: 200,
+    width: 100,
   },
   {
     id: "name",
@@ -23,7 +24,7 @@ const headCells = [
     id: "subject",
     numeric: false,
     label: "Registration No.",
-    width: 250,
+    width: 150,
   },
   {
     id: "message",
@@ -41,7 +42,7 @@ const headCells = [
     id: "message",
     numeric: false,
     label: "Assigned Garage",
-    width: 150,
+    width: 100,
   },
   {
     id: "message",
@@ -53,25 +54,25 @@ const headCells = [
     id: "message",
     numeric: false,
     label: "Case Age (Insurer)",
-    width: 200,
+    width: 150,
   },
   {
     id: "message",
     numeric: false,
     label: "Officer",
-    width: 150,
+    width: 100,
   },
   {
     id: "message",
     numeric: false,
     label: "Request Type",
-    width: 150,
+    width: 100,
   },
   {
     id: "serial",
     numeric: false,
     label: "Insurer Claim ID.",
-    width: 150,
+    width: 100,
   },
 ];
 
@@ -80,7 +81,7 @@ const data = [
     _id: "6144145976c7fe",
     email: "minageres123@gmail.com",
     name: "Mina",
-    phone: "+9617099995114",
+    phone: <Link href="/claim-details">9617099995114</Link>,
     subject: "test",
     message: "ahlannn",
     date: "2021-09-17 19:10:50",
