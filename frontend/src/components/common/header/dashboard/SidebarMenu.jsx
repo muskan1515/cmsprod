@@ -92,12 +92,12 @@ const SidebarMenu = () => {
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive("/create-listing", route.pathname)
+                      isSinglePageActive("/add-claim", route.pathname)
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href="/create-listing" title="Add Claims">
+                    <Link href="/add-claim" title="Add Claims">
                       <i className="flaticon-plus"></i>
                       {/* <span> Create Listing</span> */}
                     </Link>
