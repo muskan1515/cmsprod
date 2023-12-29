@@ -1,4 +1,23 @@
+import { useState } from "react";
+
 const CreateList = () => {
+  const [applicantNumber, setApplicantNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+
+    // Allow only numeric input
+    const numericValue = inputValue.replace(/\D/g, "");
+
+    // Restrict to 10 digits
+    const truncatedValue = numericValue.slice(0, 10);
+    if (truncatedValue.length === 10) {
+      setApplicantNumber(truncatedValue);
+    }
+
+    setPhoneNumber(truncatedValue);
+  };
   return (
     <>
       <div className="col-lg-4">
@@ -8,10 +27,8 @@ const CreateList = () => {
               htmlFor=""
               className="text-color"
               style={{
-                // paddingTop: "15px",
                 color: "#1560bd",
                 fontWeight: "",
-                // marginTop: "-13px",
               }}
             >
               Region <span class="text-danger">*</span>
@@ -23,16 +40,13 @@ const CreateList = () => {
               data-live-search="true"
               data-width="100%"
             >
-              <option data-tokens="Status1">1</option>
-              <option data-tokens="Status2">2</option>
-              <option data-tokens="Status3">3</option>
+              <option data-tokens="Status1">Select Region</option>
+              <option data-tokens="Status1">Hyderabad</option>
+              <option data-tokens="Status2">Delhi</option>
+              <option data-tokens="Status3">Chandigarh</option>
             </select>
           </div>
         </div>
-        {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
       </div>
 
       <div className="col-lg-4">
@@ -197,12 +211,12 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Policy Period From
+              Policy Period Start
             </label>
           </div>
           <div className="col-lg-7">
             <input
-              type="text"
+              type="date"
               className="form-control"
               id="propertyTitle"
               // placeholder="Enter Registration No."
@@ -224,12 +238,12 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Policy Period Start
+              Policy Period End
             </label>
           </div>
           <div className="col-lg-7">
             <input
-              type="text"
+              type="date"
               className="form-control"
               id="propertyTitle"
               // placeholder="Enter Registration No."
@@ -338,8 +352,13 @@ const CreateList = () => {
           <div className="col-lg-7">
             <input
               type="text"
+              maxLength={10}
               className="form-control"
-              id="propertyTitle"
+              id="formGroupExampleInput3"
+              // onChange={(e) => setApplicantNumber(e.target.value)}
+              onChange={(e) => setApplicantNumber(e.target.value)}
+              pattern="[0-9]*"
+              title="Please enter only 10 digits"
               // placeholder="Enter Registration No."
             />
           </div>

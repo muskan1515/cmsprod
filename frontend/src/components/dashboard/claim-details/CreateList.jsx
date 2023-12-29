@@ -1,9 +1,9 @@
 const CreateList = () => {
   return (
     <>
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -17,7 +17,7 @@ const CreateList = () => {
               Name <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -32,9 +32,9 @@ const CreateList = () => {
         </div> */}
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -48,7 +48,7 @@ const CreateList = () => {
               Phone <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -59,9 +59,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -75,7 +75,7 @@ const CreateList = () => {
               Email <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -86,9 +86,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -102,7 +102,7 @@ const CreateList = () => {
               LeadID <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -113,9 +113,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -126,10 +126,10 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Reg. No. <span class="req-btn">*</span>
+              Registration No. <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -140,9 +140,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -153,10 +153,10 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              In. ClaimID 
+              Insurer ClaimID 
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -167,9 +167,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -183,7 +183,7 @@ const CreateList = () => {
               Status <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -194,9 +194,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -210,7 +210,7 @@ const CreateList = () => {
               Sub Status <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -221,9 +221,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -234,10 +234,10 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Inti. Date <span class="req-btn">*</span>
+              Intimation Date <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -248,9 +248,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -261,10 +261,10 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Req. Type <span class="req-btn">*</span>
+              Request Type <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
@@ -275,9 +275,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-6">
         <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
+          <div className="col-lg-5 my_profile_setting_input form-group">
             <label
               htmlFor=""
               className="text-color"
@@ -288,10 +288,10 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Endo. Doc <span class="req-btn">*</span>
+              Endorsement Doc <span class="req-btn">*</span>
             </label>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <input
               type="text"
               className="form-control"
