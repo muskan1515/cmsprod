@@ -305,6 +305,114 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
+              Insured Name
+            </label>
+          </div>
+          <div className="col-lg-7">
+            <input
+              type="text"
+              className="form-control"
+              id="propertyTitle"
+              // placeholder="Enter Registration No."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="col-lg-4">
+        <div className="row mt-1">
+          <div className="col-lg-5 my_profile_setting_input form-group">
+            <label
+              htmlFor=""
+              className="text-color"
+              style={{
+                // paddingTop: "15px",
+                color: "#1560bd",
+                fontWeight: "",
+                // marginTop: "-13px",
+              }}
+            >
+              Insured Mobile No. 1
+            </label>
+          </div>
+          <div className="col-lg-7">
+            <input
+              type="text"
+              className="form-control"
+              id="propertyTitle"
+              // placeholder="Enter Registration No."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="col-lg-4">
+        <div className="row mt-1">
+          <div className="col-lg-5 my_profile_setting_input form-group">
+            <label
+              htmlFor=""
+              className="text-color"
+              style={{
+                // paddingTop: "15px",
+                color: "#1560bd",
+                fontWeight: "",
+                // marginTop: "-13px",
+              }}
+            >
+              Insured Mobile No. 2
+            </label>
+          </div>
+          <div className="col-lg-7">
+            <input
+              type="text"
+              className="form-control"
+              id="propertyTitle"
+              // placeholder="Enter Registration No."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="col-lg-4">
+        <div className="row mt-1">
+          <div className="col-lg-5 my_profile_setting_input form-group">
+            <label
+              htmlFor=""
+              className="text-color"
+              style={{
+                // paddingTop: "15px",
+                color: "#1560bd",
+                fontWeight: "",
+                // marginTop: "-13px",
+              }}
+            >
+              Insured Mail Address
+            </label>
+          </div>
+          <div className="col-lg-7">
+            <input
+              type="text"
+              className="form-control"
+              id="propertyTitle"
+              // placeholder="Enter Registration No."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="col-lg-4">
+        <div className="row mt-1">
+          <div className="col-lg-5 my_profile_setting_input form-group">
+            <label
+              htmlFor=""
+              className="text-color"
+              style={{
+                // paddingTop: "15px",
+                color: "#1560bd",
+                fontWeight: "",
+                // marginTop: "-13px",
+              }}
+            >
               Vehicle Particulars <span class="text-danger">*</span>
             </label>
           </div>
@@ -454,117 +562,9 @@ const CreateList = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-             Insured Name
-            </label>
-          </div>
-          <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Insured Mobile No. 1
-            </label>
-          </div>
-          <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-             Insured Mobile No. 2
-            </label>
-          </div>
-          <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Insured Mail Address
-            </label>
-          </div>
-          <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
-          </div>
-        </div>
-      </div>
-
       <div className="col-lg-12">
         <div className="my_profile_setting_input">
-          <button className="btn btn2 float-end bg-info">Submit</button>
+          <button className="btn float-end btn-color">Submit</button>
         </div>
       </div>
 
