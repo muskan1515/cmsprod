@@ -37,7 +37,7 @@ const Form = () => {
             </h2>
             <div
               id="collapseThree"
-              class="accordion-collapse collapse show"
+              class="accordion-collapse collapse"
               aria-labelledby="headingThree"
               data-bs-parent="#accordionExample"
             >

@@ -62,7 +62,7 @@ const index = () => {
               </div>
               {/* End .row */}
 
-              <div className="row" style={{ justifyContent: "space-between" }}>
+              <div className="row mt-2" style={{ justifyContent: "space-between" }}>
                 <AllStatistics />
               </div>
               {/* End .row Dashboard top statistics */}
@@ -83,7 +83,7 @@ const index = () => {
                 className="bg-dark"
                 style={{
                   width: "100%",
-                  height: "4px",
+                  height: "2px",
                   color: "blue",
                   border: "1px solid blue",
                 }}
