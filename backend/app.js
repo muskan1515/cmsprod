@@ -3,12 +3,16 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const fs = require('fs')
 
+const transporter = require("./Config/nodeMailerConfig")
+
 const db = require("./Config/dbConfig");
 
 const session = require('express-session');
 
 const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
+
+const dotenv = require("dotenv").config();
 
 const app = express();
 
@@ -286,6 +290,174 @@ app.post("/login",(req,res)=>{
 
 })
 
+app.get('/getSpecificClaim',authenticateUser, (req, res) => {
+ 
+  const LeadId = req.query.LeadId;
+  console.log(LeadId);
+  const sql = "CALL GetInfoByLeadId(?)";
+  db.query(sql,[LeadId], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send(result);
+  });
+});
+
+app.post("/sendEmail/1",authenticateUser,(req,res)=>{
+  const {vehicleNo,PolicyNo,Insured,Date,toMail} = req.body;
+
+  const emailContent = `
+    Dear Sir/Madam,
+
+    Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+
+      We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
+    Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
+    can procedd further in your case and we also request 
+    you to provide the following details as follows:-
+
+    1) Original DL/Rc For verification
+    2) Written Statement in Breif
+    3) Estimate Copy
+    5) Spot Snaps/Video(If Any)
+    6) Claim Form filled completely Filled & Duly Signed & mentioning Mobile no.
+    7) Discharge Voucher completely Filled & Duly Signed
+    8) Satisfaction Voucher completely Filled & Duly Signed(If Cashless)
+    9) Current year Policy
+    10) Previous Year Policy
+    11) Pan Card
+    12) Aadhar Card
+    13) Cancel Cheque Of Insured with name mentioned on it(If Cashless Provide the Repairer cheque)
+    14) PI Report(If Break In the policy)
+    15) TP Affidavit on Rs10/- stamp paper
+    16) MLC Report(If Any)
+    17) Towing Bill/Crane Bill(If Any)
+
+        Please provide the clear copy of all the documents so that the claim processing can be fast
+
+    Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+            claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+
+  `;
+
+  const mailOptions = {
+    from: 'infosticstech@gmail.com',
+    to: toMail,
+    subject: 'Survey Request for Vehicle Claim',
+    text: emailContent,
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully');
+    }
+  });
+
+})
+
+app.post("/sendEmail/2",authenticateUser,(req,res)=>{
+  const {vehicleNo,PolicyNo,Insured,Date} = req.body;
+
+  const emailContent = `
+    Dear Sir/Madam,
+
+    Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+
+      We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} and the approval
+      is as follows;-
+     Parts
+     1) Fr Bumper- New Allowed
+     2) FR Grill- New Allowed
+     3) LH Head LIght- new Allowed
+     4) LH Fender0- Repair Allowed
+     Labour
+     1) Fr Bumper- R/R-150, Painting-2500
+     2) LH Head Light- R/R-100
+     3) LH Fender- Denting-250, Painting-2200
+     
+         Further approval will be provided after dismentaling of the vehicle.
+     
+     Note:- Pleasae consider that the the claim is payable  subject to policy terms & conditions & Cashless facility will be allowed 
+            Subject to all the documents get verified from online. It is for your information please.
+  `;
+
+  const mailOptions = {
+    from: 'infosticstech@gmail.com',
+    to: 'ivijayrajsingh@gmail.com',
+    subject: 'Survey Request for Vehicle Claim',
+    text: emailContent,
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully');
+    }
+  });
+
+})
+
+app.post("/sendEmail/3",authenticateUser,(req,res)=>{
+  const {date} = req.body;
+
+  const currentDate = new Date();
+
+  const emailContent = `
+  Dear Sir/Madam,
+
+  Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+  
+   We have conducted the online survey on ${currentDate} & also mailed you regarding the documents on ${date} and now again we rquest you
+  to please provide the follwong documents to procedd further in your case:-
+  
+  1) What is the Status of the said vheicle
+  2) How much time it will take to repair the vehicle
+  3) Please provide UR & RI Snaps
+  4) Invoice Bill duly signed & stamped of dealer
+  5) Payment receipt duly signed & stamped of dealer
+  6) Previous Year Policy
+  7) Pan Card
+  8) Please destorey the items properly in the RI, Otherwise we will treat the part is repaired
+     
+      Please provide the clear copy of all the documents so that the claim processing can be fast
+  
+  Note:- If We Cannot get the response with in 01 day we will inform the insurer that the insured is not interseted in the
+          claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+  `;
+
+  const mailOptions = {
+    from: 'infosticstech@gmail.com',
+    to: 'ivijayrajsingh@gmail.com',
+    subject: 'Survey Request for Vehicle Claim',
+    text: emailContent,
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully');
+    }
+  });
+
+})
+
+
+
 // Read
 app.get('/claim-details/:claimNo', authenticateUser, (req, res) => {
   const sql = 'SELECT * FROM claim_details WHERE claim_no = ?';
@@ -300,8 +472,9 @@ app.get('/claim-details/:claimNo', authenticateUser, (req, res) => {
 });
 
 app.get('/getAllClaims',authenticateUser, (req, res) => {
-  const sql = 'SELECT * FROM ClaimDetails';
-  db.query(sql, (err, result) => {
+  const region = req.query.region;
+  const sql = "CALL GetPolicyInfoByRegion(?)";
+  db.query(sql,[region], (err, result) => {
     if (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -335,6 +508,128 @@ app.post('/login', (req, res) => {
     }
   });
 });
+
+app.post('/addClaim', (req, res) => {
+  const {
+    SurveyType,
+    ReferenceNo,
+    PolicyIssuingOffice,
+    PolicyNumber,
+    PolicyPeriodStart,
+    PolicyPeriodEnd,
+    ClaimNumber,
+    ClaimServicingOffice,
+    AddedBy,
+    Region,
+    InspectionType,
+    IsClaimCompleted,
+    IsActive,
+    InsuredName,
+    InsuredMobileNo1,
+    InsuredMobileNo2,
+    InsuredMailAddress,
+    InsuredAddress,
+    RegisteredNumber,
+    GarageNameAndAddress,
+    GarageContactNo1,
+    GarageContactNo2,
+    PlaceOfLoss,
+    NatureOfLoss,
+    EstimatedLoss
+  } = req.body;
+  
+  // SQL query to insert data into the respective tables
+  const sqlQuery = `
+    -- Insert into ClaimDetails table
+    INSERT INTO ClaimDetails (
+      SurveyType,
+      ReferenceNo,
+      PolicyIssuingOffice,
+      PolicyNumber,
+      PolicyPeriodStart,
+      PolicyPeriodEnd,
+      ClaimNumber,
+      ClaimServicingOffice,
+      AddedBy,
+      Region,
+      InspectionType,
+      IsClaimCompleted,
+      IsActive
+    ) VALUES (
+      '${SurveyType}',
+      '${ReferenceNo}',
+      '${PolicyIssuingOffice}',
+      '${PolicyNumber}',
+      '${PolicyPeriodStart}',
+      '${PolicyPeriodEnd}',
+      '${ClaimNumber}',
+      '${ClaimServicingOffice}',
+      '${AddedBy}',
+      '${Region}',
+      '${InspectionType}',
+      '${IsClaimCompleted}',
+      '${IsActive}'
+    );
+  
+    -- Insert into InsuredDetails table
+    INSERT INTO InsuredDetails (
+      InsuredName,
+      InsuredMobileNo1,
+      InsuredMobileNo2,
+      InsuredMailAddress,
+      InsuredAddress
+    ) VALUES (
+      '${InsuredName}',
+      '${InsuredMobileNo1}',
+      '${InsuredMobileNo2}',
+      '${InsuredMailAddress}',
+      '${InsuredAddress}'
+    );
+  
+    -- Insert into VehicleDetails table
+    INSERT INTO VehicleDetails (
+      RegisteredNumber
+    ) VALUES (
+      '${RegisteredNumber}'
+    );
+  
+    -- Insert into GarageDetails table
+    INSERT INTO GarageDetails (
+      GarageNameAndAddress,
+      GarageContactNo1,
+      GarageContactNo2
+    ) VALUES (
+      '${GarageNameAndAddress}',
+      '${GarageContactNo1}',
+      '${GarageContactNo2}'
+    );
+  
+    -- Insert into AccidentDetails table
+    INSERT INTO AccidentDetails (
+      PlaceOfLoss,
+      NatureOfLoss,
+      EstimatedLoss
+    ) VALUES (
+      '${PlaceOfLoss}',
+      '${NatureOfLoss}',
+      '${EstimatedLoss}'
+    );
+  `;
+  
+  // Execute the SQL queries using your database connection
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error('Error inserting data into the database:', error);
+      return res.status(500).json({ error: 'Error inserting data into the database.' });
+    }
+  
+    res.status(200).json({ message: 'Data inserted successfully.' });
+  });
+  
+  
+});
+
+
 
 
 app.get('/vehicle-details/:claimNo', authenticateUser, (req, res) => {
@@ -400,5 +695,7 @@ app.put('/driver-details/:claimNo', authenticateUser, (req, res) => {
 
 
 app.listen(port, () => {
+
+  
     console.log(`Server running on http://localhost:${port}`);
   });

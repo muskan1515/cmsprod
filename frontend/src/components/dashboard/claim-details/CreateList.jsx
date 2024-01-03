@@ -1,4 +1,55 @@
-const CreateList = () => {
+import axios from "axios";
+import toast from "react-hot-toast";
+
+const CreateList = ({
+  claim,
+  InsuredName,
+  setInsuredName,
+  InsuredMailAddress,
+  setInsuredMailAddress,
+  InsuredMobileNo1,
+  setInsuredMobileNo1,
+  InsuredMobileNo2,
+  setInsuredMobileNo2,
+  requestTypeTypes,
+  subTypeTypes
+  ,
+  edit
+}) => {
+
+  const formatDate = (val)=>{
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString('en-GB');
+    return formattedDate;
+  }
+
+  const sendMailHandler = (vehicleNo,PolicyNo,Insured)=>{
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+   
+    const payload = {
+      vehicleNo: vehicleNo,
+      PolicyNo: PolicyNo,
+      Insured:Insured,
+      toMail:"ivijayrajsingh@gmail.com",
+      date:formatDate(new Date())
+    };
+
+
+    toast.loading("Sending Acknowledgment Mail!!");
+    axios.post("/api/sendEmail1",payload,{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`
+      }
+    }).then((res)=>{
+      toast.dismiss();
+      toast.success("Successfully sent the mail!");
+    })
+    .catch((err)=>{
+      toast.dismiss();
+      toast.error(err);
+    })
+  }
+
   return (
     <>
       <div className="col-lg-6">
@@ -22,6 +73,9 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claim.InsuredName}
+              disabled={!edit}
+              onChange={(e)=>setInsuredName(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -49,12 +103,23 @@ const CreateList = () => {
             </label>
           </div>
           <div className="col-lg-7">
-            <input
+            {claim.InsuredMobileNo1 && <input
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claim.InsuredMobileNo1}
+              disabled={!edit}
+              onChange={(e)=>setInsuredMobNo1(e.target.value)}
               // placeholder="Enter Registration No."
-            />
+            />}
+            {claim.InsuredMobileNo2 && <input
+              type="text"
+              className="form-control"
+              id="propertyTitle"
+              value={claim.InsuredMobileNo2}
+              onChange={(e)=>setInsuredMobNo2(e.target.value)}
+              // placeholder="Enter Registration No."
+            />}
           </div>
         </div>
       </div>
@@ -80,8 +145,14 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claim.InsuredMailAddress}
+              disabled={!edit}
+              onChange={(e)=>setInsuredMailAddress(e.target.value)}
               // placeholder="Enter Registration No."
             />
+            {(!InsuredMailAddress) && (
+              <button onClick={()=>sendMailHandler(claim.VehicleRegisteredNumber,claim.PolicyNumber,claim.InsuredName)}>Send Mail</button>
+            )}
           </div>
         </div>
       </div>
@@ -107,6 +178,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claim.LeadId}
+
               // placeholder="Enter Registration No."
             />
           </div>
@@ -134,6 +207,7 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claim.ReferenceNo}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -161,6 +235,7 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claim.ClaimNumber}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -188,6 +263,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              placeholder={"Not Started"}
+              disabled={!edit}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -207,16 +284,20 @@ const CreateList = () => {
                 // marginTop: "-13px",
               }}
             >
-              Sub Status <span class="req-btn">*</span>
+              Survey Type <span class="req-btn">*</span>
             </label>
           </div>
           <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
+           <select disabled={!edit}>
+           {subTypeTypes.map((sub,index)=>{
+            return <option key={sub.id}  style={{
+              // paddingTop: "15px",
+              color: "#1560bd",
+              fontWeight: "",
+              // marginTop: "-13px",
+            }} value={sub.value}>{sub.type}</option>
+          })}
+           </select>
           </div>
         </div>
       </div>
@@ -242,6 +323,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              disabled={!edit}
+              value={formatDate(claim.ClaimAddedDateTime)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -265,12 +348,17 @@ const CreateList = () => {
             </label>
           </div>
           <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
+          
+          <select disabled={!edit}>
+          {requestTypeTypes.map((sub,index)=>{
+           return <option key={sub.id}  style={{
+             // paddingTop: "15px",
+             color: "#1560bd",
+             fontWeight: "",
+             // marginTop: "-13px",
+           }} value={sub.value}>{sub.type}</option>
+         })}
+          </select>
           </div>
         </div>
       </div>
@@ -292,12 +380,12 @@ const CreateList = () => {
             </label>
           </div>
           <div className="col-lg-7">
-            <input
+            {/*<input
               type="text"
               className="form-control"
               id="propertyTitle"
               // placeholder="Enter Registration No."
-            />
+            />*/}
           </div>
         </div>
       </div>

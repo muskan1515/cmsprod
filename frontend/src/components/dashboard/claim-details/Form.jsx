@@ -6,8 +6,14 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form = () => {
+const Form = ({claim,edit}) => {
   const router = useRouter();
+
+  const formatDate = (val)=>{
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString('en-GB');
+    return formattedDate;
+  }
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -56,7 +62,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Name <span class="req-btn">*</span>
+                          Vehicle Model <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -64,6 +70,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={`${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -87,7 +95,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Phone <span class="req-btn">*</span>
+                          Registered Number <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -95,6 +103,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleRegisteredNumber}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -114,7 +124,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Email <span class="req-btn">*</span>
+                          Engine Type <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -122,6 +132,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleModeOfCheck}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -141,7 +153,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          LeadID <span class="req-btn">*</span>
+                          Registered Owner <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -149,6 +161,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleRegisteredOwner}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -168,7 +182,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Registration No. <span class="req-btn">*</span>
+                          Date of Registration <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -176,6 +190,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={formatDate(claim.VehicleDateOfRegistration)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -195,7 +211,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Insurer ClaimID
+                          PUC Number <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -203,6 +219,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehiclePucNumber}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -222,7 +240,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Status <span class="req-btn">*</span>
+                          Transfer Date <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -230,6 +248,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={formatDate(claim.VehicleTransferDate)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -249,7 +269,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Sub Status <span class="req-btn">*</span>
+                          Engine Number <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -257,6 +277,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleEngineNumber}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -276,7 +298,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Intimation Date <span class="req-btn">*</span>
+                          Added By <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -284,6 +306,124 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleAddedBy}
+                          // placeholder="Enter Registration No."
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-5 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#1560bd",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                      Issuing Authority <span class="req-btn">*</span>
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        disabled={!edit}
+                        value={claim.IssuingAuthority}
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-6">
+                <div className="row mt-1">
+                  <div className="col-lg-5 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color"
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#1560bd",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                      }}
+                    >
+                    License Number <span class="req-btn">*</span>
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      disabled={!edit}
+                      value={claim.LicenseNumber}
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+              <div className="row mt-1">
+                <div className="col-lg-5 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#1560bd",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    License Type <span class="req-btn">*</span>
+                  </label>
+                </div>
+                <div className="col-lg-7">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    disabled={!edit}
+                    value={claim.LicenseType}
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+
+                  <div className="col-lg-6">
+                    <div className="row mt-1">
+                      <div className="col-lg-5 my_profile_setting_input form-group">
+                        <label
+                          htmlFor=""
+                          className="text-color"
+                          style={{
+                            // paddingTop: "15px",
+                            color: "#1560bd",
+                            fontWeight: "",
+                            // marginTop: "-13px",
+                          }}
+                        >
+                          Chassis Number<span class="req-btn">*</span>
+                        </label>
+                      </div>
+                      <div className="col-lg-7">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleChassisNumber}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -303,7 +443,7 @@ const Form = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Request Type <span class="req-btn">*</span>
+                          Fuel Type <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -311,33 +451,8 @@ const Form = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Endorsement Doc <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
+                          disabled={!edit}
+                          value={claim.VehicleFuelType}
                           // placeholder="Enter Registration No."
                         />
                       </div>

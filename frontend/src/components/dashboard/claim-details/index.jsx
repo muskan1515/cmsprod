@@ -1,14 +1,68 @@
+import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
 import Form from "./Form";
 import Form_01 from "./Form_01";
+import Form_02 from "./Form_02";
+import toast from "react-hot-toast";
+import axios from "axios";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = () => {
+const index = ({}) => {
+ const url = window.location.href;
+ const leadId = url.split('/claim-details?leadId=')[1];
+ const [claim,setClaim] = useState({});
+ const [InsuredName,setInsuredName] = useState(claim?.InsuredName ? claim.InsuredName : "")
+ const [InsuredMailAddress,setInsuredMailAddress] = useState(claim?.InsuredMailAddress ? claim.InsuredMailAddress : "")
+ const [InsuredMobileNo1,setInsuredMobileNo1] = useState(claim?.InsuredMobileNo1 ? claim.InsuredMobileNo1 : "")
+ const [InsuredMobileNo2,setInsuredMobileNo2] = useState(claim?.InsuredMobileNo2 ? claim.InsuredMobileNo2 : "")
+ const [subType,setSubType] = useState("");
+ const [requestType,setRequestType] = useState("");
+
+
+
+ const [edit,setEdit] = useState(false);
+
+ const editHandler = ()=>{
+  setEdit(true);
+ }
+
+ const subTypeTypes = [
+  {id:1,"type":"Motor","value":"Motor"},
+  {id:1,"type":"Non-Motor","value":"Non-Motor"},
+  {id:1,"type":"Motor-2W","value":"Motor-2W"},
+  {id:1,"type":"Motor-4W","value":"Motor-4W"}
+ ]
+
+ const requestTypeTypes = [
+  {id:1,"type":"SPOT","value":"SPOT"},
+  {id:1,"type":"Final","value":"Final"},
+  {id:1,"type":"re-inspection","value":"re-inspection"}
+ ]
+
+  useEffect(()=>{
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios.get("/api/getSpecificClaim",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        LeadId:leadId
+      }
+    })
+    .then((res)=>{
+      console.log(res.data.data[0][0]);
+      setClaim(res.data.data[0][0]);
+    })
+    .catch((err)=>{
+      toast.error(err)
+    })
+  },[leadId]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -54,11 +108,11 @@ const index = () => {
 
                 <div className="col-lg-12 mb-2">
                   <div className="style2">
-                    {/* <h4 className="breadcrumb_title">Case Details</h4> */}
-                    {/* <p>We are glad to see you again!</p> */}
+                   <button onClick={editHandler}>{edit ? "Save" : "Edit"}</button>
                   </div>
                 </div>
                 {/* End .col */}
+
                 <div className="row">
                   <div className="col-lg-9">
                     <div className="my_dashboard_review">
@@ -76,7 +130,20 @@ const index = () => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <CreateList />
+                        <CreateList 
+                        claim={claim}
+                        InsuredName={InsuredName}
+                        setInsuredName={setInsuredName}
+                        InsuredMailAddress={InsuredMailAddress}
+                        setInsuredMailAddress={setInsuredMailAddress}
+                        InsuredMobileNo1={InsuredMobileNo1}
+                        setInsuredMobileNo1={setInsuredMobileNo1}
+                        InsuredMobileNo2={InsuredMobileNo2}
+                        setInsuredMobileNo2={setInsuredMobileNo2}
+                        requestTypeTypes={requestTypeTypes}
+                        subTypeTypes={subTypeTypes}
+                        edit={edit}
+                        />
                       </div>
                       <div className="row">
                         <div className="col-lg-12">
@@ -92,7 +159,7 @@ const index = () => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <Form />
+                        <Form claim={claim} edit={edit} />
                       </div>
                       <div className="row">
                         <div className="col-lg-12">
@@ -108,9 +175,25 @@ const index = () => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <Form_01 />
+                        <Form_01 claim={claim}  edit={edit}/>
                       </div>
                     </div>
+                    <div className="row">
+                    <div className="col-lg-12">
+                      {/* <h4 className="mb10">Case Details</h4> */}
+                    </div>
+                    <div
+                      className=" bg-dark"
+                      style={{
+                        width: "100%",
+                        height: "3px",
+                        color: "blue",
+                        border: "1px solid",
+                        marginBottom: "5px",
+                      }}
+                    ></div>
+                    <Form_02 claim={claim} edit={edit}/>
+                  </div>
                     {/* <div className="my_dashboard_review mt30">
                     <div className="row">
                       <div className="col-lg-12">

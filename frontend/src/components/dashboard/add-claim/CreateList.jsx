@@ -1,8 +1,100 @@
-import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { use, useReducer, useState } from "react";
 
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  const router = useRouter();
+
+  const [region,setRegion] = useState("");
+  const [date,setDate]=useState("");
+  const [surveyType,setSurveyType]=useState("");
+  const [inspectionType,setInspectionType] = useState("");
+  const [policyNumber,setPolicyNumber] = useState("");
+  const [policyIssuingOffice,setPolicyIssuingOffice] = useState("");
+  const [policyStartDate,setPolicyStartDate] = useState("");
+  const [policyStartEnd,setPolicyStartEnd] = useState("");
+  const [claimSurvicingOffice,setClaimSurvicingOffice] = useState("");
+  const [insuredName,setInsuredName]=useState("");
+  const [insuredMobileNo1,setInsuredMobileNo1] = useState("");
+  const [insuredMobileNo2,setInsuredMobileNo2] = useState("");
+  const [insuredMailAddress,setInsuredMailAddress] = useState("");
+  const [vehicleParticular,setVehicleParticular] = useState("");
+  const [placeOfLoss,setPlaceOfLoss] = useState("");
+  const [natureOfLoss,setNatureOfLoss] = useState("");
+  const [estimatedLoss,setEstimatedLoss] = useState("");
+  const [garageName,setGarageName] = useState("");
+  const [garageNumber,setGarageNumber] = useState("");
+  const [claimNumber,setClaimNumber]=useState("");
+
+  const generateRegion = (region)=>{
+    const firstThreeLetters = region.slice(0, 3);
+
+  const now = new Date();
+  const mm = String(now.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-indexed
+  const dd = String(now.getDate()).padStart(2, '0');
+  const hh = String(now.getHours()).padStart(2, '0');
+  const min = String(now.getMinutes()).padStart(2, '0');
+  const ss = String(now.getSeconds()).padStart(2, '0');
+  const result = `${firstThreeLetters}/${mm}/${dd}${hh}${min}${ss}`;
+
+  console.log(result);
+  return result;
+  }
+  
+  const submitHandler = ()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
+    const payload = {
+      SurveyType:surveyType,
+      ReferenceNo : generateRegion(region),
+      PolicyIssuingOffice:policyIssuingOffice,
+      PolicyNumber:policyNumber,
+      PolicyPeriodStart:policyStartDate,
+      PolicyPeriodEnd:policyStartEnd,
+      ClaimServicingOffice:claimSurvicingOffice,
+      ClaimNumber:claimNumber,
+      AddedBy:userInfo[0].Username,
+      Region:region,
+      InspectionType:inspectionType,
+      IsClaimCompleted:0,
+      IsActive:1,
+      InsuredName:insuredName,
+      InsuredMobileNo1:insuredMobileNo1,
+      InsuredMailAddress:insuredMailAddress,
+      InsuredMobileNo2:insuredMobileNo2,
+      InsuredAddress:"",
+      RegisteredNumber :vehicleParticular,
+      GarageNameAndAddress:garageName,
+      GarageContactNo1:garageNumber,
+      GarageContactNo2:garageNumber,
+      PlaceOfLoss:placeOfLoss,
+      NatureOfLoss:natureOfLoss,
+      EstimatedLoss:estimatedLoss
+    };
+
+    if(!payload.Region || !payload.SurveyType || !payload.InspectionType || !date
+      || !payload.PolicyNumber || !payload.PolicyIssuingOffice || !payload.ClaimNumber || !payload.ClaimServicingOffice
+      || !payload.RegisteredNumber ){
+        alert("Fill all the marked fields please");
+      }
+      else{
+        axios.post("/api/addClaim",payload,{headers:{
+          Authorization:`Bearer ${userInfo[0].Token}`,
+          "Content-Type":"application/json"
+        }})
+        .then((res)=>{
+          alert("Successfully added");
+          router.push("/my-dashboard");
+        })
+        .catch((err)=>{
+          alert("Error");
+        });
+      }
+  }
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -39,11 +131,13 @@ const CreateList = () => {
               className="selectpicker form-select"
               data-live-search="true"
               data-width="100%"
+              value={region}
+              onChange={(e)=>setRegion(e.target.value)}
             >
               <option data-tokens="Status1">Select Region</option>
-              <option data-tokens="Status1">Hyderabad</option>
-              <option data-tokens="Status2">Delhi</option>
-              <option data-tokens="Status3">Chandigarh</option>
+              <option data-tokens="Status1" value={"Hyderabad"}>Hyderabad</option>
+              <option data-tokens="Status2" value={"Delhi"}>Delhi</option>
+              <option data-tokens="Status3" value={"Chandigarh"}>Chandigarh</option>
             </select>
           </div>
         </div>
@@ -70,10 +164,13 @@ const CreateList = () => {
               className="selectpicker form-select"
               data-live-search="true"
               data-width="100%"
+              value={surveyType}
+              onChange={(e)=>setSurveyType(e.target.value)}
             >
-              <option data-tokens="Status1">1</option>
-              <option data-tokens="Status2">2</option>
-              <option data-tokens="Status3">3</option>
+              <option data-tokens="Status1" value={"Motor"}>Motor</option>
+              <option data-tokens="Status2" value={"Non-Motor"}>Non-Motor</option>
+              <option data-tokens="Status3" value={"Motor-2W"}>Motor-2W</option>
+              <option data-tokens="Status3" value={"Motor-4W"}>Motor-4W</option>
             </select>
           </div>
         </div>
@@ -104,10 +201,12 @@ const CreateList = () => {
               className="selectpicker form-select"
               data-live-search="true"
               data-width="100%"
+              value={inspectionType}
+              onChange={(e)=>setInspectionType(e.target.value)}
             >
-              <option data-tokens="Status1">1</option>
-              <option data-tokens="Status2">2</option>
-              <option data-tokens="Status3">3</option>
+              <option data-tokens="Status1" value={"spot"}>Spot</option>
+              <option data-tokens="Status2" value={"final"}>final</option>
+              <option data-tokens="Status3" value={"re-inspection"}>re-inspection</option>
             </select>
           </div>
         </div>
@@ -138,6 +237,8 @@ const CreateList = () => {
               type="date"
               className="form-control"
               id="propertyTitle"
+              value={date}
+              onChange={(e)=>setDate(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -165,6 +266,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={policyNumber}
+              onChange={(e)=>setPolicyNumber(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -192,6 +295,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={policyIssuingOffice}
+              onChange={(e)=>setPolicyIssuingOffice(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -219,6 +324,8 @@ const CreateList = () => {
               type="date"
               className="form-control"
               id="propertyTitle"
+              value={policyStartDate}
+              onChange={(e)=>setPolicyStartDate(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -246,6 +353,8 @@ const CreateList = () => {
               type="date"
               className="form-control"
               id="propertyTitle"
+              value={setPolicyStartEnd}
+              onChange={(e)=>setPolicyStartEnd(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -273,6 +382,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claimNumber}
+              onChange={(e)=>setClaimNumber(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -300,6 +411,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={claimSurvicingOffice}
+              onChange={(e)=>setClaimSurvicingOffice(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -327,6 +440,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={insuredName}
+              onChange={(e)=>setInsuredName(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -356,7 +471,8 @@ const CreateList = () => {
               className="form-control"
               id="formGroupExampleInput3"
               // onChange={(e) => setApplicantNumber(e.target.value)}
-              onChange={(e) => setApplicantNumber(e.target.value)}
+              value={insuredMobileNo1}
+              onChange={(e)=>setInsuredMobileNo1(e.target.value)}
               pattern="[0-9]*"
               title="Please enter only 10 digits"
               // placeholder="Enter Registration No."
@@ -386,6 +502,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={insuredMobileNo2}
+              onChange={(e)=>setInsuredMobileNo2(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -413,6 +531,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={insuredMailAddress}
+              onChange={(e)=>setInsuredMailAddress(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -440,6 +560,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={vehicleParticular}
+              onChange={(e)=>setVehicleParticular(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -467,6 +589,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={placeOfLoss}
+              onChange={(e)=>setPlaceOfLoss(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -494,6 +618,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={natureOfLoss}
+              onChange={(e)=>setNatureOfLoss(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -521,6 +647,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={estimatedLoss}
+              onChange={(e)=>setEstimatedLoss(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -548,6 +676,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={garageName}
+              onChange={(e)=>setGarageName(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -575,6 +705,8 @@ const CreateList = () => {
               type="text"
               className="form-control"
               id="propertyTitle"
+              value={garageNumber}
+              onChange={(e)=>setGarageNumber(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -583,7 +715,7 @@ const CreateList = () => {
 
       <div className="col-lg-12">
         <div className="my_profile_setting_input">
-          <button className="btn float-end btn-color">Submit</button>
+          <button className="btn float-end btn-color" onClick={submitHandler}>Submit</button>
         </div>
       </div>
 

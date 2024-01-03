@@ -1,6 +1,41 @@
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+
 
 const Form = () => {
+
+  const [username,setUsername] = useState("");
+  const [password,setPassword] = useState("");
+
+  const router = useRouter();
+
+  const submitHandler = (event)=>{
+
+    event.preventDefault();
+    
+    const payload = {
+      username : username,
+      password : password
+    };
+
+    toast.loading("Logging!!!");
+    axios.post("/api/login",payload)
+    .then((res)=>{
+      toast.dismiss();
+      localStorage.setItem("userInfo",JSON.stringify(res.data.userData.data));
+      toast.success("Successfully logged in!");
+      router.push("/my-dashboard");
+    })
+    .catch((err)=>{
+      toast.dismiss();
+      toast.error(err);
+    })
+  }
+
   return (
     <form action="#">
       <div className="heading text-center">
@@ -19,6 +54,7 @@ const Form = () => {
           type="text"
           className="form-control"
           required
+          onChange={(e)=>setUsername(e.target.value)}
           placeholder="User Name Or Email"
         />
         <div className="input-group-prepend">
@@ -34,6 +70,7 @@ const Form = () => {
           type="password"
           className="form-control"
           required
+          onChange={(e)=>setPassword(e.target.value)}
           placeholder="Password"
         />
         <div className="input-group-prepend">
@@ -64,7 +101,7 @@ const Form = () => {
       </div>
       {/* End .form-group */}
 
-      <button type="submit" className="btn btn-log w-100 btn-thm">
+      <button type="submit" className="btn btn-log w-100 btn-thm" onClick={(e)=>submitHandler(e)}>
         Log In
       </button>
       {/* login button */}

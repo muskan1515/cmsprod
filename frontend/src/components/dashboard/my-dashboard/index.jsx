@@ -4,11 +4,33 @@ import MobileMenu from "../../common/header/MobileMenu";
 import Activities from "./Activities";
 import AllStatistics from "./AllStatistics";
 import StatisticsChart from "./StatisticsChart";
-// import Sidebar from "../../common/header/dashboard/SideBar";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const index = () => {
+
+  const [allClaims,setAllClaims] = useState([]);
+
+  useEffect(()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // console.log(userInfo[0].Token)
+    axios.get("/api/getAllClaims",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      }
+    })
+    .then((res)=>{
+      console.log(res.data.data[0])
+      setAllClaims(res.data.data[0]);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  },[]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -62,7 +84,7 @@ const index = () => {
               </div>
               {/* End .row */}
 
-              <div className="row mt-2" style={{ justifyContent: "space-between" }}>
+              <div className="row" style={{ justifyContent: "space-between" }}>
                 <AllStatistics />
               </div>
               {/* End .row Dashboard top statistics */}
@@ -83,7 +105,7 @@ const index = () => {
                 className="bg-dark"
                 style={{
                   width: "100%",
-                  height: "2px",
+                  height: "4px",
                   color: "blue",
                   border: "1px solid blue",
                 }}
@@ -96,7 +118,7 @@ const index = () => {
                   </div>
                 </div> */}
                 {/* End statistics chart */}
-                <Exemple />
+                <Exemple claims = {allClaims} />
                 {/* <div className="col-xl-5">
                   <div className="recent_job_activity">
                     <h4 className="title mb-4">Recent Activities</h4>
