@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: false,
   env:{
-    BACKEND_DOMAIN:"http://localhost:3009"
+    BACKEND_DOMAIN:"https://claims-backend-apis.onrender.com"
   }
 };
 
