@@ -9,6 +9,8 @@ const db = require("./Config/dbConfig");
 
 const session = require('express-session');
 
+const pm2 = require("pm2");
+
 const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
 
@@ -698,4 +700,24 @@ app.listen(port, () => {
 
   
     console.log(`Server running on http://localhost:${port}`);
+    pm2.connect((err) => {
+      if (err) {
+        console.error(err);
+        process.exit(2);
+      }
+    
+      pm2.start({
+        script: "./app.js",
+        name: "db",
+        autorestart: true,
+        watch: true, // Enable auto-restart on file changes
+        max_memory_restart: '1G', // Adjust as needed based on your server's memory requirements
+      }, (err, apps) => {
+        pm2.disconnect(); // Disconnect from pm2 once started
+        if (err) throw err;
+        console.log('Server started successfully using pm2.');
+      });
+
+    });
+    
   });
