@@ -9,7 +9,7 @@ const db = require("./Config/dbConfig");
 
 const session = require('express-session');
 
-const pm2 = require("pm2");
+const pm2 = require("pm2")
 
 const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
@@ -19,7 +19,7 @@ const dotenv = require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-const port = 3009;
+const port = 3006;
 app.use(session({
   secret: 'your-secret-key', // Replace with a secret key for session management
   resave: false,
@@ -338,7 +338,7 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
     17) Towing Bill/Crane Bill(If Any)
 
         Please provide the clear copy of all the documents so that the claim processing can be fast or
-        <p><a href="https://claims-app-phi.vercel.app/documents" target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href="https://claims-app-phi.vercel.app/documents" target="_blank">Click me</a> to fill the documents information .</p>
 
     Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
             claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
@@ -540,10 +540,8 @@ app.post('/addClaim', (req, res) => {
     NatureOfLoss,
     EstimatedLoss
   } = req.body;
-  
-  // SQL query to insert data into the respective tables
-  const sqlQuery = `
-    -- Insert into ClaimDetails table
+
+  const insertClaimDetails = `
     INSERT INTO ClaimDetails (
       SurveyType,
       ReferenceNo,
@@ -563,40 +561,27 @@ app.post('/addClaim', (req, res) => {
       '${ReferenceNo}',
       '${PolicyIssuingOffice}',
       '${PolicyNumber}',
-      '${PolicyPeriodStart}',
-      '${PolicyPeriodEnd}',
+      '${STR_TO_DATE('${PolicyPeriodStart}', '%Y-%m-%d')}',
+      '${STR_TO_DATE('${PolicyPeriodEnd}', '%Y-%m-%d')}',
       '${ClaimNumber}',
       '${ClaimServicingOffice}',
-      '${AddedBy}',
+      '${parseInt(AddedBy)}',
       '${Region}',
       '${InspectionType}',
-      '${IsClaimCompleted}',
-      '${IsActive}'
+      '${parseInt(IsClaimCompleted)}',
+      '${parseInt(IsActive)}'
     );
-  
-    -- Insert into InsuredDetails table
-    INSERT INTO InsuredDetails (
-      InsuredName,
-      InsuredMobileNo1,
-      InsuredMobileNo2,
-      InsuredMailAddress,
-      InsuredAddress
-    ) VALUES (
-      '${InsuredName}',
-      '${InsuredMobileNo1}',
-      '${InsuredMobileNo2}',
-      '${InsuredMailAddress}',
-      '${InsuredAddress}'
-    );
-  
-    -- Insert into VehicleDetails table
+  `;
+
+  const insertVehicleDetails = `
     INSERT INTO VehicleDetails (
       RegisteredNumber
     ) VALUES (
       '${RegisteredNumber}'
     );
-  
-    -- Insert into GarageDetails table
+  `;
+
+  const insertGarageDetails = `
     INSERT INTO GarageDetails (
       GarageNameAndAddress,
       GarageContactNo1,
@@ -606,8 +591,9 @@ app.post('/addClaim', (req, res) => {
       '${GarageContactNo1}',
       '${GarageContactNo2}'
     );
-  
-    -- Insert into AccidentDetails table
+  `;
+
+  const insertAccidentDetails = `
     INSERT INTO AccidentDetails (
       PlaceOfLoss,
       NatureOfLoss,
@@ -615,21 +601,61 @@ app.post('/addClaim', (req, res) => {
     ) VALUES (
       '${PlaceOfLoss}',
       '${NatureOfLoss}',
-      '${EstimatedLoss}'
+      '${CONVERT('${EstimatedLoss}', DECIMAL(10, 2))}'
     );
   `;
-  
-  // Execute the SQL queries using your database connection
-  db.query(sqlQuery, (error, results) => {
+
+  const insertInsuredDetails = `
+    INSERT INTO InsuredDetails (
+      InsuredName,
+      InsuredMobileNo1,
+      InsuredMobileNo2,
+      InsuredMailAddress
+    ) VALUES (
+      '${InsuredName}',
+      '${InsuredMobileNo1}',
+      '${InsuredMobileNo2}',
+      '${InsuredMailAddress}'
+    );
+  `;
+
+  // Execute the SQL queries individually
+  db.query(insertClaimDetails, (error, results) => {
     if (error) {
-      console.error('Error inserting data into the database:', error);
-      return res.status(500).json({ error: 'Error inserting data into the database.' });
+      console.error('Error inserting data into ClaimDetails:', error);
+      return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
     }
-  
-    res.status(200).json({ message: 'Data inserted successfully.' });
+
+    db.query(insertVehicleDetails, (error, results) => {
+      if (error) {
+        console.error('Error inserting data into VehicleDetails:', error);
+        return res.status(500).json({ error: 'Error inserting data into VehicleDetails.' });
+      }
+
+      db.query(insertGarageDetails, (error, results) => {
+        if (error) {
+          console.error('Error inserting data into GarageDetails:', error);
+          return res.status(500).json({ error: 'Error inserting data into GarageDetails.' });
+        }
+
+        db.query(insertAccidentDetails, (error, results) => {
+          if (error) {
+            console.error('Error inserting data into AccidentDetails:', error);
+            return res.status(500).json({ error: 'Error inserting data into AccidentDetails.' });
+          }
+
+          db.query(insertInsuredDetails, (error, results) => {
+            if (error) {
+              console.error('Error inserting data into InsuredDetails:', error);
+              return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
+            }
+
+            res.status(200).json({ message: 'Data inserted successfully.' });
+          });
+        });
+      });
+    });
   });
-  
-  
 });
 
 
