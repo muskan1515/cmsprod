@@ -9,7 +9,7 @@ import CreateList from "./CreateList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const index = () => {
+const Index = () => {
 
   const [allClaims,setAllClaims] = useState([]);
 
@@ -145,4 +145,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
