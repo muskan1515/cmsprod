@@ -37,7 +37,7 @@ const CreateList = () => {
           </div>
           <div className="col-lg-1">
             <div className="my_profile_setting_input">
-              <button className="btn btn2 float-end bg-info">Search</button>
+              <button className="btn float-end btn-color">Search</button>
             </div>
           </div>
         </div>

@@ -105,7 +105,11 @@ const index = () => {
                 className="bg-dark"
                 style={{
                   width: "100%",
+<<<<<<< Updated upstream
                   height: "4px",
+=======
+                  height: "3px",
+>>>>>>> Stashed changes
                   color: "blue",
                   border: "1px solid blue",
                 }}

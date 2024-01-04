@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
+import ChatboxContent from "./ChatboxContent";
 import CreateList from "./CreateList";
 import Form from "./Form";
 import Form_01 from "./Form_01";
+<<<<<<< Updated upstream
 import Form_02 from "./Form_02";
 import toast from "react-hot-toast";
 import axios from "axios";
+=======
+import StatusLog from "./StatusLog";
+>>>>>>> Stashed changes
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -145,7 +150,7 @@ const Index = ({}) => {
                         edit={edit}
                         />
                       </div>
-                      <div className="row">
+                      <div className="row" style={{}}>
                         <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
                         </div>
@@ -223,7 +228,45 @@ const Index = ({}) => {
                     <FloorPlans />
                   </div> */}
                   </div>
-                  <div className="col-lg-3"></div>
+                  <div className="col-lg-3">
+                    <div className="my_dashboard_review">
+                      <div className="row">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <h4 className="mb10">Status Log</h4>
+                          </div>
+                          <div
+                            className=" bg-dark"
+                            style={{
+                              width: "100%",
+                              height: "3px",
+                              color: "blue",
+                              border: "1px solid",
+                              marginBottom: "5px",
+                            }}
+                          ></div>
+                          <StatusLog />
+                          {/* <CreateList /> */}
+                        </div>
+                        <div className="row mt-4">
+                          <div className="col-lg-12">
+                            <h4 className="mb10">Comment Box</h4>
+                          </div>
+                          <div
+                            className=" bg-dark"
+                            style={{
+                              width: "100%",
+                              height: "3px",
+                              color: "blue",
+                              border: "1px solid",
+                              marginBottom: "5px",
+                            }}
+                          ></div>
+                          <ChatboxContent />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 {/* End .col */}
               </div>

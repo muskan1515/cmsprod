@@ -25,7 +25,7 @@ const Form = ({claim,edit}) => {
 
   return (
     <>
-      <div className="row mt-2">
+      <div className=" faq_according row mt-2">
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">

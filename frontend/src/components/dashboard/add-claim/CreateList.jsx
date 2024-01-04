@@ -1,6 +1,11 @@
+<<<<<<< Updated upstream
 import axios from "axios";
 import { useRouter } from "next/router";
 import { use, useReducer, useState } from "react";
+=======
+import { useState } from "react";
+import MyDatePicker from "../../common/MyDatePicker";
+>>>>>>> Stashed changes
 
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState();
@@ -112,6 +117,7 @@ const CreateList = () => {
   };
   return (
     <>
+<<<<<<< Updated upstream
       <div className="col-lg-4">
         <div className="row mt-1 mb-1">
           <div className="col-lg-5 my_profile_setting_input form-group">
@@ -139,26 +145,67 @@ const CreateList = () => {
               <option data-tokens="Status2" value={"Delhi"}>Delhi</option>
               <option data-tokens="Status3" value={"Chandigarh"}>Chandigarh</option>
             </select>
+=======
+      <div className="row">
+        <div className="col-lg-4">
+          <div className="row mt-1 mb-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  color: "#2e008b",
+                  fontWeight: "",
+                }}
+              >
+                Region <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <select
+                className="selectpicker form-select"
+                data-live-search="true"
+                data-width="100%"
+              >
+                <option data-tokens="Status1">Select Region</option>
+                <option data-tokens="Status1">Hyderabad</option>
+                <option data-tokens="Status2">Delhi</option>
+                <option data-tokens="Status3">Chandigarh</option>
+              </select>
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
-      </div>
 
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Survey Type <span class="text-danger">*</span>
-            </label>
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Survey Type <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <select
+                className="selectpicker form-select"
+                data-live-search="true"
+                data-width="100%"
+              >
+                <option data-tokens="Status1">1</option>
+                <option data-tokens="Status2">2</option>
+                <option data-tokens="Status3">3</option>
+              </select>
+            </div>
           </div>
+<<<<<<< Updated upstream
           <div className="col-lg-7">
             <select
               className="selectpicker form-select"
@@ -209,42 +256,83 @@ const CreateList = () => {
               <option data-tokens="Status3" value={"re-inspection"}>re-inspection</option>
             </select>
           </div>
-        </div>
-        {/* <div className="my_profile_setting_input form-group">
+=======
+          {/* <div className="my_profile_setting_input form-group">
           <label htmlFor="propertyTitle">Property Title</label>
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
-      </div>
+>>>>>>> Stashed changes
+        </div>
 
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Date <span class="text-danger">*</span>
-            </label>
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Inspection Type <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <select
+                className="selectpicker form-select"
+                data-live-search="true"
+                data-width="100%"
+              >
+                <option data-tokens="Status1">1</option>
+                <option data-tokens="Status2">2</option>
+                <option data-tokens="Status3">3</option>
+              </select>
+            </div>
           </div>
-          <div className="col-lg-7">
-            <input
+          {/* <div className="my_profile_setting_input form-group">
+          <label htmlFor="propertyTitle">Property Title</label>
+          <input type="text" className="form-control" id="propertyTitle" />
+        </div> */}
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Date <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              {/* <input
               type="date"
               className="form-control"
               id="propertyTitle"
+<<<<<<< Updated upstream
               value={date}
               onChange={(e)=>setDate(e.target.value)}
               // placeholder="Enter Registration No."
             />
+=======
+            /> */}
+              <MyDatePicker />
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
-      </div>
 
+<<<<<<< Updated upstream
       <div className="col-lg-4">
         <div className="row mt-1">
           <div className="col-lg-5 my_profile_setting_input form-group">
@@ -270,10 +358,36 @@ const CreateList = () => {
               onChange={(e)=>setPolicyNumber(e.target.value)}
               // placeholder="Enter Registration No."
             />
+=======
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Policy Number <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
-      </div>
 
+<<<<<<< Updated upstream
       <div className="col-lg-4">
         <div className="row mt-1">
           <div className="col-lg-5 my_profile_setting_input form-group">
@@ -299,84 +413,438 @@ const CreateList = () => {
               onChange={(e)=>setPolicyIssuingOffice(e.target.value)}
               // placeholder="Enter Registration No."
             />
+=======
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Policy Issuing Office <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
-      </div>
 
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Policy Period Start
-            </label>
-          </div>
-          <div className="col-lg-7">
-            <input
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Policy Period Start
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <MyDatePicker />
+              {/* <input
               type="date"
               className="form-control"
               id="propertyTitle"
+<<<<<<< Updated upstream
               value={policyStartDate}
               onChange={(e)=>setPolicyStartDate(e.target.value)}
               // placeholder="Enter Registration No."
             />
+=======
+            /> */}
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
-      </div>
 
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Policy Period End
-            </label>
-          </div>
-          <div className="col-lg-7">
-            <input
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Policy Period End
+              </label>
+            </div>
+            <div className="col-lg-7">
+              {/* <input
               type="date"
               className="form-control"
               id="propertyTitle"
+<<<<<<< Updated upstream
               value={setPolicyStartEnd}
               onChange={(e)=>setPolicyStartEnd(e.target.value)}
               // placeholder="Enter Registration No."
             />
+=======
+            /> */}
+              <MyDatePicker />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Claim Number <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Claim Survicing Off. <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Insured Name
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Insured Mobile No. 1
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                maxLength={10}
+                className="form-control"
+                id="formGroupExampleInput3"
+                // onChange={(e) => setApplicantNumber(e.target.value)}
+                onChange={(e) => setApplicantNumber(e.target.value)}
+                pattern="[0-9]*"
+                title="Please enter only 10 digits"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Insured Mobile No. 2
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Insured Mail Address
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Vehicle Particulars <span class="text-danger">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Place of Loss
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Nature of Loss
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Estimated Loss
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Garage Name & Add.
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Garage Contact No.
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
       </div>
-
-      <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-5 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#1560bd",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Claim Number <span class="text-danger">*</span>
-            </label>
+      <div className="row mt-3">
+        <div className="text-center">
+          <div className="my_profile_setting_input">
+            <button className="btn btn-color fw-bold w-25">Submit</button>
           </div>
+<<<<<<< Updated upstream
           <div className="col-lg-7">
             <input
               type="text"
@@ -716,6 +1184,8 @@ const CreateList = () => {
       <div className="col-lg-12">
         <div className="my_profile_setting_input">
           <button className="btn float-end btn-color" onClick={submitHandler}>Submit</button>
+=======
+>>>>>>> Stashed changes
         </div>
       </div>
 
@@ -727,7 +1197,7 @@ const CreateList = () => {
               className="text-color"
               style={{
                 // paddingTop: "15px",
-                color: "#1560bd",
+                color: "#2e008b",
                 fontWeight: "",
                 // marginTop: "-13px",
               }}

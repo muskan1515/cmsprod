@@ -40,12 +40,12 @@ const Form = () => {
     <form action="#">
       <div className="heading text-center">
         <h3>Login to your account</h3>
-        <p className="text-center">
+        {/* <p className="text-center">
           Dont have an account?{" "}
           <Link href="/register" className="text-thm">
             Sign Up!
           </Link>
-        </p>
+        </p> */}
       </div>
       {/* End .heading */}
 
@@ -101,18 +101,22 @@ const Form = () => {
       </div>
       {/* End .form-group */}
 
+<<<<<<< Updated upstream
       <button type="submit" className="btn btn-log w-100 btn-thm" onClick={(e)=>submitHandler(e)}>
+=======
+      <button type="submit" className="btn btn-color w-100">
+>>>>>>> Stashed changes
         Log In
       </button>
       {/* login button */}
 
-      <div className="divide">
+      {/* <div className="divide">
         <span className="lf_divider">Or</span>
         <hr />
-      </div>
+      </div> */}
       {/* devider */}
 
-      <div className="row mt25">
+      {/* <div className="row mt25">
         <div className="col-lg-6">
           <button
             type="submit"
@@ -121,7 +125,6 @@ const Form = () => {
             <i className="fa fa-facebook float-start mt5"></i> Facebook
           </button>
         </div>
-        {/* End .col */}
 
         <div className="col-lg-6">
           <button
@@ -131,8 +134,7 @@ const Form = () => {
             <i className="fa fa-google float-start mt5"></i> Google
           </button>
         </div>
-        {/* End .col */}
-      </div>
+      </div> */}
       {/* more signin options */}
     </form>
   );
