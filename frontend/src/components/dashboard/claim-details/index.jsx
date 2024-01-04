@@ -12,7 +12,7 @@ import axios from "axios";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = ({}) => {
+const Index = ({}) => {
  const url = window.location.href;
  const leadId = url.split('/claim-details?leadId=')[1];
  const [claim,setClaim] = useState({});
@@ -246,4 +246,4 @@ const index = ({}) => {
   );
 };
 
-export default index;
+export default Index;
