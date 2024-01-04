@@ -1,18 +1,36 @@
 const mysql = require('mysql2');
 const dotenv = require('dotenv').config();
 
-const db = mysql.createConnection({
+let db;
+
+function handleDisconnect() {
+  db = mysql.createConnection({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     password: process.env.DB_PASSWORD,
   });
-  const instance = db.connect((err) => {
+
+  db.connect((err) => {
     if (err) {
       console.error('Error connecting to MySQL:', err);
-      return;
+      setTimeout(handleDisconnect, 2000); // Retry connection after 2 seconds
+    } else {
+      console.log('Connected to MySQL');
     }
-    console.log('Connected to MySQL');
   });
 
-  module.exports =  db;
+  db.on('error', (err) => {
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      console.error('Database connection was closed. Reconnecting...');
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+// Initial connection
+handleDisconnect();
+
+module.exports = db;
