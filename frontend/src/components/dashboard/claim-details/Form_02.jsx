@@ -70,7 +70,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.GarageNameAndAddress}
                           // placeholder="Enter Registration No."
                         />
@@ -103,7 +102,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.GarageContactNo1}
                           // placeholder="Enter Registration No."
                         />}
@@ -111,7 +109,6 @@ const Form = ({claim,edit}) => {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            disabled={!edit}
                             value={claim.GarageContactNo2}
                             // placeholder="Enter Registration No."
                           />}
@@ -140,7 +137,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={formatDate(claim.GarageAddedDate)}
                           // placeholder="Enter Registration No."
                         />
@@ -169,7 +165,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.GarageAddedBy}
                           // placeholder="Enter Registration No."
                         />
@@ -198,7 +193,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={formatDate(claim.GarageModifiedDate)}
                           // placeholder="Enter Registration No."
                         />

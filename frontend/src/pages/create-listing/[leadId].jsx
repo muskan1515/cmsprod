@@ -5,10 +5,13 @@ import { useRouter } from "next/router";
 
 const index = () => {
   const router = useRouter();
+  const { leadId } = router.query;
+  console.log(router.query)
+  console.log(leadId);
   return (
     <>
       <Seo pageTitle="Claim Details" />
-      <ClaimDetails />
+      <ClaimDetails leadId={leadId} />
     </>
   );
 };

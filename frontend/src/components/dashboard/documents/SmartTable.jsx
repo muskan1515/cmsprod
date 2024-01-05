@@ -138,7 +138,7 @@ function SmartTable(props) {
               />
             </div>
           </div>
-          {data.length > 0 ? (
+          {props.data.length > 0 ? (
             <div className="row mt-3">
               <div className="smartTable-tableContainer">
                 <table
@@ -179,7 +179,7 @@ function SmartTable(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((row, idx) => {
+                    {props.data.map((row, idx) => {
                       return (
                         <tr key={"tr_" + idx}>
                           {props.headCells.map((headCell, idxx) => {

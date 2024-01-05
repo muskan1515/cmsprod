@@ -1,5 +1,8 @@
 import Link from "next/link";
 import SmartTable from "./SmartTable";
+import { useEffect } from "react";
+import { useState } from "react";
+import { CldUploadWidget } from "next-cloudinary";
 
 const headCells = [
   {
@@ -170,7 +173,151 @@ const data = [
 ];
 
 export default function Exemple() {
+
+  const [updatedCode,setUpdatedCode] = useState([]);
+  const [filesUrl,setFilesUrl] =useState("");
+  const [attachment,setAttachment] = useState("");
+
+  const [uploadedData,setUploadedData]=useState([]);
+
+  const handleUpload = (result,index,edit) => {
+   
+    try {
+      const fileUrl = result.info.secure_url;
+      
+      const newUploadData = {
+        "id":index,
+        "name":result.info.original_filename + "." + result.info.format,
+        "url":result.info.url
+      }
+      const earlierData = uploadedData;
+      if(edit === true){
+      let updated = [];
+      earlierData.map((data,idx)=>{
+        if(String(data.id) === String(index)){
+          updated.push(newUploadData);
+        }
+        else{
+          updated.push(data);
+        }
+      })
+      setUpdatedCode(updated);
+      }
+      else{
+        earlierData.push(newUploadData);
+      setUpdatedCode(earlierData);
+      }
+      
+      console.log(updatedCode);
+
+    } catch (error) {
+      console.error("Error handling upload:", error);
+    }
+  };
+
+  const checkIsUploaded = (index)=>{
+    console.log(uploadedData);
+    let selectedField = {};
+    uploadedData.map((data,idx)=>{
+      if(String(index) === String(data.id)){
+        selectedField = data;
+      }
+    })
+
+    return selectedField;
+  }
+  useEffect(()=>{
+    const getData = ()=>{
+      const tempData = [];
+        data.map((row,index)=>{
+          const isUploaded  = checkIsUploaded(index);
+          // console.log(isUploaded,index);
+          const updatedRow = {
+            _id:index+1,
+            serial_num:row.serial_num,
+            doc_name:row.doc_name,
+            action: (
+              isUploaded.name ? <div style={{display:"flex",flexDirection:"row",paddingLeft:"30%",marginLeft:'6%'}}>
+              
+               <h4>{isUploaded ? isUploaded.name : ""}</h4>
+              <CldUploadWidget
+            onUpload={(result)=>handleUpload(result,index,true)}
+            uploadPreset="mpbjdclg"
+            options={{
+              cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
+              allowedFormats: [
+                "jpg",
+                "png",
+                "pdf",
+                "csv",
+                "word",
+                "excel"
+              ], // Specify allowed formats
+              maxFiles: 50,
+            }}
+          >
+            {({ open }) => (
+              <div>
+                <button
+                  className="btn btn-color profile_edit_button mb-5"
+                  style={{}}
+                  onClick={open} 
+                >
+                 Edit
+                </button>
+              </div>
+            )}
+          </CldUploadWidget>
+         <a  className="btn btn-color profile_edit_button mb-5" href={isUploaded.url} target="_blank" rel="noopener noreferrer">View</a> 
+         </div>:
+         <>
+         <CldUploadWidget
+            onUpload={(result)=>handleUpload(result,index)}
+            uploadPreset="mpbjdclg"
+            options={{
+              cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
+              allowedFormats: [
+                "jpg",
+                "png",
+                "pdf",
+                "csv",
+                "word",
+                "excel",
+                "pdf"
+              ], // Specify allowed formats
+              maxFiles: 50,
+            }}
+          >
+            {({ open }) => (
+              <div>
+                <button
+                  className="btn btn-color profile_edit_button mb-5"
+                  style={{}}
+                  onClick={open} 
+                >
+                  Upload Files
+                </button>
+              </div>
+            )}
+          </CldUploadWidget>
+          </> )
+          }
+          tempData.push(updatedRow);
+        });
+        return tempData;
+    }
+    // getData();
+    setUpdatedCode(getData());
+  },[uploadedData]);
+
+  useEffect(()=>{
+    if(uploadedData){
+      console.log(uploadedData)
+    }
+  },[uploadedData]);
+console.log(uploadedData)
+ 
   return (
-    <SmartTable title="Documents Upload" data={data} headCells={headCells} />
+    <SmartTable title="Documents Upload" data={updatedCode} headCells={headCells} />
   );
 }

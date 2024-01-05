@@ -8,14 +8,20 @@ import Exemple from "./Exemple";
 import CreateList from "./CreateList";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Index = () => {
 
   const [allClaims,setAllClaims] = useState([]);
+  const router = useRouter();
 
   useEffect(()=>{
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if(!userInfo){
+      router.push("/login");
+    }
     // console.log(userInfo[0].Token)
     axios.get("/api/getAllClaims",{
       headers:{

@@ -74,8 +74,6 @@ const CreateList = ({
               className="form-control"
               id="propertyTitle"
               value={claim.InsuredName}
-              disabled={!edit}
-              onChange={(e)=>setInsuredName(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -108,8 +106,6 @@ const CreateList = ({
               className="form-control"
               id="propertyTitle"
               value={claim.InsuredMobileNo1}
-              disabled={!edit}
-              onChange={(e)=>setInsuredMobNo1(e.target.value)}
               // placeholder="Enter Registration No."
             />}
             {claim.InsuredMobileNo2 && <input
@@ -117,7 +113,6 @@ const CreateList = ({
               className="form-control"
               id="propertyTitle"
               value={claim.InsuredMobileNo2}
-              onChange={(e)=>setInsuredMobNo2(e.target.value)}
               // placeholder="Enter Registration No."
             />}
           </div>
@@ -146,8 +141,6 @@ const CreateList = ({
               className="form-control"
               id="propertyTitle"
               value={claim.InsuredMailAddress}
-              disabled={!edit}
-              onChange={(e)=>setInsuredMailAddress(e.target.value)}
               // placeholder="Enter Registration No."
             />
             {(!InsuredMailAddress) && (
@@ -263,8 +256,7 @@ const CreateList = ({
               type="text"
               className="form-control"
               id="propertyTitle"
-              placeholder={"Not Started"}
-              disabled={!edit}
+              value={"Not Started"}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -323,7 +315,6 @@ const CreateList = ({
               type="text"
               className="form-control"
               id="propertyTitle"
-              disabled={!edit}
               value={formatDate(claim.ClaimAddedDateTime)}
               // placeholder="Enter Registration No."
             />

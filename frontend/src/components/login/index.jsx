@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import CopyrightFooter from "../common/footer/CopyrightFooter";
 import Footer from "../common/footer/Footer";
 import Header from "../common/header/DefaultHeader";
@@ -5,8 +6,19 @@ import MobileMenu from "../common/header/MobileMenu";
 import PopupSignInUp from "../common/PopupSignInUp";
 import BreadCrumbBanner from "./BreadCrumbBanner";
 import Form from "./Form";
+import { useRouter } from "next/router";
 
-const index = () => {
+const   Index = () => {
+
+  const router = useRouter();
+
+  useEffect(()=>{
+    const userData = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userData);
+    if(userData[0].Token ){
+      router.push("/my-dashboard");
+    }
+  },[])
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -53,4 +65,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

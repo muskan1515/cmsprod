@@ -69,7 +69,6 @@ const Form_01 = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.DriverName                          }
                           // placeholder="Enter Registration No."
                         />
@@ -102,7 +101,6 @@ const Form_01 = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={formatDate(claim.DriverAddedDate)}
                           // placeholder="Enter Registration No."
                         />
@@ -131,7 +129,6 @@ const Form_01 = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.DriverTypeOfVerification}
                           // placeholder="Enter Registration No."
                         />
@@ -160,7 +157,6 @@ const Form_01 = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={formatDate(claim.DriverModifiedDate)}
                           // placeholder="Enter Registration No."
                         />

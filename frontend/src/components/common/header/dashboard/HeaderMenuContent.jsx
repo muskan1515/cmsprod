@@ -2,9 +2,31 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import MyAccount from "./MyAccount";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const HeaderMenuContent = ({ float = "" }) => {
   const route = useRouter();
+
+  const [regionValue ,setRegionValue] = useState("");
+
+  const [name,setName]=useState("");
+
+  const handlerChangeRegion = (val)=>{
+    
+      localStorage.setItem("regionType",JSON.stringify(val));
+      setRegionValue(val);
+
+  }
+  useEffect(()=>{
+    const region = JSON.parse(localStorage.getItem("regionType"));
+    if(region){
+      setRegionValue(region);
+    }
+
+    const tempName = JSON.parse(localStorage.getItem("userInfo"));
+    setName(tempName[0].Username);
+    console.log(name);
+  },[]);
 
   const home = [
     {
@@ -457,6 +479,8 @@ const HeaderMenuContent = ({ float = "" }) => {
             className="selectpicker form-select"
             data-live-search="true"
             data-width="100%"
+            value={regionValue}
+            onChange={(e)=>handlerChangeRegion(e.target.value)}
           >
             <option data-tokens="type1">Select Region</option>
             <option data-tokens="type1">Chandigarh</option>
@@ -482,7 +506,7 @@ const HeaderMenuContent = ({ float = "" }) => {
               src="/assets/images/team/e1.png"
               alt="e1.png"
             />
-            <span className="dn-1199 ms-1">Ali Tufan</span>
+            <span className="dn-1199 ms-1">{name}</span>
           </a>
           <div className="dropdown-menu">
             <MyAccount />

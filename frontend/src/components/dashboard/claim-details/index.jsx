@@ -12,7 +12,7 @@ import axios from "axios";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const Index = ({}) => {
+const index = ({}) => {
  const url = window.location.href;
  const leadId = url.split('/claim-details?leadId=')[1];
  const [claim,setClaim] = useState({});
@@ -20,8 +20,8 @@ const Index = ({}) => {
  const [InsuredMailAddress,setInsuredMailAddress] = useState(claim?.InsuredMailAddress ? claim.InsuredMailAddress : "")
  const [InsuredMobileNo1,setInsuredMobileNo1] = useState(claim?.InsuredMobileNo1 ? claim.InsuredMobileNo1 : "")
  const [InsuredMobileNo2,setInsuredMobileNo2] = useState(claim?.InsuredMobileNo2 ? claim.InsuredMobileNo2 : "")
- const [subType,setSubType] = useState("");
- const [requestType,setRequestType] = useState("");
+ const [subType,setSubType] = useState("Motor");
+ const [requestType,setRequestType] = useState("Spot");
 
 
 
@@ -246,4 +246,4 @@ const Index = ({}) => {
   );
 };
 
-export default Index;
+export default index;

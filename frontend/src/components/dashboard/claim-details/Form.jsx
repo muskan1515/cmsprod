@@ -70,7 +70,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={`${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`}
                           // placeholder="Enter Registration No."
                         />
@@ -103,7 +102,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleRegisteredNumber}
                           // placeholder="Enter Registration No."
                         />
@@ -132,7 +130,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleModeOfCheck}
                           // placeholder="Enter Registration No."
                         />
@@ -161,7 +158,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleRegisteredOwner}
                           // placeholder="Enter Registration No."
                         />
@@ -190,7 +186,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={formatDate(claim.VehicleDateOfRegistration)}
                           // placeholder="Enter Registration No."
                         />
@@ -219,7 +214,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehiclePucNumber}
                           // placeholder="Enter Registration No."
                         />
@@ -248,7 +242,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={formatDate(claim.VehicleTransferDate)}
                           // placeholder="Enter Registration No."
                         />
@@ -277,7 +270,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleEngineNumber}
                           // placeholder="Enter Registration No."
                         />
@@ -306,7 +298,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleAddedBy}
                           // placeholder="Enter Registration No."
                         />
@@ -335,7 +326,6 @@ const Form = ({claim,edit}) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        disabled={!edit}
                         value={claim.IssuingAuthority}
                         // placeholder="Enter Registration No."
                       />
@@ -364,7 +354,6 @@ const Form = ({claim,edit}) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                      disabled={!edit}
                       value={claim.LicenseNumber}
                       // placeholder="Enter Registration No."
                     />
@@ -393,7 +382,6 @@ const Form = ({claim,edit}) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    disabled={!edit}
                     value={claim.LicenseType}
                     // placeholder="Enter Registration No."
                   />
@@ -422,7 +410,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleChassisNumber}
                           // placeholder="Enter Registration No."
                         />
@@ -451,7 +438,6 @@ const Form = ({claim,edit}) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          disabled={!edit}
                           value={claim.VehicleFuelType}
                           // placeholder="Enter Registration No."
                         />

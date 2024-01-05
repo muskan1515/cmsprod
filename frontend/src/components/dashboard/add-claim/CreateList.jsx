@@ -8,7 +8,9 @@ const CreateList = () => {
 
   const router = useRouter();
 
-  const [region,setRegion] = useState("");
+  const regionType = JSON.parse(localStorage.getItem("regionType"));
+
+  const [region,setRegion] = useState(regionType);
   const [date,setDate]=useState("");
   const [surveyType,setSurveyType]=useState("");
   const [inspectionType,setInspectionType] = useState("");
@@ -127,6 +129,15 @@ const CreateList = () => {
             </label>
           </div>
           <div className="col-lg-7">
+            {region ? 
+              <input
+              type="text"
+              className="form-control"
+              id="region"
+              value={region}
+              // placeholder="Enter Registration No."
+            />
+            :
             <select
               className="selectpicker form-select"
               data-live-search="true"
@@ -134,11 +145,12 @@ const CreateList = () => {
               value={region}
               onChange={(e)=>setRegion(e.target.value)}
             >
-              <option data-tokens="Status1">Select Region</option>
+               
+                <option data-tokens="Status1">Select Region</option>
               <option data-tokens="Status1" value={"Hyderabad"}>Hyderabad</option>
               <option data-tokens="Status2" value={"Delhi"}>Delhi</option>
               <option data-tokens="Status3" value={"Chandigarh"}>Chandigarh</option>
-            </select>
+            </select>}
           </div>
         </div>
       </div>
@@ -167,6 +179,7 @@ const CreateList = () => {
               value={surveyType}
               onChange={(e)=>setSurveyType(e.target.value)}
             >
+            <option data-tokens="Status1" value={""}>Select Type</option>
               <option data-tokens="Status1" value={"Motor"}>Motor</option>
               <option data-tokens="Status2" value={"Non-Motor"}>Non-Motor</option>
               <option data-tokens="Status3" value={"Motor-2W"}>Motor-2W</option>
@@ -204,6 +217,7 @@ const CreateList = () => {
               value={inspectionType}
               onChange={(e)=>setInspectionType(e.target.value)}
             >
+            <option data-tokens="Status1" value={""}>Select Type</option>
               <option data-tokens="Status1" value={"spot"}>Spot</option>
               <option data-tokens="Status2" value={"final"}>final</option>
               <option data-tokens="Status3" value={"re-inspection"}>re-inspection</option>
