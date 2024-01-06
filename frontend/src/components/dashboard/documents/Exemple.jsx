@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SmartTable from "./SmartTable";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -21,6 +22,12 @@ const headCells = [
     id: "action",
     numeric: false,
     label: "Action",
+    width: 150,
+  },
+  {
+    id: "files",
+    numeric: false,
+    label: "Files",
     width: 150,
   },
   // {
@@ -183,18 +190,22 @@ export default function Exemple() {
   const [change , setChange] = useState(false);
 
   const getIndex = (label,datas)=>{
-    datas.map((data,index)=>{
+    let index = -1;
+     datas.map((data,idx)=>{
       if(String(data[index].docName) === String(label))
-       return index;
+        index = idx;
     })
-    return -1;
+    return index;
+    
   }
-  const handleUpload = (result,label,edit) => {
+  const handleUpload = (result,label) => {
    
     try {
       const fileUrl = result.info.secure_url;
       
+      
       const index = getIndex(label,uploadedData);
+      console.log(index);
       if (index === -1){
         
       const newUploadData = {
@@ -217,12 +228,15 @@ export default function Exemple() {
 
         let oldData = uploadedData;
         let wholeDocData = uploadedData[index].data;
+      
         wholeDocData.push({
           "name":result.info.original_filename + "." + result.info.format,
+          "thumbnail_url":result.info.thumbnail_url,
           "url":result.info.url
         });
 
         oldData[index].data = wholeDocData;
+        console.log(oldData);
         setUploadedData(oldData);
         setChange(true);
       }
@@ -234,11 +248,11 @@ export default function Exemple() {
     }
   };
 
-  const checkIsUploaded = (index)=>{
-    console.log(uploadedData);
+  const checkIsUploaded = (label)=>{
+    // console.log(uploadedData);
     let selectedField = {};
     uploadedData.map((data,idx)=>{
-      if(String(index) === String(data.id)){
+      if(String(label) === String(data.docName)){
         selectedField = data;
       }
     })
@@ -250,18 +264,19 @@ export default function Exemple() {
     const getData = ()=>{
       const tempData = [];
         data.map((row,index)=>{
-          const isUploaded  = checkIsUploaded(index);
-          // console.log(isUploaded,index);
+          const isUploaded  = checkIsUploaded(row.doc_name);
+          console.log(isUploaded.data,row.doc_name);
           const updatedRow = {
             _id:index+1,
             serial_num:row.serial_num,
             doc_name:row.doc_name,
-            action: (
-              isUploaded.name ?
-               <div style={{display:"flex",flexDirection:"row",paddingLeft:"30%",marginLeft:'6%'}}>
-               <h4>{isUploaded ? isUploaded.name : ""}</h4>
-              <CldUploadWidget
-            onUpload={(result)=>handleUpload(result,index,true)}
+            files:isUploaded?.data?.map((file)=>{
+              return <div style={{display:"flex",flexDirection:"column"}}>
+              <Image src={file.thumbnail_url} width={90} height={90} /> 
+              <h4>{file.name}</h4>
+
+             {/*  <CldUploadWidget
+            onUpload={(result)=>handleUpload(result,row.doc_name,true)}
             uploadPreset="mpbjdclg"
             options={{
               cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
@@ -283,14 +298,17 @@ export default function Exemple() {
                   style={{}}
                   onClick={open} 
                 >
-                 Edit
+                 Dele
                 </button>
               </div>
             )}
-          </CldUploadWidget>
+          </CldUploadWidget>*/}
          <a  className="btn btn-color profile_edit_button mb-5" href={isUploaded.url} target="_blank" rel="noopener noreferrer">View</a> 
-         </div>:
-         <>
+         <button className="btn btn-color profile_edit_button mb-5">Delete</button>
+         </div>}),
+            action: (
+            
+         
          <CldUploadWidget
             onUpload={(result)=>handleUpload(result,row.doc_name)}
             uploadPreset="mpbjdclg"
@@ -313,14 +331,14 @@ export default function Exemple() {
                 <button
                   className="btn btn-color profile_edit_button mb-5"
                   style={{}}
-                  onClick={open} 
+                  onClick={()=>open()} 
                 >
                   Upload Files
                 </button>
               </div>
             )}
           </CldUploadWidget>
-          </> )
+           )
           }
           tempData.push(updatedRow);
         });
