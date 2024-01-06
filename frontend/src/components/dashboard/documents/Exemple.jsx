@@ -270,8 +270,8 @@ export default function Exemple() {
             _id:index+1,
             serial_num:row.serial_num,
             doc_name:row.doc_name,
-            files:isUploaded?.data?.map((file)=>{
-              return <div style={{display:"flex",flexDirection:"column"}}>
+            files:isUploaded?.data?.map((file,idx)=>{
+              return <div style={{display:"flex",flexDirection:"column"}} key={idx}>
               <Image src={file.thumbnail_url} width={90} height={90} /> 
               <h4>{file.name}</h4>
 
