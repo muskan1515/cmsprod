@@ -180,35 +180,54 @@ export default function Exemple() {
 
   const [uploadedData,setUploadedData]=useState([]);
 
-  const handleUpload = (result,index,edit) => {
+  const [change , setChange] = useState(false);
+
+  const getIndex = (label,datas)=>{
+    datas.map((data,index)=>{
+      if(String(data[index].docName) === String(label))
+       return index;
+    })
+    return -1;
+  }
+  const handleUpload = (result,label,edit) => {
    
     try {
       const fileUrl = result.info.secure_url;
       
+      const index = getIndex(label,uploadedData);
+      if (index === -1){
+        
       const newUploadData = {
-        "id":index,
-        "name":result.info.original_filename + "." + result.info.format,
-        "url":result.info.url
-      }
-      const earlierData = uploadedData;
-      if(edit === true){
-      let updated = [];
-      earlierData.map((data,idx)=>{
-        if(String(data.id) === String(index)){
-          updated.push(newUploadData);
-        }
-        else{
-          updated.push(data);
-        }
-      })
-      setUpdatedCode(updated);
+        "docName" : label,
+        "data" : [
+          {
+            "name":result.info.original_filename + "." + result.info.format,
+            "thumbnail_url":result.info.thumbnail_url,
+             "url":result.info.url
+          }
+        ],
+      };
+
+      let oldData =uploadedData;
+      oldData.push(newUploadData);
+      setUploadedData(oldData);
+      setChange(true);
       }
       else{
-        earlierData.push(newUploadData);
-      setUpdatedCode(earlierData);
+
+        let oldData = uploadedData;
+        let wholeDocData = uploadedData[index].data;
+        wholeDocData.push({
+          "name":result.info.original_filename + "." + result.info.format,
+          "url":result.info.url
+        });
+
+        oldData[index].data = wholeDocData;
+        setUploadedData(oldData);
+        setChange(true);
       }
       
-      console.log(updatedCode);
+     
 
     } catch (error) {
       console.error("Error handling upload:", error);
@@ -227,6 +246,7 @@ export default function Exemple() {
     return selectedField;
   }
   useEffect(()=>{
+    console.log(uploadedData);
     const getData = ()=>{
       const tempData = [];
         data.map((row,index)=>{
@@ -237,8 +257,8 @@ export default function Exemple() {
             serial_num:row.serial_num,
             doc_name:row.doc_name,
             action: (
-              isUploaded.name ? <div style={{display:"flex",flexDirection:"row",paddingLeft:"30%",marginLeft:'6%'}}>
-              
+              isUploaded.name ?
+               <div style={{display:"flex",flexDirection:"row",paddingLeft:"30%",marginLeft:'6%'}}>
                <h4>{isUploaded ? isUploaded.name : ""}</h4>
               <CldUploadWidget
             onUpload={(result)=>handleUpload(result,index,true)}
@@ -272,7 +292,7 @@ export default function Exemple() {
          </div>:
          <>
          <CldUploadWidget
-            onUpload={(result)=>handleUpload(result,index)}
+            onUpload={(result)=>handleUpload(result,row.doc_name)}
             uploadPreset="mpbjdclg"
             options={{
               cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
@@ -307,8 +327,9 @@ export default function Exemple() {
         return tempData;
     }
     // getData();
+    setChange(false);
     setUpdatedCode(getData());
-  },[uploadedData]);
+  },[uploadedData,change]);
 
   useEffect(()=>{
     if(uploadedData){

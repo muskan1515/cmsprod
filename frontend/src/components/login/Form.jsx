@@ -27,12 +27,12 @@ const Form = () => {
     .then((res)=>{
       toast.dismiss();
       localStorage.setItem("userInfo",JSON.stringify(res.data.userData.data));
-      toast.success("Successfully logged in!");
+      alert("Successfully logged in!");
       router.push("/my-dashboard");
     })
     .catch((err)=>{
       toast.dismiss();
-      toast.error(err);
+      alert("Try Again!!");
     })
   }
 
