@@ -19,7 +19,7 @@ const dotenv = require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-const port = 3006;
+const port = process.env.PORT || 8000;
 app.use(session({
   secret: 'your-secret-key', // Replace with a secret key for session management
   resave: false,
