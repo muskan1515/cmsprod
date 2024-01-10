@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: false,
   env:{
-    BACKEND_DOMAIN:"https://claims-backend-apis.onrender.com",
+    BACKEND_DOMAIN:"http://ec2-16-171-174-30.eu-north-1.compute.amazonaws.com:8080",
     CRYPTO_SECRET_KEY: "gjfdkhslbreif847593rewfdkjbcm34woebkdjcnx43oihefdkcnx",
     COOKIE_PASSWORD: "ierfkgj439802vfckdh5438909endck",
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:"dcrq3m6dx",
