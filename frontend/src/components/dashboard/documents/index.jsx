@@ -5,6 +5,8 @@ import MobileMenu from "../../common/header/MobileMenu";
 import Exemple from "./Exemple";
 
 const index = () => {
+  const url = window.location.href;
+ const leadId = url.split('/documents?leadId=')[1];
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -14,7 +16,7 @@ const index = () => {
       <MobileMenu />
 
       {/* <!-- Our Error Page --> */}
-      <section className="bgc-f7" style={{paddingTop:"10px"}}>
+      <section className="our-error bgc-f7 mt-2">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">

@@ -6,7 +6,6 @@ const AllStatistics = () => {
       icon: "flaticon-home",
       timer: "37",
       name: "Estimate Approval Pending",
-      color: "#AFEEEE",
     },
     {
       id: 2,
@@ -14,7 +13,6 @@ const AllStatistics = () => {
       icon: "flaticon-view",
       timer: "24",
       name: "Vehicle Under Repair",
-      color:"#98FB98"
     },
     {
       id: 3,
@@ -22,7 +20,6 @@ const AllStatistics = () => {
       icon: "flaticon-chat",
       timer: "12",
       name: "Invoice Approval Pending",
-      color:"#9ACD32"
     },
     {
       id: 4,
@@ -30,7 +27,6 @@ const AllStatistics = () => {
       icon: "flaticon-heart",
       timer: "18",
       name: "Surveyor Report Uploaded",
-      color:"#FFA07A"
     },
     {
       id: 1,
@@ -38,7 +34,6 @@ const AllStatistics = () => {
       icon: "flaticon-home",
       timer: "37",
       name: "Hard Copies Pending",
-      color:"#FFB6C1"
     },
     {
       id: 2,
@@ -46,7 +41,6 @@ const AllStatistics = () => {
       icon: "flaticon-view",
       timer: "24",
       name: "Soft Copy Completed",
-      color:"#FFE4E1"
     },
     {
       id: 3,
@@ -54,7 +48,6 @@ const AllStatistics = () => {
       icon: "flaticon-chat",
       timer: "12",
       name: "Payment Pending",
-      color:"#B0C4DE"
     },
     {
       id: 4,
@@ -62,7 +55,6 @@ const AllStatistics = () => {
       icon: "flaticon-heart",
       timer: "18",
       name: "Settled Cases",
-      color:"#7FFFD4"
     },
     {
       id: 1,
@@ -70,7 +62,6 @@ const AllStatistics = () => {
       icon: "flaticon-home",
       timer: "37",
       name: "Withdrawn / Rejected",
-      color:"#FFFACD"
     },
     {
       id: 2,
@@ -78,7 +69,6 @@ const AllStatistics = () => {
       icon: "flaticon-view",
       timer: "24",
       name: "More Info Required",
-      color:"#FFEFD5"
     },
     {
       id: 3,
@@ -86,7 +76,6 @@ const AllStatistics = () => {
       icon: "flaticon-chat",
       timer: "12",
       name: "My Claims",
-      color:"#E6E6FA"
     },
   ];
 
@@ -100,13 +89,13 @@ const AllStatistics = () => {
         >
           <div
             className={`ff_one ${item.blockStyle}`}
-            style={{ backgroundColor: item.color }}
+            style={{ backgroundColor: "lightblue" }}
           >
             <div className="detais">
-              <div className="timer fw-bold" style={{ fontSize: "32px" }}>
+              <div className="timer fw-bold" style={{ fontSize: "35px" }}>
                 {item.timer}
               </div>
-              <p style={{ fontSize: "12px", color:"black", fontWeight:"bold" }}>{item.name}</p>
+              <p style={{ fontSize: "13px" }}>{item.name}</p>
             </div>
             {/* <div className="icon">
               <span className={item.icon}></span>
