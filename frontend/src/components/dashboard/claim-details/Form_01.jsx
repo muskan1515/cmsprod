@@ -6,7 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form_01 = () => {
+const Form_01 = ({claim,edit}) => {
   const router = useRouter();
 
   //   const togglePasswordVisibility = () => {
@@ -17,21 +17,25 @@ const Form_01 = () => {
   //     setPasswordVisible_01(!passwordVisible_01);
   //   };
 
+  const formatDate = (val)=>{
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString('en-GB');
+    return formattedDate;
+  }
   return (
     <>
-      <div className="row">
+      <div className="row mt-2">
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button
-                class="btn accordion-button collapsed"
+                class="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseOne"
                 aria-expanded="false"
                 aria-controls="collapseOne"
-                style={{padding:"10px 10px 0 25px"}}
               >
                 <h4 className="">Driver Details</h4>
               </button>
@@ -65,6 +69,7 @@ const Form_01 = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          value={claim.DriverName                          }
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -88,7 +93,7 @@ const Form_01 = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Phone <span class="req-btn">*</span>
+                          Added Date <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -96,6 +101,7 @@ const Form_01 = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          value={formatDate(claim.DriverAddedDate)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -115,7 +121,7 @@ const Form_01 = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Email <span class="req-btn">*</span>
+                           Type of Verification <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -123,6 +129,7 @@ const Form_01 = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          value={claim.DriverTypeOfVerification}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -142,7 +149,7 @@ const Form_01 = () => {
                             // marginTop: "-13px",
                           }}
                         >
-                          LeadID <span class="req-btn">*</span>
+                          Modified Date <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -150,200 +157,14 @@ const Form_01 = () => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          value={formatDate(claim.DriverModifiedDate)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Registration No. <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Insurer ClaimID
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Status <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Sub Status <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Intimation Date <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Request Type <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Endorsement Doc <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
+                
                 </div>
               </div>
             </div>
