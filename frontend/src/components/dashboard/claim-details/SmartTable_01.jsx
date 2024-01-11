@@ -118,7 +118,7 @@ function SmartTable(props) {
   };
 
   return (
-    <div className="col-12 p-2">
+    <div className="col-12 p-3">
       <div className="smartTable-container row">
         <div className="col-12">
           {loading && (
@@ -127,15 +127,18 @@ function SmartTable(props) {
             </div>
           )}
           <div className="row">
-            <div className="col-9 h3 text-start">{props.title}</div>
+            <div
+              className="col-8 h4 text-start mt-2"
+              style={{ marginLeft: "20px" }}
+            >
+              {props.title}
+            </div>
             {/* <div className="col-lg-3">
-              <input
-              style={{height:"40px"}}
-                type="text"
-                className="form-control"
-                placeholder="Search..."
-                onChange={handleSearch}
-              />
+              <div
+                className="btn btn-log btn-thm flaticon-pdf"
+                title="pdf zip download"
+                style={{ marginLeft: "250px" }}
+              ></div>
             </div> */}
           </div>
           {data.length > 0 ? (
@@ -153,7 +156,9 @@ function SmartTable(props) {
                             id={headCell.id}
                             key={headCell.id}
                             scope="col"
-                            style={{ width: headCell.width ?? "auto" }}
+                            style={{
+                              width: headCell.width ?? "auto",
+                            }}
                             className={
                               headCell.sortable !== false
                                 ? "smartTable-pointer"
@@ -178,7 +183,7 @@ function SmartTable(props) {
                       })}
                     </tr>
                   </thead>
-                  <tbody style={{textAlign:"start"}}>
+                  <tbody>
                     {data.map((row, idx) => {
                       return (
                         <tr key={"tr_" + idx}>

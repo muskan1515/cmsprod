@@ -6,7 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form_01 = () => {
+const Form = () => {
   const router = useRouter();
 
   //   const togglePasswordVisibility = () => {
@@ -19,27 +19,27 @@ const Form_01 = () => {
 
   return (
     <>
-      <div className="row">
+      <div className=" faq_according row">
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
+            <h2 class="accordion-header" id="headingTwo">
               <button
                 class="btn accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
+                data-bs-target="#collapseTwo"
                 aria-expanded="false"
-                aria-controls="collapseOne"
-                style={{padding:"10px 10px 0 25px"}}
+                aria-controls="collapseTwo"
+                style={{ padding: "10px 10px 0 40px" }}
               >
-                <h4 className="">Driver Details</h4>
+                <h4 className="">Vehicle Details</h4>
               </button>
             </h2>
             <div
-              id="collapseOne"
+              id="collapseTwo"
               class="accordion-collapse collapse"
-              aria-labelledby="headingOne"
+              aria-labelledby="headingTwo"
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
@@ -355,4 +355,4 @@ const Form_01 = () => {
   );
 };
 
-export default Form_01;
+export default Form;

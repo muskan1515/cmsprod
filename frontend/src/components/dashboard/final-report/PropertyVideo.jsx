@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
+import PolicyDetails from "./PolicyDetails";
+import Servey from "./Survey";
 
 const PropertyVideo = () => {
   const [isOpen, setOpen] = useState(false);
@@ -75,6 +77,7 @@ const PropertyVideo = () => {
         >
           <div className="property_video">
             <div className="thumb">
+              <PolicyDetails />
               {/* <Image
                 width={692}
                 height={390}
@@ -97,7 +100,8 @@ const PropertyVideo = () => {
         <div className="tab-pane fade show " id="description" role="tabpanel">
           <div className="property_video">
             <div className="thumb">
-              <Image
+              <Servey />
+              {/* <Image
                 width={692}
                 height={390}
                 className="pro_img  w100 w-100 cover"
@@ -112,7 +116,7 @@ const PropertyVideo = () => {
                 >
                   <span className="flaticon-play"></span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
