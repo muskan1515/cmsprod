@@ -9,15 +9,9 @@ const MyAccount = () => {
     // { id: 2, name: " My Message", ruterPath: "/my-message" },
     // { id: 3, name: " My Favourite", ruterPath: "/my-favourites" },
     // { id: 4, name: " My Package", ruterPath: "/my-package" },
-    
+    { id: 5, name: " Log out", ruterPath: "/login" },
   ];
   const route = useRouter();
-
-  const logoutHandler = ()=>{
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("regionType");
-    route.push("/login");
-  }
   return (
     <>
       <div className="user_set_header">
@@ -50,16 +44,6 @@ const MyAccount = () => {
             {item.name}
           </Link>
         ))}
-        <div onClick={logoutHandler}>
-        <Link
-        
-        key={90}
-        className="dropdown-item"
-        href={""}
-      >
-        Logout
-      </Link>
-      </div>
       </div>
     </>
   );

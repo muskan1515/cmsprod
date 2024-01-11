@@ -128,7 +128,7 @@ function SmartTable(props) {
           )}
           <div className="row">
             <div className="col-9 h3 text-start">{props.title}</div>
-            <div className="col-lg-3">
+            {/* <div className="col-lg-3">
               <input
               style={{height:"40px"}}
                 type="text"
@@ -136,9 +136,9 @@ function SmartTable(props) {
                 placeholder="Search..."
                 onChange={handleSearch}
               />
-            </div>
+            </div> */}
           </div>
-          {props.data.length > 0 ? (
+          {data.length > 0 ? (
             <div className="row mt-3">
               <div className="smartTable-tableContainer">
                 <table
@@ -178,8 +178,8 @@ function SmartTable(props) {
                       })}
                     </tr>
                   </thead>
-                  <tbody>
-                    {props.data.map((row, idx) => {
+                  <tbody style={{textAlign:"start"}}>
+                    {data.map((row, idx) => {
                       return (
                         <tr key={"tr_" + idx}>
                           {props.headCells.map((headCell, idxx) => {
