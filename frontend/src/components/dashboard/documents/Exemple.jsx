@@ -95,136 +95,144 @@ const data = [
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "2",
+    serial_num: "1",
     doc_name: "Certificate of registration",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "3",
+    serial_num: "1",
     doc_name: "Repair Estimate",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "4",
+    serial_num: "1",
     doc_name: "Claim form",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "5",
+    serial_num: "1",
     doc_name: "Insurance policy",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "6",
+    serial_num: "1",
     doc_name: "Damage vehicle photographs/video",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "7",
+    serial_num: "1",
     doc_name: "Aadhar card",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "8",
+    serial_num: "1",
     doc_name: "Pan card",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "9",
+    serial_num: "1",
     doc_name: " Cancel cheque",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "10",
+    serial_num: "1",
     doc_name: " Satisfaction voucher",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "11",
+    serial_num: "1",
     doc_name: "Discharge voucher",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "12",
+    serial_num: "1",
     doc_name: "Dismantle photographs",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "13",
+    serial_num: "1",
     doc_name: "Reinspection photographs",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "14",
+    serial_num: "1",
     doc_name: "Repair Invoice",
     action: "2021-09-17 19:10:50",
   },
   {
     _id: "6144145976c7fe",
-    serial_num: "15",
+    serial_num: "1",
     doc_name: "Payment/cash receipt",
     action: "2021-09-17 19:10:50",
   },
 ];
 
 export default function Exemple() {
-  const [updatedCode, setUpdatedCode] = useState([]);
-  const [filesUrl, setFilesUrl] = useState("");
-  const [attachment, setAttachment] = useState("");
 
-  const [uploadedData, setUploadedData] = useState([]);
+  const [updatedCode,setUpdatedCode] = useState([]);
+  const [filesUrl,setFilesUrl] =useState("");
+  const [attachment,setAttachment] = useState("");
 
-  const [change, setChange] = useState(false);
+  const [uploadedData,setUploadedData]=useState([]);
 
-  const getIndex = (label, datas) => {
+  const [change , setChange] = useState(false);
+
+  const getIndex = (label,datas)=>{
     let index = -1;
-    datas.map((data, idx) => {
-      if (String(data[index].docName) === String(label)) index = idx;
-    });
+     datas.map((data,idx)=>{
+      if(String(data[index].docName) === String(label))
+        index = idx;
+    })
     return index;
-  };
-  const handleUpload = (result, label) => {
+    
+  }
+  const handleUpload = (result,label) => {
+   
     try {
       const fileUrl = result.info.secure_url;
-
-      const index = getIndex(label, uploadedData);
+      
+      
+      const index = getIndex(label,uploadedData);
       console.log(index);
-      if (index === -1) {
-        const newUploadData = {
-          docName: label,
-          data: [
-            {
-              name: result.info.original_filename + "." + result.info.format,
-              thumbnail_url: result.info.thumbnail_url,
-              url: result.info.url,
-            },
-          ],
-        };
+      if (index === -1){
+        
+      const newUploadData = {
+        "docName" : label,
+        "data" : [
+          {
+            "name":result.info.original_filename + "." + result.info.format,
+            "thumbnail_url":result.info.thumbnail_url,
+             "url":result.info.url
+          }
+        ],
+      };
 
-        let oldData = uploadedData;
-        oldData.push(newUploadData);
-        setUploadedData(oldData);
-        setChange(true);
-      } else {
+      let oldData =uploadedData;
+      oldData.push(newUploadData);
+      setUploadedData(oldData);
+      setChange(true);
+      }
+      else{
+
         let oldData = uploadedData;
         let wholeDocData = uploadedData[index].data;
-
+      
         wholeDocData.push({
-          name: result.info.original_filename + "." + result.info.format,
-          thumbnail_url: result.info.thumbnail_url,
-          url: result.info.url,
+          "name":result.info.original_filename + "." + result.info.format,
+          "thumbnail_url":result.info.thumbnail_url,
+          "url":result.info.url
         });
 
         oldData[index].data = wholeDocData;
@@ -232,40 +240,42 @@ export default function Exemple() {
         setUploadedData(oldData);
         setChange(true);
       }
+      
+     
+
     } catch (error) {
       console.error("Error handling upload:", error);
     }
   };
 
-  const checkIsUploaded = (label) => {
+  const checkIsUploaded = (label)=>{
     // console.log(uploadedData);
     let selectedField = {};
-    uploadedData.map((data, idx) => {
-      if (String(label) === String(data.docName)) {
+    uploadedData.map((data,idx)=>{
+      if(String(label) === String(data.docName)){
         selectedField = data;
       }
-    });
+    })
 
     return selectedField;
-  };
-  useEffect(() => {
+  }
+  useEffect(()=>{
     console.log(uploadedData);
-    const getData = () => {
+    const getData = ()=>{
       const tempData = [];
-      data.map((row, index) => {
-        const isUploaded = checkIsUploaded(row.doc_name);
-        console.log(isUploaded.data, row.doc_name);
-        const updatedRow = {
-          _id: index + 1,
-          serial_num: row.serial_num,
-          doc_name: row.doc_name,
-          files: isUploaded?.data?.map((file) => {
-            return (
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <Image src={file.thumbnail_url} width={90} height={90} />
-                <h4>{file.name}</h4>
+        data.map((row,index)=>{
+          const isUploaded  = checkIsUploaded(row.doc_name);
+          console.log(isUploaded.data,row.doc_name);
+          const updatedRow = {
+            _id:index+1,
+            serial_num:row.serial_num,
+            doc_name:row.doc_name,
+            files:isUploaded?.data?.map((file,idx)=>{
+              return <div style={{display:"flex",flexDirection:"column"}} key={idx}>
+              <Image src={file.thumbnail_url} width={90} height={90} /> 
+              <h4>{file.name}</h4>
 
-                {/*  <CldUploadWidget
+             {/*  <CldUploadWidget
             onUpload={(result)=>handleUpload(result,row.doc_name,true)}
             uploadPreset="mpbjdclg"
             options={{
@@ -293,73 +303,60 @@ export default function Exemple() {
               </div>
             )}
           </CldUploadWidget>*/}
-                <a
+         <a  className="btn btn-color profile_edit_button mb-5" href={isUploaded.url} target="_blank" rel="noopener noreferrer">View</a> 
+         <button className="btn btn-color profile_edit_button mb-5">Delete</button>
+         </div>}),
+            action: (
+            
+         
+         <CldUploadWidget
+            onUpload={(result)=>handleUpload(result,row.doc_name)}
+            uploadPreset="mpbjdclg"
+            options={{
+              cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
+              allowedFormats: [
+                "jpg",
+                "png",
+                "pdf",
+                "csv",
+                "word",
+                "excel",
+                "pdf"
+              ], // Specify allowed formats
+              maxFiles: 50,
+            }}
+          >
+            {({ open }) => (
+              <div>
+                <button
                   className="btn btn-color profile_edit_button mb-5"
-                  href={isUploaded.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  style={{}}
+                  onClick={()=>open()} 
                 >
-                  View
-                </a>
-                <button className="btn btn-color profile_edit_button mb-5">
-                  Delete
+                  Upload Files
                 </button>
               </div>
-            );
-          }),
-          action: (
-            <CldUploadWidget
-              onUpload={(result) => handleUpload(result, row.doc_name)}
-              uploadPreset="mpbjdclg"
-              options={{
-                cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
-                allowedFormats: [
-                  "jpg",
-                  "png",
-                  "pdf",
-                  "csv",
-                  "word",
-                  "excel",
-                  "pdf",
-                ], // Specify allowed formats
-                maxFiles: 50,
-              }}
-            >
-              {({ open }) => (
-                <div>
-                  <button
-                    className="btn btn-color profile_edit_button mb-5"
-                    style={{}}
-                    onClick={() => open()}
-                  >
-                    Upload Files
-                  </button>
-                </div>
-              )}
-            </CldUploadWidget>
-          ),
-        };
-        tempData.push(updatedRow);
-      });
-      return tempData;
-    };
+            )}
+          </CldUploadWidget>
+           )
+          }
+          tempData.push(updatedRow);
+        });
+        return tempData;
+    }
     // getData();
     setChange(false);
     setUpdatedCode(getData());
-  }, [uploadedData, change]);
+  },[uploadedData,change]);
 
-  useEffect(() => {
-    if (uploadedData) {
-      console.log(uploadedData);
+  useEffect(()=>{
+    if(uploadedData){
+      console.log(uploadedData)
     }
-  }, [uploadedData]);
-  console.log(uploadedData);
-
+  },[uploadedData]);
+console.log(uploadedData)
+ 
   return (
-    <SmartTable
-      title="Documents Upload"
-      data={updatedCode}
-      headCells={headCells}
-    />
+    <SmartTable title="Documents Upload" data={updatedCode} headCells={headCells} />
   );
 }

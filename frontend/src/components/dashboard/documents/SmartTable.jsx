@@ -130,7 +130,7 @@ function SmartTable(props) {
             <div className="col-9 h3 text-start">{props.title}</div>
             <div className="col-lg-3">
               <input
-                style={{ height: "40px" }}
+              style={{height:"40px"}}
                 type="text"
                 className="form-control"
                 placeholder="Search..."

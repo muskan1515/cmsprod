@@ -6,7 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form_01 = ({ claim, edit }) => {
+const Form_01 = ({claim,edit}) => {
   const router = useRouter();
 
   //   const togglePasswordVisibility = () => {
@@ -16,12 +16,12 @@ const Form_01 = ({ claim, edit }) => {
   //   const togglePasswordVisibility_01 = () => {
   //     setPasswordVisible_01(!passwordVisible_01);
   //   };
-  const formatDate = (val) => {
-    const date = new Date(val);
-    const formattedDate = date.toLocaleDateString("en-GB");
-    return formattedDate;
-  };
 
+  const formatDate = (val)=>{
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString('en-GB');
+    return formattedDate;
+  }
   return (
     <>
       <div className="row mt-2">
@@ -69,7 +69,7 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.DriverName}
+                          value={claim.DriverName                          }
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -121,7 +121,7 @@ const Form_01 = ({ claim, edit }) => {
                             // marginTop: "-13px",
                           }}
                         >
-                          Type of Verification <span class="req-btn">*</span>
+                           Type of Verification <span class="req-btn">*</span>
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -163,6 +163,8 @@ const Form_01 = ({ claim, edit }) => {
                       </div>
                     </div>
                   </div>
+
+                
                 </div>
               </div>
             </div>
