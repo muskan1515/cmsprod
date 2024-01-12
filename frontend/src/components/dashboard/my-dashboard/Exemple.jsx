@@ -126,37 +126,36 @@ const data = [
   //   },
 ];
 
-export default function Exemple({ claims }) {
-  const [updatedData, setUpdatedData] = useState([]);
+export default function Exemple({claims}) {
+
+  const [updatedData,setUpdatedData]=useState([]);
   let tempData = [];
-  useEffect(() => {
+  useEffect(()=>{
     claims?.map((claim, index) => {
-      const tempGarage = claim?.AssignedGarage?.split(",").map((item) =>
-        item.trim()
-      );
+     
+      const tempGarage = claim?.AssignedGarage?.split(',').map(item => item.trim());
       // console.log(tempGarage);
       const updatedRow = {
-        reference_id: claim.ReferenceID,
-        policy_holder: claim.PolicyHolder,
-        policy_no: (
-          <a href={`/claim-details?leadId=${claim.LeadID}`}>{claim.PolicyNo}</a>
-        ),
-        registration_no: claim.RegistrationNo,
-        city: tempGarage ? tempGarage[1] : "NA",
-        state: tempGarage ? tempGarage[2] : "NA",
-        assigned_garage: tempGarage ? tempGarage[0] : "NA",
-        case_age: "Not assigned Yet",
-        case_age_insured: "Not assigned Yet",
-        officer: "Not assigned Yet",
-        request_type: "Not assigned Yet",
-        claim_id: "Not assigned Yet",
+        reference_id:claim.ReferenceID,
+        policy_holder:claim.PolicyHolder,
+        policy_no:<a href={`/claim-details?leadId=${claim.LeadID}`}>{claim.PolicyNo}</a>,
+        registration_no:claim.RegistrationNo,
+        city : tempGarage ? tempGarage[1] : "NA",
+        state : tempGarage ? tempGarage[2] : "NA",
+        assigned_garage: tempGarage ?tempGarage[0] : "NA",
+        case_age :"Not assigned Yet",
+        case_age_insured:"Not assigned Yet",
+        officer:"Not assigned Yet",
+        request_type:"Not assigned Yet",
+        claim_id:"Not assigned Yet",
+
       };
       tempData.push(updatedRow);
     });
     setUpdatedData(tempData);
-  }, [claims]);
+  
+
+  },[claims]);
   console.log(updatedData);
-  return (
-    <SmartTable title="My Claims" data={updatedData} headCells={headCells} />
-  );
+  return <SmartTable title="My Claims" data={updatedData} headCells={headCells} />;
 }
