@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import CopyrightFooter from "../common/footer/CopyrightFooter";
 import Footer from "../common/footer/Footer";
 import Header from "../common/header/DefaultHeader";
@@ -5,9 +6,19 @@ import MobileMenu from "../common/header/MobileMenu";
 import PopupSignInUp from "../common/PopupSignInUp";
 import BreadCrumbBanner from "./BreadCrumbBanner";
 import Form from "./Form";
-import Image from "next/image";
+import { useRouter } from "next/router";
 
-const index = () => {
+const   Index = () => {
+
+  const router = useRouter();
+
+  useEffect(()=>{
+    const userData = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userData);
+    if(userData && userData[0].Token ){
+      router.push("/my-dashboard");
+    }
+  },[])
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -20,25 +31,13 @@ const index = () => {
       <PopupSignInUp />
 
       {/* <!-- Inner Page Breadcrumb --> */}
-      {/* <BreadCrumbBanner /> */}
+      <BreadCrumbBanner />
 
       {/* <!-- Our LogIn Register --> */}
-      <section className="our-log bgc-fa mt100 mb100">
+      <section className="our-log bgc-fa">
         <div className="container">
-          <div className="row p-3" style={{backgroundColor:"light"}}>
-            <div className="col-sm-12 col-lg-6">
-              <div className="login_form  inner_page">
-                <Image
-                  width={364}
-                  height={278}
-                  className="img-circle-rounded w100"
-                  src="/assets/images/home/11.avif"
-                  alt="fp1.jpg"
-                />
-                {/* <Form /> */}
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-6">
+          <div className="row  ">
+            <div className="col-sm-12 col-lg-6 offset-lg-3">
               <div className="login_form  inner_page">
                 <Form />
               </div>
@@ -48,13 +47,13 @@ const index = () => {
       </section>
 
       {/* <!-- Our Footer --> */}
-      {/* <section className="footer_one">
+      <section className="footer_one">
         <div className="container">
           <div className="row">
             <Footer />
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* <!-- Our Footer Bottom Area --> */}
       <section className="footer_middle_area pt40 pb40">
@@ -66,4 +65,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

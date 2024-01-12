@@ -4,16 +4,39 @@ import MobileMenu from "../../common/header/MobileMenu";
 import Activities from "./Activities";
 import AllStatistics from "./AllStatistics";
 import StatisticsChart from "./StatisticsChart";
-// import Sidebar from "../../common/header/dashboard/SideBar";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const index = () => {
-  const [allClaims, setAllClaims] = useState([]);
+const Index = () => {
+
+  const [allClaims,setAllClaims] = useState([]);
   const router = useRouter();
+
+  useEffect(()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if(!userInfo){
+      router.push("/login");
+    }
+    // console.log(userInfo[0].Token)
+    axios.get("/api/getAllClaims",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      }
+    })
+    .then((res)=>{
+      console.log(res.data.data[0])
+      setAllClaims(res.data.data[0]);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  },[]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -67,22 +90,18 @@ const index = () => {
               </div>
               {/* End .row */}
 
-              <div
-                className="row mt-2"
-                style={{ justifyContent: "space-between" }}
-              >
+              <div className="row" style={{ justifyContent: "space-between" }}>
                 <AllStatistics />
               </div>
               {/* End .row Dashboard top statistics */}
               <div
                 className=" bg-dark"
                 style={{
-                  width: "101%",
+                  width: "100%",
                   height: "3px",
                   color: "blue",
                   border: "1px solid",
-                  marginBottom: "5px",
-                  marginLeft: "-12px",
+                  marginBottom:"5px"
                 }}
               ></div>
               <div className="row">
@@ -91,11 +110,10 @@ const index = () => {
               <div
                 className="bg-dark"
                 style={{
-                  width: "101%",
-                  height: "3px",
+                  width: "100%",
+                  height: "4px",
                   color: "blue",
                   border: "1px solid blue",
-                  marginLeft: "-12px",
                 }}
               ></div>
               <div className="row">
@@ -106,7 +124,7 @@ const index = () => {
                   </div>
                 </div> */}
                 {/* End statistics chart */}
-                <Exemple claims={allClaims} />
+                <Exemple claims = {allClaims} />
                 {/* <div className="col-xl-5">
                   <div className="recent_job_activity">
                     <h4 className="title mb-4">Recent Activities</h4>
@@ -133,4 +151,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
