@@ -6,14 +6,8 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form = ({claim,edit}) => {
+const Form = ({ claim, edit }) => {
   const router = useRouter();
-
-  const formatDate = (val)=>{
-    const date = new Date(val);
-    const formattedDate = date.toLocaleDateString('en-GB');
-    return formattedDate;
-  }
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -23,24 +17,41 @@ const Form = ({claim,edit}) => {
   //     setPasswordVisible_01(!passwordVisible_01);
   //   };
 
+  const formatDate = (val) => {
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString("en-GB");
+    return formattedDate;
+  };
+
   return (
     <>
-      <div className="row mt-2">
+      <div className=" faq_according row">
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingThree">
               <button
-                class="accordion-button collapsed"
+                class="btn accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseThree"
                 aria-expanded="false"
                 aria-controls="collapseThree"
+                style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Vehicle Details</h4>
               </button>
             </h2>
+            {/* <div
+              className=" bg-dark"
+              style={{
+                width: "100%",
+                height: "3px",
+                color: "blue",
+                border: "1px solid",
+                marginBottom: "5px",
+              }}
+            ></div> */}
             <div
               id="collapseThree"
               class="accordion-collapse collapse"
@@ -75,10 +86,6 @@ const Form = ({claim,edit}) => {
                         />
                       </div>
                     </div>
-                    {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
                   </div>
 
                   <div className="col-lg-6">
@@ -306,88 +313,88 @@ const Form = ({claim,edit}) => {
                   </div>
 
                   <div className="col-lg-6">
-                  <div className="row mt-1">
-                    <div className="col-lg-5 my_profile_setting_input form-group">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          // paddingTop: "15px",
-                          color: "#1560bd",
-                          fontWeight: "",
-                          // marginTop: "-13px",
-                        }}
-                      >
-                      Issuing Authority <span class="req-btn">*</span>
-                      </label>
+                    <div className="row mt-1">
+                      <div className="col-lg-5 my_profile_setting_input form-group">
+                        <label
+                          htmlFor=""
+                          className="text-color"
+                          style={{
+                            // paddingTop: "15px",
+                            color: "#1560bd",
+                            fontWeight: "",
+                            // marginTop: "-13px",
+                          }}
+                        >
+                          Issuing Authority <span class="req-btn">*</span>
+                        </label>
+                      </div>
+                      <div className="col-lg-7">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
+                          value={claim.IssuingAuthority}
+                          // placeholder="Enter Registration No."
+                        />
+                      </div>
                     </div>
-                    <div className="col-lg-7">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="propertyTitle"
-                        value={claim.IssuingAuthority}
-                        // placeholder="Enter Registration No."
-                      />
+                  </div>
+
+                  <div className="col-lg-6">
+                    <div className="row mt-1">
+                      <div className="col-lg-5 my_profile_setting_input form-group">
+                        <label
+                          htmlFor=""
+                          className="text-color"
+                          style={{
+                            // paddingTop: "15px",
+                            color: "#1560bd",
+                            fontWeight: "",
+                            // marginTop: "-13px",
+                          }}
+                        >
+                          License Number <span class="req-btn">*</span>
+                        </label>
+                      </div>
+                      <div className="col-lg-7">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
+                          value={claim.LicenseNumber}
+                          // placeholder="Enter Registration No."
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="col-lg-6">
-                <div className="row mt-1">
-                  <div className="col-lg-5 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#1560bd",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                    License Number <span class="req-btn">*</span>
-                    </label>
+                  <div className="col-lg-6">
+                    <div className="row mt-1">
+                      <div className="col-lg-5 my_profile_setting_input form-group">
+                        <label
+                          htmlFor=""
+                          className="text-color"
+                          style={{
+                            // paddingTop: "15px",
+                            color: "#1560bd",
+                            fontWeight: "",
+                            // marginTop: "-13px",
+                          }}
+                        >
+                          License Type <span class="req-btn">*</span>
+                        </label>
+                      </div>
+                      <div className="col-lg-7">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
+                          value={claim.LicenseType}
+                          // placeholder="Enter Registration No."
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={claim.LicenseNumber}
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-6">
-              <div className="row mt-1">
-                <div className="col-lg-5 my_profile_setting_input form-group">
-                  <label
-                    htmlFor=""
-                    className="text-color"
-                    style={{
-                      // paddingTop: "15px",
-                      color: "#1560bd",
-                      fontWeight: "",
-                      // marginTop: "-13px",
-                    }}
-                  >
-                    License Type <span class="req-btn">*</span>
-                  </label>
-                </div>
-                <div className="col-lg-7">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    value={claim.LicenseType}
-                    // placeholder="Enter Registration No."
-                  />
-                </div>
-              </div>
-            </div>
 
                   <div className="col-lg-6">
                     <div className="row mt-1">

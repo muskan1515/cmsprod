@@ -1,16 +1,14 @@
 import dynamic from "next/dynamic";
 import Seo from "../components/common/seo";
 // import HomeMain from "../components/home";
-import Login from "../components/login";
-import { Toaster } from "react-hot-toast";
+import MyDashboard from "../components/dashboard/my-dashboard";
 
 const index = () => {
   return (
     <>
-    <Toaster/>
       <Seo pageTitle="Home-1" />
       {/* <HomeMain /> */}
-      <Login />
+      <MyDashboard />
     </>
   );
 };
