@@ -6,7 +6,7 @@ import Exemple from "./Exemple";
 
 const index = () => {
   const url = window.location.href;
-  const leadId = url.split("/documents?leadId=")[1];
+ const leadId = url.split('/documents?leadId=')[1];
   return (
     <>
       {/* <!-- Main Header Nav --> */}
