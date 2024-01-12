@@ -18,10 +18,30 @@ const PropertyVideo = () => {
           <a
             className="nav-link active"
             data-bs-toggle="tab"
+            href="#descriptions"
+            role="tab"
+          >
+            Policy & Vehicle
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link "
+            data-bs-toggle="tab"
             href="#description"
             role="tab"
           >
-            Property video
+            Survey
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link "
+            data-bs-toggle="tab"
+            href="#description"
+            role="tab"
+          >
+            New Parts
           </a>
         </li>
         <li className="nav-item">
@@ -31,7 +51,17 @@ const PropertyVideo = () => {
             href="#listing"
             role="tab"
           >
-            Virtual Tour
+            Labour
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            data-bs-toggle="tab"
+            href="#listing"
+            role="tab"
+          >
+            Summary & Notes
           </a>
         </li>
       </ul>
@@ -40,9 +70,31 @@ const PropertyVideo = () => {
       <div className="tab-content" id="myTabContent2">
         <div
           className="tab-pane fade show active"
-          id="description"
+          id="descriptions"
           role="tabpanel"
         >
+          <div className="property_video">
+            <div className="thumb">
+              {/* <Image
+                width={692}
+                height={390}
+                className="pro_img  w100 w-100 cover"
+                src="/assets/images/background/7.jpg"
+                alt="7.jpg"
+              />
+              <div className="overlay_icon">
+                <div
+                  onClick={() => setOpen(true)}
+                  role="button"
+                  className="video_popup_btn red popup-youtube"
+                >
+                  <span className="flaticon-play"></span>
+                </div>
+              </div> */}
+            </div>
+          </div>
+        </div>
+        <div className="tab-pane fade show " id="description" role="tabpanel">
           <div className="property_video">
             <div className="thumb">
               <Image
