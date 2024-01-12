@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 
-const PolicyDetails = () => {
+const PolicyDetails = ({setIsStatusModal}) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -19,10 +19,14 @@ const PolicyDetails = () => {
 
     setPhoneNumber(truncatedValue);
   };
+
+  const openStatusUpdateHandler = () => {
+    setIsStatusModal(true);
+  };
   return (
     <>
       <div className="row">
-        <hr />
+        {/* <hr /> */}
         <div className="col-lg-4">
           <div className="row mt-1 mb-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
@@ -110,7 +114,7 @@ const PolicyDetails = () => {
         </div>
         <hr />
         <div className="col-lg-12">
-          <h4>Policy Details :</h4>
+          <h4 className="text-dark" style={{fontSize:"21px"}}>Policy Details :</h4>
           <hr />
         </div>
 
