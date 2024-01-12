@@ -11,7 +11,6 @@ function SmartTable(props) {
   const [tableWidth, setTableWidth] = useState(1000);
   const [data, setData] = useState(props.data);
 
-  console.log(props.data)
   const [search, setSearch] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage ?? 10);
   const [rowsPerPageOptions] = useState(

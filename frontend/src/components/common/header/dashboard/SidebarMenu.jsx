@@ -20,7 +20,13 @@ const SidebarMenu = () => {
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const openQuoteModal = () => {
+    setIsQuoteModalOpen();
+  };
+  const closeQuoteModal = () => {
+    setIsQuoteModalOpen(false);
+  };
   const myProperties = [
     { id: 1, name: "General Elements", route: "/my-properties" },
     { id: 2, name: "Advanced Elements", route: "/my-properties" },
@@ -102,18 +108,18 @@ const SidebarMenu = () => {
                       {/* <span> Create Listing</span> */}
                     </Link>
                   </li>
-                  {/* <li
+                  <li
                     className={`treeview ${
-                      isSinglePageActive("/my-message", route.pathname)
+                      isSinglePageActive("/final-report", route.pathname)
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href="/my-message">
-                      <i className="flaticon-envelope"></i>
-                      <span> Message</span>
+                    <Link href="/final-report" title="Final Report">
+                      <i className="flaticon-invoice"></i>
+                      {/* <span> Message</span> */}
                     </Link>
-                  </li> */}
+                  </li>
                 </ul>
               </li>
               {/* End Main */}

@@ -251,8 +251,8 @@ const HeaderMenuContent = ({ float = "" }) => {
               : undefined
           }
         >
-          <span className="title">Home</span>
-          <span className="arrow"></span>
+          {/* <span className="title">Home</span>
+          <span className="arrow"></span> */}
         </a>
         {/* <!-- Level Two--> */}
 
@@ -286,8 +286,8 @@ const HeaderMenuContent = ({ float = "" }) => {
               : undefined
           }
         >
-          <span className="title">Listing</span>
-          <span className="arrow"></span>
+          {/* <span className="title">Listing</span>
+          <span className="arrow"></span> */}
         </a>
         {/* <!-- Level Two--> */}
         <ul className="sub-menu ">
@@ -341,8 +341,8 @@ const HeaderMenuContent = ({ float = "" }) => {
               : undefined
           }
         >
-          <span className="title">Property</span>{" "}
-          <span className="arrow"></span>
+          {/* <span className="title">Property</span>{" "}
+          <span className="arrow"></span> */}
         </a>
         <ul className="sub-menu ">
           {property.map((item) => (
@@ -394,8 +394,8 @@ const HeaderMenuContent = ({ float = "" }) => {
               : undefined
           }
         >
-          <span className="title">Pages</span>
-          <span className="arrow"></span>
+          {/* <span className="title">Pages</span>
+          <span className="arrow"></span> */}
         </a>
         <ul className="sub-menu ">
           {pages.map((item) => (
@@ -427,8 +427,8 @@ const HeaderMenuContent = ({ float = "" }) => {
               : undefined
           }
         >
-          <span className="title">Blog</span>
-          <span className="arrow"></span>
+          {/* <span className="title">Blog</span>
+          <span className="arrow"></span> */}
         </a>
         <ul className="sub-menu ">
           {blog.map((item) => (
@@ -451,33 +451,33 @@ const HeaderMenuContent = ({ float = "" }) => {
       {/* End .dropitem */}
 
       <li className="last">
-        <Link
+        {/* <Link
           href="/contact"
           className={route.pathname === "/contact" ? "ui-active" : undefined}
         >
           Contact
-        </Link>
+        </Link> */}
       </li>
       {/* End .dropitem */}
 
       <li className={`list-inline-item list_s ${float}`}>
-        <a
+        {/* <a
           href="#"
           className="btn flaticon-user"
           data-bs-toggle="modal"
           data-bs-target=".bd-example-modal-lg"
         >
           <span className="dn-lg">Login/Register</span>
-        </a>
+        </a> */}
       </li>
       {/* End .dropitem */}
 
-      <li className={`list-inline-item add_listing ${float}`}>
+      {/* <li className={`list-inline-item add_listing ${float}`}>
         <Link href="/create-listing">
           <span className="flaticon-plus"></span>
           <span className="dn-lg"> Create Listing</span>
         </Link>
-      </li>
+      </li> */}
       {/* End .dropitem */}
     </ul>
   );

@@ -1,13 +1,10 @@
+
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-
-
 const Form = () => {
-
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
 
@@ -40,12 +37,12 @@ const Form = () => {
     <form action="#">
       <div className="heading text-center">
         <h3>Login to your account</h3>
-        <p className="text-center">
+        {/* <p className="text-center">
           Dont have an account?{" "}
           <Link href="/register" className="text-thm">
             Sign Up!
           </Link>
-        </p>
+        </p> */}
       </div>
       {/* End .heading */}
 
@@ -54,8 +51,8 @@ const Form = () => {
           type="text"
           className="form-control"
           required
-          onChange={(e)=>setUsername(e.target.value)}
           placeholder="User Name Or Email"
+          onChange={(e)=>setUsername(e.target.value)}
         />
         <div className="input-group-prepend">
           <div className="input-group-text">
@@ -70,8 +67,8 @@ const Form = () => {
           type="password"
           className="form-control"
           required
-          onChange={(e)=>setPassword(e.target.value)}
           placeholder="Password"
+          onChange={(e)=>setPassword(e.target.value)}
         />
         <div className="input-group-prepend">
           <div className="input-group-text">
@@ -95,9 +92,9 @@ const Form = () => {
           Remember me
         </label>
 
-        <a className="btn-fpswd float-end" href="#">
+        {/* <a className="btn-fpswd float-end" href="#">
           Forgot password?
-        </a>
+        </a> */}
       </div>
       {/* End .form-group */}
 
@@ -106,13 +103,13 @@ const Form = () => {
       </button>
       {/* login button */}
 
-      <div className="divide">
+      {/* <div className="divide">
         <span className="lf_divider">Or</span>
         <hr />
-      </div>
+      </div> */}
       {/* devider */}
 
-      <div className="row mt25">
+      {/* <div className="row mt25">
         <div className="col-lg-6">
           <button
             type="submit"
@@ -121,7 +118,6 @@ const Form = () => {
             <i className="fa fa-facebook float-start mt5"></i> Facebook
           </button>
         </div>
-        {/* End .col */}
 
         <div className="col-lg-6">
           <button
@@ -131,8 +127,7 @@ const Form = () => {
             <i className="fa fa-google float-start mt5"></i> Google
           </button>
         </div>
-        {/* End .col */}
-      </div>
+      </div> */}
       {/* more signin options */}
     </form>
   );
