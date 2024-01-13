@@ -601,7 +601,7 @@ app.post('/addClaim', (req, res) => {
     ) VALUES (
       '${PlaceOfLoss}',
       '${NatureOfLoss}',
-      '${CONVERT('${EstimatedLoss}', DECIMAL(10, 2))}'
+      '${EstimatedLoss}'
     );
   `;
 
