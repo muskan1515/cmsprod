@@ -19,7 +19,7 @@ const dotenv = require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-const port = process.env.PORT || 8000;
+const port = 3006;
 app.use(session({
   secret: 'your-secret-key', // Replace with a secret key for session management
   resave: false,
@@ -541,6 +541,8 @@ app.post('/addClaim', (req, res) => {
     EstimatedLoss
   } = req.body;
 
+
+
   const insertClaimDetails = `
     INSERT INTO ClaimDetails (
       SurveyType,
@@ -561,7 +563,7 @@ app.post('/addClaim', (req, res) => {
       '${ReferenceNo}',
       '${PolicyIssuingOffice}',
       '${PolicyNumber}',
-      ${PolicyPeriodStart}',
+      '${PolicyPeriodStart}',
       '${PolicyPeriodEnd}',
       '${ClaimNumber}',
       '${ClaimServicingOffice}',
@@ -589,7 +591,7 @@ app.post('/addClaim', (req, res) => {
     ) VALUES (
       '${GarageNameAndAddress}',
       '${GarageContactNo1}',
-      '${GarageContactNo2}'
+      '${""}'
     );
   `;
 
@@ -727,24 +729,24 @@ app.listen(port, () => {
 
   
     console.log(`Server running on http://localhost:${port}`);
-    pm2.connect((err) => {
-      if (err) {
-        console.error(err);
-        process.exit(2);
-      }
+    // pm2.connect((err) => {
+    //   if (err) {
+    //     console.error(err);
+    //     process.exit(2);
+    //   }
     
-      pm2.start({
-        script: "./app.js",
-        name: "db",
-        autorestart: true,
-        watch: true, // Enable auto-restart on file changes
-        max_memory_restart: '1G', // Adjust as needed based on your server's memory requirements
-      }, (err, apps) => {
-        pm2.disconnect(); // Disconnect from pm2 once started
-        if (err) throw err;
-        console.log('Server started successfully using pm2.');
-      });
+    //   pm2.start({
+    //     script: "./app.js",
+    //     name: "db",
+    //     autorestart: true,
+    //     watch: true, // Enable auto-restart on file changes
+    //     max_memory_restart: '1G', // Adjust as needed based on your server's memory requirements
+    //   }, (err, apps) => {
+    //     pm2.disconnect(); // Disconnect from pm2 once started
+    //     if (err) throw err;
+    //     console.log('Server started successfully using pm2.');
+    //   });
 
-    });
+    // });
     
   });
