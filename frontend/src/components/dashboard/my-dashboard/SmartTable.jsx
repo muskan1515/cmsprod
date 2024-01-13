@@ -11,7 +11,6 @@ function SmartTable(props) {
   const [tableWidth, setTableWidth] = useState(1000);
   const [data, setData] = useState(props.data);
 
-  console.log(props.data)
   const [search, setSearch] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage ?? 10);
   const [rowsPerPageOptions] = useState(
@@ -154,7 +153,7 @@ function SmartTable(props) {
                             id={headCell.id}
                             key={headCell.id}
                             scope="col"
-                            style={{ width: headCell.width ?? "auto" }}
+                            style={{ width: headCell.width ?? "auto", backgroundColor:"#2e008b", color:"white" }}
                             className={
                               headCell.sortable !== false
                                 ? "smartTable-pointer"
@@ -185,7 +184,7 @@ function SmartTable(props) {
                         <tr key={"tr_" + idx}>
                           {props.headCells.map((headCell, idxx) => {
                             return (
-                              <td key={"td_" + idx + "_" + idxx}>
+                              <td style={{color:"black", fontSize:"15px"}} key={"td_" + idx + "_" + idxx}>
                                 {headCell.render
                                   ? headCell.render(row)
                                   : row[headCell.id]}
@@ -200,7 +199,7 @@ function SmartTable(props) {
               </div>
             </div>
           ) : (
-            <div className="row p-4">
+            <div className="row p-1">
               <div className="smartTable-noDataFound col-12">
                 <h4>NO DATA FOUND</h4>
               </div>

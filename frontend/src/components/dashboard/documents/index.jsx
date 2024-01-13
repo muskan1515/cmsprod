@@ -5,6 +5,8 @@ import MobileMenu from "../../common/header/MobileMenu";
 import Exemple from "./Exemple";
 
 const index = () => {
+  const url = window.location.href;
+  const leadId = url.split("/documents?leadId=")[1];
   return (
     <>
       {/* <!-- Main Header Nav --> */}

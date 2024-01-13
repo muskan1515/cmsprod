@@ -106,7 +106,7 @@ const AllStatistics = () => {
               <div className="timer fw-bold" style={{ fontSize: "32px" }}>
                 {item.timer}
               </div>
-              <p style={{ fontSize: "14px", color:"black", fontWeight:"bold" }}>{item.name}</p>
+              <p style={{ fontSize: "12px", color:"black", fontWeight:"bold" }}>{item.name}</p>
             </div>
             {/* <div className="icon">
               <span className={item.icon}></span>

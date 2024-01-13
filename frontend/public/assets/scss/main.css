@@ -200,7 +200,8 @@ a img {
 
 .form-control {
   /* height: 50px; */
-  height: 30px;
+  height: 37px;
+  border: 1px solid grey;
 }
 
 .form-control:active,
@@ -14073,7 +14074,7 @@ legend span {
 
 .our-dashbord.dashbord .container-fluid {
   padding-left: 60px;
-  padding-right: 60px;
+  /* padding-right: 60px; */
 }
 
 .breadcrumb_widgets {
@@ -14192,7 +14193,7 @@ legend span {
   background-color: #ffffff;
   border: 1px solid rgb(235, 235, 235);
   border-radius: 8px;
-  padding: 30px;
+  padding: 10px;
 }
 
 .my_dashboard_review .review_content .review_title {
@@ -21344,14 +21345,14 @@ main {
 
 .btn-color {
   font-weight: bold;
-  line-height: 1.2;
+  line-height: 1.1;
   height: 40px ;
   width: 100px ;
   -webkit-box-shadow: 0px 1px 4px 0px rgba(255, 90, 95, 0.3);
   -moz-box-shadow: 0px 1px 4px 0px rgba(255, 90, 95, 0.3);
   -o-box-shadow: 0px 1px 4px 0px rgba(255, 90, 95, 0.3);
   box-shadow: 0px 1px 4px 0px rgba(255, 90, 95, 0.3);
-  margin-top: 5px;
+  /* margin-top: 5px; */
   background-color: #2e008b;
   color: white;
 }
@@ -21403,4 +21404,15 @@ main {
   background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
+}
+
+.dashboard-height {
+  padding-top: 70px !important;
+  padding-left: 295px !important;
+}
+
+.container-padding{
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  /* padding-top: 100px !important; */
 }

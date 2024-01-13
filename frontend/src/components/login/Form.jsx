@@ -1,13 +1,10 @@
+
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-
-
 const Form = () => {
-
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
 
@@ -27,12 +24,12 @@ const Form = () => {
     .then((res)=>{
       toast.dismiss();
       localStorage.setItem("userInfo",JSON.stringify(res.data.userData.data));
-      toast.success("Successfully logged in!");
+      alert("Successfully logged in!");
       router.push("/my-dashboard");
     })
     .catch((err)=>{
       toast.dismiss();
-      toast.error(err);
+      alert("Try Again!!");
     })
   }
 
@@ -54,8 +51,8 @@ const Form = () => {
           type="text"
           className="form-control"
           required
-          onChange={(e)=>setUsername(e.target.value)}
           placeholder="User Name Or Email"
+          onChange={(e)=>setUsername(e.target.value)}
         />
         <div className="input-group-prepend">
           <div className="input-group-text">
@@ -70,8 +67,8 @@ const Form = () => {
           type="password"
           className="form-control"
           required
-          onChange={(e)=>setPassword(e.target.value)}
           placeholder="Password"
+          onChange={(e)=>setPassword(e.target.value)}
         />
         <div className="input-group-prepend">
           <div className="input-group-text">
@@ -95,17 +92,13 @@ const Form = () => {
           Remember me
         </label>
 
-        <a className="btn-fpswd float-end" href="#">
+        {/* <a className="btn-fpswd float-end" href="#">
           Forgot password?
-        </a>
+        </a> */}
       </div>
       {/* End .form-group */}
 
-<<<<<<< Updated upstream
       <button type="submit" className="btn btn-log w-100 btn-thm" onClick={(e)=>submitHandler(e)}>
-=======
-      <button type="submit" className="btn btn-color w-100">
->>>>>>> Stashed changes
         Log In
       </button>
       {/* login button */}

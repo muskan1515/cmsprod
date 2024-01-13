@@ -1,5 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import SmartTable from "./SmartTable";
+import { useEffect } from "react";
+import { useState } from "react";
+import { CldUploadWidget } from "next-cloudinary";
 
 const headCells = [
   {
@@ -18,6 +22,12 @@ const headCells = [
     id: "action",
     numeric: false,
     label: "Action",
+    width: 150,
+  },
+  {
+    id: "files",
+    numeric: false,
+    label: "Files",
     width: 150,
   },
   // {
@@ -170,7 +180,186 @@ const data = [
 ];
 
 export default function Exemple() {
+  const [updatedCode, setUpdatedCode] = useState([]);
+  const [filesUrl, setFilesUrl] = useState("");
+  const [attachment, setAttachment] = useState("");
+
+  const [uploadedData, setUploadedData] = useState([]);
+
+  const [change, setChange] = useState(false);
+
+  const getIndex = (label, datas) => {
+    let index = -1;
+    datas.map((data, idx) => {
+      if (String(data[index].docName) === String(label)) index = idx;
+    });
+    return index;
+  };
+  const handleUpload = (result, label) => {
+    try {
+      const fileUrl = result.info.secure_url;
+
+      const index = getIndex(label, uploadedData);
+      console.log(index);
+      if (index === -1) {
+        const newUploadData = {
+          "docName" : label,
+          "data" : [
+            {
+              "name":result.info.original_filename + "." + result.info.format,
+              "thumbnail_url":result.info.thumbnail_url,
+               "url":result.info.url
+            }
+          ],
+        };
+
+        let oldData = uploadedData;
+        oldData.push(newUploadData);
+        setUploadedData(oldData);
+        setChange(true);
+      } else {
+        let oldData = uploadedData;
+        let wholeDocData = uploadedData[index].data;
+
+        wholeDocData.push({
+          "name":result.info.original_filename + "." + result.info.format,
+          "thumbnail_url":result.info.thumbnail_url,
+          "url":result.info.url
+        });
+
+        oldData[index].data = wholeDocData;
+        console.log(oldData);
+        setUploadedData(oldData);
+        setChange(true);
+      }
+    } catch (error) {
+      console.error("Error handling upload:", error);
+    }
+  };
+
+  const checkIsUploaded = (label) => {
+    // console.log(uploadedData);
+    let selectedField = {};
+    uploadedData.map((data, idx) => {
+      if (String(label) === String(data.docName)) {
+        selectedField = data;
+      }
+    });
+
+    return selectedField;
+  };
+  useEffect(() => {
+    console.log(uploadedData);
+    const getData = () => {
+      const tempData = [];
+      data.map((row, index) => {
+        const isUploaded = checkIsUploaded(row.doc_name);
+        console.log(isUploaded.data, row.doc_name);
+        const updatedRow = {
+          _id: index + 1,
+          serial_num: row.serial_num,
+          doc_name: row.doc_name,
+          files: isUploaded?.data?.map((file) => {
+            return (
+              <div style={{ display: "flex", flexDirection: "column" }} key={idx}>
+                <Image src={file.thumbnail_url} width={90} height={90} />
+                <h4>{file.name}</h4>
+
+                {/*  <CldUploadWidget
+            onUpload={(result)=>handleUpload(result,row.doc_name,true)}
+            uploadPreset="mpbjdclg"
+            options={{
+              cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
+              allowedFormats: [
+                "jpg",
+                "png",
+                "pdf",
+                "csv",
+                "word",
+                "excel"
+              ], // Specify allowed formats
+              maxFiles: 50,
+            }}
+          >
+            {({ open }) => (
+              <div>
+                <button
+                  className="btn btn-color profile_edit_button mb-5"
+                  style={{}}
+                  onClick={open} 
+                >
+                 Dele
+                </button>
+              </div>
+            )}
+          </CldUploadWidget>*/}
+                <a
+                  className="btn btn-color profile_edit_button mb-5"
+                  href={isUploaded.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View
+                </a>
+                <button className="btn btn-color profile_edit_button mb-5">
+                  Delete
+                </button>
+              </div>
+            );
+          }),
+          action: (
+            <CldUploadWidget
+              onUpload={(result) => handleUpload(result, row.doc_name)}
+              uploadPreset="mpbjdclg"
+              options={{
+                cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
+                allowedFormats: [
+                  "jpg",
+                  "png",
+                  "pdf",
+                  "csv",
+                  "word",
+                  "excel",
+                  "pdf",
+                ], // Specify allowed formats
+                maxFiles: 50,
+              }}
+            >
+              {({ open }) => (
+                <div>
+                  <button
+                    className="btn btn-color profile_edit_button mb-5"
+                    style={{}}
+                    onClick={() => open()}
+                  >
+                    Upload Files
+                  </button>
+                </div>
+              )}
+            </CldUploadWidget>
+          ),
+        };
+        tempData.push(updatedRow);
+      });
+      return tempData;
+    };
+    // getData();
+    setChange(false);
+    setUpdatedCode(getData());
+  }, [uploadedData, change]);
+
+  useEffect(() => {
+    if (uploadedData) {
+      console.log(uploadedData);
+    }
+  }, [uploadedData]);
+  console.log(uploadedData);
+
   return (
-    <SmartTable title="Documents Upload" data={data} headCells={headCells} />
+    <SmartTable
+      title="Documents Upload"
+      data={updatedCode}
+      headCells={headCells}
+    />
   );
 }

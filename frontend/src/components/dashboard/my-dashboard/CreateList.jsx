@@ -2,7 +2,7 @@ const CreateList = () => {
   return (
     <>
       <div className="col-lg-12">
-        <div className="row my_profile_setting_input form-group" >
+        <div className="row my_profile_setting_input form-group" style={{marginLeft:"-25px"}}>
           <div className="col-lg-3">
             <input
               type="text"

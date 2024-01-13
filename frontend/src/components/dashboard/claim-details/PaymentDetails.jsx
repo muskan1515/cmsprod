@@ -4,9 +4,10 @@
 import { FaEye } from "react-icons/fa";
 // import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
+import Exemple from "./Exemple_01";
 // import toast from "react-hot-toast";
 
-const Form_01 = ({ claim, edit }) => {
+const PaymentDetails = () => {
   const router = useRouter();
 
   //   const togglePasswordVisibility = () => {
@@ -16,53 +17,46 @@ const Form_01 = ({ claim, edit }) => {
   //   const togglePasswordVisibility_01 = () => {
   //     setPasswordVisible_01(!passwordVisible_01);
   //   };
-  const formatDate = (val) => {
-    const date = new Date(val);
-    const formattedDate = date.toLocaleDateString("en-GB");
-    return formattedDate;
-  };
 
   return (
     <>
-      <div className="row mt-2">
+      <div className=" faq_according row">
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
+            <h2 class="accordion-header" id="headingFive">
               <button
-                class="accordion-button collapsed"
+                class="btn accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
+                data-bs-target="#collapseFive"
                 aria-expanded="false"
-                aria-controls="collapseOne"
+                aria-controls="collapseFive"
                 style={{ padding: "10px 10px 0 25px" }}
               >
-                <h4 className="">Driver Details</h4>
+                <h4 className="">Payment Details</h4>
               </button>
             </h2>
             <div
-              id="collapseOne"
+              id="collapseFive"
               class="accordion-collapse collapse"
-              aria-labelledby="headingOne"
+              aria-labelledby="headingFive"
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
                 <div className="row">
                   <div className="col-lg-6">
-                    <div className="row mt-1">
+                    <div className="row mt-1 mb-1">
                       <div className="col-lg-5 my_profile_setting_input form-group">
                         <label
                           htmlFor=""
                           className="text-color"
                           style={{
-                            // paddingTop: "15px",
                             color: "#1560bd",
                             fontWeight: "",
-                            // marginTop: "-13px",
                           }}
                         >
-                          Name <span class="req-btn">*</span>
+                          Estimate Amount 
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -70,59 +64,23 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.DriverName}
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                    {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Added Date <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          value={formatDate(claim.DriverAddedDate)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
                     </div>
                   </div>
-
                   <div className="col-lg-6">
-                    <div className="row mt-1">
+                    <div className="row mt-1 mb-1">
                       <div className="col-lg-5 my_profile_setting_input form-group">
                         <label
                           htmlFor=""
                           className="text-color"
                           style={{
-                            // paddingTop: "15px",
                             color: "#1560bd",
                             fontWeight: "",
-                            // marginTop: "-13px",
                           }}
                         >
-                          Type of Verification <span class="req-btn">*</span>
+                          Invoice Amount
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -130,7 +88,30 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.DriverTypeOfVerification}
+                          // placeholder="Enter Registration No."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="row mt-1 mb-1">
+                      <div className="col-lg-5 my_profile_setting_input form-group">
+                        <label
+                          htmlFor=""
+                          className="text-color"
+                          style={{
+                            color: "#1560bd",
+                            fontWeight: "",
+                          }}
+                        >
+                          Allowed Amount
+                        </label>
+                      </div>
+                      <div className="col-lg-7">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -138,19 +119,17 @@ const Form_01 = ({ claim, edit }) => {
                   </div>
 
                   <div className="col-lg-6">
-                    <div className="row mt-1">
+                    <div className="row mt-1 mb-1">
                       <div className="col-lg-5 my_profile_setting_input form-group">
                         <label
                           htmlFor=""
                           className="text-color"
                           style={{
-                            // paddingTop: "15px",
                             color: "#1560bd",
                             fontWeight: "",
-                            // marginTop: "-13px",
                           }}
                         >
-                          Modified Date <span class="req-btn">*</span>
+                          Customer Share 
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -158,12 +137,19 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={formatDate(claim.DriverModifiedDate)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
+                      <div className="col-lg-12 text-end">
+                        <button className="btn btn-color mt-1 ">Save</button>
+                      </div>
                     </div>
                   </div>
+                  {/* <div className="col-lg-12">
+                    <div className="row">
+                      <Exemple />
+                    </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -175,4 +161,4 @@ const Form_01 = ({ claim, edit }) => {
   );
 };
 
-export default Form_01;
+export default PaymentDetails;

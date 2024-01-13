@@ -27,7 +27,7 @@ const StatusLog = () => {
           </div>
           <div className="col-lg-12 text-center mt-2">
             <div className="my_profile_setting_input">
-              <button className="btn btn-color w-100">Update Search</button>
+              <button className="btn btn-color w-100">Update Status</button>
             </div>
           </div>
         </div>

@@ -3,7 +3,6 @@ import Seo from "../components/common/seo";
 // import HomeMain from "../components/home";
 import MyDashboard from "../components/dashboard/my-dashboard";
 import { Toaster } from "react-hot-toast";
-
 const index = () => {
   return (
     <>

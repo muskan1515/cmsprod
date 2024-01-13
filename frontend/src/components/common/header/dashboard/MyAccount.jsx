@@ -12,6 +12,11 @@ const MyAccount = () => {
     { id: 5, name: " Log out", ruterPath: "/login" },
   ];
   const route = useRouter();
+  const logoutHandler = ()=>{
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("regionType");
+    route.push("/login");
+  }
   return (
     <>
       <div className="user_set_header">
@@ -44,6 +49,16 @@ const MyAccount = () => {
             {item.name}
           </Link>
         ))}
+        <div onClick={logoutHandler}>
+        <Link
+        
+        key={90}
+        className="dropdown-item"
+        href={""}
+      >
+        Logout
+      </Link>
+      </div>
       </div>
     </>
   );
