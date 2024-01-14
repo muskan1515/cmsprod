@@ -1,5 +1,7 @@
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const Servey = () => {
   const [applicantNumber, setApplicantNumber] = useState();
@@ -27,35 +29,34 @@ const Servey = () => {
 
     const selection = window.getSelection();
     if (selection.rangeCount === 0) return;
-  
+
     const range = selection.getRangeAt(0);
-  
+
     // Create a span element
-    const span = document.createElement('span');
-  
+    const span = document.createElement("span");
+
     switch (command) {
-      case 'bold':
-        span.style.fontWeight = 'bold';
+      case "bold":
+        span.style.fontWeight = "bold";
         break;
-      case 'italic':
-        span.style.fontStyle = 'italic';
+      case "italic":
+        span.style.fontStyle = "italic";
         break;
-      case 'justifyCenter':
-        span.style.textAlign = 'center';
+      case "justifyCenter":
+        span.style.textAlign = "center";
         break;
-      case 'justifyRight':
-        span.style.textAlign = 'right';
+      case "justifyRight":
+        span.style.textAlign = "right";
         break;
-      case 'justifyLeft':
-        span.style.textAlign = 'left';
+      case "justifyLeft":
+        span.style.textAlign = "left";
         break;
       default:
         break;
     }
-  
+
     // Surround the selected content with the created span element
     range.surroundContents(span);
-  
   };
   return (
     <>
@@ -269,13 +270,14 @@ const Servey = () => {
           </div>
           <div className="col-lg-12">
             <div>
-              <textarea
+              <Editor />
+              {/* <textarea
                 value={editorContent}
                 onChange={(e) => setEditorContent(e.target.value)}
                 style={{ width: "100%", height: "150px" }}
-              />
+              /> */}
               <br />
-              <button onClick={() => formatText("bold")}>Bold</button>
+              {/* <button onClick={() => formatText("bold")}>Bold</button>
               <button onClick={() => formatText("italic")}>Italic</button>
               <button onClick={() => formatText("justifyCenter")}>
                 Align Center
@@ -285,7 +287,7 @@ const Servey = () => {
               </button>
               <button onClick={() => formatText("justifyLeft")}>
                 Align Left
-              </button>
+              </button> */}
             </div>
             {/* <textarea
               className="form-control"
@@ -301,14 +303,15 @@ const Servey = () => {
             <hr />
           </div>
           <div className="col-lg-12 mb-2">
-            <textarea
+            {/* <textarea
               className="form-control"
               placeholder="Enter text here..."
               cols="20"
               rows="2"
               wrap="hard"
               required
-            />
+            /> */}
+            <Editor />
           </div>
         </div>
         <div className="col-lg-6">
@@ -317,45 +320,23 @@ const Servey = () => {
             <hr />
           </div>
           <div className="col-lg-12">
-            <textarea
-              className="form-control"
-              placeholder="Enter text here..."
-              cols="20"
-              rows="4"
-              wrap="hard"
-              required
-            />
+            <Editor />
           </div>
           <div className="col-lg-12 mt-3">
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
           </div>
           <div className="col-lg-12">
-            <textarea
-              className="form-control"
-              placeholder="Enter text here..."
-              cols="20"
-              rows="4"
-              wrap="hard"
-              required
-            />
+            <Editor />
           </div>
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
           </div>
           <div className="col-lg-12 mb-2">
-            <textarea
-              className="form-control"
-              placeholder="Enter text here..."
-              cols="20"
-              rows="6"
-              wrap="hard"
-              required
-            />
+            <Editor/>
           </div>
         </div>
-
         <hr />
       </div>
       {/* <div className="row">
