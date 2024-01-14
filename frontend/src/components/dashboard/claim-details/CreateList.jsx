@@ -58,7 +58,7 @@ const CreateList = ({
       <div className="row">
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -72,7 +72,7 @@ const CreateList = ({
                 Name <span class="req-btn">*</span>
               </label>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-6">
               <input
                 type="text"
                 className="form-control"
@@ -80,7 +80,7 @@ const CreateList = ({
                 value={claim.InsuredName}
                 // placeholder="Enter Registration No."
               />
-              <button
+              {/* <button
                 href="#"
                 className="btn btn-color w-50"
                 style={{ marginLeft: "12px" }}
@@ -90,7 +90,7 @@ const CreateList = ({
                 <Link href="#">
                   <span className="flaticon-edit text-light"></span>
                 </Link>
-              </button>
+              </button>*/}
             </div>
           </div>
           {/* <div className="my_profile_setting_input form-group">
@@ -101,7 +101,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -140,7 +140,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -154,7 +154,7 @@ const CreateList = ({
                 Email <span class="req-btn">*</span>
               </label>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-6">
               <input
                 type="text"
                 className="form-control"
@@ -162,8 +162,13 @@ const CreateList = ({
                 value={claim.InsuredMailAddress}
                 // placeholder="Enter Registration No."
               />
+            </div>
+            <div className="col-lg-1">
               {!InsuredMailAddress && (
                 <button
+                  title="Send Mails"
+                  className="btn btn-color flaticon-envelope w60"
+                  // style={{ marginTop: "-1px" }}
                   onClick={() =>
                     sendMailHandler(
                       claim.VehicleRegisteredNumber,
@@ -171,9 +176,7 @@ const CreateList = ({
                       claim.InsuredName
                     )
                   }
-                >
-                  Send Mail
-                </button>
+                ></button>
               )}
             </div>
           </div>
@@ -181,7 +184,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -210,7 +213,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -224,7 +227,7 @@ const CreateList = ({
                 Registration No. <span class="req-btn">*</span>
               </label>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-6">
               <input
                 type="text"
                 className="form-control"
@@ -238,7 +241,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -266,7 +269,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -280,7 +283,7 @@ const CreateList = ({
                 Status <span class="req-btn">*</span>
               </label>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-6">
               <input
                 type="text"
                 className="form-control"
@@ -294,7 +297,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -333,7 +336,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -347,7 +350,7 @@ const CreateList = ({
                 Intimation Date <span class="req-btn">*</span>
               </label>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-6">
               <input
                 type="text"
                 className="form-control"
@@ -361,7 +364,7 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"

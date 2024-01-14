@@ -145,11 +145,11 @@ export default function Exemple({ claims }) {
         city: tempGarage ? tempGarage[1] : "NA",
         state: tempGarage ? tempGarage[2] : "NA",
         assigned_garage: tempGarage ? tempGarage[0] : "NA",
-        case_age: "Not assigned Yet",
-        case_age_insured: "Not assigned Yet",
-        officer: "Not assigned Yet",
-        request_type: "Not assigned Yet",
-        claim_id: "Not assigned Yet",
+        case_age: "N.A.Y.",
+        case_age_insured: "N.A.Y.",
+        officer: "N.A.Y.",
+        request_type: "N.A.Y.",
+        claim_id: "N.A.Y.",
       };
       tempData.push(updatedRow);
     });

@@ -130,13 +130,13 @@ const Index = ({}) => {
                 </div>
                 {/* End Dashboard Navigation */}
 
-                <div className="col-lg-12 mb-2">
+                {/* <div className="col-lg-12 mb-2">
                   <div className="style2">
                     <button className="btn btn-color" onClick={editHandler}>
                       {edit ? "Save" : "Edit"}
                     </button>
                   </div>
-                </div>
+                </div> */}
                 {/* End .col */}
 
                 <div className="row">
@@ -144,7 +144,21 @@ const Index = ({}) => {
                     <div className="">
                       <div className="my_dashboard_review mb-2">
                         <div className="col-lg-12">
-                          <h4 className="mb10">CASE DETAILS</h4>
+                          <div className="row">
+                            <h4 className="col-lg-11">CASE DETAILS</h4>
+                            <div className="col-lg-1">
+                              <button
+                                className="btn btn-color w-100 mb-1" style={{marginTop:"-10px"}}
+                                onClick={editHandler}
+                              >
+                                {edit ? (
+                                  "Save"
+                                ) : (
+                                  <span className="flaticon-edit"></span>
+                                )}
+                              </button>
+                            </div>
+                          </div>
                         </div>
                         <div
                           className=" bg-dark"

@@ -36,6 +36,7 @@ const Form_01 = ({ claim, edit }) => {
                 data-bs-target="#collapseOne"
                 aria-expanded="false"
                 aria-controls="collapseOne"
+                style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Driver Details</h4>
               </button>

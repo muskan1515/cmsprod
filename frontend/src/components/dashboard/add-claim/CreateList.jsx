@@ -7,7 +7,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [phoneNumber_01, setPhoneNumber_01] = useState("");
   const router = useRouter();
 
   const regionType = JSON.parse(localStorage.getItem("regionType"));
@@ -109,6 +109,21 @@ const CreateList = () => {
     }
   };
 
+  const handleInputChange_01 = (e) => {
+    const inputValue = e.target.value;
+
+    // Allow only numeric input
+    const numericValue = inputValue.replace(/\D/g, "");
+
+    // Restrict to 10 digits
+    const truncatedValue = numericValue.slice(0, 10);
+    if (truncatedValue.length === 10) {
+      setInsuredMobileNo2(truncatedValue);
+    }
+
+    setPhoneNumber_01(truncatedValue);
+  };
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -118,7 +133,7 @@ const CreateList = () => {
     // Restrict to 10 digits
     const truncatedValue = numericValue.slice(0, 10);
     if (truncatedValue.length === 10) {
-      setApplicantNumber(truncatedValue);
+      setInsuredMobileNo1(truncatedValue);
     }
 
     setPhoneNumber(truncatedValue);
@@ -397,7 +412,7 @@ const CreateList = () => {
                 type="date"
                 className="form-control"
                 id="propertyTitle"
-                value={setPolicyStartEnd}
+                value={policyStartEnd}
                 onChange={(e) => setPolicyStartEnd(e.target.value)}
                 // placeholder="Enter Registration No."
               />
@@ -516,8 +531,8 @@ const CreateList = () => {
                 className="form-control"
                 id="formGroupExampleInput3"
                 // onChange={(e) => setApplicantNumber(e.target.value)}
-                value={insuredMobileNo1}
-                onChange={(e) => setInsuredMobileNo1(e.target.value)}
+                value={phoneNumber}
+                onChange={handleInputChange}
                 pattern="[0-9]*"
                 title="Please enter only 10 digits"
                 // placeholder="Enter Registration No."
@@ -547,8 +562,8 @@ const CreateList = () => {
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={insuredMobileNo2}
-                onChange={(e) => setInsuredMobileNo2(e.target.value)}
+                value={phoneNumber_01}
+                onChange={handleInputChange_01}
                 // placeholder="Enter Registration No."
               />
             </div>

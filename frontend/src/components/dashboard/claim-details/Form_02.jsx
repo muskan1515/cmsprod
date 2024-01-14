@@ -29,22 +29,23 @@ const Form = ({ claim, edit }) => {
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
+            <h2 class="accordion-header" id="headingSeven">
               <button
                 class="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseThree"
+                data-bs-target="#collapseSeven"
                 aria-expanded="false"
-                aria-controls="collapseThree"
+                aria-controls="collapseSeven"
+                style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Garage Details</h4>
               </button>
             </h2>
             <div
-              id="collapseThree"
+              id="collapseSeven"
               class="accordion-collapse collapse"
-              aria-labelledby="headingThree"
+              aria-labelledby="headingSeven"
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
