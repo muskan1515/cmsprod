@@ -73,6 +73,7 @@
     "pg-protocol": "^1.6.0",
     "pg-types": "^2.2.0",
     "pgpass": "^1.0.5",
+    "pm2": "^5.3.0",
     "postgres-array": "^2.0.0",
     "postgres-bytea": "^1.0.0",
     "postgres-date": "^1.0.7",

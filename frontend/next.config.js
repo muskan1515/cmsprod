@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: false,
   env:{
+<<<<<<< HEAD
     BACKEND_DOMAIN:"http://ec2-16-171-143-35.eu-north-1.compute.amazonaws.com:8080",
+=======
+    BACKEND_DOMAIN:"https://claims-backend-apis.onrender.com",
+>>>>>>> 92f8535eca529b2cf137a35d68232c9df6a75ca5
     CRYPTO_SECRET_KEY: "gjfdkhslbreif847593rewfdkjbcm34woebkdjcnx43oihefdkcnx",
     COOKIE_PASSWORD: "ierfkgj439802vfckdh5438909endck",
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:"dcrq3m6dx",

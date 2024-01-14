@@ -36,6 +36,12 @@ const headCells = [
     label: "Action",
     width: 50,
   },
+  {
+    id: "files",
+    numeric: false,
+    label: "Files",
+    width: 150,
+  },
   // {
   //   id: "files",
   //   numeric: false,
