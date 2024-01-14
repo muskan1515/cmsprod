@@ -9,31 +9,43 @@ const headCells = [
   {
     id: "serial_num",
     numeric: false,
-    label: "Serial No.",
-    width: 100,
+    label: "S.No.",
+    width: 10,
   },
   {
     id: "doc_name",
     numeric: false,
     label: "Document Name",
+    width: 120,
+  },
+  {
+    id: "date",
+    numeric: false,
+    label: "Date",
+    width: 150,
+  },
+  {
+    id: "files",
+    numeric: false,
+    label: "File Name",
     width: 150,
   },
   {
     id: "action",
     numeric: false,
     label: "Action",
-    width: 150,
-  },
-  {
-    id: "files",
-    numeric: false,
-    label: "Files",
-    width: 150,
+    width: 50,
   },
   // {
-  //   id: "subject",
+  //   id: "files",
   //   numeric: false,
-  //   label: "Registration No.",
+  //   label: "File Name",
+  //   width: 150,
+  // },
+  // {
+  //   id: "date",
+  //   numeric: false,
+  //   label: "Date",
   //   width: 150,
   // },
   // {
@@ -328,7 +340,7 @@ export default function Exemple() {
               {({ open }) => (
                 <div>
                   <button
-                    className="btn btn-color profile_edit_button mb-5"
+                    className="btn btn-color w-100"
                     style={{}}
                     onClick={() => open()}
                   >

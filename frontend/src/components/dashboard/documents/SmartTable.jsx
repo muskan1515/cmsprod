@@ -127,8 +127,8 @@ function SmartTable(props) {
             </div>
           )}
           <div className="row">
-            <div className="col-9 h3 text-start">{props.title}</div>
-            <div className="col-lg-3">
+            <div className="col-9 h4 text-start mb-0">{props.title}</div>
+            {/* <div className="col-lg-3">
               <input
                 style={{ height: "40px" }}
                 type="text"
@@ -136,13 +136,13 @@ function SmartTable(props) {
                 placeholder="Search..."
                 onChange={handleSearch}
               />
-            </div>
+            </div> */}
           </div>
           {props.data.length > 0 ? (
             <div className="row mt-3">
               <div className="smartTable-tableContainer">
                 <table
-                  className={"smartTable-table table table-striped border"}
+                  className={"smartTable-table table table-striped border text-start"}
                   style={{ minWidth: tableWidth }}
                 >
                   <thead className="smartTable-thead">
