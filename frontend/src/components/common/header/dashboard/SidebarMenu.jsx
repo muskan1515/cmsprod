@@ -120,6 +120,18 @@ const SidebarMenu = () => {
                       {/* <span> Message</span> */}
                     </Link>
                   </li>
+                  <li
+                    className={`treeview ${
+                      isSinglePageActive("/send-mail", route.pathname)
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <Link href="/send-mail" title="Send Mail">
+                      <i className="flaticon-envelope"></i>
+                      {/* <span> Message</span> */}
+                    </Link>
+                  </li>
                 </ul>
               </li>
               {/* End Main */}

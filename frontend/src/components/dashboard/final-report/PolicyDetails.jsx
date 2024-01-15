@@ -773,7 +773,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
       <hr style={{ color: "#2e008b", height: "1px" }} />
       <div className="row">
-        <div className="col-lg-8">
+        <div className="col-lg-8" style={{ borderRight: "1px solid grey" }}>
           <h4 className="text-dark" style={{ fontSize: "21px" }}>
             Vehicle Details :
           </h4>

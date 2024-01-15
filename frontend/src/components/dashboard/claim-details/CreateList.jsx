@@ -163,7 +163,7 @@ const CreateList = ({
                 // placeholder="Enter Registration No."
               />
             </div>
-            <div className="col-lg-1">
+            {/* <div className="col-lg-1">
               {!InsuredMailAddress && (
                 <button
                   title="Send Mails"
@@ -178,7 +178,7 @@ const CreateList = ({
                   }
                 ></button>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
 

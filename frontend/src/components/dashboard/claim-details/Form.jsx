@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 
 const Form = ({ claim, edit }) => {
   const router = useRouter();
-  
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -22,6 +21,10 @@ const Form = ({ claim, edit }) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
+  };
+
+  const editHandler = () => {
+    setEdit(true);
   };
 
   return (
@@ -41,6 +44,15 @@ const Form = ({ claim, edit }) => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Vehicle Details</h4>
+                <div className="col-lg-1 m-1">
+                  <button
+                    className="btn-thm mb-1"
+                    style={{ marginTop: "-10px" }}
+                    onClick={editHandler}
+                  >
+                    {edit ? "Save" : <span className="flaticon-edit"></span>}
+                  </button>
+                </div>
               </button>
             </h2>
             {/* <div

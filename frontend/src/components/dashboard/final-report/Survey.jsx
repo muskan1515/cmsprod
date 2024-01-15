@@ -62,119 +62,121 @@ const Servey = () => {
     <>
       <div className="row">
         <div className="col-lg-6" style={{ borderRight: "1px solid black" }}>
-          <div className="col-lg-12">
-            <h4>Account Details :</h4>
-            <hr />
-          </div>
-          <div className="col-lg-12">
-            <div className="row mt-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  Date of Accident <span class="text-danger">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                {/* <input
+          <div className="row">
+            <div className="col-lg-12">
+              <h4>Account Details :</h4>
+              <hr />
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1">
+                <div className="col-lg-3 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-2"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Date of Accident <span class="text-danger">*</span>
+                  </label>
+                </div>
+                <div className="col-lg-8">
+                  {/* <input
               type="date"
               className="form-control"
               id="propertyTitle"
             /> */}
-                <MyDatePicker />
+                  <MyDatePicker />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-lg-12">
-            <div className="row mt-1 mb-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    color: "#2e008b",
-                    fontWeight: "",
-                  }}
-                >
-                  Time of Accident <span class="text-danger">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
-                  // placeholder="Enter Registration No."
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-12">
-            <div className="row">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  Place of Accident <span class="text-danger">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
-                  // placeholder="Enter Registration No."
-                />
+            <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-3 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-2"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Time of Accident <span class="text-danger">*</span>
+                  </label>
+                </div>
+                <div className="col-lg-7">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
               </div>
             </div>
-            {/* <div className="my_profile_setting_input form-group">
+            <div className="col-lg-12">
+              <div className="row">
+                <div className="col-lg-3 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-2"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Place of Accident <span class="text-danger">*</span>
+                  </label>
+                </div>
+                <div className="col-lg-7">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+              {/* <div className="my_profile_setting_input form-group">
           <label htmlFor="propertyTitle">Property Title</label>
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
-          </div>
-          <div className="col-lg-12">
-            <div className="row">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  Place of Survey <span class="text-danger">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
-                  // placeholder="Enter Registration No."
-                />
-              </div>
             </div>
-            {/* <div className="my_profile_setting_input form-group">
+            <div className="col-lg-12">
+              <div className="row">
+                <div className="col-lg-3 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-2"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Place of Survey <span class="text-danger">*</span>
+                  </label>
+                </div>
+                <div className="col-lg-7">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+              {/* <div className="my_profile_setting_input form-group">
           <label htmlFor="propertyTitle">Property Title</label>
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
+            </div>
           </div>
           <hr />
 
@@ -334,7 +336,7 @@ const Servey = () => {
             <hr />
           </div>
           <div className="col-lg-12 mb-2">
-            <Editor/>
+            <Editor />
           </div>
         </div>
         <hr />

@@ -3,14 +3,6 @@ import SingleChatBoxReply from "./SingleChatBoxReplay";
 const ChatboxContent = () => {
   return (
     <>
-      <div
-        className="inbox_chatting_box mt-2"
-        style={{ border: "1px solid #f2f2f2", borderRadius: "5px" }}
-      >
-        <ul className="chatting_content">
-          <SingleChatBoxReply />
-        </ul>
-      </div>
       <div className="mi_text mt-2">
         <div className="message_input">
           <form className="form-inline position-relative">
@@ -27,6 +19,14 @@ const ChatboxContent = () => {
             </button>
           </form>
         </div>
+      </div>
+      <div
+        className="inbox_chatting_box mt-2"
+        style={{ border: "1px solid #f2f2f2", borderRadius: "5px" }}
+      >
+        <ul className="chatting_content">
+          <SingleChatBoxReply />
+        </ul>
       </div>
 
       {/* End inbox_chatting_box */}
