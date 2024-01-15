@@ -15,6 +15,9 @@ const Form = ({ claim, edit }) => {
     return formattedDate;
   };
 
+  const editHandler = () => {
+    setEdit(true);
+  };
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
   //   };
@@ -40,6 +43,15 @@ const Form = ({ claim, edit }) => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Garage Details</h4>
+                <div className="col-lg-1 m-1">
+                  <button
+                    className="btn-thm mb-1"
+                    style={{ marginTop: "-10px" }}
+                    onClick={editHandler}
+                  >
+                    {edit ? "Save" : <span className="flaticon-edit"></span>}
+                  </button>
+                </div>
               </button>
             </h2>
             <div

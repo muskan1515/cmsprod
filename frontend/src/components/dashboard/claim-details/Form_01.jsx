@@ -22,6 +22,10 @@ const Form_01 = ({ claim, edit }) => {
     return formattedDate;
   };
 
+  const editHandler = () => {
+    setEdit(true);
+  };
+
   return (
     <>
       <div className="row mt-2">
@@ -39,6 +43,15 @@ const Form_01 = ({ claim, edit }) => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Driver Details</h4>
+                <div className="col-lg-1 m-1">
+                  <button
+                    className="btn-thm mb-1"
+                    style={{ marginTop: "-10px" }}
+                    onClick={editHandler}
+                  >
+                    {edit ? "Save" : <span className="flaticon-edit"></span>}
+                  </button>
+                </div>
               </button>
             </h2>
             <div

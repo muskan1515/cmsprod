@@ -7,8 +7,12 @@ import { useRouter } from "next/router";
 import Exemple from "./Exemple_01";
 // import toast from "react-hot-toast";
 
-const UploadReort = () => {
+const UploadReort = (edit) => {
   const router = useRouter();
+
+  const editHandler = () => {
+    setEdit(true);
+  };
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -35,6 +39,15 @@ const UploadReort = () => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Upload Report</h4>
+                <div className="col-lg-1 m-1">
+                  <button
+                    className="btn-thm mb-1"
+                    style={{ marginTop: "-10px" }}
+                    onClick={editHandler}
+                  >
+                    {edit ? "Save" : <span className="flaticon-edit"></span>}
+                  </button>
+                </div>
               </button>
             </h2>
             <div

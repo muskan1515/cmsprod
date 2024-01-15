@@ -7,8 +7,12 @@ import { useRouter } from "next/router";
 import Exemple from "./Exemple_01";
 // import toast from "react-hot-toast";
 
-const PaymentDetails = () => {
+const PaymentDetails = (edit) => {
   const router = useRouter();
+
+  const editHandler = () => {
+    setEdit(true);
+  };
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -35,6 +39,15 @@ const PaymentDetails = () => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Payment Details</h4>
+                <div className="col-lg-1 m-1">
+                  <button
+                    className="btn-thm mb-1"
+                    style={{ marginTop: "-10px" }}
+                    onClick={editHandler}
+                  >
+                    {edit ? "Save" : <span className="flaticon-edit"></span>}
+                  </button>
+                </div>
               </button>
             </h2>
             <div
@@ -56,7 +69,7 @@ const PaymentDetails = () => {
                             fontWeight: "",
                           }}
                         >
-                          Estimate Amount 
+                          Estimate Amount
                         </label>
                       </div>
                       <div className="col-lg-7">
@@ -129,7 +142,7 @@ const PaymentDetails = () => {
                             fontWeight: "",
                           }}
                         >
-                          Customer Share 
+                          Customer Share
                         </label>
                       </div>
                       <div className="col-lg-7">

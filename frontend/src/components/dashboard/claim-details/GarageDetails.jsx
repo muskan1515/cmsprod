@@ -7,8 +7,12 @@ import { useRouter } from "next/router";
 import Exemple from "./Exemple_01";
 // import toast from "react-hot-toast";
 
-const GarageDetails = () => {
+const GarageDetails = (edit) => {
   const router = useRouter();
+
+  const editHandler = () => {
+    setEdit(true);
+  };
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -35,6 +39,15 @@ const GarageDetails = () => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Garage Details</h4>
+                <div className="col-lg-1 m-1">
+                  <button
+                    className="btn-thm mb-1"
+                    style={{ marginTop: "-10px" }}
+                    onClick={editHandler}
+                  >
+                    {edit ? "Save" : <span className="flaticon-edit"></span>}
+                  </button>
+                </div>
               </button>
             </h2>
             <div
@@ -196,102 +209,6 @@ const GarageDetails = () => {
                       </td>
                     </tr>
                   </table>
-                  {/* <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Estimate Amount
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Invoice Amount
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Allowed Amount
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                        />
-                      </div>
-                    </div>
-                  </div> */}
-
-                  {/* <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Customer Share
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                        />
-                      </div>
-                      <div className="col-lg-12 text-end">
-                        <button className="btn btn-color mt-1 ">Save</button>
-                      </div>
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>

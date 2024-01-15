@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import ChatboxContent from "./ChatboxContent";
-import CreateList from "./CreateList";
+// import CreateList from "./CreateList";
 import Form from "./Form";
 import Form_01 from "./Form_01";
 import Form_02 from "./Form_02";
@@ -14,6 +14,8 @@ import Exemple from "./Exemple";
 import UploadReort from "./UploadReport";
 import PaymentDetails from "./PaymentDetails";
 import GarageDetails from "./GarageDetails";
+import CreateList from "./CreateList";
+import CreateList_01 from "./CreateList_01";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -149,13 +151,16 @@ const Index = ({}) => {
                               CASE DETAILS
                               <button
                                 className="btn-thm m-1"
-                                style={{  }}
+                                style={{}}
                                 onClick={editHandler}
                               >
                                 {edit ? (
                                   "Save"
                                 ) : (
-                                  <span className="flaticon-edit" style={{fontSize:"14px"}}></span>
+                                  <span
+                                    className="flaticon-edit"
+                                    style={{ fontSize: "14px" }}
+                                  ></span>
                                 )}
                               </button>
                             </h4>
@@ -171,6 +176,9 @@ const Index = ({}) => {
                             marginBottom: "5px",
                           }}
                         ></div>
+                        <div className="col-lg-12">
+                          <CreateList_01 />
+                        </div>
                         <CreateList
                           claim={claim}
                           InsuredName={InsuredName}
