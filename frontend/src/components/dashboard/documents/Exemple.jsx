@@ -221,13 +221,13 @@ export default function Exemple() {
       console.log(index);
       if (index === -1) {
         const newUploadData = {
-          "docName" : label,
-          "data" : [
+          docName: label,
+          data: [
             {
-              "name":result.info.original_filename + "." + result.info.format,
-              "thumbnail_url":result.info.thumbnail_url,
-               "url":result.info.url
-            }
+              name: result.info.original_filename + "." + result.info.format,
+              thumbnail_url: result.info.thumbnail_url,
+              url: result.info.url,
+            },
           ],
         };
 
@@ -240,9 +240,9 @@ export default function Exemple() {
         let wholeDocData = uploadedData[index].data;
 
         wholeDocData.push({
-          "name":result.info.original_filename + "." + result.info.format,
-          "thumbnail_url":result.info.thumbnail_url,
-          "url":result.info.url
+          name: result.info.original_filename + "." + result.info.format,
+          thumbnail_url: result.info.thumbnail_url,
+          url: result.info.url,
         });
 
         oldData[index].data = wholeDocData;
@@ -279,7 +279,10 @@ export default function Exemple() {
           doc_name: row.doc_name,
           files: isUploaded?.data?.map((file) => {
             return (
-              <div style={{ display: "flex", flexDirection: "column" }} key={idx}>
+              <div
+                style={{ display: "flex", flexDirection: "column" }}
+                key={idx}
+              >
                 <Image src={file.thumbnail_url} width={90} height={90} />
                 <h4>{file.name}</h4>
 

@@ -416,7 +416,10 @@ const CreateList = () => {
                 onChange={(e) => setPolicyStartEnd(e.target.value)}
                 // placeholder="Enter Registration No."
               />
-              {/* <MyDatePicker /> */}
+              {/* <MyDatePicker
+                value={policyStartEnd}
+                onChange={(e) => setPolicyStartEnd(e.target.value)}
+              /> */}
             </div>
           </div>
         </div>

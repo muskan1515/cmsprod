@@ -31,12 +31,11 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
-                        marginRight: "50px",
                       }}
                     >
                       Name
@@ -58,13 +57,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Phone
@@ -86,20 +84,19 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-2 text-color"
+                      className="col-lg-2 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Email
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-10 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -116,20 +113,19 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color"
+                      className="col-lg-7 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Registration No.
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -144,20 +140,19 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Insurer ClaimID
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -172,13 +167,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Status
@@ -202,19 +196,18 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
-                        marginRight: "50px",
                       }}
                     >
                       Survey Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -229,20 +222,19 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Intimation Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -257,13 +249,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Request Type
@@ -287,13 +278,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color"
+                      className="col-lg-8 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       Endorsement Doc.
@@ -313,13 +303,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
-                        marginRight: "50px",
                       }}
                     >
                       SPOC Name
@@ -341,12 +330,11 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
-                        marginRight: "50px",
                       }}
                     >
                       SPOC Name

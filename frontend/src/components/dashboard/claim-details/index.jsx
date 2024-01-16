@@ -215,7 +215,7 @@ const Index = ({}) => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        {!editCase ? <div className="col-lg-12">
+                        {!editCase ? <div className="col-lg-12 m-2">
                           <CreateList_01 
                           claim={claim}
                           InsuredName={InsuredName}
@@ -255,7 +255,7 @@ const Index = ({}) => {
                         className="row mt-2 mb-2"
                         style={{ marginLeft: "-15px" }}
                       >
-                      {editCase && <div className="col-lg-12">
+                      <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
                           {/* <div
@@ -301,10 +301,10 @@ const Index = ({}) => {
                           VehicleFuelType={VehicleFuelType}
                           setVehicleFuelType={setVehicleFuelType}
                           />
-                        </div>}
+                        </div>
                       </div>
                       <div className="row mt-2" style={{ marginLeft: "-15px" }}>
-                       {editCase &&  <div className="col-lg-12">
+                        <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
                           {/* <div
@@ -328,11 +328,12 @@ const Index = ({}) => {
                           setVerification={setVerification}
 
                           />
-                        </div>}
+                        </div>
                       </div>
 
                       <div className="row mt-2" style={{ marginLeft: "-15px" }}>
-                        {editCase && <div className="col-lg-12">
+                        {/* {editCase && */}
+                         <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
                           {/* <div
@@ -357,7 +358,7 @@ const Index = ({}) => {
                           GarageAddedBy={GarageAddedBy}
                           setGarageAddedBy={setGarageAddedBy}
                            />
-                        </div>}
+                        </div>
                       </div>
 
                       <div className="row mb-2" style={{ marginLeft: "-15px" }}>

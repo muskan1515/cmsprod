@@ -132,7 +132,7 @@ function SmartTable(props) {
             <div className="col-9 h3">{props.title}</div>
             <div className="col-lg-3">
               <input
-              style={{height:"40px"}}
+                style={{ height: "40px" }}
                 type="text"
                 className="form-control"
                 placeholder="Search..."
@@ -155,7 +155,11 @@ function SmartTable(props) {
                             id={headCell.id}
                             key={headCell.id}
                             scope="col"
-                            style={{ width: headCell.width ?? "auto", backgroundColor:"#2e008b", color:"white" }}
+                            style={{
+                              width: headCell.width ?? "auto",
+                              backgroundColor: "#2e008b",
+                              color: "white",
+                            }}
                             className={
                               headCell.sortable !== false
                                 ? "smartTable-pointer"
@@ -186,7 +190,10 @@ function SmartTable(props) {
                         <tr key={"tr_" + idx}>
                           {props.headCells.map((headCell, idxx) => {
                             return (
-                              <td style={{color:"black", fontSize:"15px"}} key={"td_" + idx + "_" + idxx}>
+                              <td
+                                style={{ color: "black", fontSize: "15px" }}
+                                key={"td_" + idx + "_" + idxx}
+                              >
                                 {headCell.render
                                   ? headCell.render(row)
                                   : row[headCell.id]}
@@ -201,17 +208,28 @@ function SmartTable(props) {
               </div>
             </div>
           ) : (
-            <div className="row p-1">
-              <div className="smartTable-noDataFound col-12">
-                <h4>NO DATA FOUND</h4>
+            <div className="row">
+              <div
+                className="smartTable-noDataFound col-12"
+                style={{ marginTop: "110px", marginBottom: "40px" }}
+              >
+                <div className="ring">
+                  Loading
+                  <span className="load"></span>
+                </div>
               </div>
             </div>
+            // <div className="row p-1">
+            //   <div className="smartTable-noDataFound col-12">
+            //     <h4>NO DATA FOUND</h4>
+            //   </div>
+            // </div>
           )}
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
-              <div className="col-12 text-end p-3">
+              {/* <div className="col-12 text-end p-3">
                 {props.data.length > 0 ? props.data.length : 0} Rows
-              </div>
+              </div> */}
             </div>
           ) : (
             <div className="row">

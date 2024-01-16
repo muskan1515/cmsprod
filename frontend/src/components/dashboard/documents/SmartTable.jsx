@@ -142,7 +142,9 @@ function SmartTable(props) {
             <div className="row mt-3">
               <div className="smartTable-tableContainer">
                 <table
-                  className={"smartTable-table table table-striped border text-start"}
+                  className={
+                    "smartTable-table table table-striped border text-start"
+                  }
                   style={{ minWidth: tableWidth }}
                 >
                   <thead className="smartTable-thead">
@@ -153,7 +155,11 @@ function SmartTable(props) {
                             id={headCell.id}
                             key={headCell.id}
                             scope="col"
-                            style={{ width: headCell.width ?? "auto" }}
+                            style={{
+                              width: headCell.width ?? "auto",
+                              backgroundColor: "#2e008b",
+                              color: "white",
+                            }}
                             className={
                               headCell.sortable !== false
                                 ? "smartTable-pointer"
@@ -207,9 +213,9 @@ function SmartTable(props) {
           )}
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
-              <div className="col-12 text-end p-3">
+              {/* <div className="col-12 text-end p-3">
                 {data.length > 0 ? data.length : 0} Rows
-              </div>
+              </div> */}
             </div>
           ) : (
             <div className="row">

@@ -22,6 +22,7 @@ const index = () => {
             <div className="col-lg-12 text-center">
               {/* <ErrorPageContent /> */}
               <Exemple />
+              <button className="btn btn-color">Submit</button>
             </div>
           </div>
         </div>
