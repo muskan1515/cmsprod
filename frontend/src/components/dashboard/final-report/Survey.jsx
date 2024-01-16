@@ -1,9 +1,13 @@
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
-import { Editor } from "react-draft-wysiwyg";
+// import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import { Editor } from "draft-js";
 
-const Servey = () => {
+
+
+const Servey = ({}) => {
+  
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -22,42 +26,46 @@ const Servey = () => {
     setPhoneNumber(truncatedValue);
   };
 
+  // const Editor = SomeComponent.Editor;
   const [editorContent, setEditorContent] = useState("");
 
   const formatText = (command) => {
-    const selectedText = window.getSelection().toString();
-
-    const selection = window.getSelection();
-    if (selection.rangeCount === 0) return;
-
-    const range = selection.getRangeAt(0);
-
-    // Create a span element
-    const span = document.createElement("span");
-
-    switch (command) {
-      case "bold":
-        span.style.fontWeight = "bold";
-        break;
-      case "italic":
-        span.style.fontStyle = "italic";
-        break;
-      case "justifyCenter":
-        span.style.textAlign = "center";
-        break;
-      case "justifyRight":
-        span.style.textAlign = "right";
-        break;
-      case "justifyLeft":
-        span.style.textAlign = "left";
-        break;
-      default:
-        break;
+    if (typeof window !== 'undefined') {
+      const selectedText = window.getSelection().toString();
+  
+      const selection = window.getSelection();
+      if (selection.rangeCount === 0) return;
+  
+      const range = selection.getRangeAt(0);
+  
+      // Create a span element
+      const span = document.createElement("span");
+  
+      switch (command) {
+        case "bold":
+          span.style.fontWeight = "bold";
+          break;
+        case "italic":
+          span.style.fontStyle = "italic";
+          break;
+        case "justifyCenter":
+          span.style.textAlign = "center";
+          break;
+        case "justifyRight":
+          span.style.textAlign = "right";
+          break;
+        case "justifyLeft":
+          span.style.textAlign = "left";
+          break;
+        default:
+          break;
+      }
+  
+      // Surround the selected content with the created span element
+      range.surroundContents(span);
     }
-
-    // Surround the selected content with the created span element
-    range.surroundContents(span);
   };
+  
   return (
     <>
       <div className="row">
@@ -272,7 +280,7 @@ const Servey = () => {
           </div>
           <div className="col-lg-12">
             <div>
-              <Editor />
+             {/*  <Editor/>*/}
               {/* <textarea
                 value={editorContent}
                 onChange={(e) => setEditorContent(e.target.value)}
@@ -313,7 +321,7 @@ const Servey = () => {
               wrap="hard"
               required
             /> */}
-            <Editor />
+           {/** <Editor /> */}
           </div>
         </div>
         <div className="col-lg-6">
@@ -322,21 +330,21 @@ const Servey = () => {
             <hr />
           </div>
           <div className="col-lg-12">
-            <Editor />
+            {/** <Editor /> */}
           </div>
           <div className="col-lg-12 mt-3">
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
           </div>
           <div className="col-lg-12">
-            <Editor />
+            {/** <Editor /> */}
           </div>
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
           </div>
           <div className="col-lg-12 mb-2">
-            <Editor />
+           {/** <Editor /> */}
           </div>
         </div>
         <hr />

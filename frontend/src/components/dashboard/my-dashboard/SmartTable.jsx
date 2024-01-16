@@ -6,6 +6,8 @@ import SVGChevronLeft from "./icons/SVGChevronLeft";
 import SVGChevronRight from "./icons/SVGChevronRight";
 
 function SmartTable(props) {
+
+  console.log(props.setMajorSearch);
   const [loading, setLoading] = useState(false);
   const [sortDesc, setSortDesc] = useState({});
   const [tableWidth, setTableWidth] = useState(1000);
@@ -134,7 +136,7 @@ function SmartTable(props) {
                 type="text"
                 className="form-control"
                 placeholder="Search..."
-                onChange={handleSearch}
+                onChange={(e)=>props.setMajorSearch(e.target.value)}
               />
             </div>
           </div>

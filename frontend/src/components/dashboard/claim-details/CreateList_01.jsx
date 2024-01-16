@@ -2,7 +2,24 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
-const CreateList_01 = ({}) => {
+const CreateList_01 = ({
+  claim,
+  InsuredName,
+  RegisteredNumber,
+  subType,
+  InsuredMobileNo1,
+  ClaimNumber,
+  InsuredMailAddress,
+  requestType
+
+}) => {
+
+  const formatDate = (val) => {
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString("en-GB");
+    return formattedDate;
+  };
+  
   return (
     <>
       <div className="col-lg-12">
@@ -33,7 +50,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      Shubhendra Patel
+                      {claim.InsuredName}
                     </label>
                   </div>
                 </td>
@@ -61,7 +78,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      9977543620
+                      {claim.InsuredMobileNo1}
                     </label>
                   </div>
                 </td>
@@ -89,7 +106,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      patelshubhendra@gmail.com
+                      {claim.InsuredMailAddress}
                     </label>
                   </div>
                 </td>
@@ -119,7 +136,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      123456
+                     {claim.VehicleRegisteredNumber}
                     </label>
                   </div>
                 </td>
@@ -147,7 +164,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      12345
+                      {claim.ClaimNumber}
                     </label>
                   </div>
                 </td>
@@ -204,7 +221,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      Motor
+                      {subType}
                     </label>
                   </div>
                 </td>
@@ -232,7 +249,7 @@ const CreateList_01 = ({}) => {
                         fontWeight:"bold",
                       }}
                     >
-                      11/19/1997
+                      {formatDate(claim.ClaimAddedDateTime)}
                     </label>
                   </div>
                 </td>

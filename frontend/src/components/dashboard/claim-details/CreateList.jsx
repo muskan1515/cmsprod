@@ -13,6 +13,12 @@ const CreateList = ({
   InsuredMobileNo2,
   setInsuredMobileNo2,
   requestTypeTypes,
+  setRequestType,
+  requestType,
+  setSubType,
+  subType,
+  ClaimNumber,
+  setClaimNumber,
   subTypeTypes,
   edit,
   setIsStatusModal,
@@ -77,7 +83,9 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={claim.InsuredName}
+                value={InsuredName ? InsuredName : claim.InsuredName}
+                onChange={(e)=>setInsuredName(e.target.value)}
+                disabled={!edit}
                 // placeholder="Enter Registration No."
               />
               {/* <button
@@ -116,12 +124,14 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              {claim.InsuredMobileNo1 && (
+              {claim.InsuredMobileNo1  && (
                 <input
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={claim.InsuredMobileNo1}
+                  value={InsuredMobileNo1 ? InsuredMobileNo1 : claim.InsuredMobileNo1}
+                  onChange={(e)=>setInsuredMobileNo1(e.target.value)}
+                  disabled={!edit}
                   // placeholder="Enter Registration No."
                 />
               )}
@@ -130,7 +140,9 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={claim.InsuredMobileNo2}
+                  value={InsuredMobileNo2 ? InsuredMobileNo2 : claim.InsuredMobileNo2}
+                  onChange={(e)=>setInsuredMobileNo2(e.target.value)}
+                  disabled={!edit}
                   // placeholder="Enter Registration No."
                 />
               )}
@@ -159,7 +171,9 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={claim.InsuredMailAddress}
+                value={InsuredMailAddress ? InsuredMailAddress : claim.InsuredMailAddress}
+                  onChange={(e)=>setInsuredMailAddress(e.target.value)}
+                  disabled={!edit}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -260,7 +274,9 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={claim.ClaimNumber}
+                value={ClaimNumber ? ClaimNumber : claim.ClaimNumber}
+                onChange={(e)=>setClaimNumber(e.target.value)}
+                disabled={!edit}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -312,7 +328,7 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <select disabled={!edit}>
+              <select disabled={!edit} value={!subType ? claim?.SurveyType : subType} onChange={(e)=>setSubType(e.target.value)}>
                 {subTypeTypes.map((sub, index) => {
                   return (
                     <option
@@ -352,7 +368,6 @@ const CreateList = ({
             </div>
             <div className="col-lg-6">
               <input
-                type="text"
                 className="form-control"
                 id="propertyTitle"
                 value={formatDate(claim.ClaimAddedDateTime)}
@@ -379,7 +394,7 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <select disabled={!edit}>
+              <select disabled={!edit} value={!requestType ? "" : requestType} onChange={(e)=>setRequestType(e.target.value)}>
                 {requestTypeTypes.map((sub, index) => {
                   return (
                     <option

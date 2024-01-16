@@ -4,7 +4,7 @@ import ModalVideo from "react-modal-video";
 import PolicyDetails from "./PolicyDetails";
 import Servey from "./Survey";
 
-const PropertyVideo = () => {
+const PropertyVideo = ({SomeComponent}) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
@@ -14,6 +14,7 @@ const PropertyVideo = () => {
         isOpen={isOpen}
         videoId="oqNZOOWF8qM"
         onClose={() => setOpen(false)}
+        allow="picture-in-picture"
       />
       <ul className="nav nav-tabs" id="myTab" role="tablist">
         <li className="nav-item">
@@ -100,7 +101,7 @@ const PropertyVideo = () => {
         <div className="tab-pane fade show " id="description" role="tabpanel">
           <div className="property_video">
             <div className="thumb">
-              <Servey />
+              <Servey SomeComponent={SomeComponent} />
               {/* <Image
                 width={692}
                 height={390}

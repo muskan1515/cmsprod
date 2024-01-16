@@ -126,8 +126,9 @@ const data = [
   //   },
 ];
 
-export default function Exemple({ claims }) {
+export default function Exemple({ claims , setMajorSearch }) {
   const [updatedData, setUpdatedData] = useState([]);
+
   let tempData = [];
   useEffect(() => {
     claims?.map((claim, index) => {
@@ -157,6 +158,6 @@ export default function Exemple({ claims }) {
   }, [claims]);
   console.log(updatedData);
   return (
-    <SmartTable title="My Claims" data={updatedData} headCells={headCells} />
+    <SmartTable title="My Claims" data={updatedData} headCells={headCells} setMajorSearch={setMajorSearch}/>
   );
 }

@@ -25,25 +25,64 @@ const Index = ({}) => {
   const leadId = url.split("/claim-details?leadId=")[1];
   const [claim, setClaim] = useState({});
   const [InsuredName, setInsuredName] = useState(
-    claim?.InsuredName ? claim.InsuredName : ""
+    claim?.InsuredName
   );
   const [InsuredMailAddress, setInsuredMailAddress] = useState(
-    claim?.InsuredMailAddress ? claim.InsuredMailAddress : ""
+    claim?.InsuredMailAddress 
   );
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState(
-    claim?.InsuredMobileNo1 ? claim.InsuredMobileNo1 : ""
+    claim?.InsuredMobileNo1
   );
   const [InsuredMobileNo2, setInsuredMobileNo2] = useState(
-    claim?.InsuredMobileNo2 ? claim.InsuredMobileNo2 : ""
+    claim?.InsuredMobileNo2
   );
   const [subType, setSubType] = useState("Motor");
   const [requestType, setRequestType] = useState("Spot");
 
+  const [ClaimNumber,setClaimNumber] = useState( claim?.ClaimNumber ? claim?.ClaimNumber : "");
+
+  const [VehicleModel,setVehicleModel]=useState(claim.VehicleMakeVariantModelColor ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}` : "")
+  const [RegisteredNumber,setRegisteredNumber]=useState(claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : "");
+  const [EngineType,setEngineType] = useState(claim?.VehicleModeOfCheck ? claim?.VehicleModeOfCheck : "");
+  const [RegisteredOwner,setRegisteredOwner]=useState(claim?.VehicleRegisteredOwner ? claim?.VehicleRegisteredOwner : "");
+  const [DateRegistration,setDateRegistration]=useState(claim?.VehicleDateOfRegistration ? claim?.VehicleDateOfRegistration : "");
+  const [PUCNumber,setPUCNumber] = useState(claim?.VehiclePucNumber ? claim?.VehiclePucNumber : "");
+  const [TransferDate,setTransferDate] = useState(claim?.VehicleTransferDate ? claim?.VehicleTransferDate : "");
+  const [EngineNumber,setEngineNumber] = useState(claim?.VehicleEngineNumber ? claim?.VehicleEngineNumber : "");
+  const [AddedBy , setAddedBy] = useState(claim?.VehicleAddedBy ? claim?.VehicleAddedBy : "");
+  const [IssuingAuthority,setIssuingAuthority]=useState(claim?.IssuingAuthority ? claim?.IssuingAuthority : "");
+  const [LicenseNumber,setLicenseNumber]=useState(claim?.LicenseNumber ? claim?.LicenseNumber : "");
+  const [LicenseType,setLicenseType]=useState(claim?.LicenseType ? claim?.LicenseType : "");
+  const [VehicleChassisNumber,setVehicleChassisNumber]=useState(claim?.VehicleChassisNumber ? claim?.VehicleChassisNumber : "");
+  const [VehicleFuelType,setVehicleFuelType] = useState(claim?.VehicleFuelType ? claim?.VehicleFuelType : "");
+
+
+  const [DriverName,setDriverName] = useState(claim?.DriverName ? claim?.DriverName : "");
+  const [DriverAddedDate,setDriverAddedDate] = useState(claim?.DriverAddedDate ? claim?.DriverAddedDate : "");
+  const [Verification,setVerification]=useState(claim?.DriverTypeOfVerification ? claim?.DriverTypeOfVerification : "");
+  
+
+  const [GarageNameAndAddress,setGarageNameAndAddress]=useState(claim?.GarageNameAndAddress ? claim?.GarageNameAndAddress : "");
+  const [GarageContactNo1,setGarageContactNo1] = useState(claim?.GarageContactNo1 ? claim?.GarageContactNo1 : "");
+  const [GarageContactNo2,setGarageContactNo2] = useState(claim?.GarageContactNo2 ? claim?.GarageContactNo2 : "");
+  const [GarageAddedBy,setGarageAddedBy]=useState(claim?.GarageAddedBy ? claim?.GarageAddedBy : "");
+
+  const [editCase, setEditCase] = useState(false);
+  const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
 
-  const editHandler = () => {
-    setEdit(true);
+
+
+
+  const editHandler = (value) => {
+    if(value === 1){
+      setEditCase((prop)=>!prop);
+    }
+    else if(value === 2){
+      setEditVehichle((prop)=>!prop);
+    }
   };
+
 
   const subTypeTypes = [
     { id: 1, type: "Motor", value: "Motor" },
@@ -151,10 +190,10 @@ const Index = ({}) => {
                               CASE DETAILS
                               <button
                                 className="btn-thm m-1"
-                                style={{}}
-                                onClick={editHandler}
+                                style={{  }}
+                                onClick={()=>editHandler(1)}
                               >
-                                {edit ? (
+                                {editCase ? (
                                   "Save"
                                 ) : (
                                   <span
@@ -176,10 +215,20 @@ const Index = ({}) => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <div className="col-lg-12">
-                          <CreateList_01 />
+                        {!editCase ? <div className="col-lg-12">
+                          <CreateList_01 
+                          claim={claim}
+                          InsuredName={InsuredName}
+                          RegisteredNumber={RegisteredNumber}
+                          subType={subType}
+                          InsuredMobileNo1={InsuredMobileNo1}
+                          ClaimNumber={ClaimNumber}
+                          InsuredMailAddress={InsuredMailAddress}
+                          requestType={requestType}
+                          
+                          />
                         </div>
-                        <CreateList
+                        : <CreateList
                           claim={claim}
                           InsuredName={InsuredName}
                           setInsuredName={setInsuredName}
@@ -191,15 +240,22 @@ const Index = ({}) => {
                           setInsuredMobileNo2={setInsuredMobileNo2}
                           requestTypeTypes={requestTypeTypes}
                           subTypeTypes={subTypeTypes}
-                          edit={edit}
+                          setRequestType={setRequestType}
+                          requestType={requestType}
+                          setSubType={setSubType}
+                          subType={subType}
+                          ClaimNumber={ClaimNumber}
+                          setClaimNumber={setClaimNumber}
+                          edit={editCase}
                           setIsStatusModal={setIsStatusModal}
                         />
+                        }
                       </div>
                       <div
                         className="row mt-2 mb-2"
                         style={{ marginLeft: "-15px" }}
                       >
-                        <div className="col-lg-12">
+                      {editCase && <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
                           {/* <div
@@ -212,11 +268,43 @@ const Index = ({}) => {
                             marginBottom: "5px",
                           }}
                         ></div> */}
-                          <Form claim={claim} edit={edit} />
-                        </div>
+                          <Form 
+                          claim={claim} 
+                          edit={editCase}  
+                          editHandler={editHandler}
+                          VehicleModel={VehicleModel}
+                          setVehicleModel={setVehicleModel}
+                          RegisteredNumber={RegisteredNumber}
+                          setRegisteredNumber={setRegisteredNumber}
+                          setEngineType={setEngineType}
+                          EngineType={EngineType}
+                          RegisteredOwner={RegisteredOwner}
+                          setRegisteredOwner={setRegisteredOwner}
+                          DateRegistration={DateRegistration}
+                          setDateRegistration={setDateRegistration}
+                          PUCNumber={PUCNumber}
+                          setPUCNumber={setPUCNumber}
+                          TransferDate={TransferDate}
+                          setTransferDate={setTransferDate}
+                          EngineNumber={EngineNumber}
+                          setEngineNumber={setEngineNumber}
+                          AddedBy={AddedBy}
+                          setAddedBy={setAddedBy}
+                          IssuingAuthority={IssuingAuthority}
+                          setIssuingAuthority={setIssuingAuthority}
+                          LicenseNumber={LicenseNumber}
+                          setLicenseNumber={setLicenseNumber}
+                          LicenseType={LicenseType}
+                          setLicenseType={setLicenseType}
+                          VehicleChassisNumber={VehicleChassisNumber}
+                          setVehicleChassisNumber={setVehicleChassisNumber}
+                          VehicleFuelType={VehicleFuelType}
+                          setVehicleFuelType={setVehicleFuelType}
+                          />
+                        </div>}
                       </div>
                       <div className="row mt-2" style={{ marginLeft: "-15px" }}>
-                        <div className="col-lg-12">
+                       {editCase &&  <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
                           {/* <div
@@ -226,15 +314,25 @@ const Index = ({}) => {
                             height: "3px",
                             color: "blue",
                             border: "1px solid",
-                            marginBottom: "5px",
+                            mar`ginBottom: "5px",
                           }}
                         ></div> */}
-                          <Form_01 claim={claim} edit={edit} />
-                        </div>
+                          <Form_01 
+                          claim={claim} 
+                          edit={edit}
+                          DriverName = {DriverName}
+                          setDriverName = {setDriverName}
+                          DriverAddedDate = {DriverAddedDate}
+                          setDriverAddedDate={setDriverAddedDate}
+                          Verification={Verification}
+                          setVerification={setVerification}
+
+                          />
+                        </div>}
                       </div>
 
                       <div className="row mt-2" style={{ marginLeft: "-15px" }}>
-                        <div className="col-lg-12">
+                        {editCase && <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
                           {/* <div
@@ -247,8 +345,19 @@ const Index = ({}) => {
                             marginBottom: "5px",
                           }}
                         ></div> */}
-                          <Form_02 claim={claim} edit={edit} />
-                        </div>
+                          <Form_02 
+                          claim={claim} 
+                          edit={edit}
+                          GarageNameAndAddress = {GarageNameAndAddress}
+                          setGarageNameAndAddress={setGarageNameAndAddress}
+                          GarageContactNo1={GarageContactNo1}
+                          setGarageContactNo1={setGarageContactNo1}
+                          GarageContactNo2={GarageContactNo2}
+                          setGarageContactNo2={setGarageContactNo2}
+                          GarageAddedBy={GarageAddedBy}
+                          setGarageAddedBy={setGarageAddedBy}
+                           />
+                        </div>}
                       </div>
 
                       <div className="row mb-2" style={{ marginLeft: "-15px" }}>

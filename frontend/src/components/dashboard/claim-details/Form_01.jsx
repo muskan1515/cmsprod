@@ -6,7 +6,13 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form_01 = ({ claim, edit }) => {
+const Form_01 = ({ claim, edit , 
+  DriverName ,
+  setDriverName ,
+  DriverAddedDate ,
+  setDriverAddedDate,
+  Verification,
+  setVerification }) => {
   const router = useRouter();
 
   //   const togglePasswordVisibility = () => {
@@ -44,13 +50,7 @@ const Form_01 = ({ claim, edit }) => {
               >
                 <h4 className="">Driver Details</h4>
                 <div className="col-lg-1 m-1">
-                  <button
-                    className="btn-thm mb-1"
-                    style={{ marginTop: "-10px" }}
-                    onClick={editHandler}
-                  >
-                    {edit ? "Save" : <span className="flaticon-edit"></span>}
-                  </button>
+                
                 </div>
               </button>
             </h2>
@@ -83,7 +83,8 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.DriverName}
+                          onChange={(e)=>setDriverName(e.target.value)}
+                          value={DriverName ? DriverName : claim.DriverName}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -115,7 +116,8 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={formatDate(claim.DriverAddedDate)}
+                          onChange={(e)=>setDriverAddedDate(e.target.value)}
+                          value={formatDate(DriverAddedDate ?  DriverAddedDate: claim.DriverAddedDate)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -143,7 +145,8 @@ const Form_01 = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.DriverTypeOfVerification}
+                          onChange={(e)=>setVerification(e.target.value)}
+                          value={Verification ? Verification : claim.DriverTypeOfVerification}
                           // placeholder="Enter Registration No."
                         />
                       </div>

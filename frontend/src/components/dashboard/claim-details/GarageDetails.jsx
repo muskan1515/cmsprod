@@ -40,13 +40,13 @@ const GarageDetails = (edit) => {
               >
                 <h4 className="">Garage Details</h4>
                 <div className="col-lg-1 m-1">
-                  <button
+                  {/*<button
                     className="btn-thm mb-1"
                     style={{ marginTop: "-10px" }}
                     onClick={editHandler}
                   >
                     {edit ? "Save" : <span className="flaticon-edit"></span>}
-                  </button>
+  </button>*/}
                 </div>
               </button>
             </h2>

@@ -1,4 +1,18 @@
-const CreateList = () => {
+import { useState } from "react";
+
+const CreateList = ({setSearchInput,setType}) => {
+
+  const [currentType,setCurrentType]=useState(0);
+  const [searchValue,setSearchValue]=useState("");
+  const handleInputChange = (value,type)=>{
+    setCurrentType(type);
+    setSearchValue(value);
+  }
+
+  const searchHandler = ()=>{
+    setType(currentType);
+    setSearchInput(searchValue);
+  }
   return (
     <>
       <div className="col-lg-12">
@@ -9,6 +23,7 @@ const CreateList = () => {
               className="form-control"
               id="propertyTitle"
               placeholder="Enter Policy No."
+              onChange={(e)=>handleInputChange(e.target.value,1)}
             />
           </div>
           <div className="col-lg-3">
@@ -17,6 +32,7 @@ const CreateList = () => {
               className="form-control"
               id="propertyTitle"
               placeholder="Enter Registration No."
+              onChange={(e)=>handleInputChange(e.target.value,1)}
             />
           </div>
           <div className="col-lg-3">
@@ -25,6 +41,7 @@ const CreateList = () => {
               className="form-control"
               id="propertyTitle"
               placeholder="Enter PB Reference ID"
+              onChange={(e)=>handleInputChange(e.target.value,1)}
             />
           </div>
           <div className="col-lg-2">
@@ -37,7 +54,7 @@ const CreateList = () => {
           </div>
           <div className="col-lg-1">
             <div className="my_profile_setting_input">
-              <button className="btn float-end btn-color">Search</button>
+              <button className="btn float-end btn-color" onClick={searchHandler}>Search</button>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import PropertyVideo from "./PropertyVideo";
 
-const index = () => {
+const index = ({SomeComponent}) => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -56,7 +56,7 @@ const index = () => {
               </div>
               {/* End .row */}
               <div className="shop_single_tab_content style2 mt30">
-                <PropertyVideo />
+                <PropertyVideo  SomeComponent={SomeComponent}/>
               </div>
 
               {/* <ChatBox /> */}

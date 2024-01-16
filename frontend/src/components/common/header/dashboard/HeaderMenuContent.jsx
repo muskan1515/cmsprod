@@ -4,14 +4,16 @@ import MyAccount from "./MyAccount";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const HeaderMenuContent = ({ float = "" }) => {
+const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
   const route = useRouter();
   const [regionValue ,setRegionValue] = useState("");
 
   const [name,setName]=useState("");
 
   const handlerChangeRegion = (val)=>{
-    
+    if(isDashboard){
+      setIsRegionChange(true);
+    }
       localStorage.setItem("regionType",JSON.stringify(val));
       setRegionValue(val);
 
@@ -481,10 +483,10 @@ const HeaderMenuContent = ({ float = "" }) => {
             value={regionValue}
             onChange={(e)=>handlerChangeRegion(e.target.value)}
           >
-            <option data-tokens="type1">Select Region</option>
-            <option data-tokens="type1">Chandigarh</option>
-            <option data-tokens="Type2">Delhi</option>
-            <option data-tokens="Type3">Hyderabad</option>
+            <option data-tokens="type1" value={""}>Select Region</option>
+            <option data-tokens="type1" value={"Chandigarh"}>Chandigarh</option>
+            <option data-tokens="Type2" value={"Delhi"}>Delhi</option>
+            <option data-tokens="Type3" value={"Hyderabad"}>Hyderabad</option>
           </select>
         </div>
         {/* <Link

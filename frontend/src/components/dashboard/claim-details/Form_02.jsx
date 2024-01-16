@@ -6,7 +6,16 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form = ({ claim, edit }) => {
+const Form = ({ claim,
+   edit,
+   GarageNameAndAddress ,
+   setGarageNameAndAddress,
+   GarageContactNo1,
+   setGarageContactNo1,
+   GarageContactNo2,
+   setGarageContactNo2,
+   GarageAddedBy,
+   setGarageAddedBy }) => {
   const router = useRouter();
 
   const formatDate = (val) => {
@@ -44,13 +53,7 @@ const Form = ({ claim, edit }) => {
               >
                 <h4 className="">Garage Details</h4>
                 <div className="col-lg-1 m-1">
-                  <button
-                    className="btn-thm mb-1"
-                    style={{ marginTop: "-10px" }}
-                    onClick={editHandler}
-                  >
-                    {edit ? "Save" : <span className="flaticon-edit"></span>}
-                  </button>
+                 
                 </div>
               </button>
             </h2>
@@ -83,7 +86,8 @@ const Form = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.GarageNameAndAddress}
+                          onChange={(e)=>setGarageNameAndAddress(e.target.value)}
+                          value={GarageNameAndAddress ? GarageNameAndAddress : claim.GarageNameAndAddress}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -116,7 +120,8 @@ const Form = ({ claim, edit }) => {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={claim.GarageContactNo1}
+                            value={GarageContactNo1 ? GarageContactNo1 : claim.GarageContactNo1}
+                            onChange={(e)=>setGarageContactNo1(e.target.value)}
                             // placeholder="Enter Registration No."
                           />
                         )}
@@ -125,7 +130,8 @@ const Form = ({ claim, edit }) => {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={claim.GarageContactNo2}
+                            value={GarageContactNo2 ? GarageContactNo2 : claim.GarageContactNo2}
+                            onChange={(e)=>setGarageContactNo2(e.target.value)}
                             // placeholder="Enter Registration No."
                           />
                         )}
@@ -182,7 +188,8 @@ const Form = ({ claim, edit }) => {
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={claim.GarageAddedBy}
+                          value={GarageAddedBy ? GarageAddedBy :claim.GarageAddedBy}
+                          onChange={(e)=>setGarageAddedBy(e.target.value)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
