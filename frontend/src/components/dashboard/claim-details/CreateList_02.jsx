@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
-const CreateList_01 = ({
+const CreateList_02 = ({
   claim,
   InsuredName,
   RegisteredNumber,
@@ -13,8 +13,6 @@ const CreateList_01 = ({
   requestType
 
 }) => {
-
- 
 
   const formatDate = (val) => {
     const date = new Date(val);
@@ -33,11 +31,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-4 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
+                        marginRight: "50px",
                       }}
                     >
                       Name
@@ -59,12 +58,13 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-4 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
                       Phone
@@ -86,19 +86,20 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-2 text-color text-start"
+                      className="col-lg-2 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
                       Email
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-10 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -115,86 +116,30 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-7 text-color text-start"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
-                      Lead No.
+                      Registration No.
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
                         fontWeight:"bold",
                       }}
                     >
-                     {claim.LeadId}
+                     {claim.VehicleRegisteredNumber}
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-start"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                      }}
-                    >
-                      Insurer ClaimID
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {claim.ClaimNumber}
-                    </label>
-                  </div>
-                </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-start"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                      }}
-                    >
-                      Added Date
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {formatDate(claim.InsuredAddedDateTime)}
-                    </label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -208,7 +153,7 @@ const CreateList_01 = ({
                         marginRight: "50px",
                       }}
                     >
-                      Claim Region 
+                      Insurer ClaimID
                     </label>
                     <label
                       htmlFor=""
@@ -219,7 +164,7 @@ const CreateList_01 = ({
                         fontWeight:"bold",
                       }}
                     >
-                      {claim.ClaimRegion}
+                      {claim.ClaimNumber}
                     </label>
                   </div>
                 </td>
@@ -236,7 +181,7 @@ const CreateList_01 = ({
                         marginRight: "50px",
                       }}
                     >
-                      Claim Servicing Office
+                      Status
                     </label>
                     <label
                       htmlFor=""
@@ -247,56 +192,29 @@ const CreateList_01 = ({
                         fontWeight:"bold",
                       }}
                     >
-                      {claim.ClaimServicingOffice}
+                      Not Started
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                <div className="row">
-                  <label
-                    htmlFor=""
-                    className="col-lg-4 text-color"
-                    style={{
-                      color: "black",
-                      fontSize:"15px",
-                      fontWeight:"bold",
-
-                      marginRight: "50px",
-                    }}
-                  >
-                    Liscence Number
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="col-lg-6 text-color text-end"
-                    style={{
-                      color: "#1560bd",
-                      fontSize:"15px",
-                      fontWeight:"bold",
-                    }}
-                  >
-                    {claim.LicenseNumber}
-                  </label>
-                </div>
-              </td>
               </tr>
-             {/* <tr>
+              <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-5 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
+                        marginRight: "50px",
                       }}
                     >
                       Survey Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -311,19 +229,20 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
                       Intimation Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize:"15px",
@@ -338,12 +257,13 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-4 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
                       Request Type
@@ -367,12 +287,13 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-8 text-color text-start"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
                       Endorsement Doc.
@@ -392,12 +313,13 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-4 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
 
+                        marginRight: "50px",
                       }}
                     >
                       SPOC Name
@@ -419,11 +341,12 @@ const CreateList_01 = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-start"
+                      className="col-lg-4 text-color"
                       style={{
                         color: "black",
                         fontSize:"15px",
                         fontWeight:"bold",
+                        marginRight: "50px",
                       }}
                     >
                       SPOC Name
@@ -441,7 +364,7 @@ const CreateList_01 = ({
                     </label>
                   </div>
                 </td>
-                    </tr>*/}
+              </tr>
             </table>
           </div>
         </div>
@@ -450,4 +373,4 @@ const CreateList_01 = ({
   );
 };
 
-export default CreateList_01;
+export default CreateList_02;

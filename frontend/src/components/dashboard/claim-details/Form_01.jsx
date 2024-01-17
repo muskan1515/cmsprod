@@ -85,6 +85,7 @@ const Form_01 = ({ claim, edit ,
                           id="propertyTitle"
                           onChange={(e)=>setDriverName(e.target.value)}
                           value={DriverName ? DriverName : claim.DriverName}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -118,6 +119,7 @@ const Form_01 = ({ claim, edit ,
                           id="propertyTitle"
                           onChange={(e)=>setDriverAddedDate(e.target.value)}
                           value={formatDate(DriverAddedDate ?  DriverAddedDate: claim.DriverAddedDate)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -147,6 +149,7 @@ const Form_01 = ({ claim, edit ,
                           id="propertyTitle"
                           onChange={(e)=>setVerification(e.target.value)}
                           value={Verification ? Verification : claim.DriverTypeOfVerification}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>

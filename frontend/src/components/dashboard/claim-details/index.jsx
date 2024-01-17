@@ -16,6 +16,9 @@ import PaymentDetails from "./PaymentDetails";
 import GarageDetails from "./GarageDetails";
 import CreateList from "./CreateList";
 import CreateList_01 from "./CreateList_01";
+import CreateList_02 from "./CreateList_02";
+import CreateList_03 from "./CreateList_03";
+import CreateList_04 from "./CreateList_04";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -25,16 +28,16 @@ const Index = ({}) => {
   const leadId = url.split("/claim-details?leadId=")[1];
   const [claim, setClaim] = useState({});
   const [InsuredName, setInsuredName] = useState(
-    claim?.InsuredName
+    claim?.InsuredName ? claim?.InsuredName : ""
   );
   const [InsuredMailAddress, setInsuredMailAddress] = useState(
-    claim?.InsuredMailAddress 
+    claim?.InsuredMailAddress  ? claim?.InsuredMailAddress : ""
   );
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState(
-    claim?.InsuredMobileNo1
+    claim?.InsuredMobileNo1 ? claim?.InsuredMobileNo1  : ""
   );
   const [InsuredMobileNo2, setInsuredMobileNo2] = useState(
-    claim?.InsuredMobileNo2
+    claim?.InsuredMobileNo2 ? claim?.InsuredMobileNo2 : ""
   );
   const [subType, setSubType] = useState("Motor");
   const [requestType, setRequestType] = useState("Spot");
@@ -42,7 +45,7 @@ const Index = ({}) => {
   const [ClaimNumber,setClaimNumber] = useState( claim?.ClaimNumber ? claim?.ClaimNumber : "");
 
   const [VehicleModel,setVehicleModel]=useState(claim.VehicleMakeVariantModelColor ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}` : "")
-  const [RegisteredNumber,setRegisteredNumber]=useState(claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : "");
+
   const [EngineType,setEngineType] = useState(claim?.VehicleModeOfCheck ? claim?.VehicleModeOfCheck : "");
   const [RegisteredOwner,setRegisteredOwner]=useState(claim?.VehicleRegisteredOwner ? claim?.VehicleRegisteredOwner : "");
   const [DateRegistration,setDateRegistration]=useState(claim?.VehicleDateOfRegistration ? claim?.VehicleDateOfRegistration : "");
@@ -71,8 +74,88 @@ const Index = ({}) => {
   const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
 
+  
+
+  const generateRegion = (region) => {
+    const firstThreeLetters = region?.slice(0, 3);
+
+    const now = new Date();
+    const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
+    const dd = String(now.getDate()).padStart(2, "0");
+    const hh = String(now.getHours()).padStart(2, "0");
+    const min = String(now.getMinutes()).padStart(2, "0");
+    const ss = String(now.getSeconds()).padStart(2, "0");
+    const result = `${firstThreeLetters}/${mm}/${dd}${hh}${min}${ss}`;
+
+    console.log(result);
+    return result;
+  };
+
+    const [RegisteredNumber,setRegisteredNumber]=useState(claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : "");
 
 
+  const onSaveHandler = ()=>{
+
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const vehicleParts = VehicleModel?.split(",");
+
+
+    const payload = {
+      InsuredName : InsuredName ? InsuredName : claim.InsuredName,
+      InsuredMailAddress:InsuredMailAddress ? InsuredMailAddress : claim.InsuredMailAddress,
+      InsuredMobileNo1:InsuredMobileNo1 ? InsuredMobileNo1 : claim.InsuredMobileNo1,
+      InsuredMobileNo2:InsuredMobileNo2 ? InsuredMobileNo2 : claim.InsuredMobileNo2,
+      ClaimNumber:ClaimNumber ? ClaimNumber : claim.ClaimNumber,
+      VehicleMakeVariantModelColor:vehicleParts[0] ? vehicleParts[0] : claim.VehicleMakeVariantModelColor,
+      VehicleTypeOfBody : vehicleParts[1] ? vehicleParts[1] : claim.VehicleTypeOfBody,
+      VehicleRegisteredNumber : RegisteredNumber ? RegisteredNumber : generateRegion(claim?.ClaimRegion),
+      VehicleDateOfRegistration : DateRegistration ? DateRegistration : claim.VehicleDateOfRegistration,
+      VehiclePucNumber:PUCNumber ? PUCNumber : claim.VehiclePucNumber,
+      VehicleTransferDate:TransferDate ? TransferDate : claim.VehicleTransferDate,
+      VehicleEngineNumber:EngineNumber ? EngineNumber : claim.VehicleEngineNumber,
+      VehicleAddedBy:AddedBy ? AddedBy : claim.VehicleAddedBy,
+      IssuingAuthority:IssuingAuthority ? IssuingAuthority : claim.IssuingAuthority,
+      LicenseNumber:LicenseNumber ? LicenseNumber : claim.LicenseNumber,
+      LicenseType:LicenseType ? LicenseType : claim.LicenseType,
+      VehicleChassisNumber:VehicleChassisNumber ? VehicleChassisNumber : claim.VehicleChassisNumber,
+      VehicleFuelType:VehicleFuelType ? VehicleFuelType : claim.VehicleFuelType,
+      DriverName:DriverName ? DriverName : claim.DriverName,
+      DriverAddedDate:DriverAddedDate ? DriverAddedDate : claim.DriverAddedDate,
+      DriverTypeOfVerification:Verification ? Verification : claim.DriverTypeOfVerification,
+      GarageNameAndAddress:GarageNameAndAddress ? GarageNameAndAddress : claim.GarageNameAndAddress,
+      GarageAddedBy:GarageAddedBy ? GarageAddedBy : claim.GarageAddedBy,
+      GarageContactNo1:GarageContactNo1 ? GarageContactNo1 : claim.GarageContactNo1,
+      GarageContactNo2:GarageContactNo2 ? GarageContactNo2 : claim.GarageContactNo2,
+      LeadId : claim.LeadId,
+      token : userInfo[0].Token
+    };
+    console.log(payload);
+    if(!payload.InsuredName || !payload.InsuredMailAddress || !payload.InsuredMobileNo1 || !payload.InsuredMobileNo2 || !payload.ClaimNumber || !payload.VehicleMakeVariantModelColor || !payload.VehicleTypeOfBody
+      || !payload.VehicleRegisteredNumber || !payload.VehicleDateOfRegistration || !payload.VehiclePucNumber || !payload.VehicleTransferDate || !payload.VehicleEngineNumber || !payload.VehicleAddedBy ||
+      !payload.IssuingAuthority || !payload.LicenseNumber || !payload.LicenseType || !payload.VehicleChassisNumber || !payload.VehicleFuelType || !payload.DriverAddedDate || !payload.DriverName || !payload.DriverTypeOfVerification ||
+      !payload.GarageAddedBy || !payload.GarageNameAndAddress || !payload.GarageContactNo1 || !payload.GarageContactNo2){
+        alert("Please fill all the details before submitting!!");
+      }
+      else{
+        axios.put("/api/updateClaimDetails",payload ,{
+          headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res)=>{
+          alert("Successfully Updated the Information !!");
+          
+        })
+        .catch((err)=>{
+          console.log(err)
+          alert("Caught into Error ! Try Again.")
+        })
+        setEditCase((prop)=>!prop);
+        // window.location.reload();
+      }
+  }
 
   const editHandler = (value) => {
     if(value === 1){
@@ -124,6 +207,27 @@ const Index = ({}) => {
       .catch((err) => {
         toast.error(err);
       });
+
+
+      
+
+      axios
+      .get("/api/getDocumentList", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params:{
+          leadId:leadId
+        }
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   }, [leadId]);
   return (
     <>
@@ -184,24 +288,61 @@ const Index = ({}) => {
                   <div className="col-lg-9">
                     <div className="">
                       <div className="my_dashboard_review mb-2">
-                        <div className="col-lg-12">
+                      <div className="col-lg-12">
+                      <div className="row">
+                        <h4 className="">
+                          CASE DETAILS
+                          {editCase ? <button
+                            className="btn-thm m-1"
+                            style={{  }}
+                            onClick={()=>onSaveHandler()}
+                          >
+                            Save
+                          </button>
+                          :
+                          <button
+                            className="btn-thm m-1"
+                            style={{  }}
+                            onClick={()=>editHandler(1)}
+                          >
+                            <span
+                                className="flaticon-edit"
+                                style={{ fontSize: "14px" }}
+                              ></span>
+                            
+                          </button>
+                            }
+                        </h4>
+                      </div>
+                    </div>
+                    <div
+                      className=" bg-dark"
+                      style={{
+                        width: "100%",
+                        height: "3px",
+                        color: "blue",
+                        border: "1px solid",
+                        marginBottom: "5px",
+                      }}
+                    ></div>
+                        {!editCase ? <div className="col-lg-12">
+                          <CreateList_01 
+                          claim={claim}
+                          InsuredName={InsuredName}
+                          RegisteredNumber={RegisteredNumber}
+                          subType={subType}
+                          InsuredMobileNo1={InsuredMobileNo1}
+                          ClaimNumber={ClaimNumber}
+                          InsuredMailAddress={InsuredMailAddress}
+                          requestType={requestType}
+                          
+                          />
+
+                          <div className="col-lg-12">
                           <div className="row">
                             <h4 className="">
-                              CASE DETAILS
-                              <button
-                                className="btn-thm m-1"
-                                style={{  }}
-                                onClick={()=>editHandler(1)}
-                              >
-                                {editCase ? (
-                                  "Save"
-                                ) : (
-                                  <span
-                                    className="flaticon-edit"
-                                    style={{ fontSize: "14px" }}
-                                  ></span>
-                                )}
-                              </button>
+                              DRIVER DETAILS
+                             
                             </h4>
                           </div>
                         </div>
@@ -215,8 +356,7 @@ const Index = ({}) => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        {!editCase ? <div className="col-lg-12 m-2">
-                          <CreateList_01 
+                          <CreateList_04
                           claim={claim}
                           InsuredName={InsuredName}
                           RegisteredNumber={RegisteredNumber}
@@ -319,7 +459,7 @@ const Index = ({}) => {
                         ></div> */}
                           <Form_01 
                           claim={claim} 
-                          edit={edit}
+                          edit={editCase}
                           DriverName = {DriverName}
                           setDriverName = {setDriverName}
                           DriverAddedDate = {DriverAddedDate}
@@ -332,7 +472,6 @@ const Index = ({}) => {
                       </div>
 
                       <div className="row mt-2" style={{ marginLeft: "-15px" }}>
-                        {/* {editCase && */}
                          <div className="col-lg-12">
                           {/* <h4 className="mb10">Case Details</h4> */}
 
@@ -348,7 +487,7 @@ const Index = ({}) => {
                         ></div> */}
                           <Form_02 
                           claim={claim} 
-                          edit={edit}
+                          edit={editCase}
                           GarageNameAndAddress = {GarageNameAndAddress}
                           setGarageNameAndAddress={setGarageNameAndAddress}
                           GarageContactNo1={GarageContactNo1}

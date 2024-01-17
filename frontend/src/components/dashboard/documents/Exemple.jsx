@@ -25,7 +25,7 @@ const headCells = [
     width: 150,
   },
   {
-    id: "files",
+    id: "file_name",
     numeric: false,
     label: "File Name",
     width: 150,
@@ -197,31 +197,33 @@ const data = [
   },
 ];
 
-export default function Exemple() {
+export default function Exemple({setUpdatedData,uploadedData,leadId}) {
   const [updatedCode, setUpdatedCode] = useState([]);
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
 
-  const [uploadedData, setUploadedData] = useState([]);
+  // const [uploadedData, setUploadedData] = useState([]);
 
   const [change, setChange] = useState(false);
 
   const getIndex = (label, datas) => {
     let index = -1;
     datas.map((data, idx) => {
-      if (String(data[index].docName) === String(label)) index = idx;
+      if (String(data[idx].docName) === String(label)) index = idx;
     });
     return index;
   };
-  const handleUpload = (result, label) => {
+  const handleUpload = (result, label,idx) => {
     try {
       const fileUrl = result.info.secure_url;
 
-      const index = getIndex(label, uploadedData);
-      console.log(index);
-      if (index === -1) {
+      
+      console.log(uploadedData,label,result);
+     
         const newUploadData = {
           docName: label,
+          index : idx,
+          leadId:leadId,
           data: [
             {
               name: result.info.original_filename + "." + result.info.format,
@@ -233,23 +235,9 @@ export default function Exemple() {
 
         let oldData = uploadedData;
         oldData.push(newUploadData);
-        setUploadedData(oldData);
+        setUpdatedData(oldData);
         setChange(true);
-      } else {
-        let oldData = uploadedData;
-        let wholeDocData = uploadedData[index].data;
-
-        wholeDocData.push({
-          name: result.info.original_filename + "." + result.info.format,
-          thumbnail_url: result.info.thumbnail_url,
-          url: result.info.url,
-        });
-
-        oldData[index].data = wholeDocData;
-        console.log(oldData);
-        setUploadedData(oldData);
-        setChange(true);
-      }
+      
     } catch (error) {
       console.error("Error handling upload:", error);
     }
@@ -277,46 +265,19 @@ export default function Exemple() {
           _id: index + 1,
           serial_num: row.serial_num,
           doc_name: row.doc_name,
-          files: isUploaded?.data?.map((file) => {
-            return (
+          files: uploadedData.map((file,idx) => {
+            if(file.docName === row.doc_name){
+            return(
+
               <div
                 style={{ display: "flex", flexDirection: "column" }}
                 key={idx}
               >
-                <Image src={file.thumbnail_url} width={90} height={90} />
-                <h4>{file.name}</h4>
-
-                {/*  <CldUploadWidget
-            onUpload={(result)=>handleUpload(result,row.doc_name,true)}
-            uploadPreset="mpbjdclg"
-            options={{
-              cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
-              allowedFormats: [
-                "jpg",
-                "png",
-                "pdf",
-                "csv",
-                "word",
-                "excel"
-              ], // Specify allowed formats
-              maxFiles: 50,
-            }}
-          >
-            {({ open }) => (
-              <div>
-                <button
-                  className="btn btn-color profile_edit_button mb-5"
-                  style={{}}
-                  onClick={open} 
-                >
-                 Dele
-                </button>
-              </div>
-            )}
-          </CldUploadWidget>*/}
+                <Image src={file.data[0].thumbnail_url} width={90} height={90} />
+                <a>{file.data[0].name}</a>
                 <a
                   className="btn btn-color profile_edit_button mb-5"
-                  href={isUploaded.url}
+                  href={file.data[0].url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -327,10 +288,26 @@ export default function Exemple() {
                 </button>
               </div>
             );
+            }
+            return null;
+          }),
+          file_name: uploadedData.map((file,idx) => {
+            if(file.docName === row.doc_name){
+              return(
+              <div
+                style={{ display: "flex", flexDirection: "column" }}
+                key={idx}
+              >
+                <h4>{file.data[0].name}</h4>
+               
+              </div>
+            );
+              }
+              return null;
           }),
           action: (
             <CldUploadWidget
-              onUpload={(result) => handleUpload(result, row.doc_name)}
+              onUpload={(result) => handleUpload(result, row.doc_name,row.serial_num)}
               uploadPreset="mpbjdclg"
               options={{
                 cloudName: "dcrq3m6dx", // Your Cloudinary cloud name

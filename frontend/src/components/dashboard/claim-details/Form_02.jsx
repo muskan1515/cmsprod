@@ -88,6 +88,7 @@ const Form = ({ claim,
                           id="propertyTitle"
                           onChange={(e)=>setGarageNameAndAddress(e.target.value)}
                           value={GarageNameAndAddress ? GarageNameAndAddress : claim.GarageNameAndAddress}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -115,26 +116,27 @@ const Form = ({ claim,
                         </label>
                       </div>
                       <div className="col-lg-7">
-                        {claim.GarageContactNo1 && (
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
                             value={GarageContactNo1 ? GarageContactNo1 : claim.GarageContactNo1}
                             onChange={(e)=>setGarageContactNo1(e.target.value)}
+                            disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
-                        )}
-                        {claim.GarageContactNo2 && (
+                        
+                       
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
                             value={GarageContactNo2 ? GarageContactNo2 : claim.GarageContactNo2}
                             onChange={(e)=>setGarageContactNo2(e.target.value)}
+                            disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
-                        )}
+                        
                       </div>
                     </div>
                   </div>
@@ -190,6 +192,7 @@ const Form = ({ claim,
                           id="propertyTitle"
                           value={GarageAddedBy ? GarageAddedBy :claim.GarageAddedBy}
                           onChange={(e)=>setGarageAddedBy(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>

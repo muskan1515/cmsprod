@@ -255,6 +255,68 @@ app.post('/vehicle-details', authenticateUser, (req, res) => {
   });
 });
 
+app.post('/uploadDocument', authenticateUser, (req, res) => {
+  const {data,leadId} = req.body;
+
+  const array = data;
+  
+  array.map((data,index)=>{
+
+    const photo1 = data.data[0][0]?.length > 1 ? data.data[0][0] : {};
+    const photo2 = data.data[0][1]?.length > 1 ? data.data[0][1] : {};
+    const photo3 = data.data[0][2]?.length > 1 ? data.data[0][2] : {};
+    const photo4 = data.data[0][3]?.length > 1 ? data.data[0][3] : {};
+    const photo5 = data.data[0][4]?.length > 1 ? data.data[0][4] : {};
+    const photo6 = data.data[0][5]?.length > 1 ? data.data[0][5] : {};
+    const insertUploadDetails = `
+    INSERT INTO DocumentList (
+      LeadId,
+      DocumentName,
+      Photo1,
+      Photo2,
+      Photo3,
+      Photo4,
+      Photo5,
+      Photo6
+    ) VALUES (
+      '${data.leadId}',
+      '${data.docName}',
+      '${photo1}',
+      '${photo2}',
+      '${photo3}',
+      '${photo4}',
+      '${photo5}',
+      '${photo6}'
+    );
+  `;
+
+  if(!photo1 || !photo2 || !photo3 || !photo4 || !photo5 || !photo6){
+    console.log("not!");
+  }
+  else {
+    db.query(insertUploadDetails, (error, results) => {
+      if (error) {
+        console.error('Error inserting data into Upload Details:', error);
+        return res.status(500).json({ error: 'Error inserting data into DocumentDetails.' });
+      }
+
+      res.status(200).json({ message: 'Data inserted successfully.' });
+    });
+
+  }
+  })
+
+  // const sql = 'INSERT INTO vehicle_details SET ?';
+  // db.query(sql, req.body, (err, result) => {
+  //   if (err) {
+  //     console.error(err);
+  //     res.status(500).send('Internal Server Error');
+  //     return;
+  //   }
+  //   res.send(`Vehicle Details added with ID: ${result.insertId}`);
+  // });
+});
+
 app.post('/driver-details', authenticateUser, (req, res) => {
   const sql = 'INSERT INTO driver_details SET ?';
   db.query(sql, req.body, (err, result) => {
@@ -291,6 +353,21 @@ app.post("/login",(req,res)=>{
   })
 
 })
+
+app.get('/getDocuments',authenticateUser, (req, res) => {
+ 
+  const LeadId = req.query.LeadId;
+  console.log("get",LeadId);
+  const sql = 'SELECT * FROM DocumentList WHERE LeadId =?';
+  db.query(sql,[LeadId], (err, result) => {
+    if (err) {
+      // console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send(result);
+  });
+});
 
 app.get('/getSpecificClaim',authenticateUser, (req, res) => {
  
@@ -575,11 +652,30 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
+  db.query(insertClaimDetails, (error, results) => {
+    if (error) {
+      console.error('Error inserting data into ClaimDetails:', error);
+      return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
+    }
+
+    let LeadId = 0;
+
+    db.query("SELECT LeadId FROM ClaimDetails ORDER BY LeadId DESC LIMIT 1", (error, results) => {
+    if (error) {
+      console.error('Error inserting data into ClaimDetails:', error);
+      return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
+    }
+    console.log(results);
+    LeadId = results[0].LeadId;
+    
+  
   const insertVehicleDetails = `
     INSERT INTO VehicleDetails (
-      RegisteredNumber
+      RegisteredNumber,
+      LeadId 
     ) VALUES (
-      '${RegisteredNumber}'
+      '${RegisteredNumber}',
+      '${parseInt(results[0].LeadId)}'
     );
   `;
 
@@ -587,11 +683,13 @@ app.post('/addClaim', (req, res) => {
     INSERT INTO GarageDetails (
       GarageNameAndAddress,
       GarageContactNo1,
-      GarageContactNo2
+      GarageContactNo2,
+      LeadId 
     ) VALUES (
       '${GarageNameAndAddress}',
       '${GarageContactNo1}',
-      '${""}'
+      '${GarageContactNo2}',
+      '${parseInt(results[0].LeadId)}'
     );
   `;
 
@@ -599,34 +697,67 @@ app.post('/addClaim', (req, res) => {
     INSERT INTO AccidentDetails (
       PlaceOfLoss,
       NatureOfLoss,
-      EstimatedLoss
+      EstimatedLoss,
+      LeadId
     ) VALUES (
       '${PlaceOfLoss}',
       '${NatureOfLoss}',
-      '${EstimatedLoss}'
+      '${EstimatedLoss}',
+      '${parseInt(results[0].LeadId)}'
     );
   `;
+
+  const insertDriverDetails = `
+    INSERT INTO AccidentDetails (
+      IssuingAuthority,
+      LicenseNumber,
+      LicenseType,
+      DriverName,
+      AddedDate,
+      TypeOfVerification,
+      LeadId
+    ) VALUES (
+      '${""}',
+      '${""}',
+      '${""}',
+      '${""}',
+      '${""}',
+      '${""}',
+      '${parseInt(results[0].LeadId)}'
+    );
+  `;
+
+
+  // const updateDriverDetails = `
+  //   UPDATE DriverDetails
+  //   SET
+  //   IssuingAuthority = '${IssuingAuthority}',
+  //   LicenseNumber = '${LicenseNumber}',
+  //   LicenseType = '${LicenseType}',
+  //   DriverName = '${DriverName}',
+  //   AddedDate = '${DriverAddedDate}',
+  //   TypeOfVerification = '${DriverTypeOfVerification}'
+  //     WHERE LeadId = ${LeadId};
+  // `;
 
   const insertInsuredDetails = `
     INSERT INTO InsuredDetails (
       InsuredName,
       InsuredMobileNo1,
       InsuredMobileNo2,
-      InsuredMailAddress
+      InsuredMailAddress,
+      LeadId
     ) VALUES (
       '${InsuredName}',
       '${InsuredMobileNo1}',
       '${InsuredMobileNo2}',
-      '${InsuredMailAddress}'
+      '${InsuredMailAddress}',
+      '${parseInt(results[0].LeadId)}'
     );
   `;
 
   // Execute the SQL queries individually
-  db.query(insertClaimDetails, (error, results) => {
-    if (error) {
-      console.error('Error inserting data into ClaimDetails:', error);
-      return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
-    }
+  
 
     db.query(insertVehicleDetails, (error, results) => {
       if (error) {
@@ -651,16 +782,142 @@ app.post('/addClaim', (req, res) => {
               console.error('Error inserting data into InsuredDetails:', error);
               return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
             }
+            db.query(insertDriverDetails, (error, results) => {
+              if (error) {
+                console.error('Error inserting data into DriverDetails:', error);
+                return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
+              }
+  
+              res.status(200).json({ message: 'Data inserted successfully.' });
+            });
 
-            res.status(200).json({ message: 'Data inserted successfully.' });
           });
         });
       });
     });
   });
+  });
 });
 
 
+
+app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
+  const leadId = req.params.leadId;
+  // console.log("leadId",leadId);
+
+  // Extract fields from the request body
+  const {   InsuredName ,
+      InsuredMailAddress,
+      InsuredMobileNo1,
+      InsuredMobileNo2,
+      ClaimNumber,
+      VehicleMakeVariantModelColor,
+      VehicleTypeOfBody ,
+      VehicleRegisteredNumber ,
+      VehicleDateOfRegistration ,
+      VehiclePucNumber,
+      VehicleTransferDate,
+      VehicleEngineNumber,
+      VehicleAddedBy,
+      IssuingAuthority,
+      LicenseNumber,
+      LicenseType,
+      VehicleChassisNumber,
+      VehicleFuelType,
+      DriverName,
+      DriverAddedDate,
+      DriverTypeOfVerification,
+      GarageNameAndAddress,
+      GarageAddedBy,
+      GarageContactNo1,
+      GarageContactNo2,
+      LeadId
+} = req.body;
+
+  // Update ClaimDetails
+  const updateDriverDetails = `
+    UPDATE DriverDetails
+    SET
+    IssuingAuthority = '${IssuingAuthority}',
+    LicenseNumber = '${LicenseNumber}',
+    LicenseType = '${LicenseType}',
+    DriverName = '${DriverName}',
+    AddedDate = '${DriverAddedDate}',
+    TypeOfVerification = '${DriverTypeOfVerification}'
+      WHERE LeadId = ${LeadId};
+  `;
+
+  // Update VehicleDetails
+  const updateVehicleDetails = `
+    UPDATE VehicleDetails
+    SET RegisteredNumber = '${VehicleRegisteredNumber}',
+    MakeVariantModelColor='${VehicleMakeVariantModelColor}',
+    TypeOfBody='${VehicleTypeOfBody}',
+    DateOfRegistration='${VehicleDateOfRegistration}',
+    PucNumber='${VehiclePucNumber}',
+    TransferDate='${VehicleTransferDate}',
+    EngineNumber='${VehicleEngineNumber}',
+    AddedBy='${VehicleAddedBy}',
+    ChassisNumber='${VehicleChassisNumber}',
+    FuelType='${VehicleFuelType}'
+    WHERE LeadId = ${LeadId};
+  `;
+
+  // Update GarageDetails
+  const updateGarageDetails = `
+    UPDATE GarageDetails
+    SET
+      GarageNameAndAddress = '${GarageNameAndAddress}',
+      GarageContactNo1 = '${GarageContactNo1}',
+      GarageContactNo2 = '${GarageContactNo2 || ''}',
+      AddedBy = '${GarageAddedBy}'
+      WHERE LeadId = ${LeadId};
+  `;
+
+ 
+  // Update InsuredDetails
+  const updateInsuredDetails = `
+    UPDATE InsuredDetails
+    SET
+      InsuredName = '${InsuredName}',
+      InsuredMobileNo1 = '${InsuredMobileNo1}',
+      InsuredMobileNo2 = '${InsuredMobileNo2}',
+      InsuredMailAddress = '${InsuredMailAddress}'
+    WHERE LeadId = ${LeadId};
+  `;
+
+  // Execute the SQL queries individually
+  db.query(updateDriverDetails, (error, results) => {
+    if (error) {
+      console.error('Error updating data in ClaimDetails:', error);
+      return res.status(500).json({ error: 'Error updating data in ClaimDetails.' });
+    }
+
+    db.query(updateVehicleDetails, (error, results) => {
+      if (error) {
+        console.error('Error updating data in VehicleDetails:', error);
+        return res.status(500).json({ error: 'Error updating data in VehicleDetails.' });
+      }
+
+      db.query(updateGarageDetails, (error, results) => {
+        if (error) {
+          console.error('Error updating data in GarageDetails:', error);
+          return res.status(500).json({ error: 'Error updating data in GarageDetails.' });
+        }
+
+          db.query(updateInsuredDetails, (error, results) => {
+            if (error) {
+              console.error('Error updating data in InsuredDetails:', error);
+              return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
+            }
+
+            res.status(200).json({ message: 'Data updated successfully.' });
+          });
+        
+      });
+    });
+  });
+});
 
 
 app.get('/vehicle-details/:claimNo', authenticateUser, (req, res) => {
