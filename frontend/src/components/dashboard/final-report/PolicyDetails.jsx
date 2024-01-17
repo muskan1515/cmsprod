@@ -1,9 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
+import axios from "axios";
 
 const PolicyDetails = ({ setIsStatusModal }) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [claim, setClaim] = useState({});
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios
+      .get("/api/getSpecificClaim", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: "1",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data[0][0]);
+        setClaim(res.data.data[0][0]);
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  }, []);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -47,6 +70,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                 type="text"
                 className="form-control"
                 id="propertyTitle"
+                value={claim.ReferenceNo ? claim.ReferenceNo : ""}
+                readOnly
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -147,6 +172,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value={claim.PolicyNumber ? claim.PolicyNumber : ""}
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -178,6 +206,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+                        value={claim.InsuredName ? claim.InsuredName : ""}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -519,6 +549,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+                    value={claim.InsuredName ? claim.InsuredName : ""}
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
