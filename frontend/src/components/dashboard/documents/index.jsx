@@ -7,7 +7,7 @@ import Exemple from "./Exemple";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const index = () => {
+const Index = () => {
   const url = window.location.href;
   const leadId = url.split("http://localhost:3000/documents/")[1];
   const [uploadedData,setUpdatedData] = useState([]);
@@ -114,4 +114,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
