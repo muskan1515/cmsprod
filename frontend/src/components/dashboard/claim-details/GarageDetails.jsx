@@ -28,14 +28,14 @@ const GarageDetails = (edit) => {
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingSix">
+            <h2 class="accordion-header" id="headingNine">
               <button
                 class="btn accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseSix"
+                data-bs-target="#collapseNine"
                 aria-expanded="false"
-                aria-controls="collapseSix"
+                aria-controls="collapseNine"
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Garage Details</h4>
@@ -51,9 +51,9 @@ const GarageDetails = (edit) => {
               </button>
             </h2>
             <div
-              id="collapseSix"
+              id="collapseNine"
               class="accordion-collapse collapse"
-              aria-labelledby="headingSix"
+              aria-labelledby="headingNine"
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">

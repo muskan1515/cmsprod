@@ -147,16 +147,24 @@ const CreateList = () => {
 
     const otherDiv = document.getElementById("other-div");
     const otherDiv_01 = document.getElementById("other-div_01");
+    const otherDiv_02 = document.getElementById("other-div_02");
 
     if (selectedIndex === 1) {
       otherDiv.style.display = "block";
+      otherDiv_02.style.display = "none";
     }
     if (selectedIndex === 2) {
       otherDiv_01.style.display = "block";
       otherDiv.style.display = "none";
+      otherDiv_02.style.display = "none";
+    }
+    if (selectedIndex === 3) {
+      otherDiv_02.style.display = "block";
+      otherDiv.style.display = "none";
     } else {
       otherDiv.style.display = "block";
       otherDiv_01.style.display = "none";
+      otherDiv_02.style.display = "none";
     }
   };
 
@@ -214,7 +222,7 @@ const CreateList = () => {
                 value={selectedOption}
                 onChange={check}
               >
-                <option data-tokens="Status1">Select Email</option>
+                <option data-tokens="" value="0">Select Email</option>
                 <option data-tokens="Status1" value="1">
                   Hyderabad
                 </option>
@@ -228,8 +236,8 @@ const CreateList = () => {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-2"></div>
+        <div className="row" style={{display:"none"}}>
+          <div className="col-lg-1"></div>
           <div className="col-lg-8">
             <div id="other-div">
               {/* Content for the "Other" option */}
@@ -246,8 +254,8 @@ const CreateList = () => {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-2"></div>
+        <div className="row" style={{display:"none"}}>
+          <div className="col-lg-1"></div>
           <div className="col-lg-8">
             <div id="other-div_01">
               {/* Content for the "Other" option */}
@@ -258,6 +266,25 @@ const CreateList = () => {
                 id="otherInput"
                 name="otherInput"
                 placeholder="div2"
+                // style={otherPurpose ? viewStyle : hiddenStyle}
+                // onChange={(e) => setOtherPurposeValue(e.target.value)}
+                // maxLength={30}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row" style={{display:"none"}}>
+          <div className="col-lg-1"></div>
+          <div className="col-lg-8">
+            <div id="other-div_02">
+              {/* Content for the "Other" option */}
+              <input
+                required
+                type="text"
+                className="form-control"
+                id="otherInput"
+                name="otherInput"
+                placeholder="div3"
                 // style={otherPurpose ? viewStyle : hiddenStyle}
                 // onChange={(e) => setOtherPurposeValue(e.target.value)}
                 // maxLength={30}

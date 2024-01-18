@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
+import { FaCross, FaRedo } from "react-icons/fa";
 
 const headCells = [
   {
@@ -21,12 +22,7 @@ const headCells = [
     label: "Policy No.",
     width: 150,
   },
-  {
-    id: "registration_no",
-    numeric: false,
-    label: "Registration No.",
-    width: 150,
-  },
+
   {
     id: "city",
     numeric: false,
@@ -73,6 +69,12 @@ const headCells = [
     id: "claim_id",
     numeric: false,
     label: "Insurer Claim ID.",
+    width: 100,
+  },
+  {
+    id: "document",
+    numeric: false,
+    label: "Upload Document",
     width: 100,
   },
 ];
@@ -126,7 +128,7 @@ const data = [
   //   },
 ];
 
-export default function Exemple({ claims , setMajorSearch }) {
+export default function Exemple({ claims, setMajorSearch }) {
   const [updatedData, setUpdatedData] = useState([]);
 
   let tempData = [];
@@ -151,6 +153,11 @@ export default function Exemple({ claims , setMajorSearch }) {
         officer: "N.A.Y.",
         request_type: "N.A.Y.",
         claim_id: "N.A.Y.",
+        document: (
+          <span className="flaticon-close text-danger" style={{marginLeft:"10px"}}>
+            {/* <FaCross />{" "} */}
+          </span>
+        ),
       };
       tempData.push(updatedRow);
     });
@@ -158,6 +165,11 @@ export default function Exemple({ claims , setMajorSearch }) {
   }, [claims]);
   console.log(updatedData);
   return (
-    <SmartTable title="My Claims" data={updatedData} headCells={headCells} setMajorSearch={setMajorSearch}/>
+    <SmartTable
+      title="My Claims"
+      data={updatedData}
+      headCells={headCells}
+      setMajorSearch={setMajorSearch}
+    />
   );
 }
