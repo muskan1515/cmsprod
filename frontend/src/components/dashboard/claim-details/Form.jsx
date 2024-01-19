@@ -119,13 +119,14 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={!VehicleModel?`${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`:VehicleModel}
                           onChange={(e)=>setVehicleModel(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="col-lg-6">
+                  {/*<div className="col-lg-6">
                     <div className="row mt-1">
                       <div className="col-lg-5 my_profile_setting_input form-group">
                         <label
@@ -146,13 +147,14 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={RegisteredNumber ? RegisteredNumber : claim.VehicleRegisteredNumber}
-                          onChange={(e)=>setRegisteredNumber(e.target.value)}
+                          value={RegisteredNumber}
+                          
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
                     </div>
-                  </div>
+                        </div>*/}
 
                   <div className="col-lg-6">
                     <div className="row mt-1">
@@ -177,6 +179,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={EngineType ? EngineType: claim.VehicleModeOfCheck}
                           onChange={(e)=>setEngineType(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -206,6 +209,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={RegisteredOwner ? RegisteredOwner : claim.VehicleRegisteredOwner}
                           onChange={(e)=>setRegisteredOwner(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -235,6 +239,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={formatDate(DateRegistration ? DateRegistration : claim.VehicleDateOfRegistration)}
                           onChange={(e)=>setDateRegistration(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -264,6 +269,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={PUCNumber ? PUCNumber : claim.VehiclePucNumber}
                           onChange={(e)=>setPUCNumber(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -293,6 +299,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={formatDate(TransferDate ? TransferDate : claim.VehicleTransferDate)}
                           onChange={(e)=>setTransferDate(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -322,6 +329,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={EngineNumber ? EngineNumber : claim.VehicleEngineNumber}
                           onChange={(e)=>setEngineNumber(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -351,6 +359,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={AddedBy ? AddedBy : claim.VehicleAddedBy}
                           onChange={(e)=>setAddedBy(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -380,6 +389,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={IssuingAuthority ? IssuingAuthority : claim.IssuingAuthority}
                           onChange={(e)=>setIssuingAuthority(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -409,6 +419,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={LicenseNumber ? LicenseNumber :claim.LicenseNumber}
                           onChange={(e)=>setLicenseNumber(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -438,6 +449,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={LicenseType ? LicenseType :claim.LicenseType}
                           onChange={(e)=>setLicenseType(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -467,6 +479,8 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={VehicleChassisNumber?VehicleChassisNumber:claim.VehicleChassisNumber}
                           onChange={(e)=>setVehicleChassisNumber(e.target.value)}
+                          disabled={!edit}
+
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -496,6 +510,7 @@ const Form = ({ claim, edit,editHandler,
                           id="propertyTitle"
                           value={VehicleFuelType ? VehicleFuelType:claim.VehicleFuelType}
                           onChange={(e)=>setVehicleFuelType(e.target.value)}
+                          disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
                       </div>

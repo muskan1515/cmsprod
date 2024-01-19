@@ -124,7 +124,6 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              {claim.InsuredMobileNo1  && (
                 <input
                   type="text"
                   className="form-control"
@@ -134,8 +133,7 @@ const CreateList = ({
                   disabled={!edit}
                   // placeholder="Enter Registration No."
                 />
-              )}
-              {claim.InsuredMobileNo2 && (
+              
                 <input
                   type="text"
                   className="form-control"
@@ -145,7 +143,7 @@ const CreateList = ({
                   disabled={!edit}
                   // placeholder="Enter Registration No."
                 />
-              )}
+              
             </div>
           </div>
         </div>

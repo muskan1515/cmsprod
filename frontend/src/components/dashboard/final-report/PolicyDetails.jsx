@@ -1,9 +1,107 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
+import axios from "axios";
 
 const PolicyDetails = ({ setIsStatusModal }) => {
-  const [applicantNumber, setApplicantNumber] = useState();
+  const [applicantNumber, setApplicantNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [claim, setClaim] = useState([]);
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios
+      .get("/api/getSpecificClaim", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: "1",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data[0][0]);
+        setClaim(res.data.data[0][0]);
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  }, []);
+
+  const [subType, setSubType] = useState("Motor");
+
+  const [ReferenceNo, setReferenceNo] = useState("");
+  const [InsuredName, setInsuredName] = useState("");
+  const [InsuredMailAddress, setInsuredMailAddress] = useState("");
+  const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
+  const [InsuredMobileNo2, setInsuredMobileNo2] = useState("");
+  const [requestType, setRequestType] = useState("Spot");
+  const [ClaimNumber, setClaimNumber] = useState("");
+  const [VehicleModel, setVehicleModel] = useState("");
+  const [EngineType, setEngineType] = useState("");
+  const [RegisteredOwner, setRegisteredOwner] = useState("");
+  const [DateRegistration, setDateRegistration] = useState("");
+  const [PUCNumber, setPUCNumber] = useState("");
+  const [TransferDate, setTransferDate] = useState("");
+  const [EngineNumber, setEngineNumber] = useState("");
+  const [AddedBy, setAddedBy] = useState("");
+  const [IssuingAuthority, setIssuingAuthority] = useState("");
+  const [LicenseNumber, setLicenseNumber] = useState("");
+  const [LicenseType, setLicenseType] = useState("");
+  const [VehicleChassisNumber, setVehicleChassisNumber] = useState("");
+  const [VehicleFuelType, setVehicleFuelType] = useState("");
+  const [DriverName, setDriverName] = useState("");
+  const [DriverAddedDate, setDriverAddedDate] = useState("");
+  const [Verification, setVerification] = useState("");
+  const [GarageNameAndAddress, setGarageNameAndAddress] = useState("");
+  const [GarageContactNo1, setGarageContactNo1] = useState("");
+  const [GarageContactNo2, setGarageContactNo2] = useState("");
+  const [GarageAddedBy, setGarageAddedBy] = useState("");
+  const [ClaimAddedDateTime, setClaimAddedDateTime] = useState("");
+  const [ClaimIsActive, setClaimIsActive] = useState("");
+  const [PolicyIssuingOffice, setPolicyIssuingOffice] = useState("");
+  const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState("");
+  const [VehicleTypeOfBody, setVehicleTypeOfBody] = useState("");
+
+  
+
+  useEffect(() => {
+    setReferenceNo(claim?.ReferenceNo || "");
+    setInsuredName(claim?.InsuredName || "");
+    setInsuredMailAddress(claim?.InsuredMailAddress || "");
+    setInsuredMobileNo1(claim?.InsuredMobileNo1 || "");
+    setInsuredMobileNo2(claim?.InsuredMobileNo2 || "");
+    setClaimNumber(claim?.ClaimNumber || "");
+    setVehicleModel(
+      claim?.VehicleMakeVariantModelColor
+        ? `${claim.VehicleMakeVariantModelColor}`
+        : ""
+    );
+    setEngineType(claim?.VehicleModeOfCheck || "");
+    setRegisteredOwner(claim?.VehicleRegisteredOwner || "");
+    setDateRegistration(claim?.VehicleDateOfRegistration || "");
+    setPUCNumber(claim?.VehiclePucNumber || "");
+    setTransferDate(claim?.VehicleTransferDate || "");
+    setEngineNumber(claim?.VehicleEngineNumber || "");
+    setAddedBy(claim?.VehicleAddedBy || "");
+    setIssuingAuthority(claim?.IssuingAuthority || "");
+    setLicenseNumber(claim?.LicenseNumber || "");
+    setLicenseType(claim?.LicenseType || "");
+    setVehicleChassisNumber(claim?.VehicleChassisNumber || "");
+    setVehicleFuelType(claim?.VehicleFuelType || "");
+    setDriverName(claim?.DriverName || "");
+    setDriverAddedDate(claim?.DriverAddedDate || "");
+    setVerification(claim?.DriverTypeOfVerification || "");
+    setGarageNameAndAddress(claim?.GarageNameAndAddress || "");
+    setGarageContactNo1(claim?.GarageContactNo1 || "");
+    setGarageContactNo2(claim?.GarageContactNo2 || "");
+    setGarageAddedBy(claim?.GarageAddedBy || "");
+    setClaimAddedDateTime(claim?.ClaimAddedDateTime || "");
+    setClaimIsActive(claim?.ClaimIsActive?.type || "");
+    setPolicyIssuingOffice(claim?.PolicyIssuingOffice|| "");
+    setVehicleRegisteredNumber(claim?.VehicleRegisteredNumber|| "");
+    setVehicleTypeOfBody(claim?.VehicleTypeOfBody|| "");
+  }, [claim]);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -47,6 +145,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                 type="text"
                 className="form-control"
                 id="propertyTitle"
+                value={ReferenceNo}
+                readOnly
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -147,6 +247,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value={claim.PolicyNumber ? claim.PolicyNumber : ""}
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -178,6 +281,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+                        value={InsuredName}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -263,6 +368,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -348,6 +455,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -374,6 +483,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -400,6 +511,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -431,6 +544,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         onChange={(e) => setApplicantNumber(e.target.value)}
                         pattern="[0-9]*"
                         title="Please enter only 10 digits"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -457,6 +572,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value = {ClaimIsActive}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -483,6 +600,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value= {PolicyIssuingOffice}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -519,6 +638,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+                    value={claim.InsuredName ? claim.InsuredName : ""}
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -546,6 +668,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -681,6 +805,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -708,6 +834,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -735,6 +863,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -762,6 +892,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -802,6 +934,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value  = {VehicleRegisteredNumber}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -828,6 +962,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -854,6 +990,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -917,6 +1055,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value= {VehicleChassisNumber}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -944,6 +1084,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value = {EngineNumber}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -971,6 +1113,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -998,6 +1142,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value = {VehicleTypeOfBody}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -1024,6 +1170,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value = {VehicleModel}
+                        readOnly
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -1050,6 +1198,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -1076,6 +1226,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        readOnly
+
+
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -1132,6 +1285,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1159,6 +1314,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1186,6 +1343,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1213,6 +1372,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1240,6 +1401,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1267,6 +1430,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      value= {VehicleFuelType}
+                      readOnly
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1294,6 +1459,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1321,6 +1488,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1348,6 +1517,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      readOnly
+
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -1383,6 +1554,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1465,6 +1638,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1546,6 +1721,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1573,6 +1750,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1600,6 +1779,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
