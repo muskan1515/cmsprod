@@ -6,7 +6,7 @@ const AllStatistics = () => {
       icon: "flaticon-home",
       timer: "37",
       name: "Claim Appointment",
-      color: "#AFEEEE",
+      color: "#a5d9c5",
     },
     {
       id: 1,
@@ -108,7 +108,7 @@ const AllStatistics = () => {
         >
           <div
             className={`ff_one ${item.blockStyle}`}
-            style={{ backgroundColor: item.color, marginRight:"5px" }}
+            style={{ backgroundColor: item.color, marginRight: "5px" }}
           >
             <div className="detais">
               <div className="timer fw-bold" style={{ fontSize: "32px" }}>

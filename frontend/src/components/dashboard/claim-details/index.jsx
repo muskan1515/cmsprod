@@ -115,6 +115,7 @@ const Index = ({}) => {
   );
 
   const [editCase, setEditCase] = useState(false);
+  const [editCase_01, setEditCase_01] = useState(false);
   const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -257,9 +258,10 @@ const Index = ({}) => {
     if (value === 1) {
       setEditCase((prop) => !prop);
     } else if (value === 2) {
-      setEditVehichle((prop) => !prop);
+      setEditCase_01((prop) => !prop);
     }
   };
+  
 
   const subTypeTypes = [
     { id: 1, type: "Motor", value: "Motor" },
@@ -417,7 +419,7 @@ const Index = ({}) => {
                         ></div>
                         {!editCase ? (
                           <div className="col-lg-12">
-                            <CreateList_01
+                            <CreateList_02
                               claim={claim}
                               InsuredName={InsuredName}
                               RegisteredNumber={RegisteredNumber}
@@ -459,6 +461,93 @@ const Index = ({}) => {
                         <div className="col-lg-12">
                           <Video />
                         </div>
+                      </div>
+                      <div className="my_dashboard_review mb-2">
+                        <div className="col-lg-12">
+                          <div className="row">
+                            <h4 className="">
+                              Vehicle Details
+                              {editCase_01 ? (
+                                <button
+                                  className="btn-thm m-1"
+                                  style={{}}
+                                  onClick={() => onSaveHandler()}
+                                >
+                                  Save
+                                </button>
+                              ) : (
+                                <button
+                                  className="btn-thm m-1"
+                                  style={{}}
+                                  onClick={() => editHandler(2)}
+                                >
+                                  <span
+                                    className="flaticon-edit"
+                                    style={{ fontSize: "14px" }}
+                                  ></span>
+                                </button>
+                              )}
+                            </h4>
+                          </div>
+                        </div>
+                        <div
+                          className=" bg-dark"
+                          style={{
+                            width: "100%",
+                            height: "3px",
+                            color: "blue",
+                            border: "1px solid",
+                            marginBottom: "5px",
+                          }}
+                        ></div>
+                        {!editCase_01 ? (
+                          <div className="col-lg-12">
+                            <CreateList_02
+                              claim={claim}
+                              InsuredName={InsuredName}
+                              RegisteredNumber={RegisteredNumber}
+                              subType={subType}
+                              InsuredMobileNo1={InsuredMobileNo1}
+                              ClaimNumber={ClaimNumber}
+                              InsuredMailAddress={InsuredMailAddress}
+                              requestType={requestType}
+                            />
+                          </div>
+                        ) : (
+                          <Form
+                            claim={claim}
+                            edit={editCase_01}
+                            editHandler={editHandler}
+                            VehicleModel={VehicleModel}
+                            setVehicleModel={setVehicleModel}
+                            RegisteredNumber={RegisteredNumber}
+                            setRegisteredNumber={setRegisteredNumber}
+                            setEngineType={setEngineType}
+                            EngineType={EngineType}
+                            RegisteredOwner={RegisteredOwner}
+                            setRegisteredOwner={setRegisteredOwner}
+                            DateRegistration={DateRegistration}
+                            setDateRegistration={setDateRegistration}
+                            PUCNumber={PUCNumber}
+                            setPUCNumber={setPUCNumber}
+                            TransferDate={TransferDate}
+                            setTransferDate={setTransferDate}
+                            EngineNumber={EngineNumber}
+                            setEngineNumber={setEngineNumber}
+                            AddedBy={AddedBy}
+                            setAddedBy={setAddedBy}
+                            IssuingAuthority={IssuingAuthority}
+                            setIssuingAuthority={setIssuingAuthority}
+                            LicenseNumber={LicenseNumber}
+                            setLicenseNumber={setLicenseNumber}
+                            LicenseType={LicenseType}
+                            setLicenseType={setLicenseType}
+                            VehicleChassisNumber={VehicleChassisNumber}
+                            setVehicleChassisNumber={setVehicleChassisNumber}
+                            VehicleFuelType={VehicleFuelType}
+                            setVehicleFuelType={setVehicleFuelType}
+                          />
+                        )}
                       </div>
                       <div
                         className="row mt-2 mb-2"
@@ -593,12 +682,12 @@ const Index = ({}) => {
                           <PaymentDetails />
                         </div>
                       </div>
-                      <div className="row mb-2" style={{ marginLeft: "-15px" }}>
+                      {/* <div className="row mb-2" style={{ marginLeft: "-15px" }}>
                         <div className="col-lg-12 text-center">
-                          {/* <ErrorPageContent /> */}
+                          <ErrorPageContent />
                           <GarageDetails />
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <div className="col-lg-3">

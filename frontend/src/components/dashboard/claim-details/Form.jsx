@@ -6,7 +6,10 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
-const Form = ({ claim, edit,editHandler,
+const Form = ({
+  claim,
+  edit,
+  editHandler,
   VehicleModel,
   setVehicleModel,
   RegisteredNumber,
@@ -34,8 +37,8 @@ const Form = ({ claim, edit,editHandler,
   VehicleChassisNumber,
   setVehicleChassisNumber,
   VehicleFuelType,
-  setVehicleFuelType
- }) => {
+  setVehicleFuelType,
+}) => {
   const router = useRouter();
 
   //   const togglePasswordVisibility = () => {
@@ -73,9 +76,7 @@ const Form = ({ claim, edit,editHandler,
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Vehicle Details</h4>
-                <div className="col-lg-1 m-1">
-                
-                </div>
+                <div className="col-lg-1 m-1"></div>
               </button>
             </h2>
             {/* <div
@@ -117,8 +118,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={!VehicleModel?`${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`:VehicleModel}
-                          onChange={(e)=>setVehicleModel(e.target.value)}
+                          value={
+                            !VehicleModel
+                              ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`
+                              : VehicleModel
+                          }
+                          onChange={(e) => setVehicleModel(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -177,8 +182,10 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={EngineType ? EngineType: claim.VehicleModeOfCheck}
-                          onChange={(e)=>setEngineType(e.target.value)}
+                          value={
+                            EngineType ? EngineType : claim.VehicleModeOfCheck
+                          }
+                          onChange={(e) => setEngineType(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -207,8 +214,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={RegisteredOwner ? RegisteredOwner : claim.VehicleRegisteredOwner}
-                          onChange={(e)=>setRegisteredOwner(e.target.value)}
+                          value={
+                            RegisteredOwner
+                              ? RegisteredOwner
+                              : claim.VehicleRegisteredOwner
+                          }
+                          onChange={(e) => setRegisteredOwner(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -237,8 +248,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={formatDate(DateRegistration ? DateRegistration : claim.VehicleDateOfRegistration)}
-                          onChange={(e)=>setDateRegistration(e.target.value)}
+                          value={formatDate(
+                            DateRegistration
+                              ? DateRegistration
+                              : claim.VehicleDateOfRegistration
+                          )}
+                          onChange={(e) => setDateRegistration(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -268,7 +283,7 @@ const Form = ({ claim, edit,editHandler,
                           className="form-control"
                           id="propertyTitle"
                           value={PUCNumber ? PUCNumber : claim.VehiclePucNumber}
-                          onChange={(e)=>setPUCNumber(e.target.value)}
+                          onChange={(e) => setPUCNumber(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -297,8 +312,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={formatDate(TransferDate ? TransferDate : claim.VehicleTransferDate)}
-                          onChange={(e)=>setTransferDate(e.target.value)}
+                          value={formatDate(
+                            TransferDate
+                              ? TransferDate
+                              : claim.VehicleTransferDate
+                          )}
+                          onChange={(e) => setTransferDate(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -327,8 +346,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={EngineNumber ? EngineNumber : claim.VehicleEngineNumber}
-                          onChange={(e)=>setEngineNumber(e.target.value)}
+                          value={
+                            EngineNumber
+                              ? EngineNumber
+                              : claim.VehicleEngineNumber
+                          }
+                          onChange={(e) => setEngineNumber(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -358,7 +381,7 @@ const Form = ({ claim, edit,editHandler,
                           className="form-control"
                           id="propertyTitle"
                           value={AddedBy ? AddedBy : claim.VehicleAddedBy}
-                          onChange={(e)=>setAddedBy(e.target.value)}
+                          onChange={(e) => setAddedBy(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -387,8 +410,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={IssuingAuthority ? IssuingAuthority : claim.IssuingAuthority}
-                          onChange={(e)=>setIssuingAuthority(e.target.value)}
+                          value={
+                            IssuingAuthority
+                              ? IssuingAuthority
+                              : claim.IssuingAuthority
+                          }
+                          onChange={(e) => setIssuingAuthority(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -417,8 +444,10 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={LicenseNumber ? LicenseNumber :claim.LicenseNumber}
-                          onChange={(e)=>setLicenseNumber(e.target.value)}
+                          value={
+                            LicenseNumber ? LicenseNumber : claim.LicenseNumber
+                          }
+                          onChange={(e) => setLicenseNumber(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -447,8 +476,8 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={LicenseType ? LicenseType :claim.LicenseType}
-                          onChange={(e)=>setLicenseType(e.target.value)}
+                          value={LicenseType ? LicenseType : claim.LicenseType}
+                          onChange={(e) => setLicenseType(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />
@@ -477,8 +506,14 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={VehicleChassisNumber?VehicleChassisNumber:claim.VehicleChassisNumber}
-                          onChange={(e)=>setVehicleChassisNumber(e.target.value)}
+                          value={
+                            VehicleChassisNumber
+                              ? VehicleChassisNumber
+                              : claim.VehicleChassisNumber
+                          }
+                          onChange={(e) =>
+                            setVehicleChassisNumber(e.target.value)
+                          }
                           disabled={!edit}
 
                           // placeholder="Enter Registration No."
@@ -508,8 +543,12 @@ const Form = ({ claim, edit,editHandler,
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={VehicleFuelType ? VehicleFuelType:claim.VehicleFuelType}
-                          onChange={(e)=>setVehicleFuelType(e.target.value)}
+                          value={
+                            VehicleFuelType
+                              ? VehicleFuelType
+                              : claim.VehicleFuelType
+                          }
+                          onChange={(e) => setVehicleFuelType(e.target.value)}
                           disabled={!edit}
                           // placeholder="Enter Registration No."
                         />

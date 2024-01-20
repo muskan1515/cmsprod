@@ -154,7 +154,7 @@ export default function Exemple({ claims, setMajorSearch }) {
         request_type: "N.A.Y.",
         claim_id: "N.A.Y.",
         document: (
-          <span className="flaticon-close text-danger" style={{marginLeft:"10px"}}>
+          <span className="flaticon-close text-danger" style={{marginLeft:"30px", fontWeight:"bold"}}>
             {/* <FaCross />{" "} */}
           </span>
         ),

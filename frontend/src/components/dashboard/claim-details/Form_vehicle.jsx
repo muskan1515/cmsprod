@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
-const CreateList_02 = ({
+const Form_vehicle = ({
   claim,
   InsuredName,
   RegisteredNumber,
@@ -10,16 +10,14 @@ const CreateList_02 = ({
   InsuredMobileNo1,
   ClaimNumber,
   InsuredMailAddress,
-  requestType
-
+  requestType,
 }) => {
-
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-  
+
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -34,8 +32,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                         marginRight: "50px",
                       }}
                     >
@@ -46,8 +44,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim?.InsuredName}
@@ -61,8 +59,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -74,8 +72,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.InsuredMobileNo1}
@@ -89,8 +87,8 @@ const CreateList_02 = ({
                       className="col-lg-2 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -102,8 +100,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.InsuredMailAddress}
@@ -119,8 +117,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -132,11 +130,11 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
-                     {claim.VehicleRegisteredNumber}
+                      {claim.VehicleRegisteredNumber}
                     </label>
                   </div>
                 </td>
@@ -147,8 +145,8 @@ const CreateList_02 = ({
                       className="col-lg-5 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -160,8 +158,8 @@ const CreateList_02 = ({
                       className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.ClaimNumber}
@@ -175,8 +173,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -188,8 +186,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Not Started
@@ -205,8 +203,8 @@ const CreateList_02 = ({
                       className="col-lg-5 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                         marginRight: "50px",
                       }}
                     >
@@ -217,8 +215,8 @@ const CreateList_02 = ({
                       className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {subType}
@@ -232,8 +230,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -245,8 +243,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {formatDate(claim.ClaimAddedDateTime)}
@@ -260,8 +258,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -273,8 +271,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       SPOT
@@ -290,8 +288,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -303,8 +301,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     ></label>
                   </div>
@@ -316,8 +314,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -329,8 +327,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Estimate Amount
@@ -344,8 +342,8 @@ const CreateList_02 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                         marginRight: "50px",
                       }}
                     >
@@ -356,8 +354,8 @@ const CreateList_02 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Estimate Amount
@@ -373,4 +371,4 @@ const CreateList_02 = ({
   );
 };
 
-export default CreateList_02;
+export default Form_vehicle;
