@@ -39,7 +39,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus}) => {
               onChange={(e)=>setStat(e.target.value)}
             >
               {statusOptions.map((stat,index)=>{
-                return  <option data-tokens="Status1" value={stat.id} disabled={status[0]?.Status >= stat.id ? true : false }>{stat.value}</option>
+                return  <option key={index} data-tokens="Status1" value={stat.id} disabled={status[0]?.Status >= stat.id ? true : false }>{stat.value}</option>
               })}
             </select>
           </div>
@@ -51,7 +51,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus}) => {
               onChange={(e)=>setSubStage(e.target.value)}
             >
             {subStatus.map((stat,index)=>{
-              return  <option data-tokens="Status1" value={stat.id} >{stat.value}</option>
+              return  <option data-tokens="Status1" value={stat.id} key={index}>{stat.value}</option>
             })}
             </select>
           </div>
