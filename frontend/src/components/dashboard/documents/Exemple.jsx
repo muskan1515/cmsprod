@@ -197,7 +197,7 @@ const data = [
   },
 ];
 
-export default function Exemple({setUpdatedData,uploadedData,leadId}) {
+export default function Exemple({setUpdatedData,uploadedData,leadId,document}) {
   const [updatedCode, setUpdatedCode] = useState([]);
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
@@ -243,6 +243,16 @@ export default function Exemple({setUpdatedData,uploadedData,leadId}) {
     }
   };
 
+  const checkAlreadyDone = (label)=>{
+    let isPresent = false;
+    // console.log(label,document)
+    document.map((temp,index)=>{
+      if(String(temp.DocumentName) === String(label)){
+        isPresent = true;
+      }
+    })
+    return isPresent;
+  }
   const checkIsUploaded = (label) => {
     // console.log(uploadedData);
     let selectedField = {};
@@ -260,7 +270,9 @@ export default function Exemple({setUpdatedData,uploadedData,leadId}) {
       const tempData = [];
       data.map((row, index) => {
         const isUploaded = checkIsUploaded(row.doc_name);
-        console.log(isUploaded.data, row.doc_name);
+        const isDone = checkAlreadyDone(row.doc_name);
+        console.log(isDone);
+        if(!isDone){
         const updatedRow = {
           _id: index + 1,
           serial_num: row.serial_num,
@@ -338,13 +350,14 @@ export default function Exemple({setUpdatedData,uploadedData,leadId}) {
           ),
         };
         tempData.push(updatedRow);
+      }
       });
       return tempData;
     };
     // getData();
     setChange(false);
     setUpdatedCode(getData());
-  }, [uploadedData, change]);
+  }, [uploadedData, change,document]);
 
   useEffect(() => {
     if (uploadedData) {

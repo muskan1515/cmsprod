@@ -44,15 +44,13 @@ const Index = ({}) => {
   const [subType, setSubType] = useState("Motor");
   const [requestType, setRequestType] = useState("Spot");
 
-  const [ClaimNumber, setClaimNumber] = useState(
-    claim?.ClaimNumber ? claim?.ClaimNumber : ""
-  );
+  const [documents,setDocuments]=useState([]);
 
-  const [VehicleModel, setVehicleModel] = useState(
-    claim.VehicleMakeVariantModelColor
-      ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`
-      : ""
-  );
+  const [ClaimNumber,setClaimNumber] = useState( claim?.ClaimNumber ? claim?.ClaimNumber : "");
+
+  const [VehicleModel,setVehicleModel]=useState(claim.VehicleMakeVariantModelColor ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}` : "")
+
+ 
 
   const [EngineType, setEngineType] = useState(
     claim?.VehicleModeOfCheck ? claim?.VehicleModeOfCheck : ""
@@ -101,6 +99,8 @@ const Index = ({}) => {
     claim?.DriverTypeOfVerification ? claim?.DriverTypeOfVerification : ""
   );
 
+  const [status,setStatus] = useState([]);
+
   const [GarageNameAndAddress, setGarageNameAndAddress] = useState(
     claim?.GarageNameAndAddress ? claim?.GarageNameAndAddress : ""
   );
@@ -118,6 +118,72 @@ const Index = ({}) => {
   const [editCase_01, setEditCase_01] = useState(false);
   const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
+
+  const statusOptions = [
+    {
+      id : 1,
+      value : "Claim Appointment"
+    },
+    {
+      id : 2,
+      value : "Estimate Approval Pending"
+    },
+    {
+      id : 3,
+      value : "Vehicle Under repair"
+    },
+    {
+      id : 4,
+      value : "Invoice Approval Pending"
+    },
+    {
+      id : 5,
+      value : "Surveyor Report Pending"
+    },
+    {
+      id : 6,
+      value : "Hard Copies Pending"
+    },
+    {
+      id : 7,
+      value : "Soft Copy Completed"
+    },
+    {
+      id : 8,
+      value : "Payment Pending"
+    },
+    {
+      id : 9,
+      value : "Settled Cases"
+    },
+    {
+      id : 10,
+      value : "Withdrawl/Rejected"
+    },
+    {
+      id : 11,
+      value : "More Info Required"
+    },
+    {
+      id : 12,
+      value : "My Claims"
+    },
+  ]
+
+  const subStatus = [
+    {
+      id : 1,
+      value : "Withdrawl/Reject"
+    },
+    {
+      id : 2,
+      value : "More Info Required"
+    }
+    ,{
+      id : 3,
+      value : "More forward!"
+    }
+  ]
 
   const generateRegion = (region) => {
     const firstThreeLetters = region?.slice(0, 3);
@@ -207,33 +273,34 @@ const Index = ({}) => {
     };
     console.log(payload);
     if (
-      !payload.InsuredName ||
-      !payload.InsuredMailAddress ||
-      !payload.InsuredMobileNo1 ||
-      !payload.InsuredMobileNo2 ||
-      !payload.ClaimNumber ||
-      !payload.VehicleMakeVariantModelColor ||
-      !payload.VehicleTypeOfBody ||
-      !payload.VehicleRegisteredNumber ||
-      !payload.VehicleDateOfRegistration ||
-      !payload.VehiclePucNumber ||
-      !payload.VehicleTransferDate ||
-      !payload.VehicleEngineNumber ||
-      !payload.VehicleAddedBy ||
-      !payload.IssuingAuthority ||
-      !payload.LicenseNumber ||
-      !payload.LicenseType ||
-      !payload.VehicleChassisNumber ||
-      !payload.VehicleFuelType ||
-      !payload.DriverAddedDate ||
-      !payload.DriverName ||
-      !payload.DriverTypeOfVerification ||
-      !payload.GarageAddedBy ||
-      !payload.GarageNameAndAddress ||
-      !payload.GarageContactNo1 ||
-      !payload.GarageContactNo2
+      // !payload.InsuredName |
+      !payload.InsuredMailAddress 
+      // !payload.InsuredMobileNo1 ||
+      // !payload.InsuredMobileNo2 ||
+      // !payload.ClaimNumber ||
+      // !payload.VehicleMakeVariantModelColor ||
+      // !payload.VehicleTypeOfBody ||
+      // !payload.VehicleRegisteredNumber ||
+      // !payload.VehicleDateOfRegistration ||
+      // !payload.VehiclePucNumber ||
+      // !payload.VehicleTransferDate ||
+      // !payload.VehicleEngineNumber ||
+      // !payload.VehicleAddedBy ||
+      // !payload.IssuingAuthority ||
+      // !payload.LicenseNumber ||
+      // !payload.LicenseType ||
+      // !payload.VehicleChassisNumber ||
+      // !payload.VehicleFuelType ||
+      // !payload.DriverAddedDate ||
+      // !payload.DriverName ||
+      // !payload.DriverTypeOfVerification ||
+      // !payload.GarageAddedBy ||
+      // !payload.GarageNameAndAddress ||
+      // !payload.GarageContactNo1 ||
+      // !payload.GarageContactNo2
+
     ) {
-      alert("Please fill all the details before submitting!!");
+      alert("Please fill the mail address , it is a must required field!");
     } else {
       axios
         .put("/api/updateClaimDetails", payload, {
@@ -315,7 +382,31 @@ const Index = ({}) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        setDocuments(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
+      .get("/api/getStatus", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params:{
+          leadId:leadId
+        }
+      })
+      .then((res) => {
+        const temp = res.data.data;
+        let selectiveStat = [];
+        temp.map((stat,index)=>{
+          if(String(stat.LeadId) === String(leadId)){
+              selectiveStat.push(stat);
+          }
+        });
+        setStatus(selectiveStat);
       })
       .catch((err) => {
         console.log(err);
@@ -617,7 +708,7 @@ const Index = ({}) => {
                         ></div> */}
                           <Form_01
                             claim={claim}
-                            edit={edit}
+                            edit={editCase}
                             DriverName={DriverName}
                             setDriverName={setDriverName}
                             DriverAddedDate={DriverAddedDate}
@@ -645,7 +736,7 @@ const Index = ({}) => {
                         ></div> */}
                           <Form_02
                             claim={claim}
-                            edit={edit}
+                            edit={editCase}
                             GarageNameAndAddress={GarageNameAndAddress}
                             setGarageNameAndAddress={setGarageNameAndAddress}
                             GarageContactNo1={GarageContactNo1}
@@ -667,7 +758,7 @@ const Index = ({}) => {
                       <div className="row mb-2" style={{ marginLeft: "-15px" }}>
                         <div className="col-lg-12 text-center">
                           {/* <ErrorPageContent /> */}
-                          <Exemple />
+                          <Exemple documents={documents} />
                         </div>
                       </div>
                       <div className="row mb-2" style={{ marginLeft: "-15px" }}>
@@ -707,7 +798,7 @@ const Index = ({}) => {
                               marginBottom: "5px",
                             }}
                           ></div>
-                          <StatusLog />
+                          <StatusLog leadId={leadId} status={status} statusOptions={statusOptions} subStatus={subStatus} />
                           {/* <CreateList /> */}
                         </div>
                         {/* <hr /> */}

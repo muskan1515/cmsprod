@@ -46,7 +46,7 @@ const Header = ({setIsRegionChange, isDashboard}) => {
         {/* site logo brand */}
 
         <nav>
-          <HeaderMenuContent setIsRegionChange={setIsRegionChange} isDashboard={true}/>
+          <HeaderMenuContent setIsRegionChange={setIsRegionChange} isDashboard={isDashboard}/>
         </nav>
         {/* End .navbar */}
       </div>

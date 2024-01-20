@@ -4,7 +4,6 @@ import MobileMenu from "../../common/header/MobileMenu";
 import Activities from "./Activities";
 import AllStatistics from "./AllStatistics";
 import StatisticsChart from "./StatisticsChart";
-// import Sidebar from "../../common/header/dashboard/SideBar";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
 import { useEffect, useState } from "react";
@@ -24,6 +23,7 @@ const Index = () => {
   const [filterClaims, setFilterClaims] = useState([]);
   const [majorSearch, setMajorSearch] = useState("");
 
+  const [status,setStatus] = useState([]);
   const [isRegionChange, setIsRegionChange] = useState(false);
 
   useEffect(() => {
@@ -64,23 +64,23 @@ const Index = () => {
     setFilterClaims(filterClaim);
   }, [majorSearch]);
 
-  useEffect(() => {
-    let filterClaim;
-    const region = JSON.parse(localStorage.getItem("regionType"));
+  // useEffect(() => {
+  //   let filterClaim;
+  //   const region = JSON.parse(localStorage.getItem("regionType"));
 
-    if (region) {
-      filterClaim = allClaims.filter((claim, index) => {
-        const regiontest = claim?.reference_id?.split("/")[0];
-        if (region.toLowerCase().includes(regiontest?.toLowerCase())) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+  //   if (region) {
+  //     filterClaim = allClaims.filter((claim, index) => {
+  //       const regiontest = claim?.reference_id?.split("/")[0];
+  //       if (region.toLowerCase().includes(regiontest?.toLowerCase())) {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     });
 
-      setFilterClaims(filterClaim);
-    }
-  }, [isRegionChange]);
+  //     setFilterClaims(filterClaim);
+  //   }
+  // }, [isRegionChange]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -99,6 +99,25 @@ const Index = () => {
       .then((res) => {
         console.log(res.data.data[0]);
         setAllClaims(res.data.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
+      .get("/api/getStatus", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params:{
+          leadId:""
+        }
+      })
+      .then((res) => {
+        const temp = res.data.data;
+       
+        setStatus(temp);
       })
       .catch((err) => {
         console.log(err);
@@ -205,6 +224,7 @@ const Index = () => {
                       : allClaims
                   }
                   setMajorSearch={setMajorSearch}
+                  status={status}
                 />
                 {/* <div className="col-xl-5">
                   <div className="recent_job_activity">

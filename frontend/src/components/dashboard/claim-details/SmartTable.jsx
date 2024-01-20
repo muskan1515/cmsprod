@@ -22,7 +22,6 @@ function SmartTable(props) {
   const fetchData = useCallback(
     async (queryString) => {
       setLoading(true);
-
       try {
         const response = await fetch(
           props.url + (queryString ? queryString : ""),
@@ -131,6 +130,7 @@ function SmartTable(props) {
               aria-expanded="false"
               aria-controls="collapseTwo"
               style={{ padding: "10px 10px 0 25px" }}
+             
             >
               {/* <h4 className="">Vehicle Details</h4> */}
               <div className="row">
@@ -178,10 +178,11 @@ function SmartTable(props) {
                           className="btn btn-log btn-thm flaticon-pdf"
                           title="pdf zip download"
                           style={{ marginLeft: "250px" }}
+                          onClick={props.downloadAllFiles}
                         ></div>
                       </div>
                     </div>
-                    {data.length > 0 ? (
+                    {props.data.length > 0 ? (
                       <div className="row mt-3">
                         <div className="smartTable-tableContainer">
                           <table
@@ -227,7 +228,7 @@ function SmartTable(props) {
                               </tr>
                             </thead>
                             <tbody>
-                              {data.map((row, idx) => {
+                              {props.data.map((row, idx) => {
                                 return (
                                   <tr key={"tr_" + idx}>
                                     {props.headCells.map((headCell, idxx) => {
@@ -256,7 +257,7 @@ function SmartTable(props) {
                     {props.noPagination || data.length === 0 || !props.url ? (
                       <div className="row">
                         <div className="col-12 text-end p-3">
-                          {data.length > 0 ? data.length : 0} Rows
+                          {props.data.length > 0 ? props.data.length : 0} Rows
                         </div>
                       </div>
                     ) : (

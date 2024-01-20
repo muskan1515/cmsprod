@@ -481,6 +481,7 @@ const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
             data-live-search="true"
             data-width="100%"
             value={regionValue}
+            disabled={!isDashboard}
             onChange={(e)=>handlerChangeRegion(e.target.value)}
           >
             <option data-tokens="type1" value={""}>Select Region</option>

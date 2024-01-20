@@ -262,12 +262,38 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
   
   array.map((data,index)=>{
 
-    const photo1 = data.data[0][0]?.length > 1 ? data.data[0][0] : {};
-    const photo2 = data.data[0][1]?.length > 1 ? data.data[0][1] : {};
-    const photo3 = data.data[0][2]?.length > 1 ? data.data[0][2] : {};
-    const photo4 = data.data[0][3]?.length > 1 ? data.data[0][3] : {};
-    const photo5 = data.data[0][4]?.length > 1 ? data.data[0][4] : {};
-    const photo6 = data.data[0][5]?.length > 1 ? data.data[0][5] : {};
+   
+    let photo1="",photo2="",photo3="",photo4="",photo5="",photo6="";
+    let photoAtt1="",photoAtt2="",photoAtt3="",photoAtt4="",photoAtt5="",photoAtt6="";
+
+    if(data.data[0][0]){
+      photo1=data.data[0][0].url;
+      photoAtt1 = data.data[0][0].name;
+    }
+    if(data.data[1]?.length > 0){
+      photo2=data.data[1][0].url;
+      photoAtt2 = data.data[1][0].name;
+    }
+    if(data.data[2]?.length > 0){
+      photo3=data.data[2][0].url;
+      photoAtt3 = data.data[2][0].name;
+    }
+    if(data.data[3]?.length > 0){
+      photo4=data.data[3][0].url;
+      photoAtt4 = data.data[3][0].name;
+    }
+    if(data.data[4]?.length > 0){
+      photo4=data.data[4][0].url;
+      photoAtt4 = data.data[4][0].name;
+    }
+    if(data.data[5]?.length > 0){
+      photo5=data.data[5][0].url;
+      photoAtt5 = data.data[5][0].name;
+    }
+    if(data.data[6]?.length > 0){
+      photo6=data.data[6][0].url;
+      photoAtt6= data.data[6][0].name;
+    }
     const insertUploadDetails = `
     INSERT INTO DocumentList (
       LeadId,
@@ -277,7 +303,14 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
       Photo3,
       Photo4,
       Photo5,
-      Photo6
+      Photo6,
+      Attribute1,
+      Attribute2,
+      Attribute3,
+      Attribute4,
+      Attribute5,
+      Attribute6,
+      ClaimNumber
     ) VALUES (
       '${data.leadId}',
       '${data.docName}',
@@ -286,35 +319,34 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
       '${photo3}',
       '${photo4}',
       '${photo5}',
-      '${photo6}'
+      '${photo5}',
+      '${photoAtt1}',
+      '${photoAtt2}',
+      '${photoAtt3}',
+      '${photoAtt4}',
+      '${photoAtt5}',
+      '${photoAtt6}',
+      '${'12'}'
     );
   `;
 
-  if(!photo1 || !photo2 || !photo3 || !photo4 || !photo5 || !photo6){
-    console.log("not!");
-  }
-  else {
+ 
+  
     db.query(insertUploadDetails, (error, results) => {
       if (error) {
         console.error('Error inserting data into Upload Details:', error);
         return res.status(500).json({ error: 'Error inserting data into DocumentDetails.' });
       }
 
-      res.status(200).json({ message: 'Data inserted successfully.' });
+      
     });
+    
 
-  }
+  
   })
 
-  // const sql = 'INSERT INTO vehicle_details SET ?';
-  // db.query(sql, req.body, (err, result) => {
-  //   if (err) {
-  //     console.error(err);
-  //     res.status(500).send('Internal Server Error');
-  //     return;
-  //   }
-  //   res.send(`Vehicle Details added with ID: ${result.insertId}`);
-  // });
+  res.status(200).json({ message: 'Data inserted successfully.' });
+
 });
 
 app.post('/driver-details', authenticateUser, (req, res) => {
@@ -564,6 +596,32 @@ app.get('/getAllClaims',authenticateUser, (req, res) => {
   });
 });
 
+app.get('/getStatus',authenticateUser, (req, res) => {
+  const leadId = req.query.LeadId;
+  const sql = "SELECT * FROM ClaimStatus";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send(result);
+  });
+});
+
+app.post('/updateStatus',authenticateUser, (req, res) => {
+  const {leadId,stage,Substatus} = req.body;
+  // const sql = "SELECT * FROM Status WHERE LeadId=?";
+  // db.query(sql,[leadId], (err, result) => {
+  //   if (err) {
+  //     console.error(err);
+  //     res.status(500).send('Internal Server Error');
+  //     return;
+  //   }
+  //   res.send(result);
+  // });
+});
+
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   console.log(username,password);
@@ -652,6 +710,9 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
+  
+
+
   db.query(insertClaimDetails, (error, results) => {
     if (error) {
       console.error('Error inserting data into ClaimDetails:', error);
@@ -678,6 +739,19 @@ app.post('/addClaim', (req, res) => {
       '${parseInt(results[0].LeadId)}'
     );
   `;
+
+  const statusDetails = `
+    INSERT INTO ClaimStatus (
+      Status,
+      SubStatus,
+      LeadId 
+    ) VALUES (
+      '${1}',
+      '${2}',
+      '${parseInt(results[0].LeadId)}'
+    );
+  `;
+
 
   const insertGarageDetails = `
     INSERT INTO GarageDetails (
@@ -708,21 +782,9 @@ app.post('/addClaim', (req, res) => {
   `;
 
   const insertDriverDetails = `
-    INSERT INTO AccidentDetails (
-      IssuingAuthority,
-      LicenseNumber,
-      LicenseType,
-      DriverName,
-      AddedDate,
-      TypeOfVerification,
+    INSERT INTO DriverDetails (
       LeadId
     ) VALUES (
-      '${""}',
-      '${""}',
-      '${""}',
-      '${""}',
-      '${""}',
-      '${""}',
       '${parseInt(results[0].LeadId)}'
     );
   `;
@@ -781,7 +843,8 @@ app.post('/addClaim', (req, res) => {
             if (error) {
               console.error('Error inserting data into InsuredDetails:', error);
               return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
-            }
+            } 
+            db.query(statusDetails, (error, results) => {
             db.query(insertDriverDetails, (error, results) => {
               if (error) {
                 console.error('Error inserting data into DriverDetails:', error);
@@ -790,6 +853,8 @@ app.post('/addClaim', (req, res) => {
   
               res.status(200).json({ message: 'Data inserted successfully.' });
             });
+          }
+            );
 
           });
         });
@@ -799,13 +864,39 @@ app.post('/addClaim', (req, res) => {
   });
 });
 
+app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
+  const leadId = req.params.leadId;
+  
+  const {   
+      Status ,
+      subStage
+} = req.body;
+ 
+  // Update InsuredDetails
+  const statusDetails = `
+    UPDATE ClaimStatus
+    SET
+      Status = '${Status}',
+      SubStatus = '${subStage}'
+    WHERE LeadId = ${leadId};
+  `;
+
+          db.query(statusDetails, (error, results) => {
+            if (error) {
+              console.error('Error updating data in InsuredDetails:', error);
+              return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
+            }
+
+            res.status(200).json({ message: 'Data updated successfully.' });
+          });
+        
+});
+
 
 
 app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
   const leadId = req.params.leadId;
-  // console.log("leadId",leadId);
-
-  // Extract fields from the request body
+  
   const {   InsuredName ,
       InsuredMailAddress,
       InsuredMobileNo1,
@@ -886,7 +977,6 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
     WHERE LeadId = ${LeadId};
   `;
 
-  // Execute the SQL queries individually
   db.query(updateDriverDetails, (error, results) => {
     if (error) {
       console.error('Error updating data in ClaimDetails:', error);
