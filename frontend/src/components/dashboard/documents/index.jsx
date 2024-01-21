@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 const Index = () => {
   const url = window.location.href;
-  const leadId = url.split("http://localhost:3000/documents/")[1];
+  const leadId = url.split("https://claims-app-phi.vercel.app/documents/")[1];
   const [status , setStatus]=useState([]);
   const [document,setDocument]=useState([]);
   const [uploadedData,setUpdatedData] = useState([]);
