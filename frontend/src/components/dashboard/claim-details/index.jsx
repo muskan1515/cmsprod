@@ -29,17 +29,19 @@ const Index = ({}) => {
   const url = window.location.href;
   const leadId = url.split("/claim-details?leadId=")[1];
   const [claim, setClaim] = useState({});
+  console.log(claim)
+  console.log(claim?.insuredDetails?.InsuredName)
   const [InsuredName, setInsuredName] = useState(
-    claim?.InsuredName ? claim?.InsuredName : ""
+    claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : ""
   );
   const [InsuredMailAddress, setInsuredMailAddress] = useState(
-    claim?.InsuredMailAddress ? claim?.InsuredMailAddress : ""
+    claim?.insuredDetails?.InsuredMailAddress ? claim?.insuredDetails?.InsuredMailAddress : ""
   );
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState(
-    claim?.InsuredMobileNo1 ? claim?.InsuredMobileNo1 : ""
+    claim?.insuredDetails?.InsuredMobileNo1 ? claim?.insuredDetails?.InsuredMobileNo1 : ""
   );
   const [InsuredMobileNo2, setInsuredMobileNo2] = useState(
-    claim?.InsuredMobileNo2 ? claim?.InsuredMobileNo2 : ""
+    claim?.insuredDetails?.InsuredMobileNo2 ? claim?.insuredDetails?.InsuredMobileNo2 : ""
   );
   const [subType, setSubType] = useState("Motor");
   const [requestType, setRequestType] = useState("Spot");
@@ -74,7 +76,7 @@ const Index = ({}) => {
     claim?.VehicleAddedBy ? claim?.VehicleAddedBy : ""
   );
   const [IssuingAuthority, setIssuingAuthority] = useState(
-    claim?.IssuingAuthority ? claim?.IssuingAuthority : ""
+    claim?.insuredDetails?.IssuingAuthority ? claim?.insuredDetails?.IssuingAuthority : ""
   );
   const [LicenseNumber, setLicenseNumber] = useState(
     claim?.LicenseNumber ? claim?.LicenseNumber : ""
@@ -364,8 +366,9 @@ const Index = ({}) => {
         },
       })
       .then((res) => {
-        console.log(res.data.data[0][0]);
-        setClaim(res.data.data[0][0]);
+        // console.log(res.data.data[0][0]);
+        console.log(res);
+        setClaim(res.data.data);
       })
       .catch((err) => {
         toast.error(err);

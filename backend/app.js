@@ -401,20 +401,67 @@ app.get('/getDocuments',authenticateUser, (req, res) => {
   });
 });
 
-app.get('/getSpecificClaim',authenticateUser, (req, res) => {
+// app.get('/getSpecificClaim',authenticateUser, (req, res) => {
  
-  const LeadId = req.query.LeadId;
-  console.log(LeadId);
-  const sql = "CALL GetInfoByLeadId(?)";
-  db.query(sql,[LeadId], (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    res.send(result);
-  });
+//   const LeadId = req.query.LeadId;
+//   console.log(LeadId);
+//   const sql = "CALL GetInfoByLeadId(?)";
+//   db.query(sql,[LeadId], (err, result) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send('Internal Server Error');
+//       return;
+//     }
+//     res.send(result);
+//   });
+// });
+app.get('/getSpecificClaim', authenticateUser, async (req, res) => {
+  try {
+    const leadId = req.query.LeadId;
+    // const region = req.query.Region || null;
+
+    // Execute stored procedures for each table
+    const claimDetails = await executeStoredProc('GetClaimDetailsByLeadId', [leadId]);
+    const insuredDetails = await executeStoredProc('GetInsuredDetailsByLeadId', [leadId]);
+    const accidentDetails = await executeStoredProc('GetAccidentDetailsByLeadId', [leadId]);
+    const driverDetails = await executeStoredProc('GetDriverDetailsByLeadId', [leadId]);
+    const vehicleDetails = await executeStoredProc('GetVehicleDetailsByLeadId', [leadId]);
+    const garageDetails = await executeStoredProc('GetGarageDetailsByLeadId', [leadId]);
+    const claimStatus = await executeStoredProc('GetClaimStatusByLeadId', [leadId]);
+
+    // Combine the results into a single variable or structure as needed
+    const combinedResult = {
+      claimDetails: claimDetails[0],
+      insuredDetails: insuredDetails[0],
+      accidentDetails: accidentDetails[0],
+      driverDetails: driverDetails[0],
+      vehicleDetails: vehicleDetails[0],
+      garageDetails: garageDetails[0],
+      claimStatus: claimStatus[0]
+    };
+
+    // Send the combined result to the client
+    res.send(combinedResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
+// Function to execute stored procedures
+function executeStoredProc(procName, params) {
+  return new Promise((resolve, reject) => {
+    const sql = `CALL ${procName}(?)`;
+    db.query(sql, params, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result[0]); // Assuming stored procedures return an array with the first element as the result
+      }
+    });
+  });
+}
+
 
 app.post("/sendEmail/1",authenticateUser,(req,res)=>{
   const {vehicleNo,PolicyNo,Insured,Date,leadId,toMail} = req.body;

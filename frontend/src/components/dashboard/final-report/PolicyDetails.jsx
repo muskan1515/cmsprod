@@ -16,7 +16,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
           "Content-Type": "application/json",
         },
         params: {
-          LeadId: "1",
+          LeadId: "8",
         },
       })
       .then((res) => {

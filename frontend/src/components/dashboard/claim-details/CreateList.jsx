@@ -83,7 +83,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredName ? InsuredName : claim.InsuredName}
+                value={InsuredName ? InsuredName : claim.insuredDetails.InsuredName}
                 onChange={(e)=>setInsuredName(e.target.value)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
@@ -128,7 +128,7 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={InsuredMobileNo1 ? InsuredMobileNo1 : claim.InsuredMobileNo1}
+                  value={InsuredMobileNo1 ? InsuredMobileNo1 : claim.insuredDetails.InsuredMobileNo1}
                   onChange={(e)=>setInsuredMobileNo1(e.target.value)}
                   disabled={!edit}
                   // placeholder="Enter Registration No."
@@ -138,7 +138,7 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={InsuredMobileNo2 ? InsuredMobileNo2 : claim.InsuredMobileNo2}
+                  value={InsuredMobileNo2 ? InsuredMobileNo2 : claim.insuredDetails.InsuredMobileNo2}
                   onChange={(e)=>setInsuredMobileNo2(e.target.value)}
                   disabled={!edit}
                   // placeholder="Enter Registration No."
@@ -169,7 +169,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredMailAddress ? InsuredMailAddress : claim.InsuredMailAddress}
+                value={InsuredMailAddress ? InsuredMailAddress : claim.insuredDetails.InsuredMailAddress}
                   onChange={(e)=>setInsuredMailAddress(e.target.value)}
                   disabled={!edit}
                 // placeholder="Enter Registration No."
@@ -183,9 +183,9 @@ const CreateList = ({
                   // style={{ marginTop: "-1px" }}
                   onClick={() =>
                     sendMailHandler(
-                      claim.VehicleRegisteredNumber,
-                      claim.PolicyNumber,
-                      claim.InsuredName
+                      claim.insuredDetails.VehicleRegisteredNumber,
+                      claim.insuredDetails.PolicyNumber,
+                      claim.insuredDetails.InsuredName
                     )
                   }
                 ></button>
@@ -215,7 +215,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={claim.LeadId}
+                value={claim.insuredDetails.LeadId}
 
                 // placeholder="Enter Registration No."
               />
@@ -244,7 +244,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={claim.ReferenceNo}
+                value={claim.insuredDetails.ReferenceNo}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -272,7 +272,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={ClaimNumber ? ClaimNumber : claim.ClaimNumber}
+                value={ClaimNumber ? ClaimNumber : claim.insuredDetails.ClaimNumber}
                 onChange={(e)=>setClaimNumber(e.target.value)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
@@ -368,7 +368,7 @@ const CreateList = ({
               <input
                 className="form-control"
                 id="propertyTitle"
-                value={formatDate(claim.ClaimAddedDateTime)}
+                value={formatDate(claim.insuredDetails.ClaimAddedDateTime)}
                 // placeholder="Enter Registration No."
               />
             </div>
