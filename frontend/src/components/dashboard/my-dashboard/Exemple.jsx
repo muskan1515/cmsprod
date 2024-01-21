@@ -140,13 +140,14 @@ export default function Exemple({ claims, setMajorSearch,status }) {
         val = stat.Status;
       }
     });
-    return val;
+    return 0;
   }
 
   let tempData = [];
   useEffect(() => {
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID) ;
+      console.log(tempValue);
       console.log(tempValue);
       const tempGarage = claim?.AssignedGarage?.split(",").map((item) =>
         item.trim()

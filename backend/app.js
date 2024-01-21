@@ -16,6 +16,7 @@ const { OAuth2Client } = require('google-auth-library');
 
 const contentFunc = require("./Config/getEmailContent");
 const emailHandler = require('./Config/getEmailContent');
+const { default: axios } = require('axios');
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -498,6 +499,7 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
 
   `;
 
+  
 
   const mailOptions = {
     from: 'infosticstech@gmail.com',
@@ -723,6 +725,9 @@ app.post('/addClaim', (req, res) => {
     EstimatedLoss
   } = req.body;
 
+  const authorizationHeader = req.headers.authorization;
+
+  const token = authorizationHeader.substring('Bearer '.length);
 
 
   const insertClaimDetails = `
@@ -766,15 +771,13 @@ app.post('/addClaim', (req, res) => {
       return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
     }
 
-    let LeadId = 0;
-
     db.query("SELECT LeadId FROM ClaimDetails ORDER BY LeadId DESC LIMIT 1", (error, results) => {
     if (error) {
       console.error('Error inserting data into ClaimDetails:', error);
       return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
     }
     console.log(results);
-    LeadId = results[0].LeadId;
+    const addLeadId = results[0].LeadId;
     
   
   const insertVehicleDetails = `
@@ -897,9 +900,28 @@ app.post('/addClaim', (req, res) => {
                 console.error('Error inserting data into DriverDetails:', error);
                 return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
               }
-  
-              res.status(200).json({ message: 'Data inserted successfully.' });
-            });
+
+              axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/1`,{
+                vehicleNo : "N.A.",
+                PolicyNo : ReferenceNo,
+                Insured : InsuredName,
+                toMail:InsuredMailAddress,
+                Date: new Date(),
+                leadId:addLeadId
+              },
+              {
+                headers:{
+                  Authorization:`Bearer ${token}`,
+                  "Content-Type":"application/json"
+                }
+              }
+              ).then((res)=>{
+                res.status(200).json({ message: 'Data inserted successfully.' });
+              })
+              .catch((Er)=>{
+               console.og(Er);
+              })
+  });
           }
             );
 

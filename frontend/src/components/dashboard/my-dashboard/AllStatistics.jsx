@@ -102,7 +102,7 @@ const AllStatistics = ({status}) => {
     let count =0;
     
     status.map((stat,index)=>{
-      console.log(stat,item)
+      // console.log(stat,item)
       if(String(stat.Status) === String(item.id)){
        
         count  = count + 1;
