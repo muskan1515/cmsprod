@@ -82,7 +82,7 @@ const Form = ({
                       className="btn-thm m-1"
                       style={{}}
                       onClick={() => setEditCase_03(true)}
-                    >
+                    > 
                       <span
                         className="flaticon-edit"
                         style={{ fontSize: "14px" }}
@@ -119,9 +119,9 @@ const Form = ({
                             value={
                               GarageNameAndAddress
                                 ? GarageNameAndAddress
-                                : claim.GarageNameAndAddress
+                                : claim.garageDetails?.GarageNameAndAddress
                             }
-                            disabled={!edit}
+                            // disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -156,12 +156,12 @@ const Form = ({
                             value={
                               GarageContactNo1
                                 ? GarageContactNo1
-                                : claim.GarageContactNo1
+                                : claim.garageDetails?.GarageContactNo1
                             }
                             onChange={(e) =>
                               setGarageContactNo1(e.target.value)
                             }
-                            disabled={!edit}
+                            // disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
 
@@ -172,12 +172,12 @@ const Form = ({
                             value={
                               GarageContactNo2
                                 ? GarageContactNo2
-                                : claim.GarageContactNo2
+                                : claim.garageDetails?.GarageContactNo2
                             }
                             onChange={(e) =>
                               setGarageContactNo2(e.target.value)
                             }
-                            disabled={!edit}
+                            // disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -205,7 +205,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(claim.GarageAddedDate)}
+                            value={formatDate(claim.garageDetails?.GarageAddedDate)}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -236,10 +236,10 @@ const Form = ({
                             value={
                               GarageAddedBy
                                 ? GarageAddedBy
-                                : claim.GarageAddedBy
+                                : claim.garageDetails?.GarageAddedBy
                             }
                             onChange={(e) => setGarageAddedBy(e.target.value)}
-                            disabled={!edit}
+                            // disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -267,7 +267,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(claim.GarageModifiedDate)}
+                            value={formatDate(claim.garageDetails?.GarageModifiedDate)}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -276,7 +276,7 @@ const Form = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_garage />
+                    <Form_garage  claim={claim}/>
                   </div>
                 )}
               </div>

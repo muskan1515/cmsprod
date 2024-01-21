@@ -11,10 +11,12 @@ const StatusLog = ({leadId,status,statusOptions,subStatus}) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload = {
       LeadId : Number(leadId),
-      Status : stat ? Number(stat) : Number(status[0].Status +1),
+      Status :  Number(stat) ,
       subStage : subStage ?Number(subStage) : Number(3),
       token : Number(userInfo[0].Token)
     };
+
+    console.log(payload);
     axios.put("/api/updateStatus",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,

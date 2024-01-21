@@ -197,7 +197,7 @@ const data = [
   },
 ];
 
-export default function Exemple({setUpdatedData,uploadedData,leadId,document}) {
+export default function Exemple({setUpdatedData,uploadedData,leadId,status,document}) {
   const [updatedCode, setUpdatedCode] = useState([]);
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
@@ -253,6 +253,12 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,document}) {
     })
     return isPresent;
   }
+
+  const checkId = (status,row)=>{
+    if(status.Status === 1 && Number(row.serial_num) <= 5 )
+     return true;
+    return false;
+  }
   const checkIsUploaded = (label) => {
     // console.log(uploadedData);
     let selectedField = {};
@@ -271,8 +277,9 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,document}) {
       data.map((row, index) => {
         const isUploaded = checkIsUploaded(row.doc_name);
         const isDone = checkAlreadyDone(row.doc_name);
-        console.log(isDone);
-        if(!isDone){
+        const isAccordingToStatus = checkId(status,row);
+        console.log(isAccordingToStatus);
+        if(!isDone&& isAccordingToStatus ){
         const updatedRow = {
           _id: index + 1,
           serial_num: row.serial_num,

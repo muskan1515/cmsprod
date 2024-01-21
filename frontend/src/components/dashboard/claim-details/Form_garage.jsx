@@ -48,7 +48,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      jkhkhkhj
+                      {claim.garageDetails?.GarageNameAndAddress}
                     </label>
                   </div>
                 </td>
@@ -76,7 +76,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      uiyuiuy
+                      { claim.garageDetails?.GarageContactNo1}
                     </label>
                   </div>
                 </td>
@@ -104,7 +104,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      uiyiuyiy
+                    {formatDate(claim.garageDetails?.GarageAddedDate)}
                     </label>
                   </div>
                 </td>
@@ -134,7 +134,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      876868hjgj8768
+                      { claim.garageDetails?.GarageAddedBy}
                     </label>
                   </div>
                 </td>
@@ -162,7 +162,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      878867
+                    {formatDate(claim.garageDetails?.GarageModifiedDate)}
                     </label>
                   </div>
                 </td>
@@ -190,7 +190,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Not Started
+                    {formatDate(claim.claimStatus?.ClaimStatus)}
                     </label>
                   </div>
                 </td>

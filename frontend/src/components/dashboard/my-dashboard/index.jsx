@@ -182,7 +182,7 @@ const Index = () => {
                 className="row mt-2"
                 style={{ justifyContent: "space-between" }}
               >
-                <AllStatistics />
+                <AllStatistics status={status} />
               </div>
               {/* End .row Dashboard top statistics */}
               <div

@@ -59,7 +59,10 @@ const Index = () => {
       }
       
      })
-     setStatus(updatedStatus);
+
+     const statlen = updatedStatus.length;
+
+     setStatus(updatedStatus[statlen-1]);
     })
     .catch((err) => {
       console.log(err);
@@ -93,6 +96,8 @@ const Index = () => {
     .catch((err) => {
       console.log(err);
     });
+
+  
   },[])
 
   
@@ -161,6 +166,7 @@ const Index = () => {
               setUpdatedData={setUpdatedData} 
               uploadedData={uploadedData} 
               leadId={leadId} 
+              status={status}
               document={document}/>
               <button className="btn btn-color" onClick={onSubmitHandler}>Submit</button>
             </div>

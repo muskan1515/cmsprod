@@ -1,7 +1,7 @@
-const AllStatistics = () => {
+const AllStatistics = ({status}) => {
   const allStatistics = [
     {
-      id: 0,
+      id: 1,
       blockStyle: "",
       icon: "flaticon-home",
       timer: "37",
@@ -9,7 +9,7 @@ const AllStatistics = () => {
       color: "#a5d9c5",
     },
     {
-      id: 1,
+      id: 2,
       blockStyle: "",
       icon: "flaticon-home",
       timer: "37",
@@ -17,7 +17,7 @@ const AllStatistics = () => {
       color: "#AFEEEE",
     },
     {
-      id: 2,
+      id: 3,
       blockStyle: "style2",
       icon: "flaticon-view",
       timer: "24",
@@ -25,7 +25,7 @@ const AllStatistics = () => {
       color: "#98FB98",
     },
     {
-      id: 3,
+      id: 4,
       blockStyle: "style3",
       icon: "flaticon-chat",
       timer: "12",
@@ -33,7 +33,7 @@ const AllStatistics = () => {
       color: "#9ACD32",
     },
     {
-      id: 4,
+      id: 5,
       blockStyle: "style4",
       icon: "flaticon-heart",
       timer: "18",
@@ -41,7 +41,7 @@ const AllStatistics = () => {
       color: "#FFA07A",
     },
     {
-      id: 1,
+      id: 6,
       blockStyle: "",
       icon: "flaticon-home",
       timer: "37",
@@ -49,7 +49,7 @@ const AllStatistics = () => {
       color: "#FFB6C1",
     },
     {
-      id: 2,
+      id: 7,
       blockStyle: "style2",
       icon: "flaticon-view",
       timer: "24",
@@ -57,7 +57,7 @@ const AllStatistics = () => {
       color: "#FFE4E1",
     },
     {
-      id: 3,
+      id: 8,
       blockStyle: "style3",
       icon: "flaticon-chat",
       timer: "12",
@@ -65,7 +65,7 @@ const AllStatistics = () => {
       color: "#B0C4DE",
     },
     {
-      id: 4,
+      id: 9,
       blockStyle: "style4",
       icon: "flaticon-heart",
       timer: "18",
@@ -73,7 +73,7 @@ const AllStatistics = () => {
       color: "#7FFFD4",
     },
     {
-      id: 1,
+      id: 10,
       blockStyle: "",
       icon: "flaticon-home",
       timer: "37",
@@ -81,7 +81,7 @@ const AllStatistics = () => {
       color: "#FFFACD",
     },
     {
-      id: 2,
+      id: 11,
       blockStyle: "style2",
       icon: "flaticon-view",
       timer: "24",
@@ -89,7 +89,7 @@ const AllStatistics = () => {
       color: "#FFEFD5",
     },
     {
-      id: 3,
+      id: 12,
       blockStyle: "style2",
       icon: "flaticon-chat",
       timer: "12",
@@ -97,6 +97,20 @@ const AllStatistics = () => {
       color: "#E6E6FA",
     },
   ];
+
+  const getCount = (item)=>{
+    let count =0;
+    
+    status.map((stat,index)=>{
+      console.log(stat,item)
+      if(String(stat.Status) === String(item.id)){
+       
+        count  = count + 1;
+      }
+    })
+    console.log(count)
+    return count;
+  }
 
   return (
     <>
@@ -112,7 +126,7 @@ const AllStatistics = () => {
           >
             <div className="detais">
               <div className="timer fw-bold" style={{ fontSize: "32px" }}>
-                {item.timer}
+                {getCount(item)}
               </div>
               <p
                 style={{ fontSize: "12px", color: "black", fontWeight: "bold" }}

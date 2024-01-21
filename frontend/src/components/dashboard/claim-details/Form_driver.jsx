@@ -48,7 +48,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      jkhkhkhj
+                    {claim?.driverDetails?.DriverName}
                     </label>
                   </div>
                 </td>
@@ -76,7 +76,9 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      uiyuiuy
+                    {formatDate(
+                     claim?.driverDetails?.DriverAddedDate
+                    )}
                     </label>
                   </div>
                 </td>
@@ -104,7 +106,9 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      uiyiuyiy
+                    {
+                      claim?.driverDetails?.DriverTypeOfVerification
+                    }
                     </label>
                   </div>
                 </td>
@@ -134,7 +138,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      876868hjgj8768
+                    {formatDate(claim?.driverDetails?.DriverModifiedDate)}
                     </label>
                   </div>
                 </td>
@@ -162,7 +166,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      878867
+                      {claim?.claimDetails?.ClaimNumber}
                     </label>
                   </div>
                 </td>
@@ -190,7 +194,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Not Started
+                      {claim?.claimStatus?.ClaimStatus}
                     </label>
                   </div>
                 </td>

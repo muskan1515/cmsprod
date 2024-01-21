@@ -14,6 +14,8 @@ const pm2 = require("pm2")
 const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
 
+const contentFunc = require("./Config/getEmailContent");
+const emailHandler = require('./Config/getEmailContent');
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -463,9 +465,19 @@ function executeStoredProc(procName, params) {
 }
 
 
+
 app.post("/sendEmail/1",authenticateUser,(req,res)=>{
   const {vehicleNo,PolicyNo,Insured,Date,leadId,toMail} = req.body;
 
+  const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
+  db.query(sql,[leadId], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    const content = emailHandler(result[0].Status);
+    
   const emailContent = `
     Dear Sir/Madam,
 
@@ -476,22 +488,7 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
     can procedd further in your case and we also request 
     you to provide the following details as follows:-
 
-    1) Original DL/Rc For verification
-    2) Written Statement in Breif
-    3) Estimate Copy
-    5) Spot Snaps/Video(If Any)
-    6) Claim Form filled completely Filled & Duly Signed & mentioning Mobile no.
-    7) Discharge Voucher completely Filled & Duly Signed
-    8) Satisfaction Voucher completely Filled & Duly Signed(If Cashless)
-    9) Current year Policy
-    10) Previous Year Policy
-    11) Pan Card
-    12) Aadhar Card
-    13) Cancel Cheque Of Insured with name mentioned on it(If Cashless Provide the Repairer cheque)
-    14) PI Report(If Break In the policy)
-    15) TP Affidavit on Rs10/- stamp paper
-    16) MLC Report(If Any)
-    17) Towing Bill/Crane Bill(If Any)
+    ${content}
 
         Please provide the clear copy of all the documents so that the claim processing can be fast or
       <p><a href=https://claims-app-phi.vercel.app/documents/${leadId} target="_blank">Click me</a> to fill the documents information .</p>
@@ -500,6 +497,7 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
             claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
   `;
+
 
   const mailOptions = {
     from: 'infosticstech@gmail.com',
@@ -518,6 +516,8 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
       res.status(200).send('Email sent successfully');
     }
   });
+
+});
 
 })
 
@@ -928,14 +928,14 @@ app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
     WHERE LeadId = ${leadId};
   `;
 
-          db.query(statusDetails, (error, results) => {
-            if (error) {
-              console.error('Error updating data in InsuredDetails:', error);
-              return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
-            }
+          // db.query(statusDetails, (error, results) => {
+          //   if (error) {
+          //     console.error('Error updating data in InsuredDetails:', error);
+          //     return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
+          //   }
 
-            res.status(200).json({ message: 'Data updated successfully.' });
-          });
+          //   res.status(200).json({ message: 'Data updated successfully.' });
+          // });
         
 });
 

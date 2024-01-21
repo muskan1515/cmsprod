@@ -147,7 +147,7 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               !VehicleModel
-                                ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}`
+                                ? `${claim?.vehicleDetails?.VehicleMakeVariantModelColor},${claim?.vehicleDetails?.VehicleTypeOfBody}`
                                 : VehicleModel
                             }
                             onChange={(e) => setVehicleModel(e.target.value)}
@@ -179,8 +179,7 @@ const Form = ({
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={RegisteredNumber}
-                          
+                          value={RegisteredNumber ? RegisteredNumber : claim?.vehicleDetails?.VehicleRegisteredNumber}
                           
                           // placeholder="Enter Registration No."
                         />
@@ -210,7 +209,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              EngineType ? EngineType : claim.VehicleModeOfCheck
+                              EngineType ? EngineType : claim?.vehicleDetails?.VehicleModeOfCheck
                             }
                             onChange={(e) => setEngineType(e.target.value)}
 
@@ -244,7 +243,7 @@ const Form = ({
                             value={
                               RegisteredOwner
                                 ? RegisteredOwner
-                                : claim.VehicleRegisteredOwner
+                                : claim?.vehicleDetails?.VehicleRegisteredOwner
                             }
                             onChange={(e) => setRegisteredOwner(e.target.value)}
 
@@ -278,7 +277,7 @@ const Form = ({
                             value={formatDate(
                               DateRegistration
                                 ? DateRegistration
-                                : claim.VehicleDateOfRegistration
+                                : claim?.vehicleDetails?.VehicleDateOfRegistration
                             )}
                             onChange={(e) =>
                               setDateRegistration(e.target.value)
@@ -312,7 +311,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              PUCNumber ? PUCNumber : claim.VehiclePucNumber
+                              PUCNumber ? PUCNumber : claim?.vehicleDetails?.VehiclePucNumber
                             }
                             onChange={(e) => setPUCNumber(e.target.value)}
 
@@ -346,7 +345,7 @@ const Form = ({
                             value={formatDate(
                               TransferDate
                                 ? TransferDate
-                                : claim.VehicleTransferDate
+                                : claim?.vehicleDetails?.VehicleTransferDate
                             )}
                             onChange={(e) => setTransferDate(e.target.value)}
 
@@ -380,7 +379,7 @@ const Form = ({
                             value={
                               EngineNumber
                                 ? EngineNumber
-                                : claim.VehicleEngineNumber
+                                : claim?.vehicleDetails?.VehicleEngineNumber
                             }
                             onChange={(e) => setEngineNumber(e.target.value)}
 
@@ -411,7 +410,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={AddedBy ? AddedBy : claim.VehicleAddedBy}
+                            value={AddedBy ? AddedBy : claim?.vehicleDetails?.VehicleAddedBy}
                             onChange={(e) => setAddedBy(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -444,7 +443,7 @@ const Form = ({
                             value={
                               IssuingAuthority
                                 ? IssuingAuthority
-                                : claim.IssuingAuthority
+                                : claim?.driverDetails?.IssuingAuthority
                             }
                             onChange={(e) =>
                               setIssuingAuthority(e.target.value)
@@ -480,7 +479,7 @@ const Form = ({
                             value={
                               LicenseNumber
                                 ? LicenseNumber
-                                : claim.LicenseNumber
+                                : claim?.driverDetails?.LicenseNumber
                             }
                             onChange={(e) => setLicenseNumber(e.target.value)}
 
@@ -512,7 +511,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              LicenseType ? LicenseType : claim.LicenseType
+                              LicenseType ? LicenseType : claim?.driverDetails?.LicenseType
                             }
                             onChange={(e) => setLicenseType(e.target.value)}
 
@@ -546,7 +545,7 @@ const Form = ({
                             value={
                               VehicleChassisNumber
                                 ? VehicleChassisNumber
-                                : claim.VehicleChassisNumber
+                                : claim?.vehicleDetails?.VehicleChassisNumber
                             }
                             onChange={(e) =>
                               setVehicleChassisNumber(e.target.value)
@@ -582,7 +581,7 @@ const Form = ({
                             value={
                               VehicleFuelType
                                 ? VehicleFuelType
-                                : claim.VehicleFuelType
+                                : claim?.vehicleDetails?.VehicleFuelType
                             }
                             onChange={(e) => setVehicleFuelType(e.target.value)}
 
@@ -594,7 +593,37 @@ const Form = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_vehicle />
+                    <Form_vehicle
+                    claim={claim}
+                    VehicleModel={VehicleModel}
+                    setVehicleModel={setVehicleModel}
+                    RegisteredNumber={RegisteredNumber}
+                    setRegisteredNumber={setRegisteredNumber}
+                    setEngineType={setEngineType}
+                    EngineType={EngineType}
+                    RegisteredOwner={RegisteredOwner}
+                    setRegisteredOwner={setRegisteredOwner}
+                    DateRegistration={DateRegistration}
+                    setDateRegistration={setDateRegistration}
+                    PUCNumber={PUCNumber}
+                    setPUCNumber={setPUCNumber}
+                    TransferDate={TransferDate}
+                    setTransferDate={setTransferDate}
+                    EngineNumber={EngineNumber}
+                    setEngineNumber={setEngineNumber}
+                    AddedBy={AddedBy}
+                    setAddedBy={setAddedBy}
+                    IssuingAuthority={IssuingAuthority}
+                    setIssuingAuthority={setIssuingAuthority}
+                    LicenseNumber={LicenseNumber}
+                    setLicenseNumber={setLicenseNumber}
+                    LicenseType={LicenseType}
+                    setLicenseType={setLicenseType}
+                    VehicleChassisNumber={VehicleChassisNumber}
+                    setVehicleChassisNumber={setVehicleChassisNumber}
+                    VehicleFuelType={VehicleFuelType}
+                    setVehicleFuelType={setVehicleFuelType}
+                    />
                   </div>
                 )}
               </div>

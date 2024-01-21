@@ -29,8 +29,7 @@ const Index = ({}) => {
   const url = window.location.href;
   const leadId = url.split("/claim-details?leadId=")[1];
   const [claim, setClaim] = useState({});
-  console.log(claim)
-  console.log(claim?.insuredDetails?.InsuredName)
+ 
   const [InsuredName, setInsuredName] = useState(
     claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : ""
   );
@@ -48,72 +47,75 @@ const Index = ({}) => {
 
   const [documents,setDocuments]=useState([]);
 
-  const [ClaimNumber,setClaimNumber] = useState( claim?.ClaimNumber ? claim?.ClaimNumber : "");
+  const [ClaimNumber,setClaimNumber] = useState( claim?.claimDetails?.ClaimNumber ? claim?.ClaimNumber?.ClaimNumber : "");
 
-  const [VehicleModel,setVehicleModel]=useState(claim.VehicleMakeVariantModelColor ? `${claim.VehicleMakeVariantModelColor},${claim.VehicleTypeOfBody}` : "")
+  const [VehicleModel,setVehicleModel]=useState(claim.vehicleDetails?.VehicleMakeVariantModelColor ? `${claim.vehicleDetails?.VehicleMakeVariantModelColor},${claim.vehicleDetails?.VehicleTypeOfBody}` : "")
 
  
 
   const [EngineType, setEngineType] = useState(
-    claim?.VehicleModeOfCheck ? claim?.VehicleModeOfCheck : ""
+    claim?.vehicleDetails?.VehicleModeOfCheck ? claim?.vehicleDetails?.VehicleModeOfCheck : ""
   );
   const [RegisteredOwner, setRegisteredOwner] = useState(
-    claim?.VehicleRegisteredOwner ? claim?.VehicleRegisteredOwner : ""
+    claim?.vehicleDetails?.VehicleRegisteredOwner ? claim?.vehicleDetails?.VehicleRegisteredOwner : ""
   );
   const [DateRegistration, setDateRegistration] = useState(
-    claim?.VehicleDateOfRegistration ? claim?.VehicleDateOfRegistration : ""
+    claim?.claimDetails?.ReferenceNo ? claim?.claimDetails?.ReferenceNo : ""
   );
   const [PUCNumber, setPUCNumber] = useState(
-    claim?.VehiclePucNumber ? claim?.VehiclePucNumber : ""
+    claim?.vehicleDetails?.VehiclePucNumber ? claim?.vehicleDetails?.VehiclePucNumber : ""
   );
   const [TransferDate, setTransferDate] = useState(
-    claim?.VehicleTransferDate ? claim?.VehicleTransferDate : ""
+    claim?.vehicleDetails?.VehicleTransferDate ? claim?.vehicleDetails?.VehicleTransferDate : ""
   );
   const [EngineNumber, setEngineNumber] = useState(
-    claim?.VehicleEngineNumber ? claim?.VehicleEngineNumber : ""
+    claim?.vehicleDetails?.VehicleEngineNumber ? claim?.vehicleDetails?.VehicleEngineNumber : ""
   );
   const [AddedBy, setAddedBy] = useState(
-    claim?.VehicleAddedBy ? claim?.VehicleAddedBy : ""
+    claim?.vehicleDetails?.VehicleAddedBy ? claim?.vehicleDetails?.VehicleAddedBy : ""
   );
   const [IssuingAuthority, setIssuingAuthority] = useState(
-    claim?.insuredDetails?.IssuingAuthority ? claim?.insuredDetails?.IssuingAuthority : ""
+    claim?.driverDetails?.IssuingAuthority ? claim?.driverDetails?.IssuingAuthority : ""
   );
   const [LicenseNumber, setLicenseNumber] = useState(
-    claim?.LicenseNumber ? claim?.LicenseNumber : ""
+    claim?.driverDetails?.LicenseNumber ? claim?.driverDetails?.LicenseNumber : ""
   );
   const [LicenseType, setLicenseType] = useState(
-    claim?.LicenseType ? claim?.LicenseType : ""
+    claim?.driverDetails?.LicenseType ? claim?.driverDetails?.LicenseType : ""
   );
   const [VehicleChassisNumber, setVehicleChassisNumber] = useState(
-    claim?.VehicleChassisNumber ? claim?.VehicleChassisNumber : ""
+    claim?.vehicleDetails?.VehicleChassisNumber ? claim?.vehicleDetails?.VehicleChassisNumber : ""
   );
   const [VehicleFuelType, setVehicleFuelType] = useState(
-    claim?.VehicleFuelType ? claim?.VehicleFuelType : ""
+    claim?.vehicleDetails?.VehicleFuelType ? claim?.vehicleDetails?.VehicleFuelType : ""
   );
 
   const [DriverName, setDriverName] = useState(
-    claim?.DriverName ? claim?.DriverName : ""
+    claim?.driverDetails?.DriverName ? claim?.driverDetails?.DriverName : ""
   );
   const [DriverAddedDate, setDriverAddedDate] = useState(
-    claim?.DriverAddedDate ? claim?.DriverAddedDate : ""
+    claim?.driverDetails?.DriverAddedDate ? claim?.driverDetails?.DriverAddedDate : ""
   );
   const [Verification, setVerification] = useState(
-    claim?.DriverTypeOfVerification ? claim?.DriverTypeOfVerification : ""
+    claim?.driverDetails?.DriverTypeOfVerification ? claim?.driverDetails?.DriverTypeOfVerification : ""
   );
 
-  const [status,setStatus] = useState([]);
+  const [status,setStatus] = useState(
+    claim?.claimStatus?.ClaimStatus ? claim?.claimStatus?.ClaimStatus : ""
+);
+
 
   const [GarageNameAndAddress, setGarageNameAndAddress] = useState(
-    claim?.GarageNameAndAddress ? claim?.GarageNameAndAddress : ""
+    claim?.garageDetails?.GarageNameAndAddress ? claim?.garageDetails?.GarageNameAndAddress : ""
   );
   const [GarageContactNo1, setGarageContactNo1] = useState(
-    claim?.GarageContactNo1 ? claim?.GarageContactNo1 : ""
+    claim?.garageDetails?.GarageContactNo1 ? claim?.garageDetails?.GarageContactNo1 : ""
   );
   const [GarageContactNo2, setGarageContactNo2] = useState(
-    claim?.GarageContactNo2 ? claim?.GarageContactNo2 : ""
+    claim?.garageDetails?.GarageContactNo2 ? claim?.garageDetails?.GarageContactNo2 : ""
   );
   const [GarageAddedBy, setGarageAddedBy] = useState(
-    claim?.GarageAddedBy ? claim?.GarageAddedBy : ""
+    claim?.garageDetails?.GarageAddedBy ? claim?.garageDetails?.GarageAddedBy : ""
   );
 
   const [editCase, setEditCase] = useState(false);
@@ -211,70 +213,75 @@ const Index = ({}) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const vehicleParts = VehicleModel?.split(",");
 
+    const region = JSON.parse(localStorage.getItem("regionType"));
+    if(!region ){
+      alert("Please select the region!!");
+    }
+else{
     const payload = {
-      InsuredName: InsuredName ? InsuredName : claim.InsuredName,
+      InsuredName: InsuredName ? InsuredName : claim.insuredDetails?.InsuredName,
       InsuredMailAddress: InsuredMailAddress
         ? InsuredMailAddress
-        : claim.InsuredMailAddress,
+        : claim.insuredDetails?.InsuredMailAddress,
       InsuredMobileNo1: InsuredMobileNo1
         ? InsuredMobileNo1
-        : claim.InsuredMobileNo1,
+        : claim.insuredDetails?.InsuredMobileNo1,
       InsuredMobileNo2: InsuredMobileNo2
         ? InsuredMobileNo2
-        : claim.InsuredMobileNo2,
-      ClaimNumber: ClaimNumber ? ClaimNumber : claim.ClaimNumber,
+        : claim.insuredDetails?.InsuredMobileNo2,
+      ClaimNumber: ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber,
       VehicleMakeVariantModelColor: vehicleParts[0]
         ? vehicleParts[0]
-        : claim.VehicleMakeVariantModelColor,
+        : claim.vehicleDetails?.VehicleMakeVariantModelColor,
       VehicleTypeOfBody: vehicleParts[1]
         ? vehicleParts[1]
-        : claim.VehicleTypeOfBody,
-      VehicleRegisteredNumber: RegisteredNumber
-        ? RegisteredNumber
+        : claim.vehicleDetails?.VehicleTypeOfBody,
+      VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
+        ? claim?.claimDetails?.ReferenceNo
         : generateRegion(claim?.ClaimRegion),
       VehicleDateOfRegistration: DateRegistration
         ? DateRegistration
-        : claim.VehicleDateOfRegistration,
-      VehiclePucNumber: PUCNumber ? PUCNumber : claim.VehiclePucNumber,
+        : claim.vehicleDetails?.VehicleDateOfRegistration,
+      VehiclePucNumber: PUCNumber ? PUCNumber : claim.vehicleDetails?.VehiclePucNumber,
       VehicleTransferDate: TransferDate
         ? TransferDate
-        : claim.VehicleTransferDate,
+        : claim.vehicleDetails?.VehicleTransferDate,
       VehicleEngineNumber: EngineNumber
         ? EngineNumber
-        : claim.VehicleEngineNumber,
-      VehicleAddedBy: AddedBy ? AddedBy : claim.VehicleAddedBy,
+        : claim.vehicleDetails?.VehicleEngineNumber,
+      VehicleAddedBy: AddedBy ? AddedBy : claim.vehicleDetails?.VehicleAddedBy,
       IssuingAuthority: IssuingAuthority
         ? IssuingAuthority
-        : claim.IssuingAuthority,
-      LicenseNumber: LicenseNumber ? LicenseNumber : claim.LicenseNumber,
-      LicenseType: LicenseType ? LicenseType : claim.LicenseType,
+        : claim.driverDetails?.IssuingAuthority,
+      LicenseNumber: LicenseNumber ? LicenseNumber : claim.driverDetails?.LicenseNumber,
+      LicenseType: LicenseType ? LicenseType : claim.driverDetails?.LicenseType,
       VehicleChassisNumber: VehicleChassisNumber
         ? VehicleChassisNumber
-        : claim.VehicleChassisNumber,
+        : claim.vehicleDetails?.VehicleChassisNumber,
       VehicleFuelType: VehicleFuelType
         ? VehicleFuelType
-        : claim.VehicleFuelType,
-      DriverName: DriverName ? DriverName : claim.DriverName,
+        : claim.vehicleDetails?.VehicleFuelType,
+      DriverName: DriverName ? DriverName : claim.driverDetails?.DriverName,
       DriverAddedDate: DriverAddedDate
         ? DriverAddedDate
-        : claim.DriverAddedDate,
+        : claim.driverDetails?.DriverAddedDate,
       DriverTypeOfVerification: Verification
         ? Verification
-        : claim.DriverTypeOfVerification,
+        : claim.driverDetails?.DriverTypeOfVerification,
       GarageNameAndAddress: GarageNameAndAddress
         ? GarageNameAndAddress
-        : claim.GarageNameAndAddress,
-      GarageAddedBy: GarageAddedBy ? GarageAddedBy : claim.GarageAddedBy,
+        : claim.garageDetails?.GarageNameAndAddress,
+      GarageAddedBy: GarageAddedBy ? GarageAddedBy : claim.garageDetails?.GarageAddedBy,
       GarageContactNo1: GarageContactNo1
         ? GarageContactNo1
-        : claim.GarageContactNo1,
+        : claim.garageDetails?.GarageContactNo1,
       GarageContactNo2: GarageContactNo2
         ? GarageContactNo2
-        : claim.GarageContactNo2,
-      LeadId: claim.LeadId,
+        : claim.garageDetails?.GarageContactNo2,
+      LeadId: claim.claimDetails?.LeadId,
       token: userInfo[0].Token,
     };
-    console.log(payload);
+
     if (
       // !payload.InsuredName |
       !payload.InsuredMailAddress 
@@ -323,8 +330,9 @@ const Index = ({}) => {
       } else {
         setEditCase((prop) => !prop);
       }
+    }
       // setEditCase((prop) => !prop);
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
@@ -799,7 +807,7 @@ const Index = ({}) => {
                       <div className="row" style={{ marginLeft: "0px" }}>
                         <div className="row mb-2 my_dashboard_review">
                           <div className="col-lg-12">
-                            <h4 className="mb10">Status Log</h4>
+d                            <h4 className="mb10">Status Log</h4>
                           </div>
                           <div
                             className=" bg-dark"

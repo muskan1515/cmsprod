@@ -113,7 +113,7 @@ const Form_01 = ({
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName ? DriverName : claim.DriverName}
+                            value={DriverName ? DriverName : claim.driverDetails?.DriverName}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -149,7 +149,7 @@ const Form_01 = ({
                             value={formatDate(
                               DriverAddedDate
                                 ? DriverAddedDate
-                                : claim.DriverAddedDate
+                                : claim.driverDetails?.DriverAddedDate
                             )}
                             
                             // placeholder="Enter Registration No."
@@ -183,7 +183,7 @@ const Form_01 = ({
                             value={
                               Verification
                                 ? Verification
-                                : claim.DriverTypeOfVerification
+                                : claim.driverDetails?.DriverTypeOfVerification
                             }
                             
                             // placeholder="Enter Registration No."
@@ -213,7 +213,7 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(claim.DriverModifiedDate)}
+                            value={formatDate(claim.driverDetails?.DriverModifiedDate)}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -222,7 +222,7 @@ const Form_01 = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_driver />
+                    <Form_driver claim={claim} />
                   </div>
                 )}
               </div>
