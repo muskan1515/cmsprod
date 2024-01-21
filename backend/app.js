@@ -916,7 +916,7 @@ app.post('/addClaim', (req, res) => {
                 }
               }
               ).then((res)=>{
-                res.status(200).json({ message: 'Data inserted successfully.' });
+               return  res.status(200).json({ message: 'Data inserted successfully.' });
               })
               .catch((Er)=>{
                console.log(Er);
