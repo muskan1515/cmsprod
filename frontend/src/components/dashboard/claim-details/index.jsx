@@ -118,6 +118,7 @@ const Index = ({}) => {
 
   const [editCase, setEditCase] = useState(false);
   const [editCase_01, setEditCase_01] = useState(false);
+  const [editCase_02, setEditCase_02] = useState(false);
   const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -206,7 +207,7 @@ const Index = ({}) => {
     claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
   );
 
-  const onSaveHandler = () => {
+  const onSaveHandler = (func) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const vehicleParts = VehicleModel?.split(",");
 
@@ -300,7 +301,6 @@ const Index = ({}) => {
       // !payload.GarageNameAndAddress ||
       // !payload.GarageContactNo1 ||
       // !payload.GarageContactNo2
-
     ) {
       alert("Please fill the mail address , it is a must required field!");
     } else {
@@ -318,7 +318,12 @@ const Index = ({}) => {
           console.log(err);
           alert("Caught into Error ! Try Again.");
         });
-      setEditCase((prop) => !prop);
+      if (func) {
+        func(false);
+      } else {
+        setEditCase((prop) => !prop);
+      }
+      // setEditCase((prop) => !prop);
       // window.location.reload();
     }
   };
@@ -328,9 +333,10 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     } else if (value === 2) {
       setEditCase_01((prop) => !prop);
+    } else if (value === 3) {
+      setEditCase_02((prop) => !prop);
     }
   };
-  
 
   const subTypeTypes = [
     { id: 1, type: "Motor", value: "Motor" },
@@ -556,7 +562,7 @@ const Index = ({}) => {
                           <Video />
                         </div>
                       </div>
-                      <div className="my_dashboard_review mb-2">
+                      {/* <div className="my_dashboard_review mb-2">
                         <div className="col-lg-12">
                           <div className="row">
                             <h4 className="">
@@ -642,7 +648,7 @@ const Index = ({}) => {
                             setVehicleFuelType={setVehicleFuelType}
                           />
                         )}
-                      </div>
+                      </div> */}
                       <div
                         className="row mt-2 mb-2"
                         style={{ marginLeft: "-15px" }}
@@ -661,8 +667,9 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                           <Form
+                            onSaveHandler={onSaveHandler}
                             claim={claim}
-                            edit={editCase}
+                            edit={editCase_01}
                             editHandler={editHandler}
                             VehicleModel={VehicleModel}
                             setVehicleModel={setVehicleModel}
@@ -710,8 +717,10 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                           <Form_01
+                            onSaveHandler={onSaveHandler}
                             claim={claim}
-                            edit={editCase}
+                            edit={editCase_02}
+                            editHandler={editHandler}
                             DriverName={DriverName}
                             setDriverName={setDriverName}
                             DriverAddedDate={DriverAddedDate}
@@ -738,8 +747,9 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                           <Form_02
+                            onSaveHandler={onSaveHandler}
                             claim={claim}
-                            edit={editCase}
+                            editHandler={editHandler}
                             GarageNameAndAddress={GarageNameAndAddress}
                             setGarageNameAndAddress={setGarageNameAndAddress}
                             GarageContactNo1={GarageContactNo1}

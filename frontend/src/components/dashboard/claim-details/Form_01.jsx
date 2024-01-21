@@ -4,16 +4,25 @@
 import { FaEye } from "react-icons/fa";
 // import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
+import Form_driver from "./Form_driver";
+import { useState } from "react";
 // import toast from "react-hot-toast";
 
-const Form_01 = ({ claim, edit , 
-  DriverName ,
-  setDriverName ,
-  DriverAddedDate ,
+const Form_01 = ({
+  claim,
+  editHandler,
+  edit,
+  DriverName,
+  setDriverName,
+  DriverAddedDate,
   setDriverAddedDate,
   Verification,
-  setVerification }) => {
+  setVerification,
+  onSaveHandler,
+}) => {
   const router = useRouter();
+  const [editCase_02, setEditCase_02] = useState(false);
+  const [editVechile, setEditVechile] = useState(false);
 
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -28,9 +37,9 @@ const Form_01 = ({ claim, edit ,
     return formattedDate;
   };
 
-  const editHandler = () => {
-    setEdit(true);
-  };
+  // const editHandler = () => {
+  //   setEdit(true);
+  // };
 
   return (
     <>
@@ -49,9 +58,6 @@ const Form_01 = ({ claim, edit ,
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Driver Details</h4>
-                <div className="col-lg-1 m-1">
-                
-                </div>
               </button>
             </h2>
             <div
@@ -61,129 +67,164 @@ const Form_01 = ({ claim, edit ,
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Name <span class="req-btn">*</span>
-                        </label>
+                <div className="col-lg-1 m-1">
+                  {editCase_02 ? (
+                    <button
+                      className="btn-thm m-1"
+                      style={{}}
+                      onClick={() => onSaveHandler(setEditCase_02)}
+                    >
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-thm m-1"
+                      style={{}}
+                      onClick={() => setEditCase_02(true)}
+                    >
+                      <span
+                        className="flaticon-edit"
+                        style={{ fontSize: "14px" }}
+                      ></span>
+                    </button>
+                  )}
+                </div>
+                {editCase_02 ? (
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Name <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName ? DriverName : claim.DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
                       </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          onChange={(e)=>setDriverName(e.target.value)}
-                          value={DriverName ? DriverName : claim.DriverName}
-                          disabled={!edit}
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                    {/* <div className="my_profile_setting_input form-group">
+                      {/* <div className="my_profile_setting_input form-group">
           <label htmlFor="propertyTitle">Property Title</label>
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
-                  </div>
+                    </div>
 
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Added Date <span class="req-btn">*</span>
-                        </label>
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Added Date <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverAddedDate(e.target.value)}
+                            value={formatDate(
+                              DriverAddedDate
+                                ? DriverAddedDate
+                                : claim.DriverAddedDate
+                            )}
+                            
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
                       </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          onChange={(e)=>setDriverAddedDate(e.target.value)}
-                          value={formatDate(DriverAddedDate ?  DriverAddedDate: claim.DriverAddedDate)}
-                          disabled={!edit}
-                          // placeholder="Enter Registration No."
-                        />
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Type of Verification <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setVerification(e.target.value)}
+                            value={
+                              Verification
+                                ? Verification
+                                : claim.DriverTypeOfVerification
+                            }
+                            
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Modified Date <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={formatDate(claim.DriverModifiedDate)}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Type of Verification <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          onChange={(e)=>setVerification(e.target.value)}
-                          value={Verification ? Verification : claim.DriverTypeOfVerification}
-                          disabled={!edit}
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
+                ) : (
+                  <div className="row">
+                    <Form_driver />
                   </div>
-
-                  <div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Modified Date <span class="req-btn">*</span>
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          value={formatDate(claim.DriverModifiedDate)}
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
