@@ -915,7 +915,7 @@ app.post('/addClaim', (req, res) => {
                   "Content-Type":"application/json"
                 }
               }
-              ).then((res)=>{
+              ).then((responsee)=>{
                return  res.status(200).json({ message: 'Data inserted successfully.' });
               })
               .catch((Er)=>{
