@@ -37,7 +37,7 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Name
+                      Vehicle Model
                     </label>
                     <label
                       htmlFor=""
@@ -48,7 +48,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.InsuredName}
+                      jkhkhkhj
                     </label>
                   </div>
                 </td>
@@ -56,7 +56,7 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -65,18 +65,18 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Phone
+                      Engine Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "15px",
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.InsuredMobileNo1}
+                      uiyuiuy
                     </label>
                   </div>
                 </td>
@@ -84,7 +84,7 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-2 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -93,18 +93,18 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Email
+                      Registered Owner{" "}
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "15px",
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.InsuredMailAddress}
+                      uiyiuyiy
                     </label>
                   </div>
                 </td>
@@ -123,7 +123,7 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Registration No.
+                      Date of Registration
                     </label>
                     <label
                       htmlFor=""
@@ -134,7 +134,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.VehicleRegisteredNumber}
+                      876868hjgj8768
                     </label>
                   </div>
                 </td>
@@ -151,7 +151,7 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Insurer ClaimID
+                      PUC Number
                     </label>
                     <label
                       htmlFor=""
@@ -162,7 +162,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.ClaimNumber}
+                      878867
                     </label>
                   </div>
                 </td>
@@ -170,7 +170,7 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -179,11 +179,11 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Status
+                      Transfer Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "15px",
@@ -208,7 +208,7 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Survey Type
+                      Engine Number
                     </label>
                     <label
                       htmlFor=""
@@ -219,7 +219,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {subType}
+                      hjgjgj
                     </label>
                   </div>
                 </td>
@@ -236,7 +236,7 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Intimation Date
+                      Added By
                     </label>
                     <label
                       htmlFor=""
@@ -247,7 +247,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(claim.ClaimAddedDateTime)}
+                      34/3/3333
                     </label>
                   </div>
                 </td>
@@ -255,7 +255,7 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -264,11 +264,11 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Request Type
+                      Issuing Authority
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "15px",
@@ -294,7 +294,7 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      Endorsement Doc.
+                      License Number
                     </label>
                     <label
                       htmlFor=""
@@ -311,7 +311,7 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-5 text-color"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -320,18 +320,18 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      SPOC Name
+                      License Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "15px",
                         fontWeight: "bold",
                       }}
                     >
-                      Estimate Amount
+                      Estimate
                     </label>
                   </div>
                 </td>
@@ -339,7 +339,7 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-5 text-color"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -347,18 +347,101 @@ const Form_vehicle = ({
                         marginRight: "50px",
                       }}
                     >
-                      SPOC Name
+                      Chassis Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "15px",
                         fontWeight: "bold",
                       }}
                     >
-                      Estimate Amount
+                      Estimate
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+
+                        marginRight: "50px",
+                      }}
+                    >
+                      Fuel Type
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-4 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+
+                        marginRight: "50px",
+                      }}
+                    >
+                      License Type
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Estimate 
+                    </label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                        marginRight: "50px",
+                      }}
+                    >
+                      Chassis Number
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Estimate
                     </label>
                   </div>
                 </td>
