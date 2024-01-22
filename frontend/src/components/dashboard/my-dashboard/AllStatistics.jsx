@@ -1,4 +1,4 @@
-const AllStatistics = ({status}) => {
+const AllStatistics = ({allClaims,setSelectedCard}) => {
   const allStatistics = [
     {
       id: 1,
@@ -101,9 +101,9 @@ const AllStatistics = ({status}) => {
   const getCount = (item)=>{
     let count =0;
     
-    status.map((stat,index)=>{
+    allClaims.map((stat,index)=>{
       // console.log(stat,item)
-      if(String(stat.Status) === String(item.id)){
+      if(String(stat.CurrentStatus) === String(item.id)){
        
         count  = count + 1;
       }
@@ -114,11 +114,12 @@ const AllStatistics = ({status}) => {
 
   return (
     <>
-      {allStatistics.map((item) => (
+      {allStatistics.map((item,index) => (
         <div
           className="col-xs-4 col-sm-2 col-md-6 col-lg-4 col-xl-1"
           key={item.id}
           style={{ padding: "0px" }}
+          onClick={()=>setSelectedCard(index+1)}
         >
           <div
             className={`ff_one ${item.blockStyle}`}

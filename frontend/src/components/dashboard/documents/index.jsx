@@ -121,13 +121,18 @@ const Index = () => {
         })
       }
     }
+
+    if(data.length < document.length){
+      alert("Please upload all the required data !!!");
+    }
     
+
+    else{
     
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
    
     const payload = JSON.stringify({data :  data});
-    console.log(data);
-``
+    
     
     toast.loading("Uploading!")
     axios.post("/api/uploadDocument",payload,{
@@ -142,6 +147,7 @@ const Index = () => {
   .catch((err)=>{
     alert(err);
   })
+}
 
  
   }

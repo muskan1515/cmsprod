@@ -484,7 +484,20 @@ else{
                 </div> */}
                 {/* End .col */}
 
-                <div className="row">
+                {claim.length ===0 ?
+                  <div className="row">
+              <div
+                className="smartTable-noDataFound col-12"
+                style={{ marginTop: "110px", marginBottom: "40px" }}
+              >
+                <div className="ring">
+                  Loading
+                  <span className="load"></span>
+                </div>
+              </div>
+            </div>
+            :
+            <div className="row">
                   <div className="col-lg-9">
                     <div className="">
                       <div className="my_dashboard_review mb-2">
@@ -819,7 +832,7 @@ d                            <h4 className="mb10">Status Log</h4>
                               marginBottom: "5px",
                             }}
                           ></div>
-                          <StatusLog leadId={leadId} status={status} statusOptions={statusOptions} subStatus={subStatus} />
+                          <StatusLog leadId={leadId} status={status} statusOptions={statusOptions} subStatus={subStatus} claim={claim}/>
                           {/* <CreateList /> */}
                         </div>
                         {/* <hr /> */}
@@ -911,8 +924,7 @@ d                            <h4 className="mb10">Status Log</h4>
                       </div>
                     </div>
                   </div>
-                </div>
-                {/* End .col */}
+                </div>}
               </div>
               {/* End .row */}
 

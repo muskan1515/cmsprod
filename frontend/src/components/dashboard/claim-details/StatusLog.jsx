@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const StatusLog = ({leadId,status,statusOptions,subStatus}) => {
+const StatusLog = ({leadId,status,statusOptions,subStatus,claim}) => {
 
   const [stat , setStat] = useState(0);
   const [subStage,setSubStage] = useState(0);
@@ -38,6 +38,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus}) => {
               className="selectpicker form-select"
               data-live-search="true"
               data-width="100%"
+             
               onChange={(e)=>setStat(e.target.value)}
             >
               {statusOptions.map((stat,index)=>{

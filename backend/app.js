@@ -423,6 +423,7 @@ app.get('/getSpecificClaim', authenticateUser, async (req, res) => {
     const leadId = req.query.LeadId;
     // const region = req.query.Region || null;
 
+    
     // Execute stored procedures for each table
     const claimDetails = await executeStoredProc('GetClaimDetailsByLeadId', [leadId]);
     const insuredDetails = await executeStoredProc('GetInsuredDetailsByLeadId', [leadId]);
@@ -658,17 +659,42 @@ app.get('/getStatus',authenticateUser, (req, res) => {
   });
 });
 
-app.post('/updateStatus',authenticateUser, (req, res) => {
-  const {leadId,stage,Substatus} = req.body;
-  // const sql = "SELECT * FROM Status WHERE LeadId=?";
-  // db.query(sql,[leadId], (err, result) => {
-  //   if (err) {
-  //     console.error(err);
-  //     res.status(500).send('Internal Server Error');
-  //     return;
-  //   }
-  //   res.send(result);
-  // });
+app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
+  const { LeadId,Status,subStage} = req.body;
+  const sql = 'SELECT * FROM DocumentList WHERE LeadId =?';
+  db.query(sql,[LeadId], (err, result) => {
+    if (err) {
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+  
+   if(result.length > 0){
+    
+    const statusDetails = `
+    INSERT INTO ClaimStatus (
+      Status,
+      SubStatus,
+      LeadId 
+    ) VALUES (
+      '${Status}',
+      '${subStage}',
+      '${parseInt(LeadId)}'
+    );
+  `;
+
+  db.query(statusDetails, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send(result);
+  });
+   }
+  });
+
+  
+  
 });
 
 app.post('/login', (req, res) => {
@@ -915,8 +941,13 @@ app.post('/addClaim', (req, res) => {
                   "Content-Type":"application/json"
                 }
               }
+<<<<<<< Updated upstream
               ).then((responsee)=>{
                return  res.status(200).json({ message: 'Data inserted successfully.' });
+=======
+              ).then((ressss)=>{
+                return res.status(200).json({ message: 'Data inserted successfully.' });
+>>>>>>> Stashed changes
               })
               .catch((Er)=>{
                console.log(Er);

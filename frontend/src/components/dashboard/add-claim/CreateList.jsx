@@ -48,6 +48,11 @@ const CreateList = () => {
     return result;
   };
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const submitHandler = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -78,6 +83,10 @@ const CreateList = () => {
       NatureOfLoss: natureOfLoss,
       EstimatedLoss: estimatedLoss,
     };
+    if (!isValidEmail(payload.InsuredMailAddress)){
+      alert("Please provide a valid email address !!");
+      return ;
+    }
 
     if (
       !payload.Region ||
@@ -88,10 +97,14 @@ const CreateList = () => {
       !payload.PolicyIssuingOffice ||
       !payload.ClaimNumber ||
       !payload.ClaimServicingOffice ||
-      !payload.RegisteredNumber
+      !payload.RegisteredNumber||
+      !payload.InsuredName||
+      !payload.InsuredMailAddress||
+      !payload.InsuredMobileNo1
     ) {
       alert("Fill all the marked fields please");
     } else {
+      
       axios
         .post("/api/addClaim", payload, {
           headers: {
@@ -108,6 +121,8 @@ const CreateList = () => {
         });
     }
   };
+
+
 
   const handleInputChange_01 = (e) => {
     const inputValue = e.target.value;
@@ -437,7 +452,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Number
+                Claim Number  <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -495,7 +510,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Name
+                Insured Name  <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -524,7 +539,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Mobile No. 1
+                Insured Mobile No. 1  <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -563,6 +578,7 @@ const CreateList = () => {
             <div className="col-lg-7">
               <input
                 type="text"
+                maxLength={10}
                 className="form-control"
                 id="propertyTitle"
                 value={phoneNumber_01}
@@ -586,12 +602,12 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Mail Address
+                Insured Mail Address  <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="propertyTitle"
                 value={insuredMailAddress}
@@ -766,6 +782,7 @@ const CreateList = () => {
             <div className="col-lg-7">
               <input
                 type="text"
+                maxLength={10}
                 className="form-control"
                 id="propertyTitle"
                 value={garageNumber}

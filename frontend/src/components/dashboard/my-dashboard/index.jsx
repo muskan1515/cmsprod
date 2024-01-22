@@ -14,9 +14,12 @@ import { useRouter } from "next/router";
 const Index = () => {
   const [start, setStart] = useState(0);
 
-  const [end, setEnd] = useState(4);
+  
   const [properties, setProperties] = useState([]);
   const [allClaims, setAllClaims] = useState([]);
+  const [filterCardClaim,setFilterCardClaim]=useState([]);
+  const [selectedCard,setSelectedCard] = useState(0);
+  const [end, setEnd] = useState( 10);
   const [type, setType] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
@@ -125,6 +128,29 @@ const Index = () => {
 
      
   }, []);
+  useEffect(()=>{
+
+    let temp = [];
+    if(selectedCard === 0){
+      temp = allClaims;
+    }
+    else{
+      temp = allClaims.filter((claim,index)=>{
+        if(String(claim.CurrentStatus) === String(selectedCard)){
+          return true;
+        }
+        else{
+          return false;
+        }
+      })
+     
+    }
+
+    console.log(temp);
+
+    setFilterCardClaim(temp);
+
+  },[selectedCard]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -182,7 +208,7 @@ const Index = () => {
                 className="row mt-2"
                 style={{ justifyContent: "space-between" }}
               >
-                <AllStatistics status={status} />
+                <AllStatistics allClaims={allClaims} setSelectedCard={setSelectedCard}/>
               </div>
               {/* End .row Dashboard top statistics */}
               <div
@@ -197,7 +223,9 @@ const Index = () => {
                 }}
               ></div>
               <div className="row">
-                <CreateList setSearchInput={setSearchInput} setType={setType} />
+                <CreateList 
+                setSearchInput={setSearchInput} 
+                setType={setType} />
               </div>
               <div
                 className="bg-dark"
@@ -221,8 +249,13 @@ const Index = () => {
                   claims={
                     searchInput || majorSearch || isRegionChange
                       ? filterClaims
-                      : allClaims
+                      : 
+                      selectedCard ?
+                      filterCardClaim :
+                      allClaims
                   }
+                  start={start}
+                  end={end}
                   setMajorSearch={setMajorSearch}
                   status={status}
                 />
@@ -241,7 +274,12 @@ const Index = () => {
                     <Pagination
                       setStart={setStart}
                       setEnd={setEnd}
-                      properties={allClaims}
+                      properties={searchInput || majorSearch || isRegionChange
+                        ? filterClaims
+                        : 
+                        selectedCard > 0 ?
+                        filterCardClaim :
+                        allClaims}
                     />
                   </div>
                 </div>
