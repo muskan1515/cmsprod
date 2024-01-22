@@ -941,13 +941,8 @@ app.post('/addClaim', (req, res) => {
                   "Content-Type":"application/json"
                 }
               }
-<<<<<<< Updated upstream
-              ).then((responsee)=>{
-               return  res.status(200).json({ message: 'Data inserted successfully.' });
-=======
               ).then((ressss)=>{
                 return res.status(200).json({ message: 'Data inserted successfully.' });
->>>>>>> Stashed changes
               })
               .catch((Er)=>{
                console.log(Er);
