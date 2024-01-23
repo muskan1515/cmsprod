@@ -16,7 +16,9 @@ import {
   FaThList,
 } from "react-icons/fa";
 
-const SidebarMenu = () => {
+const SidebarMenu = ({leadId,email,policyNo,vehicleNo,Insured}) => {
+
+  console.log(leadId);
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -110,24 +112,24 @@ const SidebarMenu = () => {
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive("/final-report", route.pathname)
+                      isSinglePageActive(`/final-report/${leadId}`, route.pathname)
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href="/final-report" title="Final Report">
+                    <Link href={`/final-report/${leadId}`} title="Final Report">
                       <i className="flaticon-invoice"></i>
                       {/* <span> Message</span> */}
                     </Link>
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive("/send-mail", route.pathname)
+                      isSinglePageActive(`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`, route.pathname)
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href="/send-mail" title="Send Mail">
+                    <Link href={`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`} title="Send Mail">
                       <i className="flaticon-envelope"></i>
                       {/* <span> Message</span> */}
                     </Link>

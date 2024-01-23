@@ -1,206 +1,76 @@
+import React, { useState } from "react";
+import { data } from "./data";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { use, useReducer } from "react";
-import { useState } from "react";
-// import { Editor } from "react-draft-wysiwyg";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-// import { Editor } from "draft-js";
-import MyDatePicker from "../../common/MyDatePicker";
-// import Editor from "./Editor";
 
-const CreateList = () => {
-  const [applicantNumber, setApplicantNumber] = useState();
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [phoneNumber_01, setPhoneNumber_01] = useState("");
+const CreateList = ({ leadId , email,policyNo , Insured,vehicleNo }) => {
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [emailAddress, setEmailAddress] = useState(email ? email : "");
+  const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
+  const [date, setDate] = useState("");
+
   const router = useRouter();
 
-  const regionType = JSON.parse(localStorage.getItem("regionType"));
-
-  const [region, setRegion] = useState(regionType);
-  const [date, setDate] = useState("");
-  const [surveyType, setSurveyType] = useState("");
-  const [inspectionType, setInspectionType] = useState("");
-  const [policyNumber, setPolicyNumber] = useState("");
-  const [policyIssuingOffice, setPolicyIssuingOffice] = useState("");
-  const [policyStartDate, setPolicyStartDate] = useState("");
-  const [policyStartEnd, setPolicyStartEnd] = useState("");
-  const [claimSurvicingOffice, setClaimSurvicingOffice] = useState("");
-  const [insuredName, setInsuredName] = useState("");
-  const [insuredMobileNo1, setInsuredMobileNo1] = useState("");
-  const [insuredMobileNo2, setInsuredMobileNo2] = useState("");
-  const [insuredMailAddress, setInsuredMailAddress] = useState("");
-  const [vehicleParticular, setVehicleParticular] = useState("");
-  const [placeOfLoss, setPlaceOfLoss] = useState("");
-  const [natureOfLoss, setNatureOfLoss] = useState("");
-  const [estimatedLoss, setEstimatedLoss] = useState("");
-  const [garageName, setGarageName] = useState("");
-  const [garageNumber, setGarageNumber] = useState("");
-  const [claimNumber, setClaimNumber] = useState("");
-
-  const generateRegion = (region) => {
-    const firstThreeLetters = region.slice(0, 3);
-
-    const now = new Date();
-    const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
-    const dd = String(now.getDate()).padStart(2, "0");
-    const hh = String(now.getHours()).padStart(2, "0");
-    const min = String(now.getMinutes()).padStart(2, "0");
-    const ss = String(now.getSeconds()).padStart(2, "0");
-    const result = `${firstThreeLetters}/${mm}/${dd}${hh}${min}${ss}`;
-
-    console.log(result);
-    return result;
-  };
-
-  const submitHandler = () => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-    const payload = {
-      SurveyType: surveyType,
-      ReferenceNo: generateRegion(region),
-      PolicyIssuingOffice: policyIssuingOffice,
-      PolicyNumber: policyNumber,
-      PolicyPeriodStart: policyStartDate,
-      PolicyPeriodEnd: policyStartEnd,
-      ClaimServicingOffice: claimSurvicingOffice,
-      ClaimNumber: claimNumber,
-      AddedBy: userInfo[0].Username,
-      Region: region,
-      InspectionType: inspectionType,
-      IsClaimCompleted: 0,
-      IsActive: 1,
-      InsuredName: insuredName,
-      InsuredMobileNo1: insuredMobileNo1,
-      InsuredMailAddress: insuredMailAddress,
-      InsuredMobileNo2: insuredMobileNo2,
-      InsuredAddress: "",
-      RegisteredNumber: vehicleParticular,
-      GarageNameAndAddress: garageName,
-      GarageContactNo1: garageNumber,
-      GarageContactNo2: garageNumber,
-      PlaceOfLoss: placeOfLoss,
-      NatureOfLoss: natureOfLoss,
-      EstimatedLoss: estimatedLoss,
-    };
-
-    if (
-      !payload.Region ||
-      !payload.SurveyType ||
-      !payload.InspectionType ||
-      !date ||
-      !payload.PolicyNumber ||
-      !payload.PolicyIssuingOffice ||
-      !payload.ClaimNumber ||
-      !payload.ClaimServicingOffice ||
-      !payload.RegisteredNumber
-    ) {
-      alert("Fill all the marked fields please");
+  console.log(leadId,email,policyNo)
+  const handleCheckboxChange = (id, value, checked) => {
+    if (checked) {
+      // If checked, add the item to the selectedItems list
+      setSelectedItems((prevSelectedItems) => [
+        ...prevSelectedItems,
+        { id, value },
+      ]);
     } else {
-      axios
-        .post("/api/addClaim", payload, {
-          headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          alert("Successfully added");
-          router.push("/my-dashboard");
-        })
-        .catch((err) => {
-          alert("Error");
-        });
+      // If unchecked, remove the item from the selectedItems list
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter((item) => item.id !== id)
+      );
     }
-  };
-
-  const handleInputChange_01 = (e) => {
-    const inputValue = e.target.value;
-
-    // Allow only numeric input
-    const numericValue = inputValue.replace(/\D/g, "");
-
-    // Restrict to 10 digits
-    const truncatedValue = numericValue.slice(0, 10);
-    if (truncatedValue.length === 10) {
-      setInsuredMobileNo2(truncatedValue);
-    }
-
-    setPhoneNumber_01(truncatedValue);
   };
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-
-    // Allow only numeric input
-    const numericValue = inputValue.replace(/\D/g, "");
-
-    // Restrict to 10 digits
-    const truncatedValue = numericValue.slice(0, 10);
-    if (truncatedValue.length === 10) {
-      setInsuredMobileNo1(truncatedValue);
-    }
-
-    setPhoneNumber(truncatedValue);
+    // ... your existing code
   };
 
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const check = (e) => {
-    const selectedIndex = e.target.selectedIndex;
-    setSelectedOption(e.target.value);
-
-    const otherDiv = document.getElementById("other-div");
-    const otherDiv_01 = document.getElementById("other-div_01");
-    const otherDiv_02 = document.getElementById("other-div_02");
-
-    if (selectedIndex === 1) {
-      otherDiv.style.display = "block";
-      otherDiv_02.style.display = "none";
-    }
-    if (selectedIndex === 2) {
-      otherDiv_01.style.display = "block";
-      otherDiv.style.display = "none";
-      otherDiv_02.style.display = "none";
-    }
-    if (selectedIndex === 3) {
-      otherDiv_02.style.display = "block";
-      otherDiv.style.display = "none";
-    } else {
-      otherDiv.style.display = "block";
-      otherDiv_01.style.display = "none";
-      otherDiv_02.style.display = "none";
-    }
+  const createStringFromSelectedItems = (selectedItems) => {
+    return selectedItems.map((item, index) => {
+      return `${index + 1}) ${item.value}`;
+    }).join('\n');
+  };
+  const createStringFromSelectedItems2 = (selectedItems) => {
+    return selectedItems.map((item, index) => {
+      return `${item.value},`;
+    }).join('');
   };
 
-  const [selectedOption_02, setSelectedOption_02] = useState("");
+  const handleSubmit = () => {
+    
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(selectedItems)
+   const payload = {
+    toMail : emailAddress ? emailAddress : email,
+    PolicyNo : policyNos ? policyNos : policyNo,
+    Date : date ? date : new Date(),
+    vehicleNo : vehicleNo,
+    Insured:Insured,
+    content : createStringFromSelectedItems(selectedItems),
+    content2:createStringFromSelectedItems2(selectedItems),
+    leadId:leadId
+   }
 
-  const check_02 = (e) => {
-    const selectedIndex = e.target.selectedIndex;
-    setSelectedOption_02(e.target.value);
-
-    const otherDiv = document.getElementById("other-div_02");
-
-    if (selectedIndex === 4) {
-      otherDiv.style.display = "block";
-    } else {
-      otherDiv.style.display = "none";
+   axios.post("/api/sendCustomEmail",payload,{
+    headers:{
+      Authorization : `Bearer ${userInfo[0].Token}`,
+      "Content-Type":"application/json"
     }
+   }).then((res)=>{
+    alert("Successfully sent!!");
+    router.push(`/claim-details?leadId=${leadId}`)
+   }).catch((Err)=>{
+    alert("Try again!");
+   })
   };
 
-  const [selectedOption_03, setSelectedOption_03] = useState("");
-
-  const check_03 = (e) => {
-    const selectedIndex = e.target.selectedIndex;
-    setSelectedOption_03(e.target.value);
-
-    const otherDiv = document.getElementById("other-div_03");
-
-    if (selectedIndex === 1) {
-      otherDiv.style.display = "block";
-    } else {
-      otherDiv.style.display = "none";
-    }
-  };
   return (
     <>
       <div className="row">
@@ -215,30 +85,24 @@ const CreateList = () => {
                   fontWeight: "",
                 }}
               >
-                Type of Email :
+                Type of Documents:
               </label>
             </div>
             <div className="col-lg-7">
-              <select
-                className="selectpicker form-select"
-                data-live-search="true"
-                data-width="100%"
-                value={selectedOption}
-                onChange={check}
-              >
-                <option data-tokens="" value="0">
-                  Select Email
-                </option>
-                <option data-tokens="Status1" value="1">
-                  Mail-1
-                </option>
-                <option data-tokens="Status2" value="2">
-                  Mail-2
-                </option>
-                <option data-tokens="Status3" value="3">
-                  Mail-3
-                </option>
-              </select>
+              {data?.map((stat, index) => (
+                <div key={index}>
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${index}`}
+                    data-tokens="Status1"
+                    value={stat.serial_num}
+                    onChange={(e) =>
+                      handleCheckboxChange(stat.serial_num, stat.doc_name, e.target.checked)
+                    }
+                  />
+                  <label htmlFor={`checkbox-${index}`}>{stat.doc_name}</label>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -263,10 +127,9 @@ const CreateList = () => {
                 className="form-control"
                 id="otherInput"
                 name="otherInput"
-                placeholder="Email Address"
-                // style={otherPurpose ? viewStyle : hiddenStyle}
-                // onChange={(e) => setOtherPurposeValue(e.target.value)}
-                // maxLength={30}
+                placeholder = {email}
+                value={emailAddress}
+                onChange={(e) => setEmailAddress(e.target.value)}
               />
             </div>
           </div>
@@ -292,10 +155,9 @@ const CreateList = () => {
                 className="form-control"
                 id="otherInput"
                 name="otherInput"
-                placeholder="div2"
-                // style={otherPurpose ? viewStyle : hiddenStyle}
-                // onChange={(e) => setOtherPurposeValue(e.target.value)}
-                // maxLength={30}
+                placeholder={policyNo}
+                value={policyNos}
+                onChange={(e) => setPolicyNo(e.target.value)}
               />
             </div>
           </div>
@@ -321,33 +183,25 @@ const CreateList = () => {
                 className="form-control"
                 id="otherInput"
                 name="otherInput"
-                placeholder="div2"
-                // style={otherPurpose ? viewStyle : hiddenStyle}
-                // onChange={(e) => setOtherPurposeValue(e.target.value)}
-                // maxLength={30}
+                onChange={(e) => setDate(e.target.value)}
               />
             </div>
           </div>
         </div>
-
         <div className="col-lg-3 mt-2">
-          <button className="btn btn-color">Submit</button>
+          <button className="btn btn-color" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
-        {/* <div className="row" style={{ display: "" }}>
-          <div className="col-lg-1"></div>
-          <div className="col-lg-8" style={{ marginLeft: "40px" }}>
-            <div id="other-div">
-              <textarea
-                className="form-control"
-                placeholder=""
-                cols="15"
-                rows="4"
-                wrap="hard"
-                required
-              />
-            </div>
-          </div>
-        </div> */}
+      </div>
+
+      <div>
+        <h4>Selected Items:</h4>
+        <ul>
+          {selectedItems.map((item) => (
+            <li key={item.id}>{item.value}</li>
+          ))}
+        </ul>
       </div>
     </>
   );

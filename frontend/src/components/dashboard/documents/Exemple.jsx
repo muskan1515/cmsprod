@@ -4,6 +4,7 @@ import SmartTable from "./SmartTable";
 import { useEffect } from "react";
 import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
+import { forEach } from "jszip";
 
 const headCells = [
   {
@@ -197,7 +198,7 @@ const data = [
   },
 ];
 
-export default function Exemple({setUpdatedData,uploadedData,leadId,status,document}) {
+export default function Exemple({setUpdatedData,uploadedData,leadId,status,document,content}) {
   const [updatedCode, setUpdatedCode] = useState([]);
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
@@ -243,6 +244,12 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
     }
   };
 
+  const checkWithinTheContent = (row)=>{
+    const present = content.includes(row.doc_name);
+
+    return present;
+  }
+
   const checkAlreadyDone = (label)=>{
     let isPresent = false;
     // console.log(label,document)
@@ -279,7 +286,7 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
       data.map((row, index) => {
         const isUploaded = checkIsUploaded(row.doc_name);
         const isDone = checkAlreadyDone(row.doc_name);
-        const isAccordingToStatus = checkId(status,row);
+        const isAccordingToStatus = content ? checkWithinTheContent(row) : checkId(status,row);
         console.log(isAccordingToStatus);
         if(!isDone&& isAccordingToStatus ){
         const updatedRow = {

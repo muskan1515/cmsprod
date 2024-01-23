@@ -10,11 +10,18 @@ const Index = () => {
   const mainReq = url.split("/documents/")[1];
   const token = mainReq.split("?token=")[1];
   const leadId = mainReq.split("?token=")[0];
+  const mainTokenValue = token.split("&content")[0];
 
+  const {  content } = router.query;
+
+  // Split the content string into an array using a comma as the separator
+  const contentArray = content ? content.split(',') : [];
+
+  // console.log(leadId1,token1,contentArray);
   return (
     <>
       <Seo pageTitle="Documents Upload" />
-      <Documents leadId={leadId} token={token} />
+      <Documents leadId={leadId} token={mainTokenValue} content={content}/>
     </>
   );
 };

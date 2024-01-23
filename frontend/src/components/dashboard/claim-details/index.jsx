@@ -497,7 +497,12 @@ const Index = ({}) => {
           id="DashboardOffcanvasMenu"
           data-bs-scroll="true"
         >
-          <SidebarMenu />
+          <SidebarMenu leadId={leadId} 
+          email={claim.insuredDetails?.InsuredMailAddress} 
+          policyNo={claim.claimDetails?.ClaimNumber}
+          vehicleNo={claim.vehicleDetails?.VehicleEngineNumber}
+          Insured={claim.insuredDetails?.InsuredName}
+          />
         </div>
       </div>
       {/* End sidebar_menu */}

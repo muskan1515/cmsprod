@@ -7,7 +7,8 @@ import CreateList from "./CreateList";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = () => {
+const index = ({leadId,email,policyNo,Insured,vehicleNo}) => {
+ 
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -75,7 +76,8 @@ const index = () => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <CreateList />
+                        <CreateList leadId={leadId} email={email} policyNo={policyNo}
+                        vehicleNo={vehicleNo} Insured={Insured}/ >
                       </div>
                     </div>
                     {/* <div className="my_dashboard_review mt30">

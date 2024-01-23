@@ -7,7 +7,7 @@ import Exemple from "./Exemple";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Index = ({leadId,token}) => {
+const Index = ({leadId,token,content}) => {
   
   const [check,setCheck]=useState(false);
   const [leadToken,setLeadToken]=useState(token?token : "");
@@ -158,11 +158,13 @@ setCheck(false);
     }
 
     console.log(status?.Status,data.length)
-    if(String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5){
+    if((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length)){
       alert("Please upload all the required data !!!");
     }
     else{
     
+      console.log(data);
+      return ;
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
    
     const payload = JSON.stringify({data :  data});
@@ -179,7 +181,7 @@ setCheck(false);
     window.location.reload();
   })
   .catch((err)=>{
-    isNotValidLink(true);
+    // isNotValidLink(true);
   })
 }
 
@@ -232,6 +234,7 @@ setCheck(false);
               uploadedData={uploadedData} 
               leadId={leadId} 
               status={status}
+              content={content}
               document={document}/>
               <button className="btn btn-color" onClick={onSubmitHandler}>Submit</button>
             </div>
