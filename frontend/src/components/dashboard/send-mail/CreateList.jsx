@@ -247,15 +247,15 @@ const CreateList = () => {
           <div className="col-lg-8" style={{ marginLeft: "40px" }}>
             <div id="other-div">
               {/* Content for the "Other" option */}
-              <Editor />
-              {/* <textarea
+              {/* <Editor /> */}
+              <textarea
                 className="form-control"
                 placeholder=""
                 cols="15"
                 rows="4"
                 wrap="hard"
                 required
-              /> */}
+              />
             </div>
           </div>
         </div>
