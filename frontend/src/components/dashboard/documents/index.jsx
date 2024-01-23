@@ -7,12 +7,17 @@ import Exemple from "./Exemple";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Index = () => {
-  const url = window.location.href;
-  const leadId = url.split("https://claims-app-phi.vercel.app/documents/")[1];
+const Index = ({leadId,token}) => {
+  
+  const [check,setCheck]=useState(false);
+  const [leadToken,setLeadToken]=useState(token?token : "");
+ 
   const [status , setStatus]=useState([]);
+  const [isLoading,setIsLoading]=useState(true);
   const [document,setDocument]=useState([]);
   const [uploadedData,setUpdatedData] = useState([]);
+
+  const [isNotValidLink,setIsNotValidLink] = useState(true);
   
   const types = [
     {name : "Driving licence"},
@@ -91,15 +96,45 @@ const Index = () => {
       }
       
      })
+     
      setDocument(updatedStatus);
     })
     .catch((err) => {
       console.log(err);
     });
 
+    setIsLoading(false);
+   
+setCheck(true);
+   
   
   },[])
 
+
+  useEffect(()=>{
+
+    const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+const payload = {
+  token : token,
+  leadId : leadId
+}
+
+console.log(payload);
+axios.post("/api/getClaimDetails",payload,{
+  headers:{
+    Authorization:`Bearer ${unserInfo[0].Token}`,
+    "Content-Type":"application/json"
+  }
+}).then((res)=>{
+  setIsNotValidLink(false);
+  // alert("Successfully found!!");
+})
+.catch((Err)=>{
+  // alert(Err)
+})
+setCheck(false);
+  },[check])
   
   const onSubmitHandler = ()=>{
 
@@ -122,17 +157,15 @@ const Index = () => {
       }
     }
 
-    if(data.length < document.length){
+    console.log(status?.Status,data.length)
+    if(String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5){
       alert("Please upload all the required data !!!");
     }
-    
-
     else{
     
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
    
     const payload = JSON.stringify({data :  data});
-    
     
     toast.loading("Uploading!")
     axios.post("/api/uploadDocument",payload,{
@@ -142,10 +175,11 @@ const Index = () => {
     },
   })
   .then((res)=>{
-    alert("Successfully uploaded!!!");
+    isNotValidLink(false);
+    window.location.reload();
   })
   .catch((err)=>{
-    alert(err);
+    isNotValidLink(true);
   })
 }
 
@@ -162,7 +196,32 @@ const Index = () => {
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
 
-      {/* <!-- Our Error Page --> */}
+      {isLoading ? 
+        
+        (
+          <section className="our-error bgc-f7 mt-2">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+              <div className="ring">
+              Loading
+              <span className="load"></span>
+            </div>                </div>
+              </div>
+            </div>
+          </section>
+        ) 
+        : isNotValidLink ? (
+        <section className="our-error bgc-f7 mt-2">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 text-center">
+                <p style={{color:"black"}}>The page cannot be accessed with the provided link.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
       <section className="our-error bgc-f7 mt-2">
         <div className="container">
           <div className="row">
@@ -178,7 +237,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section>)}
 
       {/* <!-- Our Footer --> */}
       {/* <section className="footer_one">

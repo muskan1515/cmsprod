@@ -40,13 +40,6 @@ const headCells = [
     label: "Added Date",
     width: 100,
   },
-
-  {
-    id: "city",
-    numeric: false,
-    label: "City",
-    width: 100,
-  },
   {
     id: "assigned_garage",
     numeric: false,
@@ -64,13 +57,6 @@ const headCells = [
     numeric: false,
     label: "Case Age (Insurer)",
     width: 150,
-  },
-  
-  {
-    id: "claim_id",
-    numeric: false,
-    label: "Insurer Claim ID.",
-    width: 100,
   },
   {
     id: "document",
@@ -129,7 +115,7 @@ const data = [
   //   },
 ];
 
-export default function Exemple({ claims, setMajorSearch,status,start,end }) {
+export default function Exemple({ claims, setMajorSearch,status,start,end,isRegionChange }) {
   const [updatedData, setUpdatedData] = useState([]);
 
   const getValue = (leadId)=>{
@@ -165,6 +151,7 @@ export default function Exemple({ claims, setMajorSearch,status,start,end }) {
 
   let tempData = [];
   useEffect(() => {
+    const region = JSON.parse(localStorage.getItem("regionType"));
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID) ;
       //console.log(tempValue);

@@ -17,6 +17,7 @@ const { OAuth2Client } = require('google-auth-library');
 const contentFunc = require("./Config/getEmailContent");
 const emailHandler = require('./Config/getEmailContent');
 const { default: axios } = require('axios');
+const generateUniqueToken = require('./Config/generateToken');
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -262,6 +263,8 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
   const {data,leadId} = req.body;
 
   const array = data;
+
+  const currentLeadId = (data[0].leadId);
   
   array.map((data,index)=>{
 
@@ -335,20 +338,39 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
 
  
   
+  
+  
     db.query(insertUploadDetails, (error, results) => {
       if (error) {
         console.error('Error inserting data into Upload Details:', error);
         return res.status(500).json({ error: 'Error inserting data into DocumentDetails.' });
       }
-
       
     });
-    
 
-  
+   
   })
 
-  res.status(200).json({ message: 'Data inserted successfully.' });
+  const claimToken = generateUniqueToken();
+
+
+  const insertTokeDteials = `
+  UPDATE ClaimDetails
+  SET Token='${claimToken}'
+  WHERE LeadId = ${currentLeadId};
+  `
+  
+  db.query(insertTokeDteials, (error, results) => {
+    if (error) {
+      console.error('Error inserting data into CL Details:', error);
+      return res.status(500).json({ error: 'Error.' });
+    }
+    res.status(200).json({ message: 'Data inserted successfully.' });
+    
+  });
+
+
+ 
 
 });
 
@@ -467,6 +489,26 @@ function executeStoredProc(procName, params) {
 }
 
 
+app.post("/getClaimDetails",(req,res)=>{
+  const {token,leadId} = req.body;
+  const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
+    db.query(sql,[leadId], (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      if(result2[0]?.Token === token){
+        // console.log(result2[0].Token === token);
+        res.status(200).send('Successfully found!!');
+      }
+      else{
+        res.status(403).send('Forbidden Access!');
+      }
+
+});
+});
+
 
 app.post("/sendEmail/1",authenticateUser,(req,res)=>{
   const {vehicleNo,PolicyNo,Insured,Date,leadId,toMail} = req.body;
@@ -479,6 +521,17 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
       return;
     }
     const content = emailHandler(result[0].Status);
+
+    const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
+    db.query(sql,[leadId], (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      // console.log(result2[0].Token);
+  
+      
     
   const emailContent = `
     Dear Sir/Madam,
@@ -493,14 +546,14 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
     ${content}
 
         Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${result2[0].Token} target="_blank">Click me</a> to fill the documents information .</p>
 
     Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
             claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
   `;
 
-  
+
 
   const mailOptions = {
     from: 'infosticstech@gmail.com',
@@ -519,7 +572,7 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
       res.status(200).send('Email sent successfully');
     }
   });
-
+    });
 });
 
 })
@@ -661,6 +714,7 @@ app.get('/getStatus',authenticateUser, (req, res) => {
 
 app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
   const { LeadId,Status,subStage} = req.body;
+  console.log("updateAStatus")
   const sql = 'SELECT * FROM DocumentList WHERE LeadId =?';
   db.query(sql,[LeadId], (err, result) => {
     if (err) {
@@ -688,6 +742,7 @@ app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
       res.status(500).send('Internal Server Error');
       return;
     }
+    
     res.send(result);
   });
    }
@@ -755,7 +810,7 @@ app.post('/addClaim', (req, res) => {
 
   const token = authorizationHeader.substring('Bearer '.length);
 
-
+  const generatedToken = generateUniqueToken();
   const insertClaimDetails = `
     INSERT INTO ClaimDetails (
       SurveyType,
@@ -770,6 +825,7 @@ app.post('/addClaim', (req, res) => {
       Region,
       InspectionType,
       IsClaimCompleted,
+      Token,
       IsActive
     ) VALUES (
       '${SurveyType}',
@@ -784,12 +840,10 @@ app.post('/addClaim', (req, res) => {
       '${Region}',
       '${InspectionType}',
       '${parseInt(IsClaimCompleted)}',
+      '${generatedToken}',
       '${parseInt(IsActive)}'
     );
   `;
-
-  
-
 
   db.query(insertClaimDetails, (error, results) => {
     if (error) {
@@ -959,33 +1013,33 @@ app.post('/addClaim', (req, res) => {
   });
 });
 
-app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
-  const leadId = req.params.leadId;
+// app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
+//   const leadId = req.params.leadId;
   
-  const {   
-      Status ,
-      subStage
-} = req.body;
+//   const {   
+//       Status ,
+//       subStage
+// } = req.body;
  
-  // Update InsuredDetails
-  const statusDetails = `
-    UPDATE ClaimStatus
-    SET
-      Status = '${Status}',
-      SubStatus = '${subStage}'
-    WHERE LeadId = ${leadId};
-  `;
+//   // Update InsuredDetails
+//   const statusDetails = `
+//     UPDATE ClaimStatus
+//     SET
+//       Status = '${Status}',
+//       SubStatus = '${subStage}'
+//     WHERE LeadId = ${leadId};
+//   `;
 
-          // db.query(statusDetails, (error, results) => {
-          //   if (error) {
-          //     console.error('Error updating data in InsuredDetails:', error);
-          //     return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
-          //   }
+//           // db.query(statusDetails, (error, results) => {
+//           //   if (error) {
+//           //     console.error('Error updating data in InsuredDetails:', error);
+//           //     return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
+//           //   }
 
-          //   res.status(200).json({ message: 'Data updated successfully.' });
-          // });
+//           //   res.status(200).json({ message: 'Data updated successfully.' });
+//           // });
         
-});
+// });
 
 
 

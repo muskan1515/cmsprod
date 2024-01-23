@@ -1,5 +1,5 @@
 import Header from "../../common/header/dashboard/Header";
-import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
+import SidebarMenu from "../../common/header/dashboard/SidebarMenu_01";
 import MobileMenu from "../../common/header/MobileMenu";
 import Activities from "./Activities";
 import AllStatistics from "./AllStatistics";
@@ -47,6 +47,30 @@ const Index = () => {
     setFilterClaims(filterClaim);
   }, [searchInput]);
 
+
+  const [filterAccordingClaim,setFilterAccordingClaim]=useState([]);
+  const [showRegionClaim,setShowRegionClaim]=useState(false);
+  useEffect(()=>{
+    const region = JSON.parse(localStorage.getItem("regionType"));
+    if(region){
+      setShowRegionClaim(true);
+    
+    const filterAccordingToRegion =allClaims.filter((claim)=>{
+      if(claim.Region === region){
+        return true;
+      }
+      else{
+        return false
+      }
+    });
+    console.log(filterAccordingToRegion);
+    setFilterAccordingClaim(filterAccordingToRegion);
+  }
+  else{
+    setShowRegionClaim(false);
+  }
+  },[isRegionChange]);
+
   useEffect(() => {
     let filterClaim;
 
@@ -61,6 +85,8 @@ const Index = () => {
           majorSearch.toLowerCase()
         ) ||
         claim?.AssignedGarage?.toLowerCase().includes(majorSearch.toLowerCase())
+        ||
+        claim?.Region?.toLowerCase().includes(majorSearch.toLowerCase())
     );
 
     // console.log("claims",filterClaim);
@@ -208,7 +234,12 @@ const Index = () => {
                 className="row mt-2"
                 style={{ justifyContent: "space-between" }}
               >
-                <AllStatistics allClaims={allClaims} setSelectedCard={setSelectedCard}/>
+                <AllStatistics allClaims={ searchInput || majorSearch || isRegionChange
+                  ? filterClaims
+                  : 
+                  selectedCard ?
+                  filterCardClaim :
+                  allClaims} setSelectedCard={setSelectedCard}/>
               </div>
               {/* End .row Dashboard top statistics */}
               <div
@@ -278,7 +309,9 @@ const Index = () => {
                         ? filterClaims
                         : 
                         selectedCard > 0 ?
-                        filterCardClaim :
+                        filterCardClaim : 
+                        showRegionClaim ?
+                        filterAccordingClaim :
                         allClaims}
                     />
                   </div>

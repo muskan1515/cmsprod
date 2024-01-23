@@ -1,4 +1,4 @@
-import Header from "../../common/header/dashboard/Header";
+import Header from "../../common/header/dashboard/Header_01";
 import { useEffect, useState } from "react";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
@@ -214,10 +214,7 @@ const Index = ({}) => {
     const vehicleParts = VehicleModel?.split(",");
 
     const region = JSON.parse(localStorage.getItem("regionType"));
-    if(!region ){
-      alert("Please select the region!!");
-    }
-else{
+   
     const payload = {
       InsuredName: InsuredName ? InsuredName : claim.insuredDetails?.InsuredName,
       InsuredMailAddress: InsuredMailAddress
@@ -333,7 +330,7 @@ else{
     }
       // setEditCase((prop) => !prop);
       window.location.reload();
-    }
+    
   };
 
   const editHandler = (value) => {
@@ -432,7 +429,7 @@ else{
   return (
     <>
       {/* <!-- Main Header Nav --> */}
-      <Header />
+      <Header region={claim ? claim?.claimDetails?.ClaimRegion : "N.A."}/>
 
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />

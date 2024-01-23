@@ -255,7 +255,7 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
   }
 
   const checkId = (status,row)=>{
-    if(status.Status === 1 && Number(row.serial_num) <= 5 )
+    if(status?.Status === 1 && Number(row.serial_num) <= 5 )
      return true;
     return false;
   }
@@ -270,6 +270,8 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
 
     return selectedField;
   };
+
+  console.log(document)
   useEffect(() => {
     console.log(uploadedData);
     const getData = () => {
