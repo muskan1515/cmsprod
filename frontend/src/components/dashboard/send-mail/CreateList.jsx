@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { use, useReducer } from "react";
 import { useState } from "react";
 // import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import MyDatePicker from "../../common/MyDatePicker";
-import Editor from "./Editor";
+// import Editor from "./Editor";
 
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState();
