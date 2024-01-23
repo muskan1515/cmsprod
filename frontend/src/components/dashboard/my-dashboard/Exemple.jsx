@@ -58,16 +58,6 @@ const headCells = [
     label: "Case Age (Insurer)",
     width: 150,
   },
-<<<<<<< HEAD
-=======
-
-  {
-    id: "claim_id",
-    numeric: false,
-    label: "Insurer Claim ID.",
-    width: 100,
-  },
->>>>>>> 2203c06644f48427eb4ea796c864c3cffa33a266
   {
     id: "document",
     numeric: false,
@@ -125,9 +115,6 @@ const data = [
   //   },
 ];
 
-<<<<<<< HEAD
-export default function Exemple({ claims, setMajorSearch,status,start,end,isRegionChange }) {
-=======
 export default function Exemple({
   claims,
   setMajorSearch,
@@ -135,7 +122,6 @@ export default function Exemple({
   start,
   end,
 }) {
->>>>>>> 2203c06644f48427eb4ea796c864c3cffa33a266
   const [updatedData, setUpdatedData] = useState([]);
 
   const getValue = (leadId) => {

@@ -255,105 +255,7 @@ const Index = ({}) => {
     const vehicleParts = VehicleModel?.split(",");
 
     const region = JSON.parse(localStorage.getItem("regionType"));
-<<<<<<< HEAD
    
-    const payload = {
-      InsuredName: InsuredName ? InsuredName : claim.insuredDetails?.InsuredName,
-      InsuredMailAddress: InsuredMailAddress
-        ? InsuredMailAddress
-        : claim.insuredDetails?.InsuredMailAddress,
-      InsuredMobileNo1: InsuredMobileNo1
-        ? InsuredMobileNo1
-        : claim.insuredDetails?.InsuredMobileNo1,
-      InsuredMobileNo2: InsuredMobileNo2
-        ? InsuredMobileNo2
-        : claim.insuredDetails?.InsuredMobileNo2,
-      ClaimNumber: ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber,
-      VehicleMakeVariantModelColor: vehicleParts[0]
-        ? vehicleParts[0]
-        : claim.vehicleDetails?.VehicleMakeVariantModelColor,
-      VehicleTypeOfBody: vehicleParts[1]
-        ? vehicleParts[1]
-        : claim.vehicleDetails?.VehicleTypeOfBody,
-      VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
-        ? claim?.claimDetails?.ReferenceNo
-        : generateRegion(claim?.ClaimRegion),
-      VehicleDateOfRegistration: DateRegistration
-        ? DateRegistration
-        : claim.vehicleDetails?.VehicleDateOfRegistration,
-      VehiclePucNumber: PUCNumber ? PUCNumber : claim.vehicleDetails?.VehiclePucNumber,
-      VehicleTransferDate: TransferDate
-        ? TransferDate
-        : claim.vehicleDetails?.VehicleTransferDate,
-      VehicleEngineNumber: EngineNumber
-        ? EngineNumber
-        : claim.vehicleDetails?.VehicleEngineNumber,
-      VehicleAddedBy: AddedBy ? AddedBy : claim.vehicleDetails?.VehicleAddedBy,
-      IssuingAuthority: IssuingAuthority
-        ? IssuingAuthority
-        : claim.driverDetails?.IssuingAuthority,
-      LicenseNumber: LicenseNumber ? LicenseNumber : claim.driverDetails?.LicenseNumber,
-      LicenseType: LicenseType ? LicenseType : claim.driverDetails?.LicenseType,
-      VehicleChassisNumber: VehicleChassisNumber
-        ? VehicleChassisNumber
-        : claim.vehicleDetails?.VehicleChassisNumber,
-      VehicleFuelType: VehicleFuelType
-        ? VehicleFuelType
-        : claim.vehicleDetails?.VehicleFuelType,
-      DriverName: DriverName ? DriverName : claim.driverDetails?.DriverName,
-      DriverAddedDate: DriverAddedDate
-        ? DriverAddedDate
-        : claim.driverDetails?.DriverAddedDate,
-      DriverTypeOfVerification: Verification
-        ? Verification
-        : claim.driverDetails?.DriverTypeOfVerification,
-      GarageNameAndAddress: GarageNameAndAddress
-        ? GarageNameAndAddress
-        : claim.garageDetails?.GarageNameAndAddress,
-      GarageAddedBy: GarageAddedBy ? GarageAddedBy : claim.garageDetails?.GarageAddedBy,
-      GarageContactNo1: GarageContactNo1
-        ? GarageContactNo1
-        : claim.garageDetails?.GarageContactNo1,
-      GarageContactNo2: GarageContactNo2
-        ? GarageContactNo2
-        : claim.garageDetails?.GarageContactNo2,
-      LeadId: claim.claimDetails?.LeadId,
-      token: userInfo[0].Token,
-    };
-
-    if (
-      // !payload.InsuredName |
-      !payload.InsuredMailAddress 
-      // !payload.InsuredMobileNo1 ||
-      // !payload.InsuredMobileNo2 ||
-      // !payload.ClaimNumber ||
-      // !payload.VehicleMakeVariantModelColor ||
-      // !payload.VehicleTypeOfBody ||
-      // !payload.VehicleRegisteredNumber ||
-      // !payload.VehicleDateOfRegistration ||
-      // !payload.VehiclePucNumber ||
-      // !payload.VehicleTransferDate ||
-      // !payload.VehicleEngineNumber ||
-      // !payload.VehicleAddedBy ||
-      // !payload.IssuingAuthority ||
-      // !payload.LicenseNumber ||
-      // !payload.LicenseType ||
-      // !payload.VehicleChassisNumber ||
-      // !payload.VehicleFuelType ||
-      // !payload.DriverAddedDate ||
-      // !payload.DriverName ||
-      // !payload.DriverTypeOfVerification ||
-      // !payload.GarageAddedBy ||
-      // !payload.GarageNameAndAddress ||
-      // !payload.GarageContactNo1 ||
-      // !payload.GarageContactNo2
-    ) {
-      alert("Please fill the mail address , it is a must required field!");
-=======
-    if (!region) {
-      alert("Please select the region!!");
->>>>>>> 2203c06644f48427eb4ea796c864c3cffa33a266
-    } else {
       const payload = {
         InsuredName: InsuredName
           ? InsuredName
@@ -481,6 +383,7 @@ const Index = ({}) => {
           setEditCase((prop) => !prop);
         }
       }
+      
       // setEditCase((prop) => !prop);
       window.location.reload();
     
