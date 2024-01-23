@@ -85,7 +85,7 @@ const CreateList = () => {
     };
     if (!isValidEmail(payload.InsuredMailAddress)){
       alert("Please provide a valid email address !!");
-      return ;
+      return ;   
     }
 
     if (

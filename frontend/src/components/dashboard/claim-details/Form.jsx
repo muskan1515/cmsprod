@@ -100,28 +100,36 @@ const Form = ({
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
-                <div className="col-lg-1 m-1">
-                  {editCase_01 ? (
-                    <button
-                      className="btn-thm m-1"
-                      style={{}}
-                      onClick={() => onSaveHandler(setEditCase_01)}
-                    >
-                      Save
+                <div className="row">
+                  <div className="col-lg-1 text-end">
+                    {editCase_01 ? (
+                      <button
+                        className="btn-thm"
+                        style={{}}
+                        onClick={() => onSaveHandler(setEditCase_01)}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-thm"
+                        style={{}}
+                        onClick={() => setEditCase_01(true)}
+                      >
+                        <span
+                          className="flaticon-edit"
+                          style={{ fontSize: "14px" }}
+                        ></span>
+                      </button>
+                    )}
+                  </div>
+                  <div className="col-lg-2 text-start">
+                    <button className="btn-thm" style={{}}>
+                      Fetch Details
                     </button>
-                  ) : (
-                    <button
-                      className="btn-thm m-1"
-                      style={{}}
-                      onClick={() => setEditCase_01(true)}
-                    >
-                      <span
-                        className="flaticon-edit"
-                        style={{ fontSize: "14px" }}
-                      ></span>
-                    </button>
-                  )}
+                  </div>
                 </div>
+
                 {editCase_01 ? (
                   <div className="row">
                     <div className="col-lg-6">

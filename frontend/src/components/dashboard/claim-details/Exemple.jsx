@@ -22,12 +22,12 @@ const headCells = [
     label: "Uploaded On",
     width: 120,
   },
-  {
-    id: "status",
-    numeric: false,
-    label: "Status",
-    width: 120,
-  },
+  // {
+  //   id: "status",
+  //   numeric: false,
+  //   label: "Status",
+  //   width: 120,
+  // },
   {
     id: "file",
     numeric: false,

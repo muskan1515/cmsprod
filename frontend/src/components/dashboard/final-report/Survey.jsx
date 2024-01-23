@@ -321,7 +321,7 @@ const Servey = ({}) => {
               wrap="hard"
               required
             /> */}
-           {/** <Editor /> */}
+           {/* <Editor /> */}
           </div>
         </div>
         <div className="col-lg-6">

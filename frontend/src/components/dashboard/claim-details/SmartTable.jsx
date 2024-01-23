@@ -129,8 +129,7 @@ function SmartTable(props) {
               data-bs-target="#collapseTwo"
               aria-expanded="false"
               aria-controls="collapseTwo"
-              style={{ padding: "10px 10px 0 25px" }}
-             
+              style={{ padding: "5px 10px 0 20px" }}
             >
               {/* <h4 className="">Vehicle Details</h4> */}
               <div className="row">
@@ -158,7 +157,7 @@ function SmartTable(props) {
           >
             <div class="accordion-body">
               <div className="row"></div>
-              <div className="col-12 p-3">
+              <div className="col-12">
                 <div className="smartTable-container row">
                   <div className="col-12">
                     {loading && (
@@ -168,22 +167,22 @@ function SmartTable(props) {
                     )}
                     <div className="row">
                       <div
-                        className="col-8 h4 text-start mt-2"
+                        className="col-10 h4 text-start mt-2"
                         style={{ marginLeft: "20px" }}
                       >
                         {/* {props.title} */}
                       </div>
-                      <div className="col-lg-3">
+                      <div className="col-lg-1">
                         <div
-                          className="btn btn-log btn-thm flaticon-pdf"
+                          className="btn-thm w-50 flaticon-pdf"
                           title="pdf zip download"
-                          style={{ marginLeft: "250px" }}
+                          style={{ marginLeft: "50px" }}
                           onClick={props.downloadAllFiles}
                         ></div>
                       </div>
                     </div>
                     {props.data.length > 0 ? (
-                      <div className="row mt-3">
+                      <div className="row" style={{ marginTop: "5px" }}>
                         <div className="smartTable-tableContainer">
                           <table
                             className={
@@ -200,7 +199,9 @@ function SmartTable(props) {
                                       key={headCell.id}
                                       scope="col"
                                       style={{
-                                        width: headCell.width ?? "auto",
+                                        width: headCell.width,
+                                        backgroundColor: "#2e008b",
+                                        color: "white" ?? "auto",
                                       }}
                                       className={
                                         headCell.sortable !== false

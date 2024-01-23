@@ -68,27 +68,34 @@ const Form = ({
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
-                <div className="col-lg-1 m-1">
-                  {editCase_03 ? (
-                    <button
-                      className="btn-thm m-1"
-                      style={{}}
-                      onClick={() => onSaveHandler(setEditCase_03)}
-                    >
-                      Save
+                <div className="row">
+                  <div className="col-lg-1 text-end">
+                    {editCase_03 ? (
+                      <button
+                        className="btn-thm"
+                        style={{}}
+                        onClick={() => onSaveHandler(setEditCase_03)}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-thm"
+                        style={{}}
+                        onClick={() => setEditCase_03(true)}
+                      >
+                        <span
+                          className="flaticon-edit"
+                          style={{ fontSize: "14px" }}
+                        ></span>
+                      </button>
+                    )}
+                  </div>
+                  <div className="col-lg-2 text-start">
+                    <button className="btn-thm" style={{}}>
+                      Fetch Details
                     </button>
-                  ) : (
-                    <button
-                      className="btn-thm m-1"
-                      style={{}}
-                      onClick={() => setEditCase_03(true)}
-                    > 
-                      <span
-                        className="flaticon-edit"
-                        style={{ fontSize: "14px" }}
-                      ></span>
-                    </button>
-                  )}
+                  </div>
                 </div>
                 {editCase_03 ? (
                   <div className="row">
@@ -205,7 +212,9 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(claim.garageDetails?.GarageAddedDate)}
+                            value={formatDate(
+                              claim.garageDetails?.GarageAddedDate
+                            )}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -267,7 +276,9 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(claim.garageDetails?.GarageModifiedDate)}
+                            value={formatDate(
+                              claim.garageDetails?.GarageModifiedDate
+                            )}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -276,7 +287,7 @@ const Form = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_garage  claim={claim}/>
+                    <Form_garage claim={claim} />
                   </div>
                 )}
               </div>

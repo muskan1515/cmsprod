@@ -10,77 +10,73 @@ const CreateList_02 = ({
   InsuredMobileNo1,
   ClaimNumber,
   InsuredMailAddress,
-  requestType
-
+  requestType,
 }) => {
-
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
 
-
   const statusOptions = [
     {
-      id : 1,
-      value : "Claim Appointment"
+      id: 1,
+      value: "Claim Appointment",
     },
     {
-      id : 2,
-      value : "Estimate Approval Pending"
+      id: 2,
+      value: "Estimate Approval Pending",
     },
     {
-      id : 3,
-      value : "Vehicle Under repair"
+      id: 3,
+      value: "Vehicle Under repair",
     },
     {
-      id : 4,
-      value : "Invoice Approval Pending"
+      id: 4,
+      value: "Invoice Approval Pending",
     },
     {
-      id : 5,
-      value : "Surveyor Report Pending"
+      id: 5,
+      value: "Surveyor Report Pending",
     },
     {
-      id : 6,
-      value : "Hard Copies Pending"
+      id: 6,
+      value: "Hard Copies Pending",
     },
     {
-      id : 7,
-      value : "Soft Copy Completed"
+      id: 7,
+      value: "Soft Copy Completed",
     },
     {
-      id : 8,
-      value : "Payment Pending"
+      id: 8,
+      value: "Payment Pending",
     },
     {
-      id : 9,
-      value : "Settled Cases"
+      id: 9,
+      value: "Settled Cases",
     },
     {
-      id : 10,
-      value : "Withdrawl/Rejected"
+      id: 10,
+      value: "Withdrawl/Rejected",
     },
     {
-      id : 11,
-      value : "More Info Required"
+      id: 11,
+      value: "More Info Required",
     },
     {
-      id : 12,
-      value : "My Claims"
+      id: 12,
+      value: "My Claims",
     },
-  ]
+  ];
 
-  const checkStatus = (val)=>{
+  const checkStatus = (val) => {
     let status = "";
-    statusOptions.map((stat,index)=>{
-      if(String(stat.id ) === String(val))
-       status = stat.value;
+    statusOptions.map((stat, index) => {
+      if (String(stat.id) === String(val)) status = stat.value;
     });
     return status;
-  }
-  
+  };
+
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -90,339 +86,358 @@ const CreateList_02 = ({
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                        marginRight: "50px",
-                      }}
-                    >
-                      Name
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {claim?.insuredDetails?.InsuredName}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Name
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.insuredDetails?.InsuredName}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Phone
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {claim?.insuredDetails?.InsuredMobileNo1}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Phone
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.insuredDetails?.InsuredMobileNo1}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-2 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Email
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {claim.insuredDetails?.InsuredMailAddress}
-                    </label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Registration No.
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                     {claim.claimDetails?.ReferenceNo}
-                    </label>
-                  </div>
-                </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Insurer ClaimID
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {claim.claimDetails?.ClaimNumber}
-                    </label>
-                  </div>
-                </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Status
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {checkStatus(claim?.claimStatus?.ClaimStatus)}
-                    </label>
+                    <div className="col-lg-4">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Email
+                      </label>
+                    </div>
+                    <div className="col-lg-8  text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim.insuredDetails?.InsuredMailAddress}
+                      </label>
+                    </div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                        marginRight: "50px",
-                      }}
-                    >
-                      Survey Type
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {subType}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Registration No.
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim.claimDetails?.ReferenceNo}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Intimation Date
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      {formatDate(claim.claimDetails?.ClaimAddedDateTime)}
-                    </label>
+                    <div className="col-lg-7">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Insurer ClaimID
+                      </label>
+                    </div>
+                    <div className="col-lg-5 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim.claimDetails?.ClaimNumber}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Request Type
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      SPOT
-                    </label>
+                    <div className="col-lg-4">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Status
+                      </label>
+                    </div>
+                    <div className="col-lg-8 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {checkStatus(claim?.claimStatus?.ClaimStatus)}
+                      </label>
+                    </div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Endorsement Doc.
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    ></label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Survey Type
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {subType}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      SPOC Name
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      Estimate Amount
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Intimation Date
+                      </label>
+                    </div>
+                    <div className="col-lg-6  text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                        marginRight: "50px",
-                      }}
-                    >
-                      SPOC Name
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-                      }}
-                    >
-                      Estimate Amount
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Request Type
+                      </label>
+                    </div>
+                    <div className="col-lg-6  text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        SPOT
+                      </label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Endorsement Doc.
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      ></label>
+                    </div>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      ></label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      ></label>
+                    </div>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      ></label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      ></label>
+                    </div>
                   </div>
                 </td>
               </tr>
