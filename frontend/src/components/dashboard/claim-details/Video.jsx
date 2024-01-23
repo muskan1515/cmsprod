@@ -198,12 +198,12 @@ const Video = (edit) => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-lg-12">
-                        <button className="btn btn-color m-1">Capture</button>
-                        <button className="btn btn-color w-50 m-1">
+                      <div className="col-lg-12 text-center">
+                        <button className="btn btn-thm m-1">Capture</button>
+                        <button className="btn btn-thm m-1">
                           Enable Screenshot
                         </button>
-                        <button className="btn btn-color w-25 m-1">
+                        <button className="btn btn-thm">
                           Generate Pdf
                         </button>
                       </div>

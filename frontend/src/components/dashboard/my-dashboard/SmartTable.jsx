@@ -6,7 +6,6 @@ import SVGChevronLeft from "./icons/SVGChevronLeft";
 import SVGChevronRight from "./icons/SVGChevronRight";
 
 function SmartTable(props) {
-
   console.log(props.setMajorSearch);
   const [loading, setLoading] = useState(false);
   const [sortDesc, setSortDesc] = useState({});
@@ -143,7 +142,7 @@ function SmartTable(props) {
                 type="text"
                 className="form-control"
                 placeholder="Search..."
-                onChange={(e)=>props.setMajorSearch(e.target.value)}
+                onChange={(e) => props.setMajorSearch(e.target.value)}
               />
             </div>
           </div>
@@ -236,22 +235,68 @@ function SmartTable(props) {
               </div>
             </div>
           ) : (
-            <div className="row">
-              <div
-                className="smartTable-noDataFound col-12"
-                style={{ marginTop: "110px", marginBottom: "40px" }}
-              >
-                <div className="ring">
-                  Loading
-                  <span className="load"></span>
-                </div>
-              </div>
-            </div>
-            // <div className="row p-1">
-            //   <div className="smartTable-noDataFound col-12">
-            //     <h4>NO DATA FOUND</h4>
+            // <div className="row">
+            //   <div
+            //     className="smartTable-noDataFound col-12"
+            //     style={{ marginTop: "110px", marginBottom: "40px" }}
+            //   >
+            //     <div className="ring">
+            //       Loading
+            //       <span className="load"></span>
+            //     </div>
             //   </div>
             // </div>
+            <div className="row">
+              <div className="row mt-3">
+                <div className="smartTable-tableContainer">
+                  <table
+                    className={"smartTable-table table table-striped border"}
+                    style={{ minWidth: tableWidth }}
+                  >
+                    <thead className="smartTable-thead">
+                      <tr>
+                        {props.headCells.map((headCell) => {
+                          return (
+                            <th
+                              id={headCell.id}
+                              key={headCell.id}
+                              scope="col"
+                              style={{
+                                width: headCell.width ?? "auto",
+                                backgroundColor: "#2e008b",
+                                color: "white",
+                              }}
+                              className={
+                                headCell.sortable !== false
+                                  ? "smartTable-pointer"
+                                  : ""
+                              }
+                              onClick={() =>
+                                headCell.sortable !== false
+                                  ? sortData(headCell.id)
+                                  : {}
+                              }
+                            >
+                              {headCell.label}
+                              {sortDesc[headCell.id] ? (
+                                <SVGArrowDown />
+                              ) : sortDesc[headCell.id] === undefined ? (
+                                ""
+                              ) : (
+                                <SVGArrowUp />
+                              )}
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+              <div className="col-lg-12 text-center mt-5">
+                <h4>NO DATA FOUND</h4>
+              </div>
+            </div>
           )}
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">

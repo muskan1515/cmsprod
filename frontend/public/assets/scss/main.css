@@ -21253,8 +21253,8 @@ main {
 /* Custom css */
 
 .smartTable-container {
-  border: 1px solid lightgray;
-  padding-top: 10px;
+  /* border: 1px solid lightgray; */
+  /* padding-top: 10px; */
   background-color: white;
   border-radius: 4px;
   /* box-shadow: 0 5px 25px 0 rgb(0 113 243 / 40%); */
@@ -21513,3 +21513,5 @@ main {
     transform: rotate(405deg);
   }
 }
+
+

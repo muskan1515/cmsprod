@@ -29,12 +29,12 @@ const Form_driver = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-                        marginRight: "50px",
+                        
                       }}
                     >
                       Name
@@ -44,7 +44,7 @@ const Form_driver = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
@@ -56,13 +56,13 @@ const Form_driver = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
 
-                        marginRight: "50px",
+                        
                       }}
                     >
                       Added Date
@@ -72,7 +72,7 @@ const Form_driver = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
@@ -86,23 +86,23 @@ const Form_driver = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color"
+                      className="col-lg-7 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
 
-                        marginRight: "50px",
+                        
                       }}
                     >
                       Type of Verification
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
@@ -121,20 +121,20 @@ const Form_driver = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
 
-                        marginRight: "50px",
+                        
                       }}
                     >
                       Modified Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
@@ -146,23 +146,23 @@ const Form_driver = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
 
-                        marginRight: "50px",
+                        
                       }}
                     >
                       Insurer ClaimID
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
@@ -174,13 +174,13 @@ const Form_driver = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
 
-                        marginRight: "50px",
+                        
                       }}
                     >
                       Status
@@ -190,7 +190,7 @@ const Form_driver = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >

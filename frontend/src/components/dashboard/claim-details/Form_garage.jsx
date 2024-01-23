@@ -29,22 +29,21 @@ const Form_garage = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-                        marginRight: "50px",
                       }}
                     >
                       Name & Address
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
@@ -56,27 +55,25 @@ const Form_garage = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Contact Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                      { claim.garageDetails?.GarageContactNo1}
+                      {claim.garageDetails?.GarageContactNo1}
                     </label>
                   </div>
                 </td>
@@ -84,27 +81,25 @@ const Form_garage = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-2 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Added Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(claim.garageDetails?.GarageAddedDate)}
+                      {formatDate(claim.garageDetails?.GarageAddedDate)}
                     </label>
                   </div>
                 </td>
@@ -117,10 +112,8 @@ const Form_garage = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Added By
@@ -130,11 +123,11 @@ const Form_garage = ({
                       className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                      { claim.garageDetails?.GarageAddedBy}
+                      {claim.garageDetails?.GarageAddedBy}
                     </label>
                   </div>
                 </td>
@@ -142,27 +135,25 @@ const Form_garage = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Modified Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-4 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(claim.garageDetails?.GarageModifiedDate)}
+                      {formatDate(claim.garageDetails?.GarageModifiedDate)}
                     </label>
                   </div>
                 </td>
@@ -173,10 +164,8 @@ const Form_garage = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Status
@@ -186,11 +175,11 @@ const Form_garage = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(claim.claimStatus?.ClaimStatus)}
+                      {formatDate(claim.claimStatus?.ClaimStatus)}
                     </label>
                   </div>
                 </td>

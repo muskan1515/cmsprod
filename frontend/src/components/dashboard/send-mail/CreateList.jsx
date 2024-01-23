@@ -2,7 +2,11 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { use, useReducer } from "react";
 import { useState } from "react";
+// import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import { Editor } from "draft-js";
 import MyDatePicker from "../../common/MyDatePicker";
+import Editor from "./Editor";
 
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState();
@@ -222,39 +226,41 @@ const CreateList = () => {
                 value={selectedOption}
                 onChange={check}
               >
-                <option data-tokens="" value="0">Select Email</option>
+                <option data-tokens="" value="0">
+                  Select Email
+                </option>
                 <option data-tokens="Status1" value="1">
-                  Hyderabad
+                  Mail-1
                 </option>
                 <option data-tokens="Status2" value="2">
-                  Delhi
+                  Mail-2
                 </option>
                 <option data-tokens="Status3" value="3">
-                  Chandigarh
+                  Mail-3
                 </option>
               </select>
             </div>
           </div>
         </div>
-        <div className="row" style={{display:"none"}}>
+        <div className="row" style={{ display: "" }}>
           <div className="col-lg-1"></div>
-          <div className="col-lg-8">
+          <div className="col-lg-8" style={{ marginLeft: "40px" }}>
             <div id="other-div">
               {/* Content for the "Other" option */}
-              <input
-                required
-                type="text"
+              <Editor />
+              {/* <textarea
                 className="form-control"
-                id="otherInput"
-                name="otherInput"
-                // style={otherPurpose ? viewStyle : hiddenStyle}
-                // onChange={(e) => setOtherPurposeValue(e.target.value)}
-                // maxLength={30}
-              />
+                placeholder=""
+                cols="15"
+                rows="4"
+                wrap="hard"
+                required
+              /> */}
             </div>
           </div>
         </div>
-        <div className="row" style={{display:"none"}}>
+
+        <div className="row" style={{ display: "none" }}>
           <div className="col-lg-1"></div>
           <div className="col-lg-8">
             <div id="other-div_01">
@@ -273,7 +279,7 @@ const CreateList = () => {
             </div>
           </div>
         </div>
-        <div className="row" style={{display:"none"}}>
+        <div className="row" style={{ display: "none" }}>
           <div className="col-lg-1"></div>
           <div className="col-lg-8">
             <div id="other-div_02">
@@ -290,6 +296,11 @@ const CreateList = () => {
                 // maxLength={30}
               />
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-9 text-end">
+            <button className="btn btn-color">Send</button>
           </div>
         </div>
         {/* <div className="col-lg-1">

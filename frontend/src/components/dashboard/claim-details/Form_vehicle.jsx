@@ -31,7 +31,7 @@ const Form_vehicle = ({
   VehicleChassisNumber,
   setVehicleChassisNumber,
   VehicleFuelType,
-  setVehicleFuelType
+  setVehicleFuelType,
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -48,95 +48,98 @@ const Form_vehicle = ({
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                        marginRight: "50px",
-                      }}
-                    >
-                      Vehicle Model
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      { !VehicleModel
-                        ? `${claim?.vehicleDetails?.VehicleMakeVariantModelColor},${claim?.vehicleDetails?.VehicleTypeOfBody}`
-                        : VehicleModel}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Vehicle Model
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {!VehicleModel
+                          ? `${claim?.vehicleDetails?.VehicleMakeVariantModelColor},${claim?.vehicleDetails?.VehicleTypeOfBody}`
+                          : VehicleModel}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Engine Type
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                    {
-                      EngineNumber
-                        ? EngineNumber
-                        : claim?.vehicleDetails?.VehicleEngineNumber
-                    }
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Engine Type
+                      </label>
+                    </div>
+                    <div className="col-lg-6  text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {EngineNumber
+                          ? EngineNumber
+                          : claim?.vehicleDetails?.VehicleEngineNumber}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-
-                        marginRight: "50px",
-                      }}
-                    >
-                      Registered Owner{" "}
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-4 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                    {
-                      RegisteredOwner
-                        ? RegisteredOwner
-                        : claim?.vehicleDetails?.VehicleRegisteredOwner
-                    }
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Registered Owner{" "}
+                      </label>
+                    </div>
+                    <div className="col-lg-6  text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {RegisteredOwner
+                          ? RegisteredOwner
+                          : claim?.vehicleDetails?.VehicleRegisteredOwner}
+                      </label>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -148,28 +151,26 @@ const Form_vehicle = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Date of Registration
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(
-                      DateRegistration
-                        ? DateRegistration
-                        : claim?.vehicleDetails?.VehicleDateOfRegistration
-                    )}
+                      {formatDate(
+                        DateRegistration
+                          ? DateRegistration
+                          : claim?.vehicleDetails?.VehicleDateOfRegistration
+                      )}
                     </label>
                   </div>
                 </td>
@@ -177,29 +178,27 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       PUC Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      PUCNumber ? PUCNumber : claim?.vehicleDetails?.VehiclePucNumber
-                    }
+                      {PUCNumber
+                        ? PUCNumber
+                        : claim?.vehicleDetails?.VehiclePucNumber}
                     </label>
                   </div>
                 </td>
@@ -210,28 +209,26 @@ const Form_vehicle = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Transfer Date
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(
-                      TransferDate
-                        ? TransferDate
-                        : claim?.vehicleDetails?.VehicleTransferDate
-                    )}
+                      {formatDate(
+                        TransferDate
+                          ? TransferDate
+                          : claim?.vehicleDetails?.VehicleTransferDate
+                      )}
                     </label>
                   </div>
                 </td>
@@ -241,30 +238,27 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-                        marginRight: "50px",
                       }}
                     >
                       Engine Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      EngineNumber
+                      {EngineNumber
                         ? EngineNumber
-                        : claim?.vehicleDetails?.VehicleEngineNumber
-                    }
+                        : claim?.vehicleDetails?.VehicleEngineNumber}
                     </label>
                   </div>
                 </td>
@@ -275,24 +269,24 @@ const Form_vehicle = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Added By
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {AddedBy ? AddedBy : claim?.vehicleDetails?.VehicleAddedBy}
+                      {AddedBy
+                        ? AddedBy
+                        : claim?.vehicleDetails?.VehicleAddedBy}
                     </label>
                   </div>
                 </td>
@@ -303,28 +297,24 @@ const Form_vehicle = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Issuing Authority
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      IssuingAuthority
+                      {IssuingAuthority
                         ? IssuingAuthority
-                        : claim?.driverDetails?.IssuingAuthority
-                    }
+                        : claim?.driverDetails?.IssuingAuthority}
                     </label>
                   </div>
                 </td>
@@ -337,56 +327,52 @@ const Form_vehicle = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       License Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{
-                      LicenseNumber
+                    >
+                      {LicenseNumber
                         ? LicenseNumber
-                        : claim?.driverDetails?.LicenseNumber
-                    }</label>
+                        : claim?.driverDetails?.LicenseNumber}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       License Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      LicenseType ? LicenseType : claim?.driverDetails?.LicenseType
-                    }
+                      {LicenseType
+                        ? LicenseType
+                        : claim?.driverDetails?.LicenseType}
                     </label>
                   </div>
                 </td>
@@ -394,30 +380,27 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-                        marginRight: "50px",
                       }}
                     >
                       Chassis Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      VehicleChassisNumber
+                      {VehicleChassisNumber
                         ? VehicleChassisNumber
-                        : claim?.vehicleDetails?.VehicleChassisNumber
-                    }
+                        : claim?.vehicleDetails?.VehicleChassisNumber}
                     </label>
                   </div>
                 </td>
@@ -430,56 +413,52 @@ const Form_vehicle = ({
                       className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       Fuel Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{
-                      VehicleFuelType
+                    >
+                      {VehicleFuelType
                         ? VehicleFuelType
-                        : claim?.vehicleDetails?.VehicleFuelType
-                    }</label>
+                        : claim?.vehicleDetails?.VehicleFuelType}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-
-                        marginRight: "50px",
                       }}
                     >
                       License Type
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      LicenseType ? LicenseType : claim?.driverDetails?.LicenseType
-                    }
+                      {LicenseType
+                        ? LicenseType
+                        : claim?.driverDetails?.LicenseType}
                     </label>
                   </div>
                 </td>
@@ -487,30 +466,27 @@ const Form_vehicle = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color"
+                      className="col-lg-6 text-color"
                       style={{
                         color: "black",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
-                        marginRight: "50px",
                       }}
                     >
                       Chassis Number
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-5 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize: "15px",
+                        fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      VehicleChassisNumber
+                      {VehicleChassisNumber
                         ? VehicleChassisNumber
-                        : claim?.vehicleDetails?.VehicleChassisNumber
-                    }
+                        : claim?.vehicleDetails?.VehicleChassisNumber}
                     </label>
                   </div>
                 </td>
