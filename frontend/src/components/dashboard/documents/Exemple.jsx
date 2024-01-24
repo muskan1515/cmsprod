@@ -262,7 +262,7 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
   }
 
   const checkId = (status,row)=>{
-    if(status?.Status === 1 && Number(row.serial_num) <= 5 )
+    if(status?.Status === 1 && Number(row.serial_num) <= 10 )
      return true;
     return false;
   }
