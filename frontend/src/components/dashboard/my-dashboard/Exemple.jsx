@@ -13,7 +13,7 @@ const headCells = [
   {
     id: "reference_id",
     numeric: false,
-    label: "PB Reference ID",
+    label: "MT Reference ID",
     width: 100,
   },
   {
@@ -37,7 +37,7 @@ const headCells = [
   {
     id: "added_date",
     numeric: false,
-    label: "Added Date",
+    label: "Date",
     width: 100,
   },
   {
@@ -53,9 +53,15 @@ const headCells = [
     width: 150,
   },
   {
-    id: "case_age_insured",
+    id: "tat",
     numeric: false,
-    label: "Case Age (Insurer)",
+    label: "TAT(Days)",
+    width: 150,
+  },
+  {
+    id: "repairer_mail_id",
+    numeric: false,
+    label: "Repairer Mail Id",
     width: 150,
   },
   {
@@ -156,8 +162,12 @@ export default function Exemple({
   let tempData = [];
   useEffect(() => {
     const region = JSON.parse(localStorage.getItem("regionType"));
+    const today = new Date();
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID);
+      const addedDate = new Date(claim.AddedDate);
+      const tatInDays = Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+  
       //console.log(tempValue);
       //console.log(tempValue);
       const tempGarage = claim?.AssignedGarage?.split(",").map((item) =>
@@ -178,7 +188,8 @@ export default function Exemple({
         state: tempGarage ? tempGarage[2] : "NA",
         assigned_garage: tempGarage ? tempGarage[0] : "NA",
         case_age: "N.A.Y.",
-        case_age_insured: "N.A.Y.",
+        tat: `${tatInDays} days`,
+        repairer_mail_id: 'test@gmail.com',
         document:
           claim.IsDocumentUploaded > 0 ? (
             <span className="text-success" style={{ marginLeft: "40px" }}>

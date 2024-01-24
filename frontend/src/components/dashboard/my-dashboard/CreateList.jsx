@@ -40,7 +40,7 @@ const CreateList = ({setSearchInput,setType}) => {
               type="text"
               className="form-control"
               id="propertyTitle"
-              placeholder="Enter PB Reference ID"
+              placeholder="Enter MT Reference ID"
               onChange={(e)=>handleInputChange(e.target.value,1)}
             />
           </div>
