@@ -350,9 +350,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
           </h4>
           <hr />
           <div className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-12">
               <div className="row">
-                <div className="col-lg-12">
+                <div className="col-lg-6">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
@@ -387,7 +387,36 @@ const PolicyDetails = ({ setIsStatusModal }) => {
         </div> */}
                 </div>
 
-                <div className="col-lg-12">
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Insured <span class="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        readOnly={!isEditMode}
+                        value={InsuredName}
+                        onChange={(e) => setInsuredName(e.target.value)}
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
@@ -422,7 +451,37 @@ const PolicyDetails = ({ setIsStatusModal }) => {
         </div> */}
                 </div>
 
-                <div className="col-lg-12">
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Address <span class="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="InsuredAddress"
+                        value={InsuredAddress}
+                        onChange={(e) => setInsuredAddress(e.target.value)}
+                        readOnly={!isEditMode}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
@@ -440,7 +499,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                     <div className="col-lg-7">
                       <input
-                        type="text"
+                        type="number"
                         className="form-control"
                         id="propertyTitle"
                         // placeholder="Enter Registration No."
@@ -448,8 +507,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-
-                <div className="col-lg-12">
+                <div className="col-lg-6">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
@@ -466,18 +524,23 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       </label>
                     </div>
                     <div className="col-lg-7">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="propertyTitle"
-                        // placeholder="Enter Registration No."
-                      />
+                      <select
+                        style={{ marginTop: "-5px" }}
+                        className="selectpicker form-select"
+                        data-live-search="true"
+                        data-width="100%"
+                      >
+                        <option data-tokens="Status1">Regular</option>
+                        <option data-tokens="Status2">Add on Policy</option>
+                        <option data-tokens="Status3">
+                          Add on Policy(Not Effective)
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>
-
-                <div className="col-lg-12">
-                  {/* <div className="row mt-1">
+                <div className="col-lg-6">
+                  <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
                         htmlFor=""
@@ -489,13 +552,48 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           // marginTop: "-13px",
                         }}
                       >
-                        Date <span class="text-danger">*</span>
+                        Insurance From
                       </label>
                     </div>
                     <div className="col-lg-7">
                       <MyDatePicker />
+                      {/* <input
+                        type="date"
+                        className="form-control"
+                        id="propertyTitle"
+                      /> */}
                     </div>
-                  </div> */}
+                  </div>
+                </div>
+
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Insurance To
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                      <MyDatePicker />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-6">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
@@ -524,8 +622,162 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Token #<span class="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="mobile"
+                        value={InsuredMobileNo1}
+                        readOnly={!isEditMode}
+                        onChange={(e) => setInsuredMobileNo1(e.target.value)}
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Insurers <span class="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        value={InsuranceCompanyNameAddress}
+                        readOnly={!isEditMode}
+                        onChange={(e) =>
+                          setInsuranceCompanyNameAddress(e.target.value)
+                        }
 
-                <div className="col-lg-12">
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        H.P.A.
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        readOnly={!isEditMode}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Insurance Office
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        maxLength={10}
+                        className="form-control"
+                        id="formGroupExampleInput3"
+                        value={PolicyIssuingOffice}
+                        // onChange={(e) => setApplicantNumber(e.target.value)}
+                        onChange={(e) => setPolicyIssuingOffice(e.target.value)}
+                        // pattern="[0-9]*"
+                        // title="Please enter only 10 digits"
+                        readOnly={!isEditMode}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Claim #
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        value={ClaimIsActive}
+                        readOnly={!isEditMode}
+                        onChange={(e) => setClaimIsActive(e.target.value)}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="col-lg-6">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
@@ -553,10 +805,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       />
                     </div>
                   </div>
-                </div>
-
-                <div className="col-lg-12">
-                  <div className="row mt-1">
+                </div> */}
+                <div className="col-lg-6">
+                  <div className="row">
                     <div className="col-lg-4 my_profile_setting_input form-group">
                       <label
                         htmlFor=""
@@ -568,91 +819,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           // marginTop: "-13px",
                         }}
                       >
-                        Insurance From
-                      </label>
-                    </div>
-                    <div className="col-lg-7">
-                      <MyDatePicker />
-                      {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-lg-12">
-                  <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          // paddingTop: "15px",
-                          color: "#2e008b",
-                          fontWeight: "",
-                          // marginTop: "-13px",
-                        }}
-                      >
-                        Insurance To
-                      </label>
-                    </div>
-                    <div className="col-lg-7">
-                      {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                      <MyDatePicker />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      Insured <span class="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      readOnly={!isEditMode}
-                      value={InsuredName}
-                      onChange={(e) => setInsuredName(e.target.value)}
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                {/* <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          // paddingTop: "15px",
-                          color: "#2e008b",
-                          fontWeight: "",
-                          // marginTop: "-13px",
-                        }}
-                      >
-                        Insurers <span class="text-danger">*</span>
+                        Appointing Office
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -660,191 +827,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         type="text"
                         className="form-control"
                         id="propertyTitle"
+                        value={PolicyIssuingOffice}
+                        onChange={(e) => setPolicyIssuingOffice(e.target.value)}
                         readOnly={!isEditMode}
-
                         // placeholder="Enter Registration No."
                       />
                     </div>
-                  </div> */}
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      Address <span class="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="InsuredAddress"
-                      value={InsuredAddress}
-                      onChange={(e) => setInsuredAddress(e.target.value)}
-                      readOnly={!isEditMode}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      Insurers <span class="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={InsuranceCompanyNameAddress}
-                      readOnly={!isEditMode}
-                      onChange={(e) =>
-                        setInsuranceCompanyNameAddress(e.target.value)
-                      }
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      H.P.A.
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      readOnly={!isEditMode}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      Insurance Office
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      maxLength={10}
-                      className="form-control"
-                      id="formGroupExampleInput3"
-                      value={PolicyIssuingOffice}
-                      // onChange={(e) => setApplicantNumber(e.target.value)}
-                      onChange={(e) => setPolicyIssuingOffice(e.target.value)}
-                      // pattern="[0-9]*"
-                      // title="Please enter only 10 digits"
-                      readOnly={!isEditMode}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      Claim
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={ClaimIsActive}
-                      readOnly={!isEditMode}
-                      onChange={(e) => setClaimIsActive(e.target.value)}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                      }}
-                    >
-                      Appointing Office
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={PolicyIssuingOffice}
-                      onChange={(e) => setPolicyIssuingOffice(e.target.value)}
-                      readOnly={!isEditMode}
-                      // placeholder="Enter Registration No."
-                    />
                   </div>
                 </div>
               </div>
@@ -1075,7 +1063,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-5 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -1089,7 +1077,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     Issuing Authority
                   </label>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-7">
                   <input
                     type="text"
                     className="form-control"
@@ -1221,7 +1209,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           // marginTop: "-13px",
                         }}
                       >
-                        Registration
+                        Registration#
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -1348,7 +1336,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           // marginTop: "-13px",
                         }}
                       >
-                        Chasis
+                        Chasis#
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -1381,7 +1369,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           // marginTop: "-13px",
                         }}
                       >
-                        Engine
+                        Engine#
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -1412,7 +1400,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           // marginTop: "-13px",
                         }}
                       >
-                        Make/Variant/Mod
+                        Make/Variant
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -1575,6 +1563,38 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         value={PUCNumber}
                         readOnly={!isEditMode}
                         onChange={(e) => setPUCNumber(e.target.value)}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                        }}
+                      >
+                        Upto
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        readOnly={!isEditMode}
+                        value={VehicleTaxParticulars}
+                        onChange={(e) =>
+                          setVehicleTaxParticulars(e.target.value)
+                        }
 
                         // placeholder="Enter Registration No."
                       />
@@ -1864,7 +1884,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   </div>
                   <div className="col-lg-7">
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="propertyTitle"
                       readOnly={!isEditMode}
@@ -1942,6 +1962,36 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   </div>
                 </div>
               </div>
+              <div className="col-lg-12">
+                <div className="row mt-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color"
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#2e008b",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                      }}
+                    >
+                      Remark
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      readOnly={!isEditMode}
+                      value={VehicleTaxParticulars}
+                      onChange={(e) => setVehicleTaxParticulars(e.target.value)}
+
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1953,12 +2003,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
           <div className="row">
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -1982,12 +2032,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2009,12 +2059,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2036,12 +2086,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2066,12 +2116,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2093,12 +2143,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2120,12 +2170,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2149,12 +2199,12 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
@@ -2178,18 +2228,47 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
-                      // paddingTop: "15px",
+                      paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
                     }}
                   >
                     Route / Area of Operation
+                  </label>
+                </div>
+                <div className="col-lg-7">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    readOnly={!isEditMode}
+
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-12">
+              <div className="row mt-1">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      paddingTop: "5px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Remark
                   </label>
                 </div>
                 <div className="col-lg-7">
