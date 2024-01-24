@@ -417,7 +417,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Fuel Type
+                      Vehicle No.
                     </label>
                     <label
                       htmlFor=""
@@ -434,7 +434,7 @@ const Form_vehicle = ({
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
@@ -489,7 +489,7 @@ const Form_vehicle = ({
                         : claim?.vehicleDetails?.VehicleChassisNumber}
                     </label>
                   </div>
-                </td>
+                </td> */}
               </tr>
             </table>
           </div>
