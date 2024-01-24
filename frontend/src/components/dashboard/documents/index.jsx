@@ -157,14 +157,13 @@ setCheck(false);
       }
     }
 
-    console.log(status?.Status,data.length)
-    if((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length)){
+    // console.log(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length)))
+    if(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length))){
       alert("Please upload all the required data !!!");
     }
     else{
     
-      console.log(data);
-      return ;
+     
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
    
     const payload = JSON.stringify({data :  data});
@@ -177,7 +176,8 @@ setCheck(false);
     },
   })
   .then((res)=>{
-    isNotValidLink(false);
+    
+    alert("Successfully updated!!");
     window.location.reload();
   })
   .catch((err)=>{

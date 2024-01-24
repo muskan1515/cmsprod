@@ -1034,7 +1034,7 @@ app.post('/addClaim', (req, res) => {
               }
 
               axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/1`,{
-                vehicleNo : "N.A.",
+                vehicleNo : RegisteredNumber,
                 PolicyNo : ReferenceNo,
                 Insured : InsuredName,
                 toMail:InsuredMailAddress,

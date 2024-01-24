@@ -30,6 +30,7 @@ const Index = ({}) => {
   const leadId = url.split("/claim-details?leadId=")[1];
   const [claim, setClaim] = useState({});
 
+  const [videosList,setVideosList]=useState([]);
   const [InsuredName, setInsuredName] = useState(
     claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : ""
   );
@@ -452,6 +453,67 @@ const Index = ({}) => {
         },
       })
       .then((res) => {
+        console.log(res.data.data);
+        const tempList = res.data.data;
+        let requiredVideos = [];
+        tempList.map((list, index) => {
+          if (
+            list.Attribute1.toLowerCase().includes(".mp4") ||
+            list.Attribute1.toLowerCase().includes(".mp3")
+          ) {
+            requiredVideos.push({
+              name: list.Attribute1,
+              url: list.Photo1,
+            });
+          }
+          if (
+            list.Attribute2.toLowerCase().includes(".mp4") ||
+            list.Attribute2.toLowerCase().includes(".mp3")
+          ) {
+            requiredVideos.push({
+              name: list.Attribute2,
+              url: list.Photo2,
+            });
+          }
+          if (
+            list.Attribute3.toLowerCase().includes(".mp4") ||
+            list.Attribute3.toLowerCase().includes(".mp3")
+          ) {
+            requiredVideos.push({
+              name: list.Attribute3,
+              url: list.Photo3,
+            });
+          }
+          if (
+            list.Attribute4.toLowerCase().includes(".mp4") ||
+            list.Attribute4.toLowerCase().includes(".mp3")
+          ) {
+            requiredVideos.push({
+              name: list.Attribute4,
+              url: list.Photo4,
+            });
+          }
+          if (
+            list.Attribute5.toLowerCase().includes(".mp4") ||
+            list.Attribute5.toLowerCase().includes(".mp3")
+          ) {
+            requiredVideos.push({
+              name: list.Attribute5,
+              url: list.Photo5,
+            });
+          }
+          if (
+            list.Attribute6.toLowerCase().includes(".mp4") ||
+            list.Attribute6.toLowerCase().includes(".mp3")
+          ) {
+            requiredVideos.push({
+              name: list.Attribute6,
+              url: list.Photo6,
+            });
+          }
+          
+        });
+        setVideosList(requiredVideos);
         setDocuments(res.data.data);
       })
       .catch((err) => {
@@ -638,7 +700,7 @@ const Index = ({}) => {
                           style={{ marginLeft: "-15px" }}
                         >
                           <div className="col-lg-12">
-                            <Video />
+                            <Video videos={videosList} />
                           </div>
                         </div>
                         {/* <div className="my_dashboard_review mb-2">
