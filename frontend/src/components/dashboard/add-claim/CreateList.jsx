@@ -41,6 +41,7 @@ const CreateList = () => {
     // Update policyStartEnd when policyStartDate changes
     const oneYearLater = new Date(policyStartDate);
     oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+    oneYearLater.setDate(oneYearLater.getDate() - 1);
     const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
     setPolicyStartEnd(formattedOneYearLater);
   }, [policyStartDate]);
@@ -102,7 +103,6 @@ const CreateList = () => {
 
     if (
       !payload.Region ||
-      !payload.SurveyType ||
       !payload.InspectionType ||
       !date ||
       !payload.PolicyNumber ||
@@ -204,7 +204,7 @@ const CreateList = () => {
                     Delhi
                   </option>
                   <option data-tokens="Status3" value={"Chandigarh"}>
-                    Chandigarh
+                    Jodhpur
                   </option>
                 </select>
               )}
@@ -274,9 +274,8 @@ const CreateList = () => {
             <div className="col-lg-7">
               <input
                 type="text"
-                maxLength={10}
                 className="form-control"
-                id="propertyTitle"
+                id="broker_mail_id"
                 value={brokerMailId}
                 onChange={(e) => setBrokerMailId(e.target.value)}
                 // placeholder="Enter Registration No."
@@ -791,7 +790,7 @@ const CreateList = () => {
               <input
                 type="text"
                 className="form-control"
-                id="propertyTitle"
+                id="garageMailId"
                 value={garageMailId}
                 onChange={(e) => setGarageMailId(e.target.value)}
                 // placeholder="Enter Registration No."
