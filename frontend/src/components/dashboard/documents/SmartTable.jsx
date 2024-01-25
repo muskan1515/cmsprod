@@ -118,7 +118,7 @@ function SmartTable(props) {
   };
 
   return (
-    <div className="col-12 p-2">
+    <div className="col-12">
       <div className="smartTable-container row">
         <div className="col-12">
           {loading && (
@@ -127,7 +127,7 @@ function SmartTable(props) {
             </div>
           )}
           <div className="row">
-            <div className="col-9 h4 text-start mb-0">{props.title}</div>
+            <div className="col-9 h4 text-start">{props.title}</div>
             {/* <div className="col-lg-3">
               <input
                 style={{ height: "40px" }}
@@ -139,7 +139,7 @@ function SmartTable(props) {
             </div> */}
           </div>
           {props.data.length > 0 ? (
-            <div className="row mt-3">
+            <div className="row">
               <div className="smartTable-tableContainer">
                 <table
                   className={

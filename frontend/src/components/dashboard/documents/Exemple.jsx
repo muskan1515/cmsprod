@@ -5,30 +5,37 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import { forEach } from "jszip";
+import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
 
 const headCells = [
-  {
-    id: "serial_num",
-    numeric: false,
-    label: "S.No.",
-    width: 10,
-  },
+  // {
+  //   id: "serial_num",
+  //   numeric: false,
+  //   label: "S.No.",
+  //   width: 10,
+  // },
   {
     id: "doc_name",
     numeric: false,
     label: "Document Name",
     width: 120,
   },
+  // {
+  //   id: "date",
+  //   numeric: false,
+  //   label: "Date",
+  //   width: 150,
+  // },
+  // {
+  //   id: "file_name",
+  //   numeric: false,
+  //   label: "File Name",
+  //   width: 150,
+  // },
   {
-    id: "date",
+    id: "files",
     numeric: false,
-    label: "Date",
-    width: 150,
-  },
-  {
-    id: "file_name",
-    numeric: false,
-    label: "File Name",
+    label: "Files",
     width: 150,
   },
   {
@@ -37,12 +44,7 @@ const headCells = [
     label: "Action",
     width: 50,
   },
-  {
-    id: "files",
-    numeric: false,
-    label: "Files",
-    width: 150,
-  },
+
   // {
   //   id: "files",
   //   numeric: false,
@@ -198,7 +200,14 @@ const data = [
   },
 ];
 
-export default function Exemple({setUpdatedData,uploadedData,leadId,status,document,content}) {
+export default function Exemple({
+  setUpdatedData,
+  uploadedData,
+  leadId,
+  status,
+  document,
+  content,
+}) {
   const [updatedCode, setUpdatedCode] = useState([]);
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
@@ -214,58 +223,56 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
     });
     return index;
   };
-  const handleUpload = (result, label,idx) => {
+  const handleUpload = (result, label, idx) => {
     try {
       const fileUrl = result.info.secure_url;
 
-      
-      console.log(uploadedData,label,result);
-     
-        const newUploadData = {
-          docName: label,
-          index : idx,
-          leadId:leadId,
-          data: [
-            {
-              name: result.info.original_filename + "." + result.info.format,
-              thumbnail_url: result.info.thumbnail_url,
-              url: result.info.url,
-            },
-          ],
-        };
+      console.log(uploadedData, label, result);
 
-        let oldData = uploadedData;
-        oldData.push(newUploadData);
-        setUpdatedData(oldData);
-        setChange(true);
-      
+      const newUploadData = {
+        docName: label,
+        index: idx,
+        leadId: leadId,
+        data: [
+          {
+            name: result.info.original_filename + "." + result.info.format,
+            thumbnail_url: result.info.thumbnail_url,
+            url: result.info.url,
+          },
+        ],
+      };
+
+      let oldData = uploadedData;
+      oldData.push(newUploadData);
+      setUpdatedData(oldData);
+      setChange(true);
     } catch (error) {
       console.error("Error handling upload:", error);
     }
   };
 
-  const checkWithinTheContent = (row)=>{
+  const checkWithinTheContent = (row) => {
     const present = content.includes(row.doc_name);
 
     return present;
-  }
+  };
 
-  const checkAlreadyDone = (label)=>{
+  const checkAlreadyDone = (label) => {
     let isPresent = false;
     // console.log(label,document)
-    document.map((temp,index)=>{
-      if(String(temp.DocumentName) === String(label)){
+    document.map((temp, index) => {
+      if (String(temp.DocumentName) === String(label)) {
         isPresent = true;
       }
-    })
+    });
     return isPresent;
-  }
+  };
 
   const checkId = (status,row)=>{
     if(status?.Status === 1 && Number(row.serial_num) <= 10 )
      return true;
     return false;
-  }
+  };
   const checkIsUploaded = (label) => {
     // console.log(uploadedData);
     let selectedField = {};
@@ -278,7 +285,7 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
     return selectedField;
   };
 
-  console.log(document)
+  console.log(document);
   useEffect(() => {
     console.log(uploadedData);
     const getData = () => {
@@ -286,94 +293,113 @@ export default function Exemple({setUpdatedData,uploadedData,leadId,status,docum
       data.map((row, index) => {
         const isUploaded = checkIsUploaded(row.doc_name);
         const isDone = checkAlreadyDone(row.doc_name);
-        const isAccordingToStatus = content ? checkWithinTheContent(row) : checkId(status,row);
+        const isAccordingToStatus = content
+          ? checkWithinTheContent(row)
+          : checkId(status, row);
         console.log(isAccordingToStatus);
-        if(!isDone&& isAccordingToStatus ){
-        const updatedRow = {
-          _id: index + 1,
-          serial_num: row.serial_num,
-          doc_name: row.doc_name,
-          files: uploadedData.map((file,idx) => {
-            if(file.docName === row.doc_name){
-            return(
-
-              <div
-                style={{ display: "flex", flexDirection: "column" }}
-                key={idx}
-              >
-                <Image src={file.data[0].thumbnail_url} width={90} height={90} />
-                <a>{file.data[0].name}</a>
-                <a
-                  className="btn btn-color profile_edit_button mb-5"
-                  href={file.data[0].url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View
-                </a>
-                <button className="btn btn-color profile_edit_button mb-5">
-                  Delete
-                </button>
-              </div>
-            );
-            }
-            return null;
-          }),
-          file_name: uploadedData.map((file,idx) => {
-            if(file.docName === row.doc_name){
-              return(
-              <div
-                style={{ display: "flex", flexDirection: "column" }}
-                key={idx}
-              >
-                <h4>{file.data[0].name}</h4>
-               
-              </div>
-            );
+        if (!isDone && isAccordingToStatus) {
+          const updatedRow = {
+            _id: index + 1,
+            serial_num: row.serial_num,
+            doc_name: row.doc_name,
+            files: uploadedData.map((file, idx) => {
+              if (file.docName === row.doc_name) {
+                return (
+                  <div
+                    style={{ display: "flex", flexDirection: "column" }}
+                    key={idx}
+                  >
+                    <Image
+                      src={file.data[0].thumbnail_url}
+                      width={90}
+                      height={90}
+                    />
+                    <a>{file.data[0].name}</a>
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <a
+                          className="btn btn-color w-25"
+                          href={file.data[0].url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="View"
+                        >
+                          <span className="flaticon-view"></span>
+                        </a>
+                        <button
+                          className="btn btn-color w-25"
+                          title="Remove"
+                          style={{ marginLeft: "5px" }}
+                        >
+                          <span className="flaticon-garbage fs-6"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
               }
               return null;
-          }),
-          action: (
-            <CldUploadWidget
-              onUpload={(result) => handleUpload(result, row.doc_name,row.serial_num)}
-              uploadPreset="mpbjdclg"
-              options={{
-                cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
-                allowedFormats: [
-                  "jpg",
-                  "png",
-                  "pdf",
-                  "csv",
-                  "word",
-                  "excel",
-                  "pdf",
-                ], // Specify allowed formats
-                maxFiles: 50,
-              }}
-            >
-              {({ open }) => (
-                <div>
-                  <button
-                    className="btn btn-color w-100"
-                    style={{}}
-                    onClick={() => open()}
+            }),
+            file_name: uploadedData.map((file, idx) => {
+              if (file.docName === row.doc_name) {
+                return (
+                  <div
+                    style={{ display: "flex", flexDirection: "column" }}
+                    key={idx}
                   >
-                    Upload Files
-                  </button>
-                </div>
-              )}
-            </CldUploadWidget>
-          ),
-        };
-        tempData.push(updatedRow);
-      }
+                    <h4>{file.data[0].name}</h4>
+                  </div>
+                );
+              }
+              return null;
+            }),
+            action: (
+              <CldUploadWidget
+                onUpload={(result) =>
+                  handleUpload(result, row.doc_name, row.serial_num)
+                }
+                uploadPreset="mpbjdclg"
+                options={{
+                  cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
+                  allowedFormats: [
+                    "jpg",
+                    "png",
+                    "pdf",
+                    "csv",
+                    "word",
+                    "excel",
+                    "pdf",
+                  ], // Specify allowed formats
+                  maxFiles: 50,
+                }}
+              >
+                {({ open }) => (
+                  <div className="">
+                    <button
+                      className="btn btn-color w-100"
+                      style={{}}
+                      onClick={() => open()}
+                      title="Upload File"
+                    >
+                      <span className="">
+                        {" "}
+                        <FaUpload />
+                      </span>
+                    </button>
+                  </div>
+                )}
+              </CldUploadWidget>
+            ),
+          };
+          tempData.push(updatedRow);
+        }
       });
       return tempData;
     };
     // getData();
     setChange(false);
     setUpdatedCode(getData());
-  }, [uploadedData, change,document]);
+  }, [uploadedData, change, document]);
 
   useEffect(() => {
     if (uploadedData) {

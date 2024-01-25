@@ -81,7 +81,7 @@ const index = () => {
                   <div className="my_dashboard_review mb40">
                     <div className="property_table">
                       <div className="table-responsive mt0">
-                        <TableData />
+                        <Table />
                       </div>
                       {/* End .table-responsive */}
 

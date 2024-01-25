@@ -5,6 +5,7 @@ import PolicyDetails from "./PolicyDetails";
 import Servey from "./Survey";
 import Exemple from "./Exemple";
 import Exemple_01 from "./Exemple_01";
+import Summary from "./Summary";
 
 const PropertyVideo = ({ SomeComponent }) => {
   const [isOpen, setOpen] = useState(false);
@@ -63,7 +64,7 @@ const PropertyVideo = ({ SomeComponent }) => {
           <a
             className="nav-link"
             data-bs-toggle="tab"
-            href="#labour"
+            href="#summary"
             role="tab"
           >
             Summary & Notes
@@ -158,6 +159,33 @@ const PropertyVideo = ({ SomeComponent }) => {
           <div className="property_video">
             <div className="thumb">
               <Exemple_01 />
+              {/* <Image
+                width={692}
+                height={390}
+                className="pro_img  w100 w-100 cover"
+                src="/assets/images/background/7.jpg"
+                alt="7.jpg"
+              />
+              <div className="overlay_icon">
+                <div
+                  onClick={() => setOpen(true)}
+                  role="button"
+                  className="video_popup_btn red popup-youtube"
+                >
+                  <span className="flaticon-play"></span>
+                </div>
+              </div> */}
+            </div>
+          </div>
+        </div>
+        <div
+          className="tab-pane fade row pl15 pl0-1199 pr15 pr0-1199"
+          id="summary"
+          role="tabpanel"
+        >
+          <div className="property_video">
+            <div className="thumb">
+              <Summary />
               {/* <Image
                 width={692}
                 height={390}

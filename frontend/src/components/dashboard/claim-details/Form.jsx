@@ -327,8 +327,6 @@ const Form = ({
                                 : claim?.vehicleDetails?.VehiclePucNumber
                             }
                             onChange={(e) => setPUCNumber(e.target.value)}
-
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
