@@ -19,7 +19,7 @@ const headCells = [
   {
     id: "policy_holder",
     numeric: false,
-    label: "Policy Holder",
+    label: "Insured Name",
     width: 150,
   },
   {
@@ -49,7 +49,7 @@ const headCells = [
   {
     id: "case_age",
     numeric: false,
-    label: "Case Age (Days)",
+    label: "Garage Contact. No.",
     width: 150,
   },
   {
