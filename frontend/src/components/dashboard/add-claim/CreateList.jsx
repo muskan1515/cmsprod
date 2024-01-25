@@ -15,12 +15,12 @@ const CreateList = () => {
   const regionType = JSON.parse(localStorage.getItem("regionType"));
 
   const [region, setRegion] = useState(regionType);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(formattedTodayDate);
   const [surveyType, setSurveyType] = useState("");
   const [inspectionType, setInspectionType] = useState("");
   const [policyNumber, setPolicyNumber] = useState("");
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState("");
-  const [policyStartDate, setPolicyStartDate] = useState(formattedTodayDate);
+  const [policyStartDate, setPolicyStartDate] = useState("");
   const [policyStartEnd, setPolicyStartEnd] = useState("");
   const [claimSurvicingOffice, setClaimSurvicingOffice] = useState("");
   const [insuredName, setInsuredName] = useState("");
@@ -39,11 +39,14 @@ const CreateList = () => {
 
   useEffect(() => {
     // Update policyStartEnd when policyStartDate changes
-    const oneYearLater = new Date(policyStartDate);
-    oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-    oneYearLater.setDate(oneYearLater.getDate() - 1);
-    const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-    setPolicyStartEnd(formattedOneYearLater);
+    if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+      const oneYearLater = new Date(policyStartDate);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+      
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      setPolicyStartEnd(formattedOneYearLater);
+    } 
   }, [policyStartDate]);
 
   const generateRegion = (region) => {
@@ -114,6 +117,24 @@ const CreateList = () => {
       !payload.InsuredMailAddress ||
       !payload.InsuredMobileNo1
     ) {
+      const missingFields = [];
+
+      // Check each field and push the name to the array if it's missing
+      if (!payload.Region) missingFields.push("Region");
+      if (!payload.InspectionType) missingFields.push("InspectionType");
+      if (!date) missingFields.push("Date");
+      if (!payload.PolicyNumber) missingFields.push("PolicyNumber");
+      if (!payload.PolicyIssuingOffice) missingFields.push("PolicyIssuingOffice");
+      if (!payload.ClaimNumber) missingFields.push("ClaimNumber");
+      if (!payload.ClaimServicingOffice) missingFields.push("ClaimServicingOffice");
+      if (!payload.RegisteredNumber) missingFields.push("RegisteredNumber");
+      if (!payload.InsuredName) missingFields.push("InsuredName");
+      if (!payload.InsuredMailAddress) missingFields.push("InsuredMailAddress");
+      if (!payload.InsuredMobileNo1) missingFields.push("InsuredMobileNo1");
+    
+      // Log the missing fields
+      console.log("Missing fields:", missingFields);
+    
       alert("Fill all the marked fields please");
     } else {
       axios
@@ -197,13 +218,13 @@ const CreateList = () => {
                   onChange={(e) => setRegion(e.target.value)}
                 >
                   <option data-tokens="Status1">Select Region</option>
-                  <option data-tokens="Status1" value={"Hyderabad"}>
-                    Hyderabad
+                  <option data-tokens="Status1" value={"Chandigarh"}>
+                    Chandigarh
                   </option>
                   <option data-tokens="Status2" value={"Delhi"}>
                     Delhi
                   </option>
-                  <option data-tokens="Status3" value={"Chandigarh"}>
+                  <option data-tokens="Status3" value={"Jodhpur"}>
                     Jodhpur
                   </option>
                 </select>
