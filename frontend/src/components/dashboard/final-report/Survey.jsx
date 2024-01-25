@@ -3,11 +3,10 @@ import MyDatePicker from "../../common/MyDatePicker";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
-
-
+import { Calendar } from "primereact/calendar";
+import { Editor } from "primereact/editor";
 
 const Servey = ({}) => {
-  
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -30,17 +29,17 @@ const Servey = ({}) => {
   const [editorContent, setEditorContent] = useState("");
 
   const formatText = (command) => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const selectedText = window.getSelection().toString();
-  
+
       const selection = window.getSelection();
       if (selection.rangeCount === 0) return;
-  
+
       const range = selection.getRangeAt(0);
-  
+
       // Create a span element
       const span = document.createElement("span");
-  
+
       switch (command) {
         case "bold":
           span.style.fontWeight = "bold";
@@ -60,12 +59,13 @@ const Servey = ({}) => {
         default:
           break;
       }
-  
+
       // Surround the selected content with the created span element
       range.surroundContents(span);
     }
   };
-  
+  const [text, setText] = useState("");
+
   return (
     <>
       <div className="row">
@@ -98,6 +98,7 @@ const Servey = ({}) => {
               id="propertyTitle"
             /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar m-1 text-dark"></span>
                 </div>
               </div>
             </div>
@@ -214,7 +215,7 @@ const Servey = ({}) => {
               className="form-control"
               id="propertyTitle"
             /> */}
-                <MyDatePicker />
+                <MyDatePicker /><span className="flaticon-calendar m-1 text-dark"></span>
               </div>
             </div>
           </div>
@@ -240,7 +241,7 @@ const Servey = ({}) => {
               className="form-control"
               id="propertyTitle"
             /> */}
-                <MyDatePicker />
+                <MyDatePicker /><span className="flaticon-calendar m-1 text-dark"></span>
               </div>
             </div>
           </div>
@@ -280,7 +281,10 @@ const Servey = ({}) => {
           </div>
           <div className="col-lg-12">
             <div>
-             {/*  <Editor/>*/}
+              <div className="card">
+                <Editor />
+              </div>
+              {/*  <Editor/>*/}
               {/* <textarea
                 value={editorContent}
                 onChange={(e) => setEditorContent(e.target.value)}
@@ -313,39 +317,36 @@ const Servey = ({}) => {
             <hr />
           </div>
           <div className="col-lg-12 mb-2">
-            {/* <textarea
-              className="form-control"
-              placeholder="Enter text here..."
-              cols="20"
-              rows="2"
-              wrap="hard"
-              required
-            /> */}
-           {/* <Editor /> */}
+            <div className="card">
+              <Editor />
+            </div>
           </div>
         </div>
         <div className="col-lg-6">
           <div className="col-lg-12">
             <h4>Details of Loads / Passenger :</h4>
             <hr />
+            <div className="card">
+              <Editor />
+            </div>
           </div>
-          <div className="col-lg-12">
-            {/** <Editor /> */}
-          </div>
+          <div className="col-lg-12">{/** <Editor /> */}</div>
           <div className="col-lg-12 mt-3">
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
+            <div className="card">
+              <Editor />
+            </div>
           </div>
-          <div className="col-lg-12">
-            {/** <Editor /> */}
-          </div>
+          <div className="col-lg-12">{/** <Editor /> */}</div>
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
+            <div className="card">
+              <Editor />
+            </div>
           </div>
-          <div className="col-lg-12 mb-2">
-           {/** <Editor /> */}
-          </div>
+          <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>
         </div>
         <hr />
       </div>

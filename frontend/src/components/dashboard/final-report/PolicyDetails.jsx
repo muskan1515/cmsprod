@@ -302,6 +302,10 @@ const PolicyDetails = ({ setIsStatusModal }) => {
             /> */}
               <MyDatePicker />
             </div>
+            <span
+              className="col-lg-1 flaticon-calendar text-dark fs-4"
+              style={{ marginLeft: "-10px" }}
+            ></span>
           </div>
         </div>
 
@@ -557,6 +561,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                     <div className="col-lg-7">
                       <MyDatePicker />
+                      <span className="flaticon-calendar text-dark"></span>
                       {/* <input
                         type="date"
                         className="form-control"
@@ -590,6 +595,10 @@ const PolicyDetails = ({ setIsStatusModal }) => {
             /> */}
                       <MyDatePicker />
                     </div>
+                    <span
+                      className="col-lg-1 flaticon-calendar text-dark fs-4"
+                      style={{ marginLeft: "-30px" }}
+                    ></span>
                   </div>
                 </div>
 
@@ -928,6 +937,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   id="propertyTitle"
                   /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>
@@ -954,6 +964,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   id="propertyTitle"
                   /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>
@@ -981,6 +992,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               id="propertyTitle"
             /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>
@@ -1035,6 +1047,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               id="propertyTitle"
             /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>
@@ -1056,7 +1069,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <MyDatePicker />
+                  <MyDatePicker /><span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div> */}
@@ -1320,6 +1333,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               id="propertyTitle"
             /> */}
                       <MyDatePicker />
+                      <span className="flaticon-calendar text-dark"></span>
                     </div>
                   </div>
                 </div>
@@ -2053,6 +2067,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               id="propertyTitle"
             /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>
@@ -2137,6 +2152,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               id="propertyTitle"
             /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>
@@ -2164,6 +2180,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               id="propertyTitle"
             /> */}
                   <MyDatePicker />
+                  <span className="flaticon-calendar text-dark"></span>
                 </div>
               </div>
             </div>

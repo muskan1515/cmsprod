@@ -6,6 +6,18 @@ import Servey from "./Survey";
 import Exemple from "./Exemple";
 import Exemple_01 from "./Exemple_01";
 import Summary from "./Summary";
+import Table from "./Table";
+
+const materials = [
+  { qty: "12", desc: "12", price: "12" },
+  { qty: "", desc: "", price: "" },
+  { qty: "", desc: "", price: "" },
+  { qty: "", desc: "", price: "" },
+  { qty: "", desc: "", price: "" },
+  { qty: "", desc: "", price: "" },
+  { qty: "", desc: "", price: "" },
+  { qty: "", desc: "", price: "" },
+];
 
 const PropertyVideo = ({ SomeComponent }) => {
   const [isOpen, setOpen] = useState(false);
@@ -131,7 +143,7 @@ const PropertyVideo = ({ SomeComponent }) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <Exemple />
+              <Table data={materials} />
               {/* <Image
                 width={692}
                 height={390}
