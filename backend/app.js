@@ -271,35 +271,55 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
    
     let photo1="",photo2="",photo3="",photo4="",photo5="",photo6="";
     let photoAtt1="",photoAtt2="",photoAtt3="",photoAtt4="",photoAtt5="",photoAtt6="";
+    let photo1Timestamp="",photo2Timestamp="",photo3Timestamp="",photo4Timestamp="",photo5Timestamp="",photo6Timestamp="";
+    let photo1Latitude="",photo2Latitude="",photo3Latitude="",photo4Latitude="",photo5Latitude="",photo6Latitude="";
+    let photo1Longitude="",photo2Longitude="",photo3Longitude="",photo4Longitude="",photo5Longitude="",photo6Longitude="";
+    
 
     if(data.data[0][0]){
       photo1=data.data[0][0].url;
       photoAtt1 = data.data[0][0].name;
+      photo1Timestamp=data.data[0][0].time;
+      photo1Latitude=data.data[0][0].location.split(",")[0];
+      photo1Longitude=data.data[0][0].location.split(",")[1];
     }
+
     if(data.data[1]?.length > 0){
       photo2=data.data[1][0].url;
       photoAtt2 = data.data[1][0].name;
+      photo2Timestamp=data.data[1][0].time;
+      photo2Latitude=data.data[1][0].location.split(",")[0];
+      photo2Longitude=data.data[1][0].location.split(",")[1];
     }
     if(data.data[2]?.length > 0){
       photo3=data.data[2][0].url;
       photoAtt3 = data.data[2][0].name;
+      photo3Timestamp=data.data[2][0].time;
+      photo3Latitude=data.data[2][0].location.split(",")[0];
+      photo3Longitude=data.data[2][0].location.split(",")[1];
     }
     if(data.data[3]?.length > 0){
       photo4=data.data[3][0].url;
       photoAtt4 = data.data[3][0].name;
+      photo4Timestamp=data.data[3][0].time;
+      photo4Latitude=data.data[3][0].location.split(",")[0];
+      photo4Longitude=data.data[3][0].location.split(",")[1];
     }
     if(data.data[4]?.length > 0){
-      photo4=data.data[4][0].url;
-      photoAtt4 = data.data[4][0].name;
+      photo5=data.data[4][0].url;
+      photoAtt5= data.data[4][0].name;
+      photo5Timestamp=data.data[4][0].time;
+      photo5Latitude=data.data[4][0].location.split(",")[0];
+      photo5Longitude=data.data[4][0].location.split(",")[1];
     }
     if(data.data[5]?.length > 0){
-      photo5=data.data[5][0].url;
-      photoAtt5 = data.data[5][0].name;
+      photo6=data.data[5][0].url;
+      photoAtt6 = data.data[5][0].name;
+      photo6Timestamp=data.data[5][0].time;
+      photo6Latitude=data.data[5][0].location.split(",")[0];
+      photo6Longitude=data.data[5][0].location.split(",")[1];
     }
-    if(data.data[6]?.length > 0){
-      photo6=data.data[6][0].url;
-      photoAtt6= data.data[6][0].name;
-    }
+   
     const insertUploadDetails = `
     INSERT INTO DocumentList (
       LeadId,
@@ -316,7 +336,24 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
       Attribute4,
       Attribute5,
       Attribute6,
-      ClaimNumber
+      Photo1Latitude,
+      Photo2Latitude,
+      Photo3Latitude,
+      Photo4Latitude,
+      Photo5Latitude,
+      Photo6Latitude,
+      Photo1Longitude,
+      Photo2Longitude,
+      Photo3Longitude,
+      Photo4Longitude,
+      Photo5Longitude,
+      Photo6Longitude,
+      Photo1Timestamp,
+      Photo2Timestamp,
+      Photo3Timestamp,
+      Photo4Timestamp,
+      Photo5Timestamp,
+      Photo6Timestamp
     ) VALUES (
       '${data.leadId}',
       '${data.docName}',
@@ -325,20 +362,37 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
       '${photo3}',
       '${photo4}',
       '${photo5}',
-      '${photo5}',
+      '${photo6}',
       '${photoAtt1}',
       '${photoAtt2}',
       '${photoAtt3}',
       '${photoAtt4}',
       '${photoAtt5}',
       '${photoAtt6}',
-      '${'12'}'
+      '${photo1Timestamp}',
+      '${photo2Timestamp}',
+      '${photo3Timestamp}',
+      '${photo4Timestamp}',
+      '${photo5Timestamp}',
+      '${photo6Timestamp}',
+      '${photo1Latitude}',
+      '${photo2Latitude}',
+      '${photo3Latitude}',
+      '${photo4Latitude}',
+      '${photo5Latitude}',
+      '${photo6Latitude}',
+      '${photo1Longitude}',
+      '${photo2Longitude}',
+      '${photo3Longitude}',
+      '${photo4Longitude}',
+      '${photo5Longitude}',
+      '${photo6Longitude}'
     );
   `;
 
- 
-  
-  
+  // console.log(insertUploadDetails);
+
+
   
     db.query(insertUploadDetails, (error, results) => {
       if (error) {
@@ -351,23 +405,23 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
    
   })
 
-  const claimToken = generateUniqueToken();
+  // const claimToken = generateUniqueToken();
 
 
-  const insertTokeDteials = `
-  UPDATE ClaimDetails
-  SET Token='${claimToken}'
-  WHERE LeadId = ${currentLeadId};
-  `
+  // const insertTokeDteials = `
+  // UPDATE ClaimDetails
+  // SET Token='${claimToken}'
+  // WHERE LeadId = ${currentLeadId};
+  // `
   
-  db.query(insertTokeDteials, (error, results) => {
-    if (error) {
-      console.error('Error inserting data into CL Details:', error);
-      return res.status(500).json({ error: 'Error.' });
-    }
-    res.status(200).json({ message: 'Data inserted successfully.' });
+  // db.query(insertTokeDteials, (error, results) => {
+  //   if (error) {
+  //     console.error('Error inserting data into CL Details:', error);
+  //     return res.status(500).json({ error: 'Error.' });
+  //   }
+  //   return res.status(200).json({ message: 'Data inserted successfully.' });
     
-  });
+  // });
 
 
  

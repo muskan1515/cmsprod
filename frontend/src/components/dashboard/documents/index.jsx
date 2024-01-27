@@ -37,10 +37,31 @@ const Index = ({leadId,token,content}) => {
     {name : "Payment/cash receipt"},
   ]
 
+  const location = ()=>{
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+          // You can use the latitude and longitude here as needed
+        },
+        (error) => {
+          console.error("Error getting location:", error.message);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser");
+    }
+  }
 
   useEffect(()=>{
 
-    
+    if(!leadId || !token){
+      setIsNotValidLink(true);
+    }
+
+
+    location();    
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
     axios
     .get("/api/getStatus", {
@@ -106,6 +127,7 @@ const Index = ({leadId,token,content}) => {
     setIsLoading(false);
    
 setCheck(true);
+
    
   
   },[])
@@ -157,11 +179,12 @@ setCheck(false);
       }
     }
 
+    console.log(data);
     // console.log(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length)))
-    if(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 10) || (content && content.length !== data.length))){
-      alert("Please upload all the required data !!!");
-    }
-    else{
+    // if(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 10) || (content && content.length !== data.length))){
+    //   alert("Please upload all the required data !!!");
+    // }
+    // else{
     
      
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -183,7 +206,7 @@ setCheck(false);
   .catch((err)=>{
     // isNotValidLink(true);
   })
-}
+// }
 
  
   }
