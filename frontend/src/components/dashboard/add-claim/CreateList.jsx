@@ -112,9 +112,15 @@ const CreateList = () => {
       !payload.PolicyIssuingOffice ||
       !payload.ClaimNumber ||
       !payload.ClaimServicingOffice ||
+<<<<<<< Updated upstream
       !payload.RegisteredNumber ||
       !payload.InsuredName ||
       !payload.InsuredMailAddress ||
+=======
+      !payload.RegisteredNumber||
+      !payload.InsuredName||
+      !payload.InsuredMailAddress||
+>>>>>>> Stashed changes
       !payload.InsuredMobileNo1
     ) {
       const missingFields = [];
@@ -509,7 +515,11 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
+<<<<<<< Updated upstream
                 Claim Number <span class="text-danger">*</span>
+=======
+                Claim Number  <span class="text-danger">*</span>
+>>>>>>> Stashed changes
               </label>
             </div>
             <div className="col-lg-7">
@@ -567,7 +577,11 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
+<<<<<<< Updated upstream
                 Insured Name <span class="text-danger">*</span>
+=======
+                Insured Name  <span class="text-danger">*</span>
+>>>>>>> Stashed changes
               </label>
             </div>
             <div className="col-lg-7">
@@ -596,7 +610,11 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
+<<<<<<< Updated upstream
                 Insured Mobile No. 1 <span class="text-danger">*</span>
+=======
+                Insured Mobile No. 1  <span class="text-danger">*</span>
+>>>>>>> Stashed changes
               </label>
             </div>
             <div className="col-lg-7">
@@ -659,7 +677,11 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
+<<<<<<< Updated upstream
                 Insured Mail Address <span class="text-danger">*</span>
+=======
+                Insured Mail Address  <span class="text-danger">*</span>
+>>>>>>> Stashed changes
               </label>
             </div>
             <div className="col-lg-7">

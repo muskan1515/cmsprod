@@ -820,7 +820,6 @@ app.get('/getStatus',authenticateUser, (req, res) => {
 
 app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
   const { LeadId,Status,subStage} = req.body;
-  console.log("updateAStatus")
   const sql = 'SELECT * FROM DocumentList WHERE LeadId =?';
   db.query(sql,[LeadId], (err, result) => {
     if (err) {
@@ -848,7 +847,6 @@ app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
       res.status(500).send('Internal Server Error');
       return;
     }
-    
     res.send(result);
   });
    }

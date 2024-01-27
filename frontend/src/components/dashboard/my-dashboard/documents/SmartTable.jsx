@@ -104,18 +104,25 @@ function SmartTable(props) {
   }, props.searchDebounceTime ?? 800);
 
   const sortData = (cell) => {
-    let tempData = [...data];
+    let tempData = data.length > 0 ? [...data] : [...props.data];
 
     tempData.sort((a, b) => {
+      const valueA =
+        typeof a[cell] === "string" ? a[cell].toLowerCase() : a[cell];
+      const valueB =
+        typeof b[cell] === "string" ? b[cell].toLowerCase() : b[cell];
+
       if (sortDesc[cell]) {
-        return a[cell].toLowerCase() < b[cell].toLowerCase() ? 1 : -1;
+        return valueA < valueB ? 1 : -1;
       } else {
-        return a[cell].toLowerCase() > b[cell].toLowerCase() ? 1 : -1;
+        return valueA > valueB ? 1 : -1;
       }
     });
     setSortDesc({ [cell]: !sortDesc[cell] });
+
     setData(tempData);
   };
+
 
   return (
     <div className="col-12">
@@ -185,6 +192,7 @@ function SmartTable(props) {
                     </tr>
                   </thead>
                   <tbody>
+<<<<<<< Updated upstream:frontend/src/components/dashboard/my-dashboard/documents/SmartTable.jsx
                     {props.data.map((row, idx) => {
                       return (
                         <tr key={"tr_" + idx}>
@@ -201,6 +209,48 @@ function SmartTable(props) {
                       );
                     })}
                   </tbody>
+=======
+                  {data.length > 0
+                    ? data.map((row, idx) => {
+                        if (idx >= props.start && idx <= props.end) {
+                          return (
+                            <tr key={"tr_" + idx}>
+                              {props.headCells.map((headCell, idxx) => {
+                                return (
+                                  <td key={"td_" + idx + "_" + idxx}>
+                                    {headCell.render
+                                      ? headCell.render(row)
+                                      : row[headCell.id]}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        } else {
+                          return null; // Skip rendering rows that don't meet the condition
+                        }
+                      })
+                    : props.data.map((row, idx) => {
+                        if (idx >= props.start && idx <= props.end) {
+                          return (
+                            <tr key={"tr_" + idx}>
+                              {props.headCells.map((headCell, idxx) => {
+                                return (
+                                  <td key={"td_" + idx + "_" + idxx}>
+                                    {headCell.render
+                                      ? headCell.render(row)
+                                      : row[headCell.id]}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        } else {
+                          return null; // Skip rendering rows that don't meet the condition
+                        }
+                      })}
+                </tbody>
+>>>>>>> Stashed changes:frontend/src/components/dashboard/my-dashboard/SmartTable.jsx
                 </table>
               </div>
             </div>
