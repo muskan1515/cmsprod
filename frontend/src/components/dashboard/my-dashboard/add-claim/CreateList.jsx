@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { use, useEffect, useReducer } from "react";
 import { useState } from "react";
-import MyDatePicker from "../../common/MyDatePicker";
+import MyDatePicker from "../../../common/MyDatePicker";
 
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState();

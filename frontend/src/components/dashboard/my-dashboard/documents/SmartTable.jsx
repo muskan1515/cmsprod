@@ -192,24 +192,6 @@ function SmartTable(props) {
                     </tr>
                   </thead>
                   <tbody>
-<<<<<<< Updated upstream:frontend/src/components/dashboard/my-dashboard/documents/SmartTable.jsx
-                    {props.data.map((row, idx) => {
-                      return (
-                        <tr key={"tr_" + idx}>
-                          {props.headCells.map((headCell, idxx) => {
-                            return (
-                              <td key={"td_" + idx + "_" + idxx}>
-                                {headCell.render
-                                  ? headCell.render(row)
-                                  : row[headCell.id]}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-=======
                   {data.length > 0
                     ? data.map((row, idx) => {
                         if (idx >= props.start && idx <= props.end) {
@@ -250,7 +232,6 @@ function SmartTable(props) {
                         }
                       })}
                 </tbody>
->>>>>>> Stashed changes:frontend/src/components/dashboard/my-dashboard/SmartTable.jsx
                 </table>
               </div>
             </div>
