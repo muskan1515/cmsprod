@@ -21679,6 +21679,7 @@ input:invalid {
 .modal {
   border-radius: 5px;
   padding: 2rem;
+  top:20%;
   background-color: white;
   width: 25em;
 }

@@ -1,9 +1,11 @@
+import { useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import PropertyVideo from "./PropertyVideo";
 
 const index = ({SomeComponent}) => {
+  const [isEditModal,setIsEditModal] = useState(false);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -45,18 +47,40 @@ const index = ({SomeComponent}) => {
                     </div>
                   </div>
                 </div>
-                {/* End Dashboard Navigation */}
 
-                {/* <div className="col-lg-12 mb10">
-                  <div className="breadcrumb_content style2">
-                    <h2 className="breadcrumb_title">Message</h2>
-                    <p>We are glad to see you again!</p>
+
+                {isEditModal && (
+                  <div className="modal">
+                    <div className="modal-content">
+                      <h3 className="text-center">Quote Confirmation</h3>
+                      <h5 className="text-center">
+                        Are you sure you want to quote this property over this
+                        amount : ?
+                      </h5>
+                      {/* <p>Are you sure you want to delete the property: {property.area}?</p> */}
+                      <div className="text-center" style={{}}>
+                        <button
+                          className="btn w-35 btn-thm3 m-2"
+                          onClick={()=>("")}
+                        >
+                          Submit
+                        </button>
+                        <button
+                          className="btn w-35 btn-white"
+                          onClick={()=>setIsEditModal(true)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div> */}
+                )}
+
+              
               </div>
               {/* End .row */}
               <div className="shop_single_tab_content style2 mt30">
-                <PropertyVideo  SomeComponent={SomeComponent}/>
+                <PropertyVideo  SomeComponent={SomeComponent} setIsEditModal={setIsEditModal}/>
               </div>
 
               {/* <ChatBox /> */}

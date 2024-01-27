@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Table_01 } from "./Table_01";
 import { Modal } from "./Modal";
 
-function Table() {
+function Table({setIsEditModal}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [rows, setRows] = useState([
     {
@@ -53,24 +53,16 @@ function Table() {
         rows={rows}
         deleteRow={handleDeleteRow}
         editRow={handleEditRow}
-<<<<<<< HEAD
-        setModalOpen={setModalOpen}
-=======
->>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
+        setModalOpen={setIsEditModal}
       />
-      <button onClick={() => setModalOpen(true)} className="btn">
+      <button onClick={() => setIsEditModal(true)} className="btn">
         Add
       </button>
       {modalOpen && (
         <Modal
           closeModal={() => {
-<<<<<<< HEAD
             setRowToEdit(null);
-            setModalOpen(false)
-=======
-            setModalOpen(false);
-            setRowToEdit(null);
->>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
+            setIsEditModal(false);
           }}
           onSubmit={handleSubmit}
           defaultValue={rowToEdit !== null && rows[rowToEdit]}
