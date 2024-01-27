@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import HeaderMenuContent from "./HeaderMenuContent";
 import Image from "next/image";
 
-const Header = ({setIsRegionChange, isDashboard}) => {
+const Header = ({setIsRegionChange, isDashboard, setRegionSearchValue}) => {
   const [navbar, setNavbar] = useState(false);
-
   const changeBackground = () => {
     if (window.scrollY >= 95) {
       setNavbar(true);
@@ -46,7 +45,7 @@ const Header = ({setIsRegionChange, isDashboard}) => {
         {/* site logo brand */}
 
         <nav>
-          <HeaderMenuContent setIsRegionChange={setIsRegionChange} isDashboard={isDashboard}/>
+          <HeaderMenuContent setIsRegionChange={setIsRegionChange} isDashboard={isDashboard} setRegionSearchValue ={setRegionSearchValue}/>
         </nav>
         {/* End .navbar */}
       </div>

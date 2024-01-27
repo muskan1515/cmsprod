@@ -4,7 +4,7 @@ import MyAccount from "./MyAccount";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
+const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard,setRegionSearchValue}) => {
   const route = useRouter();
   const [regionValue ,setRegionValue] = useState("");
 
@@ -16,6 +16,7 @@ const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
     }
       localStorage.setItem("regionType",JSON.stringify(val));
       setRegionValue(val);
+      setRegionSearchValue(val)
 
   }
   useEffect(()=>{
@@ -517,7 +518,7 @@ const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
       </li>
       {/* End ."user_setting */}
 
-      {/* <li className={`list-inline-item add_listing ${float}`}>
+      {/* <li className={list-inline-item add_listing ${float}}>
         <Link href="/create-listing">
           <span className="flaticon-plus"></span>
           <span className="dn-lg"> Create Listing</span>

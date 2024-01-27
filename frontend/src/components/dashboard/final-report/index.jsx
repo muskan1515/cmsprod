@@ -4,7 +4,7 @@ import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import PropertyVideo from "./PropertyVideo";
 
-const index = ({SomeComponent}) => {
+const Index = ({SomeComponent}) => {
   const [isEditModal,setIsEditModal] = useState(false);
   return (
     <>
@@ -103,4 +103,4 @@ const index = ({SomeComponent}) => {
   );
 };
 
-export default index;
+export default Index;

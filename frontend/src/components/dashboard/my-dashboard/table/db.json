@@ -1,0 +1,25 @@
+{
+  "students": [
+    {
+      "id": 3,
+      "studentNumber": 3333,
+      "name": "Raginolf Arnulf",
+      "dateOfBirth": "1991-10-12",
+      "major": "Business"
+    },
+    {
+      "id": 4,
+      "studentNumber": 4444,
+      "name": "Marvyn Wendi",
+      "dateOfBirth": "1978-09-24",
+      "major": "Psychology"
+    },
+    {
+      "id": 3219,
+      "studentNumber": 3219,
+      "name": "",
+      "dateOfBirth": "",
+      "major": ""
+    }
+  ]
+}

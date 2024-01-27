@@ -224,7 +224,6 @@ export default function Exemple({
     });
     return index;
   };
-<<<<<<< HEAD
   const location = ()=>{
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -247,14 +246,10 @@ export default function Exemple({
   
   const handleUpload = (result, label, idx) => {
    location();
-=======
-  const handleUpload = (result, label, idx) => {
->>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
     try {
       const fileUrl = result.info.secure_url;
       console.log(uploadedData, label, result);
 
-<<<<<<< HEAD
       const newUploadData = {
         docName: label,
         index: idx,
@@ -270,23 +265,6 @@ export default function Exemple({
         ],
       };
 
-=======
-      console.log(uploadedData, label, result);
-
-      const newUploadData = {
-        docName: label,
-        index: idx,
-        leadId: leadId,
-        data: [
-          {
-            name: result.info.original_filename + "." + result.info.format,
-            thumbnail_url: result.info.thumbnail_url,
-            url: result.info.url,
-          },
-        ],
-      };
-
->>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
       let oldData = uploadedData;
       oldData.push(newUploadData);
       setUpdatedData(oldData);
@@ -384,36 +362,16 @@ export default function Exemple({
                 );
               }
               return null;
-<<<<<<< HEAD
           }),
           
-=======
-            }),
-            file_name: uploadedData.map((file, idx) => {
-              if (file.docName === row.doc_name) {
-                return (
-                  <div
-                    style={{ display: "flex", flexDirection: "column" }}
-                    key={idx}
-                  >
-                    <h4>{file.data[0].name}</h4>
-                  </div>
-                );
-              }
-              return null;
-            }),
->>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
             action: (
               <CldUploadWidget
                 onUpload={(result) =>
                   handleUpload(result, row.doc_name, row.serial_num)
                 }
-<<<<<<< HEAD
                 onOpen={(widget) => {
                   widget.update({ sources: ['camera'] });
                 }}
-=======
->>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
                 uploadPreset="mpbjdclg"
                 options={{
                   cloudName: "dcrq3m6dx", // Your Cloudinary cloud name

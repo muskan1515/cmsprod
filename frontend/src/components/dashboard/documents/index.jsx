@@ -17,7 +17,7 @@ const Index = ({leadId,token,content}) => {
   const [document,setDocument]=useState([]);
   const [uploadedData,setUpdatedData] = useState([]);
 
-  const [isNotValidLink,setIsNotValidLink] = useState(true);
+  const [isNotValidLink,setIsNotValidLink] = useState(false);
   
   const types = [
     {name : "Driving licence"},
@@ -94,6 +94,7 @@ const Index = ({leadId,token,content}) => {
       console.log(err);
     });
 
+    setIsLoading(true)
 
     axios
     .get("/api/getDocumentList", {
@@ -117,14 +118,36 @@ const Index = ({leadId,token,content}) => {
       }
       
      })
+     setIsLoading(false);
      
      setDocument(updatedStatus);
     })
     .catch((err) => {
       console.log(err);
+      setIsLoading(false);
     });
 
-    setIsLoading(false);
+    
+    const payload = {
+      token : token,
+      leadId : leadId
+    }
+    
+    console.log(payload);
+    axios.post("/api/getClaimDetails",payload,{
+      headers:{
+        Authorization:`Bearer ${unserInfo[0].Token}`,
+        "Content-Type":"application/json"
+      }
+    }).then((res)=>{
+      setIsNotValidLink(false);
+      // alert("Successfully found!!");
+    })
+    .catch((Err)=>{
+      // alert(Err)
+    })
+
+   
    
 setCheck(true);
 
@@ -221,7 +244,7 @@ setCheck(false);
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
 
-      {isLoading ? 
+      {isLoading? 
         
         (
           <section className="our-error bgc-f7 mt-2">

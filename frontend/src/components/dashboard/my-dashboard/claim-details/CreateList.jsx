@@ -1,0 +1,811 @@
+import axios from "axios";
+import toast from "react-hot-toast";
+import Link from "next/link";
+
+const CreateList = ({
+  claim,
+  InsuredName,
+  setInsuredName,
+  InsuredMailAddress,
+  setInsuredMailAddress,
+  InsuredMobileNo1,
+  setInsuredMobileNo1,
+  InsuredMobileNo2,
+  setInsuredMobileNo2,
+  requestTypeTypes,
+  setRequestType,
+  requestType,
+  setSubType,
+  subType,
+  ClaimNumber,
+  setClaimNumber,
+  subTypeTypes,
+  edit,
+  setIsStatusModal,
+}) => {
+  const formatDate = (val) => {
+    const date = new Date(val);
+    const formattedDate = date.toLocaleDateString("en-GB");
+    return formattedDate;
+  };
+
+  const statusOptions = [
+    {
+      id : 1,
+      value : "Claim Appointment"
+    },
+    {
+      id : 2,
+      value : "Estimate Approval Pending"
+    },
+    {
+      id : 3,
+      value : "Vehicle Under repair"
+    },
+    {
+      id : 4,
+      value : "Invoice Approval Pending"
+    },
+    {
+      id : 5,
+      value : "Surveyor Report Pending"
+    },
+    {
+      id : 6,
+      value : "Hard Copies Pending"
+    },
+    {
+      id : 7,
+      value : "Soft Copy Completed"
+    },
+    {
+      id : 8,
+      value : "Payment Pending"
+    },
+    {
+      id : 9,
+      value : "Settled Cases"
+    },
+    {
+      id : 10,
+      value : "Withdrawl/Rejected"
+    },
+    {
+      id : 11,
+      value : "More Info Required"
+    },
+    {
+      id : 12,
+      value : "My Claims"
+    },
+  ]
+
+  const checkStatus = (val)=>{
+    let status = "";
+    statusOptions.map((stat,index)=>{
+      if(String(stat.id ) === String(val))
+       status = stat.value;
+    });
+    return status;
+  }
+  
+
+  const sendMailHandler = (vehicleNo, PolicyNo, Insured,mailAddress) => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    const payload = {
+      vehicleNo: vehicleNo,
+      PolicyNo: PolicyNo,
+      Insured: Insured,
+      toMail: mailAddress,
+      leadId:claim?.claimDetails?.LeadId,
+      date: formatDate(new Date()),
+    };
+
+    toast.loading("Sending Acknowledgment Mail!!");
+    axios
+      .post("/api/sendEmail1", payload, {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+        },
+      })
+      .then((res) => {
+        toast.dismiss();
+        toast.success("Successfully sent the mail!");
+      })
+      .catch((err) => {
+        toast.dismiss();
+        toast.error(err);
+      });
+  };
+  const openStatusUpdateHandler = () => {
+    setIsStatusModal(true);
+  };
+  return (
+    <>
+      <div className="row">
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Name <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-6">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={InsuredName ? InsuredName : claim.insuredDetails?.InsuredName}
+                onChange={(e)=>setInsuredName(e.target.value)}
+                disabled={!edit}
+                // placeholder="Enter Registration No."
+              />
+              {/* <button
+                href="#"
+                className="btn btn-color w-50"
+                style={{ marginLeft: "12px" }}
+                onClick={() => openStatusUpdateHandler}
+                title="Update Status"
+              >
+                <Link href="#">
+                  <span className="flaticon-edit text-light"></span>
+                </Link>
+              </button>*/}
+            </div>
+          </div>
+          {/* <div className="my_profile_setting_input form-group">
+          <label htmlFor="propertyTitle">Property Title</label>
+          <input type="text" className="form-control" id="propertyTitle" />
+        </div> */}
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Phone <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  value={InsuredMobileNo1 ? InsuredMobileNo1 : claim.insuredDetails?.InsuredMobileNo1}
+                  onChange={(e)=>setInsuredMobileNo1(e.target.value)}
+                  disabled={!edit}
+                  // placeholder="Enter Registration No."
+                />
+              
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  value={InsuredMobileNo2 ? InsuredMobileNo2 : claim.insuredDetails?.InsuredMobileNo2}
+                  onChange={(e)=>setInsuredMobileNo2(e.target.value)}
+                  disabled={!edit}
+                  // placeholder="Enter Registration No."
+                />
+              
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Email <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-6">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={InsuredMailAddress ? InsuredMailAddress : claim.insuredDetails?.InsuredMailAddress}
+                  onChange={(e)=>setInsuredMailAddress(e.target.value)}
+                  disabled={!edit}
+                // placeholder="Enter Registration No."
+              />
+              <button onClick={()=>sendMailHandler( claim?.vehichleDetails?.VehicleEngineNumber,claim?.claimDetails?.ReferenceNo,claim?.insuredDetails?.InsuredName,claim.insuredDetails?.InsuredMailAddress)}>sendEmail</button>
+            </div>
+            {/* <div className="col-lg-1">
+              {!InsuredMailAddress && (
+                <button
+                  title="Send Mails"
+                  className="btn btn-color flaticon-envelope w60"
+                  // style={{ marginTop: "-1px" }}
+                  onClick={() =>
+                    sendMailHandler(
+                      claim.insuredDetails?.VehicleRegisteredNumber,
+                      claim.insuredDetails?.PolicyNumber,
+                      claim.insuredDetails?.InsuredName
+                    )
+                  }
+                ></button>
+              )}
+            </div> */}
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                LeadID <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={claim.claimDetails?.LeadId}
+
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Registration No. <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-6">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={claim.claimDetails?.ReferenceNo}
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Insurer ClaimID
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber}
+               
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Status <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-6">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={checkStatus(claim?.claimStatus?.ClaimStatus)}
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Survey Type <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <select disabled={!edit} value={!subType ? claim?.SurveyType : subType} onChange={(e)=>setSubType(e.target.value)}>
+                {subTypeTypes.map((sub, index) => {
+                  return (
+                    <option
+                      key={sub.id}
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#1560bd",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                      }}
+                      value={sub.value}
+                    >
+                      {sub.type}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Intimation Date <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-6">
+              <input
+                className="form-control"
+                id="propertyTitle"
+                value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Request Type <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <select disabled={!edit} value={!requestType ? "" : requestType} onChange={(e)=>setRequestType(e.target.value)}>
+                {requestTypeTypes.map((sub, index) => {
+                  return (
+                    <option
+                      key={sub.id}
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#1560bd",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                      }}
+                      value={sub.value}
+                    >
+                      {sub.type}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Endorsement Doc <span class="req-btn">*</span>
+              </label>
+            </div>
+            <div className="col-lg-7">
+              {/*<input
+              type="text"
+              className="form-control"
+              id="propertyTitle"
+              // placeholder="Enter Registration No."
+            />*/}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="col-lg-12">
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Name <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+            
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Phone <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Email <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  LeadID <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Registration No. <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Insurer ClaimID
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Status <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Sub Status <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Intimation Date <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Request Type <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="row mt-1">
+              <div className="col-lg-5 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#1560bd",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Endorsement Doc <span class="req-btn">*</span>
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+    </>
+  );
+};
+
+export default CreateList;
