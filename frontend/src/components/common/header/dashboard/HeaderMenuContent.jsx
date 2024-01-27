@@ -487,7 +487,7 @@ const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
             <option data-tokens="type1" value={""}>Select Region</option>
             <option data-tokens="type1" value={"Chandigarh"}>Chandigarh</option>
             <option data-tokens="Type2" value={"Delhi"}>Delhi</option>
-            <option data-tokens="Type3" value={"Hyderabad"}>Hyderabad</option>
+            <option data-tokens="Type3" value={"Jodhpur"}>Jodhpur</option>
           </select>
         </div>
         {/* <Link

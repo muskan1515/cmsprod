@@ -7,7 +7,10 @@ import Exemple from "./Exemple";
 import Exemple_01 from "./Exemple_01";
 import Summary from "./Summary";
 import Table from "./Table";
+<<<<<<< HEAD
 import EditableTable from "./Editable";
+=======
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -128,8 +131,28 @@ const PropertyVideo = ({ SomeComponent }) => {
         >
           <div className="property_video">
             <div className="thumb">
+<<<<<<< HEAD
               {/* <EditableTable /> */}
               <Table data={materials} />
+=======
+              <Table data={materials} />
+              {/* <Image
+                width={692}
+                height={390}
+                className="pro_img  w100 w-100 cover"
+                src="/assets/images/background/7.jpg"
+                alt="7.jpg"
+              />
+              <div className="overlay_icon">
+                <div
+                  onClick={() => setOpen(true)}
+                  role="button"
+                  className="video_popup_btn red popup-youtube"
+                >
+                  <span className="flaticon-play"></span>
+                </div>
+              </div> */}
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
             </div>
           </div>
         </div>
@@ -152,6 +175,7 @@ const PropertyVideo = ({ SomeComponent }) => {
           <div className="property_video">
             <div className="thumb">
               <Summary />
+<<<<<<< HEAD
             </div>
           </div>
         </div>
@@ -166,6 +190,27 @@ const PropertyVideo = ({ SomeComponent }) => {
             </div>
           </div>
         </div> */}
+=======
+              {/* <Image
+                width={692}
+                height={390}
+                className="pro_img  w100 w-100 cover"
+                src="/assets/images/background/7.jpg"
+                alt="7.jpg"
+              />
+              <div className="overlay_icon">
+                <div
+                  onClick={() => setOpen(true)}
+                  role="button"
+                  className="video_popup_btn red popup-youtube"
+                >
+                  <span className="flaticon-play"></span>
+                </div>
+              </div> */}
+            </div>
+          </div>
+        </div>
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
       </div>
       {/* End .tab-conten */}
     </>

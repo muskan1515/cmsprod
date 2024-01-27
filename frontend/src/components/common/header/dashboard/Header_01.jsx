@@ -41,7 +41,7 @@ const Header = ({region}) => {
             src="/assets/images/header-logo2.png"
             alt="header-logo2.png"
           />
-          <span className="mb-1" style={{fontSize:"25px"}}>Claim Management</span>
+          <span className="mb-1" style={{fontSize:"25px"}}>Claim </span>
         </Link>
         {/* site logo brand */}
 

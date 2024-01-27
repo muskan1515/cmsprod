@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { use, useReducer } from "react";
+import { use, useEffect, useReducer } from "react";
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 
@@ -9,11 +9,13 @@ const CreateList = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumber_01, setPhoneNumber_01] = useState("");
   const router = useRouter();
-
+  //Date
+  const todayDate = new Date();
+  const formattedTodayDate = todayDate.toISOString().split("T")[0];
   const regionType = JSON.parse(localStorage.getItem("regionType"));
 
   const [region, setRegion] = useState(regionType);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(formattedTodayDate);
   const [surveyType, setSurveyType] = useState("");
   const [inspectionType, setInspectionType] = useState("");
   const [policyNumber, setPolicyNumber] = useState("");
@@ -31,7 +33,21 @@ const CreateList = () => {
   const [estimatedLoss, setEstimatedLoss] = useState("");
   const [garageName, setGarageName] = useState("");
   const [garageNumber, setGarageNumber] = useState("");
+  const [garageMailId, setGarageMailId] = useState("");
   const [claimNumber, setClaimNumber] = useState("");
+  const [brokerMailId, setBrokerMailId] = useState("");
+
+  useEffect(() => {
+    // Update policyStartEnd when policyStartDate changes
+    if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+      const oneYearLater = new Date(policyStartDate);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+      
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      setPolicyStartEnd(formattedOneYearLater);
+    } 
+  }, [policyStartDate]);
 
   const generateRegion = (region) => {
     const firstThreeLetters = region.slice(0, 3);
@@ -83,28 +99,44 @@ const CreateList = () => {
       NatureOfLoss: natureOfLoss,
       EstimatedLoss: estimatedLoss,
     };
-    if (!isValidEmail(payload.InsuredMailAddress)){
+    if (!isValidEmail(payload.InsuredMailAddress)) {
       alert("Please provide a valid email address !!");
-      return ;   
+      return;
     }
 
     if (
       !payload.Region ||
-      !payload.SurveyType ||
       !payload.InspectionType ||
       !date ||
       !payload.PolicyNumber ||
       !payload.PolicyIssuingOffice ||
       !payload.ClaimNumber ||
       !payload.ClaimServicingOffice ||
-      !payload.RegisteredNumber||
-      !payload.InsuredName||
-      !payload.InsuredMailAddress||
+      !payload.RegisteredNumber ||
+      !payload.InsuredName ||
+      !payload.InsuredMailAddress ||
       !payload.InsuredMobileNo1
     ) {
+      const missingFields = [];
+
+      // Check each field and push the name to the array if it's missing
+      if (!payload.Region) missingFields.push("Region");
+      if (!payload.InspectionType) missingFields.push("InspectionType");
+      if (!date) missingFields.push("Date");
+      if (!payload.PolicyNumber) missingFields.push("PolicyNumber");
+      if (!payload.PolicyIssuingOffice) missingFields.push("PolicyIssuingOffice");
+      if (!payload.ClaimNumber) missingFields.push("ClaimNumber");
+      if (!payload.ClaimServicingOffice) missingFields.push("ClaimServicingOffice");
+      if (!payload.RegisteredNumber) missingFields.push("RegisteredNumber");
+      if (!payload.InsuredName) missingFields.push("InsuredName");
+      if (!payload.InsuredMailAddress) missingFields.push("InsuredMailAddress");
+      if (!payload.InsuredMobileNo1) missingFields.push("InsuredMobileNo1");
+    
+      // Log the missing fields
+      console.log("Missing fields:", missingFields);
+    
       alert("Fill all the marked fields please");
     } else {
-      
       axios
         .post("/api/addClaim", payload, {
           headers: {
@@ -121,8 +153,6 @@ const CreateList = () => {
         });
     }
   };
-
-
 
   const handleInputChange_01 = (e) => {
     const inputValue = e.target.value;
@@ -188,14 +218,14 @@ const CreateList = () => {
                   onChange={(e) => setRegion(e.target.value)}
                 >
                   <option data-tokens="Status1">Select Region</option>
-                  <option data-tokens="Status1" value={"Hyderabad"}>
-                    Hyderabad
+                  <option data-tokens="Status1" value={"Chandigarh"}>
+                    Chandigarh
                   </option>
                   <option data-tokens="Status2" value={"Delhi"}>
                     Delhi
                   </option>
-                  <option data-tokens="Status3" value={"Chandigarh"}>
-                    Chandigarh
+                  <option data-tokens="Status3" value={"Jodhpur"}>
+                    Jodhpur
                   </option>
                 </select>
               )}
@@ -203,7 +233,7 @@ const CreateList = () => {
           </div>
         </div>
 
-        <div className="col-lg-4">
+        {/* <div className="col-lg-4">
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
@@ -245,8 +275,35 @@ const CreateList = () => {
               </select>
             </div>
           </div>
+        </div> */}
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Broker Mail Id
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="broker_mail_id"
+                value={brokerMailId}
+                onChange={(e) => setBrokerMailId(e.target.value)}
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
         </div>
-
         <div className="col-lg-4">
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
@@ -278,10 +335,10 @@ const CreateList = () => {
                   Spot
                 </option>
                 <option data-tokens="Status2" value={"final"}>
-                  final
+                  Final
                 </option>
                 <option data-tokens="Status3" value={"re-inspection"}>
-                  re-inspection
+                  Pre-inspection
                 </option>
               </select>
             </div>
@@ -452,7 +509,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Number  <span class="text-danger">*</span>
+                Claim Number <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -510,7 +567,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Name  <span class="text-danger">*</span>
+                Insured Name <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -539,7 +596,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Mobile No. 1  <span class="text-danger">*</span>
+                Insured Mobile No. 1 <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -602,7 +659,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Mail Address  <span class="text-danger">*</span>
+                Insured Mail Address <span class="text-danger">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -734,6 +791,34 @@ const CreateList = () => {
           </div>
         </div>
 
+        <div className="col-lg-4">
+          <div className="row mt-1">
+            <div className="col-lg-5 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#2e008b",
+                  fontWeight: "",
+                  // marginTop: "-13px",
+                }}
+              >
+                Garage Mail id
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="garageMailId"
+                value={garageMailId}
+                onChange={(e) => setGarageMailId(e.target.value)}
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
         <div className="col-lg-4">
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">

@@ -11,8 +11,8 @@ const MyDatePicker = () => {
       selected={selectedDate}
       onChange={(date) => setSelectedDate(date)}
       showYearDropdown
-      dateFormat="MM/dd/yyyy"
-      placeholderText="MM/DD/YYYY"
+      dateFormat="dd/MM/yyyy"
+      // placeholderText="MM/DD/YYYY"
       popperPlacement="bottom-end"
       popperModifiers={{
         flip: {

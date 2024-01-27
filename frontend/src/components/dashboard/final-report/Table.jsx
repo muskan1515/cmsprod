@@ -53,7 +53,10 @@ function Table() {
         rows={rows}
         deleteRow={handleDeleteRow}
         editRow={handleEditRow}
+<<<<<<< HEAD
         setModalOpen={setModalOpen}
+=======
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
       />
       <button onClick={() => setModalOpen(true)} className="btn">
         Add
@@ -61,8 +64,13 @@ function Table() {
       {modalOpen && (
         <Modal
           closeModal={() => {
+<<<<<<< HEAD
             setRowToEdit(null);
             setModalOpen(false)
+=======
+            setModalOpen(false);
+            setRowToEdit(null);
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
           }}
           onSubmit={handleSubmit}
           defaultValue={rowToEdit !== null && rows[rowToEdit]}

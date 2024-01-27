@@ -4,11 +4,15 @@ import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 
 // import "./Table.css";
 
+<<<<<<< HEAD
 export const Table_01 = ({ rows, deleteRow, editRow , setModalOpen}) => {
   const editrowHandler = (idx)=>{
     editRow(idx);
     setModalOpen(true);
   }
+=======
+export const Table_01 = ({ rows, deleteRow, editRow }) => {
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
   return (
     <div className="table-wrapper">
       <table className="table">
@@ -61,7 +65,11 @@ export const Table_01 = ({ rows, deleteRow, editRow , setModalOpen}) => {
                     />
                     <BsFillPencilFill
                       className="edit-btn"
+<<<<<<< HEAD
                       onClick={() => editrowHandler(idx)}
+=======
+                      onClick={() => editRow(idx)}
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
                     />
                   </span>
                 </td>

@@ -3,7 +3,10 @@ import React, { useState } from "react";
 // import "./Modal.css";
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
+<<<<<<< HEAD
   console.log("mmodal");
+=======
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
   const [formState, setFormState] = useState(
     defaultValue || {
       page: "",
@@ -45,13 +48,20 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
   return (
     <div
+<<<<<<< HEAD
       className="modal-container" style={{}}
+=======
+      className="modal-container"
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
       onClick={(e) => {
         if (e.target.className === "modal-container") closeModal();
       }}
     >
       <div className="modal">
+<<<<<<< HEAD
       <h1>hello</h1>
+=======
+>>>>>>> e7ba3c542ab29145348e485beeeecbd1ad55ff36
         <form>
           <div className="form-group">
             <label htmlFor="page">Page</label>
