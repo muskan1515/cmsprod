@@ -405,23 +405,23 @@ app.post('/uploadDocument', authenticateUser, (req, res) => {
    
   })
 
-  // const claimToken = generateUniqueToken();
+  const claimToken = generateUniqueToken();
 
 
-  // const insertTokeDteials = `
-  // UPDATE ClaimDetails
-  // SET Token='${claimToken}'
-  // WHERE LeadId = ${currentLeadId};
-  // `
+  const insertTokeDteials = `
+  UPDATE ClaimDetails
+  SET Token='${claimToken}'
+  WHERE LeadId = ${currentLeadId};
+  `
   
-  // db.query(insertTokeDteials, (error, results) => {
-  //   if (error) {
-  //     console.error('Error inserting data into CL Details:', error);
-  //     return res.status(500).json({ error: 'Error.' });
-  //   }
-  //   return res.status(200).json({ message: 'Data inserted successfully.' });
+  db.query(insertTokeDteials, (error, results) => {
+    if (error) {
+      console.error('Error inserting data into CL Details:', error);
+      return res.status(500).json({ error: 'Error.' });
+    }
+    return res.status(200).json({ message: 'Data inserted successfully.' });
     
-  // });
+  });
 
 
  
