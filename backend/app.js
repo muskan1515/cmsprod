@@ -18,9 +18,11 @@ const contentFunc = require("./Config/getEmailContent");
 const emailHandler = require('./Config/getEmailContent');
 const { default: axios } = require('axios');
 const generateUniqueToken = require('./Config/generateToken');
+const upload = require('./Middleware/fileHalper');
 const dotenv = require("dotenv").config();
 
 const app = express();
+
 
 app.use(express.json());
 const port = 3006;
@@ -259,7 +261,7 @@ app.post('/vehicle-details', authenticateUser, (req, res) => {
   });
 });
 
-app.post('/uploadDocument', (req, res) => {
+app.post('/uploadDocument', upload.single('file'), (req, res) => {
   const {data,leadId} = req.body;
 
   const array = data;

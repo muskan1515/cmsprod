@@ -1,11 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import SmartTable from "./SmartTable";
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import { forEach } from "jszip";
 import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
+import Modal from "react-modal";
+import Webcam from "react-webcam";
 
 const headCells = [
   // {
@@ -200,7 +202,7 @@ const data = [
   },
 ];
 
-export default function Exemple({
+export default function DocumentUpload({
   setUpdatedData,
   uploadedData,
   leadId,
@@ -244,13 +246,96 @@ export default function Exemple({
 
   location();
 
-  useEffect(() => {
-    // Suggest to the browser that it shouldn't allow user scaling (zooming)
-    const viewportMeta = window.document.querySelector('meta[name="viewport"]');
-    if (viewportMeta) {
-      viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+  // Webcam logic here
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [img, setImg] = useState(null);
+  const webcamRef = React.useRef(null);
+  const capture = React.useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    console.log("imgg", imageSrc);
+    setImg(imageSrc);
+  }, [webcamRef]);
+
+  //Model Hanadle
+  function openModal() {
+    setCapturedImage(null);
+    setCapturedVideo(null);
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const customStyles = {
+    content: {
+      width: "70%",
+      height: "60%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: "user",
+  };
+  const [capturedImage, setCapturedImage] = useState([]);
+  const [capturedVideo, setCapturedVideo] = useState([]);
+  const [isCapturingVideo, setIsCapturingVideo] = useState(false);
+  const [modalDocName, setModalDocName] = useState("");
+  const [capturedMedia, setCapturedMedia] = useState({});
+
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
+
+  const captureImage = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    // setCapturedMedia((prev) => ({ ...prev, [field]: { image: imageSrc } }));
+    setCapturedImage(imageSrc);
+  };
+
+  const toggleCaptureVideo = () => {
+    if (!isCapturingVideo) {
+      // Start capturing video
+      setIsCapturingVideo(true);
+      setCapturedVideo(null);
+      chunksRef.current = []; // Reset chunks
+      const videoConstraints = {
+        width: 1280,
+        height: 720,
+        facingMode: "user", // or 'environment' for rear camera
+      };
+
+      const mediaRecorder = new MediaRecorder(webcamRef.current.stream);
+      console.log("MEdia", mediaRecorder);
+      mediaRecorderRef.current = mediaRecorder;
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: "video/webm" });
+        console.log("Blob", blob);
+        const videoUrl = URL.createObjectURL(blob);
+        setCapturedVideo(videoUrl);
+        setIsCapturingVideo(false);
+      };
+
+      mediaRecorder.start();
+    } else {
+      // Stop capturing video
+      mediaRecorderRef.current.stop();
     }
-  }, []);
+  };
 
   const handleUpload = (result, label, idx) => {
     location();
@@ -371,39 +456,24 @@ export default function Exemple({
             }),
 
             action: (
-              <CldUploadWidget
-                onUpload={(result) =>
-                  handleUpload(result, row.doc_name, row.serial_num)
-                }
-                // onOpen={(widget) => {
-                //   // widget.update({ sources: ['camera'] });
-                //   widget.update({ sources: ["camera"] });
-                // }}
-                uploadPreset="mpbjdclg"
-                options={{
-                  cloudName: "dcrq3m6dx", // Your Cloudinary cloud name
-                  allowedFormats: ["jpg", "png","mp4"], // Specify allowed formats
-                  maxFiles: 50,
-                }}
-              >
-                {({ open }) => (
-                  <div className="">
-                    <button
-                      className="btn btn-color w-100"
-                      style={{}}
-                      onClick={() => open()}
-                      title="Upload File"
-                    >
-                      <span className="">
-                        {" "}
-                        <FaUpload />
-                      </span>
-                    </button>
-                  </div>
-                )}
-              </CldUploadWidget>
+              <div>
+                <div className="">
+                  <button
+                    className="btn btn-color w-100"
+                    style={{}}
+                    onClick={openModal}
+                    title="Upload File"
+                  >
+                    <span className="">
+                      {" "}
+                      <FaUpload />
+                    </span>
+                  </button>
+                </div>
+              </div>
             ),
           };
+
           tempData.push(updatedRow);
         }
       });
@@ -422,10 +492,56 @@ export default function Exemple({
   console.log(uploadedData);
 
   return (
-    <SmartTable
-      title="Documents Upload"
-      data={updatedCode}
-      headCells={headCells}
-    />
+    <>
+      <SmartTable
+        title="Documents Upload"
+        data={updatedCode}
+        headCells={headCells}
+      />
+
+      <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <button onClick={closeModal}>close</button>
+        <Webcam
+          audio={false}
+          height={720}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width={1280}
+          videoConstraints={videoConstraints}
+        />
+        <button onClick={captureImage}>Capture Image</button>
+        <button onClick={toggleCaptureVideo}>
+          {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
+        </button>
+
+        {capturedImage && (
+          <div>
+            <h2>Captured Image:</h2>
+            <Image
+              src={capturedImage}
+              alt="Captured Image"
+              width={300}
+              height={200}
+            />
+          </div>
+        )}
+
+        {capturedVideo && (
+          <div>
+            <h2>Captured Video:</h2>
+            <video width="300" height="200" controls>
+              <source src={capturedVideo} type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
+      </Modal>
+    </>
   );
 }

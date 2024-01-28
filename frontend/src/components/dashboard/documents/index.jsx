@@ -4,6 +4,7 @@ import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/DefaultHeader";
 import MobileMenu from "../../common/header/MobileMenu";
 import Exemple from "./Exemple";
+import DocumentUpload from "./DocumentUpload"
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -275,14 +276,28 @@ setCheck(false);
           <div className="row">
             <div className="col-lg-12 text-center">
               {/* <ErrorPageContent /> */}
-              <Exemple  
+              {/* <Exemple  
               setUpdatedData={setUpdatedData} 
               uploadedData={uploadedData} 
               leadId={leadId} 
               status={status}
               content={content}
-              document={document}/>
+              document={document}
+              /> 
+              */}
+
+              <DocumentUpload
+               setUpdatedData={setUpdatedData} 
+               uploadedData={uploadedData} 
+               leadId={leadId} 
+               status={status}
+               content={content}
+               document={document}
+              
+              />
+              
               <button className="btn btn-color" onClick={onSubmitHandler}>Submit</button>
+
             </div>
           </div>
         </div>
