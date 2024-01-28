@@ -259,7 +259,7 @@ app.post('/vehicle-details', authenticateUser, (req, res) => {
   });
 });
 
-app.post('/uploadDocument', authenticateUser, (req, res) => {
+app.post('/uploadDocument', (req, res) => {
   const {data,leadId} = req.body;
 
   const array = data;
@@ -465,7 +465,7 @@ app.post("/login",(req,res)=>{
 
 })
 
-app.get('/getDocuments',authenticateUser, (req, res) => {
+app.get('/getDocuments', (req, res) => {
  
   const LeadId = req.query.LeadId;
   console.log("get",LeadId);
@@ -805,7 +805,7 @@ app.get('/getAllClaims',authenticateUser, (req, res) => {
   });
 });
 
-app.get('/getStatus',authenticateUser, (req, res) => {
+app.get('/getStatus', (req, res) => {
   const leadId = req.query.LeadId;
   const sql = "SELECT * FROM ClaimStatus";
   db.query(sql, (err, result) => {

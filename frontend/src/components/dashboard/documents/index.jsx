@@ -66,7 +66,7 @@ const Index = ({leadId,token,content}) => {
     axios
     .get("/api/getStatus", {
       headers: {
-        Authorization: `Bearer ${unserInfo[0].Token}`,
+        Authorization: `Bearer ${""}`,
         "Content-Type": "application/json",
       },
       params:{
@@ -99,7 +99,7 @@ const Index = ({leadId,token,content}) => {
     axios
     .get("/api/getDocumentList", {
       headers: {
-        Authorization: `Bearer ${unserInfo[0].Token}`,
+        Authorization: `Bearer ${""}`,
         "Content-Type": "application/json",
       },
       params:{
@@ -136,7 +136,7 @@ const Index = ({leadId,token,content}) => {
     console.log(payload);
     axios.post("/api/getClaimDetails",payload,{
       headers:{
-        Authorization:`Bearer ${unserInfo[0].Token}`,
+        Authorization:`Bearer ${""}`,
         "Content-Type":"application/json"
       }
     }).then((res)=>{
@@ -168,7 +168,7 @@ const payload = {
 console.log(payload);
 axios.post("/api/getClaimDetails",payload,{
   headers:{
-    Authorization:`Bearer ${unserInfo[0].Token}`,
+    Authorization:`Bearer ${""}`,
     "Content-Type":"application/json"
   }
 }).then((res)=>{
@@ -217,7 +217,7 @@ setCheck(false);
     toast.loading("Uploading!")
     axios.post("/api/uploadDocument",payload,{
       headers: {
-      'Authorization':`Bearer ${unserInfo[0].Token}`,
+      'Authorization':`Bearer ${""}`,
       'Content-Type': 'application/json',
     },
   })
