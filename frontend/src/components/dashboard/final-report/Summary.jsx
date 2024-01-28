@@ -5,7 +5,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Editor } from "primereact/editor";
 
-
 const Summary = ({}) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -74,7 +73,7 @@ const Summary = ({}) => {
           <div className="row">
             <div className="col-lg-12">
               <h4>Original Estimate :</h4>
-              <hr />
+              {/* <hr /> */}
             </div>
             <div className="col-lg-12">
               <div className="row mt-1 mb-1">
@@ -87,7 +86,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Cost of Parts
+                    Total Labour
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -135,7 +134,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Cost of Parts
+                    Total Estimate
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -159,7 +158,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Cost of Parts
+                    Estimate Date
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -175,13 +174,137 @@ const Summary = ({}) => {
           </div>
           <hr />
         </div>
-        <div className="col-lg-4" style={{ borderRight: "1px solid black" }}>
+        <div className="col-lg-5" style={{ borderRight: "1px solid black" }}>
+          <div className="row">
+            <div className="col-lg-12">
+              <h4>Assessed Value :</h4>
+              {/* <hr /> */}
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Total Labour
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Total Cost of Parts
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Total
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Less Excess
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Less Imposed
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-lg-8">
-              <h4>Assessed Value :</h4>
-              <hr />
-            </div>
-            <div className="col-lg-6">
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
@@ -192,7 +315,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Cost of Parts
+                    Other
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -205,7 +328,7 @@ const Summary = ({}) => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-4">
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
@@ -216,7 +339,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Cost of Parts
+                    Other
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -229,7 +352,13 @@ const Summary = ({}) => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6">
+          </div>
+          <div className="row">
+            <div className="col-lg-12">
+              <h4>Savage & Depreciation</h4>
+              {/* <hr /> */}
+            </div>
+            <div className="col-lg-4">
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
@@ -240,7 +369,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Cost of Parts
+                    Total Labour
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -253,7 +382,7 @@ const Summary = ({}) => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-4">
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
@@ -280,11 +409,11 @@ const Summary = ({}) => {
           </div>
           <hr />
         </div>
-        <div className="col-lg-6">
+        <div className="col-lg-5">
           <div className="row">
             <div className="col-lg-8">
               <h4>Notes :</h4>
-              <hr />
+              {/* <hr /> */}
             </div>
             <div className="col-lg-12">
               <div className="row mt-1 mb-1">
@@ -293,6 +422,114 @@ const Summary = ({}) => {
                   <div className="card">
                     <Editor />
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-8">
+              <h5>Enclosure Remarks & Other Details </h5>
+              {/* <hr /> */}
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group"></div>
+                <div className="col-lg-12">
+                  <textarea name="" id="" cols="67" rows="3"></textarea>
+                  {/* <div className="card">
+                    <Editor />
+                  </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-8">
+              <h5>Note Of Self : </h5>
+              {/* <hr /> */}
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group"></div>
+                <div className="col-lg-12">
+                  <textarea name="" id="" cols="67" rows="3"></textarea>
+                  {/* <div className="card">
+                    <Editor />
+                  </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Total Labour
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Total Cost of Parts
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Total Cost of Parts
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
                 </div>
               </div>
             </div>

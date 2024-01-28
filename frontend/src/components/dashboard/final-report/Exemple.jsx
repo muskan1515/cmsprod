@@ -80,12 +80,12 @@ const headCells = [
   //   label: "Request Type",
   //   width: 100,
   // },
-  // {
-  //   id: "serial",
-  //   numeric: false,
-  //   label: "Insurer Claim ID.",
-  //   width: 100,
-  // },
+  {
+    id: "action",
+    numeric: false,
+    label: "Action",
+    width: 100,
+  },
 ];
 
 const data = [
@@ -180,6 +180,7 @@ const data = [
         style={{ border: "1px solid black" }}
       />
     ),
+    action:<span className="flaticon-edit"></span>
   },
 ];
 

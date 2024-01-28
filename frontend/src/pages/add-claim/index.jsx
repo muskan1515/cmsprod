@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/seo";
-import AddClaim from "../../components/dashboard/my-dashboard/add-claim";
+import AddClaim from "../../components/dashboard/add-claim";
 
 const index = () => {
   return (

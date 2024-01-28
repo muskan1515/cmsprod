@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-const EditableTable = () => {
-  const [data, setData] = useState([
-    { id: 1, name: "John Doe", age: 25 },
-    { id: 2, name: "Jane Doe", age: 30 },
-    // Add more data as needed
-  ]);
+const EditableTable = ({data,setData}) => {
+  
+
+  const [hsh,setHsh] = useState("");
+  const [estimate,setEstimate]=useState(0);
+  const [assessed,setAssessed] = useState(0);
 
   const [editIndex, setEditIndex] = useState(null);
 
@@ -57,6 +57,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "name", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.name
@@ -70,6 +71,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "age", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.age
@@ -84,6 +86,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "name", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.name
@@ -97,6 +100,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "name", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.age
@@ -110,6 +114,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "age", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.name
@@ -124,6 +129,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "age", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.age
@@ -138,6 +144,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "name", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.name
@@ -151,6 +158,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "age", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.age
@@ -164,6 +172,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "name", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.name
@@ -177,6 +186,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "age", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.age
@@ -190,6 +200,7 @@ const EditableTable = () => {
                       onChange={(e) =>
                         handleInputChange(index, "name", e.target.value)
                       }
+                      disabled={editIndex === index ? false : true}
                     />
                   ) : (
                     row.name

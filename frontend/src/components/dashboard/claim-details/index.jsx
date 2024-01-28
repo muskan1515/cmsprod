@@ -600,62 +600,23 @@ const Index = ({}) => {
                 </div> */}
                 {/* End .col */}
 
-                {claim.length ===0 ?
+                {claim.length === 0 ? (
                   <div className="row">
-              <div
-                className="smartTable-noDataFound col-12"
-                style={{ marginTop: "110px", marginBottom: "40px" }}
-              >
-                <div className="ring">
-                  Loading
-                  <span className="load"></span>
-                </div>
-              </div>
-            </div>
-            :
-            <div className="row">
-                  <div className="col-lg-9">
-                    <div className="">
-                      <div className="my_dashboard_review mb-2">
-                        <div className="col-lg-12">
-                          <div className="row">
-                            <h4 className="">
-                              CASE DETAILS
-                              {editCase ? (
-                                <button
-                                  className="btn-thm m-1"
-                                  style={{}}
-                                  onClick={() => onSaveHandler()}
-                                >
-                                  Save
-                                </button>
-                              ) : (
-                                <button
-                                  className="btn-thm m-1"
-                                  style={{}}
-                                  onClick={() => editHandler(1)}
-                                >
-                                  <span
-                                    className="flaticon-edit"
-                                    style={{ fontSize: "14px" }}
-                                  ></span>
-                                </button>
-                              )}
-                            </h4>
-                          </div>
-                        </div>
-                        <div
-                          className=" bg-dark"
-                          style={{
-                            width: "100%",
-                            height: "3px",
-                            color: "blue",
-                            border: "1px solid",
-                            marginBottom: "5px",
-                          }}
-                        ></div>
-                        {!editCase ? (
-                          <>
+                    <div
+                      className="smartTable-noDataFound col-12"
+                      style={{ marginTop: "110px", marginBottom: "40px" }}
+                    >
+                      <div className="ring">
+                        Loading
+                        <span className="load"></span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="row">
+                    <div className="col-lg-9">
+                      <div className="">
+                        <div className="my_dashboard_review mb-2">
                           <div className="col-lg-12">
                             <div className="row">
                               <h4 className="">
@@ -693,7 +654,6 @@ const Index = ({}) => {
                               marginBottom: "5px",
                             }}
                           ></div>
-                          </>) : ""}
                           {!editCase ? (
                             <div className="col-lg-12">
                               <CreateList_02
@@ -1105,7 +1065,7 @@ const Index = ({}) => {
                       </div>
                     </div>
                   </div>
-            }
+                )}
               </div>
               {/* End .row */}
 

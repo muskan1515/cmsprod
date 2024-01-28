@@ -3,7 +3,6 @@ import React, { useState } from "react";
 // import "./Modal.css";
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
-  console.log("mmodal");
   const [formState, setFormState] = useState(
     defaultValue || {
       page: "",
@@ -45,7 +44,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
   return (
     <div
-      className="modal-container" style={{}}
+      className="modal-container"
       onClick={(e) => {
         if (e.target.className === "modal-container") closeModal();
       }}

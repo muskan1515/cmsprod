@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import HeaderMenuContent from "./HeaderMenuContent";
 import Image from "next/image";
 
-const Header = ({setIsRegionChange, isDashboard}) => {
+const Header = () => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -27,7 +27,7 @@ const Header = ({setIsRegionChange, isDashboard}) => {
       <div className="container-fluid p0">
         {/* <!-- Menu Toggle btn--> */}
         <Link href="/" className="navbar_brand float-start dn-smd">
-          <Image
+          {/* <Image
             width={40}
             height={45}
             className="logo1 img-fluid"
@@ -40,13 +40,13 @@ const Header = ({setIsRegionChange, isDashboard}) => {
             className="logo2 img-fluid"
             src="/assets/images/header-logo2.png"
             alt="header-logo2.png"
-          />
-          <span className="mb-1" style={{fontSize:"25px"}}>Claim Management</span>
+          /> */}
+          <span>Claim Management</span>
         </Link>
         {/* site logo brand */}
 
         <nav>
-          <HeaderMenuContent setIsRegionChange={setIsRegionChange} isDashboard={isDashboard}/>
+          <HeaderMenuContent />
         </nav>
         {/* End .navbar */}
       </div>

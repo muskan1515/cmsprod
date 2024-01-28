@@ -20,7 +20,7 @@ const materials = [
   { qty: "", desc: "", price: "" },
 ];
 
-const PropertyVideo = ({ SomeComponent ,setIsEditModal}) => {
+const PropertyVideo = ({ SomeComponent }) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
@@ -128,23 +128,9 @@ const PropertyVideo = ({ SomeComponent ,setIsEditModal}) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <Table data={materials}  setIsEditModal={setIsEditModal}/>
-              {/* <Image
-                width={692}
-                height={390}
-                className="pro_img  w100 w-100 cover"
-                src="/assets/images/background/7.jpg"
-                alt="7.jpg"
-              />
-              <div className="overlay_icon">
-                <div
-                  onClick={() => setOpen(true)}
-                  role="button"
-                  className="video_popup_btn red popup-youtube"
-                >
-                  <span className="flaticon-play"></span>
-                </div>
-              </div> */}
+              {/* <EditableTable /> */}
+              {/* <Table data={materials} /> */}
+              <Exemple_01 />
             </div>
           </div>
         </div>
@@ -167,25 +153,20 @@ const PropertyVideo = ({ SomeComponent ,setIsEditModal}) => {
           <div className="property_video">
             <div className="thumb">
               <Summary />
-              {/* <Image
-                width={692}
-                height={390}
-                className="pro_img  w100 w-100 cover"
-                src="/assets/images/background/7.jpg"
-                alt="7.jpg"
-              />
-              <div className="overlay_icon">
-                <div
-                  onClick={() => setOpen(true)}
-                  role="button"
-                  className="video_popup_btn red popup-youtube"
-                >
-                  <span className="flaticon-play"></span>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
+        {/* <div
+          className="tab-pane fade row pl15 pl0-1199 pr15 pr0-1199"
+          id="table"
+          role="tabpanel"
+        >
+          <div className="property_video">
+            <div className="thumb">
+              <Table data={materials} />
+            </div>
+          </div>
+        </div> */}
       </div>
       {/* End .tab-conten */}
     </>
