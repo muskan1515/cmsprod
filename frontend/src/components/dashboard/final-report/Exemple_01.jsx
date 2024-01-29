@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SmartTable_01 from "./SmartTable_01";
 import { useEffect, useState } from "react";
+import { all } from "axios";
 
 const headCells = [
   {
@@ -47,119 +48,39 @@ const headCells = [
     label: "GST%",
     width: 100,
   },
+  
   {
-    id: "action",
+    id: "total",
     numeric: false,
-    label: "Action",
+    label: "Total Value",
     width: 100,
   },
-];
-
-const data = [
   {
-    _id: "6144145976c7fe",
-    sno: "1",
-    dep: "0",
-    description: (
-      <select
-        style={{ marginTop: "-5px" }}
-        className="selectpicker form-select"
-        data-live-search="true"
-        data-width="100%"
-      >
-        <option data-tokens="Status1">Regular</option>
-        <option data-tokens="Status2">Add on Policy</option>
-        <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-      </select>
-    ),
-    sac: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    remark: (
-      <select
-        style={{ marginTop: "-5px" }}
-        className="selectpicker form-select"
-        data-live-search="true"
-        data-width="100%"
-      >
-        <option data-tokens="Status1">Regular</option>
-        <option data-tokens="Status2">Add on Policy</option>
-        <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-      </select>
-    ),
-    estimate: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    assessed: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    qe_qa: "01-02",
-    bill_sr: "1",
-    gst: (
-      <div className="row">
-        <div className="col-lg-12 text-center">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            required
-            id="terms"
-            style={{ border: "1px solid black" }}
-          />
-        </div>
-      </div>
-    ),
-    total: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    type: "Plastic",
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    action: <span className="flaticon-edit"></span>,
-  },
+    id: "type",
+    numeric: false,
+    label: "Type",
+    width: 100,
+  }
 ];
 
 export default function Exemple_01() {
   const [updatedCode,setUpdatedCode]=useState([]);
+
+  // const []
   const [change,setChange]=useState(false);
   const [editIndex,setEditIndex] = useState(-1);
   const [openSave,setOpenSave]=useState(false);
+  const [description,setDescription]=useState("Regular");
+  const [sac,setSac]=useState(0)
+  const [estimate,setEstimate]=useState(0);
+  const [assessed,setAssessed]=useState(0);
+  const [type,setType]=useState("");
+  const [remark,setRemark]=useState("");
+  const [gst,setGst]=useState(0);
+
+  const [edit,setEdit]=useState(false);
+
+
   const [allRows,setAllRows] = useState([
     {
       _id: 1,
@@ -168,24 +89,45 @@ export default function Exemple_01() {
       description:"",
       sac:"",
       remark: "",
-      estimate:0,
-      assessed: 0,
+      estimate:"",
+      assessed: "",
       qe_qa: "01-02",
       bill_sr: 1,
-      gst:0,
-      total:0,
+      gst:"",
+      total:"",
       type: ""
     },
   ]);
 
   const openEditHandler = (idx)=>{
-    console.log(idx);
+    // console.log(idx);
 
+    const tempIdx = allRows[idx];
+    setSac(tempIdx.sac);
+    setDescription(tempIdx.description);
+    setAssessed(tempIdx.assessed);
+    setEstimate(tempIdx.estimate);
+    setGst(tempIdx.gst);
     setEditIndex(idx);
+    setChange(true)
     setOpenSave(true);
   }
 
+  const totalValue = ()=>{
+    return gst + assessed;
+  }
+
+  console.log(editIndex,openSave)
+
   const saveHandler = ()=>{
+
+    setSac("");
+    setDescription("");
+    setAssessed(0);
+    setEstimate(0);
+    setGst(0);
+    setEditIndex(-1);
+    setChange(true)
     setOpenSave(false);
   }
   const handleAddRow = () => {
@@ -198,8 +140,8 @@ export default function Exemple_01() {
       description:"",
       sac:"",
       remark: "",
-      estimate:0,
-      assessed:0,
+      estimate:"",
+      assessed:"",
       qe_qa: "01-02",
       bill_sr:allRows.length, // Assuming bill_sr increments with each new row
       gst:0,
@@ -216,10 +158,56 @@ export default function Exemple_01() {
     setAllRows(old);
   };
 
+  const editHandler = ()=>{
+    setEdit(true);
+  }
+
+  const updateHandler = ()=>{
+    setEdit(false);
+  }
+
   const handleChange = (index,val,field)=>{
+    console.log(index,val,field);
+    
     let oldRow = allRows;
-    allRows[index].field = val;
-    console.log(oldRow);
+    const currentField = allRows[index];
+    const len = val.length;
+   
+    const dep = String(field) === "dep" ? String(currentField.dep) === val ?  val.slice(-1,1) : val : currentField.dep;
+    const description = String(field) === "description" ?  String(currentField.description) === val ?  val.slice(-1,1) : val : currentField.description;
+    const sac = String(field) === "sac" ?  String(currentField.sac) === val ?  val.slice(-1,1) : val : currentField.sac;
+    const remark = String(field) === "remark" ?  String(currentField.remark) === val ?  val.slice(-1,1) : val : currentField.remark;
+   
+    const estimate = String(field) === "estimate" ?  String(currentField.estimate) === val ?  val.slice(-1,1) : val : currentField.estimate;
+    const assessed = String(field) === "assessed" ?  String(currentField.assessed) === val ?  val.slice(-1,1) : val : currentField.assessed;
+
+    const gst = String(field) === "gst" ?  String(currentField.gst) === val ?  val.slice(-1,1) : val: currentField.gst;
+    const type = String(field) === "type" ?  String(currentField.type) === val ?  val.slice(-1,1) : val: currentField.type;
+
+    const total = estimate;
+
+    const newOutput = {
+      _id: currentField._id, // You may use a more robust ID generation logic
+      sno: currentField.sno,
+      dep: dep, // Add default values or lea ve empty as needed
+      description:description,
+      sac:sac,
+      remark: remark,
+      estimate:estimate,
+      assessed:assessed,
+      qe_qa: currentField.qe_qa,
+      bill_sr:currentField.bill_sr, // Assuming bill_sr increments with each new row
+      gst:gst,
+      total:total,
+      type: type,
+    }
+
+    oldRow[index] = newOutput;
+    setAllRows(oldRow);
+    // console.log(allRows[index].field);
+    setChange(true)
+    // console.log(oldRow);
+
   }
   useEffect(()=>{
     let temp = [];
@@ -236,8 +224,8 @@ export default function Exemple_01() {
               data-live-search="true"
               data-width="100%"
               value={row.description}
-              disabled={editIndex === index ? false : true} 
-              onChange={(e)=>handleChange(index,index,e.target.value,"description")}
+              disabled={!edit} 
+              onChange={(e)=>handleChange(index,e.target.value,"description")}
             >
               <option data-tokens="Status1" value={"Regular"}>Regular</option>
               <option data-tokens="Status2" value={"Add on Policy"}>Add on Policy</option>
@@ -251,7 +239,7 @@ export default function Exemple_01() {
               value={row.sac}
               onChange={(e)=>handleChange(index,e.target.value,"sac")}
               required
-              disabled={editIndex === index ? false : true} 
+              disabled={!edit} 
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -263,7 +251,7 @@ export default function Exemple_01() {
               value={row.remark}
               onChange={(e)=>handleChange(index,e.target.value,"remark")}
               required
-              disabled={editIndex === index ? false : true} 
+              disabled={!edit} 
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -273,7 +261,7 @@ export default function Exemple_01() {
               className="form-control"
               type="text"
               value={row.estimate}
-              disabled={editIndex === index ? false : true} 
+              disabled={!edit} 
               onChange={(e)=>handleChange(index,e.target.value,"estimate")}
               required
               id="terms"
@@ -287,7 +275,7 @@ export default function Exemple_01() {
               value={row.assessed}
               onChange={(e)=>handleChange(index,e.target.value,"assessed")}
               required
-              disabled={editIndex === index ? false : true} 
+              disabled={!edit} 
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -295,44 +283,45 @@ export default function Exemple_01() {
           qe_qa: "01-02",
           bill_sr: index+1, // Assuming bill_sr increments with each new row
           gst: (
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value={row.gst}
-                  onChange={(e)=>handleChange(index,e.target.value,"gst")}
-                  required
-                  disabled={editIndex === index ? false : true} 
-                  id="terms"
-                  style={{ border: "1px solid black" }}
-                />
-              </div>
-            </div>
-          ),
-          total: (
             <input
               className="form-control"
               type="text"
               value={row.gst}
               onChange={(e)=>handleChange(index,e.target.value,"gst")}
               required
-              disabled={editIndex === index ? false : true} 
+              disabled={!edit}  
               id="terms"
               style={{ border: "1px solid black" }}
             />
           ),
-          type:  (<input
-          className="form-check-input"
-          type="checkbox"
-          value={row.type}
-          onChange={(e)=>handleChange(index,e.target.value,"type")}
-          required
-          disabled={editIndex === index ? false : true} 
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
+          total: (
+            <input
+              className="form-control"
+              type="text"
+              value={totalValue()}
+              // onChange={(e)=>handleChange(index,e.target.value,"gst")}
+              required
+              disabled={!edit}  
+              id="terms"
+              style={{ border: "1px solid black" }}
+            />
+          ),
+          type: (
+            <select
+              style={{ marginTop: "-5px" }}
+              className="selectpicker form-select"
+              data-live-search="true"
+              data-width="100%"
+              value={row.type}
+              disabled={!edit} 
+              onChange={(e)=>handleChange(index,e.target.value,"type")}
+            >
+              <option data-tokens="Status1" value={"Plastic"}>Plastic</option>
+              <option data-tokens="Status2" value={"Glass"}>Glass</option>
+              <option data-tokens="Status3" value={"Metal"}>Metal</option>
+              <option data-tokens="Status3" value={"Rubber"}>Rubber</option>
+            </select>
+          ),
           verify: (
             <input
               className="form-check-input"
@@ -342,9 +331,7 @@ export default function Exemple_01() {
               id="terms"
               style={{ border: "1px solid black" }}
             />
-          ),
-          action: <>{(editIndex === index) && openSave ? <button onClick={()=>saveHandler()}>Save</button>: editIndex === index && !openSave ? <span className="flaticon-edit" onClick={()=>openEditHandler()}></span> :<span className="flaticon-edit" onClick={()=>openEditHandler()}></span>}</>,
-        };
+          )        };
         temp.push(newRow);
       })
     }
@@ -352,10 +339,17 @@ export default function Exemple_01() {
     setUpdatedCode(temp);
     setChange(false);
    
-  },[change]);
+  },[change,edit]);
 
 
   console.log(updatedCode);
 
-  return <SmartTable_01 title="" data={updatedCode} headCells={headCells} handleAddRow={handleAddRow} />;
+  return <SmartTable_01 
+  title="" 
+  data={updatedCode} 
+  headCells={headCells} 
+  handleAddRow={handleAddRow} 
+  editHandler ={editHandler} 
+  updateHandler={updateHandler}  
+  edit={edit}/>;
 }

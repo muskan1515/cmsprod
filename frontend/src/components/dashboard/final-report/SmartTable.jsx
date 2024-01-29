@@ -300,104 +300,7 @@ function SmartTable(props) {
     setData(tempData);
   };
 
-  const handleAddRow = () => {
-    // Assuming a new row has a specific structure, adjust this as needed
-    const newRow = {
-      _id: new Date().toISOString(), // You may use a more robust ID generation logic
-      sno: (data.length + 1).toString(),
-      dep: "", // Add default values or leave empty as needed
-      item_name: (
-        <select
-          style={{ marginTop: "-5px" }}
-          className="selectpicker form-select"
-          data-live-search="true"
-          data-width="100%"
-        >
-          <option data-tokens="Status1">Regular</option>
-          <option data-tokens="Status2">Add on Policy</option>
-          <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-        </select>
-      ),
-      hsh_code: (
-        <input
-          className="form-control"
-          type="text"
-          value=""
-          required
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
-      remark: (
-        <select
-          style={{ marginTop: "-5px" }}
-          className="selectpicker form-select"
-          data-live-search="true"
-          data-width="100%"
-        >
-          <option data-tokens="Status1">Regular</option>
-          <option data-tokens="Status2">Add on Policy</option>
-          <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-        </select>
-      ),
-      estimate: (
-        <input
-          className="form-control"
-          type="text"
-          value=""
-          required
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
-      assessed: (
-        <input
-          className="form-control"
-          type="text"
-          value=""
-          required
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
-      qe_qa: "01-02",
-      bill_sr: (data.length + 1).toString(), // Assuming bill_sr increments with each new row
-      gst: (
-        <input
-          className="form-control"
-          type="text"
-          value=""
-          required
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
-      total: (
-        <input
-          className="form-control"
-          type="text"
-          value=""
-          required
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
-      type: "Plastic",
-      verify: (
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          required
-          id="terms"
-          style={{ border: "1px solid black" }}
-        />
-      ),
-      action: <span className="flaticon-edit"></span>,
-    };
-
-    setData([...data, newRow]);
-  };
+  console.log(props.data);
 
   return (
     <div className="col-12 p-2">
@@ -423,7 +326,7 @@ function SmartTable(props) {
               ></div>
             </div> */}
           </div>
-          {data.length > 0 ? (
+          {props.data.length > 0 ? (
             <div className="row">
               <div>
                 <div className="smartTable-tableContainer">
@@ -465,7 +368,7 @@ function SmartTable(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.map((row, idx) => (
+                      {props.data.map((row, idx) => (
                         <tr key={"tr_" + idx}>
                           {props.headCells.map((headCell, idxx) => (
                             <td key={"td_" + idx + "_" + idxx}>
@@ -479,7 +382,14 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <button onClick={handleAddRow}>Add New Row</button>
+                <button className="btn btn-color" onClick={() => props.handleAddRow()}>
+                  Add New Row
+                </button>
+                {props.edit ? (
+                  <button onClick={() => props.updateHandler()}>Save</button>
+                ) : (
+                  <button onClick={() => props.editHandler()}>Edit</button>
+                )}
               </div>
             </div>
           ) : (
@@ -492,7 +402,7 @@ function SmartTable(props) {
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
               <div className="col-12 text-end p-3">
-                {data.length > 0 ? data.length : 0} Rows
+                {props.data.length > 0 ? props.data.length : 0} Rows
               </div>
             </div>
           ) : (

@@ -130,7 +130,7 @@ const PropertyVideo = ({ SomeComponent }) => {
             <div className="thumb">
               {/* <EditableTable /> */}
               {/* <Table data={materials} /> */}
-              <Exemple />
+              <Exemple/>
             </div>
           </div>
         </div>
