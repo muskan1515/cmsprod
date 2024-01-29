@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: false,
   env:{
     BACKEND_DOMAIN:"https://claims-backend-apis.onrender.com",
+    // BACKEND_DOMAIN: "http://localhost:3006",
     CRYPTO_SECRET_KEY: "gjfdkhslbreif847593rewfdkjbcm34woebkdjcnx43oihefdkcnx",
     COOKIE_PASSWORD: "ierfkgj439802vfckdh5438909endck",
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:"dcrq3m6dx",

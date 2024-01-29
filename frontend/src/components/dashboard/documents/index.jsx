@@ -4,6 +4,7 @@ import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/DefaultHeader";
 import MobileMenu from "../../common/header/MobileMenu_01";
 import Exemple from "./Exemple";
+import DocumentUpload from "./DocumentUpload"
 import axios from "axios";
 import toast from "react-hot-toast";
 

@@ -210,17 +210,20 @@ function SmartTable(props) {
               className="smartTable-noDataFound col-12"
               style={{ marginTop: "110px", marginBottom: "40px" }}
             >
-              <div className="ring">
-                Loading
-                <span className="load"></span>
+            <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                  <p style={{color:"black"}}>The page cannot be accessed with the provided link.</p>
+                </div>
               </div>
+            </div>
             </div>
           </div>
           )}
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
               {/* <div className="col-12 text-end p-3">
-                {data.length > 0 ? data.length : 0} Rows
+                {props.data.length > 0 ? props.data.length : 0} Rows
               </div> */}
             </div>
           ) : (

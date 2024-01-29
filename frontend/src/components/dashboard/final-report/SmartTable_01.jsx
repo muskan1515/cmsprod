@@ -427,7 +427,7 @@ function SmartTable(props) {
               ></div>
             </div> */}
           </div>
-          {data.length > 0 ? (
+          {props.data.length > 0 ? (
             <div className="row">
               <div>
                 <div className="smartTable-tableContainer">
@@ -496,7 +496,7 @@ function SmartTable(props) {
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
               <div className="col-12 text-end p-3">
-                {data.length > 0 ? data.length : 0} Rows
+                {props.data.length > 0 ? props.data.length : 0} Rows
               </div>
             </div>
           ) : (

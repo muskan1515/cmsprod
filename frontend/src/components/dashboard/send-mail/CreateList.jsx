@@ -77,165 +77,203 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
       });
   };
 
+  const [selectedOption, setSelectedOption] = useState("showDocument");
+
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
   return (
     <>
-      <div className="row">
-        <div className="col-lg-6">
-          <div className="row mt-3 mb-1">
-            <div className="col-lg-4 my_profile_setting_input form-group">
-              <label
-                htmlFor=""
-                className="text-color mt-1"
-                style={{
-                  color: "#2e008b",
-                  fontWeight: "",
-                }}
-              >
-                Type of Documents:
-              </label>
+      <div className="col-lg-12">
+        <div className="col-lg-3">
+          <label htmlFor="documentType">Select Option:</label>
+          <select
+            id="documentType"
+            value={selectedOption}
+            onChange={handleSelectChange}
+            className="form-control"
+          >
+            <option value="showDocument">Send Documents</option>
+            <option value="showInput">Send Documents -1</option>
+          </select>
+        </div>
+
+        <div
+          id="document-section"
+          className="col-lg-12"
+          style={{
+            display: selectedOption === "showDocument" ? "block" : "none",
+          }}
+        >
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="row mt-3 mb-1">
+                <div className="col-lg-4 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-1"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Type of Documents:
+                  </label>
+                </div>
+                <div className="col-lg-8">
+                  {data?.map((stat, index) => (
+                    <div key={index} className="row">
+                      <div className="col-lg-4">
+                        <input
+                          type="checkbox"
+                          id={`checkbox-${index}`}
+                          data-tokens="Status1"
+                          value={stat.serial_num}
+                          onChange={(e) =>
+                            handleCheckboxChange(
+                              stat.serial_num,
+                              stat.doc_name,
+                              e.target.checked
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="col-lg-8">
+                        <label htmlFor={`checkbox-${index}`}>
+                          {stat.doc_name}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4>Selected Items:</h4>
+                <ul>
+                  {selectedItems.map((item) => (
+                    <li key={item.id}>{item.value}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div className="col-lg-8">
-              {data?.map((stat, index) => (
-                <div key={index} className="row">
-                  <div className="col-lg-4">
+
+            <div className="col-lg-6">
+              <div className="col-lg-12">
+                <div className="row mt-3 mb-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-1"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Email Address :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
                     <input
-                      type="checkbox"
-                      id={`checkbox-${index}`}
-                      data-tokens="Status1"
-                      value={stat.serial_num}
-                      onChange={(e) =>
-                        handleCheckboxChange(
-                          stat.serial_num,
-                          stat.doc_name,
-                          e.target.checked
-                        )
-                      }
+                      required
+                      type="text"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      placeholder={email}
+                      value={emailAddress}
+                      onChange={(e) => setEmailAddress(e.target.value)}
                     />
                   </div>
-                  <div className="col-lg-8">
-                    <label htmlFor={`checkbox-${index}`}>{stat.doc_name}</label>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-3 mb-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-1"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Policy No. :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      placeholder={policyNo}
+                      value={policyNos}
+                      onChange={(e) => setPolicyNo(e.target.value)}
+                    />
                   </div>
                 </div>
-              ))}
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-3 mb-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-2"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Date :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="date"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row card">
+                  <h4 className="col-12 text-center mt-1">Mail Box</h4>
+                  <hr />
+                  <div className="row">
+                    <h5 className="">To :</h5>
+                  </div>
+                  <hr />
+                  <div className="row">
+                    <h5 className="">Subject :</h5>
+                  </div>
+                  <hr />
+                  <div className="row" style={{ height: "100px" }}></div>
+                </div>
+              </div>
+              <div className="col-lg-12 text-end">
+                <button className="btn btn-color w-10" onClick={handleSubmit}>
+                  Send
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="col-lg-6">
-          <div className="col-lg-12">
-            <div className="row mt-3 mb-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color mt-1"
-                  style={{
-                    color: "#2e008b",
-                    fontWeight: "",
-                  }}
-                >
-                  Email Address :
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  required
-                  type="text"
-                  className="form-control"
-                  id="otherInput"
-                  name="otherInput"
-                  placeholder={email}
-                  value={emailAddress}
-                  onChange={(e) => setEmailAddress(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-12">
-            <div className="row mt-3 mb-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color mt-1"
-                  style={{
-                    color: "#2e008b",
-                    fontWeight: "",
-                  }}
-                >
-                  Policy No. :
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  required
-                  type="text"
-                  className="form-control"
-                  id="otherInput"
-                  name="otherInput"
-                  placeholder={policyNo}
-                  value={policyNos}
-                  onChange={(e) => setPolicyNo(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-12">
-            <div className="row mt-3 mb-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color mt-2"
-                  style={{
-                    color: "#2e008b",
-                    fontWeight: "",
-                  }}
-                >
-                  Date :
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  required
-                  type="date"
-                  className="form-control"
-                  id="otherInput"
-                  name="otherInput"
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-12">
-            <div className="row card">
-              <h4 className="col-12 text-center mt-1">Mail Box</h4>
-              <hr />
-              <div className="row">
-                <h5 className="">To :</h5>
-              </div>
-              <hr />
-              <div className="row">
-                <h5 className="">Subject :</h5>
-              </div>
-              <hr />
-              <div className="row" style={{height:"100px"}}>
-
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-12 text-end">
-            <button className="btn btn-color w-10" onClick={handleSubmit}>
-              Send
-            </button>
-          </div>
+        <div
+          id="input-section"
+          className="col-lg-12"
+          style={{ display: selectedOption === "showInput" ? "block" : "none" }}
+        >
+          {/* Input section content */}
         </div>
-      </div>
 
-      <div>
-        <h4>Selected Items:</h4>
-        <ul>
-          {selectedItems.map((item) => (
-            <li key={item.id}>{item.value}</li>
-          ))}
-        </ul>
+        {/* Rest of your content */}
       </div>
     </>
   );
