@@ -21534,7 +21534,7 @@ main {
   }
 }
 
-.table-container {
+/* .table-container {
   display: flex;
   justify-content: center;
   margin-top: 50px;
@@ -21660,10 +21660,10 @@ table input[type="checkbox"] {
 select:invalid,
 input:invalid {
   border: 2px solid red;
-}
+} */
 
 /* Modal */
-.modal-container {
+/* .modal-container {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -21687,7 +21687,7 @@ input:invalid {
 .modal .btn {
   display: block;
   margin: auto;
-}
+} */
 
 /* .form-group {
   display: flex;

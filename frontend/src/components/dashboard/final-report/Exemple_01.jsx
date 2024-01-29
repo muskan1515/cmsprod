@@ -14,7 +14,7 @@ const headCells = [
     id: "bill_sr",
     numeric: false,
     label: "Bill Sr.",
-    width: 100,
+    width: 50,
   },
   {
     id: "description",
@@ -26,7 +26,7 @@ const headCells = [
     id: "sac",
     numeric: false,
     label: "SAC",
-    width: 100,
+    width: 50,
   },
 
   {
@@ -46,60 +46,59 @@ const headCells = [
     id: "gst",
     numeric: false,
     label: "GST%",
-    width: 100,
+    width: 50,
   },
-  
-  {
-    id: "total",
-    numeric: false,
-    label: "Total Value",
-    width: 100,
-  },
-  {
-    id: "type",
-    numeric: false,
-    label: "Type",
-    width: 100,
-  }
+
+  // {
+  //   id: "total",
+  //   numeric: false,
+  //   label: "Total Value",
+  //   width: 100,
+  // },
+  // {
+  //   id: "type",
+  //   numeric: false,
+  //   label: "Type",
+  //   width: 100,
+  // },
 ];
 
 export default function Exemple_01() {
-  const [updatedCode,setUpdatedCode]=useState([]);
+  const [updatedCode, setUpdatedCode] = useState([]);
 
   // const []
-  const [change,setChange]=useState(false);
-  const [editIndex,setEditIndex] = useState(-1);
-  const [openSave,setOpenSave]=useState(false);
-  const [description,setDescription]=useState("Regular");
-  const [sac,setSac]=useState(0)
-  const [estimate,setEstimate]=useState(0);
-  const [assessed,setAssessed]=useState(0);
-  const [type,setType]=useState("");
-  const [remark,setRemark]=useState("");
-  const [gst,setGst]=useState(0);
+  const [change, setChange] = useState(false);
+  const [editIndex, setEditIndex] = useState(-1);
+  const [openSave, setOpenSave] = useState(false);
+  const [description, setDescription] = useState("Regular");
+  const [sac, setSac] = useState(0);
+  const [estimate, setEstimate] = useState(0);
+  const [assessed, setAssessed] = useState(0);
+  const [type, setType] = useState("");
+  const [remark, setRemark] = useState("");
+  const [gst, setGst] = useState(0);
 
-  const [edit,setEdit]=useState(false);
+  const [edit, setEdit] = useState(false);
 
-
-  const [allRows,setAllRows] = useState([
-    {
-      _id: 1,
-      sno: 1,
-      dep: "0",
-      description:"",
-      sac:"",
+  const [allRows, setAllRows] = useState(
+    Array.from({ length: 10 }, (_, index) => ({
+      _id: index + 1,
+      sno: index + 1,
+      dep: "", // Add default values or leave empty as needed
+      description: "",
+      sac: "",
       remark: "",
-      estimate:"",
+      estimate: "",
       assessed: "",
       qe_qa: "01-02",
-      bill_sr: 1,
-      gst:"",
-      total:"",
-      type: ""
-    },
-  ]);
+      bill_sr: index + 123, // Assuming bill_sr increments with each new row
+      gst: 0,
+      total: 0,
+      type: "",
+    }))
+  );
 
-  const openEditHandler = (idx)=>{
+  const openEditHandler = (idx) => {
     // console.log(idx);
 
     const tempIdx = allRows[idx];
@@ -109,27 +108,26 @@ export default function Exemple_01() {
     setEstimate(tempIdx.estimate);
     setGst(tempIdx.gst);
     setEditIndex(idx);
-    setChange(true)
+    setChange(true);
     setOpenSave(true);
-  }
+  };
 
-  const totalValue = ()=>{
+  const totalValue = () => {
     return gst + assessed;
-  }
+  };
 
-  console.log(editIndex,openSave)
+  console.log(editIndex, openSave);
 
-  const saveHandler = ()=>{
-
+  const saveHandler = () => {
     setSac("");
     setDescription("");
     setAssessed(0);
     setEstimate(0);
     setGst(0);
     setEditIndex(-1);
-    setChange(true)
+    setChange(true);
     setOpenSave(false);
-  }
+  };
   const handleAddRow = () => {
     console.log("inside");
     // Assuming a new row has a specific structure, adjust this as needed
@@ -137,52 +135,91 @@ export default function Exemple_01() {
       _id: allRows.length, // You may use a more robust ID generation logic
       sno: allRows.length,
       dep: "", // Add default values or leave empty as needed
-      description:"",
-      sac:"",
+      description: "",
+      sac: "",
       remark: "",
-      estimate:"",
-      assessed:"",
+      estimate: "",
+      assessed: "",
       qe_qa: "01-02",
-      bill_sr:allRows.length, // Assuming bill_sr increments with each new row
-      gst:0,
-      total:0,
+      bill_sr: allRows.length, // Assuming bill_sr increments with each new row
+      gst: 0,
+      total: 0,
       type: "",
-     
     };
 
     const old = allRows;
     old.push(newRow);
-    console.log(old)
+    console.log(old);
 
-    setChange(true)
+    setChange(true);
     setAllRows(old);
   };
 
-  const editHandler = ()=>{
+  const editHandler = () => {
     setEdit(true);
-  }
+  };
 
-  const updateHandler = ()=>{
+  const updateHandler = () => {
     setEdit(false);
-  }
+  };
 
-  const handleChange = (index,val,field)=>{
-    console.log(index,val,field);
-    
+  const handleChange = (index, val, field) => {
+    console.log(index, val, field);
+
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
-   
-    const dep = String(field) === "dep" ? String(currentField.dep) === val ?  val.slice(-1,1) : val : currentField.dep;
-    const description = String(field) === "description" ?  String(currentField.description) === val ?  val.slice(-1,1) : val : currentField.description;
-    const sac = String(field) === "sac" ?  String(currentField.sac) === val ?  val.slice(-1,1) : val : currentField.sac;
-    const remark = String(field) === "remark" ?  String(currentField.remark) === val ?  val.slice(-1,1) : val : currentField.remark;
-   
-    const estimate = String(field) === "estimate" ?  String(currentField.estimate) === val ?  val.slice(-1,1) : val : currentField.estimate;
-    const assessed = String(field) === "assessed" ?  String(currentField.assessed) === val ?  val.slice(-1,1) : val : currentField.assessed;
 
-    const gst = String(field) === "gst" ?  String(currentField.gst) === val ?  val.slice(-1,1) : val: currentField.gst;
-    const type = String(field) === "type" ?  String(currentField.type) === val ?  val.slice(-1,1) : val: currentField.type;
+    const dep =
+      String(field) === "dep"
+        ? String(currentField.dep) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.dep;
+    const description =
+      String(field) === "description"
+        ? String(currentField.description) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.description;
+    const sac =
+      String(field) === "sac"
+        ? String(currentField.sac) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.sac;
+    const remark =
+      String(field) === "remark"
+        ? String(currentField.remark) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.remark;
+
+    const estimate =
+      String(field) === "estimate"
+        ? String(currentField.estimate) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.estimate;
+    const assessed =
+      String(field) === "assessed"
+        ? String(currentField.assessed) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.assessed;
+
+    const gst =
+      String(field) === "gst"
+        ? String(currentField.gst) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.gst;
+    const type =
+      String(field) === "type"
+        ? String(currentField.type) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.type;
 
     const total = estimate;
 
@@ -190,32 +227,31 @@ export default function Exemple_01() {
       _id: currentField._id, // You may use a more robust ID generation logic
       sno: currentField.sno,
       dep: dep, // Add default values or lea ve empty as needed
-      description:description,
-      sac:sac,
+      description: description,
+      sac: sac,
       remark: remark,
-      estimate:estimate,
-      assessed:assessed,
+      estimate: estimate,
+      assessed: assessed,
       qe_qa: currentField.qe_qa,
-      bill_sr:currentField.bill_sr, // Assuming bill_sr increments with each new row
-      gst:gst,
-      total:total,
+      bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
+      gst: gst,
+      total: total,
       type: type,
-    }
+    };
 
     oldRow[index] = newOutput;
     setAllRows(oldRow);
     // console.log(allRows[index].field);
-    setChange(true)
+    setChange(true);
     // console.log(oldRow);
-
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     let temp = [];
-    const getData = ()=>{
-      allRows.map((row,index)=>{
+    const getData = () => {
+      allRows.map((row, index) => {
         const newRow = {
-          _id: index+1, // You may use a more robust ID generation logic
-          sno:  index+1,
+          _id: index + 1, // You may use a more robust ID generation logic
+          sno: index + 1,
           dep: row.dep, // Add default values or leave empty as needed
           description: (
             <select
@@ -224,12 +260,23 @@ export default function Exemple_01() {
               data-live-search="true"
               data-width="100%"
               value={row.description}
-              disabled={!edit} 
-              onChange={(e)=>handleChange(index,e.target.value,"description")}
+              disabled={!edit}
+              onChange={(e) =>
+                handleChange(index, e.target.value, "description")
+              }
             >
-              <option data-tokens="Status1" value={"Regular"}>Regular</option>
-              <option data-tokens="Status2" value={"Add on Policy"}>Add on Policy</option>
-              <option data-tokens="Status3" value={"Add on Policy(Not Effective)"}>Add on Policy(Not Effective)</option>
+              <option data-tokens="Status1" value={"Regular"}>
+                Regular
+              </option>
+              <option data-tokens="Status2" value={"Add on Policy"}>
+                Add on Policy
+              </option>
+              <option
+                data-tokens="Status3"
+                value={"Add on Policy(Not Effective)"}
+              >
+                Add on Policy(Not Effective)
+              </option>
             </select>
           ),
           sac: (
@@ -237,9 +284,9 @@ export default function Exemple_01() {
               className="form-control"
               type="text"
               value={row.sac}
-              onChange={(e)=>handleChange(index,e.target.value,"sac")}
+              onChange={(e) => handleChange(index, e.target.value, "sac")}
               required
-              disabled={!edit} 
+              disabled={!edit}
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -249,9 +296,9 @@ export default function Exemple_01() {
               className="form-control"
               type="text"
               value={row.remark}
-              onChange={(e)=>handleChange(index,e.target.value,"remark")}
+              onChange={(e) => handleChange(index, e.target.value, "remark")}
               required
-              disabled={!edit} 
+              disabled={!edit}
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -261,8 +308,8 @@ export default function Exemple_01() {
               className="form-control"
               type="text"
               value={row.estimate}
-              disabled={!edit} 
-              onChange={(e)=>handleChange(index,e.target.value,"estimate")}
+              disabled={!edit}
+              onChange={(e) => handleChange(index, e.target.value, "estimate")}
               required
               id="terms"
               style={{ border: "1px solid black" }}
@@ -273,26 +320,24 @@ export default function Exemple_01() {
               className="form-control"
               type="text"
               value={row.assessed}
-              onChange={(e)=>handleChange(index,e.target.value,"assessed")}
+              onChange={(e) => handleChange(index, e.target.value, "assessed")}
               required
-              disabled={!edit} 
+              disabled={!edit}
               id="terms"
               style={{ border: "1px solid black" }}
             />
           ),
           qe_qa: "01-02",
-          bill_sr: index+1, // Assuming bill_sr increments with each new row
+          bill_sr: index + 1, // Assuming bill_sr increments with each new row
           gst: (
-            <input
-              className="form-control"
-              type="text"
-              value={row.gst}
-              onChange={(e)=>handleChange(index,e.target.value,"gst")}
-              required
-              disabled={!edit}  
-              id="terms"
-              style={{ border: "1px solid black" }}
-            />
+            <div className="col-lg-12 text-center">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="remeberMe"
+              />
+            </div>
           ),
           total: (
             <input
@@ -301,7 +346,7 @@ export default function Exemple_01() {
               value={totalValue()}
               // onChange={(e)=>handleChange(index,e.target.value,"gst")}
               required
-              disabled={!edit}  
+              disabled={!edit}
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -313,13 +358,21 @@ export default function Exemple_01() {
               data-live-search="true"
               data-width="100%"
               value={row.type}
-              disabled={!edit} 
-              onChange={(e)=>handleChange(index,e.target.value,"type")}
+              disabled={!edit}
+              onChange={(e) => handleChange(index, e.target.value, "type")}
             >
-              <option data-tokens="Status1" value={"Plastic"}>Plastic</option>
-              <option data-tokens="Status2" value={"Glass"}>Glass</option>
-              <option data-tokens="Status3" value={"Metal"}>Metal</option>
-              <option data-tokens="Status3" value={"Rubber"}>Rubber</option>
+              <option data-tokens="Status1" value={"Plastic"}>
+                Plastic
+              </option>
+              <option data-tokens="Status2" value={"Glass"}>
+                Glass
+              </option>
+              <option data-tokens="Status3" value={"Metal"}>
+                Metal
+              </option>
+              <option data-tokens="Status3" value={"Rubber"}>
+                Rubber
+              </option>
             </select>
           ),
           verify: (
@@ -331,25 +384,27 @@ export default function Exemple_01() {
               id="terms"
               style={{ border: "1px solid black" }}
             />
-          )        };
+          ),
+        };
         temp.push(newRow);
-      })
-    }
+      });
+    };
     getData();
     setUpdatedCode(temp);
     setChange(false);
-   
-  },[change,edit]);
-
+  }, [change, edit]);
 
   console.log(updatedCode);
 
-  return <SmartTable_01 
-  title="" 
-  data={updatedCode} 
-  headCells={headCells} 
-  handleAddRow={handleAddRow} 
-  editHandler ={editHandler} 
-  updateHandler={updateHandler}  
-  edit={edit}/>;
+  return (
+    <SmartTable_01
+      title=""
+      data={updatedCode}
+      headCells={headCells}
+      handleAddRow={handleAddRow}
+      editHandler={editHandler}
+      updateHandler={updateHandler}
+      edit={edit}
+    />
+  );
 }

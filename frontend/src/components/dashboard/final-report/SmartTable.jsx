@@ -92,10 +92,11 @@ const headCells = [
   },
 ];
 
-const data = [
-  {
-    _id: "6144145976c7fe",
-    sno: "1",
+const data =
+  props.data ||
+  Array.from({ length: 10 }, (_, index) => ({
+    _id: index.toString(),
+    sno: (index + 1).toString(), // Assuming 'sno' is a sequential number
     dep: "0",
     item_name: (
       <select
@@ -185,8 +186,103 @@ const data = [
       />
     ),
     action: <span className="flaticon-edit"></span>,
-  },
-];
+  }));
+
+// const data = [
+//   {
+//     _id: "6144145976c7fe",
+//     sno: "1",
+//     dep: "0",
+//     item_name: (
+//       <select
+//         style={{ marginTop: "-5px" }}
+//         className="selectpicker form-select"
+//         data-live-search="true"
+//         data-width="100%"
+//       >
+//         <option data-tokens="Status1">Regular</option>
+//         <option data-tokens="Status2">Add on Policy</option>
+//         <option data-tokens="Status3">Add on Policy(Not Effective)</option>
+//       </select>
+//     ),
+//     hsh_code: (
+//       <input
+//         className="form-control"
+//         type="text"
+//         value=""
+//         required
+//         id="terms"
+//         style={{ border: "1px solid black" }}
+//       />
+//     ),
+//     remark: (
+//       <select
+//         style={{ marginTop: "-5px" }}
+//         className="selectpicker form-select"
+//         data-live-search="true"
+//         data-width="100%"
+//       >
+//         <option data-tokens="Status1">Regular</option>
+//         <option data-tokens="Status2">Add on Policy</option>
+//         <option data-tokens="Status3">Add on Policy(Not Effective)</option>
+//       </select>
+//     ),
+//     estimate: (
+//       <input
+//         className="form-control"
+//         type="text"
+//         value=""
+//         required
+//         id="terms"
+//         style={{ border: "1px solid black" }}
+//       />
+//     ),
+//     assessed: (
+//       <input
+//         className="form-control"
+//         type="text"
+//         value=""
+//         required
+//         id="terms"
+//         style={{ border: "1px solid black" }}
+//       />
+//     ),
+//     qe_qa: "01-02",
+//     bill_sr: "1",
+//     gst: (
+//       <input
+//         className="form-control"
+//         type="text"
+//         value=""
+//         required
+//         id="terms"
+//         style={{ border: "1px solid black" }}
+//       />
+//     ),
+//     total: (
+//       <input
+//         className="form-control"
+//         type="text"
+//         value=""
+//         required
+//         id="terms"
+//         style={{ border: "1px solid black" }}
+//       />
+//     ),
+//     type: "Plastic",
+//     verify: (
+//       <input
+//         className="form-check-input"
+//         type="checkbox"
+//         value=""
+//         required
+//         id="terms"
+//         style={{ border: "1px solid black" }}
+//       />
+//     ),
+//     action: <span className="flaticon-edit"></span>,
+//   },
+// ];
 
 function SmartTable(props) {
   const [loading, setLoading] = useState(false);
@@ -382,7 +478,10 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <button className="btn btn-color" onClick={() => props.handleAddRow()}>
+                <button
+                  className="btn btn-color"
+                  onClick={() => props.handleAddRow()}
+                >
                   Add New Row
                 </button>
                 {props.edit ? (

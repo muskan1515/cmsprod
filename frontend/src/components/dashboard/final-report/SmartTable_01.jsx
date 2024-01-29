@@ -300,8 +300,8 @@ function SmartTable(props) {
     setData(tempData);
   };
 
-
-  console.log(props.data)
+  console.log(props.data);
+  
 
   return (
     <div className="col-12 p-2">
@@ -332,7 +332,7 @@ function SmartTable(props) {
               <div>
                 <div className="smartTable-tableContainer">
                   <table
-                    className={"smartTable-table table table-striped border"}
+                    className={"smartTable-table table"}
                     style={{ minWidth: props.tableWidth }}
                   >
                     <thead className="smartTable-thead">
@@ -383,8 +383,29 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <button onClick={()=>props.handleAddRow()}>Add New Row</button>
-                {props.edit ? <button onClick={()=>props.updateHandler()}>Save</button> : <button onClick={()=>props.editHandler()}>Edit</button>}
+                <div className="col-lg-6">
+                  <button
+                    className="btn btn-color w-15"
+                    onClick={() => props.handleAddRow()}
+                  >
+                    <span className="flaticon-plus"></span>
+                  </button>
+                  {props.edit ? (
+                    <button
+                      className="btn btn-color w-15"
+                      onClick={() => props.updateHandler()}
+                    >
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-color w-15"
+                      onClick={() => props.editHandler()}
+                    >
+                      <span className="flaticon-edit"></span>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ) : (

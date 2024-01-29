@@ -11,24 +11,29 @@ const headCells = [
     width: 10,
   },
   {
-    id: "bill_sr",
+    id: "dep",
     numeric: false,
-    label: "Bill Sr.",
-    width: 100,
+    label: "Dep%",
+    width: 10,
   },
   {
-    id: "description",
+    id: "item_name",
     numeric: false,
-    label: "Description",
+    label: "Item Name",
     width: 150,
   },
   {
-    id: "sac",
+    id: "hsh_code",
     numeric: false,
-    label: "SAC",
+    label: "HSH Code",
     width: 100,
   },
-
+  {
+    id: "remark",
+    numeric: false,
+    label: "Remark",
+    width: 100,
+  },
   {
     id: "estimate",
     numeric: false,
@@ -41,18 +46,28 @@ const headCells = [
     label: "Assessed",
     width: 100,
   },
-
+  {
+    id: "qe_qa",
+    numeric: false,
+    label: "QE-QA",
+    width: 100,
+  },
+  {
+    id: "bill_sr",
+    numeric: false,
+    label: "Bill Sr.",
+    width: 100,
+  },
   {
     id: "gst",
     numeric: false,
     label: "GST%",
     width: 100,
   },
-
   {
     id: "total",
     numeric: false,
-    label: "Total Value",
+    label: "Total",
     width: 100,
   },
   {
@@ -61,6 +76,18 @@ const headCells = [
     label: "Type",
     width: 100,
   },
+  // {
+  //   id: "message",
+  //   numeric: false,
+  //   label: "Request Type",
+  //   width: 100,
+  // },
+  // {
+  //   id: "action",
+  //   numeric: false,
+  //   label: "Action",
+  //   width: 100,
+  // },
 ];
 
 export default function Exemple_01() {
@@ -80,23 +107,23 @@ export default function Exemple_01() {
 
   const [edit, setEdit] = useState(false);
 
-  const [allRows, setAllRows] = useState([
-    {
-      _id: 1,
-      sno: 1,
-      dep: "0",
+  const [allRows, setAllRows] = useState(
+    Array.from({ length: 10 }, (_, index) => ({
+      _id: index + 1,
+      sno: index + 1,
+      dep: "", // Add default values or leave empty as needed
       description: "",
       sac: "",
       remark: "",
       estimate: "",
       assessed: "",
       qe_qa: "01-02",
-      bill_sr: 1,
-      gst: "",
-      total: "",
+      bill_sr: index + 123, // Assuming bill_sr increments with each new row
+      gst: 0,
+      total: 0,
       type: "",
-    },
-  ]);
+    }))
+  );
 
   const openEditHandler = (idx) => {
     // console.log(idx);
@@ -252,7 +279,44 @@ export default function Exemple_01() {
         const newRow = {
           _id: index + 1, // You may use a more robust ID generation logic
           sno: index + 1,
-          dep: row.dep, // Add default values or leave empty as needed
+          dep: (
+            <input
+              className="form-control"
+              type="text"
+              value={row.sac}
+              onChange={(e) => handleChange(index, e.target.value, "sac")}
+              required
+              disabled={!edit}
+              id="terms"
+              style={{ border: "1px solid black" }}
+            />
+          ), // Add default values or leave empty as needed
+          item_name: (
+            <select
+              style={{ marginTop: "-5px" }}
+              className="selectpicker form-select"
+              data-live-search="true"
+              data-width="100%"
+              value={row.description}
+              disabled={!edit}
+              onChange={(e) =>
+                handleChange(index, e.target.value, "description")
+              }
+            >
+              <option data-tokens="Status1" value={"Regular"}>
+                Regular
+              </option>
+              <option data-tokens="Status2" value={"Add on Policy"}>
+                Add on Policy
+              </option>
+              <option
+                data-tokens="Status3"
+                value={"Add on Policy(Not Effective)"}
+              >
+                Add on Policy(Not Effective)
+              </option>
+            </select>
+          ),
           description: (
             <select
               style={{ marginTop: "-5px" }}
@@ -278,6 +342,18 @@ export default function Exemple_01() {
                 Add on Policy(Not Effective)
               </option>
             </select>
+          ),
+          hsh_code: (
+            <input
+              className="form-control"
+              type="text"
+              value={row.sac}
+              onChange={(e) => handleChange(index, e.target.value, "sac")}
+              required
+              disabled={!edit}
+              id="terms"
+              style={{ border: "1px solid black" }}
+            />
           ),
           sac: (
             <input
@@ -328,7 +404,7 @@ export default function Exemple_01() {
             />
           ),
           qe_qa: "01-02",
-          bill_sr: index + 1, // Assuming bill_sr increments with each new row
+          bill_sr: index + 123, // Assuming bill_sr increments with each new row
           gst: (
             <input
               className="form-control"
