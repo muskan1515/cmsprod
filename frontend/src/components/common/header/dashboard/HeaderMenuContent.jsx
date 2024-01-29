@@ -4,7 +4,7 @@ import MyAccount from "./MyAccount";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
+const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard,setRegionSearchValue}) => {
   const route = useRouter();
   const [regionValue ,setRegionValue] = useState("");
 
@@ -16,6 +16,7 @@ const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard}) => {
     }
       localStorage.setItem("regionType",JSON.stringify(val));
       setRegionValue(val);
+      setRegionSearchValue(val)
 
   }
   useEffect(()=>{

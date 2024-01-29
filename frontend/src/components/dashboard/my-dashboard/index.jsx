@@ -14,20 +14,20 @@ import { useRouter } from "next/router";
 const Index = () => {
   const [start, setStart] = useState(0);
 
-  
   const [properties, setProperties] = useState([]);
   const [allClaims, setAllClaims] = useState([]);
-  const [filterCardClaim,setFilterCardClaim]=useState([]);
-  const [selectedCard,setSelectedCard] = useState(0);
-  const [end, setEnd] = useState( 10);
+  const [filterCardClaim, setFilterCardClaim] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(0);
+  const [end, setEnd] = useState(10);
   const [type, setType] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
   const [filterClaims, setFilterClaims] = useState([]);
   const [majorSearch, setMajorSearch] = useState("");
 
-  const [status,setStatus] = useState([]);
+  const [status, setStatus] = useState([]);
   const [isRegionChange, setIsRegionChange] = useState(false);
+  const [regionSearchValue, setRegionSearchValue] = useState();
 
   useEffect(() => {
     let filterClaim;
@@ -46,31 +46,31 @@ const Index = () => {
     }
     setFilterClaims(filterClaim);
   }, [searchInput]);
-
-
-  const [filterAccordingClaim,setFilterAccordingClaim]=useState([]);
-  const [showRegionClaim,setShowRegionClaim]=useState(false);
-  useEffect(()=>{
+  console.log("regionSearchValue",regionSearchValue);
+  
+  const [filterAccordingClaim, setFilterAccordingClaim] = useState([]);
+  const [showRegionClaim, setShowRegionClaim] = useState(false);
+  useEffect(() => {
     const region = JSON.parse(localStorage.getItem("regionType"));
-    if(region){
+    if (region) {
       setShowRegionClaim(true);
-    
-    const filterAccordingToRegion =allClaims.filter((claim)=>{
-      if(claim.Region === region){
-        return true;
-      }
-      else{
-        return false
-      }
-    });
-    console.log(filterAccordingToRegion);
-    setFilterAccordingClaim(filterAccordingToRegion);
-  }
-  else{
-    setShowRegionClaim(false);
-  }
-  },[isRegionChange]);
 
+      const filterAccordingToRegion = allClaims.filter((claim) => {
+        console.log("all Claims", claim.Region, region);
+        if (claim.Region == region) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      console.log(filterAccordingToRegion);
+      setFilterClaims(filterAccordingToRegion);
+      setFilterAccordingClaim(filterAccordingToRegion);
+    } else {
+      setShowRegionClaim(false);
+    }
+  }, [regionSearchValue]);
+  console.log("isRegionChange", isRegionChange);
   useEffect(() => {
     let filterClaim;
 
@@ -84,8 +84,9 @@ const Index = () => {
         claim?.RegistrationNo?.toLowerCase().includes(
           majorSearch.toLowerCase()
         ) ||
-        claim?.AssignedGarage?.toLowerCase().includes(majorSearch.toLowerCase())
-        ||
+        claim?.AssignedGarage?.toLowerCase().includes(
+          majorSearch.toLowerCase()
+        ) ||
         claim?.Region?.toLowerCase().includes(majorSearch.toLowerCase())
     );
 
@@ -133,55 +134,51 @@ const Index = () => {
         console.log(err);
       });
 
-      axios
+    axios
       .get("/api/getStatus", {
         headers: {
           Authorization: `Bearer ${userInfo[0].Token}`,
           "Content-Type": "application/json",
         },
-        params:{
-          leadId:""
-        }
+        params: {
+          leadId: "",
+        },
       })
       .then((res) => {
         const temp = res.data.data;
-       
+
         setStatus(temp);
       })
       .catch((err) => {
         console.log(err);
       });
-
-     
   }, []);
-  useEffect(()=>{
-
+  useEffect(() => {
     let temp = [];
-    if(selectedCard === 0){
+    if (selectedCard === 0) {
       temp = allClaims;
-    }
-    else{
-      temp = allClaims.filter((claim,index)=>{
-        if(String(claim.CurrentStatus) === String(selectedCard)){
+    } else {
+      temp = allClaims.filter((claim, index) => {
+        if (String(claim.CurrentStatus) === String(selectedCard)) {
           return true;
-        }
-        else{
+        } else {
           return false;
         }
-      })
-     
+      });
     }
 
     console.log(temp);
 
     setFilterCardClaim(temp);
-
-  },[selectedCard]);
+  }, [selectedCard]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
-      <Header setIsRegionChange={setIsRegionChange} isDashboard={true} />
-
+      <Header
+        setIsRegionChange={setIsRegionChange}
+        isDashboard={true}
+        setRegionSearchValue={setRegionSearchValue}
+      />
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
 
@@ -234,12 +231,16 @@ const Index = () => {
                 className="row mt-2"
                 style={{ justifyContent: "space-between" }}
               >
-                <AllStatistics allClaims={ searchInput || majorSearch || isRegionChange
-                  ? filterClaims
-                  : 
-                  selectedCard ?
-                  filterCardClaim :
-                  allClaims} setSelectedCard={setSelectedCard}/>
+                <AllStatistics
+                  allClaims={
+                    searchInput || majorSearch || isRegionChange
+                      ? filterClaims
+                      : selectedCard
+                      ? filterCardClaim
+                      : allClaims
+                  }
+                  setSelectedCard={setSelectedCard}
+                />
               </div>
               {/* End .row Dashboard top statistics */}
               <div
@@ -254,9 +255,7 @@ const Index = () => {
                 }}
               ></div>
               <div className="row">
-                <CreateList 
-                setSearchInput={setSearchInput} 
-                setType={setType} />
+                <CreateList setSearchInput={setSearchInput} setType={setType} />
               </div>
               <div
                 className="bg-dark"
@@ -280,10 +279,9 @@ const Index = () => {
                   claims={
                     searchInput || majorSearch || isRegionChange
                       ? filterClaims
-                      : 
-                      selectedCard ?
-                      filterCardClaim :
-                      allClaims
+                      : selectedCard
+                      ? filterCardClaim
+                      : allClaims
                   }
                   start={start}
                   end={end}
@@ -305,14 +303,15 @@ const Index = () => {
                     <Pagination
                       setStart={setStart}
                       setEnd={setEnd}
-                      properties={searchInput || majorSearch || isRegionChange
-                        ? filterClaims
-                        : 
-                        selectedCard > 0 ?
-                        filterCardClaim : 
-                        showRegionClaim ?
-                        filterAccordingClaim :
-                        allClaims}
+                      properties={
+                        searchInput || majorSearch || isRegionChange
+                          ? filterClaims
+                          : selectedCard > 0
+                          ? filterCardClaim
+                          : showRegionClaim
+                          ? filterAccordingClaim
+                          : allClaims
+                      }
                     />
                   </div>
                 </div>
