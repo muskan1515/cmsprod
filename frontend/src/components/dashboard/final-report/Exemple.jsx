@@ -281,7 +281,7 @@ export default function Exemple_01() {
           sno: index + 1,
           dep: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.sac}
               onChange={(e) => handleChange(index, e.target.value, "sac")}
@@ -293,8 +293,9 @@ export default function Exemple_01() {
           ), // Add default values or leave empty as needed
           item_name: (
             <select
-              style={{ marginTop: "-5px" }}
-              className="selectpicker form-select"
+              // style={{ marginTop: "-5px" }}
+              className="selectpicker form-select p-1" 
+              style={{fontSize:"smaller"}}
               data-live-search="true"
               data-width="100%"
               value={row.description}
@@ -303,7 +304,7 @@ export default function Exemple_01() {
                 handleChange(index, e.target.value, "description")
               }
             >
-              <option data-tokens="Status1" value={"Regular"}>
+              <option data-tokens="Status1" value={"Regular"} >
                 Regular
               </option>
               <option data-tokens="Status2" value={"Add on Policy"}>
@@ -345,7 +346,7 @@ export default function Exemple_01() {
           ),
           hsh_code: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.sac}
               onChange={(e) => handleChange(index, e.target.value, "sac")}
@@ -357,7 +358,7 @@ export default function Exemple_01() {
           ),
           sac: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.sac}
               onChange={(e) => handleChange(index, e.target.value, "sac")}
@@ -369,7 +370,7 @@ export default function Exemple_01() {
           ),
           remark: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.remark}
               onChange={(e) => handleChange(index, e.target.value, "remark")}
@@ -381,7 +382,7 @@ export default function Exemple_01() {
           ),
           estimate: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.estimate}
               disabled={!edit}
@@ -393,7 +394,7 @@ export default function Exemple_01() {
           ),
           assessed: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.assessed}
               onChange={(e) => handleChange(index, e.target.value, "assessed")}
@@ -407,7 +408,7 @@ export default function Exemple_01() {
           bill_sr: index + 123, // Assuming bill_sr increments with each new row
           gst: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={row.gst}
               onChange={(e) => handleChange(index, e.target.value, "gst")}
@@ -419,7 +420,7 @@ export default function Exemple_01() {
           ),
           total: (
             <input
-              className="form-control"
+              className="form-control form-control-table"
               type="text"
               value={totalValue()}
               // onChange={(e)=>handleChange(index,e.target.value,"gst")}
