@@ -7,6 +7,7 @@ import Exemple from "./Exemple";
 import Exemple_01 from "./Exemple_01";
 import Summary from "./Summary";
 import Table from "./Table";
+import EditableTable from "./Editable";
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -117,22 +118,6 @@ const PropertyVideo = ({ SomeComponent }) => {
           <div className="property_video">
             <div className="thumb">
               <Servey SomeComponent={SomeComponent} />
-              {/* <Image
-                width={692}
-                height={390}
-                className="pro_img  w100 w-100 cover"
-                src="/assets/images/background/7.jpg"
-                alt="7.jpg"
-              />
-              <div className="overlay_icon">
-                <div
-                  onClick={() => setOpen(true)}
-                  role="button"
-                  className="video_popup_btn red popup-youtube"
-                >
-                  <span className="flaticon-play"></span>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -143,23 +128,9 @@ const PropertyVideo = ({ SomeComponent }) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <Table data={materials} />
-              {/* <Image
-                width={692}
-                height={390}
-                className="pro_img  w100 w-100 cover"
-                src="/assets/images/background/7.jpg"
-                alt="7.jpg"
-              />
-              <div className="overlay_icon">
-                <div
-                  onClick={() => setOpen(true)}
-                  role="button"
-                  className="video_popup_btn red popup-youtube"
-                >
-                  <span className="flaticon-play"></span>
-                </div>
-              </div> */}
+              {/* <EditableTable /> */}
+              {/* <Table data={materials} /> */}
+              <Exemple />
             </div>
           </div>
         </div>
@@ -171,22 +142,6 @@ const PropertyVideo = ({ SomeComponent }) => {
           <div className="property_video">
             <div className="thumb">
               <Exemple_01 />
-              {/* <Image
-                width={692}
-                height={390}
-                className="pro_img  w100 w-100 cover"
-                src="/assets/images/background/7.jpg"
-                alt="7.jpg"
-              />
-              <div className="overlay_icon">
-                <div
-                  onClick={() => setOpen(true)}
-                  role="button"
-                  className="video_popup_btn red popup-youtube"
-                >
-                  <span className="flaticon-play"></span>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -198,25 +153,20 @@ const PropertyVideo = ({ SomeComponent }) => {
           <div className="property_video">
             <div className="thumb">
               <Summary />
-              {/* <Image
-                width={692}
-                height={390}
-                className="pro_img  w100 w-100 cover"
-                src="/assets/images/background/7.jpg"
-                alt="7.jpg"
-              />
-              <div className="overlay_icon">
-                <div
-                  onClick={() => setOpen(true)}
-                  role="button"
-                  className="video_popup_btn red popup-youtube"
-                >
-                  <span className="flaticon-play"></span>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
+        {/* <div
+          className="tab-pane fade row pl15 pl0-1199 pr15 pr0-1199"
+          id="table"
+          role="tabpanel"
+        >
+          <div className="property_video">
+            <div className="thumb">
+              <Table data={materials} />
+            </div>
+          </div>
+        </div> */}
       </div>
       {/* End .tab-conten */}
     </>

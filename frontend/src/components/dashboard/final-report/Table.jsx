@@ -53,6 +53,7 @@ function Table() {
         rows={rows}
         deleteRow={handleDeleteRow}
         editRow={handleEditRow}
+        setModalOpen={setModalOpen}
       />
       <button onClick={() => setModalOpen(true)} className="btn">
         Add

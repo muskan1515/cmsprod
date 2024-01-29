@@ -21727,3 +21727,8 @@ input:invalid {
 .delete-btn {
   color: #e10d05;
 }
+
+.table-input{
+  width: 40px !important;
+  /* background-color: red; */
+}

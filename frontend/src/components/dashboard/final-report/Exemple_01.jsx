@@ -14,12 +14,6 @@ const headCells = [
     label: "Bill Sr.",
     width: 100,
   },
-  //   {
-  //     id: "dep",
-  //     numeric: false,
-  //     label: "Dep%",
-  //     width: 10,
-  //   },
   {
     id: "description",
     numeric: false,
@@ -32,12 +26,7 @@ const headCells = [
     label: "SAC",
     width: 100,
   },
-  //   {
-  //     id: "remark",
-  //     numeric: false,
-  //     label: "Remark",
-  //     width: 100,
-  //   },
+
   {
     id: "estimate",
     numeric: false,
@@ -50,12 +39,6 @@ const headCells = [
     label: "Assessed",
     width: 100,
   },
-  //   {
-  //     id: "qe_qa",
-  //     numeric: false,
-  //     label: "QE-QA",
-  //     width: 100,
-  //   },
 
   {
     id: "gst",
@@ -63,30 +46,12 @@ const headCells = [
     label: "GST%",
     width: 100,
   },
-  //   {
-  //     id: "total",
-  //     numeric: false,
-  //     label: "Total",
-  //     width: 100,
-  //   },
-  //   {
-  //     id: "type",
-  //     numeric: false,
-  //     label: "Type",
-  //     width: 100,
-  //   },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Request Type",
-  //   width: 100,
-  // },
-  // {
-  //   id: "serial",
-  //   numeric: false,
-  //   label: "Insurer Claim ID.",
-  //   width: 100,
-  // },
+  {
+    id: "action",
+    numeric: false,
+    label: "Action",
+    width: 100,
+  },
 ];
 
 const data = [
@@ -106,7 +71,7 @@ const data = [
         <option data-tokens="Status3">Add on Policy(Not Effective)</option>
       </select>
     ),
-    hsh_code: (
+    sac: (
       <input
         className="form-control"
         type="text"
@@ -185,6 +150,7 @@ const data = [
         style={{ border: "1px solid black" }}
       />
     ),
+    action: <span className="flaticon-edit"></span>,
   },
 ];
 
