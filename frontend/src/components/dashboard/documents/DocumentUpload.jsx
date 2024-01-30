@@ -277,7 +277,7 @@ export default function DocumentUpload({
 
   const customStyles = {
     content: {
-      width: "50%",
+      width: "90%",
       height: "40%",
       top: "50%",
       left: "50%",
@@ -648,7 +648,7 @@ export default function DocumentUpload({
       >
         <div className="col-lg-12">
           <div className="row">
-            <div className="col-lg-12 text-end">
+            <div className="col-lg-12 text-end mb-1">
               <button
                 className="btn flaticon-close w-25 bg-danger text-light"
                 onClick={closeModal}
@@ -669,7 +669,7 @@ export default function DocumentUpload({
 
         {isImage && (
           <div>
-            <h2>Captured Image:</h2>
+            <h4 className="mt-4">Captured Image :</h4>
             <Image
               src={uploadedUrl}
               alt="Captured Image"
@@ -682,11 +682,12 @@ export default function DocumentUpload({
 
         {isVideo && (
           <div>
-            <h2>Captured Video:</h2>
+            <h4 className="mt-4">Captured Video:</h4>
             <video width="300" height="200" controls>
               <source src={uploadedUrl} type="video/webm" />
               Your browser does not support the video tag.
             </video>
+            <div className="mb-3"></div>
             <label>{uploadedFileName}</label>
           </div>
         )}
@@ -699,8 +700,8 @@ export default function DocumentUpload({
           </>
         ) : (
           <>
-            <button onClick={uploadCancelHandler}>Cancel</button>
-            <button onClick={uploadFiles}>Upload +</button>
+            <button className="btn btn-color w-100 mb-1" onClick={uploadCancelHandler}>Cancel</button>
+            <button className="btn btn-color w-100 mb-1" onClick={uploadFiles}>Upload</button>
           </>
         )}
       </Modal>
