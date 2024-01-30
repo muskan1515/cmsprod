@@ -157,12 +157,12 @@ const Index = ({ leadId, token, content }) => {
       alert("Please upload all the required data !!!");
     } else {
       const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
-
+      
+      
       const payload = JSON.stringify({ data: data });
 
       toast.loading("Uploading!");
-      axios
-        .post("/api/uploadDocument", payload, {
+      axios.post("/api/uploadDocument", payload, {
           headers: {
             Authorization: `Bearer ${unserInfo[0].Token}`,
             "Content-Type": "application/json",
@@ -177,8 +177,6 @@ const Index = ({ leadId, token, content }) => {
         });
     }
   };
-
-  console.log(leadId);
 
   return (
     <>
@@ -218,8 +216,7 @@ const Index = ({ leadId, token, content }) => {
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
-                {/* <ErrorPageContent /> */}
-                <Exemple
+                <DocumentUpload
                   setUpdatedData={setUpdatedData}
                   uploadedData={uploadedData}
                   leadId={leadId}
@@ -256,3 +253,4 @@ const Index = ({ leadId, token, content }) => {
 };
 
 export default Index;
+

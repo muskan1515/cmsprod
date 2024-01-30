@@ -315,6 +315,10 @@ export default function Exemple({
     return selectedField;
   };
 
+  const isVideo = (url)=>{
+    return url.includes(".mp4");
+  }
+
   useEffect(() => {
     console.log(uploadedData);
     const getData = () => {
@@ -323,6 +327,7 @@ export default function Exemple({
         const isUploaded = checkIsUploaded(row.doc_name);
         const isDone = checkAlreadyDone(row.doc_name);
         const isAccordingToStatus = content
+
           ? checkWithinTheContent(row)
           : checkId(status, row);
         console.log(isAccordingToStatus);
@@ -338,11 +343,17 @@ export default function Exemple({
                     style={{ display: "flex", flexDirection: "column" }}
                     key={idx}
                   >
-                    <Image
+                   {! isVideo(file.data[0].url) ?  <Image
                       src={file.data[0].thumbnail_url}
                       width={90}
                       height={90}
-                    />
+                    /> 
+                    :
+                    <video width="300" height="200" controls>
+                    <source src={file.data[0].url} type="video/webm" />
+                    Your browser does not support the video tag.
+                  </video>
+                    }
                     <a>{file.data[0].name}</a>
                     <div className="row">
                       <div className="col-lg-12">

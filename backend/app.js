@@ -19,12 +19,16 @@ const emailHandler = require('./Config/getEmailContent');
 const { default: axios } = require('axios');
 const generateUniqueToken = require('./Config/generateToken');
 const upload = require('./Middleware/fileHalper');
+const uploadToS3 = require('./Middleware/awsUpload');
+const uploadToAWS = require('./Middleware/awsUpload');
+const uploadToAWSVideo = require("./Middleware/awsUploadVideo")
 const dotenv = require("dotenv").config();
 
 const app = express();
 
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-app.use(express.json());
 const port = 3006;
 app.use(session({
   secret: 'your-secret-key', // Replace with a secret key for session management
@@ -261,7 +265,37 @@ app.post('/vehicle-details', authenticateUser, (req, res) => {
   });
 });
 
-app.post('/uploadDocument', upload.single('file'), (req, res) => {
+app.post("/uploadMedia", (req, res) => {
+  const { file ,name } = req.body;
+
+  const extension = name.split(".")[1];
+  if(extension === "jpg"){
+  
+  uploadToAWS(file, name)
+      .then((Location) => {
+          return res.status(200).json({ Location });
+      })
+      .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: "Internal Server Error" });
+      });
+    }
+    else{
+      uploadToAWSVideo(file, name)
+      .then((Location) => {
+          return res.status(200).json({ Location });
+      })
+      .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: "Internal Server Error" });
+      });
+    }
+});
+
+
+
+app.post('/uploadDocument', (req, res) => {
+
   const {data,leadId} = req.body;
 
   const array = data;
@@ -270,7 +304,6 @@ app.post('/uploadDocument', upload.single('file'), (req, res) => {
   
   array.map((data,index)=>{
 
-   
     let photo1="",photo2="",photo3="",photo4="",photo5="",photo6="";
     let photoAtt1="",photoAtt2="",photoAtt3="",photoAtt4="",photoAtt5="",photoAtt6="";
     let photo1Timestamp="",photo2Timestamp="",photo3Timestamp="",photo4Timestamp="",photo5Timestamp="",photo6Timestamp="";

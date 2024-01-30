@@ -8,6 +8,7 @@ import { forEach } from "jszip";
 import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
+import axios from "axios";
 
 const headCells = [
   // {
@@ -214,6 +215,8 @@ export default function DocumentUpload({
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
   const [loc, setLoc] = useState("");
+  const [index,setIndex] = useState(-1);
+  const [currentLabel,setCurrentLabel]=useState("");
 
   // const [uploadedData, setUploadedData] = useState([]);
 
@@ -257,13 +260,18 @@ export default function DocumentUpload({
   }, [webcamRef]);
 
   //Model Hanadle
-  function openModal() {
-    setCapturedImage(null);
-    setCapturedVideo(null);
+  function openModal(label,idx) {
+    // setCapturedImage(null);
+    // setCapturedVideo(null);
+    setIndex(idx);
+    setCurrentLabel(label);
+
     setIsOpen(true);
   }
 
   function closeModal() {
+    setIndex(-1);
+    setCurrentLabel("");
     setIsOpen(false);
   }
 
@@ -290,17 +298,166 @@ export default function DocumentUpload({
   const [isCapturingVideo, setIsCapturingVideo] = useState(false);
   const [modalDocName, setModalDocName] = useState("");
   const [capturedMedia, setCapturedMedia] = useState({});
+  const [uploadedFileName,setUploadedFileName]=useState("");
+
+  const [isImage,setIsImage]=useState(false);
+  const [isVideo,setIsVideo]=useState(false);
+
+  const [uploadedUrl,setUploadedUrl]=useState("");
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
-  const captureImage = () => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    // setCapturedMedia((prev) => ({ ...prev, [field]: { image: imageSrc } }));
-    setCapturedImage(imageSrc);
+  function generateRandomFileName(extension) {
+    const currentDate = new Date();
+    const formattedDate = currentDate
+      .toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+      .replace(/\//g, ""); // Remove slashes from the date
+  
+    const formattedTime = currentDate
+      .toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+      .replace(/:/g, ""); // Remove colons from the time
+  
+    const randomString = Math.random().toString(36).substring(7); // Generate a random string
+  
+    if (extension === "jpg") 
+     return `image_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
+
+     return `video_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
+  }
+
+  const uploadFiles = ()=>{
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const payload = {
+      file : uploadedUrl,
+      name:uploadedFileName,
+      token : userInfo[0].Token
+    }
+    location();
+    const currentDate = new Date();
+
+    axios.post("/api/uploadFile",payload)
+    .then((res)=>{
+      console.log(res.data.userData.Location);
+
+
+      const uploaded_Url = res.data.userData.Location;
+
+      const newUploadData = {
+        docName: currentLabel,
+        index: index,
+        leadId: leadId,
+        data: [
+          {
+            name: uploadedFileName,
+            thumbnail_url: uploaded_Url,
+            url: uploaded_Url,
+            location: loc,
+            time: currentDate,
+          },
+        ],
+      };
+      let oldData = uploadedData;
+      oldData.push(newUploadData);
+      setUpdatedData(oldData);
+      console.log(oldData);
+      // setUploadedUrl("");
+      setChange(true);
+
+      alert("Successfully uploaded!!");
+      return res;
+    }).catch((err)=>{
+      alert(err);
+    })
+    setIsOpen(false);
+    setUploadedUrl("");
+    setIsImage(false);
+    setIsVideo(false);
+    setUploadedFileName("");
+  }
+
+  // const uploadVideoFile = (url)=>{
+  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //   const payload = {
+  //     file : url,
+  //     token : userInfo[0].Token
+  //   }
+  //   location();
+  //   const currentDate = new Date();
+
+  //   axios.post("/api/uploadFile",payload)
+  //   .then((res)=>{
+  //     console.log(res.data.userData.Location);
+
+
+  //     const uploaded_Url = res.data.userData.Location;
+
+  //     const newUploadData = {
+  //       docName: currentLabel,
+  //       index: index,
+  //       leadId: leadId,
+  //       data: [
+  //         {
+  //           name: name,
+  //           thumbnail_url: uploaded_Url,
+  //           url: uploaded_Url,
+  //           location: loc,
+  //           time: currentDate,
+  //         },
+  //       ],
+  //     };
+  //     let oldData = uploadedData;
+  //     oldData.push(newUploadData);
+  //     setUpdatedData(oldData);
+  //     console.log(oldData);
+  //     // setUploadedUrl("");
+  //     setChange(true);
+
+  //     alert("Successfully uploaded!!");
+  //     return res;
+  //   }).catch((err)=>{
+  //     alert(err);
+  //   })
+  // }
+
+
+
+  const handleUploadImage = async() => {
+    
+    try {
+      const imageSrc = webcamRef.current.getScreenshot();
+    const name = generateRandomFileName("jpg");
+
+    setUploadedUrl(imageSrc);
+    setUploadedFileName(name);
+    setIsImage(true);
+    } catch (error) {
+      console.error("Error handling upload:", error);
+    }
+  
   };
 
-  const toggleCaptureVideo = () => {
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+
+  const handleUploadVideo = () => {
+    try{
     if (!isCapturingVideo) {
       // Start capturing video
       setIsCapturingVideo(true);
@@ -326,47 +483,30 @@ export default function DocumentUpload({
         const blob = new Blob(chunksRef.current, { type: "video/webm" });
         console.log("Blob", blob);
         const videoUrl = URL.createObjectURL(blob);
-        setCapturedVideo(videoUrl);
-        setIsCapturingVideo(false);
+        const name = generateRandomFileName("mp4");
+
+        blobToBase64(blob).then((res)=>{
+          console.log(res)
+          setUploadedUrl(res);
+            setUploadedFileName(name);
+            setIsVideo(true);
+         
+        })
+        .catch((err)=>{
+          alert(err);
+        })
       };
-
-      mediaRecorder.start();
-    } else {
-      // Stop capturing video
-      mediaRecorderRef.current.stop();
-    }
-  };
-
-  const handleUpload = (result, label, idx) => {
-    location();
-    try {
-      const fileUrl = result.info.secure_url;
-      console.log(uploadedData, label, result);
-
-      const newUploadData = {
-        docName: label,
-        index: idx,
-        leadId: leadId,
-        data: [
-          {
-            name: result.info.original_filename + "." + result.info.format,
-            thumbnail_url: result.info.thumbnail_url,
-            url: result.info.url,
-            location: loc,
-            time: result.info.created_at,
-          },
-        ],
-      };
-
-      let oldData = uploadedData;
-      oldData.push(newUploadData);
-      setUpdatedData(oldData);
-      setChange(true);
+        // setIsCapturingVideo(false);
+        mediaRecorder.start();
+      } else {
+        // Stop capturing video
+        mediaRecorderRef.current.stop();
+      }
     } catch (error) {
       console.error("Error handling upload:", error);
     }
   };
-
+  
   const checkWithinTheContent = (row) => {
     const present = content.includes(row.doc_name);
 
@@ -399,6 +539,12 @@ export default function DocumentUpload({
 
     return selectedField;
   };
+
+  
+  const uploadCancelHandler = ()=>{
+    setUploadedUrl("");
+    setUploadedFileName("");
+  }
 
   useEffect(() => {
     console.log(uploadedData);
@@ -454,14 +600,13 @@ export default function DocumentUpload({
               }
               return null;
             }),
-
             action: (
               <div>
                 <div className="">
                   <button
                     className="btn btn-color w-100"
                     style={{}}
-                    onClick={openModal}
+                    onClick={()=>openModal(row.doc_name,index)}
                     title="Upload File"
                   >
                     <span className="">
@@ -489,7 +634,8 @@ export default function DocumentUpload({
       console.log(uploadedData);
     }
   }, [uploadedData]);
-  console.log(uploadedData);
+  
+  // console.log(uploadedData);
 
   return (
     <>
@@ -515,32 +661,39 @@ export default function DocumentUpload({
           width={1280}
           videoConstraints={videoConstraints}
         />
-        <button onClick={captureImage}>Capture Image</button>
-        <button onClick={toggleCaptureVideo}>
-          {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
-        </button>
-
-        {capturedImage && (
+          {isImage && (
           <div>
             <h2>Captured Image:</h2>
             <Image
-              src={capturedImage}
+              src={uploadedUrl}
               alt="Captured Image"
               width={300}
               height={200}
             />
+            <label>{uploadedFileName}</label>
           </div>
         )}
 
-        {capturedVideo && (
+        {isVideo && (
           <div>
             <h2>Captured Video:</h2>
             <video width="300" height="200" controls>
-              <source src={capturedVideo} type="video/webm" />
+              <source src={uploadedUrl} type="video/webm" />
               Your browser does not support the video tag.
             </video>
+             <label>{uploadedFileName}</label>
           </div>
         )}
+        {!uploadedUrl ? <><button onClick={handleUploadImage}>Capture Image</button>
+        <button onClick={handleUploadVideo}>
+          {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
+        </button></> : 
+        <><button onClick={uploadCancelHandler}>Cancel</button>
+        <button onClick={uploadFiles}>
+          Upload +
+        </button></>}
+
+      
       </Modal>
     </>
   );

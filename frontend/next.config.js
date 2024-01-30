@@ -20,7 +20,8 @@ const nextConfig = {
       "avatars.githubusercontent.com",
       "lh3.googleusercontent.com",
       "*.cloudinary.com",
-    ],
+      'cmsdocv1.s3.ap-south-1.amazonaws.com'],
+      
   },
 };
 

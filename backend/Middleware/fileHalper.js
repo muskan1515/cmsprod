@@ -22,7 +22,24 @@ const upload = multer({
       cb(null, file.originalname);
     },
   }),
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5 MB (adjust as needed)
+  },
 });
+
+
+upload.singleWithLogging = function (field) {
+  return (req, res, next) => {
+    upload.single(field)(req, res, (err) => {
+      if (err) {
+        console.error('Error uploading file:', err);
+        return next(err);
+      }
+      console.log('File uploaded successfully:', req.file);
+      next();
+    });
+  };
+};
 
 
 module.exports = upload
