@@ -18,6 +18,7 @@ import {
 
 const SidebarMenu = ({leadId,email,policyNo,vehicleNo,Insured}) => {
 
+  
   console.log(leadId);
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);

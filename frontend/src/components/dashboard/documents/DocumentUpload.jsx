@@ -272,6 +272,7 @@ export default function DocumentUpload({
   function closeModal() {
     setIndex(-1);
     setCurrentLabel("");
+    setIsCapturingVideo(false);
     setIsOpen(false);
   }
 
@@ -288,11 +289,44 @@ export default function DocumentUpload({
     },
   };
 
-  const videoConstraints = {
+  function getUserMediaWithConstraints(videoConstraints) {
+    return navigator.mediaDevices.getUserMedia({ video: videoConstraints });
+  }
+
+  const [videoConst,setVideoConst]=useState({
     width: 1280,
     height: 720,
-    facingMode: "user",
-  };
+    facingMode: { ideal: "environment" } // "environment" corresponds to the back camera
+  });
+  
+  useEffect(()=>{
+    
+    getUserMediaWithConstraints(videoConst)
+      .then((stream) => {
+        // Handle the stream, for example, attach it to a video element
+        const videoElement = document.getElementById('videoElement');
+        videoElement.srcObject = stream;
+      })
+      .catch((error) => {
+        console.error('Error accessing back camera. Trying user camera.', error);
+  
+        // Retry with the user camera
+        const videoConstraintsUser = ( { width: 1280, height: 720, facingMode: "user" });
+        getUserMediaWithConstraints(videoConstraintsUser)
+          .then((userStream) => {
+            // Handle the user camera stream
+            setVideoConst(videoConstraintsUser)
+            const videoElement = document.getElementById('videoElement');
+            videoElement.srcObject = userStream;
+          })
+          .catch((userError) => {
+            console.error('Error accessing user camera:', userError);
+          });
+      });
+  
+},[]);
+
+  
   const [capturedImage, setCapturedImage] = useState([]);
   const [capturedVideo, setCapturedVideo] = useState([]);
   const [isCapturingVideo, setIsCapturingVideo] = useState(false);
@@ -308,6 +342,15 @@ export default function DocumentUpload({
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
+
+  const [webcamOpened, setWebcamOpened] = useState(false);
+  const [isCapturingEnabled, setIsCapturingEnabled] = useState(false);
+
+
+  const handleWebcamOpen = () => {
+    setWebcamOpened(true);
+    setIsCapturingEnabled(true);
+  };
   function generateRandomFileName(extension) {
     const currentDate = new Date();
     const formattedDate = currentDate
@@ -491,11 +534,12 @@ export default function DocumentUpload({
               alert(err);
             });
         };
-        // setIsCapturingVideo(false);
+        
         mediaRecorder.start();
       } else {
         // Stop capturing video
         mediaRecorderRef.current.stop();
+        setIsCapturingVideo(false);
       }
     } catch (error) {
       console.error("Error handling upload:", error);
@@ -538,6 +582,7 @@ export default function DocumentUpload({
   const uploadCancelHandler = () => {
     setUploadedUrl("");
     setUploadedFileName("");
+    setIsCapturingVideo(false);
   };
 
   useEffect(() => {
@@ -661,7 +706,8 @@ export default function DocumentUpload({
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               width={1980}
-              videoConstraints={videoConstraints}
+              onUserMedia={() => handleWebcamOpen()}
+              videoConstraints={videoConst}
             />
           </div>
         </div>
@@ -690,7 +736,7 @@ export default function DocumentUpload({
             <label>{uploadedFileName}</label>
           </div>
         )}
-        {!uploadedUrl ? (
+        {!uploadedUrl &&webcamOpened && isCapturingEnabled  ?( 
           <>
             <button
               className="btn btn-color w-100 mb-1"

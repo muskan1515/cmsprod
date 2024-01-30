@@ -8,18 +8,7 @@ const headCells = [
     label: "File Name",
     width: 100,
   },
-  {
-    id: "date",
-    numeric: false,
-    label: "Uploaded On",
-    width: 100,
-  },
-  {
-    id: "date",
-    numeric: false,
-    label: "Uploaded By",
-    width: 100,
-  },
+  
   {
     id: "status",
     numeric: false,

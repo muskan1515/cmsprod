@@ -48,6 +48,10 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   };
 
   const handleSubmit = () => {
+    if(!emailAddress || !policyNos || !date){
+      alert("All Marked field should be filled!!");
+    }
+    else{
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     console.log(selectedItems);
     const payload = {
@@ -60,6 +64,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
       content2: createStringFromSelectedItems2(selectedItems),
       leadId: leadId,
     };
+  }
 
     axios
       .post("/api/sendCustomEmail", payload, {

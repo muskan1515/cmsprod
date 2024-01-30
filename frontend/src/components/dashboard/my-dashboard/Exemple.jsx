@@ -184,12 +184,12 @@ export default function Exemple({
         registration_no: claim.RegistrationNo,
         region: claim.Region,
         added_date: formatDate(claim.AddedDate),
-        city: tempGarage ? tempGarage[1] : "NA",
-        state: tempGarage ? tempGarage[2] : "NA",
-        assigned_garage: tempGarage ? tempGarage[0] : "NA",
-        case_age: "N.A.Y.",
+        city: tempGarage ? tempGarage[1] : "N.Aa",
+        state: tempGarage ? tempGarage[2] : "N.A.",
+        assigned_garage: tempGarage ? tempGarage[0] : "N.A.",
+        case_age: "N.A.",
         tat: `${tatInDays} days`,
-        repairer_mail_id: 'test@gmail.com',
+        repairer_mail_id: claim.RepairerMailId ? claim.RepairerMailId : "N.A.",
         document:
           claim.IsDocumentUploaded > 0 ? (
             <span className="text-success" style={{ marginLeft: "40px" }}>

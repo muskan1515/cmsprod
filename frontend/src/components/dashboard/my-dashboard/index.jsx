@@ -235,8 +235,7 @@ const Index = () => {
                   allClaims={
                     searchInput || majorSearch || isRegionChange
                       ? filterClaims
-                      : selectedCard
-                      ? filterCardClaim
+                      
                       : allClaims
                   }
                   setSelectedCard={setSelectedCard}
