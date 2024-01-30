@@ -277,7 +277,7 @@ export default function DocumentUpload({
 
   const customStyles = {
     content: {
-      width: "90%",
+      width: "100%",
       height: "60%",
       top: "50%",
       left: "50%",
@@ -660,10 +660,9 @@ export default function DocumentUpload({
               height={160}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              width={1080}
+              width={1980}
               videoConstraints={videoConstraints}
             />
-            <div className="col-lg-12"></div>
           </div>
         </div>
 
@@ -671,12 +670,13 @@ export default function DocumentUpload({
           <div>
             <h4 className="mt-4">Captured Image :</h4>
             <Image
+              className="mb-3"
               src={uploadedUrl}
               alt="Captured Image"
               width={300}
-              height={200}
+              height={300}
             />
-            <label>{uploadedFileName}</label>
+            <label className="mb-3">{uploadedFileName}</label>
           </div>
         )}
 
@@ -687,21 +687,35 @@ export default function DocumentUpload({
               <source src={uploadedUrl} type="video/webm" />
               Your browser does not support the video tag.
             </video>
-            <div className="mb-3"></div>
             <label>{uploadedFileName}</label>
           </div>
         )}
         {!uploadedUrl ? (
           <>
-            <button className="btn btn-color w-100 mb-1" onClick={handleUploadImage}>Capture Image</button>
-            <button className="btn btn-color w-100 p-1" onClick={handleUploadVideo}>
+            <button
+              className="btn btn-color w-100 mb-1"
+              onClick={handleUploadImage}
+            >
+              Capture Image
+            </button>
+            <button
+              className="btn btn-color w-100 p-1"
+              onClick={handleUploadVideo}
+            >
               {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
             </button>
           </>
         ) : (
           <>
-            <button className="btn btn-color w-100 mb-1" onClick={uploadCancelHandler}>Cancel</button>
-            <button className="btn btn-color w-100 mb-1" onClick={uploadFiles}>Upload</button>
+            <button
+              className="btn btn-color w-100 mb-1"
+              onClick={uploadCancelHandler}
+            >
+              Cancel
+            </button>
+            <button className="btn btn-color w-100 mb-1" onClick={uploadFiles}>
+              Upload
+            </button>
           </>
         )}
       </Modal>
