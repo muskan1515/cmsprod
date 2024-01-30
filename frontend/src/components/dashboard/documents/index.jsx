@@ -42,7 +42,7 @@ const Index = ({ leadId, token, content }) => {
     axios
       .get("/api/getStatus", {
         headers: {
-          Authorization: `Bearer ${unserInfo[0].Token}`,
+          Authorization: `Bearer ${""}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -71,7 +71,7 @@ const Index = ({ leadId, token, content }) => {
     axios
       .get("/api/getDocumentList", {
         headers: {
-          Authorization: `Bearer ${unserInfo[0].Token}`,
+          Authorization: `Bearer ${""}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -93,7 +93,7 @@ const Index = ({ leadId, token, content }) => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });                               
 
     setIsLoading(false);
 
@@ -112,7 +112,7 @@ const Index = ({ leadId, token, content }) => {
     axios
       .post("/api/getClaimDetails", payload, {
         headers: {
-          Authorization: `Bearer ${unserInfo[0].Token}`,
+          Authorization: `Bearer ${""}`,
           "Content-Type": "application/json",
         },
       })
@@ -164,7 +164,7 @@ const Index = ({ leadId, token, content }) => {
       toast.loading("Uploading!");
       axios.post("/api/uploadDocument", payload, {
           headers: {
-            Authorization: `Bearer ${unserInfo[0].Token}`,
+            Authorization: `Bearer ${""}`,
             "Content-Type": "application/json",
           },
         })
