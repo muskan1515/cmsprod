@@ -5,7 +5,8 @@ import { FaEye } from "react-icons/fa";
 // import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
 import Form_vehicle from "./Form_vehicle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 // import toast from "react-hot-toast";
 
 const Form = ({
@@ -45,7 +46,7 @@ const Form = ({
   const router = useRouter();
   const [editCase_01, setEditCase_01] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
-
+  const [details, setDetails] = useState();
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
   //   };
@@ -64,6 +65,70 @@ const Form = ({
   //   setEdit(true);
   // };
 
+  // useEffect(() => {
+  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  //   if (!userInfo) {
+  //     router.push("/login");
+  //   }
+  //   axios
+  //     .get("/api/getOnlineVehicleData", {
+  //       headers: {
+  //         Authorization: `Bearer ${userInfo[0].Token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log( "datata",res.data.data[0]);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err",err);
+  //     });
+  // }, []);
+
+  const handleFetchData = async (req, res) => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (!userInfo) {
+      router.push("/login");
+    }
+    try {
+      const response = axios
+        .get("/api/getOnlineVehicleData", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setDetails(res.data.data);
+          console.log("datata", res.data.data);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+
+      setEditCase_01(true);
+      console.log("data", data);
+    } catch (error) {
+      console.log("Error from Fetch Details-> ", error);
+    }
+  };
+  setVehicleModel(details?.rc_maker_model),
+    setRegisteredOwner(details?.rc_owner_name),
+    setDateRegistration(details?.rc_regn_dt),
+    setEngineNumber(details?.rc_eng_no),
+    setLicenseNumber(details?.rc_regn_no),
+    setVehicleChassisNumber(details?.rc_chasi_no),
+    setVehicleFuelType(details?.bancs_Fuel_Type),
+    setPUCNumber,
+    setTransferDate,
+    setEngineType,
+    setAddedBy,
+    setLicenseType,
+    setIssuingAuthority;
+
+  console.log("datatattatatatata", details?.rc_maker_model);
   return (
     <>
       <div className=" faq_according row">
@@ -124,7 +189,11 @@ const Form = ({
                     )}
                   </div>
                   <div className="col-lg-2 text-start">
-                    <button className="btn-thm" style={{}}>
+                    <button
+                      className="btn-thm"
+                      onClick={handleFetchData}
+                      style={{}}
+                    >
                       Fetch Details
                     </button>
                   </div>
@@ -601,6 +670,42 @@ const Form = ({
                                 : claim?.vehicleDetails?.VehicleFuelType
                             }
                             onChange={(e) => setVehicleFuelType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Registerd Number <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              RegisteredNumber
+                                ? RegisteredNumber
+                                : claim?.vehicleDetails?.RegisteredNumber
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
 
                             // placeholder="Enter Registration No."
                           />
