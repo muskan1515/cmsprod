@@ -278,7 +278,7 @@ export default function DocumentUpload({
   const customStyles = {
     content: {
       width: "90%",
-      height: "40%",
+      height: "60%",
       top: "50%",
       left: "50%",
       right: "auto",
@@ -660,7 +660,7 @@ export default function DocumentUpload({
               height={160}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              width={1280}
+              width={1080}
               videoConstraints={videoConstraints}
             />
             <div className="col-lg-12"></div>
