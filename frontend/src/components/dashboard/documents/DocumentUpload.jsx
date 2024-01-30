@@ -215,8 +215,8 @@ export default function DocumentUpload({
   const [filesUrl, setFilesUrl] = useState("");
   const [attachment, setAttachment] = useState("");
   const [loc, setLoc] = useState("");
-  const [index,setIndex] = useState(-1);
-  const [currentLabel,setCurrentLabel]=useState("");
+  const [index, setIndex] = useState(-1);
+  const [currentLabel, setCurrentLabel] = useState("");
 
   // const [uploadedData, setUploadedData] = useState([]);
 
@@ -260,7 +260,7 @@ export default function DocumentUpload({
   }, [webcamRef]);
 
   //Model Hanadle
-  function openModal(label,idx) {
+  function openModal(label, idx) {
     // setCapturedImage(null);
     // setCapturedVideo(null);
     setIndex(idx);
@@ -277,13 +277,13 @@ export default function DocumentUpload({
 
   const customStyles = {
     content: {
-      width: "70%",
+      width: "100%",
       height: "60%",
       top: "50%",
       left: "50%",
       right: "auto",
       bottom: "auto",
-      marginRight: "-50%",
+      // marginRight: "-50%",
       transform: "translate(-50%, -50%)",
     },
   };
@@ -298,12 +298,12 @@ export default function DocumentUpload({
   const [isCapturingVideo, setIsCapturingVideo] = useState(false);
   const [modalDocName, setModalDocName] = useState("");
   const [capturedMedia, setCapturedMedia] = useState({});
-  const [uploadedFileName,setUploadedFileName]=useState("");
+  const [uploadedFileName, setUploadedFileName] = useState("");
 
-  const [isImage,setIsImage]=useState(false);
-  const [isVideo,setIsVideo]=useState(false);
+  const [isImage, setIsImage] = useState(false);
+  const [isVideo, setIsVideo] = useState(false);
 
-  const [uploadedUrl,setUploadedUrl]=useState("");
+  const [uploadedUrl, setUploadedUrl] = useState("");
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
@@ -317,7 +317,7 @@ export default function DocumentUpload({
         year: "numeric",
       })
       .replace(/\//g, ""); // Remove slashes from the date
-  
+
     const formattedTime = currentDate
       .toLocaleTimeString("en-US", {
         hour12: false,
@@ -326,64 +326,65 @@ export default function DocumentUpload({
         second: "2-digit",
       })
       .replace(/:/g, ""); // Remove colons from the time
-  
-    const randomString = Math.random().toString(36).substring(7); // Generate a random string
-  
-    if (extension === "jpg") 
-     return `image_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
 
-     return `video_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
+    const randomString = Math.random().toString(36).substring(7); // Generate a random string
+
+    if (extension === "jpg")
+      return `image_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
+
+    return `video_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
   }
 
-  const uploadFiles = ()=>{
+  const uploadFiles = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload = {
-      file : uploadedUrl,
-      name:uploadedFileName,
-      token : userInfo[0].Token
-    }
+      file: uploadedUrl,
+      name: uploadedFileName,
+      token: userInfo[0].Token,
+    };
     location();
     const currentDate = new Date();
 
-    axios.post("/api/uploadFile",payload)
-    .then((res)=>{
-      console.log(res.data.userData.Location);
+    axios
+      .post("/api/uploadFile", payload)
+      .then((res) => {
+        console.log(res.data.userData.Location);
 
+        const uploaded_Url = res.data.userData.Location;
 
-      const uploaded_Url = res.data.userData.Location;
+        const newUploadData = {
+          docName: currentLabel,
+          index: index,
+          leadId: leadId,
+          data: [
+            {
+              name: uploadedFileName,
+              thumbnail_url: uploaded_Url,
+              url: uploaded_Url,
+              location: loc,
+              time: currentDate,
+            },
+          ],
+        };
+        let oldData = uploadedData;
+        oldData.push(newUploadData);
+        setUpdatedData(oldData);
+        console.log(oldData);
+        // setUploadedUrl("");
+        setChange(true);
 
-      const newUploadData = {
-        docName: currentLabel,
-        index: index,
-        leadId: leadId,
-        data: [
-          {
-            name: uploadedFileName,
-            thumbnail_url: uploaded_Url,
-            url: uploaded_Url,
-            location: loc,
-            time: currentDate,
-          },
-        ],
-      };
-      let oldData = uploadedData;
-      oldData.push(newUploadData);
-      setUpdatedData(oldData);
-      console.log(oldData);
-      // setUploadedUrl("");
-      setChange(true);
-
-      alert("Successfully uploaded!!");
-      return res;
-    }).catch((err)=>{
-      alert(err);
-    })
+        alert("Successfully uploaded!!");
+        return res;
+      })
+      .catch((err) => {
+        alert(err);
+      });
     setIsOpen(false);
     setUploadedUrl("");
     setIsImage(false);
     setIsVideo(false);
     setUploadedFileName("");
-  }
+  };
 
   // const uploadVideoFile = (url)=>{
   //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -397,7 +398,6 @@ export default function DocumentUpload({
   //   axios.post("/api/uploadFile",payload)
   //   .then((res)=>{
   //     console.log(res.data.userData.Location);
-
 
   //     const uploaded_Url = res.data.userData.Location;
 
@@ -429,73 +429,68 @@ export default function DocumentUpload({
   //   })
   // }
 
-
-
-  const handleUploadImage = async() => {
-    
+  const handleUploadImage = async () => {
     try {
       const imageSrc = webcamRef.current.getScreenshot();
-    const name = generateRandomFileName("jpg");
+      const name = generateRandomFileName("jpg");
 
-    setUploadedUrl(imageSrc);
-    setUploadedFileName(name);
-    setIsImage(true);
+      setUploadedUrl(imageSrc);
+      setUploadedFileName(name);
+      setIsImage(true);
     } catch (error) {
       console.error("Error handling upload:", error);
     }
-  
   };
 
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.onloadend = () => resolve(reader.result.split(",")[1]);
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
   };
 
-
   const handleUploadVideo = () => {
-    try{
-    if (!isCapturingVideo) {
-      // Start capturing video
-      setIsCapturingVideo(true);
-      setCapturedVideo(null);
-      chunksRef.current = []; // Reset chunks
-      const videoConstraints = {
-        width: 1280,
-        height: 720,
-        facingMode: "user", // or 'environment' for rear camera
-      };
+    try {
+      if (!isCapturingVideo) {
+        // Start capturing video
+        setIsCapturingVideo(true);
+        setCapturedVideo(null);
+        chunksRef.current = []; // Reset chunks
+        const videoConstraints = {
+          width: 1280,
+          height: 720,
+          facingMode: "user", // or 'environment' for rear camera
+        };
 
-      const mediaRecorder = new MediaRecorder(webcamRef.current.stream);
-      console.log("MEdia", mediaRecorder);
-      mediaRecorderRef.current = mediaRecorder;
+        const mediaRecorder = new MediaRecorder(webcamRef.current.stream);
+        console.log("MEdia", mediaRecorder);
+        mediaRecorderRef.current = mediaRecorder;
 
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          chunksRef.current.push(event.data);
-        }
-      };
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            chunksRef.current.push(event.data);
+          }
+        };
 
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "video/webm" });
-        console.log("Blob", blob);
-        const videoUrl = URL.createObjectURL(blob);
-        const name = generateRandomFileName("mp4");
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(chunksRef.current, { type: "video/webm" });
+          console.log("Blob", blob);
+          const videoUrl = URL.createObjectURL(blob);
+          const name = generateRandomFileName("mp4");
 
-        blobToBase64(blob).then((res)=>{
-          console.log(res)
-          setUploadedUrl(res);
-            setUploadedFileName(name);
-            setIsVideo(true);
-         
-        })
-        .catch((err)=>{
-          alert(err);
-        })
-      };
+          blobToBase64(blob)
+            .then((res) => {
+              console.log(res);
+              setUploadedUrl(res);
+              setUploadedFileName(name);
+              setIsVideo(true);
+            })
+            .catch((err) => {
+              alert(err);
+            });
+        };
         // setIsCapturingVideo(false);
         mediaRecorder.start();
       } else {
@@ -506,7 +501,7 @@ export default function DocumentUpload({
       console.error("Error handling upload:", error);
     }
   };
-  
+
   const checkWithinTheContent = (row) => {
     const present = content.includes(row.doc_name);
 
@@ -540,11 +535,10 @@ export default function DocumentUpload({
     return selectedField;
   };
 
-  
-  const uploadCancelHandler = ()=>{
+  const uploadCancelHandler = () => {
     setUploadedUrl("");
     setUploadedFileName("");
-  }
+  };
 
   useEffect(() => {
     console.log(uploadedData);
@@ -606,7 +600,7 @@ export default function DocumentUpload({
                   <button
                     className="btn btn-color w-100"
                     style={{}}
-                    onClick={()=>openModal(row.doc_name,index)}
+                    onClick={() => openModal(row.doc_name, index)}
                     title="Upload File"
                   >
                     <span className="">
@@ -634,7 +628,7 @@ export default function DocumentUpload({
       console.log(uploadedData);
     }
   }, [uploadedData]);
-  
+
   // console.log(uploadedData);
 
   return (
@@ -652,48 +646,78 @@ export default function DocumentUpload({
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <button onClick={closeModal}>close</button>
-        <Webcam
-          audio={false}
-          height={720}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width={1280}
-          videoConstraints={videoConstraints}
-        />
-          {isImage && (
+        <div className="col-lg-12">
+          <div className="row">
+            <div className="col-lg-12 text-end mb-1">
+              <button
+                className="btn flaticon-close w-25 bg-danger text-light"
+                onClick={closeModal}
+              ></button>
+            </div>
+            <Webcam
+              style={{ marginLeft: "" }}
+              audio={false}
+              height={160}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              width={1980}
+              videoConstraints={videoConstraints}
+            />
+          </div>
+        </div>
+
+        {isImage && (
           <div>
-            <h2>Captured Image:</h2>
+            <h4 className="mt-4">Captured Image :</h4>
             <Image
+              className="mb-3"
               src={uploadedUrl}
               alt="Captured Image"
               width={300}
-              height={200}
+              height={300}
             />
-            <label>{uploadedFileName}</label>
+            <label className="mb-3">{uploadedFileName}</label>
           </div>
         )}
 
         {isVideo && (
           <div>
-            <h2>Captured Video:</h2>
+            <h4 className="mt-4">Captured Video:</h4>
             <video width="300" height="200" controls>
               <source src={uploadedUrl} type="video/webm" />
               Your browser does not support the video tag.
             </video>
-             <label>{uploadedFileName}</label>
+            <label>{uploadedFileName}</label>
           </div>
         )}
-        {!uploadedUrl ? <><button onClick={handleUploadImage}>Capture Image</button>
-        <button onClick={handleUploadVideo}>
-          {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
-        </button></> : 
-        <><button onClick={uploadCancelHandler}>Cancel</button>
-        <button onClick={uploadFiles}>
-          Upload +
-        </button></>}
-
-      
+        {!uploadedUrl ? (
+          <>
+            <button
+              className="btn btn-color w-100 mb-1"
+              onClick={handleUploadImage}
+            >
+              Capture Image
+            </button>
+            <button
+              className="btn btn-color w-100 p-1"
+              onClick={handleUploadVideo}
+            >
+              {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className="btn btn-color w-100 mb-1"
+              onClick={uploadCancelHandler}
+            >
+              Cancel
+            </button>
+            <button className="btn btn-color w-100 mb-1" onClick={uploadFiles}>
+              Upload
+            </button>
+          </>
+        )}
       </Modal>
     </>
   );
