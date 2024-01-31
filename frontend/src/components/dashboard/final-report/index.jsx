@@ -55,7 +55,7 @@ const index = ({SomeComponent}) => {
                 </div> */}
               </div>
               {/* End .row */}
-              <div className="shop_single_tab_content style2 mt30">
+              <div className="shop_single_tab_content style2">
                 <PropertyVideo  SomeComponent={SomeComponent}/>
               </div>
 

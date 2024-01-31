@@ -77,7 +77,7 @@ const Servey = ({}) => {
             </div>
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-3 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -88,7 +88,7 @@ const Servey = ({}) => {
                       // marginTop: "-13px",
                     }}
                   >
-                    Date of Accident <span class="text-danger">*</span>
+                    Date of Accident <span class="text-danger">*</span> :
                   </label>
                 </div>
                 <div className="col-lg-8">
@@ -104,7 +104,7 @@ const Servey = ({}) => {
             </div>
             <div className="col-lg-12">
               <div className="row mt-1 mb-1">
-                <div className="col-lg-3 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -113,7 +113,7 @@ const Servey = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Time of Accident <span class="text-danger">*</span>
+                    Time of Accident <span class="text-danger">*</span> :
                   </label>
                 </div>
                 <div className="col-lg-7">
@@ -128,7 +128,7 @@ const Servey = ({}) => {
             </div>
             <div className="col-lg-12">
               <div className="row">
-                <div className="col-lg-3 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -139,7 +139,7 @@ const Servey = ({}) => {
                       // marginTop: "-13px",
                     }}
                   >
-                    Place of Accident <span class="text-danger">*</span>
+                    Place of Accident <span class="text-danger">*</span> :
                   </label>
                 </div>
                 <div className="col-lg-7">
@@ -158,7 +158,7 @@ const Servey = ({}) => {
             </div>
             <div className="col-lg-12">
               <div className="row">
-                <div className="col-lg-3 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -169,7 +169,7 @@ const Servey = ({}) => {
                       // marginTop: "-13px",
                     }}
                   >
-                    Place of Survey <span class="text-danger">*</span>
+                    Place of Survey <span class="text-danger">*</span> :
                   </label>
                 </div>
                 <div className="col-lg-7">
@@ -193,75 +193,80 @@ const Servey = ({}) => {
             <h4>Survey Details :</h4>
             <hr />
           </div>
-          <div className="col-lg-12">
-            <div className="row mt-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  Allotment Date <span class="text-danger">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                {/* <input
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="row mt-1">
+                <div className="col-lg-6 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Allotment Date <span class="text-danger">*</span> :
+                  </label>
+                </div>
+                <div className="col-lg-6">
+                  {/* <input
               type="date"
               className="form-control"
               id="propertyTitle"
             /> */}
-                <MyDatePicker /><span className="flaticon-calendar m-1 text-dark"></span>
+                  <MyDatePicker />
+                  {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-lg-12">
-            <div className="row mt-1">
-              <div className="col-lg-4 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  Inspection <span class="text-danger">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                {/* <input
+            <div className="col-lg-6">
+              <div className="row mt-1">
+                <div className="col-lg-5 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Inspection <span class="text-danger">*</span> :
+                  </label>
+                </div>
+                <div className="col-lg-7">
+                  {/* <input
               type="date"
               className="form-control"
               id="propertyTitle"
             /> */}
-                <MyDatePicker /><span className="flaticon-calendar m-1 text-dark"></span>
+                  <MyDatePicker />
+                  {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-lg-12">
+
+          <div className="col-lg-12 mt-2">
             <div className="row">
               <div className="col-lg-4 my_profile_setting_input form-group">
                 <label
                   htmlFor=""
                   className="text-color"
                   style={{
-                    // paddingTop: "15px",
+                    paddingTop: "5px",
                     color: "#2e008b",
                     fontWeight: "",
                     // marginTop: "-13px",
                   }}
                 >
-                  Spot Survey Recieved
+                  Spot Survey Recieved :
                 </label>
               </div>
-              <div className="col-lg-7">
+              <div className="col-lg-8">
                 <input
                   type="text"
                   className="form-control"
@@ -326,7 +331,7 @@ const Servey = ({}) => {
           <div className="col-lg-12">
             <h4>Details of Loads / Passenger :</h4>
             <hr />
-            <div className="card">
+            <div className="card" style={{height:"200px"}}>
               <Editor />
             </div>
           </div>
@@ -334,7 +339,7 @@ const Servey = ({}) => {
           <div className="col-lg-12 mt-3">
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
-            <div className="card">
+            <div className="card" style={{height:"200px"}}>
               <Editor />
             </div>
           </div>
@@ -342,7 +347,7 @@ const Servey = ({}) => {
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
-            <div className="card">
+            <div className="card" style={{height:"200px"}}>
               <Editor />
             </div>
           </div>
