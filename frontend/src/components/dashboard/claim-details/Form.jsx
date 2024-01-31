@@ -42,9 +42,105 @@ const Form = ({
   VehicleFuelType,
   setVehicleFuelType,
   onSaveHandler,
+  //New Fields
+  setVehicleClassDescription,
+  setMakerDesc,
+  setMakerModel,
+  setManufactureMonth,
+  setVehicleGvw,
+  setVehicleCubicCap,
+  setVehicleSeatCap,
+  setVehiclePermanentAddress,
+  setfitUpto,
+  setRcPasiaModelCode,
+  setRcInsuranceComp,
+  setRcInsuranceUpto,
+  setRcRegisteredAt,
+  setRcBlacklistStatus,
+  setRcStatus,
+  setRcVehicleType,
+  setBancsModelCode,
+  setBancsMakeCode,
+  setBancsSubtypeCode,
+  setBancsBodyType,
+  setBancsVehicleClass,
+  setBancsVehicleSegment,
+  setRcRtoCode,
+
+  VehicleClassDescription,
+  MakerDesc,
+  MakerModel,
+  ManufactureMonth,
+  VehicleGvw,
+  VehicleCubicCap,
+  VehicleSeatCap,
+  VehiclePermanentAddress,
+  fitUpto,
+  RcPasiaModelCode,
+  RcInsuranceComp,
+  RcInsuranceUpto,
+  RcRegisteredAt,
+  RcBlacklistStatus,
+  RcStatus,
+  RcVehicleType,
+  BancsModelCode,
+  BancsMakeCode,
+  BancsSubtypeCode,
+  BancsBodyType,
+  BancsVehicleClass,
+  BancsVehicleSegment,
+  RcRtoCode,
+  //New Fields
+  setVehicleClassDescription,
+  setMakerDesc,
+  setMakerModel,
+  setManufactureMonth,
+  setVehicleGvw,
+  setVehicleCubicCap,
+  setVehicleSeatCap,
+  setVehiclePermanentAddress,
+  setfitUpto,
+  setRcPasiaModelCode,
+  setRcInsuranceComp,
+  setRcInsuranceUpto,
+  setRcRegisteredAt,
+  setRcBlacklistStatus,
+  setRcStatus,
+  setRcVehicleType,
+  setBancsModelCode,
+  setBancsMakeCode,
+  setBancsSubtypeCode,
+  setBancsBodyType,
+  setBancsVehicleClass,
+  setBancsVehicleSegment,
+  setRcRtoCode,
+
+  VehicleClassDescription,
+  MakerDesc,
+  MakerModel,
+  ManufactureMonth,
+  VehicleGvw,
+  VehicleCubicCap,
+  VehicleSeatCap,
+  VehiclePermanentAddress,
+  fitUpto,
+  RcPasiaModelCode,
+  RcInsuranceComp,
+  RcInsuranceUpto,
+  RcRegisteredAt,
+  RcBlacklistStatus,
+  RcStatus,
+  RcVehicleType,
+  BancsModelCode,
+  BancsMakeCode,
+  BancsSubtypeCode,
+  BancsBodyType,
+  BancsVehicleClass,
+  BancsVehicleSegment,
+  RcRtoCode,
 }) => {
   const router = useRouter();
-  const [editCase_01, setEditCase_01] = useState(false);
+  const [editCase_01, EditCase_01] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
   const [details, setDetails] = useState();
   //   const togglePasswordVisibility = () => {
@@ -60,31 +156,6 @@ const Form = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-
-  // const editHandler = () => {
-  //   setEdit(true);
-  // };
-
-  // useEffect(() => {
-  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-  //   if (!userInfo) {
-  //     router.push("/login");
-  //   }
-  //   axios
-  //     .get("/api/getOnlineVehicleData", {
-  //       headers: {
-  //         Authorization: `Bearer ${userInfo[0].Token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log( "datata",res.data.data[0]);
-  //     })
-  //     .catch((err) => {
-  //       console.log("err",err);
-  //     });
-  // }, []);
 
   const handleFetchData = async (req, res) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -117,9 +188,34 @@ const Form = ({
   setVehicleModel(details?.rc_maker_model),
     setRegisteredOwner(details?.rc_owner_name),
     setDateRegistration(details?.rc_regn_dt),
-    setEngineNumber(details?.rc_eng_no),
-    setLicenseNumber(details?.rc_regn_no),
     setVehicleChassisNumber(details?.rc_chasi_no),
+    //New Fields
+    setVehicleClassDescription(details?.rc_vh_class_desc), //is it same as ClassOfVehicle ?
+    setMakerDesc(details?.rc_maker_desc),
+    setMakerModel(details?.rc_maker_model);
+  setManufactureMonth(details?.rc_manu_month_yr);
+  setVehicleGvw(details?.rc_gvw);
+  setVehicleCubicCap(details?.rc_cubic_cap);
+  setVehicleSeatCap(details?.rc_seat_cap);
+  setVehiclePermanentAddress(details?.rc_permanent_address);
+  setfitUpto(details?.rc_fit_upto);
+  setRcPasiaModelCode(details?.rc_pasia_model_code);
+  setRcInsuranceComp(details?.rc_insurance_comp);
+  setRcInsuranceUpto(details?.rc_insurance_upto);
+  setRcRegisteredAt(details?.rc_registered_at);
+  setRcBlacklistStatus(details?.rc_blacklist_status);
+  setRcStatus(details?.rc_status);
+  setRcVehicleType(details?.rc_vehicle_type);
+  setBancsModelCode(details?.bancs_model_code);
+  setBancsMakeCode(details?.bancs_make_code);
+  setBancsSubtypeCode(details?.bancs_Subtype_code);
+  setBancsBodyType(details?.bancs_Body_Type);
+  setBancsVehicleClass(details?.bancs_Vehicle_class);
+  setBancsVehicleSegment(details?.bancs_Vehicle_Segment);
+  setRcRtoCode(details?.rc_rto_code);
+
+  setEngineNumber(details?.rc_eng_no),
+    setLicenseNumber(details?.rc_regn_no),
     setVehicleFuelType(details?.bancs_Fuel_Type),
     setPUCNumber,
     setTransferDate,
@@ -127,8 +223,7 @@ const Form = ({
     setAddedBy,
     setLicenseType,
     setIssuingAuthority;
-
-  // console.log("datatattatatatata", details?.rc_maker_model);
+  //permanenet Address
   return (
     <>
       <div className=" faq_according row">
@@ -710,6 +805,59 @@ const Form = ({
                       setVehicleChassisNumber={setVehicleChassisNumber}
                       VehicleFuelType={VehicleFuelType}
                       setVehicleFuelType={setVehicleFuelType}
+
+                       // New Fields
+                       setVehicleClassDescription={
+                        setVehicleClassDescription
+                      }
+                      setMakerDesc={setMakerDesc}
+                      setMakerModel={setMakerModel}
+                      setManufactureMonth={setManufactureMonth}
+                      setVehicleGvw={setVehicleGvw}
+                      setVehicleCubicCap={setVehicleCubicCap}
+                      setVehicleSeatCap={setVehicleSeatCap}
+                      setVehiclePermanentAddress={
+                        setVehiclePermanentAddress
+                      }
+                      setfitUpto={setfitUpto}
+                      setRcPasiaModelCode={setRcPasiaModelCode}
+                      setRcInsuranceComp={setRcInsuranceComp}
+                      setRcInsuranceUpto={setRcInsuranceUpto}
+                      setRcRegisteredAt={setRcRegisteredAt}
+                      setRcBlacklistStatus={setRcBlacklistStatus}
+                      setRcStatus={setRcStatus}
+                      setRcVehicleType={setRcVehicleType}
+                      setBancsModelCode={setBancsModelCode}
+                      setBancsMakeCode={setBancsMakeCode}
+                      setBancsSubtypeCode={setBancsSubtypeCode}
+                      setBancsBodyType={setBancsBodyType}
+                      setBancsVehicleClass={setBancsVehicleClass}
+                      setBancsVehicleSegment={setBancsVehicleSegment}
+                      setRcRtoCode={setRcRtoCode}
+
+                      VehicleClassDescription={VehicleClassDescription}
+                      MakerDesc={MakerDesc}
+                      MakerModel={MakerModel}
+                      ManufactureMonth={ManufactureMonth}
+                      VehicleGvw={VehicleGvw}
+                      VehicleCubicCap={VehicleCubicCap}
+                      VehicleSeatCap={VehicleSeatCap}
+                      VehiclePermanentAddress={VehiclePermanentAddress}
+                      fitUpto={fitUpto}
+                      RcPasiaModelCode={RcPasiaModelCode}
+                      RcInsuranceComp={RcInsuranceComp}
+                      RcInsuranceUpto={RcInsuranceUpto}
+                      RcRegisteredAt={RcRegisteredAt}
+                      RcBlacklistStatus={RcBlacklistStatus}
+                      RcStatus={RcStatus}
+                      RcVehicleType={RcVehicleType}
+                      BancsModelCode={BancsModelCode}
+                      BancsMakeCode={BancsMakeCode}
+                      BancsSubtypeCode={BancsSubtypeCode}
+                      BancsBodyType={BancsBodyType}
+                      BancsVehicleClass={BancsVehicleClass}
+                      BancsVehicleSegment={BancsVehicleSegment}
+                      RcRtoCode={RcRtoCode}
                     />
                   </div>
                 )}
