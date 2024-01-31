@@ -296,35 +296,29 @@ export default function DocumentUpload({
   const [videoConst,setVideoConst]=useState({
     width: 1280,
     height: 720,
-    facingMode: { ideal: "environment" } // "environment" corresponds to the back camera
+    facingMode: "user", // "environment" corresponds to the back camera
   });
   
-  useEffect(()=>{
-    
+ 
+  const updateVideoConstraints = () => {
+    const isMobileView = window.innerWidth < 768; // You can adjust this threshold as needed
+    const updatedConstraints = isMobileView
+      ? { width: 1280, height: 720, facingMode: "environment" } // Back camera for mobile
+      : { width: 1280, height: 720, facingMode: "user" }; // Front camera for laptop or pc
+
+    setVideoConst(updatedConstraints);
+  };
+
+  useEffect(() => {
     getUserMediaWithConstraints(videoConst)
       .then((stream) => {
-        // Handle the stream, for example, attach it to a video element
         const videoElement = document.getElementById('videoElement');
         videoElement.srcObject = stream;
       })
       .catch((error) => {
-        console.error('Error accessing back camera. Trying user camera.', error);
-  
-        // Retry with the user camera
-        const videoConstraintsUser = ( { width: 1280, height: 720, facingMode: "user" });
-        getUserMediaWithConstraints(videoConstraintsUser)
-          .then((userStream) => {
-            // Handle the user camera stream
-            setVideoConst(videoConstraintsUser)
-            const videoElement = document.getElementById('videoElement');
-            videoElement.srcObject = userStream;
-          })
-          .catch((userError) => {
-            console.error('Error accessing user camera:', userError);
-          });
+        console.error('Error accessing camera:', error);
       });
-  
-},[]);
+  }, [videoConst]);
 
   
   const [capturedImage, setCapturedImage] = useState([]);
@@ -584,6 +578,16 @@ export default function DocumentUpload({
     setUploadedFileName("");
     setIsCapturingVideo(false);
   };
+
+  useEffect(() => {
+    // Update video constraints when the window is resized
+    window.addEventListener('resize', updateVideoConstraints);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateVideoConstraints);
+    };
+  }, []);
 
   useEffect(() => {
     console.log(uploadedData);

@@ -48,7 +48,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   };
 
   const handleSubmit = () => {
-    if(!emailAddress || !policyNos || !date){
+    if(!(email && emailAddress) || !(policyNos && policyNo) || !date){
       alert("All Marked field should be filled!!");
     }
     else{
@@ -64,7 +64,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
       content2: createStringFromSelectedItems2(selectedItems),
       leadId: leadId,
     };
-  }
+  
 
     axios
       .post("/api/sendCustomEmail", payload, {
@@ -80,6 +80,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
       .catch((Err) => {
         alert("Try again!");
       });
+    }
   };
 
   const [selectedOption, setSelectedOption] = useState("showDocument");
