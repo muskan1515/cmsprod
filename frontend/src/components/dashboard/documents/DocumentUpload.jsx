@@ -191,9 +191,9 @@ export default function DocumentUpload({
 
   const customStyles = {
     content: {
-      width: "70%",
-      height: "40%",
-      top: "50%",
+      width: "100%",
+      height: "90%",
+      top: "60%",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -594,10 +594,10 @@ export default function DocumentUpload({
             <Webcam
               style={{ marginLeft: "" }}
               audio={false}
-              height={160}
+              height={300}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              width={1980}
+              width={1280}
               onUserMedia={() => handleWebcamOpen()}
               videoConstraints={videoConst}
             />
