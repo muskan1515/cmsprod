@@ -278,14 +278,15 @@ export default function DocumentUpload({
 
   const customStyles = {
     content: {
-      width: "100%",
-      height: "60%",
+      width: "70%",
+      height: "40%",
       top: "50%",
       left: "50%",
       right: "auto",
       bottom: "auto",
       // marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      padding:"0px"
     },
   };
 
