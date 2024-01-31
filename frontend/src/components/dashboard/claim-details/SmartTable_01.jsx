@@ -141,7 +141,7 @@ function SmartTable(props) {
               ></div>
             </div> */}
           </div>
-          {data.length > 0 ? (
+          {props.data.length > 0 ? (
             <div className="row mt-3">
               <div className="smartTable-tableContainer">
                 <table
@@ -184,7 +184,24 @@ function SmartTable(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((row, idx) => {
+                    {props.data.length < 0 ?
+                      data.map((row, idx) => {
+                      return (
+                        <tr key={"tr_" + idx}>
+                          {props.headCells.map((headCell, idxx) => {
+                            return (
+                              <td key={"td_" + idx + "_" + idxx}>
+                                {headCell.render
+                                  ? headCell.render(row)
+                                  : row[headCell.id]}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })
+                    :
+                    props.data.map((row, idx) => {
                       return (
                         <tr key={"tr_" + idx}>
                           {props.headCells.map((headCell, idxx) => {
@@ -199,6 +216,7 @@ function SmartTable(props) {
                         </tr>
                       );
                     })}
+                  
                   </tbody>
                 </table>
               </div>
@@ -213,7 +231,7 @@ function SmartTable(props) {
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
               <div className="col-12 text-end p-3">
-                {data.length > 0 ? data.length : 0} Rows
+                {props.data.length > 0 ? props.data.length : 0} Rows
               </div>
             </div>
           ) : (

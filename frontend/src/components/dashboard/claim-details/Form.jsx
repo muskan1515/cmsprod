@@ -128,7 +128,7 @@ const Form = ({
     setLicenseType,
     setIssuingAuthority;
 
-  console.log("datatattatatatata", details?.rc_maker_model);
+  // console.log("datatattatatatata", details?.rc_maker_model);
   return (
     <>
       <div className=" faq_according row">
@@ -223,9 +223,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              !VehicleModel
-                                ? `${claim?.vehicleDetails?.VehicleMakeVariantModelColor},${claim?.vehicleDetails?.VehicleTypeOfBody}`
-                                : VehicleModel
+                              VehicleModel
                             }
                             onChange={(e) => setVehicleModel(e.target.value)}
                             disabled={false}
@@ -264,39 +262,6 @@ const Form = ({
                     </div>
                         </div>*/}
 
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Engine Type <span class="req-btn">*</span>
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              EngineType
-                                ? EngineType
-                                : claim?.vehicleDetails?.VehicleModeOfCheck
-                            }
-                            onChange={(e) => setEngineType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
 
                     <div className="col-lg-6">
                       <div className="row mt-1">

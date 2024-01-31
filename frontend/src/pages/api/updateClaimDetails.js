@@ -7,7 +7,7 @@ async function handler(request, response) {
     const domain = process.env.BACKEND_DOMAIN;
     const payload = request.body;
    
-    // console.log(payload);
+   
     
     const userResponse = await axios.put(`${domain}/updateClaim/${payload.LeadId}`, payload,{
         headers:{

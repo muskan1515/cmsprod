@@ -125,8 +125,6 @@ const Form = ({
                             }
                             value={
                               GarageNameAndAddress
-                                ? GarageNameAndAddress
-                                : claim.garageDetails?.GarageNameAndAddress
                             }
                             // disabled={!edit}
                             // placeholder="Enter Registration No."
@@ -162,8 +160,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               GarageContactNo1
-                                ? GarageContactNo1
-                                : claim.garageDetails?.GarageContactNo1
                             }
                             onChange={(e) =>
                               setGarageContactNo1(e.target.value)
@@ -178,8 +174,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               GarageContactNo2
-                                ? GarageContactNo2
-                                : claim.garageDetails?.GarageContactNo2
                             }
                             onChange={(e) =>
                               setGarageContactNo2(e.target.value)
@@ -244,8 +238,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               GarageAddedBy
-                                ? GarageAddedBy
-                                : claim.garageDetails?.GarageAddedBy
                             }
                             onChange={(e) => setGarageAddedBy(e.target.value)}
                             // disabled={!edit}

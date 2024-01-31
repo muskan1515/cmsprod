@@ -21,7 +21,8 @@ const generateUniqueToken = require('./Config/generateToken');
 const upload = require('./Middleware/fileHalper');
 const uploadToS3 = require('./Middleware/awsUpload');
 const uploadToAWS = require('./Middleware/awsUpload');
-const uploadToAWSVideo = require("./Middleware/awsUploadVideo")
+const uploadToAWSVideo = require("./Middleware/awsUploadVideo");
+const uploadToAWSChunk = require('./Middleware/awsUpload_Chunk');
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -292,6 +293,65 @@ app.post("/uploadMedia", (req, res) => {
     }
 });
 
+app.get("/getUploadDocuments",authenticateUser,(req,res)=>{
+  const LeadId = req.query.leadId;
+  const sql ="SELECT * FROM ReportDocuments WHERE LeadId =?";
+  db.query(sql, [LeadId],(error, results) => {
+    if (error) {
+      console.error('Error inserting data into VehicleDetails:', error);
+      return res.status(500).json({ error: 'Error inserting data into VehicleDetails.' });
+    }
+
+    return res.status(200).json({ results });
+  })
+})
+
+
+app.post("/uploadClaimMedia", (req, res) => {
+  
+    const {garage,fileUrl,fileName,reportType,LeadId,isLastChunk,uploadedBy,file}=req.body;
+    
+    uploadToAWS(file, fileName)
+      .then((Location) => {
+
+        const insertUploadDetails = `
+        INSERT INTO ReportDocuments (
+          LeadId,
+          FileName,
+          FilePath,
+          UploadedBy,
+          GarageName,
+          ReportType
+        ) VALUES (
+          '${LeadId}',
+          '${fileName}',
+          '${Location}',
+          '${uploadedBy}',
+          '${garage}',
+          '${reportType}'
+        );
+      `;
+
+      // Execute the SQL queries individually
+      
+    
+        db.query(insertUploadDetails, (error, results) => {
+          if (error) {
+            console.error('Error inserting data into VehicleDetails:', error);
+            return res.status(500).json({ error: 'Error inserting data into VehicleDetails.' });
+          }
+    
+          return res.status(200).json({ Location });
+        })
+      })
+      .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: "Internal Server Error" });
+      });
+    
+
+ 
+});
 
 
 app.post('/uploadDocument', (req, res) => {
@@ -611,14 +671,20 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
     }
     const content = emailHandler(result[0].Status);
 
-    const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
-    db.query(sql,[leadId], (err, result2) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-      // console.log(result2[0].Token);
+        const generatedToken = generateUniqueToken();
+        const insertClaimDetails = `
+        UPDATE ClaimDetails
+        SET
+        Token = '${generatedToken}'
+        WHERE LeadId = ${leadId};
+      `;
+        db.query(insertClaimDetails, (err, result2) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+            return;
+          }
+       
   
       
     
@@ -635,13 +701,12 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
     ${content}
 
         Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${result2[0].Token} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${''} target="_blank">Click me</a> to fill the documents information .</p>
 
     Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
             claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
   `;
-
 
 
   const mailOptions = {
@@ -668,7 +733,7 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
 
 
 app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
-  const {vehicleNo,PolicyNo,Insured,Date,content,content2,leadId,toMail} = req.body;
+  const {vehicleNo,PolicyNo,Insured,Date,content,content2,leadId,toMail,fromEmail,subject,body} = req.body;
 
   const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
   db.query(sql,[leadId], (err, result2) => {
@@ -677,16 +742,8 @@ app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
       res.status(500).send('Internal Server Error');
       return;
     }
-
   const emailContent = `
-    Dear Sir/Madam,
-
-    Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
-
-      We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
-    Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
-    can procedd further in your case and we also request 
-    you to provide the following details as follows:-
+    ${body}
 
     ${content}
 
@@ -698,10 +755,11 @@ app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
 
   `;
 
+
   const mailOptions = {
-    from: 'infosticstech@gmail.com',
+    from: fromEmail,
     to: toMail,
-    subject: 'Survey Request for Vehicle Claim',
+    subject: subject,
     text: emailContent,
   };
 
@@ -1190,6 +1248,15 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
       InsuredMobileNo1,
       InsuredMobileNo2,
       ClaimNumber,
+      PolicyIssuingOffice,
+      ClaimRegion,
+      ClaimServicingOffice,
+      InspectionType,
+      SurveyType,
+      PolicyPeriodStart,
+      PolicyPeriodEnd,
+      InsuranceCompanyNameAddress,
+      InsuredAddedBy,
       VehicleMakeVariantModelColor,
       VehicleTypeOfBody ,
       VehicleRegisteredNumber ,
@@ -1212,6 +1279,21 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
       GarageContactNo2,
       LeadId
 } = req.body;
+
+
+  const updateClaimDetails = `
+  UPDATE ClaimDetails
+  SET
+  PolicyIssuingOffice = '${PolicyIssuingOffice}',
+  Region = '${ClaimRegion}',
+  ClaimServicingOffice = '${ClaimServicingOffice}',
+  InspectionType = '${InspectionType}',
+  SurveyType = '${SurveyType}',
+  PolicyPeriodStart = '${PolicyPeriodStart}',
+  PolicyPeriodEnd = '${PolicyPeriodEnd}',
+  InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}'
+    WHERE LeadId = ${LeadId};
+  `;
 
   // Update ClaimDetails
   const updateDriverDetails = `
@@ -1265,6 +1347,12 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
     WHERE LeadId = ${LeadId};
   `;
 
+  db.query(updateClaimDetails, (error, results) => {
+    if (error) {
+      console.error('Error updating data in ClaimDetails:', error);
+      return res.status(500).json({ error: 'Error updating data in ClaimDetails.' });
+    }
+
   db.query(updateDriverDetails, (error, results) => {
     if (error) {
       console.error('Error updating data in ClaimDetails:', error);
@@ -1293,6 +1381,7 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
           });
         
       });
+    });
     });
   });
 });

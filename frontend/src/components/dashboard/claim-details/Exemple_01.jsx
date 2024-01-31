@@ -1,5 +1,8 @@
 import Link from "next/link";
 import SmartTable from "./SmartTable_01";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { file } from "jszip";
 
 const headCells = [
   {
@@ -9,16 +12,23 @@ const headCells = [
     width: 100,
   },
   
-  {
-    id: "status",
-    numeric: false,
-    label: "Status",
-    width: 100,
-  },
+  
   {
     id: "file",
     numeric: false,
     label: "File",
+    width: 100,
+  },
+  {
+    id: "UploadedBy",
+    numeric: false,
+    label: "Uploaded By",
+    width: 100,
+  },
+  {
+    id: "verified_by",
+    numeric: false,
+    label: "Verified By",
     width: 100,
   },
   {
@@ -321,8 +331,90 @@ const data = [
   },
 ];
 
-export default function Exemple() {
+export default function Exemple({leadId}) {
+
+  const [allDocs,setAllDocs]=useState([]);
+
+  const [uploadedData,setUploadedData]=useState([]);
+  useEffect(()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
+    axios.get("/api/getAllUploadByLeadId",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        leadId:leadId
+      }
+    })
+    .then((res)=>{
+      setAllDocs(res.data.data.results);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  },[]);
+
+  
+
+  useEffect(() => {
+    const getData = () => {
+      const tempData = [];
+      data.map((row, index) => {
+
+          const updatedRow = {
+            _id: index + 1,
+            serial_num: row.serial_num,
+            doc_name: row.doc_name,
+            files: allDocs.map((file, idx) => {
+              if (file.ReportType === row.doc_name) {
+                return (
+                  <div
+                    style={{ display: "flex", flexDirection: "column" }}
+                    key={idx}
+                  >
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <a
+                          className="btn btn-color w-25"
+                          href={file.FilePath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="View"
+                        >
+                        {file.FileName}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            }),
+            uploadedBy: <h4>{file?.UploadedBy}</h4>,
+            verified_by:(
+              file?.IsVerified ? "N.A.": <span style={{color:"green"}}>{file?.VerifiedBy}</span>
+            ),
+            action: (
+              file?.IsVerified ? "-": <button>Verify</button>
+            ),
+          };
+          tempData.push(updatedRow);
+        
+      });
+      return tempData;
+    };
+
+    const temp =getData();
+    setUploadedData(temp);
+  }, [allDocs]);
+
+
+  console.log(uploadedData);
+
   return (
-    <SmartTable title="Survey Upload Report" data={data} headCells={headCells} />
+    <SmartTable title="Survey Upload Report" data={uploadedData} headCells={headCells} />
   );
 }

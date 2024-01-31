@@ -2,12 +2,24 @@ import React, { useState } from "react";
 import { data } from "./data";
 import axios from "axios";
 import { useRouter } from "next/router";
+// import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 
 const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [emailAddress, setEmailAddress] = useState(email ? email : "");
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
+
+  const [fromEmail,setFromEmail]=useState('infosticstech@gmail.com');
+  const [subject,setSubject]=useState('Survey Request for Vehicle Claim');
+  const [body,setBody]=useState(` Dear Sir/Madam,
+
+  Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+
+    We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${policyNo} on ${date} from the United India 
+  Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
+  can procedd further in your case and we also request 
+  you to provide the following details as follows:-`);
 
   const router = useRouter();
 
@@ -48,12 +60,15 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   };
 
   const handleSubmit = () => {
-    if(!(email && emailAddress) || !(policyNos && policyNo) || !date){
+    if(!(policyNos && policyNo) || !date){
       alert("All Marked field should be filled!!");
+    }
+    else if(!(email || emailAddress)){
+      alert("Email is required field !!");
     }
     else{
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(selectedItems);
+    // /console.log(selectedItems);
     const payload = {
       toMail: emailAddress ? emailAddress : email,
       PolicyNo: policyNos ? policyNos : policyNo,
@@ -63,7 +78,21 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
       content: createStringFromSelectedItems(selectedItems),
       content2: createStringFromSelectedItems2(selectedItems),
       leadId: leadId,
+      subject:subject,
+      body:body,
+      fromEmail:fromEmail
     };
+
+    if(!payload.toMail || String(payload.toMail)==="None"  ){
+      alert("Email is required field !!");
+    }
+    else if(!payload.PolicyNo){
+      alert("PolicyNo is required field !!");
+    }
+    else if(!payload.content || !payload.content2){
+      alert("Please select the documents to be passed over email!");
+    }
+    else{
   
 
     axios
@@ -81,6 +110,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
         alert("Try again!");
       });
     }
+  }
   };
 
   const [selectedOption, setSelectedOption] = useState("showDocument");
@@ -251,17 +281,20 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                 <div className="row card">
                   <h4 className="col-12 text-center mt-1">Mail Box</h4>
                   <hr />
-                  <div className="row">
+                  <div className="row" >
                     <h5 className="">To :</h5>
+                    <input value={fromEmail} onChange={(e)=>setFromEmail(e.target.value)}/>
                   </div>
                   <hr />
                   <div className="row">
                     <h5 className="">Subject :</h5>
+                    <input value={subject} onChange={(e)=>setSubject(e.target.value)}/>
                   </div>
                   <hr />
                   <div className="row" style={{ height: "100px" }}></div>
                 </div>
               </div>
+              <textarea value={body} onChange={(e)=>setBody(e.target.value)}/>
               <div className="col-lg-12 text-end">
                 <button className="btn btn-color w-10" onClick={handleSubmit}>
                   Send

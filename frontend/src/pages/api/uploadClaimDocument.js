@@ -2,32 +2,27 @@ import axios from "axios";
 
 async function handler(request, response) {
   try {
-
-    const token = request.headers.authorization;
-    const domain = process.env.BACKEND_DOMAIN;
     
-    const { vehicleNo,PolicyNo,Insured,date,content,content2,subject,body,fromEmail,leadId,toMail } = request.body;
-
-    const userResponse = await axios.post(`${domain}/sendCustomEmail`, {
-        vehicleNo: vehicleNo,
-        PolicyNo: PolicyNo,
-        Insured:Insured,
-        toMail:toMail,
-        leadId : leadId,
-        content:content,
-        content2:content2,
-        subject:subject,
-        body:body,
-        fromEmail:fromEmail,
-        Date:date
-
-    },
-    {
-        headers: {
-          Authorization:token,
-          "Content-Type":"application/json"
-        }
-      });
+   
+    const domain = process.env.BACKEND_DOMAIN;
+    const {token,fileName,fileUrl,garage,reportType,LeadId,file,isLastChunk,uploadedBy} = request.body;
+    // console.log(request.body)
+    
+    const userResponse = await axios.post(`${domain}/uploadClaimMedia`, {
+        fileUrl : fileUrl,
+        fileName:fileName,
+        garage:garage,
+        reportType:reportType,
+        LeadId:LeadId,
+        file:file,
+        uploadedBy:uploadedBy,
+        isLastChunk:isLastChunk
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     const user = userResponse.data;
 
     if (!user) {

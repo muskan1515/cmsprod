@@ -1,6 +1,8 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import ReactDatePicker from "react-datepicker";
+import MyDatePicker from "../../common/MyDatePicker";
 
 const CreateList = ({
   claim,
@@ -20,10 +22,27 @@ const CreateList = ({
   ClaimNumber,
   setClaimNumber,
   subTypeTypes,
+  policyIssuingOffice,
+  setPolicyIssuingOffice,
+  claimRegion,
+  setClaimRegion,
+  claimServicingOffice,
+  setClaimServicingOffice,
+  policyStartDate,
+  setPolicyStartDate,
+  policyEndDate,
+  setPolicyEndDate,
+  insuranceCompanyNameAddress,
+  setInsuranceCompanyNameAddress,
+  insuredAddedBy,
+  setInsuredAddedBy,
   edit,
   setIsStatusModal,
 }) => {
-  const formatDate = (val) => {
+
+  console.log(policyEndDate,policyStartDate)
+
+   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
@@ -111,11 +130,11 @@ const CreateList = ({
       })
       .then((res) => {
         toast.dismiss();
-        toast.success("Successfully sent the mail!");
+        alert("Successfully sent the mail!");
       })
       .catch((err) => {
         toast.dismiss();
-        toast.error(err);
+       alert(err);
       });
   };
   const openStatusUpdateHandler = () => {
@@ -145,7 +164,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredName ? InsuredName : claim.insuredDetails?.InsuredName}
+                value={InsuredName }
                 onChange={(e)=>setInsuredName(e.target.value)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
@@ -190,7 +209,7 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={InsuredMobileNo1 ? InsuredMobileNo1 : claim.insuredDetails?.InsuredMobileNo1}
+                  value={InsuredMobileNo1 }
                   onChange={(e)=>setInsuredMobileNo1(e.target.value)}
                   disabled={!edit}
                   // placeholder="Enter Registration No."
@@ -200,7 +219,7 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={InsuredMobileNo2 ? InsuredMobileNo2 : claim.insuredDetails?.InsuredMobileNo2}
+                  value={InsuredMobileNo2 }
                   onChange={(e)=>setInsuredMobileNo2(e.target.value)}
                   disabled={!edit}
                   // placeholder="Enter Registration No."
@@ -231,12 +250,12 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredMailAddress ? InsuredMailAddress : claim.insuredDetails?.InsuredMailAddress}
+                value={InsuredMailAddress ? InsuredMailAddress : "" }
                   onChange={(e)=>setInsuredMailAddress(e.target.value)}
                   disabled={!edit}
                 // placeholder="Enter Registration No."
               />
-              <button onClick={()=>sendMailHandler( claim?.vehichleDetails?.VehicleEngineNumber,claim?.claimDetails?.ReferenceNo,claim?.insuredDetails?.InsuredName,claim.insuredDetails?.InsuredMailAddress)}>sendEmail</button>
+              {claim.claimStatus?.ClaimStatus <= 1 && claim.claimDetails?.ClaimNumber &&  <button onClick={()=>sendMailHandler( claim?.vehichleDetails?.VehicleEngineNumber,claim?.claimDetails?.ReferenceNo,claim?.insuredDetails?.InsuredName,claim.insuredDetails?.InsuredMailAddress)}>sendEmail</button>}
             </div>
             {/* <div className="col-lg-1">
               {!InsuredMailAddress && (
@@ -279,7 +298,8 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={claim.claimDetails?.ReferenceNo}
+                value={policyIssuingOffice }
+                onChange={(e)=>setPolicyIssuingOffice(e.target.value)}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -307,7 +327,8 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber}
+                value={claimRegion }
+                onChange={(e)=>setClaimRegion(e.target.value)}
                
                 // placeholder="Enter Registration No."
               />
@@ -336,7 +357,8 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={checkStatus(claim?.claimStatus?.ClaimStatus)}
+                value={claimServicingOffice}
+                onChange={(e)=>setClaimServicingOffice(e.target.value)}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -360,7 +382,9 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <select disabled={!edit} value={!subType ? claim?.SurveyType : subType} onChange={(e)=>setSubType(e.target.value)}>
+              <select disabled={!edit} 
+              value={subType } 
+              onChange={(e)=>setSubType(e.target.value)}>
                 {subTypeTypes.map((sub, index) => {
                   return (
                     <option
@@ -401,11 +425,14 @@ const CreateList = ({
           </div>
           <div className="col-lg-6">
             <input
+            // type="date"
               className="form-control"
               id="propertyTitle"
-              value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+              value={formatDate(policyStartDate)}
+              // onChange={(e)=>setPolicyStartDate(e.target.value)}
               // placeholder="Enter Registration No."
             />
+            <MyDatePicker selectedDate={""} setSelectedDate={setPolicyStartDate}/>
           </div>
         </div>
       </div>
@@ -428,11 +455,15 @@ const CreateList = ({
         </div>
         <div className="col-lg-6">
           <input
+          // type="date"
             className="form-control"
             id="propertyTitle"
-            value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+            value={formatDate(policyEndDate)}
+            // onChange={(e)=>setPolicyEndDate(e.target.value)}
             // placeholder="Enter Registration No."
           />
+          <MyDatePicker selectedDate={""} setSelectedDate={setPolicyEndDate}/>
+
         </div>
       </div>
     </div>
@@ -457,7 +488,8 @@ const CreateList = ({
               <input
                 className="form-control"
                 id="propertyTitle"
-                value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+                value={insuranceCompanyNameAddress}
+                onChange={(e)=>setInsuranceCompanyNameAddress(e.target.value)}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -484,7 +516,8 @@ const CreateList = ({
             <input
               className="form-control"
               id="propertyTitle"
-              value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+              value={insuredAddedBy}
+              onChange={(e)=>setInsuredAddedBy(e.target.value)}
               // placeholder="Enter Registration No."
             />
           </div>
@@ -507,7 +540,9 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <select disabled={!edit} value={!requestType ? "" : requestType} onChange={(e)=>setRequestType(e.target.value)}>
+              <select disabled={!edit} 
+              value={!requestType ? "" : requestType} 
+              onChange={(e)=>setRequestType(e.target.value)}>
                 {requestTypeTypes.map((sub, index) => {
                   return (
                     <option
@@ -797,7 +832,8 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  // placeholder="Enter Registration No."
+                  value={requestType}
+                  onChange={(e)=>setRequestType(e.target.value)}
                 />
               </div>
             </div>

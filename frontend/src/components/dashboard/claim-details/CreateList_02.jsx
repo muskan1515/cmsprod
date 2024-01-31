@@ -169,7 +169,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.insuredDetails?.InsuredMailAddress}
+                        {claim.insuredDetails?.InsuredMailAddress ? claim.insuredDetails?.InsuredMailAddress : "N.A."}
                       </label>
                     </div>
                   </div>

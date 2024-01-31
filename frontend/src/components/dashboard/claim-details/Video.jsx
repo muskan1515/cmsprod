@@ -4,6 +4,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 const Video = ({ videos }) => {
+
   const [open, setOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -17,6 +18,7 @@ const Video = ({ videos }) => {
     setOpen(false);
   };
 
+  console.log(videos[selectedVideo]?.url);
   const handleVideoPause = () => {
     setOpen(false);
   };

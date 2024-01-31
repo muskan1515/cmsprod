@@ -76,7 +76,7 @@ const Index = ({}) => {
   );
 
 
-  const [subType, setSubType] = useState("Motor");
+  const [subType, setSubType] = useState(claim?.claimDetails?.SurveyType ? claim?.claimDetails?.SurveyType : "Motor");
   const [inspectionType, setInspectionType] = useState(claim?.claimDetails?.InspectionType ? claim?.claimDetails?.InspectionType : "SPOT");
 
   const [documents, setDocuments] = useState([]);
@@ -86,8 +86,8 @@ const Index = ({}) => {
   );
 
   const [VehicleModel, setVehicleModel] = useState(
-    claim.vehicleDetails?.VehicleMakeVariantModelColor
-      ? `${claim.vehicleDetails?.VehicleMakeVariantModelColor},${claim.vehicleDetails?.VehicleTypeOfBody}`
+    claim.vehicleDetails?.VehicleTypeOfBody
+      ? claim.vehicleDetails?.VehicleTypeOfBody
       : ""
   );
 
@@ -261,6 +261,44 @@ const Index = ({}) => {
     },
   ];
 
+
+  useEffect(()=>{
+    setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice);
+    setClaimRegion(claim?.claimDetails?.ClaimRegion);
+    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice);
+    setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart);
+    setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
+    setInsuranceCompanyNameAddress(claim?.claimDetails?.InsuranceCompanyNameAddress);
+    setInsuredAddedBy(claim?.insuredDetails?.InsuredAddedBy);
+    setInsuredName(claim?.insuredDetails?.InsuredName);
+    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
+    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
+    setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2);
+    setSubType(claim?.claimDetails?.SurveyType);
+    setInspectionType(claim?.claimDetails?.InspectionType);
+    setVehicleModel(claim.vehicleDetails?.VehicleTypeOfBody);
+    setEngineType(claim?.vehicleDetails?.VehicleModeOfCheck);
+    setRegisteredOwner(claim?.vehicleDetails?.VehicleRegisteredOwner);
+    setDateRegistration(claim?.claimDetails?.ReferenceNo);
+    setPUCNumber(claim?.vehicleDetails?.VehiclePucNumber);
+    setTransferDate(claim?.vehicleDetails?.VehicleTransferDate);
+    setEngineNumber(claim?.vehicleDetails?.VehicleEngineNumber);
+    setAddedBy(claim?.vehicleDetails?.VehicleAddedBy);
+    setIssuingAuthority(claim?.vehicleDetails?.IssuingAuthority);
+    setLicenseNumber(claim?.vehicleDetails?.LicenseNumber);
+    setLicenseType(claim?.vehicleDetails?.LicenseType);
+    setVehicleChassisNumber(claim?.vehicleDetails?.VehicleChassisNumber);
+    setVehicleFuelType(claim?.vehicleDetails?.VehicleFuelType);
+    setDriverName(claim?.driverDetails?.DriverName);
+    setDriverAddedDate(claim?.driverDetails?.DriverAddedDate);
+    setVerification(claim?.driverDetails?.DriverTypeOfVerification);
+    setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress);
+    setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
+    setGarageContactNo2(claim?.garageDetails?.GarageContactNo2);
+    setGarageAddedBy(claim?.garageDetails?.GarageAddedBy);
+
+  },[claim]);
+
   const generateRegion = (region) => {
     const firstThreeLetters = region?.slice(0, 3);
 
@@ -279,8 +317,11 @@ const Index = ({}) => {
   const [RegisteredNumber, setRegisteredNumber] = useState(
     claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
   );
+  
+
 
   const onSaveHandler = (func) => {
+    console.log(insuranceCompanyNameAddress);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const vehicleParts = VehicleModel?.split(",");
 
@@ -296,19 +337,25 @@ const Index = ({}) => {
       InsuredMobileNo1: InsuredMobileNo1
         ? InsuredMobileNo1
         : claim.insuredDetails?.InsuredMobileNo1,
+      PolicyIssuingOffice : policyIssuingOffice ? policyIssuingOffice : 
+      claim.claimDetails?.PolicyIssuingOffice,
+      ClaimRegion : claimRegion ? claimRegion : claim.claimDetails?.ClaimRegion,
+      ClaimServicingOffice: claimServicingOffice ? claimServicingOffice : claim.claimDetails?.ClaimServicingOffice,
+      PolicyPeriodStart : policyStartDate ? policyStartDate : claim.claimDetails?.PolicyPeriodStart,
+      PolicyPeriodEnd : policyEndDate ? policyEndDate : claim.claimDetails?.PolicyPeriodEnd,
+      InsuranceCompanyNameAddress : insuranceCompanyNameAddress ? insuranceCompanyNameAddress : 
+      claim.claimDetails?.InsuranceCompanyNameAddress,
+      InsuredAddedBy : insuredAddedBy ?insuredAddedBy : claim.claimDetails?.InsuredAddedBy,
       InsuredMobileNo2: InsuredMobileNo2
         ? InsuredMobileNo2
         : claim.insuredDetails?.InsuredMobileNo2,
       ClaimNumber: ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber,
-      VehicleMakeVariantModelColor: vehicleParts
-        ? vehicleParts[0]
-        : claim.vehicleDetails?.VehicleMakeVariantModelColor,
-      VehicleTypeOfBody: vehicleParts
-        ? vehicleParts[1]
-        : claim.vehicleDetails?.VehicleTypeOfBody,
+      VehicleTypeOfBody: VehicleModel ? VehicleModel : claim.claimDetails?.VehicleModel,
       VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
         ? claim?.claimDetails?.ReferenceNo
         : generateRegion(claim?.ClaimRegion),
+      SurveyType :  subType ? subType : claim.claimDetails?.SurveyType,
+      InspectionType : inspectionType ? inspectionType : claim?.claimDetails?.InspectionType,
       VehicleDateOfRegistration: DateRegistration
         ? DateRegistration
         : claim.vehicleDetails?.VehicleDateOfRegistration,
@@ -357,7 +404,6 @@ const Index = ({}) => {
       LeadId: claim.claimDetails?.LeadId,
       token: userInfo[0].Token,
     };
-
     if (
       // !payload.InsuredName |
       !payload.InsuredMailAddress
@@ -483,7 +529,7 @@ const Index = ({}) => {
             list.Attribute1.toLowerCase().includes(".mp4") ||
             list.Attribute1.toLowerCase().includes(".mp3")
           ) {
-            requiredVideos.push({
+            requiredVideos.push({ 
               name: list.Attribute1,
               url: list.Photo1,
             });
@@ -627,7 +673,7 @@ const Index = ({}) => {
                 </div> */}
                 {/* End .col */}
 
-                {claim.length === 0 ? (
+                {claim.claimDetails?.InsuredName  ? (
                   <div className="row">
                     <div
                       className="smartTable-noDataFound col-12"
@@ -710,11 +756,27 @@ const Index = ({}) => {
                               setRequestType={setInspectionType}
                               requestType={inspectionType}
                               setSubType={setSubType}
+
                               subType={subType}
                               ClaimNumber={ClaimNumber}
                               setClaimNumber={setClaimNumber}
                               edit={editCase}
                               setIsStatusModal={setIsStatusModal}
+
+                              policyIssuingOffice={policyIssuingOffice}
+                              setPolicyIssuingOffice={setPolicyIssuingOffice}
+                              claimRegion={claimRegion}
+                              setClaimRegion={setClaimRegion}
+                              claimServicingOffice={claimServicingOffice}
+                              setClaimServicingOffice={setClaimServicingOffice}
+                              policyStartDate={policyStartDate}
+                              setPolicyStartDate={setPolicyStartDate}
+                              policyEndDate={policyEndDate}
+                              setPolicyEndDate={setPolicyEndDate}
+                              insuranceCompanyNameAddress={insuranceCompanyNameAddress}
+                              setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
+                              insuredAddedBy={insuredAddedBy}
+                              setInsuredAddedBy={setInsuredAddedBy}
                             />
                           )}
                         </div>
@@ -956,7 +1018,7 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <UploadReort />
+                            <UploadReort leadId={leadId} />
                           </div>
                         </div>
                         <div
