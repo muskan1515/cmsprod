@@ -192,7 +192,7 @@ export default function DocumentUpload({
   const customStyles = {
     content: {
       width: "100%",
-      height: "90%",
+      height: "80%",
       top: "60%",
       left: "50%",
       right: "auto",
