@@ -1,40 +1,19 @@
-import Link from "next/link";
 import Image from "next/image";
 import SmartTable from "./SmartTable";
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { CldUploadWidget } from "next-cloudinary";
-import { forEach } from "jszip";
-import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
 import axios from "axios";
 
 const headCells = [
-  // {
-  //   id: "serial_num",
-  //   numeric: false,
-  //   label: "S.No.",
-  //   width: 10,
-  // },
   {
     id: "doc_name",
     numeric: false,
     label: "Document Name",
     width: 120,
   },
-  // {
-  //   id: "date",
-  //   numeric: false,
-  //   label: "Date",
-  //   width: 150,
-  // },
-  // {
-  //   id: "file_name",
-  //   numeric: false,
-  //   label: "File Name",
-  //   width: 150,
-  // },
   {
     id: "files",
     numeric: false,
@@ -46,68 +25,7 @@ const headCells = [
     numeric: false,
     label: "Action",
     width: 50,
-  },
-
-  // {
-  //   id: "files",
-  //   numeric: false,
-  //   label: "File Name",
-  //   width: 150,
-  // },
-  // {
-  //   id: "date",
-  //   numeric: false,
-  //   label: "Date",
-  //   width: 150,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "City",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "State",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Assigned Garage",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Case Age (Days)",
-  //   width: 150,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Case Age (Insurer)",
-  //   width: 150,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Officer",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Request Type",
-  //   width: 100,
-  // },
-  // {
-  //   id: "serial",
-  //   numeric: false,
-  //   label: "Insurer Claim ID.",
-  //   width: 100,
-  // },
+  }
 ];
 
 const data = [
@@ -218,8 +136,6 @@ export default function DocumentUpload({
   const [index, setIndex] = useState(-1);
   const [currentLabel, setCurrentLabel] = useState("");
 
-  // const [uploadedData, setUploadedData] = useState([]);
-
   const [change, setChange] = useState(false);
 
   const getIndex = (label, datas) => {
@@ -259,10 +175,7 @@ export default function DocumentUpload({
     setImg(imageSrc);
   }, [webcamRef]);
 
-  //Model Hanadle
   function openModal(label, idx) {
-    // setCapturedImage(null);
-    // setCapturedVideo(null);
     setIndex(idx);
     setCurrentLabel(label);
 
@@ -297,15 +210,15 @@ export default function DocumentUpload({
   const [videoConst,setVideoConst]=useState({
     width: 1280,
     height: 720,
-    facingMode: "user", // "environment" corresponds to the back camera
+    facingMode: "user", 
   });
   
  
   const updateVideoConstraints = () => {
-    const isMobileView = window.innerWidth < 768; // You can adjust this threshold as needed
+    const isMobileView = window.innerWidth < 768;
     const updatedConstraints = isMobileView
-      ? { width: 1280, height: 720, facingMode: "environment" } // Back camera for mobile
-      : { width: 1280, height: 720, facingMode: "user" }; // Front camera for laptop or pc
+      ? { width: 1280, height: 720, facingMode: "environment" } 
+      : { width: 1280, height: 720, facingMode: "user" }; 
 
     setVideoConst(updatedConstraints);
   };
@@ -424,49 +337,6 @@ export default function DocumentUpload({
     setUploadedFileName("");
   };
 
-  // const uploadVideoFile = (url)=>{
-  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  //   const payload = {
-  //     file : url,
-  //     token : userInfo[0].Token
-  //   }
-  //   location();
-  //   const currentDate = new Date();
-
-  //   axios.post("/api/uploadFile",payload)
-  //   .then((res)=>{
-  //     console.log(res.data.userData.Location);
-
-  //     const uploaded_Url = res.data.userData.Location;
-
-  //     const newUploadData = {
-  //       docName: currentLabel,
-  //       index: index,
-  //       leadId: leadId,
-  //       data: [
-  //         {
-  //           name: name,
-  //           thumbnail_url: uploaded_Url,
-  //           url: uploaded_Url,
-  //           location: loc,
-  //           time: currentDate,
-  //         },
-  //       ],
-  //     };
-  //     let oldData = uploadedData;
-  //     oldData.push(newUploadData);
-  //     setUpdatedData(oldData);
-  //     console.log(oldData);
-  //     // setUploadedUrl("");
-  //     setChange(true);
-
-  //     alert("Successfully uploaded!!");
-  //     return res;
-  //   }).catch((err)=>{
-  //     alert(err);
-  //   })
-  // }
-
   const handleUploadImage = async () => {
     try {
       const imageSrc = webcamRef.current.getScreenshot();
@@ -488,6 +358,23 @@ export default function DocumentUpload({
       reader.readAsDataURL(blob);
     });
   };
+
+  const changeCameraConstraints = ()=>{
+    if(videoConst.facingMode === "user"){
+      setVideoConst({
+        height:videoConst.height,
+        width:videoConst.width,
+        facingMode:"environment"
+      });
+    }
+    else{
+        setVideoConst({
+          height:videoConst.height,
+          width:videoConst.width,
+          facingMode:"user"
+        });
+    }
+  }
 
   const handleUploadVideo = () => {
     try {
@@ -584,11 +471,11 @@ export default function DocumentUpload({
     // Update video constraints when the window is resized
     window.addEventListener('resize', updateVideoConstraints);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('resize', updateVideoConstraints);
     };
   }, []);
+
 
   useEffect(() => {
     console.log(uploadedData);
@@ -716,6 +603,8 @@ export default function DocumentUpload({
             />
           </div>
         </div>
+
+        <div onClick={changeCameraConstraints}><img src="https://th.bing.com/th?id=OIP.UKGBmbTeRXuAeK4TtheaOAEsEs&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" width={'20px'}/></div>
 
         {isImage && (
           <div>

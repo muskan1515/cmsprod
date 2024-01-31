@@ -188,7 +188,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        Registration No.
+                        Reference No.
                       </label>
                     </div>
                     <div className="col-lg-6 text-end">
@@ -218,7 +218,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        Insurer ClaimID
+                        Policy No.
                       </label>
                     </div>
                     <div className="col-lg-5 text-end">
@@ -310,7 +310,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        Intimation Date
+                      Policy Issuing Office
                       </label>
                     </div>
                     <div className="col-lg-6  text-end">
@@ -323,7 +323,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+                        {(claim.claimDetails?.PolicyIssuingOffice)}
                       </label>
                     </div>
                   </div>
@@ -399,7 +399,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      ></label>
+                      >Claim Region</label>
                     </div>
                     <div className="col-lg-6 text-end">
                       <label
@@ -410,7 +410,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      ></label>
+                      >{claim.claimDetails?.ClaimRegion}</label>
                     </div>
                   </div>
                 </td>
@@ -425,7 +425,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      ></label>
+                      >Claim Servicing Office</label>
                     </div>
                     <div className="col-lg-6 text-end">
                       <label
@@ -436,7 +436,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      ></label>
+                      >{claim.claimDetails?.ClaimServicingOffice}</label>
                     </div>
                   </div>
                 </td>

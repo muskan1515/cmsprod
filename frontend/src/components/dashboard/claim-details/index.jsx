@@ -31,6 +31,31 @@ const Index = ({}) => {
   const [claim, setClaim] = useState({});
 
   const [videosList,setVideosList]=useState([]);
+
+  const [policyIssuingOffice, setPolicyIssuingOffice] = useState(
+    claim?.claimDetails?.PolicyIssuingOffice ? claim?.claimDetails?.PolicyIssuingOffice : ""
+  );
+
+  const [claimRegion, setClaimRegion] = useState(
+    claim?.claimDetails?.ClaimRegion ? claim?.claimDetails?.ClaimRegion : ""
+  );
+
+  const [claimServicingOffice, setClaimServicingOffice] = useState(
+    claim?.claimDetails?.ClaimServicingOffice ? claim?.claimDetails?.ClaimServicingOffice : ""
+  );
+
+  const [policyStartDate, setPolicyStartDate] = useState(
+    claim?.claimDetails?.PolicyPeriodStart ? claim?.claimDetails?.PolicyPeriodStart : ""
+  );
+  const [policyEndDate, setPolicyEndDate] = useState(
+    claim?.claimDetails?.PolicyPeriodEnd ? claim?.claimDetails?.PolicyPeriodEnd : ""
+  );
+  const [insuranceCompanyNameAddress, setInsuranceCompanyNameAddress] = useState(
+    claim?.claimDetails?.InsuranceCompanyNameAddress ? claim?.claimDetails?.InsuranceCompanyNameAddress : ""
+  );const [insuredAddedBy, setInsuredAddedBy] = useState(
+    claim?.insuredDetails?.InsuredAddedBy ? claim?.insuredDetails?.InsuredAddedBy : ""
+  );
+
   const [InsuredName, setInsuredName] = useState(
     claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : ""
   );
@@ -49,8 +74,10 @@ const Index = ({}) => {
       ? claim?.insuredDetails?.InsuredMobileNo2
       : ""
   );
+
+
   const [subType, setSubType] = useState("Motor");
-  const [requestType, setRequestType] = useState("Spot");
+  const [inspectionType, setInspectionType] = useState(claim?.claimDetails?.InspectionType ? claim?.claimDetails?.InspectionType : "SPOT");
 
   const [documents, setDocuments] = useState([]);
 
@@ -273,10 +300,10 @@ const Index = ({}) => {
         ? InsuredMobileNo2
         : claim.insuredDetails?.InsuredMobileNo2,
       ClaimNumber: ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber,
-      VehicleMakeVariantModelColor: vehicleParts[0]
+      VehicleMakeVariantModelColor: vehicleParts
         ? vehicleParts[0]
         : claim.vehicleDetails?.VehicleMakeVariantModelColor,
-      VehicleTypeOfBody: vehicleParts[1]
+      VehicleTypeOfBody: vehicleParts
         ? vehicleParts[1]
         : claim.vehicleDetails?.VehicleTypeOfBody,
       VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
@@ -664,7 +691,7 @@ const Index = ({}) => {
                                 InsuredMobileNo1={InsuredMobileNo1}
                                 ClaimNumber={ClaimNumber}
                                 InsuredMailAddress={InsuredMailAddress}
-                                requestType={requestType}
+                                requestType={inspectionType}
                               />
                             </div>
                           ) : (
@@ -680,8 +707,8 @@ const Index = ({}) => {
                               setInsuredMobileNo2={setInsuredMobileNo2}
                               requestTypeTypes={requestTypeTypes}
                               subTypeTypes={subTypeTypes}
-                              setRequestType={setRequestType}
-                              requestType={requestType}
+                              setRequestType={setInspectionType}
+                              requestType={inspectionType}
                               setSubType={setSubType}
                               subType={subType}
                               ClaimNumber={ClaimNumber}

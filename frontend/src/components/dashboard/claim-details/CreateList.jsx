@@ -257,6 +257,7 @@ const CreateList = ({
           </div>
         </div>
 
+    
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -270,36 +271,7 @@ const CreateList = ({
                   // marginTop: "-13px",
                 }}
               >
-                LeadID <span class="req-btn">*</span>
-              </label>
-            </div>
-            <div className="col-lg-7">
-              <input
-                type="text"
-                className="form-control"
-                id="propertyTitle"
-                value={claim.claimDetails?.LeadId}
-
-                // placeholder="Enter Registration No."
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-6">
-          <div className="row mt-1">
-            <div className="col-lg-4 my_profile_setting_input form-group">
-              <label
-                htmlFor=""
-                className="text-color"
-                style={{
-                  // paddingTop: "15px",
-                  color: "#1560bd",
-                  fontWeight: "",
-                  // marginTop: "-13px",
-                }}
-              >
-                Registration No. <span class="req-btn">*</span>
+               Policy Issuing Office <span class="req-btn">*</span>
               </label>
             </div>
             <div className="col-lg-6">
@@ -327,7 +299,7 @@ const CreateList = ({
                   // marginTop: "-13px",
                 }}
               >
-                Insurer ClaimID
+                Claim Region
               </label>
             </div>
             <div className="col-lg-7">
@@ -356,7 +328,7 @@ const CreateList = ({
                   // marginTop: "-13px",
                 }}
               >
-                Status <span class="req-btn">*</span>
+                Claim Servicing Office <span class="req-btn">*</span>
               </label>
             </div>
             <div className="col-lg-6">
@@ -410,7 +382,62 @@ const CreateList = ({
           </div>
         </div>
 
+     
         <div className="col-lg-6">
+        <div className="row mt-1">
+          <div className="col-lg-4 my_profile_setting_input form-group">
+            <label
+              htmlFor=""
+              className="text-color"
+              style={{
+                // paddingTop: "15px",
+                color: "#1560bd",
+                fontWeight: "",
+                // marginTop: "-13px",
+              }}
+            >
+              Policy Start Date <span class="req-btn">*</span>
+            </label>
+          </div>
+          <div className="col-lg-6">
+            <input
+              className="form-control"
+              id="propertyTitle"
+              value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+              // placeholder="Enter Registration No."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="col-lg-6">
+      <div className="row mt-1">
+        <div className="col-lg-4 my_profile_setting_input form-group">
+          <label
+            htmlFor=""
+            className="text-color"
+            style={{
+              // paddingTop: "15px",
+              color: "#1560bd",
+              fontWeight: "",
+              // marginTop: "-13px",
+            }}
+          >
+            Policy End Date <span class="req-btn">*</span>
+          </label>
+        </div>
+        <div className="col-lg-6">
+          <input
+            className="form-control"
+            id="propertyTitle"
+            value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+            // placeholder="Enter Registration No."
+          />
+        </div>
+      </div>
+    </div>
+
+          <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
               <label
@@ -423,7 +450,7 @@ const CreateList = ({
                   // marginTop: "-13px",
                 }}
               >
-                Intimation Date <span class="req-btn">*</span>
+              Insurance Company Name & Address <span class="req-btn">*</span>
               </label>
             </div>
             <div className="col-lg-6">
@@ -438,6 +465,32 @@ const CreateList = ({
         </div>
 
         <div className="col-lg-6">
+        <div className="row mt-1">
+          <div className="col-lg-4 my_profile_setting_input form-group">
+            <label
+              htmlFor=""
+              className="text-color"
+              style={{
+                // paddingTop: "15px",
+                color: "#1560bd",
+                fontWeight: "",
+                // marginTop: "-13px",
+              }}
+            >
+            Insured Added By <span class="req-btn">*</span>
+            </label>
+          </div>
+          <div className="col-lg-6">
+            <input
+              className="form-control"
+              id="propertyTitle"
+              value={formatDate(claim.claimDetails?.ClaimAddedDateTime)}
+              // placeholder="Enter Registration No."
+            />
+          </div>
+        </div>
+      </div> 
+        <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
               <label
@@ -450,7 +503,7 @@ const CreateList = ({
                   // marginTop: "-13px",
                 }}
               >
-                Request Type <span class="req-btn">*</span>
+                Inspection Type <span class="req-btn">*</span>
               </label>
             </div>
             <div className="col-lg-7">
@@ -587,33 +640,7 @@ const CreateList = ({
             </div>
           </div>
 
-          <div className="col-lg-6">
-            <div className="row mt-1">
-              <div className="col-lg-5 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#1560bd",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  LeadID <span class="req-btn">*</span>
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
-                  // placeholder="Enter Registration No."
-                />
-              </div>
-            </div>
-          </div>
-
+        
           <div className="col-lg-6">
             <div className="row mt-1">
               <div className="col-lg-5 my_profile_setting_input form-group">
