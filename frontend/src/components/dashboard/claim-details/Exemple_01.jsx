@@ -335,6 +335,8 @@ export default function Exemple({leadId}) {
 
   const [allDocs,setAllDocs]=useState([]);
 
+  const [change,setChange]=useState(false);
+
   const [uploadedData,setUploadedData]=useState([]);
   useEffect(()=>{
 
@@ -357,48 +359,54 @@ export default function Exemple({leadId}) {
     })
   },[]);
 
+  const verifyReport = (reportId)=>{
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
+    const payload = {
+      reportId:reportId,
+      userName:userInfo[0].Username
+    };
+    axios.post("/api/verifyReportUpload",payload,
+    {
+      headers:{
+      Authorization:`Bearer ${userInfo[0].Token}`,
+      "Content-Type":"application/json"
+      }
+    }).then((res)=>{
+      alert("Successfully updated!");
+      setChange(true);
+    })
+    .catch((err)=>{
+      alert("Try Again!");
+    })
+  }
+
   
 
   useEffect(() => {
     const getData = () => {
       const tempData = [];
-      data.map((row, index) => {
+      allDocs.map((row, index) => {
 
+        console.log(row);
           const updatedRow = {
-            _id: index + 1,
-            serial_num: row.serial_num,
-            doc_name: row.doc_name,
-            files: allDocs.map((file, idx) => {
-              if (file.ReportType === row.doc_name) {
-                return (
-                  <div
-                    style={{ display: "flex", flexDirection: "column" }}
-                    key={idx}
-                  >
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <a
-                          className="btn btn-color w-25"
-                          href={file.FilePath}
+            doc_name: row.ReportType ? row.ReportType : "Driving Licence",
+            file: 
+                  <a 
+                          href={row?.FilePath}
                           target="_blank"
                           rel="noopener noreferrer"
                           title="View"
                         >
-                        {file.FileName}
+                        {row.FileName !=="" ? row.FileName : "Driving Licence"}
                         </a>
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-              return null;
-            }),
-            uploadedBy: <h4>{file?.UploadedBy}</h4>,
+                      ,
+            UploadedBy: <h4>{row?.AddedDateTime}</h4>,
             verified_by:(
-              file?.IsVerified ? "N.A.": <span style={{color:"green"}}>{file?.VerifiedBy}</span>
+              !row?.IsVerified ? <span style={{color:"red"}}>Not Verified</span>: <span style={{color:"green"}}>{row?.VerifiedBy}</span>
             ),
-            action: (
-              file?.IsVerified ? "-": <button>Verify</button>
+            subject: (
+              row?.IsVerified ? "-": <button onClick={()=>verifyReport(row.ReportId)}>Verify</button>
             ),
           };
           tempData.push(updatedRow);
@@ -407,9 +415,10 @@ export default function Exemple({leadId}) {
       return tempData;
     };
 
+    setChange(false);
     const temp =getData();
     setUploadedData(temp);
-  }, [allDocs]);
+  }, [allDocs,change]);
 
 
   console.log(uploadedData);

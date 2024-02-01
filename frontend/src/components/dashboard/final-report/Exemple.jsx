@@ -107,6 +107,11 @@ export default function Exemple_01({
   VehicleAddedDate}) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
+  const [totalEstimate,setTotalEstimate]=useState(0);
+  const [totalAssessed,setTotaAssessed]=useState(0);
+  const [totalDifference,setTotalDifference]=useState(0);
+  
+
   // const []
   const [change, setChange] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
@@ -118,6 +123,7 @@ export default function Exemple_01({
   const [type, setType] = useState("");
   const [remark, setRemark] = useState("");
   const [gst, setGst] = useState(0);
+  const [change2,setChange2]=useState(false);
 
   const [allDepreciations,setAllDepreciations]=useState([]);
 
@@ -160,6 +166,12 @@ export default function Exemple_01({
     }))
   );
 
+  useEffect(()=>{
+    setChange2(false);
+    setTotaAssessed(calculateTotalAssessed);
+    setTotalEstimate(calculateTotalEstimated);
+    setTotalDifference(totalEstimate-totalAssessed);
+  },[change2]);
   const openEditHandler = (idx) => {
     // console.log(idx);
 
@@ -227,6 +239,7 @@ export default function Exemple_01({
   };
 
   const handleChange = (index, val, field) => {
+    setChange2(true);
     console.log(index, val, field);
 
     let oldRow = allRows;
@@ -291,9 +304,12 @@ export default function Exemple_01({
           : val
         : currentField.type;
 
-    const total = Number(assessed) * Number(currentField.qa);
+        const overall = Number(assessed)*Number(currentField.qa);
+        const subtract = String(policyType) === "" ? (overall* Number(currentField.dep))/100 : 0;
+        const total_without = overall-subtract ;
+        const total = total_without + (total_without * Number(currentField.gst))/100;
 
-    console.log(total,assessed,qa)
+
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
       sno: currentField.sno,
@@ -318,30 +334,54 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
+  const calculateTotalAssessed = ()=>{
+    let total = 0;
+    allRows.map((row,index)=>{
+      total = total + (Number(row.assessed) * Number(row.qa));
+    })
+    return total;
+  }
+
+
+  const calculateTotalEstimated = ()=>{
+    let total = 0;
+    allRows.map((row,index)=>{
+      total = total + (Number(row.estimate) * Number(row.qe));
+    })
+    return total;
+  }
 
   const handleQeQaChange=(index, val, field) => {
     
+    setChange2(true);
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
     const qe =
     String(field) === "qe"
-      ? String(currentField.type) === val
+      ? String(currentField.qe) === val
       ? val.slice(-1, 1)
       : val
     : currentField.qe;
       const qa =
       String(field) === "qa"
-        ?String(currentField.type) === val
+        ?String(currentField.qa) === val
         ? val.slice(-1, 1)
         : val
       : currentField.qa;
 
   
-    
-    const total = String(type) === "qe" ? (Number(currentField.assessed) * Number(val)) : currentField.total;
 
+      
+    
+     const overall = Number(currentField.assessed)*Number(qa);
+    const subtract = String(policyType) === "" ? (overall* Number(currentField.dep))/100 : 0;
+   // console.log(currentField.total,subtract);
+   const total_without = overall-subtract ;
+   const total = total_without + (total_without * Number(currentField.gst))/100;
+
+    // console.log("geq",qe,qa,total * qa);
    
 
     const newOutput = {
@@ -362,9 +402,10 @@ export default function Exemple_01({
     };
 
     oldRow[index] = newOutput;
+    setChange(true);
     setAllRows(oldRow);
     // console.log(allRows[index].field);
-    setChange(true);
+    
     // console.log(oldRow);
   };
 
@@ -413,6 +454,7 @@ export default function Exemple_01({
 
   const handleTypeChange=(index, val, field) => {
     
+    setChange2(true)
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
@@ -421,6 +463,7 @@ export default function Exemple_01({
     const dep =
       calculateDepreciationsPercenatge(allDepreciations,val,claim.vehicleDetails?.VehicleAddedDate);
     
+      // console.log(dep,val);
     const type =
       String(field) === "type"
         ? String(currentField.type) === val
@@ -429,7 +472,10 @@ export default function Exemple_01({
         : currentField.type;
 
       
-    console.log(dep)
+        const overall = Number(currentField.assessed)*Number(currentField.qa);
+         const subtract = String(policyType) === "" ? (overall* Number(dep))/100 : 0;
+        // console.log(currentField.total,subtract);
+        const total = overall-subtract;
     
 
     const newOutput = {
@@ -441,11 +487,59 @@ export default function Exemple_01({
       remark: currentField.remark,
       estimate: currentField.estimate,
       assessed: currentField.assessed,
-      qe_qa: currentField.qe_qa,
+      qa: currentField.qa,
+      qe:currentField.qe,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
-      total: currentField.total,
+      total: total,
       type: type,
+    };
+
+    oldRow[index] = newOutput;
+    setAllRows(oldRow);
+    // console.log(allRows[index].field);
+    setChange(true);
+    // console.log(oldRow);
+  };
+
+  const handleGSTChange=(index, val, field) => {
+    
+    setChange2(true)
+    let oldRow = allRows;
+    const currentField = allRows[index];
+    const len = val.length;
+
+
+    const gst =
+      String(field) === "gst"
+        ? String(currentField.gst) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.gst;
+
+      
+        const overall = Number(currentField.assessed)*Number(currentField.qa);
+         const subtract = String(policyType) === "" ? (overall* Number(currentField.dep))/100 : 0;
+        // console.log(currentField.total,subtract);
+        const total_without = overall-subtract ;
+        const total = total_without + (total_without * Number(gst))/100;
+    
+
+    const newOutput = {
+      _id: currentField._id, // You may use a more robust ID generation logic
+      sno: currentField.sno,
+      dep: currentField.dep, // Add default values or lea ve empty as needed
+      description: currentField.description,
+      sac: currentField.sac,
+      remark: currentField.remark,
+      estimate: currentField.estimate,
+      assessed: currentField.assessed,
+      qa: currentField.qa,
+      qe:currentField.qe,
+      bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
+      gst: gst,
+      total: total,
+      type: currentField.type,
     };
 
     oldRow[index] = newOutput;
@@ -562,18 +656,6 @@ export default function Exemple_01({
               style={{ border: "1px solid black" }}
             />
           ),
-          estimate: (
-            <input
-              className="form-control form-control-table"
-              type="text"
-              value={row.estimate}
-              disabled={!edit}
-              onChange={(e) => handleChange(index, e.target.value, "estimate")}
-              required
-              id="terms"
-              style={{ border: "1px solid black" }}
-            />
-          ),
           assessed: (
             <input
               className="form-control form-control-table"
@@ -586,6 +668,19 @@ export default function Exemple_01({
               style={{ border: "1px solid black" }}
             />
           ),
+          estimate: (
+            <input
+              className="form-control form-control-table"
+              type="text"
+              value={row.estimate}
+              disabled={!edit}
+              onChange={(e) => handleChange(index, e.target.value, "estimate")}
+              required
+              id="terms"
+              style={{ border: "1px solid black" }}
+            />
+          ),
+         
           qe: (
             <input
               className="form-control form-control-table"
@@ -694,6 +789,9 @@ export default function Exemple_01({
       handleAddRow={handleAddRow}
       editHandler={editHandler}
       updateHandler={updateHandler}
+      estimate = {totalAssessed}
+      assessed = {totalEstimate}
+      difference = {totalEstimate - totalAssessed}
       edit={edit}
     />
   );
