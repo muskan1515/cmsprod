@@ -213,63 +213,36 @@ const Index = ({}) => {
   const [edit, setEdit] = useState(false);
 
   //New Fields
-  const [VehicleClassDescription, setVehicleClassDescription] = useState(
-    details?.VehicleClassDescription || ""
-  );
-  const [MakerDesc, setMakerDesc] = useState(details?.MakerDesc || "");
-  const [MakerModel, setMakerModel] = useState(details?.MakerModel || "");
-  const [ManufactureMonth, setManufactureMonth] = useState(
-    details?.ManufactureMonth || ""
-  );
-  const [VehicleGvw, setVehicleGvw] = useState(details?.VehicleGvw || "");
-  const [VehicleCubicCap, setVehicleCubicCap] = useState(
-    details?.VehicleCubicCap || ""
-  );
-  const [VehicleSeatCap, setVehicleSeatCap] = useState(
-    details?.VehicleSeatCap || ""
-  );
-  const [VehiclePermanentAddress, setVehiclePermanentAddress] = useState(
-    details?.VehiclePermanentAddress || ""
-  );
-  const [fitUpto, setFitUpto] = useState(details?.fitUpto || "");
-  const [RcPasiaModelCode, setRcPasiaModelCode] = useState(
-    details?.RcPasiaModelCode || ""
-  );
-  const [RcInsuranceComp, setRcInsuranceComp] = useState(
-    details?.RcInsuranceComp || ""
-  );
-  const [RcInsuranceUpto, setRcInsuranceUpto] = useState(
-    details?.RcInsuranceUpto || ""
-  );
-  const [RcRegisteredAt, setRcRegisteredAt] = useState(
-    details?.RcRegisteredAt || ""
-  );
-  const [RcBlacklistStatus, setRcBlacklistStatus] = useState(
-    details?.RcBlacklistStatus || ""
-  );
-  const [RcStatus, setRcStatus] = useState(details?.RcStatus || "");
-  const [RcVehicleType, setRcVehicleType] = useState(
-    details?.RcVehicleType || ""
-  );
-  const [BancsModelCode, setBancsModelCode] = useState(
-    details?.BancsModelCode || ""
-  );
-  const [BancsMakeCode, setBancsMakeCode] = useState(
-    details?.BancsMakeCode || ""
-  );
-  const [BancsSubtypeCode, setBancsSubtypeCode] = useState(
-    details?.BancsSubtypeCode || ""
-  );
-  const [BancsBodyType, setBancsBodyType] = useState(
-    details?.BancsBodyType || ""
-  );
-  const [BancsVehicleClass, setBancsVehicleClass] = useState(
-    details?.BancsVehicleClass || ""
-  );
-  const [BancsVehicleSegment, setBancsVehicleSegment] = useState(
-    details?.BancsVehicleSegment || ""
-  );
-  const [RcRtoCode, setRcRtoCode] = useState(details?.RcRtoCode || "");
+  const [VehicleClassDescription, setVehicleClassDescription] = useState("");
+  const [MakerDesc, setMakerDesc] = useState("");
+  const [MakerModel, setMakerModel] = useState("");
+  const [ManufactureMonth, setManufactureMonth] = useState("");
+  const [VehicleGvw, setVehicleGvw] = useState("");
+  const [VehicleCubicCap, setVehicleCubicCap] = useState("");
+  const [VehicleSeatCap, setVehicleSeatCap] = useState("");
+  const [VehiclePermanentAddress, setVehiclePermanentAddress] = useState("");
+  const [FitUpto, setFitUpto] = useState("");
+  const [RcPasiaModelCode, setRcPasiaModelCode] = useState("");
+  const [RcInsuranceComp, setRcInsuranceComp] = useState("");
+  const [RcInsuranceUpto, setRcInsuranceUpto] = useState("");
+  const [RcRegisteredAt, setRcRegisteredAt] = useState("");
+  const [RcBlacklistStatus, setRcBlacklistStatus] = useState("");
+  const [RcStatus, setRcStatus] = useState("");
+  const [RcVehicleType, setRcVehicleType] = useState("");
+  const [BancsModelCode, setBancsModelCode] = useState("");
+  const [BancsMakeCode, setBancsMakeCode] = useState("");
+  const [BancsSubtypeCode, setBancsSubtypeCode] = useState("");
+  const [BancsBodyType, setBancsBodyType] = useState("");
+  const [BancsVehicleClass, setBancsVehicleClass] = useState("");
+  const [BancsVehicleSegment, setBancsVehicleSegment] = useState("");
+  const [RcRtoCode, setRcRtoCode] = useState("");
+  const [VehicleRcStatus, setVehicleRcStatus] = useState("");
+  const [VehicleBlackListStatus, setVehicleBlackListStatus] = useState("");
+  const [VehicleRegistedAt, setVehicleRegistedAt] = useState("");
+  const [VehicleInsuranceCompany, setVehicleInsuranceCompany] = useState("");
+  const [ManufactureMonthYear, setManufactureMonthYear] = useState("");
+  const [PermanentAddress, setPermanentAddress] = useState("");
+  const [ClassOfVehicle, setClassOfVehicle] = useState("");
 
   const statusOptions = [
     {
@@ -337,14 +310,15 @@ const Index = ({}) => {
     },
   ];
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice);
     setClaimRegion(claim?.claimDetails?.ClaimRegion);
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice);
     setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart);
     setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
-    setInsuranceCompanyNameAddress(claim?.claimDetails?.InsuranceCompanyNameAddress);
+    setInsuranceCompanyNameAddress(
+      claim?.claimDetails?.InsuranceCompanyNameAddress
+    );
     setInsuredAddedBy(claim?.insuredDetails?.InsuredAddedBy);
     setInsuredName(claim?.insuredDetails?.InsuredName);
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
@@ -372,8 +346,7 @@ const Index = ({}) => {
     setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
     setGarageContactNo2(claim?.garageDetails?.GarageContactNo2);
     setGarageAddedBy(claim?.garageDetails?.GarageAddedBy);
-
-  },[claim]);
+  }, [claim]);
 
   const generateRegion = (region) => {
     const firstThreeLetters = region?.slice(0, 3);
@@ -393,8 +366,6 @@ const Index = ({}) => {
   const [RegisteredNumber, setRegisteredNumber] = useState(
     claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
   );
-  
-
 
   const onSaveHandler = (func) => {
     console.log(insuranceCompanyNameAddress);
@@ -413,25 +384,39 @@ const Index = ({}) => {
       InsuredMobileNo1: InsuredMobileNo1
         ? InsuredMobileNo1
         : claim.insuredDetails?.InsuredMobileNo1,
-      PolicyIssuingOffice : policyIssuingOffice ? policyIssuingOffice : 
-      claim.claimDetails?.PolicyIssuingOffice,
-      ClaimRegion : claimRegion ? claimRegion : claim.claimDetails?.ClaimRegion,
-      ClaimServicingOffice: claimServicingOffice ? claimServicingOffice : claim.claimDetails?.ClaimServicingOffice,
-      PolicyPeriodStart : policyStartDate ? policyStartDate : claim.claimDetails?.PolicyPeriodStart,
-      PolicyPeriodEnd : policyEndDate ? policyEndDate : claim.claimDetails?.PolicyPeriodEnd,
-      InsuranceCompanyNameAddress : insuranceCompanyNameAddress ? insuranceCompanyNameAddress : 
-      claim.claimDetails?.InsuranceCompanyNameAddress,
-      InsuredAddedBy : insuredAddedBy ?insuredAddedBy : claim.claimDetails?.InsuredAddedBy,
+      PolicyIssuingOffice: policyIssuingOffice
+        ? policyIssuingOffice
+        : claim.claimDetails?.PolicyIssuingOffice,
+      ClaimRegion: claimRegion ? claimRegion : claim.claimDetails?.ClaimRegion,
+      ClaimServicingOffice: claimServicingOffice
+        ? claimServicingOffice
+        : claim.claimDetails?.ClaimServicingOffice,
+      PolicyPeriodStart: policyStartDate
+        ? policyStartDate
+        : claim.claimDetails?.PolicyPeriodStart,
+      PolicyPeriodEnd: policyEndDate
+        ? policyEndDate
+        : claim.claimDetails?.PolicyPeriodEnd,
+      InsuranceCompanyNameAddress: insuranceCompanyNameAddress
+        ? insuranceCompanyNameAddress
+        : claim.claimDetails?.InsuranceCompanyNameAddress,
+      InsuredAddedBy: insuredAddedBy
+        ? insuredAddedBy
+        : claim.claimDetails?.InsuredAddedBy,
       InsuredMobileNo2: InsuredMobileNo2
         ? InsuredMobileNo2
         : claim.insuredDetails?.InsuredMobileNo2,
       ClaimNumber: ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber,
-      VehicleTypeOfBody: VehicleModel ? VehicleModel : claim.claimDetails?.VehicleModel,
+      VehicleTypeOfBody: VehicleModel
+        ? VehicleModel
+        : claim.claimDetails?.VehicleModel,
       VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
         ? claim?.claimDetails?.ReferenceNo
         : generateRegion(claim?.ClaimRegion),
-      SurveyType :  subType ? subType : claim.claimDetails?.SurveyType,
-      InspectionType : inspectionType ? inspectionType : claim?.claimDetails?.InspectionType,
+      SurveyType: subType ? subType : claim.claimDetails?.SurveyType,
+      InspectionType: inspectionType
+        ? inspectionType
+        : claim?.claimDetails?.InspectionType,
       VehicleDateOfRegistration: DateRegistration
         ? DateRegistration
         : claim.vehicleDetails?.VehicleDateOfRegistration,
@@ -479,7 +464,36 @@ const Index = ({}) => {
         : claim.garageDetails?.GarageContactNo2,
       LeadId: claim.claimDetails?.LeadId,
       //New Fields
-
+      VehicleClassDescription,
+      MakerDesc,
+      MakerModel,
+      ManufactureMonth,
+      VehicleGvw,
+      VehicleCubicCap,
+      VehicleSeatCap,
+      VehiclePermanentAddress,
+      FitUpto,
+      RcPasiaModelCode,
+      RcInsuranceComp,
+      RcInsuranceUpto,
+      RcRegisteredAt,
+      RcBlacklistStatus,
+      RcStatus,
+      RcVehicleType,
+      BancsModelCode,
+      BancsMakeCode,
+      BancsSubtypeCode,
+      BancsBodyType,
+      BancsVehicleClass,
+      BancsVehicleSegment,
+      RcRtoCode,
+      VehicleRcStatus,
+      VehicleBlackListStatus,
+      VehicleRegistedAt,
+      VehicleInsuranceCompany,
+      ManufactureMonthYear,
+      PermanentAddress,
+      ClassOfVehicle,
       token: userInfo[0].Token,
     };
     if (
@@ -607,7 +621,7 @@ const Index = ({}) => {
             list.Attribute1.toLowerCase().includes(".mp4") ||
             list.Attribute1.toLowerCase().includes(".mp3")
           ) {
-            requiredVideos.push({ 
+            requiredVideos.push({
               name: list.Attribute1,
               url: list.Photo1,
             });
@@ -750,7 +764,7 @@ const Index = ({}) => {
                 </div> */}
                 {/* End .col */}
 
-                {claim.claimDetails?.InsuredName  ? (
+                {claim.claimDetails?.InsuredName ? (
                   <div className="row">
                     <div
                       className="smartTable-noDataFound col-12"
@@ -833,13 +847,11 @@ const Index = ({}) => {
                               setRequestType={setInspectionType}
                               requestType={inspectionType}
                               setSubType={setSubType}
-
                               subType={subType}
                               ClaimNumber={ClaimNumber}
                               setClaimNumber={setClaimNumber}
                               edit={editCase}
                               setIsStatusModal={setIsStatusModal}
-
                               policyIssuingOffice={policyIssuingOffice}
                               setPolicyIssuingOffice={setPolicyIssuingOffice}
                               claimRegion={claimRegion}
@@ -850,8 +862,12 @@ const Index = ({}) => {
                               setPolicyStartDate={setPolicyStartDate}
                               policyEndDate={policyEndDate}
                               setPolicyEndDate={setPolicyEndDate}
-                              insuranceCompanyNameAddress={insuranceCompanyNameAddress}
-                              setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
+                              insuranceCompanyNameAddress={
+                                insuranceCompanyNameAddress
+                              }
+                              setInsuranceCompanyNameAddress={
+                                setInsuranceCompanyNameAddress
+                              }
                               insuredAddedBy={insuredAddedBy}
                               setInsuredAddedBy={setInsuredAddedBy}
                             />
@@ -1015,7 +1031,7 @@ const Index = ({}) => {
                               setVehiclePermanentAddress={
                                 setVehiclePermanentAddress
                               }
-                              setfitUpto={setfitUpto}
+                              setFitUpto={setFitUpto}
                               setRcPasiaModelCode={setRcPasiaModelCode}
                               setRcInsuranceComp={setRcInsuranceComp}
                               setRcInsuranceUpto={setRcInsuranceUpto}
@@ -1030,16 +1046,16 @@ const Index = ({}) => {
                               setBancsVehicleClass={setBancsVehicleClass}
                               setBancsVehicleSegment={setBancsVehicleSegment}
                               setRcRtoCode={setRcRtoCode}
-
                               VehicleClassDescription={VehicleClassDescription}
                               MakerDesc={MakerDesc}
                               MakerModel={MakerModel}
-                              ManufactureMonth={ManufactureMonth}
+                              ManufactureMonthYear={ManufactureMonthYear}
+                              setManufactureMonthYear={setManufactureMonthYear}
                               VehicleGvw={VehicleGvw}
                               VehicleCubicCap={VehicleCubicCap}
                               VehicleSeatCap={VehicleSeatCap}
                               VehiclePermanentAddress={VehiclePermanentAddress}
-                              fitUpto={fitUpto}
+                              FitUpto={FitUpto}
                               RcPasiaModelCode={RcPasiaModelCode}
                               RcInsuranceComp={RcInsuranceComp}
                               RcInsuranceUpto={RcInsuranceUpto}
@@ -1054,6 +1070,22 @@ const Index = ({}) => {
                               BancsVehicleClass={BancsVehicleClass}
                               BancsVehicleSegment={BancsVehicleSegment}
                               RcRtoCode={RcRtoCode}
+                              setVehicleRcStatus={setVehicleRcStatus}
+                              VehicleRcStatus={VehicleRcStatus}
+                              VehicleBlackListStatus={VehicleBlackListStatus}
+                              setVehicleBlackListStatus={
+                                setVehicleBlackListStatus
+                              }
+                              setVehicleRegistedAt={setVehicleRegistedAt}
+                              VehicleRegistedAt={VehicleRegistedAt}
+                              setVehicleInsuranceCompany={
+                                setVehicleInsuranceCompany
+                              }
+                              VehicleInsuranceCompany={VehicleInsuranceCompany}
+                              PermanentAddress={PermanentAddress}
+                              setPermanentAddress={setPermanentAddress}
+                              ClassOfVehicle={ClassOfVehicle}
+                              setClassOfVehicle={setClassOfVehicle}
                             />
                           </div>
                         </div>

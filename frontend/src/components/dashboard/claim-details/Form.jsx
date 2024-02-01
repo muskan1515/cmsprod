@@ -46,16 +46,15 @@ const Form = ({
   setVehicleClassDescription,
   setMakerDesc,
   setMakerModel,
-  setManufactureMonth,
+  setManufactureMonthYear,
   setVehicleGvw,
   setVehicleCubicCap,
   setVehicleSeatCap,
   setVehiclePermanentAddress,
-  setfitUpto,
+  setFitUpto,
   setRcPasiaModelCode,
   setRcInsuranceComp,
   setRcInsuranceUpto,
-  setRcRegisteredAt,
   setRcBlacklistStatus,
   setRcStatus,
   setRcVehicleType,
@@ -66,16 +65,19 @@ const Form = ({
   setBancsVehicleClass,
   setBancsVehicleSegment,
   setRcRtoCode,
+  setVehicleBlackListStatus,
+  setVehicleRegistedAt,
+  setVehicleRcStatus,
 
   VehicleClassDescription,
   MakerDesc,
   MakerModel,
-  ManufactureMonth,
+  ManufactureMonthYear,
   VehicleGvw,
   VehicleCubicCap,
   VehicleSeatCap,
   VehiclePermanentAddress,
-  fitUpto,
+  FitUpto,
   RcPasiaModelCode,
   RcInsuranceComp,
   RcInsuranceUpto,
@@ -83,54 +85,8 @@ const Form = ({
   RcBlacklistStatus,
   RcStatus,
   RcVehicleType,
-  BancsModelCode,
-  BancsMakeCode,
-  BancsSubtypeCode,
-  BancsBodyType,
-  BancsVehicleClass,
-  BancsVehicleSegment,
-  RcRtoCode,
-  //New Fields
-  setVehicleClassDescription,
-  setMakerDesc,
-  setMakerModel,
-  setManufactureMonth,
-  setVehicleGvw,
-  setVehicleCubicCap,
-  setVehicleSeatCap,
-  setVehiclePermanentAddress,
-  setfitUpto,
-  setRcPasiaModelCode,
-  setRcInsuranceComp,
-  setRcInsuranceUpto,
-  setRcRegisteredAt,
-  setRcBlacklistStatus,
-  setRcStatus,
-  setRcVehicleType,
-  setBancsModelCode,
-  setBancsMakeCode,
-  setBancsSubtypeCode,
-  setBancsBodyType,
-  setBancsVehicleClass,
-  setBancsVehicleSegment,
-  setRcRtoCode,
 
-  VehicleClassDescription,
-  MakerDesc,
-  MakerModel,
-  ManufactureMonth,
-  VehicleGvw,
-  VehicleCubicCap,
-  VehicleSeatCap,
-  VehiclePermanentAddress,
-  fitUpto,
-  RcPasiaModelCode,
-  RcInsuranceComp,
-  RcInsuranceUpto,
-  RcRegisteredAt,
-  RcBlacklistStatus,
-  RcStatus,
-  RcVehicleType,
+  //--
   BancsModelCode,
   BancsMakeCode,
   BancsSubtypeCode,
@@ -138,9 +94,24 @@ const Form = ({
   BancsVehicleClass,
   BancsVehicleSegment,
   RcRtoCode,
+  BancsFuelType,
+  VehicleType,
+  VehicleBlackListStatus,
+  VehicleRegistedAt,
+  VehicleInsuranceUpto,
+  VehicleInsuranceCompany,
+  VehicleRcStatus,
+
+  setBancsFuelType,
+  setVehicleInsuranceCompany,
+  PermanentAddress,
+  setPermanentAddress,
+  ClassOfVehicle,
+  setClassOfVehicle
+
 }) => {
   const router = useRouter();
-  const [editCase_01, EditCase_01] = useState(false);
+  const [editCase_01, setEditCase_01] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
   const [details, setDetails] = useState();
   //   const togglePasswordVisibility = () => {
@@ -179,7 +150,7 @@ const Form = ({
           console.log("err", err);
         });
 
-      setEditCase_01(true);
+      // setEditCase_01(true);
       console.log("data", data);
     } catch (error) {
       console.log("Error from Fetch Details-> ", error);
@@ -193,16 +164,15 @@ const Form = ({
     setVehicleClassDescription(details?.rc_vh_class_desc), //is it same as ClassOfVehicle ?
     setMakerDesc(details?.rc_maker_desc),
     setMakerModel(details?.rc_maker_model);
-  setManufactureMonth(details?.rc_manu_month_yr);
+    setManufactureMonthYear(details?.rc_manu_month_yr);
   setVehicleGvw(details?.rc_gvw);
   setVehicleCubicCap(details?.rc_cubic_cap);
   setVehicleSeatCap(details?.rc_seat_cap);
   setVehiclePermanentAddress(details?.rc_permanent_address);
-  setfitUpto(details?.rc_fit_upto);
+  setFitUpto(details?.rc_fit_upto);
   setRcPasiaModelCode(details?.rc_pasia_model_code);
   setRcInsuranceComp(details?.rc_insurance_comp);
   setRcInsuranceUpto(details?.rc_insurance_upto);
-  setRcRegisteredAt(details?.rc_registered_at);
   setRcBlacklistStatus(details?.rc_blacklist_status);
   setRcStatus(details?.rc_status);
   setRcVehicleType(details?.rc_vehicle_type);
@@ -213,11 +183,15 @@ const Form = ({
   setBancsVehicleClass(details?.bancs_Vehicle_class);
   setBancsVehicleSegment(details?.bancs_Vehicle_Segment);
   setRcRtoCode(details?.rc_rto_code);
-
+  // setBancsFuelType(details?.bancs_Fuel_Type);
   setEngineNumber(details?.rc_eng_no),
     setLicenseNumber(details?.rc_regn_no),
     setVehicleFuelType(details?.bancs_Fuel_Type),
-    setPUCNumber,
+    setVehicleRcStatus(details?.rc_status);
+  setVehicleBlackListStatus(details?.rc_blacklist_status);
+  setVehicleRegistedAt(details?.rc_registered_at);
+  setVehicleInsuranceCompany(details?.rc_insurance_comp);
+  setPUCNumber,
     setTransferDate,
     setEngineType,
     setAddedBy,
@@ -283,6 +257,7 @@ const Form = ({
                       </button>
                     )}
                   </div>
+                  {editCase_01 && (
                   <div className="col-lg-2 text-start">
                     <button
                       className="btn-thm"
@@ -291,7 +266,7 @@ const Form = ({
                     >
                       Fetch Details
                     </button>
-                  </div>
+                  </div>)}
                 </div>
 
                 {editCase_01 ? (
@@ -317,9 +292,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleModel
-                            }
+                            value={VehicleModel}
                             onChange={(e) => setVehicleModel(e.target.value)}
                             disabled={false}
                             // placeholder="Enter Registration No."
@@ -356,7 +329,6 @@ const Form = ({
                       </div>
                     </div>
                         </div>*/}
-
 
                     <div className="col-lg-6">
                       <div className="row mt-1">
@@ -772,6 +744,517 @@ const Form = ({
                         </div>
                       </div>
                     </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Rc Rto Code <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              RcRtoCode
+                                ? RcRtoCode
+                                : claim?.vehicleDetails?.RcRtoCode
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Vehicle Segment <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              BancsVehicleSegment
+                                ? BancsVehicleSegment
+                                : claim?.vehicleDetails?.BancsVehicleSegment
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Vehicle Class <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              BancsVehicleClass
+                                ? BancsVehicleClass
+                                : claim?.vehicleDetails?.BancsVehicleClass
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Body Type <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              BancsBodyType
+                                ? BancsBodyType
+                                : claim?.vehicleDetails?.BancsBodyType
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Fuel Type <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleFuelType
+                                ? VehicleFuelType
+                                : claim?.vehicleDetails?.VehicleFuelType
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Subtype Code <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              BancsSubtypeCode
+                                ? BancsSubtypeCode
+                                : claim?.vehicleDetails?.BancsSubtypeCode
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Make Code <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              BancsMakeCode
+                                ? BancsMakeCode
+                                : claim?.vehicleDetails?.BancsMakeCode
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Model Code <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              BancsModelCode
+                                ? BancsModelCode
+                                : claim?.vehicleDetails?.BancsModelCode
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Type <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              RcVehicleType
+                                ? RcVehicleType
+                                : claim?.vehicleDetails?.VehicleType
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Rc Status <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleRcStatus
+                                ? VehicleRcStatus
+                                : claim?.vehicleDetails?.VehicleRcStatus
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Black ListStatus{" "}
+                            <span class="req-btn">*</span>
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleBlackListStatus
+                                ? VehicleBlackListStatus
+                                : claim?.vehicleDetails?.VehicleBlackListStatus
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Registed At <span class="req-btn">*</span>
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleRegistedAt
+                                ? VehicleRegistedAt
+                                : claim?.vehicleDetails?.VehicleRegistedAt
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Insurance Upto{" "}
+                            <span class="req-btn">*</span>
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleInsuranceUpto
+                                ? VehicleInsuranceUpto
+                                : claim?.vehicleDetails?.VehicleInsuranceUpto
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Insurance Company{" "}
+                            <span class="req-btn">*</span>
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleInsuranceCompany
+                                ? VehicleInsuranceCompany
+                                : claim?.vehicleDetails?.VehicleInsuranceCompany
+                            }
+                            onChange={(e) =>
+                              setRegisteredNumber(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="row">
@@ -805,25 +1288,19 @@ const Form = ({
                       setVehicleChassisNumber={setVehicleChassisNumber}
                       VehicleFuelType={VehicleFuelType}
                       setVehicleFuelType={setVehicleFuelType}
-
-                       // New Fields
-                       setVehicleClassDescription={
-                        setVehicleClassDescription
-                      }
+                      // New Fields
+                      setVehicleClassDescription={setVehicleClassDescription}
                       setMakerDesc={setMakerDesc}
                       setMakerModel={setMakerModel}
-                      setManufactureMonth={setManufactureMonth}
+                      setManufactureMonthYear={setManufactureMonthYear}
                       setVehicleGvw={setVehicleGvw}
                       setVehicleCubicCap={setVehicleCubicCap}
                       setVehicleSeatCap={setVehicleSeatCap}
-                      setVehiclePermanentAddress={
-                        setVehiclePermanentAddress
-                      }
-                      setfitUpto={setfitUpto}
+                      setVehiclePermanentAddress={setVehiclePermanentAddress}
+                      setFitUpto={setFitUpto}
                       setRcPasiaModelCode={setRcPasiaModelCode}
                       setRcInsuranceComp={setRcInsuranceComp}
                       setRcInsuranceUpto={setRcInsuranceUpto}
-                      setRcRegisteredAt={setRcRegisteredAt}
                       setRcBlacklistStatus={setRcBlacklistStatus}
                       setRcStatus={setRcStatus}
                       setRcVehicleType={setRcVehicleType}
@@ -834,16 +1311,15 @@ const Form = ({
                       setBancsVehicleClass={setBancsVehicleClass}
                       setBancsVehicleSegment={setBancsVehicleSegment}
                       setRcRtoCode={setRcRtoCode}
-
                       VehicleClassDescription={VehicleClassDescription}
                       MakerDesc={MakerDesc}
                       MakerModel={MakerModel}
-                      ManufactureMonth={ManufactureMonth}
+                      ManufactureMonthYear={ManufactureMonthYear}
                       VehicleGvw={VehicleGvw}
                       VehicleCubicCap={VehicleCubicCap}
                       VehicleSeatCap={VehicleSeatCap}
                       VehiclePermanentAddress={VehiclePermanentAddress}
-                      fitUpto={fitUpto}
+                      FitUpto={FitUpto}
                       RcPasiaModelCode={RcPasiaModelCode}
                       RcInsuranceComp={RcInsuranceComp}
                       RcInsuranceUpto={RcInsuranceUpto}
@@ -858,6 +1334,13 @@ const Form = ({
                       BancsVehicleClass={BancsVehicleClass}
                       BancsVehicleSegment={BancsVehicleSegment}
                       RcRtoCode={RcRtoCode}
+                      PermanentAddress={PermanentAddress}
+                      setPermanentAddress={setPermanentAddress}
+                      setVehicleRegistedAt={setVehicleRegistedAt}
+                      VehicleRegistedAt={VehicleRegistedAt}
+                      ClassOfVehicle={ClassOfVehicle}
+                      setClassOfVehicle={setClassOfVehicle}
+
                     />
                   </div>
                 )}
