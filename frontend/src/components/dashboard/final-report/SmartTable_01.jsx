@@ -301,7 +301,6 @@ function SmartTable(props) {
   };
 
   console.log(props.data);
-  
 
   return (
     <div className="col-12 p-2">
@@ -383,28 +382,125 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <div className="col-lg-6">
-                  <button
-                    className="btn btn-color w-15"
-                    onClick={() => props.handleAddRow()}
-                  >
-                    <span className="flaticon-plus"></span>
-                  </button>
-                  {props.edit ? (
-                    <button
-                      className="btn btn-color w-15"
-                      onClick={() => props.updateHandler()}
-                    >
-                      Save
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-color w-15"
-                      onClick={() => props.editHandler()}
-                    >
-                      <span className="flaticon-edit"></span>
-                    </button>
-                  )}
+                <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-3">
+                      <button
+                        className="btn btn-color w-15"
+                        onClick={() => props.handleAddRow()}
+                      >
+                        <span className="flaticon-plus"></span>
+                      </button>
+                      {props.edit ? (
+                        <button
+                          className="btn btn-color w-15"
+                          onClick={() => props.updateHandler()}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-color w-15"
+                          onClick={() => props.editHandler()}
+                        >
+                          <span className="flaticon-edit"></span>
+                        </button>
+                      )}
+                    </div>
+                    <div className="col-lg-3">
+                      <div className="row mt-1">
+                        <div className="col-lg-4 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Estimated
+                          </label>
+                        </div>
+                        <div className="col-lg-8">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // value={LicenseType}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3">
+                      <div className="row mt-1">
+                        <div className="col-lg-4 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Assessed
+                          </label>
+                        </div>
+                        <div className="col-lg-8">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // value={LicenseType}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3">
+                      <div className="row mt-1">
+                        <div className="col-lg-4 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Diffrance
+                          </label>
+                        </div>
+                        <div className="col-lg-8">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // value={LicenseType}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

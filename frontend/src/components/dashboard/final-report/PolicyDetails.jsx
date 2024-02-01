@@ -303,7 +303,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               <MyDatePicker />
             </div>
             <span
-              className="col-lg-1 flaticon-calendar text-dark fs-4"
+              className="col-lg-1 flaticon-calendar text-dark fs-6"
               style={{ marginLeft: "-20px" }}
             ></span>
           </div>
@@ -319,7 +319,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   // paddingTop: "15px",
                   color: "#2e008b",
                   fontWeight: "",
-                  marginTop: "10px",
+                  marginTop: "5px",
                 }}
               >
                 Vehicle
@@ -327,7 +327,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
             </div>
             <div className="col-lg-7">
               <select
-                style={{ marginTop: "5px" }}
+                // style={{ marginTop: "5px" }}
+                style={{ padding: "2px", marginTop: "3px" }}
                 className="selectpicker form-select"
                 data-live-search="true"
                 data-width="100%"
@@ -349,16 +350,16 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
       <div className="row">
         <div className="col-lg-8" style={{ borderRight: "1px solid grey" }}>
-          <h4 className="text-dark" style={{ fontSize: "21px" }}>
+          <h4 className="text-dark" style={{ fontSize: "17px" }}>
             Policy Details :
           </h4>
           <hr />
           <div className="row">
             <div className="col-lg-12">
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-7">
                   <div className="row mt-1">
-                    <div className="col-lg-2 my_profile_setting_input form-group">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -367,13 +368,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Policy#
                       </label>
                     </div>
-                    <div className="col-lg-10">
+                    <div className="col-lg-8" style={{ marginLeft: "" }}>
                       <input
                         type="text"
                         className="form-control"
@@ -392,7 +393,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
         </div> */}
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-5">
                   <div className="row mt-1">
                     <div className="col-lg-4 text-end my_profile_setting_input form-group">
                       <label
@@ -422,34 +423,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="col-lg-6">
+                <div className="col-lg-4">
                   <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          color: "#2e008b",
-                          fontWeight: "",
-                        }}
-                      >
-                        Endorsement <span class="text-danger">*</span>
-                      </label>
-                    </div>
-                    <div className="col-lg-7">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="propertyTitle"
-                        readOnly={!isEditMode}
-                      />
-                    </div>
-                  </div>
-                </div> */}
-
-                <div className="col-lg-3">
-                  <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
+                    <div className="col-lg-7 my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -458,13 +434,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         I.D.V.
                       </label>
                     </div>
-                    <div className="col-lg-7 text-end">
+                    <div className="col-lg-5">
                       <input
                         type="number"
                         className="form-control"
@@ -476,7 +452,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                 </div>
                 <div className="col-lg-3">
                   <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
+                    <div className="col-lg-2 my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -491,9 +467,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         Type
                       </label>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-10">
                       <select
-                        style={{ marginTop: "-5px" }}
+                        style={{ padding: "2px" }}
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
@@ -507,7 +483,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-5">
                   <div className="row mt-1">
                     <div className="col-lg-4 text-end my_profile_setting_input form-group">
                       <label
@@ -538,24 +514,25 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3">
+                <div className="col-lg-4">
                   <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
+                    <div className="col-lg-7 form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
                         style={{
                           // paddingTop: "15px",
                           color: "#2e008b",
-                          fontWeight: "",
+                          fontWeight: "bold",
+                          paddingRight: "-10px",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Insurance From
                       </label>
                     </div>
-                    <div className="col-lg-7">
+                    <div className="col-lg-5">
                       <MyDatePicker />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                       {/* <input
@@ -569,7 +546,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
                 <div className="col-lg-3">
                   <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
+                    <div className="col-lg-2 my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -578,13 +555,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
-                        Insurance To
+                        To
                       </label>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-10">
                       <MyDatePicker />
                     </div>
                     {/* <span
@@ -594,7 +571,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-5">
                   <div className="row mt-1">
                     <div className="col-lg-4 text-end my_profile_setting_input form-group">
                       <label
@@ -656,9 +633,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                 </div> */}
               </div>
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-7">
                   <div className="row mt-1">
-                    <div className="col-lg-5 my_profile_setting_input form-group">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -673,7 +650,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         Insurers <span class="text-danger">*</span> :
                       </label>
                     </div>
-                    <div className="col-lg-7">
+                    <div className="col-lg-8">
                       <input
                         type="text"
                         className="form-control"
@@ -689,9 +666,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-5">
                   <div className="row mt-1">
-                    <div className="col-lg-4 text-end my_profile_setting_input form-group">
+                    <div className="col-lg-4 text-end my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -700,7 +677,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Claim # :
@@ -720,9 +697,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6">
-                  <div className="row mt-1">
-                    <div className="col-lg-5 my_profile_setting_input form-group">
+                <div className="col-lg-7">
+                  <div className="row">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -731,13 +708,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Insurance Office :
                       </label>
                     </div>
-                    <div className="col-lg-7">
+                    <div className="col-lg-8">
                       <input
                         type="text"
                         className="form-control"
@@ -749,144 +726,78 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="col-lg-6">
-                  <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          // paddingTop: "15px",
-                          color: "#2e008b",
-                          fontWeight: "",
-                          // marginTop: "-13px",
-                          fontSize:"15px"
-                        }}
-                      >
-                        Insurance Office
-                      </label>
-                    </div>
-                    <div className="col-lg-7">
-                      <input
-                        type="text"
-                        maxLength={10}
-                        className="form-control"
-                        id="formGroupExampleInput3"
-                        value={PolicyIssuingOffice}
-                        // onChange={(e) => setApplicantNumber(e.target.value)}
-                        onChange={(e) => setPolicyIssuingOffice(e.target.value)}
-                        // pattern="[0-9]*"
-                        // title="Please enter only 10 digits"
-                        readOnly={!isEditMode}
-
-                        // placeholder="Enter Registration No."
-                      />
-                    </div>
-                  </div>
-                </div> */}
-
-                {/* <div className="col-lg-6">
-                  <div className="row mt-1">
-                    <div className="col-lg-4 my_profile_setting_input form-group">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          // paddingTop: "15px",
-                          color: "#2e008b",
-                          fontWeight: "",
-                          // marginTop: "-13px",
-                          fontSize:"15px"
-                        }}
-                      >
-                        Policy Type <span class="text-danger">*</span>
-                      </label>
-                    </div>
-                    <div className="col-lg-7">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="propertyTitle"
-                        readOnly={!isEditMode}
-                        onChange={(e) => setPolicyType(e.target.value)}
-                        value={PolicyType}
-                        // placeholder="Enter Registration No."
-                      />
-                    </div>
-                  </div>
-                </div> */}
-                <div className="col-lg-3">
+                <div className="col-lg-3 text-end">
                   <div className="form-group form-check custom-checkbox">
                     <label
-                      className="form-check-label m-3"
+                      className="form-check-label"
                       htmlFor="terms"
                       style={{
                         color: "#2e008b",
                         fontWeight: "bold",
-                        fontSize: "",
+                        fontSize: "14px",
                       }}
                     >
                       Total Loss
                     </label>
                     <input
-                      className="form-check-input mt-4"
+                      className="m-2"
                       type="checkbox"
                       value=""
                       id="terms"
-                      style={{ border: "1px solid black", marginLeft: "20px" }}
+                      style={{ border: "1px solid black" }}
                     />
                   </div>
                 </div>
-                <div className="col-lg-3">
+                <div className="col-lg-2">
                   <div className="form-group form-check custom-checkbox">
                     <label
-                      className="form-check-label m-3"
+                      className="form-check-label"
                       htmlFor="terms"
                       style={{
                         color: "#2e008b",
                         fontWeight: "bold",
-                        fontSize: "",
+                        fontSize: "14px",
                       }}
                     >
                       IMT 23
                     </label>
                     <input
-                      className="form-check-input mt-4"
+                      className="m-2"
                       type="checkbox"
                       value=""
                       id="terms"
-                      style={{ border: "1px solid black", marginLeft: "20px" }}
+                      style={{ border: "1px solid black" }}
                     />
                   </div>
                 </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="row" style={{ paddingRight: "0px" }}>
-                  <div className="col-lg-5 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        paddingTop: "5px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                        fontSize: "15px",
-                      }}
-                    >
-                      Appointing Office :
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={PolicyIssuingOffice}
-                      onChange={(e) => setPolicyIssuingOffice(e.target.value)}
-                      readOnly={!isEditMode}
-                      // placeholder="Enter Registration No."
-                    />
+                <div className="col-lg-7 mt-0">
+                  <div className="row" style={{ paddingRight: "0px" }}>
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          paddingTop: "5px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Appointing Office :
+                      </label>
+                    </div>
+                    <div className="col-lg-8">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        value={PolicyIssuingOffice}
+                        onChange={(e) => setPolicyIssuingOffice(e.target.value)}
+                        readOnly={!isEditMode}
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -894,14 +805,14 @@ const PolicyDetails = ({ setIsStatusModal }) => {
           </div>
         </div>
         <div className="col-lg-4">
-          <h4 className="text-dark" style={{ fontSize: "21px" }}>
+          <h4 className="text-dark" style={{ fontSize: "17px" }}>
             Driver & Licence Details :
           </h4>
           <hr />
           <div className="row">
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -910,12 +821,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
+                      fontSize: "14px",
                     }}
                   >
                     Driver Name
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-8">
                   <input
                     type="text"
                     className="form-control"
@@ -931,7 +843,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
             </div>
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -940,12 +852,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
+                      fontSize: "14px",
                     }}
                   >
                     Driver Lic. No.
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-8">
                   <input
                     type="text"
                     className="form-control"
@@ -959,9 +872,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-8">
               <div className="row mt-1">
-                <div className="col-lg-6 my_profile_setting_input form-group">
+                <div className="col-lg-6 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -969,6 +882,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
@@ -987,9 +901,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               </div>
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-4">
               <div className="row mt-1">
-                <div className="col-lg-4 text-end my_profile_setting_input form-group">
+                <div className="col-lg-2 text-end my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -997,13 +911,14 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
-                    Up to
+                    To
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-10">
                   {/* <input
               type="date"
               className="form-control"
@@ -1015,32 +930,9 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               </div>
             </div>
 
-            {/* <div className="col-lg-12">
+            <div className="col-lg-8">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
-                  <label
-                    htmlFor=""
-                    className="text-color"
-                    style={{
-                      // paddingTop: "15px",
-                      color: "#2e008b",
-                      fontWeight: "",
-                      // marginTop: "-13px",
-                    }}
-                  >
-                    Date of Birth
-                  </label>
-                </div>
-                <div className="col-lg-7">
-                  <MyDatePicker />
-                  <span className="flaticon-calendar text-dark"></span>
-                </div>
-              </div>
-            </div> */}
-
-            <div className="col-lg-6">
-              <div className="row mt-1">
-                <div className="col-lg-6 my_profile_setting_input form-group">
+                <div className="col-lg-6 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -1048,6 +940,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
@@ -1056,18 +949,19 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                 </div>
                 <div className="col-lg-6">
                   {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
+                  type="date"
+                  className="form-control"
+                  id="propertyTitle"
+                  /> */}
                   <MyDatePicker />
+                  {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-4">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-2 text-end my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -1075,13 +969,14 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       paddingTop: "5px",
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
-                    Renewal
+                    To
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-10">
                   {/* <input
               type="date"
               className="form-control"
@@ -1093,7 +988,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
               </div>
             </div>
 
-            {/* <div className="col-lg-12">
+            <div className="col-lg-12">
               <div className="row mt-1">
                 <div className="col-lg-4 my_profile_setting_input form-group">
                   <label
@@ -1104,34 +999,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
-                    }}
-                  >
-                    Renewal
-                  </label>
-                </div>
-                <div className="col-lg-7">
-                  <MyDatePicker /><span className="flaticon-calendar text-dark"></span>
-                </div>
-              </div>
-            </div> */}
-
-            <div className="col-lg-12">
-              <div className="row mt-1">
-                <div className="col-lg-5 my_profile_setting_input form-group">
-                  <label
-                    htmlFor=""
-                    className="text-color"
-                    style={{
-                      // paddingTop: "15px",
-                      color: "#2e008b",
-                      fontWeight: "",
-                      // marginTop: "-13px",
+                      fontSize: "14px",
                     }}
                   >
                     Issuing Authority
                   </label>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-8">
                   <input
                     type="text"
                     className="form-control"
@@ -1148,7 +1022,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -1157,12 +1031,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
+                      fontSize: "14px",
                     }}
                   >
                     License Type
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-8">
                   <input
                     type="text"
                     className="form-control"
@@ -1179,7 +1054,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -1188,12 +1063,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
+                      fontSize: "14px",
                     }}
                   >
                     Badge#
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-8">
                   <input
                     type="text"
                     className="form-control"
@@ -1210,7 +1086,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -1219,12 +1095,13 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
+                      fontSize: "14px",
                     }}
                   >
                     Remark
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-8">
                   <input
                     type="text"
                     className="form-control"
@@ -1243,7 +1120,7 @@ const PolicyDetails = ({ setIsStatusModal }) => {
       <hr style={{ color: "#2e008b", height: "1px" }} />
       <div className="row">
         <div className="col-lg-8" style={{ borderRight: "1px solid grey" }}>
-          <h4 className="text-dark" style={{ fontSize: "21px" }}>
+          <h4 className="text-dark" style={{ fontSize: "17px" }}>
             Vehicle Details :
           </h4>
           <hr />
@@ -2400,13 +2277,20 @@ const PolicyDetails = ({ setIsStatusModal }) => {
       <hr style={{ color: "#2e008b", height: "1px" }} />
 
       {isEditMode ? (
-        <button className="btn btn-color w-50" onClick={handleUpdateClick}>Update</button>
+        <button className="btn btn-color m-1" onClick={handleUpdateClick}>
+          Update
+        </button>
       ) : (
-        <button className="btn btn-color w-25" onClick={handleEditClick}>Click to Update</button>
+        <button className="btn btn-color m-1" onClick={handleEditClick}>
+          Update
+        </button>
       )}
-      <button className="btn btn-color" onClick={handleEditClick}>Add</button>
-      <button className="btn btn-color" onClick={handleEditClick}>Modify</button>
-
+      <button className="btn btn-color m-1" onClick={handleEditClick}>
+        Add
+      </button>
+      <button className="btn btn-color m-1" onClick={handleEditClick}>
+        Modify
+      </button>
     </>
   );
 };
