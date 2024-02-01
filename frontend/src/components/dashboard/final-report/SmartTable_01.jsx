@@ -429,7 +429,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            // value={LicenseType}
+                            value={props.estimate}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -460,7 +460,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            // value={LicenseType}
+                            value={props.assessed}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -491,7 +491,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            // value={LicenseType}
+                            value={props.difference}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 

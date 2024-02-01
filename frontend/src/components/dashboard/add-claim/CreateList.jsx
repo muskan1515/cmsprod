@@ -201,15 +201,7 @@ const CreateList = () => {
               </label>
             </div>
             <div className="col-lg-7">
-              {region ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  id="region"
-                  value={region}
-                  // placeholder="Enter Registration No."
-                />
-              ) : (
+              
                 <select
                   className="selectpicker form-select"
                   data-live-search="true"
@@ -228,7 +220,7 @@ const CreateList = () => {
                     Jodhpur
                   </option>
                 </select>
-              )}
+              
             </div>
           </div>
         </div>

@@ -650,6 +650,27 @@ function executeStoredProc(procName, params) {
   });
 }
 
+app.post("/verifyReportUpload",authenticateUser,(req,res)=>{
+  const {userName,reportId} = req.body;
+  const updateVerifyReport = `
+  UPDATE ReportDocuments
+        SET
+        VerifiedBy = '${userName}',
+        IsVerified = '${1}'
+        WHERE ReportId = ${reportId};
+  `;
+    db.query(updateVerifyReport, (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error while updating the verified status');
+        return;
+      }
+        // console.log(result2[0].Token === token);
+        res.status(200).send('Successfully Updated!!');
+    })
+
+});
+
 
 app.post("/getClaimDetails",(req,res)=>{
   const {token,leadId} = req.body;
