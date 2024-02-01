@@ -19,7 +19,7 @@ const uploadToAWSChunk = (chunks,name) => {
 
     // Configure the S3 parameters
     const params = {
-        Bucket: "cmsdocv1",
+        Bucket: "mydocsforcms",
         Key: fileName,
         Body: fileBuffer,
         ContentType: 'image/jpeg', // Adjust content type based on your image format
