@@ -293,6 +293,19 @@ app.post("/uploadMedia", (req, res) => {
     }
 });
 
+app.get("/getDepreciationRates",authenticateUser,(req,res)=>{
+  
+  const sql ="select * from DepreciationRates";
+  db.query(sql,(error, results) => {
+    if (error) {
+      console.error('Error while getting the depreciations rates', error);
+      return res.status(500).json({ error: 'Error while getting the depreciations rates' });
+    }
+
+    return res.status(200).json({ results });
+  })
+})
+
 app.get("/getUploadDocuments",authenticateUser,(req,res)=>{
   const LeadId = req.query.leadId;
   const sql ="SELECT * FROM ReportDocuments WHERE LeadId =?";
@@ -742,37 +755,95 @@ app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
       res.status(500).send('Internal Server Error');
       return;
     }
-  const emailContent = `
-    ${body}
+    
 
-    ${content}
+    if(!result2[0].Token){
 
-        Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${result2[0].Token}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
+      const generatedToken = generateUniqueToken();
+      const insertClaimDetails = `
+      UPDATE ClaimDetails
+      SET
+      Token = '${generatedToken}'
+      WHERE LeadId = ${leadId};
+    `;
+      db.query(insertClaimDetails, (err, result2) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+          return;
+        }
 
-    Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-            claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+     
+        const emailContent = `
+        ${body}
 
-  `;
+        ${content}
 
+            Please provide the clear copy of all the documents so that the claim processing can be fast or
+          <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
 
-  const mailOptions = {
-    from: fromEmail,
-    to: toMail,
-    subject: subject,
-    text: emailContent,
-  };
+        Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+                claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
-  // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).send('Email sent successfully');
+      `;
+
+      const mailOptions = {
+        from: fromEmail,
+        to: toMail,
+        subject: subject,
+        text: emailContent,
+      };
+
+      // Send the email
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send('Internal Server Error');
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.status(200).send('Email sent successfully');
+        }
+      });
+});
     }
-  });
+  else{
+   
+   
+      const emailContent = `
+      ${body}
+
+      ${content}
+
+          Please provide the clear copy of all the documents so that the claim processing can be fast or
+        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${result2[0].Token}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
+
+      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+              claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+
+    `;
+
+
+const mailOptions = {
+from: fromEmail,
+to: toMail,
+subject: subject,
+text: emailContent,
+};
+
+// Send the email
+transporter.sendMail(mailOptions, (error, info) => {
+if (error) {
+  console.error(error);
+  res.status(500).send('Internal Server Error');
+} else {
+  console.log('Email sent: ' + info.response);
+  res.status(200).send('Email sent successfully');
+}
+});
+};
+  
+  
+  
 });
 });
 

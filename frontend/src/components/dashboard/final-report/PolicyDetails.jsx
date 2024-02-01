@@ -3,153 +3,110 @@ import MyDatePicker from "../../common/MyDatePicker";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const PolicyDetails = ({ setIsStatusModal }) => {
-  const [claim, setClaim] = useState([]);
-  const [applicantNumber, setApplicantNumber] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [LeadId, setLeadId] = useState(8);
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    axios
-      .get("/api/getSpecificClaim", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          LeadId: "8",
-        },
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        setClaim(res.data.data);
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
-  }, []);
+const PolicyDetails = ({ 
+  setIsStatusModal ,
+  setPolicyType, 
+  policyType,
+  isEditMode,
+  setIsEditMode,
+  phoneNumber,
+  setPhoneNumber,
+  applicantNumber,
+  setApplicantNumber,
 
-  const [subType, setSubType] = useState("Motor");
+  ReferenceNo,
+  setReferenceNo,
+  InsuredMailAddress,
+  setInsuredMailAddress,
+  requestType,
+  setRequestType,
+  ClaimNumber,
+  EngineType,
+  setEngineType,
+  DateRegistration,
+  setDateRegistration,
+  PUCNumber,
+  setPUCNumber,
+  TransferDate,
+  setTransferDate,
+  AddedBy,
+  setAddedBy,
+  Verification,
+  setVerification,
 
-  const [ReferenceNo, setReferenceNo] = useState("");
-  const [InsuredMailAddress, setInsuredMailAddress] = useState("");
-  const [requestType, setRequestType] = useState("Spot");
-  const [ClaimNumber, setClaimNumber] = useState("");
-  const [EngineType, setEngineType] = useState("");
-  const [DateRegistration, setDateRegistration] = useState("");
-  const [PUCNumber, setPUCNumber] = useState("");
-  const [TransferDate, setTransferDate] = useState("");
-  const [AddedBy, setAddedBy] = useState("");
-  const [Verification, setVerification] = useState("");
-  const [GarageNameAndAddress, setGarageNameAndAddress] = useState("");
-  const [GarageContactNo1, setGarageContactNo1] = useState("");
-  const [GarageContactNo2, setGarageContactNo2] = useState("");
-  const [GarageAddedBy, setGarageAddedBy] = useState("");
-  const [ClaimAddedDateTime, setClaimAddedDateTime] = useState("");
-  const [ClaimIsActive, setClaimIsActive] = useState("");
-  const [PolicyIssuingOffice, setPolicyIssuingOffice] = useState("");
+  GarageNameAndAddress,
+  setGarageNameAndAddress,
+  GarageContactNo,
+  setGarageContactNo1,
+  GarageContactNo2,
+  setGarageContactNo2,
+  GarageAddedBy,
+  setGarageAddedBy,
 
-  //Policy Details
-  const [PolicyNumber, setPolicyNumber] = useState("");
-  const [InsuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
-    useState("");
-  const [InsuredAddress, setInsuredAddress] = useState("");
-  const [InsuredName, setInsuredName] = useState("");
-  const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
-  const [InsuredMobileNo2, setInsuredMobileNo2] = useState("");
-  const [ClaimRegion, setClaimRegion] = useState("");
-  //Drivers Details
-  const [DriverName, setDriverName] = useState("");
-  const [DriverAddedDate, setDriverAddedDate] = useState("");
-  const [IssuingAuthority, setIssuingAuthority] = useState("");
-  const [LicenseNumber, setLicenseNumber] = useState("");
-  const [LicenseType, setLicenseType] = useState("");
-  const [BadgeNumber, setBadgeNumber] = useState("");
-  //Vehicle Details
-  const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState("");
-  const [RegisteredOwner, setRegisteredOwner] = useState("");
-  const [VehicleChassisNumber, setVehicleChassisNumber] = useState("");
-  const [EngineNumber, setEngineNumber] = useState("");
-  const [VehicleTypeOfBody, setVehicleTypeOfBody] = useState("");
-  const [VehicleCubicCapacity, setVehicleCubicCapacity] = useState("");
-  const [VehicleClassOfVehicle, setVehicleClassOfVehicle] = useState("");
-  const [VehicleFuelType, setVehicleFuelType] = useState("");
-  const [VehicleOdometerReading, setVehicleOdometerReading] = useState("");
-  const [VehiclePreAccidentCondition, setVehiclePreAccidentCondition] =
-    useState("");
-  const [VehicleModel, setVehicleModel] = useState("");
-  const [VehicleTaxParticulars, setVehicleTaxParticulars] = useState("");
-  const [VehicleSeatingCapacity, setVehicleSeatingCapacity] = useState();
-  const [PolicyType, setPolicyType] = useState();
+  ClaimAddedDateTime,
+  setClaimAddedDateTime,
+  ClaimIsActive,
+  setClaimIsActive,
+  PolicyIssuingOffice,
+  setPolicyIssuingOffice,
 
-  useEffect(() => {
-    setInsuredMailAddress(claim?.InsuredMailAddress || "");
-    setInsuredMobileNo1(claim?.InsuredMobileNo1 || "");
-    setInsuredMobileNo2(claim?.InsuredMobileNo2 || "");
-    setClaimNumber(claim?.ClaimNumber || "");
-    setEngineType(claim?.VehicleModeOfCheck || "");
-    setDateRegistration(claim?.VehicleDateOfRegistration || "");
-    setTransferDate(claim?.VehicleTransferDate || "");
-    setAddedBy(claim?.VehicleAddedBy || "");
-    setVerification(claim?.DriverTypeOfVerification || "");
-    setGarageNameAndAddress(claim?.GarageNameAndAddress || "");
-    setGarageContactNo1(claim?.GarageContactNo1 || "");
-    setGarageContactNo2(claim?.GarageContactNo2 || "");
-    setGarageAddedBy(claim?.GarageAddedBy || "");
-    setClaimAddedDateTime(claim?.ClaimAddedDateTime || "");
-    setClaimIsActive(claim?.ClaimIsActive?.type || "");
-    // Policy Detail
-    setReferenceNo(claim?.claimDetails?.ReferenceNo || "");
-    setPolicyNumber(claim?.claimDetails?.PolicyNumber || "");
-    setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice || "");
-    setInsuranceCompanyNameAddress(
-      claim?.claimDetails?.InsuranceCompanyNameAddress
-    );
-    setClaimRegion(claim?.claimDetails?.ClaimRegion || "");
-    setInsuredName(claim?.insuredDetails?.InsuredName || "");
-    setInsuredAddress(claim?.insuredDetails?.InsuredAddress || "");
-    setPolicyType(claim?.insuredDetails?.PolicyType || "");
-    console.log("reference no", VehicleSeatingCapacity);
+  PolicyNumber,
+  setPolicyNumber,
+  InsuranceCompanyNameAddress,
+  setInsuranceCompanyNameAddress,
+  InsuredAddress,
+  setInsuredAddress,
+  InsuredName,
+  setInsuredName,
+  InsuredMobileNo1,
+  setInsuredMobileNo1,
+  InsuredMobileNo2,
+  setInsuredMobileNo2,
+  ClaimRegion,
+  setClaimRegion,
 
-    //Drivers Details
-    setDriverName(claim?.driverDetails?.DriverName || "");
-    setDriverAddedDate(claim?.driverDetails?.DriverAddedDate || "");
-    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority || "");
-    setLicenseNumber(claim?.driverDetails?.LicenseNumber || "");
-    setLicenseType(claim?.driverDetails?.LicenseType || "");
-    setBadgeNumber(claim?.driverDetails?.BadgeNumber || "");
+  DriverName,
+  setDriverName,
+  DriverAddedDate,
+  setDriverAddedDate,
+  IssuingAuthority,
+  setIssuingAuthority,
+  LicenseNumber,
+  setLicenseNumber,
+  LicenseType,
+  setLicenseType,
+  BadgeNumber,
 
-    //Vehicle Detais
-    setVehicleRegisteredNumber(
-      claim?.vehicleDetails?.VehicleRegisteredNumber || ""
-    );
-    setRegisteredOwner(claim?.vehicleDetails?.VehicleRegisteredOwner || "");
-    setVehicleChassisNumber(claim?.vehicleDetails?.VehicleChassisNumber || "");
-    setEngineNumber(claim?.vehicleDetails?.VehicleEngineNumber || "");
-    setVehicleModel(
-      claim?.VehicleMakeVariantModelColor
-        ? `${claim.VehicleMakeVariantModelColor}`
-        : ""
-    );
-    setVehicleTypeOfBody(claim?.vehicleDetails?.VehicleTypeOfBody || "");
-    setVehicleCubicCapacity(claim?.vehicleDetails?.VehicleCubicCapacity);
-    setVehicleClassOfVehicle(claim?.vehicleDetails?.VehicleClassOfVehicle);
-    setVehicleFuelType(claim?.vehicleDetails?.VehicleFuelType || "");
-    setVehicleOdometerReading(
-      claim?.vehicleDetails?.VehicleOdometerReading || ""
-    );
-    setVehiclePreAccidentCondition(
-      claim?.vehicleDetails?.VehiclePreAccidentCondition || ""
-    );
-    setVehicleTaxParticulars(
-      claim?.vehicleDetails?.VehicleTaxParticulars || ""
-    );
-    setPUCNumber(claim?.vehicleDetails?.VehiclePucNumber || "");
-    setVehicleSeatingCapacity(
-      claim?.vehicleDetails?.VehicleSeatingCapacity || 0
-    );
-  }, [claim]);
+  VehicleRegisteredNumber,
+  setVehicleRegisteredNumber,
+  RegisteredOwner,
+  setRegisteredOwner,
+  VehicleChassisNumber,
+  setVehicleChassisNumber,
+  EngineNumber,
+  setEngineNumber,
+  VehicleTypeOfBody,
+  setVehicleTypeOfBody,
+  VehicleCubicCapacity,
+  setVehicleCubicCapacity,
+  VehicleClassOfVehicle,
+  setVehicleClassOfVehicle,
+  VehicleFuelType,
+  setVehicleFuelType,
+  VehicleOdometerReading,
+  setVehicleOdometerReading,
+  VehiclePreAccidentCondition,
+  setVehiclePreAccidentCondition,
+
+  VehicleModel,
+  setVehicleModel,
+  VehicleTaxParticulars,
+  setVehicleTaxParticulars,
+  VehicleSeatingCapacity,
+  setVehicleSeatingCapacity,
+
+}) => {
+
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -473,6 +430,8 @@ const PolicyDetails = ({ setIsStatusModal }) => {
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
+                        value={policyType}
+                        onChange={(e)=>setPolicyType(e.target.value)}
                       >
                         <option data-tokens="Status1">Regular</option>
                         <option data-tokens="Status2">Add on Policy</option>

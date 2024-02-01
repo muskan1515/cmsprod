@@ -1,7 +1,8 @@
 import Link from "next/link";
 import SmartTable_01 from "./SmartTable_01";
 import { useEffect, useState } from "react";
-import { all } from "axios";
+import axios, { all } from "axios";
+import { calculateDepreciationsPercenatge } from "./functions";
 
 const headCells = [
   {
@@ -47,9 +48,15 @@ const headCells = [
     width: 100,
   },
   {
-    id: "qe_qa",
+    id: "qe",
     numeric: false,
-    label: "QE-QA",
+    label: "QE",
+    width: 100,
+  },
+  {
+    id: "qa",
+    numeric: false,
+    label: "QA",
     width: 100,
   },
   {
@@ -90,7 +97,14 @@ const headCells = [
   // },
 ];
 
-export default function Exemple_01() {
+
+export default function Exemple_01({
+  policyType, 
+  claim,
+  includeDepreciation,
+  ClaimAddedDateTime,
+  PolicyStartDate,
+  VehicleAddedDate}) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
   // const []
@@ -105,19 +119,40 @@ export default function Exemple_01() {
   const [remark, setRemark] = useState("");
   const [gst, setGst] = useState(0);
 
+  const [allDepreciations,setAllDepreciations]=useState([]);
+
+  useEffect(()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios.get("/api/getAllDepreciationList",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      }
+    })
+    .then((res)=>{
+      setAllDepreciations(res.data.data.results);
+    })
+    .catch((Err)=>{
+      alert(Err);
+    })
+  },[]);
+
+  
   const [edit, setEdit] = useState(false);
 
   const [allRows, setAllRows] = useState(
     Array.from({ length: 10 }, (_, index) => ({
       _id: index + 1,
       sno: index + 1,
-      dep: "", // Add default values or leave empty as needed
+      dep: 0, // Add default values or leave empty as needed
       description: "",
       sac: "",
       remark: "",
       estimate: "",
       assessed: "",
-      qe_qa: "01-02",
+      qe: "01",
+      qa:"01",
       bill_sr: index + 123, // Assuming bill_sr increments with each new row
       gst: 0,
       total: 0,
@@ -161,13 +196,14 @@ export default function Exemple_01() {
     const newRow = {
       _id: allRows.length, // You may use a more robust ID generation logic
       sno: allRows.length,
-      dep: "", // Add default values or leave empty as needed
+      dep: 0, // Add default values or leave empty as needed
       description: "",
       sac: "",
       remark: "",
       estimate: "",
       assessed: "",
-      qe_qa: "01-02",
+      qe: "01",
+      qa:"01",
       bill_sr: allRows.length, // Assuming bill_sr increments with each new row
       gst: 0,
       total: 0,
@@ -228,6 +264,12 @@ export default function Exemple_01() {
           ? val.slice(-1, 1)
           : val
         : currentField.estimate;
+        const bill_sr =
+        String(field) === "bill_sr"
+          ? String(currentField.bill_sr) === val
+            ? val.slice(-1, 1)
+            : val
+          : currentField.bill_sr;
     const assessed =
       String(field) === "assessed"
         ? String(currentField.assessed) === val
@@ -235,12 +277,13 @@ export default function Exemple_01() {
           : val
         : currentField.assessed;
 
-    const gst =
-      String(field) === "gst"
-        ? String(currentField.gst) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.gst;
+    
+        const gst =
+        String(field) === "gst"
+          ? String(currentField.gst) === val
+            ? val.slice(-1, 1)
+            : val
+          : currentField.gst;
     const type =
       String(field) === "type"
         ? String(currentField.type) === val
@@ -248,8 +291,9 @@ export default function Exemple_01() {
           : val
         : currentField.type;
 
-    const total = estimate;
+    const total = Number(assessed) * Number(currentField.qa);
 
+    console.log(total,assessed,qa)
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
       sno: currentField.sno,
@@ -259,8 +303,9 @@ export default function Exemple_01() {
       remark: remark,
       estimate: estimate,
       assessed: assessed,
-      qe_qa: currentField.qe_qa,
-      bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
+      qa: currentField.qa,
+      qe:currentField.qe,
+      bill_sr: bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
       total: total,
       type: type,
@@ -272,6 +317,144 @@ export default function Exemple_01() {
     setChange(true);
     // console.log(oldRow);
   };
+
+
+  const handleQeQaChange=(index, val, field) => {
+    
+    let oldRow = allRows;
+    const currentField = allRows[index];
+    const len = val.length;
+
+    const qe =
+    String(field) === "qe"
+      ? String(currentField.type) === val
+      ? val.slice(-1, 1)
+      : val
+    : currentField.qe;
+      const qa =
+      String(field) === "qa"
+        ?String(currentField.type) === val
+        ? val.slice(-1, 1)
+        : val
+      : currentField.qa;
+
+  
+    
+    const total = String(type) === "qe" ? (Number(currentField.assessed) * Number(val)) : currentField.total;
+
+   
+
+    const newOutput = {
+      _id: currentField._id, // You may use a more robust ID generation logic
+      sno: currentField.sno,
+      dep: currentField.dep, // Add default values or lea ve empty as needed
+      description: currentField.description,
+      sac: currentField.sac,
+      remark: currentField.remark,
+      estimate: currentField.estimate,
+      assessed: currentField.assessed,
+      qe: qe,
+      qa:qa,
+      bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
+      gst: currentField.gst,
+      total: total,
+      type: currentField.type,
+    };
+
+    oldRow[index] = newOutput;
+    setAllRows(oldRow);
+    // console.log(allRows[index].field);
+    setChange(true);
+    // console.log(oldRow);
+  };
+
+  // const handleGstChange=(index, val, field) => {
+    
+  //   let oldRow = allRows;
+  //   const currentField = allRows[index];
+  //   const len = val.length;
+
+  //   const gst =
+  //   String(field) === "gst"
+  //     ? String(currentField.type) === val
+  //     ? val.slice(-1, 1)
+  //     : val
+  //   : currentField.gst;
+    
+    
+  //   const assessed_amount = (Number(currentField.assessed) * Number(val));
+  //   const total =  (assessed_amount + (Number(gst) * assessed_amount)/100) ;
+
+    
+
+  //   const newOutput = {
+  //     _id: currentField._id, // You may use a more robust ID generation logic
+  //     sno: currentField.sno,
+  //     dep: currentField.dep, // Add default values or lea ve empty as needed
+  //     description: currentField.description,
+  //     sac: currentField.sac,
+  //     remark: currentField.remark,
+  //     estimate: currentField.estimate,
+  //     assessed: currentField.assessed,
+  //     qe: currentField.qe,
+  //     qa:currentField.qa,
+  //     bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
+  //     gst: gst,
+  //     total: total,
+  //     type: currentField.type,
+  //   };
+
+  //   oldRow[index] = newOutput;
+  //   setAllRows(oldRow);
+  //   // console.log(allRows[index].field);
+  //   setChange(true);
+  //   // console.log(oldRow);
+  // };
+
+  const handleTypeChange=(index, val, field) => {
+    
+    let oldRow = allRows;
+    const currentField = allRows[index];
+    const len = val.length;
+
+
+    const dep =
+      calculateDepreciationsPercenatge(allDepreciations,val,claim.vehicleDetails?.VehicleAddedDate);
+    
+    const type =
+      String(field) === "type"
+        ? String(currentField.type) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.type;
+
+      
+    console.log(dep)
+    
+
+    const newOutput = {
+      _id: currentField._id, // You may use a more robust ID generation logic
+      sno: currentField.sno,
+      dep: dep, // Add default values or lea ve empty as needed
+      description: currentField.description,
+      sac: currentField.sac,
+      remark: currentField.remark,
+      estimate: currentField.estimate,
+      assessed: currentField.assessed,
+      qe_qa: currentField.qe_qa,
+      bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
+      gst: currentField.gst,
+      total: currentField.total,
+      type: type,
+    };
+
+    oldRow[index] = newOutput;
+    setAllRows(oldRow);
+    // console.log(allRows[index].field);
+    setChange(true);
+    // console.log(oldRow);
+  };
+
   useEffect(() => {
     let temp = [];
     const getData = () => {
@@ -283,10 +466,9 @@ export default function Exemple_01() {
             <input
               className="form-control form-control-table"
               type="text"
-              value={row.sac}
-              onChange={(e) => handleChange(index, e.target.value, "sac")}
+              value={`${row.dep }%`}
+             
               required
-              disabled={!edit}
               id="terms"
               style={{ border: "1px solid black" }}
             />
@@ -404,12 +586,24 @@ export default function Exemple_01() {
               style={{ border: "1px solid black" }}
             />
           ),
-          qe_qa: (
+          qe: (
             <input
               className="form-control form-control-table"
               type="text"
-              value={row.gst}
-              onChange={(e) => handleChange(index, e.target.value, "gst")}
+              value={row.qe}
+              onChange={(e) => handleQeQaChange(index, e.target.value, "qe")}
+              required
+              disabled={!edit}
+              id="terms"
+              style={{ border: "1px solid black" }}
+            />
+          ),
+          qa: (
+            <input
+              className="form-control form-control-table"
+              type="text"
+              value={row.qa}
+              onChange={(e) => handleQeQaChange(index, e.target.value, "qa")}
               required
               disabled={!edit}
               id="terms"
@@ -420,8 +614,8 @@ export default function Exemple_01() {
             <input
               className="form-control form-control-table"
               type="text"
-              value={row.gst}
-              onChange={(e) => handleChange(index, e.target.value, "gst")}
+              value={row.bill_sr}
+              onChange={(e) => handleChange(index, e.target.value, "bill_sr")}
               required
               disabled={!edit}
               id="terms"
@@ -444,7 +638,7 @@ export default function Exemple_01() {
             <input
               className="form-control form-control-table"
               type="text"
-              value={totalValue()}
+              value={row.total}
               // onChange={(e)=>handleChange(index,e.target.value,"gst")}
               required
               disabled={!edit}
@@ -460,20 +654,15 @@ export default function Exemple_01() {
               data-width="100%"
               value={row.type}
               disabled={!edit}
-              onChange={(e) => handleChange(index, e.target.value, "type")}
+              onChange={(e) => handleTypeChange(index, e.target.value, "type")}
             >
-              <option data-tokens="Status1" value={"Plastic"}>
-                Plastic
+
+            {allDepreciations.map((dep,index)=>{
+              return  index>0 && allDepreciations[index]?.PartType === allDepreciations[index-1]?.PartType ? null :  <option data-tokens="Status1" value={dep.PartType}>
+              {dep.PartType}
               </option>
-              <option data-tokens="Status2" value={"Glass"}>
-                Glass
-              </option>
-              <option data-tokens="Status3" value={"Metal"}>
-                Metal
-              </option>
-              <option data-tokens="Status3" value={"Rubber"}>
-                Rubber
-              </option>
+            })}
+             
             </select>
           ),
           verify: (
@@ -495,7 +684,7 @@ export default function Exemple_01() {
     setChange(false);
   }, [change, edit]);
 
-  console.log(updatedCode);
+  console.log(allDepreciations);
 
   return (
     <SmartTable_01
