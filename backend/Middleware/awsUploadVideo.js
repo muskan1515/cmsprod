@@ -21,7 +21,7 @@ const uploadToAWSVideo = (yourVideoBase64Data, name) => {
 
     // Configure the S3 parameters
     const params = {
-        Bucket: "cmsdocv1",
+        Bucket: "mydocsforcms",
         Key: fileName,
         Body: buffer,
         ContentType: contentType,

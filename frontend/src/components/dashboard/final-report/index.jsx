@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import PropertyVideo from "./PropertyVideo";
+import axios from "axios";
 
-const index = ({SomeComponent}) => {
+const index = ({SomeComponent,leadId}) => {
+  
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -56,7 +59,9 @@ const index = ({SomeComponent}) => {
               </div>
               {/* End .row */}
               <div className="shop_single_tab_content style2">
-                <PropertyVideo  SomeComponent={SomeComponent}/>
+                <PropertyVideo  SomeComponent={SomeComponent}
+                leadId={leadId}
+                />
               </div>
 
               {/* <ChatBox /> */}
