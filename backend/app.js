@@ -869,7 +869,8 @@ if (error) {
 });
 
 app.post("/sendEmail/2",authenticateUser,(req,res)=>{
-  const {vehicleNo,PolicyNo,Insured,Date} = req.body;
+  //garage email
+  const {vehicleNo,PolicyNo,Insured,toMail,Date} = req.body;
 
   const emailContent = `
     Dear Sir/Madam,
@@ -896,7 +897,7 @@ app.post("/sendEmail/2",authenticateUser,(req,res)=>{
 
   const mailOptions = {
     from: 'infosticstech@gmail.com',
-    to: 'ivijayrajsingh@gmail.com',
+    to: toMail,
     subject: 'Survey Request for Vehicle Claim',
     text: emailContent,
   };
@@ -915,7 +916,9 @@ app.post("/sendEmail/2",authenticateUser,(req,res)=>{
 })
 
 app.post("/sendEmail/3",authenticateUser,(req,res)=>{
-  const {date} = req.body;
+
+  //
+  const {date,toMail} = req.body;
 
   const currentDate = new Date();
 
@@ -944,7 +947,7 @@ app.post("/sendEmail/3",authenticateUser,(req,res)=>{
 
   const mailOptions = {
     from: 'infosticstech@gmail.com',
-    to: 'ivijayrajsingh@gmail.com',
+    to: toMail,
     subject: 'Survey Request for Vehicle Claim',
     text: emailContent,
   };
@@ -1012,18 +1015,12 @@ app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
       return;
     }
   
-   if(result.length > 0){
-    
     const statusDetails = `
-    INSERT INTO ClaimStatus (
-      Status,
-      SubStatus,
-      LeadId 
-    ) VALUES (
-      '${Status}',
-      '${subStage}',
-      '${parseInt(LeadId)}'
-    );
+    UPDATE ClaimStatus
+    SET
+    Status = '${Status}',
+    SubStatus = '${1}'
+    WHERE LeadId = ${LeadId};
   `;
 
   db.query(statusDetails, (err, result) => {
@@ -1034,7 +1031,7 @@ app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
     }
     res.send(result);
   });
-   }
+   
   });
 
   
@@ -1075,6 +1072,7 @@ app.post('/addClaim', (req, res) => {
     PolicyPeriodStart,
     PolicyPeriodEnd,
     ClaimNumber,
+    BrokerMailAddress,
     ClaimServicingOffice,
     AddedBy,
     Region,
@@ -1086,6 +1084,7 @@ app.post('/addClaim', (req, res) => {
     InsuredMobileNo2,
     InsuredMailAddress,
     InsuredAddress,
+    GarageMailAddress,
     RegisteredNumber,
     GarageNameAndAddress,
     GarageContactNo1,
@@ -1098,6 +1097,8 @@ app.post('/addClaim', (req, res) => {
   const authorizationHeader = req.headers.authorization;
 
   const token = authorizationHeader.substring('Bearer '.length);
+
+
 
   const generatedToken = generateUniqueToken();
   const insertClaimDetails = `
@@ -1114,6 +1115,7 @@ app.post('/addClaim', (req, res) => {
       Region,
       InspectionType,
       IsClaimCompleted,
+      BrokerMailAddress,
       Token,
       IsActive
     ) VALUES (
@@ -1129,10 +1131,12 @@ app.post('/addClaim', (req, res) => {
       '${Region}',
       '${InspectionType}',
       '${parseInt(IsClaimCompleted)}',
+      '${BrokerMailAddress}',
       '${generatedToken}',
       '${parseInt(IsActive)}'
     );
   `;
+
 
   db.query(insertClaimDetails, (error, results) => {
     if (error) {
@@ -1177,11 +1181,13 @@ app.post('/addClaim', (req, res) => {
       GarageNameAndAddress,
       GarageContactNo1,
       GarageContactNo2,
+      GarageMailAddress,
       LeadId 
     ) VALUES (
       '${GarageNameAndAddress}',
       '${GarageContactNo1}',
       '${GarageContactNo2}',
+      '${GarageMailAddress}',
       '${parseInt(results[0].LeadId)}'
     );
   `;
@@ -1285,11 +1291,56 @@ app.post('/addClaim', (req, res) => {
                 }
               }
               ).then((ressss)=>{
-                return res.status(200).json({ message: 'Data inserted successfully.' });
+                if(GarageMailAddress !==""){
+                  axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/2`,{
+                    vehicleNo : RegisteredNumber,
+                    PolicyNo : ReferenceNo,
+                    Insured : InsuredName,
+                    toMail:GarageMailAddress,
+                    Date: new Date()
+                  },
+                  {
+                    headers:{
+                      Authorization:`Bearer ${token}`,
+                      "Content-Type":"application/json"
+                    }
+                  }
+                  ).then((ressss)=>{
+                    if(BrokerMailAddress !==""){
+                      axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/3`,{
+                      
+                        toMail:BrokerMailAddress,
+                        Date: new Date()
+                      },
+                      {
+                        headers:{
+                          Authorization:`Bearer ${token}`,
+                          "Content-Type":"application/json"
+                        }
+                      }
+                      ).then((ressss)=>{
+                       
+                      })
+                      .catch((Er)=>{
+                       console.log(Er);
+                      })
+                    }
+                  })
+                  .catch((Er)=>{
+                   console.log(Er);
+                  })
+                }
               })
               .catch((Er)=>{
                console.log(Er);
               })
+
+              //garage
+
+            
+            
+              //broker
+             
   });
           }
             );
@@ -1300,6 +1351,8 @@ app.post('/addClaim', (req, res) => {
     });
   });
   });
+
+  return res.status(200).json({ message: 'Data inserted successfully.' });
 });
 
 // app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {

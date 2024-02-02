@@ -5,7 +5,25 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim}) => {
 
   const [stat , setStat] = useState(0);
   const [subStage,setSubStage] = useState(0);
+  const [currentStatus,setCurrentStatus]=useState(1);
 
+  useEffect(()=>{
+    let stat2 = {};
+    if(status.length <= 0){
+
+    }
+    else{
+
+    status?.map((stat,index)=>{
+      if(String(stat.LeadId) === String(leadId)){
+        stat2=stat;
+      }
+    });
+  }
+
+    setCurrentStatus(stat2?.Status);
+
+  },[status.length]);
   const onSubmitHandler = ()=>{
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -29,6 +47,15 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim}) => {
       alert(err);
     });
   }
+  const getCurrentStatus=()=>{
+    let status = "";
+    statusOptions.map((stat,index)=>{
+      if(stat.id === currentStatus)
+       status = stat;
+    });
+    return status;
+  }
+  console.log(status);
   return (
     <>
       <div className="col-lg-12">
@@ -38,26 +65,17 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim}) => {
               className="selectpicker form-select"
               data-live-search="true"
               data-width="100%"
-             
+              value={stat ? stat : currentStatus}
               onChange={(e)=>setStat(e.target.value)}
             >
               {statusOptions.map((stat,index)=>{
-                return  <option key={index} data-tokens="Status1" value={stat.id} disabled={status[0]?.Status >= stat.id ? true : false }>{stat.value}</option>
+                return ( stat.id === currentStatus+1 || stat.id === currentStatus -1 || stat.id === currentStatus) ?  <option key={index} data-tokens="Status1" value={stat.id} >{stat.value}</option>
+                  :  null
+
               })}
             </select>
           </div>
-          <div className="col-lg-12">
-            <select
-              className="selectpicker form-select"
-              data-live-search="true"
-              data-width="100%"
-              onChange={(e)=>setSubStage(e.target.value)}
-            >
-            {subStatus.map((stat,index)=>{
-              return  <option data-tokens="Status1" value={stat.id} key={index}>{stat.value}</option>
-            })}
-            </select>
-          </div>
+        
           <div className="col-lg-12 text-center mt-2">
             <div className="my_profile_setting_input">
               <button className="btn btn-color w-100" onClick={onSubmitHandler}>Update Status</button>

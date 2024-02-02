@@ -255,7 +255,7 @@ const CreateList = ({
                   disabled={!edit}
                 // placeholder="Enter Registration No."
               />
-              {claim.claimStatus?.ClaimStatus <= 1 && claim.claimDetails?.ClaimNumber &&  <button onClick={()=>sendMailHandler( claim?.vehichleDetails?.VehicleEngineNumber,claim?.claimDetails?.ReferenceNo,claim?.insuredDetails?.InsuredName,claim.insuredDetails?.InsuredMailAddress)}>sendEmail</button>}
+              {claim.claimStatus?.ClaimStatus <= 1 && claim.claimDetails?.ClaimNumber && InsuredMailAddress!=="None" && <button onClick={()=>sendMailHandler( claim?.vehichleDetails?.VehicleEngineNumber,claim?.claimDetails?.ReferenceNo,claim?.insuredDetails?.InsuredName,claim.insuredDetails?.InsuredMailAddress)}>sendEmail</button>}
             </div>
             {/* <div className="col-lg-1">
               {!InsuredMailAddress && (
