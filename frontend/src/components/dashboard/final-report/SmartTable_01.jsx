@@ -312,19 +312,20 @@ function SmartTable(props) {
             </div>
           )}
           <div className="row">
-            {/* <div
-              className="col-8 h4 text-start mt-2"
-              style={{ marginLeft: "20px" }}
-            >
-              {props.title}
-            </div> */}
-            {/* <div className="col-lg-3">
-              <div
-                className="btn btn-log btn-thm flaticon-pdf"
-                title="pdf zip download"
-                style={{ marginLeft: "250px" }}
-              ></div>
-            </div> */}
+            <div className="col-lg-12 text-end">
+              <button className="btn" onClick={() => props.handleAddRow()} title="Add Row">
+                <span className="flaticon-plus"></span>
+              </button>
+              {props.edit ? (
+                <button className="btn" onClick={() => props.updateHandler()}>
+                  Save
+                </button>
+              ) : (
+                <button className="btn" onClick={() => props.editHandler()} title="Update">
+                  <span className="flaticon-edit"></span>
+                </button>
+              )}
+            </div>
           </div>
           {props.data.length > 0 ? (
             <div className="row">
@@ -502,6 +503,7 @@ function SmartTable(props) {
                     </div>
                   </div>
                 </div>
+                <div className="col-lg-12"></div>
               </div>
             </div>
           ) : (

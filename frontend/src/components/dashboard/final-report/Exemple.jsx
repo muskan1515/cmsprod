@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SmartTable_01 from "./SmartTable_01";
+import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
 import axios, { all } from "axios";
 import { calculateDepreciationsPercenatge } from "./functions";
@@ -97,20 +97,19 @@ const headCells = [
   // },
 ];
 
-
 export default function Exemple_01({
-  policyType, 
+  policyType,
   claim,
   includeDepreciation,
   ClaimAddedDateTime,
   PolicyStartDate,
-  VehicleAddedDate}) {
+  VehicleAddedDate,
+}) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
-  const [totalEstimate,setTotalEstimate]=useState(0);
-  const [totalAssessed,setTotaAssessed]=useState(0);
-  const [totalDifference,setTotalDifference]=useState(0);
-  
+  const [totalEstimate, setTotalEstimate] = useState(0);
+  const [totalAssessed, setTotaAssessed] = useState(0);
+  const [totalDifference, setTotalDifference] = useState(0);
 
   // const []
   const [change, setChange] = useState(false);
@@ -123,28 +122,27 @@ export default function Exemple_01({
   const [type, setType] = useState("");
   const [remark, setRemark] = useState("");
   const [gst, setGst] = useState(0);
-  const [change2,setChange2]=useState(false);
+  const [change2, setChange2] = useState(false);
 
-  const [allDepreciations,setAllDepreciations]=useState([]);
+  const [allDepreciations, setAllDepreciations] = useState([]);
 
-  useEffect(()=>{
-
+  useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    axios.get("/api/getAllDepreciationList",{
-      headers:{
-        Authorization:`Bearer ${userInfo[0].Token}`,
-        "Content-Type":"application/json"
-      }
-    })
-    .then((res)=>{
-      setAllDepreciations(res.data.data.results);
-    })
-    .catch((Err)=>{
-      alert(Err);
-    })
-  },[]);
+    axios
+      .get("/api/getAllDepreciationList", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setAllDepreciations(res.data.data.results);
+      })
+      .catch((Err) => {
+        alert(Err);
+      });
+  }, []);
 
-  
   const [edit, setEdit] = useState(false);
 
   const [allRows, setAllRows] = useState(
@@ -158,7 +156,7 @@ export default function Exemple_01({
       estimate: "",
       assessed: "",
       qe: "01",
-      qa:"01",
+      qa: "01",
       bill_sr: index + 123, // Assuming bill_sr increments with each new row
       gst: 0,
       total: 0,
@@ -166,12 +164,12 @@ export default function Exemple_01({
     }))
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     setChange2(false);
     setTotaAssessed(calculateTotalAssessed);
     setTotalEstimate(calculateTotalEstimated);
-    setTotalDifference(totalEstimate-totalAssessed);
-  },[change2]);
+    setTotalDifference(totalEstimate - totalAssessed);
+  }, [change2]);
   const openEditHandler = (idx) => {
     // console.log(idx);
 
@@ -215,7 +213,7 @@ export default function Exemple_01({
       estimate: "",
       assessed: "",
       qe: "01",
-      qa:"01",
+      qa: "01",
       bill_sr: allRows.length, // Assuming bill_sr increments with each new row
       gst: 0,
       total: 0,
@@ -277,12 +275,12 @@ export default function Exemple_01({
           ? val.slice(-1, 1)
           : val
         : currentField.estimate;
-        const bill_sr =
-        String(field) === "bill_sr"
-          ? String(currentField.bill_sr) === val
-            ? val.slice(-1, 1)
-            : val
-          : currentField.bill_sr;
+    const bill_sr =
+      String(field) === "bill_sr"
+        ? String(currentField.bill_sr) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.bill_sr;
     const assessed =
       String(field) === "assessed"
         ? String(currentField.assessed) === val
@@ -290,13 +288,12 @@ export default function Exemple_01({
           : val
         : currentField.assessed;
 
-    
-        const gst =
-        String(field) === "gst"
-          ? String(currentField.gst) === val
-            ? val.slice(-1, 1)
-            : val
-          : currentField.gst;
+    const gst =
+      String(field) === "gst"
+        ? String(currentField.gst) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.gst;
     const type =
       String(field) === "type"
         ? String(currentField.type) === val
@@ -304,11 +301,14 @@ export default function Exemple_01({
           : val
         : currentField.type;
 
-        const overall = Number(assessed)*Number(currentField.qa);
-        const subtract = String(policyType) === "" ? (overall* Number(currentField.dep))/100 : 0;
-        const total_without = overall-subtract ;
-        const total = total_without + (total_without * Number(currentField.gst))/100;
-
+    const overall = Number(assessed) * Number(currentField.qa);
+    const subtract =
+      String(policyType) === ""
+        ? (overall * Number(currentField.dep)) / 100
+        : 0;
+    const total_without = overall - subtract;
+    const total =
+      total_without + (total_without * Number(currentField.gst)) / 100;
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -320,7 +320,7 @@ export default function Exemple_01({
       estimate: estimate,
       assessed: assessed,
       qa: currentField.qa,
-      qe:currentField.qe,
+      qe: currentField.qe,
       bill_sr: bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
       total: total,
@@ -334,55 +334,52 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
-  const calculateTotalAssessed = ()=>{
+  const calculateTotalAssessed = () => {
     let total = 0;
-    allRows.map((row,index)=>{
-      total = total + (Number(row.assessed) * Number(row.qa));
-    })
+    allRows.map((row, index) => {
+      total = total + Number(row.assessed) * Number(row.qa);
+    });
     return total;
-  }
+  };
 
-
-  const calculateTotalEstimated = ()=>{
+  const calculateTotalEstimated = () => {
     let total = 0;
-    allRows.map((row,index)=>{
-      total = total + (Number(row.estimate) * Number(row.qe));
-    })
+    allRows.map((row, index) => {
+      total = total + Number(row.estimate) * Number(row.qe);
+    });
     return total;
-  }
+  };
 
-  const handleQeQaChange=(index, val, field) => {
-    
+  const handleQeQaChange = (index, val, field) => {
     setChange2(true);
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
     const qe =
-    String(field) === "qe"
-      ? String(currentField.qe) === val
-      ? val.slice(-1, 1)
-      : val
-    : currentField.qe;
-      const qa =
+      String(field) === "qe"
+        ? String(currentField.qe) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.qe;
+    const qa =
       String(field) === "qa"
-        ?String(currentField.qa) === val
-        ? val.slice(-1, 1)
-        : val
-      : currentField.qa;
+        ? String(currentField.qa) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.qa;
 
-  
-
-      
-    
-     const overall = Number(currentField.assessed)*Number(qa);
-    const subtract = String(policyType) === "" ? (overall* Number(currentField.dep))/100 : 0;
-   // console.log(currentField.total,subtract);
-   const total_without = overall-subtract ;
-   const total = total_without + (total_without * Number(currentField.gst))/100;
+    const overall = Number(currentField.assessed) * Number(qa);
+    const subtract =
+      String(policyType) === ""
+        ? (overall * Number(currentField.dep)) / 100
+        : 0;
+    // console.log(currentField.total,subtract);
+    const total_without = overall - subtract;
+    const total =
+      total_without + (total_without * Number(currentField.gst)) / 100;
 
     // console.log("geq",qe,qa,total * qa);
-   
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -394,7 +391,7 @@ export default function Exemple_01({
       estimate: currentField.estimate,
       assessed: currentField.assessed,
       qe: qe,
-      qa:qa,
+      qa: qa,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
@@ -405,12 +402,12 @@ export default function Exemple_01({
     setChange(true);
     setAllRows(oldRow);
     // console.log(allRows[index].field);
-    
+
     // console.log(oldRow);
   };
 
   // const handleGstChange=(index, val, field) => {
-    
+
   //   let oldRow = allRows;
   //   const currentField = allRows[index];
   //   const len = val.length;
@@ -421,12 +418,9 @@ export default function Exemple_01({
   //     ? val.slice(-1, 1)
   //     : val
   //   : currentField.gst;
-    
-    
+
   //   const assessed_amount = (Number(currentField.assessed) * Number(val));
   //   const total =  (assessed_amount + (Number(gst) * assessed_amount)/100) ;
-
-    
 
   //   const newOutput = {
   //     _id: currentField._id, // You may use a more robust ID generation logic
@@ -452,18 +446,19 @@ export default function Exemple_01({
   //   // console.log(oldRow);
   // };
 
-  const handleTypeChange=(index, val, field) => {
-    
-    setChange2(true)
+  const handleTypeChange = (index, val, field) => {
+    setChange2(true);
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
+    const dep = calculateDepreciationsPercenatge(
+      allDepreciations,
+      val,
+      claim.vehicleDetails?.VehicleAddedDate
+    );
 
-    const dep =
-      calculateDepreciationsPercenatge(allDepreciations,val,claim.vehicleDetails?.VehicleAddedDate);
-    
-      // console.log(dep,val);
+    // console.log(dep,val);
     const type =
       String(field) === "type"
         ? String(currentField.type) === val
@@ -471,12 +466,11 @@ export default function Exemple_01({
           : val
         : currentField.type;
 
-      
-        const overall = Number(currentField.assessed)*Number(currentField.qa);
-         const subtract = String(policyType) === "" ? (overall* Number(dep))/100 : 0;
-        // console.log(currentField.total,subtract);
-        const total = overall-subtract;
-    
+    const overall = Number(currentField.assessed) * Number(currentField.qa);
+    const subtract =
+      String(policyType) === "" ? (overall * Number(dep)) / 100 : 0;
+    // console.log(currentField.total,subtract);
+    const total = overall - subtract;
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -488,7 +482,7 @@ export default function Exemple_01({
       estimate: currentField.estimate,
       assessed: currentField.assessed,
       qa: currentField.qa,
-      qe:currentField.qe,
+      qe: currentField.qe,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
@@ -502,13 +496,11 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
-  const handleGSTChange=(index, val, field) => {
-    
-    setChange2(true)
+  const handleGSTChange = (index, val, field) => {
+    setChange2(true);
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
-
 
     const gst =
       String(field) === "gst"
@@ -517,13 +509,14 @@ export default function Exemple_01({
           : val
         : currentField.gst;
 
-      
-        const overall = Number(currentField.assessed)*Number(currentField.qa);
-         const subtract = String(policyType) === "" ? (overall* Number(currentField.dep))/100 : 0;
-        // console.log(currentField.total,subtract);
-        const total_without = overall-subtract ;
-        const total = total_without + (total_without * Number(gst))/100;
-    
+    const overall = Number(currentField.assessed) * Number(currentField.qa);
+    const subtract =
+      String(policyType) === ""
+        ? (overall * Number(currentField.dep)) / 100
+        : 0;
+    // console.log(currentField.total,subtract);
+    const total_without = overall - subtract;
+    const total = total_without + (total_without * Number(gst)) / 100;
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -535,7 +528,7 @@ export default function Exemple_01({
       estimate: currentField.estimate,
       assessed: currentField.assessed,
       qa: currentField.qa,
-      qe:currentField.qe,
+      qe: currentField.qe,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
       total: total,
@@ -560,8 +553,7 @@ export default function Exemple_01({
             <input
               className="form-control form-control-table"
               type="text"
-              value={`${row.dep }%`}
-             
+              value={`${row.dep}%`}
               required
               id="terms"
               style={{ border: "1px solid black" }}
@@ -680,7 +672,7 @@ export default function Exemple_01({
               style={{ border: "1px solid black" }}
             />
           ),
-         
+
           qe: (
             <input
               className="form-control form-control-table"
@@ -751,13 +743,15 @@ export default function Exemple_01({
               disabled={!edit}
               onChange={(e) => handleTypeChange(index, e.target.value, "type")}
             >
-
-            {allDepreciations.map((dep,index)=>{
-              return  index>0 && allDepreciations[index]?.PartType === allDepreciations[index-1]?.PartType ? null :  <option data-tokens="Status1" value={dep.PartType}>
-              {dep.PartType}
-              </option>
-            })}
-             
+              {allDepreciations.map((dep, index) => {
+                return index > 0 &&
+                  allDepreciations[index]?.PartType ===
+                    allDepreciations[index - 1]?.PartType ? null : (
+                  <option data-tokens="Status1" value={dep.PartType}>
+                    {dep.PartType}
+                  </option>
+                );
+              })}
             </select>
           ),
           verify: (
@@ -782,16 +776,16 @@ export default function Exemple_01({
   console.log(allDepreciations);
 
   return (
-    <SmartTable_01
+    <SmartTable
       title=""
       data={updatedCode}
       headCells={headCells}
       handleAddRow={handleAddRow}
       editHandler={editHandler}
       updateHandler={updateHandler}
-      estimate = {totalAssessed}
-      assessed = {totalEstimate}
-      difference = {totalEstimate - totalAssessed}
+      estimate={totalAssessed}
+      assessed={totalEstimate}
+      difference={totalEstimate - totalAssessed}
       edit={edit}
     />
   );

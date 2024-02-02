@@ -92,11 +92,10 @@ const headCells = [
   },
 ];
 
-const data =
-  props.data ||
-  Array.from({ length: 10 }, (_, index) => ({
-    _id: index.toString(),
-    sno: (index + 1).toString(), // Assuming 'sno' is a sequential number
+const data = [
+  {
+    _id: "6144145976c7fe",
+    sno: "1",
     dep: "0",
     item_name: (
       <select
@@ -186,103 +185,8 @@ const data =
       />
     ),
     action: <span className="flaticon-edit"></span>,
-  }));
-
-// const data = [
-//   {
-//     _id: "6144145976c7fe",
-//     sno: "1",
-//     dep: "0",
-//     item_name: (
-//       <select
-//         style={{ marginTop: "-5px" }}
-//         className="selectpicker form-select"
-//         data-live-search="true"
-//         data-width="100%"
-//       >
-//         <option data-tokens="Status1">Regular</option>
-//         <option data-tokens="Status2">Add on Policy</option>
-//         <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-//       </select>
-//     ),
-//     hsh_code: (
-//       <input
-//         className="form-control"
-//         type="text"
-//         value=""
-//         required
-//         id="terms"
-//         style={{ border: "1px solid black" }}
-//       />
-//     ),
-//     remark: (
-//       <select
-//         style={{ marginTop: "-5px" }}
-//         className="selectpicker form-select"
-//         data-live-search="true"
-//         data-width="100%"
-//       >
-//         <option data-tokens="Status1">Regular</option>
-//         <option data-tokens="Status2">Add on Policy</option>
-//         <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-//       </select>
-//     ),
-//     estimate: (
-//       <input
-//         className="form-control"
-//         type="text"
-//         value=""
-//         required
-//         id="terms"
-//         style={{ border: "1px solid black" }}
-//       />
-//     ),
-//     assessed: (
-//       <input
-//         className="form-control"
-//         type="text"
-//         value=""
-//         required
-//         id="terms"
-//         style={{ border: "1px solid black" }}
-//       />
-//     ),
-//     qe_qa: "01-02",
-//     bill_sr: "1",
-//     gst: (
-//       <input
-//         className="form-control"
-//         type="text"
-//         value=""
-//         required
-//         id="terms"
-//         style={{ border: "1px solid black" }}
-//       />
-//     ),
-//     total: (
-//       <input
-//         className="form-control"
-//         type="text"
-//         value=""
-//         required
-//         id="terms"
-//         style={{ border: "1px solid black" }}
-//       />
-//     ),
-//     type: "Plastic",
-//     verify: (
-//       <input
-//         className="form-check-input"
-//         type="checkbox"
-//         value=""
-//         required
-//         id="terms"
-//         style={{ border: "1px solid black" }}
-//       />
-//     ),
-//     action: <span className="flaticon-edit"></span>,
-//   },
-// ];
+  },
+];
 
 function SmartTable(props) {
   const [loading, setLoading] = useState(false);
@@ -407,27 +311,36 @@ function SmartTable(props) {
               <div className="spinner-border" role="status"></div>
             </div>
           )}
-          <div className="row">
-            {/* <div
-              className="col-8 h4 text-start mt-2"
-              style={{ marginLeft: "20px" }}
-            >
-              {props.title}
-            </div> */}
-            {/* <div className="col-lg-3">
-              <div
-                className="btn btn-log btn-thm flaticon-pdf"
-                title="pdf zip download"
-                style={{ marginLeft: "250px" }}
-              ></div>
-            </div> */}
+          <div className="row" style={{ marginTop: "0px" }}>
+            <div className="col-lg-12 text-end">
+              <button
+                className="btn"
+                onClick={() => props.handleAddRow()}
+                title="Add Row"
+              >
+                <span className="flaticon-plus"></span>
+              </button>
+              {props.edit ? (
+                <button className="btn" onClick={() => props.updateHandler()}>
+                  Save
+                </button>
+              ) : (
+                <button
+                  className="btn"
+                  onClick={() => props.editHandler()}
+                  title="Update"
+                >
+                  <span className="flaticon-edit"></span>
+                </button>
+              )}
+            </div>
           </div>
           {props.data.length > 0 ? (
             <div className="row">
               <div>
                 <div className="smartTable-tableContainer">
                   <table
-                    className={"smartTable-table table table-striped border"}
+                    className={"smartTable-table table"}
                     style={{ minWidth: props.tableWidth }}
                   >
                     <thead className="smartTable-thead">
@@ -478,17 +391,238 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <button
-                  className="btn btn-color"
-                  onClick={() => props.handleAddRow()}
-                >
-                  Add New Row
-                </button>
-                {props.edit ? (
-                  <button onClick={() => props.updateHandler()}>Save</button>
-                ) : (
-                  <button onClick={() => props.editHandler()}>Edit</button>
-                )}
+                <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-3">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 text-end">
+                          <input
+                            className="form-check-input m-1"
+                            type="checkbox"
+                            value=""
+                            id="remeberMe"
+                          />
+                          W/o Tax :{" "}
+                        </div>
+                        <div className="col-lg-6">
+                          <select
+                            // style={{ marginTop: "-5px" }}
+                            className="selectpicker form-select p-1"
+                            style={{ fontSize: "smaller" }}
+                            data-live-search="true"
+                            data-width="100%"
+                            // value={row.description}
+                            // disabled={!edit}
+                            // onChange={(e) =>
+                            //   handleChange(index, e.target.value, "description")
+                            // }
+                          >
+                            <option data-tokens="Status1" value={"Regular"}>
+                              Regular
+                            </option>
+                            <option
+                              data-tokens="Status2"
+                              value={"Add on Policy"}
+                            >
+                              Add on Policy
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-4 my_profile_setting_input form-group text-start">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Estimated
+                          </label>
+                        </div>
+                        <div className="col-lg-8">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={props.estimate}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-4 my_profile_setting_input form-group text-start">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Assessed
+                          </label>
+                        </div>
+                        <div className="col-lg-8">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={props.estimate}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-4 my_profile_setting_input form-group text-start">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Diffrance
+                          </label>
+                        </div>
+                        <div className="col-lg-8">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={props.estimate}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-5"></div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Age of Vehicle
+                          </label>
+                        </div>
+                        <div className="col-lg-4">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={props.assessed}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Age of Policy
+                          </label>
+                        </div>
+                        <div className="col-lg-4">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={props.assessed}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 ">
+                      <div className="row mt-1">
+                        <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Depreciation on metal(%)
+                          </label>
+                        </div>
+                        <div className="col-lg-4">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={props.difference}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ) : (
