@@ -1,9 +1,9 @@
 import Link from "next/link";
 import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
-import Select from "react-select";
+// import Select from "react-select";
 import axios, { all } from "axios";
-import { calculateDepreciationsPercenatge } from "./functions";
+import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
 
 const headCells = [
   {
@@ -117,7 +117,10 @@ export default function Exemple_01({
   const [totalEstimate, setTotalEstimate] = useState(0);
   const [totalAssessed, setTotaAssessed] = useState(0);
   const [totalDifference, setTotalDifference] = useState(0);
+  const [currentPolicy,setCurrentPolicy]=useState("Regular");
+  const [toggleGST,setToggleGST]=useState(0);
 
+  const [metalDep,setMetalDep]=useState(0);
   // const []
   const [change, setChange] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
@@ -126,6 +129,7 @@ export default function Exemple_01({
   const [sac, setSac] = useState(0);
   const [estimate, setEstimate] = useState(0);
   const [assessed, setAssessed] = useState(0);
+  const [depreciation,setDepreciation]=useState(0);
   const [type, setType] = useState("");
   const [remark, setRemark] = useState("");
   const [gst, setGst] = useState(0);
@@ -151,6 +155,8 @@ export default function Exemple_01({
   }, []);
 
   const [edit, setEdit] = useState(false);
+
+
 
   const [allRows, setAllRows] = useState(
     Array.from({ length: 2 }, (_, index) => ({
@@ -236,6 +242,25 @@ export default function Exemple_01({
     setAllRows(old);
   };
 
+  const calculateVehicleAge = ()=>{
+    return getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
+  }
+
+  const calculatePolicyAge = ()=>{
+    const end = getMonthsDifference(claim?.claimDetails?.PolicyPeriodEnd);
+    const start= getMonthsDifference(claim.claimDetails?.PolicyPeriodStart);
+
+    if(end >=0){
+      return "Already Ended";
+    }
+    else
+     return start;
+  }
+
+  const calculateDepreciationOnMetal = ()=>{
+    return calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
+  }
+
   const handleRemoveRow = (index) => {
     const updatedRows = allRows.filter((row, i) => i !== index);
     setAllRows(updatedRows);
@@ -317,12 +342,13 @@ export default function Exemple_01({
 
     const overall = Number(assessed) * Number(currentField.qa);
     const subtract =
-      String(policyType) === ""
+      String(policyType) === "" || String(currentPolicy) === "Regular"
         ? (overall * Number(currentField.dep)) / 100
         : 0;
     const total_without = overall - subtract;
     const total =
-      total_without + (total_without * Number(currentField.gst)) / 100;
+      total_without +( toggleGST%2 === 0 ? (total_without * Number(currentField.gst)) / 100 : 0);
+      console.log(total,total_without,overall,subtract);
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -364,6 +390,57 @@ export default function Exemple_01({
     return total;
   };
 
+  const changeTotalAccordingToPolicyType = (policy) => {
+  
+    let updatedOne = [];
+    allRows.map((row, index) => {
+
+    const updatedRow = row;
+    const overall = Number(row.assessed) * Number(row.qa);
+    const subtract =
+      String(policy) === "" || String(policy) === "Regular"
+        ? (overall * Number(row.dep)) / 100
+        : 0;
+    // console.log(currentField.total,subtract);
+    const total_without = overall - subtract;
+    const total =
+      total_without +( toggleGST%2 === 0 ? (total_without * Number(row.gst)) / 100 : 0);
+    row.total = total;
+    updatedOne.push(updatedRow)
+    });
+    console.log(updatedOne)
+    setAllRows(updatedOne);
+    setCurrentPolicy(policy)
+    setChange(true)
+  };
+
+  const handleToggleGSTHandler = () => {
+
+    
+    const isIncludeGST = (toggleGST +1) % 2 === 0 ? true : false;
+    let updatedOne = [];
+    allRows.map((row, index) => {
+
+    const updatedRow = row;
+
+    const overall = Number(row.assessed) * Number(row.qa);
+    const subtract =
+      String(currentPolicy) === "" || String(currentPolicy) === "Regular"
+        ? (overall * Number(row.dep)) / 100
+        : 0;
+    // console.log(currentField.total,subtract);
+    const total_without = overall - subtract;
+    const total =
+      total_without +(isIncludeGST ? (total_without * Number(row.gst)) / 100 : 0);
+    row.total = total;
+    updatedOne.push(updatedRow)
+    });
+    console.log(updatedOne)
+    setAllRows(updatedOne);
+    setToggleGST(toggleGST+1);
+    setChange(true)
+  };
+
   const handleQeQaChange = (index, val, field) => {
     setChange2(true);
     let oldRow = allRows;
@@ -391,7 +468,7 @@ export default function Exemple_01({
     // console.log(currentField.total,subtract);
     const total_without = overall - subtract;
     const total =
-      total_without + (total_without * Number(currentField.gst)) / 100;
+      total_without +( toggleGST%2 === 0 ? (total_without * Number(currentField.gst)) / 100 : 0);
 
     // console.log("geq",qe,qa,total * qa);
 
@@ -472,9 +549,11 @@ export default function Exemple_01({
       claim.vehicleDetails?.VehicleAddedDate
     );
 
+    setMetalDep(dep);
+
     // console.log(dep,val);
     const type =
-      String(field) === "type"
+      String(field) === "type" 
         ? String(currentField.type) === val
           ? val.slice(-1, 1)
           : val
@@ -482,9 +561,11 @@ export default function Exemple_01({
 
     const overall = Number(currentField.assessed) * Number(currentField.qa);
     const subtract =
-      String(policyType) === "" ? (overall * Number(dep)) / 100 : 0;
+      String(policyType) === "" || String(currentPolicy) === "Regular" ? (overall * Number(dep)) / 100 : 0;
     // console.log(currentField.total,subtract);
-    const total = overall - subtract;
+    const total_without = overall - subtract;
+    const total = total_without + (toggleGST%2 === 0 ? (total_without * Number(gst)) / 100 : 0);
+
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -511,6 +592,8 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
+
+
   const handleGSTChange = (index, val, field) => {
     setChange2(true);
     let oldRow = allRows;
@@ -524,14 +607,15 @@ export default function Exemple_01({
           : val
         : currentField.gst;
 
+        console.log(policyType,toggleGST);
     const overall = Number(currentField.assessed) * Number(currentField.qa);
     const subtract =
-      String(policyType) === ""
+      String(policyType) === "" || String(currentPolicy) === "Regular"
         ? (overall * Number(currentField.dep)) / 100
         : 0;
     // console.log(currentField.total,subtract);
     const total_without = overall - subtract;
-    const total = total_without + (total_without * Number(gst)) / 100;
+    const total = total_without + (toggleGST%2 === 0 ? (total_without * Number(gst)) / 100 : 0);
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -556,6 +640,12 @@ export default function Exemple_01({
     // console.log(allRows[index].field);
     setChange(true);
     // console.log(oldRow);
+  };
+
+
+  const gstToggleHandler = ()=>{
+    setToggleGST( toggleGST+1);
+    setChange(true)
   };
 
   useEffect(() => {
@@ -736,7 +826,7 @@ export default function Exemple_01({
               className="form-control form-control-table"
               type="number"
               value={row.gst}
-              onChange={(e) => handleChange(index, e.target.value, "gst")}
+              onChange={(e) => handleGSTChange(index, e.target.value, "gst")}
               required
               disabled={!edit}
               id="terms"
@@ -800,16 +890,24 @@ export default function Exemple_01({
   return (
     <SmartTable
       title=""
+      ToggleGST={toggleGST}
       data={updatedCode}
+
       headCells={headCells}
+      dep={metalDep}
       handleAddRow={handleAddRow}
       handleRemoveRow={handleRemoveRow}
       editHandler={editHandler}
       updateHandler={updateHandler}
       estimate={totalAssessed}
+      vehicleAge = {calculateVehicleAge}
+      gstToggleHandler={handleToggleGSTHandler}
+      calculatePolicyAge={calculatePolicyAge}
       assessed={totalEstimate}
       difference={totalEstimate - totalAssessed}
+      calculateDepreciationOnMetal={calculateDepreciationOnMetal}
       edit={edit}
+      changeTotalAccordingToPolicyType={changeTotalAccordingToPolicyType}
     />
   );
 }

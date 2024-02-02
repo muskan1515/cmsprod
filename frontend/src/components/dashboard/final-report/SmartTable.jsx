@@ -414,6 +414,7 @@ function SmartTable(props) {
                             className="form-check-input m-1"
                             type="checkbox"
                             value=""
+                            onClick={props.gstToggleHandler}
                             id="remeberMe"
                           />
                           W/o Tax :{" "}
@@ -425,11 +426,11 @@ function SmartTable(props) {
                             style={{ fontSize: "smaller" }}
                             data-live-search="true"
                             data-width="100%"
-                            // value={row.description}
+
                             // disabled={!edit}
-                            // onChange={(e) =>
-                            //   handleChange(index, e.target.value, "description")
-                            // }
+                            onChange={(e) =>
+                              props.changeTotalAccordingToPolicyType(e.target.value)
+                            }
                           >
                             <option data-tokens="Status1" value={"Regular"}>
                               Regular
@@ -466,7 +467,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.estimate}
+                            value={props.assessed}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -520,7 +521,7 @@ function SmartTable(props) {
                               fontSize: "14px",
                             }}
                           >
-                            Diffrance
+                            Difference
                           </label>
                         </div>
                         <div className="col-lg-8">
@@ -528,7 +529,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.estimate}
+                            value={props.difference}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -564,7 +565,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.assessed}
+                            value={props.vehicleAge()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -595,7 +596,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.assessed}
+                            value={props.calculatePolicyAge()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -626,7 +627,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.difference}
+                            value={props.calculateDepreciationOnMetal()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 

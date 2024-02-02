@@ -1,4 +1,4 @@
-function getMonthsDifference(givenDate) {
+export const  getMonthsDifference=(givenDate)=> {
     // Convert the given date to a JavaScript Date object
     const givenDateTime = new Date(givenDate);
 
@@ -26,5 +26,5 @@ export const calculateDepreciationsPercenatge=(depreciations,type,time)=>{
         }
     });
 
-    return smaller.DepreciationPercentage;
+    return smaller ? smaller.DepreciationPercentage : 0;
 }
