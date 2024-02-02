@@ -313,7 +313,11 @@ function SmartTable(props) {
           )}
           <div className="row">
             <div className="col-lg-12 text-end">
-              <button className="btn" onClick={() => props.handleAddRow()} title="Add Row">
+              <button
+                className="btn"
+                onClick={() => props.handleAddRow()}
+                title="Add Row"
+              >
                 <span className="flaticon-plus"></span>
               </button>
               {props.edit ? (
@@ -321,7 +325,11 @@ function SmartTable(props) {
                   Save
                 </button>
               ) : (
-                <button className="btn" onClick={() => props.editHandler()} title="Update">
+                <button
+                  className="btn"
+                  onClick={() => props.editHandler()}
+                  title=""
+                >
                   <span className="flaticon-edit"></span>
                 </button>
               )}
@@ -384,8 +392,8 @@ function SmartTable(props) {
                   </table>
                 </div>
                 <div className="col-lg-12">
-                  <div className="row mt-1">
-                    <div className="col-lg-3">
+                  <div className="row">
+                    {/* <div className="col-lg-3">
                       <button
                         className="btn btn-color w-15"
                         onClick={() => props.handleAddRow()}
@@ -500,7 +508,7 @@ function SmartTable(props) {
                           />
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="col-lg-12"></div>

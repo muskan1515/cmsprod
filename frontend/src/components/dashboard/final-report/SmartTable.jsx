@@ -7,6 +7,12 @@ import SVGChevronRight from "./icons/SVGChevronRight";
 
 const headCells = [
   {
+    id: "row",
+    numeric: false,
+    label: "remove",
+    width: 10,
+  },
+  {
     id: "sno",
     numeric: false,
     label: "#",
@@ -95,6 +101,7 @@ const headCells = [
 const data = [
   {
     _id: "6144145976c7fe",
+    row: <button onClick={() => handleRemoveRow(index)}>Remove</button>,
     sno: "1",
     dep: "0",
     item_name: (
@@ -320,6 +327,13 @@ function SmartTable(props) {
               >
                 <span className="flaticon-plus"></span>
               </button>
+              {/* <button
+                className="btn"
+                onClick={() => props.handleRemoveRow()}
+                title="Remove Row"
+              >
+                <span className="flaticon-minus"></span>
+              </button> */}
               {props.edit ? (
                 <button className="btn" onClick={() => props.updateHandler()}>
                   Save

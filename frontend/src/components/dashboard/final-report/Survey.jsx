@@ -104,9 +104,7 @@ const Servey = ({
   setVehicleTaxParticulars,
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
-
 }) => {
-
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -425,10 +423,25 @@ const Servey = ({
           </div>
         </div>
         <div className="col-lg-6">
-          <div className="col-lg-12">
-            <h4>Details of Loads / Passenger :</h4>
-            <hr />
-            <div className="card" style={{height:"200px"}}>
+          <div className="row">
+            <div className="col-lg-6">
+              <h4>Details of Loads / Passenger :</h4>
+              <hr />
+            </div>
+            <div className="col-lg-6 text-end">
+              {isEditMode ? (
+                <button className="btn btn-color m-1">Update</button>
+              ) : (
+                <button className="btn btn-color m-1">Update</button>
+              )}
+              <button className="btn btn-color m-1">Add</button>
+              {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
+            Modify
+          </button> */}
+            </div>
+          </div>
+          <div className="row">
+            <div className="card" style={{ height: "200px" }}>
               <Editor />
             </div>
           </div>
@@ -436,7 +449,7 @@ const Servey = ({
           <div className="col-lg-12 mt-3">
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
-            <div className="card" style={{height:"200px"}}>
+            <div className="card" style={{ height: "200px" }}>
               <Editor />
             </div>
           </div>
@@ -444,7 +457,7 @@ const Servey = ({
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
-            <div className="card" style={{height:"200px"}}>
+            <div className="card" style={{ height: "200px" }}>
               <Editor />
             </div>
           </div>

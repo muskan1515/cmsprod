@@ -3,9 +3,9 @@ import MyDatePicker from "../../common/MyDatePicker";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const PolicyDetails = ({ 
-  setIsStatusModal ,
-  setPolicyType, 
+const PolicyDetails = ({
+  setIsStatusModal,
+  setPolicyType,
   policyType,
   isEditMode,
   setIsEditMode,
@@ -104,10 +104,7 @@ const PolicyDetails = ({
   setVehicleTaxParticulars,
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
-
 }) => {
-
-
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -302,6 +299,23 @@ const PolicyDetails = ({
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
         </div>
+        <div className="col-lg-4 text-end">
+          {isEditMode ? (
+            <button className="btn btn-color m-1" onClick={handleUpdateClick}>
+              Update
+            </button>
+          ) : (
+            <button className="btn btn-color m-1" onClick={handleEditClick}>
+              Update
+            </button>
+          )}
+          <button className="btn btn-color m-1" onClick={handleEditClick}>
+            Add
+          </button>
+          {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
+            Modify
+          </button> */}
+        </div>
         <hr />
       </div>
 
@@ -431,7 +445,7 @@ const PolicyDetails = ({
                         data-live-search="true"
                         data-width="100%"
                         value={policyType}
-                        onChange={(e)=>setPolicyType(e.target.value)}
+                        onChange={(e) => setPolicyType(e.target.value)}
                       >
                         <option data-tokens="Status1">Regular</option>
                         <option data-tokens="Status2">Add on Policy</option>
@@ -1231,7 +1245,7 @@ const PolicyDetails = ({
                         Chasis#
                       </label>
                     </div>
-                    <div className="col-lg-6" style={{marginLeft:"10px"}}>
+                    <div className="col-lg-6" style={{ marginLeft: "10px" }}>
                       <input
                         type="text"
                         className="form-control"
@@ -1287,7 +1301,7 @@ const PolicyDetails = ({
                         Engine#
                       </label>
                     </div>
-                    <div className="col-lg-6" style={{marginLeft:"10px"}}>
+                    <div className="col-lg-6" style={{ marginLeft: "10px" }}>
                       <input
                         type="text"
                         className="form-control"
@@ -1373,7 +1387,7 @@ const PolicyDetails = ({
                         Type of Body
                       </label>
                     </div>
-                    <div className="col-lg-5" style={{marginLeft:"20px"}}>
+                    <div className="col-lg-5" style={{ marginLeft: "20px" }}>
                       <input
                         type="text"
                         className="form-control"
@@ -1452,36 +1466,38 @@ const PolicyDetails = ({
                   </div>
                 </div>
                 <div className="col-lg-12">
-              <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group text-end">
-                  <label
-                    htmlFor=""
-                    className="text-color"
-                    style={{
-                      // paddingTop: "15px",
-                      color: "#2e008b",
-                      fontWeight: "",
-                      // marginTop: "-13px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Remark
-                  </label>
-                </div>
-                <div className="col-lg-8">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    readOnly={!isEditMode}
-                    value={VehicleTaxParticulars}
-                    onChange={(e) => setVehicleTaxParticulars(e.target.value)}
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Remark
+                      </label>
+                    </div>
+                    <div className="col-lg-8">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        readOnly={!isEditMode}
+                        value={VehicleTaxParticulars}
+                        onChange={(e) =>
+                          setVehicleTaxParticulars(e.target.value)
+                        }
 
-                    // placeholder="Enter Registration No."
-                  />
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
                 {/* <div className="col-lg-12">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group text-end">
@@ -1949,7 +1965,6 @@ const PolicyDetails = ({
                 </div>
               </div> */}
             </div>
-            
           </div>
         </div>
         <div className="col-lg-4">
@@ -2231,22 +2246,6 @@ const PolicyDetails = ({
         </div>
       </div>
       <hr style={{ color: "#2e008b", height: "1px" }} />
-
-      {isEditMode ? (
-        <button className="btn btn-color m-1" onClick={handleUpdateClick}>
-          Update
-        </button>
-      ) : (
-        <button className="btn btn-color m-1" onClick={handleEditClick}>
-          Update
-        </button>
-      )}
-      <button className="btn btn-color m-1" onClick={handleEditClick}>
-        Add
-      </button>
-      <button className="btn btn-color m-1" onClick={handleEditClick}>
-        Modify
-      </button>
     </>
   );
 };

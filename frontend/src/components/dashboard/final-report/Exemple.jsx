@@ -6,6 +6,12 @@ import { calculateDepreciationsPercenatge } from "./functions";
 
 const headCells = [
   {
+    id: "row",
+    numeric: false,
+    label: "",
+    width: 10,
+  },
+  {
     id: "sno",
     numeric: false,
     label: "#",
@@ -146,8 +152,9 @@ export default function Exemple_01({
   const [edit, setEdit] = useState(false);
 
   const [allRows, setAllRows] = useState(
-    Array.from({ length: 10 }, (_, index) => ({
+    Array.from({ length: 2 }, (_, index) => ({
       _id: index + 1,
+      row: "",
       sno: index + 1,
       dep: 0, // Add default values or leave empty as needed
       description: "",
@@ -226,6 +233,12 @@ export default function Exemple_01({
 
     setChange(true);
     setAllRows(old);
+  };
+
+  const handleRemoveRow = (index) => {
+    const updatedRows = allRows.filter((row, i) => i !== index);
+    setAllRows(updatedRows);
+    setChange(true);
   };
 
   const editHandler = () => {
@@ -474,6 +487,7 @@ export default function Exemple_01({
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
+      row: currentField.row,
       sno: currentField.sno,
       dep: dep, // Add default values or lea ve empty as needed
       description: currentField.description,
@@ -520,6 +534,7 @@ export default function Exemple_01({
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
+      row: currentField.row,
       sno: currentField.sno,
       dep: currentField.dep, // Add default values or lea ve empty as needed
       description: currentField.description,
@@ -548,6 +563,12 @@ export default function Exemple_01({
       allRows.map((row, index) => {
         const newRow = {
           _id: index + 1, // You may use a more robust ID generation logic
+          row: (
+            <button
+              className="flaticon-minus"
+              onClick={() => handleRemoveRow(index)}
+            ></button>
+          ),
           sno: index + 1,
           dep: (
             <input
@@ -781,6 +802,7 @@ export default function Exemple_01({
       data={updatedCode}
       headCells={headCells}
       handleAddRow={handleAddRow}
+      handleRemoveRow={handleRemoveRow}
       editHandler={editHandler}
       updateHandler={updateHandler}
       estimate={totalAssessed}

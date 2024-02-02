@@ -81,7 +81,7 @@ export default function Exemple_01() {
   const [edit, setEdit] = useState(false);
 
   const [allRows, setAllRows] = useState(
-    Array.from({ length: 10 }, (_, index) => ({
+    Array.from({ length: 2 }, (_, index) => ({
       _id: index + 1,
       sno: index + 1,
       dep: "", // Add default values or leave empty as needed
