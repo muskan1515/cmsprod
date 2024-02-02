@@ -1319,21 +1319,23 @@ app.post('/addClaim', (req, res) => {
                         }
                       }
                       ).then((ressss)=>{
-                       
+                        return res.status(200).json({ message: 'Data inserted successfully.' });
                       })
                       .catch((Er)=>{
-                       console.log(Er);
+                        return res.status(500).json({ error: 'Error sending email into Broker Mail.' });
                       })
                     }
                   })
                   .catch((Er)=>{
-                   console.log(Er);
+                    return res.status(500).json({ error: 'Error sending email into Garage Mail.' });
                   })
                 }
               })
               .catch((Er)=>{
-               console.log(Er);
+                return res.status(500).json({ error: 'Error sending email into Acknowldegment Mail.' });
               })
+
+             
 
               //garage
 
@@ -1352,7 +1354,7 @@ app.post('/addClaim', (req, res) => {
   });
   });
 
-  return res.status(200).json({ message: 'Data inserted successfully.' });
+ 
 });
 
 // app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
