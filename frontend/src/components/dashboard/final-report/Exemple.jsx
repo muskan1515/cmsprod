@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
+import Select from "react-select";
 import axios, { all } from "axios";
 import { calculateDepreciationsPercenatge } from "./functions";
 
@@ -636,7 +637,7 @@ export default function Exemple_01({
           hsh_code: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.sac}
               onChange={(e) => handleChange(index, e.target.value, "sac")}
               required
@@ -648,7 +649,7 @@ export default function Exemple_01({
           sac: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.sac}
               onChange={(e) => handleChange(index, e.target.value, "sac")}
               required
@@ -672,7 +673,7 @@ export default function Exemple_01({
           assessed: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.assessed}
               onChange={(e) => handleChange(index, e.target.value, "assessed")}
               required
@@ -684,7 +685,7 @@ export default function Exemple_01({
           estimate: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.estimate}
               disabled={!edit}
               onChange={(e) => handleChange(index, e.target.value, "estimate")}
@@ -697,7 +698,7 @@ export default function Exemple_01({
           qe: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.qe}
               onChange={(e) => handleQeQaChange(index, e.target.value, "qe")}
               required
@@ -709,7 +710,7 @@ export default function Exemple_01({
           qa: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.qa}
               onChange={(e) => handleQeQaChange(index, e.target.value, "qa")}
               required
@@ -721,7 +722,7 @@ export default function Exemple_01({
           bill_sr: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.bill_sr}
               onChange={(e) => handleChange(index, e.target.value, "bill_sr")}
               required
@@ -733,7 +734,7 @@ export default function Exemple_01({
           gst: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.gst}
               onChange={(e) => handleChange(index, e.target.value, "gst")}
               required
@@ -745,7 +746,7 @@ export default function Exemple_01({
           total: (
             <input
               className="form-control form-control-table"
-              type="text"
+              type="number"
               value={row.total}
               // onChange={(e)=>handleChange(index,e.target.value,"gst")}
               required

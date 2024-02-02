@@ -637,6 +637,7 @@ function SmartTable(props) {
                     </div>
                   </div>
                 </div>
+                <div className="col-lg-12"></div>
               </div>
             </div>
           ) : (

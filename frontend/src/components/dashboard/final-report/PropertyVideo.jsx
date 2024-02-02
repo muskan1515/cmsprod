@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 import ModalVideo from "react-modal-video";
 import PolicyDetails from "./PolicyDetails";
 import Servey from "./Survey";
@@ -9,6 +9,7 @@ import Exemple_01 from "./Exemple_01";
 import Summary from "./Summary";
 import Table from "./Table";
 import EditableTable from "./Editable";
+import LabourForm from "./LabourForm";
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -21,11 +22,11 @@ const materials = [
   { qty: "", desc: "", price: "" },
 ];
 
-const PropertyVideo = ({ SomeComponent ,leadId}) => {
+const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [isOpen, setOpen] = useState(false);
 
-  const [policyType,setPolicyType]=useState("Regular");
-  const [includeDepreciation,setIncludeDepreciation]=useState(true);
+  const [policyType, setPolicyType] = useState("Regular");
+  const [includeDepreciation, setIncludeDepreciation] = useState(true);
 
   const [claim, setClaim] = useState([]);
   const [applicantNumber, setApplicantNumber] = useState("");
@@ -33,7 +34,7 @@ const PropertyVideo = ({ SomeComponent ,leadId}) => {
   const [isEditMode, setIsEditMode] = useState(false);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    axios 
+    axios
       .get("/api/getSpecificClaim", {
         headers: {
           Authorization: `Bearer ${userInfo[0].Token}`,
@@ -173,15 +174,13 @@ const PropertyVideo = ({ SomeComponent ,leadId}) => {
     );
   }, [claim]);
 
-  useEffect(()=>{
-
-    if(String(policyType) === "Add on Policy"){
+  useEffect(() => {
+    if (String(policyType) === "Add on Policy") {
       setIncludeDepreciation(false);
-    }
-    else{
+    } else {
       setIncludeDepreciation(true);
     }
-  },[policyType])
+  }, [policyType]);
   return (
     <>
       <ModalVideo
@@ -254,107 +253,100 @@ const PropertyVideo = ({ SomeComponent ,leadId}) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <PolicyDetails 
-              setPolicyType={setPolicyType} 
-              policyType={policyType}
-              isEditMode={isEditMode}
-              setIsEditMode={setIsEditMode}
-              phoneNumber={phoneNumber}
-              setPhoneNumber={setPhoneNumber}
-              applicantNumber={applicantNumber}
-              setApplicantNumber={setApplicantNumber}
-
-              ReferenceNo={ReferenceNo}
-              setReferenceNo={setReferenceNo}
-              InsuredMailAddress={InsuredMailAddress}
-              setInsuredMailAddress={setInsuredMailAddress}
-              requestType={requestType}
-              setRequestType={setRequestType}
-              ClaimNumber={ClaimNumber}
-              EngineType={EngineType}
-              setEngineType={setEngineType}
-              DateRegistration={DateRegistration}
-              setDateRegistration={setDateRegistration}
-              PUCNumber={PUCNumber}
-              setPUCNumber={setPUCNumber}
-              TransferDate={TransferDate}
-              setTransferDate={setTransferDate}
-              AddedBy={AddedBy}
-              setAddedBy={setAddedBy}
-              Verification={Verification}
-              setVerification={setVerification}
-
-              GarageNameAndAddress={GarageNameAndAddress}
-              setGarageNameAndAddress={setGarageNameAndAddress}
-              GarageContactNo={GarageContactNo1}
-              setGarageContactNo1={setGarageContactNo1}
-              GarageContactNo2={GarageContactNo2}
-              setGarageContactNo2={setGarageContactNo2}
-              GarageAddedBy={GarageAddedBy}
-              setGarageAddedBy={setGarageAddedBy}
-
-              ClaimAddedDateTime={ClaimAddedDateTime}
-              setClaimAddedDateTime={setClaimAddedDateTime}
-              ClaimIsActive={ClaimIsActive}
-              setClaimIsActive={setClaimIsActive}
-              PolicyIssuingOffice={PolicyIssuingOffice}
-              setPolicyIssuingOffice={setPolicyIssuingOffice}
-
-              PolicyNumber={PolicyNumber}
-              setPolicyNumber={setPolicyNumber}
-              InsuranceCompanyNameAddress={InsuranceCompanyNameAddress}
-              setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
-              InsuredAddress={InsuredAddress}
-              setInsuredAddress={setInsuredAddress}
-              InsuredName={InsuredName}
-              setInsuredName={setInsuredName}
-              InsuredMobileNo1={InsuredMobileNo1}
-              setInsuredMobileNo1={setInsuredMobileNo1}
-              InsuredMobileNo2={InsuredMobileNo2}
-              setInsuredMobileNo2={setInsuredMobileNo2}
-              ClaimRegion={ClaimRegion}
-              setClaimRegion={setClaimRegion}
-
-              DriverName={DriverName}
-              setDriverName={setDriverName}
-              DriverAddedDate={DriverAddedDate}
-              setDriverAddedDate={setDriverAddedDate}
-              IssuingAuthority={IssuingAuthority}
-              setIssuingAuthority={setIssuingAuthority}
-              LicenseNumber={LicenseNumber}
-              setLicenseNumber={setLicenseNumber}
-              LicenseType={LicenseType}
-              setLicenseType={setLicenseType}
-              BadgeNumber={BadgeNumber}
-
-              VehicleRegisteredNumber={VehicleRegisteredNumber}
-              setVehicleRegisteredNumber={setVehicleRegisteredNumber}
-              RegisteredOwner={RegisteredOwner}
-              setRegisteredOwner={setRegisteredOwner}
-              VehicleChassisNumber={VehicleChassisNumber}
-              setVehicleChassisNumber={setVehicleChassisNumber}
-              EngineNumber={EngineNumber}
-              setEngineNumber={setEngineNumber}
-              VehicleTypeOfBody={VehicleTypeOfBody}
-              setVehicleTypeOfBody={setVehicleTypeOfBody}
-              VehicleCubicCapacity={VehicleCubicCapacity}
-              setVehicleCubicCapacity={setVehicleCubicCapacity}
-              VehicleClassOfVehicle={VehicleClassOfVehicle}
-              setVehicleClassOfVehicle={setVehicleClassOfVehicle}
-              VehicleFuelType={VehicleFuelType}
-              setVehicleFuelType={setVehicleFuelType}
-              VehicleOdometerReading={VehicleOdometerReading}
-              setVehicleOdometerReading={setVehicleOdometerReading}
-              VehiclePreAccidentCondition={VehiclePreAccidentCondition}
-              setVehiclePreAccidentCondition={setVehiclePreAccidentCondition}
-
-              VehicleModel={VehicleModel}
-              setVehicleModel={setVehicleModel}
-              VehicleTaxParticulars={VehicleTaxParticulars}
-              setVehicleTaxParticulars={setVehicleTaxParticulars}
-              VehicleSeatingCapacity={VehicleSeatingCapacity}
-              setVehicleSeatingCapacity={setVehicleSeatingCapacity}
- />
+              <PolicyDetails
+                setPolicyType={setPolicyType}
+                policyType={policyType}
+                isEditMode={isEditMode}
+                setIsEditMode={setIsEditMode}
+                phoneNumber={phoneNumber}
+                setPhoneNumber={setPhoneNumber}
+                applicantNumber={applicantNumber}
+                setApplicantNumber={setApplicantNumber}
+                ReferenceNo={ReferenceNo}
+                setReferenceNo={setReferenceNo}
+                InsuredMailAddress={InsuredMailAddress}
+                setInsuredMailAddress={setInsuredMailAddress}
+                requestType={requestType}
+                setRequestType={setRequestType}
+                ClaimNumber={ClaimNumber}
+                EngineType={EngineType}
+                setEngineType={setEngineType}
+                DateRegistration={DateRegistration}
+                setDateRegistration={setDateRegistration}
+                PUCNumber={PUCNumber}
+                setPUCNumber={setPUCNumber}
+                TransferDate={TransferDate}
+                setTransferDate={setTransferDate}
+                AddedBy={AddedBy}
+                setAddedBy={setAddedBy}
+                Verification={Verification}
+                setVerification={setVerification}
+                GarageNameAndAddress={GarageNameAndAddress}
+                setGarageNameAndAddress={setGarageNameAndAddress}
+                GarageContactNo={GarageContactNo1}
+                setGarageContactNo1={setGarageContactNo1}
+                GarageContactNo2={GarageContactNo2}
+                setGarageContactNo2={setGarageContactNo2}
+                GarageAddedBy={GarageAddedBy}
+                setGarageAddedBy={setGarageAddedBy}
+                ClaimAddedDateTime={ClaimAddedDateTime}
+                setClaimAddedDateTime={setClaimAddedDateTime}
+                ClaimIsActive={ClaimIsActive}
+                setClaimIsActive={setClaimIsActive}
+                PolicyIssuingOffice={PolicyIssuingOffice}
+                setPolicyIssuingOffice={setPolicyIssuingOffice}
+                PolicyNumber={PolicyNumber}
+                setPolicyNumber={setPolicyNumber}
+                InsuranceCompanyNameAddress={InsuranceCompanyNameAddress}
+                setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
+                InsuredAddress={InsuredAddress}
+                setInsuredAddress={setInsuredAddress}
+                InsuredName={InsuredName}
+                setInsuredName={setInsuredName}
+                InsuredMobileNo1={InsuredMobileNo1}
+                setInsuredMobileNo1={setInsuredMobileNo1}
+                InsuredMobileNo2={InsuredMobileNo2}
+                setInsuredMobileNo2={setInsuredMobileNo2}
+                ClaimRegion={ClaimRegion}
+                setClaimRegion={setClaimRegion}
+                DriverName={DriverName}
+                setDriverName={setDriverName}
+                DriverAddedDate={DriverAddedDate}
+                setDriverAddedDate={setDriverAddedDate}
+                IssuingAuthority={IssuingAuthority}
+                setIssuingAuthority={setIssuingAuthority}
+                LicenseNumber={LicenseNumber}
+                setLicenseNumber={setLicenseNumber}
+                LicenseType={LicenseType}
+                setLicenseType={setLicenseType}
+                BadgeNumber={BadgeNumber}
+                VehicleRegisteredNumber={VehicleRegisteredNumber}
+                setVehicleRegisteredNumber={setVehicleRegisteredNumber}
+                RegisteredOwner={RegisteredOwner}
+                setRegisteredOwner={setRegisteredOwner}
+                VehicleChassisNumber={VehicleChassisNumber}
+                setVehicleChassisNumber={setVehicleChassisNumber}
+                EngineNumber={EngineNumber}
+                setEngineNumber={setEngineNumber}
+                VehicleTypeOfBody={VehicleTypeOfBody}
+                setVehicleTypeOfBody={setVehicleTypeOfBody}
+                VehicleCubicCapacity={VehicleCubicCapacity}
+                setVehicleCubicCapacity={setVehicleCubicCapacity}
+                VehicleClassOfVehicle={VehicleClassOfVehicle}
+                setVehicleClassOfVehicle={setVehicleClassOfVehicle}
+                VehicleFuelType={VehicleFuelType}
+                setVehicleFuelType={setVehicleFuelType}
+                VehicleOdometerReading={VehicleOdometerReading}
+                setVehicleOdometerReading={setVehicleOdometerReading}
+                VehiclePreAccidentCondition={VehiclePreAccidentCondition}
+                setVehiclePreAccidentCondition={setVehiclePreAccidentCondition}
+                VehicleModel={VehicleModel}
+                setVehicleModel={setVehicleModel}
+                VehicleTaxParticulars={VehicleTaxParticulars}
+                setVehicleTaxParticulars={setVehicleTaxParticulars}
+                VehicleSeatingCapacity={VehicleSeatingCapacity}
+                setVehicleSeatingCapacity={setVehicleSeatingCapacity}
+              />
               {/* <Image
                 width={692}
                 height={390}
@@ -377,105 +369,98 @@ const PropertyVideo = ({ SomeComponent ,leadId}) => {
         <div className="tab-pane fade show " id="description" role="tabpanel">
           <div className="property_video">
             <div className="thumb">
-              <Servey SomeComponent={SomeComponent} 
-              isEditMode={isEditMode}
-              setIsEditMode={setIsEditMode}
-              phoneNumber={phoneNumber}
-              setPhoneNumber={setPhoneNumber}
-              applicantNumber={applicantNumber}
-              setApplicantNumber={setApplicantNumber}
-
-              ReferenceNo={ReferenceNo}
-              setReferenceNo={setReferenceNo}
-              InsuredMailAddress={InsuredMailAddress}
-              setInsuredMailAddress={setInsuredMailAddress}
-              requestType={requestType}
-              setRequestType={setRequestType}
-              ClaimNumber={ClaimNumber}
-              EngineType={EngineType}
-              setEngineType={setEngineType}
-              DateRegistration={DateRegistration}
-              setDateRegistration={setDateRegistration}
-              PUCNumber={PUCNumber}
-              setPUCNumber={setPUCNumber}
-              TransferDate={TransferDate}
-              setTransferDate={setTransferDate}
-              AddedBy={AddedBy}
-              setAddedBy={setAddedBy}
-              Verification={Verification}
-              setVerification={setVerification}
-
-              GarageNameAndAddress={GarageNameAndAddress}
-              setGarageNameAndAddress={setGarageNameAndAddress}
-              GarageContactNo={GarageContactNo1}
-              setGarageContactNo1={setGarageContactNo1}
-              GarageContactNo2={GarageContactNo2}
-              setGarageContactNo2={setGarageContactNo2}
-              GarageAddedBy={GarageAddedBy}
-              setGarageAddedBy={setGarageAddedBy}
-
-              ClaimAddedDateTime={ClaimAddedDateTime}
-              setClaimAddedDateTime={setClaimAddedDateTime}
-              ClaimIsActive={ClaimIsActive}
-              setClaimIsActive={setClaimIsActive}
-              PolicyIssuingOffice={PolicyIssuingOffice}
-              setPolicyIssuingOffice={setPolicyIssuingOffice}
-
-              PolicyNumber={PolicyNumber}
-              setPolicyNumber={setPolicyNumber}
-              InsuranceCompanyNameAddress={InsuranceCompanyNameAddress}
-              setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
-              InsuredAddress={InsuredAddress}
-              setInsuredAddress={setInsuredAddress}
-              InsuredName={InsuredName}
-              setInsuredName={setInsuredName}
-              InsuredMobileNo1={InsuredMobileNo1}
-              setInsuredMobileNo1={setInsuredMobileNo1}
-              InsuredMobileNo2={InsuredMobileNo2}
-              setInsuredMobileNo2={setInsuredMobileNo2}
-              ClaimRegion={ClaimRegion}
-              setClaimRegion={setClaimRegion}
-
-              DriverName={DriverName}
-              setDriverName={setDriverName}
-              DriverAddedDate={DriverAddedDate}
-              setDriverAddedDate={setDriverAddedDate}
-              IssuingAuthority={IssuingAuthority}
-              setIssuingAuthority={setIssuingAuthority}
-              LicenseNumber={LicenseNumber}
-              setLicenseNumber={setLicenseNumber}
-              LicenseType={LicenseType}
-              setLicenseType={setLicenseType}
-              BadgeNumber={BadgeNumber}
-
-              VehicleRegisteredNumber={VehicleRegisteredNumber}
-              setVehicleRegisteredNumber={setVehicleRegisteredNumber}
-              RegisteredOwner={RegisteredOwner}
-              setRegisteredOwner={setRegisteredOwner}
-              VehicleChassisNumber={VehicleChassisNumber}
-              setVehicleChassisNumber={setVehicleChassisNumber}
-              EngineNumber={EngineNumber}
-              setEngineNumber={setEngineNumber}
-              VehicleTypeOfBody={VehicleTypeOfBody}
-              setVehicleTypeOfBody={setVehicleTypeOfBody}
-              VehicleCubicCapacity={VehicleCubicCapacity}
-              setVehicleCubicCapacity={setVehicleCubicCapacity}
-              VehicleClassOfVehicle={VehicleClassOfVehicle}
-              setVehicleClassOfVehicle={setVehicleClassOfVehicle}
-              VehicleFuelType={VehicleFuelType}
-              setVehicleFuelType={setVehicleFuelType}
-              VehicleOdometerReading={VehicleOdometerReading}
-              setVehicleOdometerReading={setVehicleOdometerReading}
-              VehiclePreAccidentCondition={VehiclePreAccidentCondition}
-              setVehiclePreAccidentCondition={setVehiclePreAccidentCondition}
-
-              VehicleModel={VehicleModel}
-              setVehicleModel={setVehicleModel}
-              VehicleTaxParticulars={VehicleTaxParticulars}
-              setVehicleTaxParticulars={setVehicleTaxParticulars}
-              VehicleSeatingCapacity={VehicleSeatingCapacity}
-              setVehicleSeatingCapacity={setVehicleSeatingCapacity}
-
+              <Servey
+                SomeComponent={SomeComponent}
+                isEditMode={isEditMode}
+                setIsEditMode={setIsEditMode}
+                phoneNumber={phoneNumber}
+                setPhoneNumber={setPhoneNumber}
+                applicantNumber={applicantNumber}
+                setApplicantNumber={setApplicantNumber}
+                ReferenceNo={ReferenceNo}
+                setReferenceNo={setReferenceNo}
+                InsuredMailAddress={InsuredMailAddress}
+                setInsuredMailAddress={setInsuredMailAddress}
+                requestType={requestType}
+                setRequestType={setRequestType}
+                ClaimNumber={ClaimNumber}
+                EngineType={EngineType}
+                setEngineType={setEngineType}
+                DateRegistration={DateRegistration}
+                setDateRegistration={setDateRegistration}
+                PUCNumber={PUCNumber}
+                setPUCNumber={setPUCNumber}
+                TransferDate={TransferDate}
+                setTransferDate={setTransferDate}
+                AddedBy={AddedBy}
+                setAddedBy={setAddedBy}
+                Verification={Verification}
+                setVerification={setVerification}
+                GarageNameAndAddress={GarageNameAndAddress}
+                setGarageNameAndAddress={setGarageNameAndAddress}
+                GarageContactNo={GarageContactNo1}
+                setGarageContactNo1={setGarageContactNo1}
+                GarageContactNo2={GarageContactNo2}
+                setGarageContactNo2={setGarageContactNo2}
+                GarageAddedBy={GarageAddedBy}
+                setGarageAddedBy={setGarageAddedBy}
+                ClaimAddedDateTime={ClaimAddedDateTime}
+                setClaimAddedDateTime={setClaimAddedDateTime}
+                ClaimIsActive={ClaimIsActive}
+                setClaimIsActive={setClaimIsActive}
+                PolicyIssuingOffice={PolicyIssuingOffice}
+                setPolicyIssuingOffice={setPolicyIssuingOffice}
+                PolicyNumber={PolicyNumber}
+                setPolicyNumber={setPolicyNumber}
+                InsuranceCompanyNameAddress={InsuranceCompanyNameAddress}
+                setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
+                InsuredAddress={InsuredAddress}
+                setInsuredAddress={setInsuredAddress}
+                InsuredName={InsuredName}
+                setInsuredName={setInsuredName}
+                InsuredMobileNo1={InsuredMobileNo1}
+                setInsuredMobileNo1={setInsuredMobileNo1}
+                InsuredMobileNo2={InsuredMobileNo2}
+                setInsuredMobileNo2={setInsuredMobileNo2}
+                ClaimRegion={ClaimRegion}
+                setClaimRegion={setClaimRegion}
+                DriverName={DriverName}
+                setDriverName={setDriverName}
+                DriverAddedDate={DriverAddedDate}
+                setDriverAddedDate={setDriverAddedDate}
+                IssuingAuthority={IssuingAuthority}
+                setIssuingAuthority={setIssuingAuthority}
+                LicenseNumber={LicenseNumber}
+                setLicenseNumber={setLicenseNumber}
+                LicenseType={LicenseType}
+                setLicenseType={setLicenseType}
+                BadgeNumber={BadgeNumber}
+                VehicleRegisteredNumber={VehicleRegisteredNumber}
+                setVehicleRegisteredNumber={setVehicleRegisteredNumber}
+                RegisteredOwner={RegisteredOwner}
+                setRegisteredOwner={setRegisteredOwner}
+                VehicleChassisNumber={VehicleChassisNumber}
+                setVehicleChassisNumber={setVehicleChassisNumber}
+                EngineNumber={EngineNumber}
+                setEngineNumber={setEngineNumber}
+                VehicleTypeOfBody={VehicleTypeOfBody}
+                setVehicleTypeOfBody={setVehicleTypeOfBody}
+                VehicleCubicCapacity={VehicleCubicCapacity}
+                setVehicleCubicCapacity={setVehicleCubicCapacity}
+                VehicleClassOfVehicle={VehicleClassOfVehicle}
+                setVehicleClassOfVehicle={setVehicleClassOfVehicle}
+                VehicleFuelType={VehicleFuelType}
+                setVehicleFuelType={setVehicleFuelType}
+                VehicleOdometerReading={VehicleOdometerReading}
+                setVehicleOdometerReading={setVehicleOdometerReading}
+                VehiclePreAccidentCondition={VehiclePreAccidentCondition}
+                setVehiclePreAccidentCondition={setVehiclePreAccidentCondition}
+                VehicleModel={VehicleModel}
+                setVehicleModel={setVehicleModel}
+                VehicleTaxParticulars={VehicleTaxParticulars}
+                setVehicleTaxParticulars={setVehicleTaxParticulars}
+                VehicleSeatingCapacity={VehicleSeatingCapacity}
+                setVehicleSeatingCapacity={setVehicleSeatingCapacity}
               />
             </div>
           </div>
@@ -489,14 +474,18 @@ const PropertyVideo = ({ SomeComponent ,leadId}) => {
             <div className="thumb">
               {/* <EditableTable /> */}
               {/* <Table data={materials} /> */}
-              <Exemple 
-              claim={claim}
-              policyType={policyType} 
-              includeDepreciation={includeDepreciation}
-              ClaimAddedDateTime={ClaimAddedDateTime}
-              PolicyStartDate={claim.claimDetails?.PolicyPeriodStart}
-              VehicleAddedDate = {claim.vehicleDetails?.VehicleDateOfRegistration}
-              />
+              <div className="row">
+                <Exemple
+                  claim={claim}
+                  policyType={policyType}
+                  includeDepreciation={includeDepreciation}
+                  ClaimAddedDateTime={ClaimAddedDateTime}
+                  PolicyStartDate={claim.claimDetails?.PolicyPeriodStart}
+                  VehicleAddedDate={
+                    claim.vehicleDetails?.VehicleDateOfRegistration
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -507,7 +496,17 @@ const PropertyVideo = ({ SomeComponent ,leadId}) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <Exemple_01 />
+              <div className="row">
+                <div
+                  className="col-lg-9"
+                  style={{ borderRight: "1px solid black" }}
+                >
+                  <Exemple_01 />
+                </div>
+                <div className="col-lg-3">
+                  <LabourForm />
+                </div>
+              </div>
             </div>
           </div>
         </div>

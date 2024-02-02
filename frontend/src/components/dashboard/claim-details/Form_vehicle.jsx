@@ -74,11 +74,6 @@ const Form_vehicle = ({
   VehicleRcStatus,
   VehicleType,
   BancsFuelType,
-
-
-
-
-  
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -520,7 +515,6 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
                       Class Of Vehicle
                     </label>
                     <label
@@ -538,17 +532,6 @@ const Form_vehicle = ({
                     </label>
                   </div>
                 </td>
-                
-
-
-
-
-
-
-
-
-
-
 
                 {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
@@ -608,7 +591,6 @@ const Form_vehicle = ({
                 </td> */}
               </tr>
 
-
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
@@ -632,9 +614,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {MakerDesc
-                        ? MakerDesc
-                        : claim?.vehicleDetails?.MakerDesc}
+                      {MakerDesc ? MakerDesc : claim?.vehicleDetails?.MakerDesc}
                     </label>
                   </div>
                 </td>
@@ -677,7 +657,6 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
                       Manufacture Month Year
                     </label>
                     <label
@@ -696,7 +675,6 @@ const Form_vehicle = ({
                   </div>
                 </td>
               </tr>
-
 
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -766,8 +744,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
-                      Permanent Address 
+                      Permanent Address
                     </label>
                     <label
                       htmlFor=""
@@ -809,9 +786,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {FitUpto
-                        ? FitUpto
-                        : claim?.vehicleDetails?.FitUpto}
+                      {FitUpto ? FitUpto : claim?.vehicleDetails?.FitUpto}
                     </label>
                   </div>
                 </td>
@@ -854,8 +829,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
-                      Vehicle Insurance Company 
+                      Vehicle Insurance Company
                     </label>
                     <label
                       htmlFor=""
@@ -942,8 +916,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
-                      Vehicle Black ListStatus 
+                      Vehicle Black ListStatus
                     </label>
                     <label
                       htmlFor=""
@@ -985,9 +958,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcStatus
-                        ? RcStatus
-                        : claim?.vehicleDetails?.RcStatus}
+                      {RcStatus ? RcStatus : claim?.vehicleDetails?.RcStatus}
                     </label>
                   </div>
                 </td>
@@ -1030,8 +1001,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
-                      Bancs Model Code 
+                      Bancs Model Code
                     </label>
                     <label
                       htmlFor=""
@@ -1119,7 +1089,6 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
                       Bancs Body Type
                     </label>
                     <label
@@ -1207,7 +1176,6 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      
                       Rc Rto Code
                     </label>
                     <label
@@ -1219,18 +1187,11 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcRtoCode
-                        ? RcRtoCode
-                        : claim?.vehicleDetails?.RcRtoCode}
+                      {RcRtoCode ? RcRtoCode : claim?.vehicleDetails?.RcRtoCode}
                     </label>
                   </div>
                 </td>
               </tr>
-
-
-
-
-
             </table>
           </div>
         </div>
