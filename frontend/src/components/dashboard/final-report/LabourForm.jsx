@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const LabourForm = ({ leadId, status, statusOptions, subStatus, claim }) => {
+const LabourForm = ({ }) => {
   return (
     <>
       <div className="col-lg-12">

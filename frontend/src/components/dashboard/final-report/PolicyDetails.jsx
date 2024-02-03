@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 import toast from "react-hot-toast";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PolicyDetails = ({
   setIsStatusModal,
@@ -198,6 +200,7 @@ const PolicyDetails = ({
       console.log("Error in Updating Claim: ", error);
     }
   };
+  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <>
@@ -245,10 +248,14 @@ const PolicyDetails = ({
                   marginTop: "5px",
                 }}
               >
-                Date <span class="text-danger">*</span>
+                Date
               </label>
             </div>
             <div className="col-lg-7">
+              {/* <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              /> */}
               {/* <input
               type="date"
               className="form-control"
@@ -306,12 +313,12 @@ const PolicyDetails = ({
             </button>
           ) : (
             <button className="btn btn-color m-1" onClick={handleEditClick}>
-              Update
+              Save
             </button>
           )}
-          <button className="btn btn-color m-1" onClick={handleEditClick}>
+          {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
             Add
-          </button>
+          </button> */}
           {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
             Modify
           </button> */}
@@ -378,7 +385,7 @@ const PolicyDetails = ({
                           fontSize: "15px",
                         }}
                       >
-                        Insured <span class="text-danger">*</span> :
+                        Insured :
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -470,7 +477,7 @@ const PolicyDetails = ({
                           fontSize: "15px",
                         }}
                       >
-                        Address <span class="text-danger">*</span> :
+                        Address :
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -558,7 +565,7 @@ const PolicyDetails = ({
                           fontSize: "15px",
                         }}
                       >
-                        H.P.A.<span class="text-danger">*</span> :
+                        H.P.A. :
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -588,7 +595,7 @@ const PolicyDetails = ({
                           fontSize:"15px"
                         }}
                       >
-                        Insurance <span class="text-danger">*</span>
+                        Insurance 
                       </label>
                     </div>
                     <div className="col-lg-7">
@@ -620,7 +627,7 @@ const PolicyDetails = ({
                           fontSize: "15px",
                         }}
                       >
-                        Insurers <span class="text-danger">*</span> :
+                        Insurers :
                       </label>
                     </div>
                     <div className="col-lg-8">

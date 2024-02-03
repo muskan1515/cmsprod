@@ -46,10 +46,10 @@ const CreateList = () => {
       const oneYearLater = new Date(policyStartDate);
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
       oneYearLater.setDate(oneYearLater.getDate() - 1);
-      
+
       const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
       setPolicyStartEnd(formattedOneYearLater);
-    } 
+    }
   }, [policyStartDate]);
 
   const generateRegion = (region) => {
@@ -104,10 +104,53 @@ const CreateList = () => {
       NatureOfLoss: natureOfLoss,
       EstimatedLoss: estimatedLoss,
     };
+<<<<<<< Updated upstream
     
 
 
      
+=======
+    if (!isValidEmail(payload.InsuredMailAddress)) {
+      alert("Please provide a valid email address !!");
+      return;
+    }
+
+    if (
+      !payload.Region ||
+      !payload.InspectionType ||
+      !date ||
+      !payload.PolicyNumber ||
+      !payload.PolicyIssuingOffice ||
+      !payload.ClaimNumber ||
+      !payload.ClaimServicingOffice ||
+      !payload.RegisteredNumber ||
+      !payload.InsuredName ||
+      !payload.InsuredMailAddress ||
+      !payload.InsuredMobileNo1
+    ) {
+      const missingFields = [];
+
+      // Check each field and push the name to the array if it's missing
+      if (!payload.Region) missingFields.push("Region");
+      if (!payload.InspectionType) missingFields.push("InspectionType");
+      if (!date) missingFields.push("Date");
+      if (!payload.PolicyNumber) missingFields.push("PolicyNumber");
+      if (!payload.PolicyIssuingOffice)
+        missingFields.push("PolicyIssuingOffice");
+      if (!payload.ClaimNumber) missingFields.push("ClaimNumber");
+      if (!payload.ClaimServicingOffice)
+        missingFields.push("ClaimServicingOffice");
+      if (!payload.RegisteredNumber) missingFields.push("RegisteredNumber");
+      if (!payload.InsuredName) missingFields.push("InsuredName");
+      if (!payload.InsuredMailAddress) missingFields.push("InsuredMailAddress");
+      if (!payload.InsuredMobileNo1) missingFields.push("InsuredMobileNo1");
+
+      // Log the missing fields
+      console.log("Missing fields:", missingFields);
+
+      alert("Fill all the marked fields please");
+    } else {
+>>>>>>> Stashed changes
       axios
         .post("/api/addClaim", payload, {
           headers: {
@@ -168,30 +211,28 @@ const CreateList = () => {
                   fontWeight: "",
                 }}
               >
-                Region <span class="text-danger">*</span>
+                Region
               </label>
             </div>
             <div className="col-lg-7">
-              
-                <select
-                  className="selectpicker form-select"
-                  data-live-search="true"
-                  data-width="100%"
-                  value={region}
-                  onChange={(e) => setRegion(e.target.value)}
-                >
-                  <option data-tokens="Status1">Select Region</option>
-                  <option data-tokens="Status1" value={"Chandigarh"}>
-                    Chandigarh
-                  </option>
-                  <option data-tokens="Status2" value={"Delhi"}>
-                    Delhi
-                  </option>
-                  <option data-tokens="Status3" value={"Jodhpur"}>
-                    Jodhpur
-                  </option>
-                </select>
-              
+              <select
+                className="selectpicker form-select"
+                data-live-search="true"
+                data-width="100%"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+              >
+                <option data-tokens="Status1">Select Region</option>
+                <option data-tokens="Status1" value={"Chandigarh"}>
+                  Chandigarh
+                </option>
+                <option data-tokens="Status2" value={"Delhi"}>
+                  Delhi
+                </option>
+                <option data-tokens="Status3" value={"Jodhpur"}>
+                  Jodhpur
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -209,7 +250,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Survey Type <span class="text-danger">*</span>
+                Survey Type 
               </label>
             </div>
             <div className="col-lg-7">
@@ -280,7 +321,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Inspection Type <span class="text-danger">*</span>
+                Inspection Type
               </label>
             </div>
             <div className="col-lg-7">
@@ -320,7 +361,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Date <span class="text-danger">*</span>
+                Date
               </label>
             </div>
             <div className="col-lg-7">
@@ -351,7 +392,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Policy Number <span class="text-danger">*</span>
+                Policy Number
               </label>
             </div>
             <div className="col-lg-7">
@@ -380,7 +421,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Policy Issuing Office <span class="text-danger">*</span>
+                Policy Issuing Office
               </label>
             </div>
             <div className="col-lg-7">
@@ -472,7 +513,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Number <span class="text-danger">*</span>
+                Claim Number
               </label>
             </div>
             <div className="col-lg-7">
@@ -501,7 +542,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Survicing Off. <span class="text-danger">*</span>
+                Claim Survicing Off.
               </label>
             </div>
             <div className="col-lg-7">
@@ -530,7 +571,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Name <span class="text-danger">*</span>
+                Insured Name
               </label>
             </div>
             <div className="col-lg-7">
@@ -559,7 +600,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Mobile No. 1 <span class="text-danger">*</span>
+                Insured Mobile No. 1
               </label>
             </div>
             <div className="col-lg-7">
@@ -622,7 +663,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Insured Mail Address <span class="text-danger">*</span>
+                Insured Mail Address
               </label>
             </div>
             <div className="col-lg-7">
@@ -651,7 +692,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Vehicle Particulars <span class="text-danger">*</span>
+                Vehicle Particulars
               </label>
             </div>
             <div className="col-lg-7">
@@ -861,7 +902,7 @@ const CreateList = () => {
                   fontWeight: "",
                 }}
               >
-                Region <span class="text-danger">*</span>
+                Region 
               </label>
             </div>
             <div className="col-lg-7">
@@ -890,7 +931,7 @@ const CreateList = () => {
                   fontWeight: "",
                 }}
               >
-                Survey Type <span class="text-danger">*</span>
+                Survey Type 
               </label>
             </div>
             <div className="col-lg-7">
@@ -921,7 +962,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Inspection Type <span class="text-danger">*</span>
+                Inspection Type 
               </label>
             </div>
             <div className="col-lg-7">
@@ -952,7 +993,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Date <span class="text-danger">*</span>
+                Date 
               </label>
             </div>
             <div className="col-lg-7">
@@ -975,7 +1016,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Policy Number <span class="text-danger">*</span>
+                Policy Number 
               </label>
             </div>
             <div className="col-lg-7">
@@ -1002,7 +1043,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Policy Issuing Office <span class="text-danger">*</span>
+                Policy Issuing Office 
               </label>
             </div>
             <div className="col-lg-7">
@@ -1075,7 +1116,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Number <span class="text-danger">*</span>
+                Claim Number 
               </label>
             </div>
             <div className="col-lg-7">
@@ -1102,7 +1143,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Survicing Off. <span class="text-danger">*</span>
+                Claim Survicing Off. 
               </label>
             </div>
             <div className="col-lg-7">
@@ -1242,7 +1283,7 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Vehicle Particulars <span class="text-danger">*</span>
+                Vehicle Particulars 
               </label>
             </div>
             <div className="col-lg-7">

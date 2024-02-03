@@ -14,17 +14,14 @@ export const  getMonthsDifference=(givenDate)=> {
 
 export const calculateDepreciationsPercenatge=(depreciations,type,time)=>{
     const age = getMonthsDifference(time);
+    console.log(age);
     let smaller = {}, greater = {};
     depreciations.map((dep,index)=>{
-        if(String(dep.PartType) === String(type) && Number(dep.Age)>= Number(age) ){
-           if(Number(dep.Age) > Number(smaller.Age) && smaller){
-            smaller = smaller;
-           }
-           else{
-            smaller = dep;
-           }
+        if(String(dep.PartType) === String(type) && Number(dep.Age)<= Number(age) ){
+          smaller=dep;
         }
     });
+
 
     return smaller ? smaller.DepreciationPercentage : 0;
 }
