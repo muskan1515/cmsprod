@@ -432,9 +432,9 @@ const Servey = ({
               {isEditMode ? (
                 <button className="btn btn-color m-1">Update</button>
               ) : (
-                <button className="btn btn-color m-1">Update</button>
+                <button className="btn btn-color m-1">Save</button>
               )}
-              <button className="btn btn-color m-1">Add</button>
+              {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
             Modify
           </button> */}

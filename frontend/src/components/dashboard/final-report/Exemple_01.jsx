@@ -17,6 +17,12 @@ const headCells = [
     width: 50,
   },
   {
+    id: "job_type",
+    numeric: false,
+    label: "Job Type",
+    width: 150,
+  },
+  {
     id: "description",
     numeric: false,
     label: "Description",
@@ -204,6 +210,26 @@ export default function Exemple_01() {
                 value={"Add on Policy(Not Effective)"}
               >
                 Add on Policy(Not Effective)
+              </option>
+            </select>
+          ),
+          job_type: (
+            <select
+              style={{ marginTop: "-5px" }}
+              className="selectpicker form-select"
+              data-live-search="true"
+              data-width="100%"
+              value={row.description}
+              disabled={!edit}
+              onChange={(e) =>
+                handleChange(index, e.target.value, "description")
+              }
+            >
+              <option data-tokens="Status1" value={"Non-Paint"}>
+                Non-Paint
+              </option>
+              <option data-tokens="Status2" value={"Paint"}>
+                Paint
               </option>
             </select>
           ),

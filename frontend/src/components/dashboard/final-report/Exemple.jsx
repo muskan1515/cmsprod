@@ -22,7 +22,7 @@ const headCells = [
     id: "dep",
     numeric: false,
     label: "Dep%",
-    width: 10,
+    width: 50,
   },
   {
     id: "item_name",
@@ -726,7 +726,7 @@ export default function Exemple_01({
           sno: index + 1,
           dep: (
             <input
-              className="form-control form-control-table"
+              className="form-control form-control-table p-1"
               type="text"
               value={`${row.dep}%`}
               required

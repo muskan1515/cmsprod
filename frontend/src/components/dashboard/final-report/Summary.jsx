@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Editor } from "primereact/editor";
 
-const Summary = ({}) => {
+const Summary = ({ isEditMode }) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -354,10 +354,7 @@ const Summary = ({}) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-12">
-              <h4>Savage & Depreciation</h4>
-              {/* <hr /> */}
-            </div>
+            <div className="col-lg-8"></div>
             <div className="col-lg-4">
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
@@ -369,31 +366,7 @@ const Summary = ({}) => {
                       fontWeight: "",
                     }}
                   >
-                    Total Labour
-                  </label>
-                </div>
-                <div className="col-lg-12">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    // placeholder="Enter Registration No."
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="row mt-1 mb-1">
-                <div className="col-lg-12 my_profile_setting_input form-group">
-                  <label
-                    htmlFor=""
-                    className="text-color mb-0"
-                    style={{
-                      color: "#2e008b",
-                      fontWeight: "",
-                    }}
-                  >
-                    Total Cost of Parts
+                    Grand Total
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -407,13 +380,161 @@ const Summary = ({}) => {
               </div>
             </div>
           </div>
-          <hr />
+          <div className="row mt-5">
+            <div className="col-lg-12">
+              <h4>Savage & Depreciation Details</h4>
+              {/* <hr /> */}
+            </div>
+            <div className="col-lg-3">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Metal %
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Expected Salvage
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-5">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Remark on Salvage
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <hr />
+            <hr />
+          </div>
+          <div className="row">
+            <div className="col-lg-8 text-end">
+              <label
+                htmlFor=""
+                className="text-color mb-0"
+                style={{
+                  paddingTop: "10px",
+                  color: "#2e008b",
+                  fontWeight: "bold",
+                }}
+              >
+                Depreciation on Parts
+              </label>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group"></div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-8 text-end">
+              <label
+                htmlFor=""
+                className="text-color mb-0"
+                style={{
+                  paddingTop: "10px",
+                  color: "#2e008b",
+                  fontWeight: "bold",
+                }}
+              >
+                Net Assessed Amount
+              </label>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group"></div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="col-lg-5">
           <div className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-6">
               <h4>Notes :</h4>
               {/* <hr /> */}
+            </div>
+            <div className="col-lg-6 text-end">
+              {isEditMode ? (
+                <button className="btn btn-color m-1">Update</button>
+              ) : (
+                <button className="btn btn-color m-1">Save</button>
+              )}
+              {/* <button className="btn btn-color m-1">Add</button> */}
+              {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
+            Modify
+          </button> */}
             </div>
             <div className="col-lg-12">
               <div className="row mt-1 mb-1">
@@ -534,7 +655,106 @@ const Summary = ({}) => {
               </div>
             </div>
           </div>
+
           <hr />
+        </div>
+        <div className="col-lg-12 mt-5">
+          <div className="row mt-1">
+            <div className="col-lg-5"></div>
+            <div className="col-lg-2">
+              <div className="row mt-1">
+                <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Age of Vehicle
+                  </label>
+                </div>
+                <div className="col-lg-4">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // value={props.assessed}
+                    // readOnly={!isEditMode}
+                    // onChange={(e) => setLicenseType(e.target.value)}
+
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-2">
+              <div className="row mt-1">
+                <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Age of Policy
+                  </label>
+                </div>
+                <div className="col-lg-4">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // value={props.assessed}
+                    // readOnly={!isEditMode}
+                    // onChange={(e) => setLicenseType(e.target.value)}
+
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 ">
+              <div className="row mt-1">
+                <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Depreciation on metal(%)
+                  </label>
+                </div>
+                <div className="col-lg-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // value={props.difference}
+                    // readOnly={!isEditMode}
+                    // onChange={(e) => setLicenseType(e.target.value)}
+
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -591,7 +591,7 @@ function SmartTable(props) {
                             Depreciation on metal(%)
                           </label>
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-3">
                           <input
                             type="text"
                             className="form-control"
