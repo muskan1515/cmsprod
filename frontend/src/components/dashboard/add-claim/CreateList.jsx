@@ -38,7 +38,7 @@ const CreateList = () => {
   const [claimNumber, setClaimNumber] = useState("");
   const [brokerMailId, setBrokerMailId] = useState("intimationmt@gmail.com");
 
-  const [BrokerMailAddress,setBrokerMailAddress]=useState("");
+  const [BrokerMailAddress, setBrokerMailAddress] = useState("");
 
   useEffect(() => {
     // Update policyStartEnd when policyStartDate changes
@@ -95,8 +95,8 @@ const CreateList = () => {
       InsuredMobileNo2: insuredMobileNo2,
       InsuredAddress: "",
       RegisteredNumber: vehicleParticular,
-      GarageMailAddress : garageMailId,
-      BrokerMailAddress : brokerMailId,
+      GarageMailAddress: garageMailId,
+      BrokerMailAddress: brokerMailId,
       GarageNameAndAddress: garageName,
       GarageContactNo1: garageNumber,
       GarageContactNo2: garageNumber,
@@ -104,68 +104,21 @@ const CreateList = () => {
       NatureOfLoss: natureOfLoss,
       EstimatedLoss: estimatedLoss,
     };
-<<<<<<< Updated upstream
-    
 
-
-     
-=======
-    if (!isValidEmail(payload.InsuredMailAddress)) {
-      alert("Please provide a valid email address !!");
-      return;
-    }
-
-    if (
-      !payload.Region ||
-      !payload.InspectionType ||
-      !date ||
-      !payload.PolicyNumber ||
-      !payload.PolicyIssuingOffice ||
-      !payload.ClaimNumber ||
-      !payload.ClaimServicingOffice ||
-      !payload.RegisteredNumber ||
-      !payload.InsuredName ||
-      !payload.InsuredMailAddress ||
-      !payload.InsuredMobileNo1
-    ) {
-      const missingFields = [];
-
-      // Check each field and push the name to the array if it's missing
-      if (!payload.Region) missingFields.push("Region");
-      if (!payload.InspectionType) missingFields.push("InspectionType");
-      if (!date) missingFields.push("Date");
-      if (!payload.PolicyNumber) missingFields.push("PolicyNumber");
-      if (!payload.PolicyIssuingOffice)
-        missingFields.push("PolicyIssuingOffice");
-      if (!payload.ClaimNumber) missingFields.push("ClaimNumber");
-      if (!payload.ClaimServicingOffice)
-        missingFields.push("ClaimServicingOffice");
-      if (!payload.RegisteredNumber) missingFields.push("RegisteredNumber");
-      if (!payload.InsuredName) missingFields.push("InsuredName");
-      if (!payload.InsuredMailAddress) missingFields.push("InsuredMailAddress");
-      if (!payload.InsuredMobileNo1) missingFields.push("InsuredMobileNo1");
-
-      // Log the missing fields
-      console.log("Missing fields:", missingFields);
-
-      alert("Fill all the marked fields please");
-    } else {
->>>>>>> Stashed changes
-      axios
-        .post("/api/addClaim", payload, {
-          headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          alert("Successfully added");
-          router.push("/my-dashboard");
-        })
-        .catch((err) => {
-          alert("Error");
-        });
-    
+    axios
+      .post("/api/addClaim", payload, {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        alert("Successfully added");
+        router.push("/my-dashboard");
+      })
+      .catch((err) => {
+        alert("Error");
+      });
   };
 
   const handleInputChange_01 = (e) => {
