@@ -6,12 +6,12 @@ const Form_vehicle = ({
   claim,
   VehicleModel,
   setVehicleModel,
-  RegisteredNumber,
-  setRegisteredNumber,
+  VehicleRegisteredNumber,
+  setVehicleRegisteredNumber,
   setEngineType,
   EngineType,
-  RegisteredOwner,
-  setRegisteredOwner,
+  VehicleRegisteredOwner,
+  setVehicleRegisteredOwner,
   DateRegistration,
   setDateRegistration,
   PUCNumber,
@@ -37,16 +37,12 @@ const Form_vehicle = ({
   MakerModel,
   // ManufactureMonth,
   VehicleGvw,
-  VehicleCubicCap,
-  VehicleSeatCap,
+  VehicleSeatingCapacity,
   VehiclePermanentAddress,
   fitUpto,
-  RcPasiaModelCode,
   RcInsuranceComp,
   RcInsuranceUpto,
   RcRegisteredAt,
-  RcBlacklistStatus,
-  RcStatus,
   RcVehicleType,
   BancsModelCode,
   BancsMakeCode,
@@ -63,7 +59,6 @@ const Form_vehicle = ({
   setManufactureMonthYear,
 
   CubicCapacity,
-  SeatingCapacity,
   PermanentAddress,
   PasiaModelCode,
   VehicleInsuranceCompany,
@@ -80,6 +75,8 @@ const Form_vehicle = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
+
+  console.log("LLL", CubicCapacity);
 
   return (
     <>
@@ -113,9 +110,7 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {!VehicleModel
-                          ? `${claim?.vehicleDetails?.VehicleMakeVariantModelColor},${claim?.vehicleDetails?.VehicleTypeOfBody}`
-                          : VehicleModel}
+                        {MakerModel ? MakerModel : claim?.vehicleDetails?.MakerModel}
                       </label>
                     </div>
                   </div>
@@ -177,8 +172,8 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {RegisteredOwner
-                          ? RegisteredOwner
+                        {!VehicleRegisteredOwner
+                          ? "NA"
                           : claim?.vehicleDetails?.VehicleRegisteredOwner}
                       </label>
                     </div>
@@ -498,9 +493,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RegisteredNumber
-                        ? RegisteredNumber
-                        : claim?.vehicleDetails?.RegisteredNumber}
+                      {VehicleRegisteredNumber
+                        ? VehicleRegisteredNumber
+                        : claim?.vehicleDetails?.VehicleRegisteredNumber}
                     </label>
                   </div>
                 </td>
@@ -727,9 +722,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {SeatingCapacity
-                        ? SeatingCapacity
-                        : claim?.vehicleDetails?.SeatingCapacity}
+                      {VehicleSeatingCapacity
+                        ? VehicleSeatingCapacity
+                        : claim?.vehicleDetails?.VehicleSeatingCapacity}
                     </label>
                   </div>
                 </td>
@@ -755,9 +750,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehiclePermanentAddress
-                        ? VehiclePermanentAddress
-                        : claim?.vehicleDetails?.VehiclePermanentAddress}
+                      {PermanentAddress
+                        ? PermanentAddress
+                        : claim?.vehicleDetails?.PermanentAddress}
                     </label>
                   </div>
                 </td>
@@ -812,9 +807,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcPasiaModelCode
-                        ? RcPasiaModelCode
-                        : claim?.vehicleDetails?.RcPasiaModelCode}
+                      {PasiaModelCode
+                        ? PasiaModelCode
+                        : claim?.vehicleDetails?.PasiaModelCode}
                     </label>
                   </div>
                 </td>
@@ -840,9 +835,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcInsuranceComp
-                        ? RcInsuranceComp
-                        : claim?.vehicleDetails?.RcInsuranceComp}
+                      {VehicleInsuranceCompany
+                        ? VehicleInsuranceCompany
+                        : claim?.vehicleDetails?.VehicleInsuranceCompany}
                     </label>
                   </div>
                 </td>
@@ -927,9 +922,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcBlacklistStatus
-                        ? RcBlacklistStatus
-                        : claim?.vehicleDetails?.RcBlacklistStatus}
+                      {VehicleBlackListStatus
+                        ? VehicleBlackListStatus
+                        : claim?.vehicleDetails?.VehicleBlackListStatus}
                     </label>
                   </div>
                 </td>
@@ -958,7 +953,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcStatus ? RcStatus : claim?.vehicleDetails?.RcStatus}
+                      {VehicleRcStatus
+                        ? VehicleRcStatus
+                        : claim?.vehicleDetails?.VehicleRcStatus}
                     </label>
                   </div>
                 </td>
@@ -984,9 +981,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcVehicleType
-                        ? RcVehicleType
-                        : claim?.vehicleDetails?.RcVehicleType}
+                      {VehicleType
+                        ? VehicleType
+                        : claim?.vehicleDetails?.VehicleType}
                     </label>
                   </div>
                 </td>

@@ -432,14 +432,14 @@ function SmartTable(props) {
                               props.changeTotalAccordingToPolicyType(e.target.value)
                             }
                           >
-                            <option data-tokens="Status1" value={"Regular"}>
-                              Regular
+                            <option data-tokens="Status1" value={"Estimate"}>
+                              Estimate
                             </option>
                             <option
                               data-tokens="Status2"
-                              value={"Add on Policy"}
+                              value={"Assessed"}
                             >
-                              Add on Policy
+                            Assessed
                             </option>
                           </select>
                         </div>
@@ -560,43 +560,12 @@ function SmartTable(props) {
                             Age of Vehicle
                           </label>
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-8">
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
                             value={props.vehicleAge()}
-                            // readOnly={!isEditMode}
-                            // onChange={(e) => setLicenseType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-2">
-                      <div className="row mt-1">
-                        <div className="col-lg-8 my_profile_setting_input form-group text-end">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Age of Policy
-                          </label>
-                        </div>
-                        <div className="col-lg-4">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={props.calculatePolicyAge()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
