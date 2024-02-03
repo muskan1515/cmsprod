@@ -1424,9 +1424,38 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
       GarageAddedBy,
       GarageContactNo1,
       GarageContactNo2,
+      VehicleClassDescription,
+      MakerDesc,
+      MakerModel,
+      ManufactureMonth,
+      VehicleGvw,
+      VehicleCubicCap,
+      VehicleSeatingCapacity,
+      VehiclePermanentAddress,
+      FitUpto,
+      PasiaModelCode,
+      RcInsuranceComp,
+      RcInsuranceUpto,
+      RcRegisteredAt,
+      RcBlacklistStatus,
+      RcVehicleType,
+      BancsModelCode,
+      BancsMakeCode,
+      BancsSubtypeCode,
+      BancsBodyType,
+      BancsVehicleClass,
+      BancsVehicleSegment,
+      RcRtoCode,
+      VehicleRcStatus,
+      VehicleBlackListStatus,
+      VehicleRegistedAt,
+      VehicleInsuranceCompany,
+      ManufactureMonthYear,
+      PermanentAddress,
+      ClassOfVehicle,
       LeadId
 } = req.body;
-
+console.log("Req.body", req.body);
 
   const updateClaimDetails = `
   UPDATE ClaimDetails
@@ -1458,16 +1487,38 @@ app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
   // Update VehicleDetails
   const updateVehicleDetails = `
     UPDATE VehicleDetails
-    SET RegisteredNumber = '${VehicleRegisteredNumber}',
-    MakeVariantModelColor='${VehicleMakeVariantModelColor}',
-    TypeOfBody='${VehicleTypeOfBody}',
-    DateOfRegistration='${VehicleDateOfRegistration}',
-    PucNumber='${VehiclePucNumber}',
-    TransferDate='${VehicleTransferDate}',
-    EngineNumber='${VehicleEngineNumber}',
-    AddedBy='${VehicleAddedBy}',
-    ChassisNumber='${VehicleChassisNumber}',
-    FuelType='${VehicleFuelType}'
+    SET 
+      RegisteredNumber = '${VehicleRegisteredNumber}',
+      MakeVariantModelColor='${VehicleMakeVariantModelColor}',
+      TypeOfBody='${VehicleTypeOfBody}',
+      DateOfRegistration='${VehicleDateOfRegistration}',
+      PucNumber='${VehiclePucNumber}',
+      TransferDate='${VehicleTransferDate}',
+      EngineNumber='${VehicleEngineNumber}',
+      AddedBy='${VehicleAddedBy}',
+      ChassisNumber='${VehicleChassisNumber}',
+      FuelType='${VehicleFuelType}',
+      MakerDesc='${MakerDesc}',
+      MakerModel='${MakerModel}',
+      CubicCapacity='${VehicleCubicCap}',
+      VehicleSeatingCapacity='${VehicleSeatingCapacity}',
+      FitUpto='${FitUpto}',
+      PasiaModelCode='${PasiaModelCode}',
+      VehicleType='${RcVehicleType}',
+      BancsModelCode='${BancsModelCode}',
+      BancsMakeCode='${BancsMakeCode}',
+      BancsSubtypeCode='${BancsSubtypeCode}',
+      BancsBodyType='${BancsBodyType}',
+      BancsVehicleClass='${BancsVehicleClass}',
+      BancsVehicleSegment='${BancsVehicleSegment}',
+      RcRtoCode='${RcRtoCode}',
+      VehicleRcStatus='${VehicleRcStatus}',
+      VehicleBlackListStatus='${VehicleBlackListStatus}',
+      VehicleRegistedAt='${VehicleRegistedAt}',
+      VehicleInsuranceCompany='${VehicleInsuranceCompany}',
+      ManufactureMonthYear='${ManufactureMonthYear}',
+      PermanentAddress='${PermanentAddress}',
+      ClassOfVehicle='${ClassOfVehicle}'
     WHERE LeadId = ${LeadId};
   `;
 
