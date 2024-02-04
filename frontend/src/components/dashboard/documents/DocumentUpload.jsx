@@ -7,6 +7,16 @@ import Modal from "react-modal";
 import Webcam from "react-webcam";
 import axios from "axios";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowsRotate,
+  faCamera,
+  faCloudArrowUp,
+  faTimes,
+  faVideo,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+
 const headCells = [
   {
     id: "doc_name",
@@ -25,7 +35,7 @@ const headCells = [
     numeric: false,
     label: "Action",
     width: 50,
-  }
+  },
 ];
 
 const data = [
@@ -199,7 +209,7 @@ export default function DocumentUpload({
       bottom: "auto",
       // marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      padding:"0px"
+      padding: "0px",
     },
   };
 
@@ -207,18 +217,17 @@ export default function DocumentUpload({
     return navigator.mediaDevices.getUserMedia({ video: videoConstraints });
   }
 
-  const [videoConst,setVideoConst]=useState({
+  const [videoConst, setVideoConst] = useState({
     width: 1280,
     height: 720,
-    facingMode: "user", 
+    facingMode: "user",
   });
-  
- 
+
   const updateVideoConstraints = () => {
     const isMobileView = window.innerWidth < 768;
     const updatedConstraints = isMobileView
-      ? { width: 1280, height: 720, facingMode: "environment" } 
-      : { width: 1280, height: 720, facingMode: "user" }; 
+      ? { width: 1280, height: 720, facingMode: "environment" }
+      : { width: 1280, height: 720, facingMode: "user" };
 
     setVideoConst(updatedConstraints);
   };
@@ -226,34 +235,53 @@ export default function DocumentUpload({
   useEffect(() => {
     getUserMediaWithConstraints(videoConst)
       .then((stream) => {
-        const videoElement = document.getElementById('videoElement');
+        const videoElement = document.getElementById("videoElement");
         videoElement.srcObject = stream;
       })
       .catch((error) => {
-        console.error('Error accessing camera:', error);
+        console.error("Error accessing camera:", error);
       });
   }, [videoConst]);
 
-  
   const [capturedImage, setCapturedImage] = useState([]);
   const [capturedVideo, setCapturedVideo] = useState([]);
   const [isCapturingVideo, setIsCapturingVideo] = useState(false);
   const [modalDocName, setModalDocName] = useState("");
   const [capturedMedia, setCapturedMedia] = useState({});
-  const [uploadedFileName, setUploadedFileName] = useState("");
+  const [uploadedFileName, setUploadedFileName] = useState([]);
+
+  const [retake, setRetake] = useState(false);
 
   const [isImage, setIsImage] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
 
-  const [uploadedUrl, setUploadedUrl] = useState("");
+  const [uploadedUrl, setUploadedUrl] = useState([]);
+
+  const [uploadedImages, setUploadedImages] = useState([]);
+  console.log("ImgURL", uploadedUrl);
+  const [imageFileName, setImageFileName] = useState("");
+  const cancelCapture = () => {
+    // Remove the last captured image from the array
+    // setUploadedImages((prevImages) => prevImages.slice(0, -1));
+    setUploadedUrl((prevImages) => prevImages.slice(0, -1));
+    setIsImage(false);
+    setRetake(false);
+  };
+
+  // const proceedToNextCapture = () => {
+  //   // Do any necessary logic before proceeding to the next capture
+  //   // For example, you might want to clear the webcam capture or reset states
+  //   // ...
+
+  //   // Reset states for the next capture
+  //   setIsImage(false);
+  // };
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
-
   const [webcamOpened, setWebcamOpened] = useState(false);
   const [isCapturingEnabled, setIsCapturingEnabled] = useState(false);
-
 
   const handleWebcamOpen = () => {
     setWebcamOpened(true);
@@ -331,20 +359,34 @@ export default function DocumentUpload({
         alert(err);
       });
     setIsOpen(false);
-    setUploadedUrl("");
+    setUploadedUrl([]);
     setIsImage(false);
     setIsVideo(false);
-    setUploadedFileName("");
+    setUploadedFileName([]);
   };
 
+  // const handleUploadImage = async () => {
+  //   try {
+  //     const imageSrc = webcamRef.current.getScreenshot();
+  //     const name = generateRandomFileName("jpg");
+
+  //     setUploadedUrl(imageSrc);
+  //     setUploadedFileName(name);
+  //     setIsImage(true);
+  //   } catch (error) {
+  //     console.error("Error handling upload:", error);
+  //   }
+  // };
   const handleUploadImage = async () => {
     try {
       const imageSrc = webcamRef.current.getScreenshot();
       const name = generateRandomFileName("jpg");
-
-      setUploadedUrl(imageSrc);
-      setUploadedFileName(name);
+      setUploadedUrl((prevImages) => [...prevImages, imageSrc]);
+      // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
+      setImageFileName(name);
+      setUploadedFileName((prevName) => [...prevName, name]);
       setIsImage(true);
+      setRetake(true);
     } catch (error) {
       console.error("Error handling upload:", error);
     }
@@ -359,22 +401,21 @@ export default function DocumentUpload({
     });
   };
 
-  const changeCameraConstraints = ()=>{
-    if(videoConst.facingMode === "user"){
+  const changeCameraConstraints = () => {
+    if (videoConst.facingMode === "user") {
       setVideoConst({
-        height:videoConst.height,
-        width:videoConst.width,
-        facingMode:"environment"
+        height: videoConst.height,
+        width: videoConst.width,
+        facingMode: "environment",
+      });
+    } else {
+      setVideoConst({
+        height: videoConst.height,
+        width: videoConst.width,
+        facingMode: "user",
       });
     }
-    else{
-        setVideoConst({
-          height:videoConst.height,
-          width:videoConst.width,
-          facingMode:"user"
-        });
-    }
-  }
+  };
 
   const handleUploadVideo = () => {
     try {
@@ -409,14 +450,15 @@ export default function DocumentUpload({
             .then((res) => {
               console.log(res);
               setUploadedUrl(res);
-              setUploadedFileName(name);
+              setUploadedVideos((prevVideos) => [...prevVideos, res]);
+              setUploadedFileName((prevName) => [...prevName, name]);
               setIsVideo(true);
             })
             .catch((err) => {
               alert(err);
             });
         };
-        
+
         mediaRecorder.start();
       } else {
         // Stop capturing video
@@ -462,20 +504,19 @@ export default function DocumentUpload({
   };
 
   const uploadCancelHandler = () => {
-    setUploadedUrl("");
-    setUploadedFileName("");
+    setUploadedUrl([]);
+    setUploadedFileName([]);
     setIsCapturingVideo(false);
   };
 
   useEffect(() => {
     // Update video constraints when the window is resized
-    window.addEventListener('resize', updateVideoConstraints);
+    window.addEventListener("resize", updateVideoConstraints);
 
     return () => {
-      window.removeEventListener('resize', updateVideoConstraints);
+      window.removeEventListener("resize", updateVideoConstraints);
     };
   }, []);
-
 
   useEffect(() => {
     console.log(uploadedData);
@@ -604,9 +645,14 @@ export default function DocumentUpload({
           </div>
         </div>
 
-        <div onClick={changeCameraConstraints}><img src="https://th.bing.com/th?id=OIP.UKGBmbTeRXuAeK4TtheaOAEsEs&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" width={'20px'}/></div>
+        <div onClick={changeCameraConstraints}>
+          <img
+            src="https://th.bing.com/th?id=OIP.UKGBmbTeRXuAeK4TtheaOAEsEs&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+            width={"20px"}
+          />
+        </div>
 
-        {isImage && (
+        {/* {isImage && (
           <div>
             <h4 className="mt-4">Captured Image :</h4>
             <Image
@@ -618,7 +664,76 @@ export default function DocumentUpload({
             />
             <label className="mb-3">{uploadedFileName}</label>
           </div>
-        )}
+        )} */}
+
+        {console.log("RETake", retake)}
+
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          {!uploadedUrl.length && webcamOpened && isCapturingEnabled ? (
+            ""
+          ) : (
+            <>
+              <button
+                className="btn btn-color w-100 mb-1"
+                onClick={cancelCapture}
+                disabled={!retake}
+              >
+                <FontAwesomeIcon icon={faArrowsRotate} />
+                Retake
+              </button>
+              {/* Additional buttons or functionality can be added here */}
+            </>
+          )}
+
+          {webcamOpened && isCapturingEnabled && (
+            <>
+              <button
+                className="btn btn-color w-100 mb-1"
+                onClick={handleUploadImage}
+              >
+                <FontAwesomeIcon icon={faCamera} />
+                Capture Image
+              </button>
+              {/* <button
+                className="btn btn-color w-100 p-1"
+                onClick={handleUploadVideo}
+              >
+                <FontAwesomeIcon icon={faVideo} />
+                {isCapturingVideo
+                  ? "Stop Capture Video"
+                  : "Start Capture Video"}
+              </button> */}
+            </>
+          )}
+
+          {uploadedUrl.length && (
+            <>
+              <button
+                className="btn btn-color w-100 mb-1"
+                onClick={uploadCancelHandler}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+                Cancel
+              </button>
+
+              <button
+                className="btn btn-color w-100 mb-1"
+                onClick={uploadFiles}
+              >
+                <FontAwesomeIcon icon={faCloudArrowUp} />
+                Upload
+              </button>
+            </>
+          )}
+        </div>
+
+        {uploadedUrl.map((url, index) => (
+          <img
+            key={`image_${index}`}
+            src={url}
+            alt={`Uploaded Image ${index + 1}`}
+          />
+        ))}
 
         {isVideo && (
           <div>
@@ -629,34 +744,6 @@ export default function DocumentUpload({
             </video>
             <label>{uploadedFileName}</label>
           </div>
-        )}
-        {!uploadedUrl &&webcamOpened && isCapturingEnabled  ?( 
-          <>
-            <button
-              className="btn btn-color w-100 mb-1"
-              onClick={handleUploadImage}
-            >
-              Capture Image
-            </button>
-            <button
-              className="btn btn-color w-100 p-1"
-              onClick={handleUploadVideo}
-            >
-              {isCapturingVideo ? "Stop Capture Video" : "Start Capture Video"}
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              className="btn btn-color w-100 mb-1"
-              onClick={uploadCancelHandler}
-            >
-              Cancel
-            </button>
-            <button className="btn btn-color w-100 mb-1" onClick={uploadFiles}>
-              Upload
-            </button>
-          </>
         )}
       </Modal>
     </>
