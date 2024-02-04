@@ -107,6 +107,8 @@ const headCells = [
 export default function Exemple_01({
   policyType,
   claim,
+  setOverallMetailDep,
+  setTotalAgeOfVehicle,
   includeDepreciation,
   ClaimAddedDateTime,
   PolicyStartDate,
@@ -118,7 +120,7 @@ export default function Exemple_01({
   const [totalAssessed, setTotaAssessed] = useState(0);
   const [totalDifference, setTotalDifference] = useState(0);
   const [currentPolicy,setCurrentPolicy]=useState("Regular");
-  const [toggleGST,setToggleGST]=useState(0);
+  const [toggleGST,setToggleGST]=useState(2);
 
   const [metalDep,setMetalDep]=useState(0);
   // const []
@@ -172,7 +174,7 @@ export default function Exemple_01({
       assessed: "",
       qe: "01",
       qa: "01",
-      bill_sr: index + 123, // Assuming bill_sr increments with each new row
+      bill_sr: "", // Assuming bill_sr increments with each new row
       gst: 0,
       total: 0,
       type: "",
@@ -229,7 +231,7 @@ export default function Exemple_01({
       assessed: "",
       qe: "01",
       qa: "01",
-      bill_sr: allRows.length, // Assuming bill_sr increments with each new row
+      bill_sr: "", // Assuming bill_sr increments with each new row
       gst: 0,
       total: 0,
       type: "",
@@ -245,12 +247,12 @@ export default function Exemple_01({
 
   const calculateVehicleAge = ()=>{
     if(! claim.vehicleDetails?.VehicleDateOfRegistration || !claim.claimDetails?.ClaimAddedDateTime){
-      return "0 months";
+      return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
     const b= getMonthsDifference(claim.claimDetails?.ClaimAddedDateTime);
-    console.log(a+b);
-    return `${a + (b)} months`;
+    setTotalAgeOfVehicle(a+b);
+    return `${a + (b)}`;
     
   }
 
@@ -267,6 +269,7 @@ export default function Exemple_01({
 
   const calculateDepreciationOnMetal = ()=>{
     const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
+    setOverallMetailDep(a);
     console.log(a);
     return a;
   }
@@ -410,7 +413,7 @@ export default function Exemple_01({
         without_gst = without_gst  + (current_total -subtract) ;
         with_gst = with_gst  + (  ((current_total-subtract) * Number(row.gst)) /100);
     });
-    if((String(currentType) === "Estimate" || String(currentType) === "") && toggleGST%2 !== 0){
+    if((String(currentType) === "Estimate") && toggleGST%2 !== 0){
       return with_gst;
     }
     return without_gst;
@@ -418,8 +421,8 @@ export default function Exemple_01({
 
   const changeTotalAccordingToPolicyType = (policy) => {
 
-    const isIncludeGSTInAssessed = (toggleGST)%2 === 0 && policy === "Assessed"  ? true : false;
-    const isIncludeGSTInEstimate = (toggleGST)%2 === 0 && policy === "Estimate"  ? true : false;
+    const isIncludeGSTInAssessed = (toggleGST)%2 === 0 && currentType === "Assessed"  ? true : false;
+    const isIncludeGSTInEstimate = (toggleGST)%2 === 0 && currentType === "Estimate"  ? true : false;
 
     let total_estimate =0;
     let total_assessed=0;
@@ -434,17 +437,19 @@ export default function Exemple_01({
 
     //total assessed calculate
     const overall_assessed = Number(row.assessed) * Number(row.qa);
-    const subtract_dep = overall_assessed - (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
-    total_estimate = total_estimate + subtract_dep  + (isIncludeGSTInEstimate ? (overall_assessed * Number(row.gst)) / 100 : 0);
+    const subtract_dep =   (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
+    const subtarct_final =  overall_assessed - subtract_dep;
+    
+    total_estimate = total_estimate + subtarct_final  + (isIncludeGSTInAssessed ? (overall_assessed * Number(row.gst)) / 100 : 0);
 
 
     //total calculation for every row
     const overall = Number(row.assessed) * Number(row.qa);
-    const subtract =
-    overall -
+    const subtract_before =
       String(policyType) === "" || String(policyType) === "Regular"
         ? (overall * Number(row.dep)) / 100
         : 0;
+    const subtract = overall - subtract_before;
     const total =
       subtract +(isIncludeGSTInAssessed ? (subtract * Number(row.gst)) / 100 : 0);
     updatedRow.total = total;
@@ -482,20 +487,13 @@ export default function Exemple_01({
 
     //total assessed calculate
     const overall_assessed = Number(row.assessed) * Number(row.qa);
-    const subtract_dep = overall_assessed - (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
-    total_estimate = total_estimate + subtract_dep  + (isIncludeGSTInEstimate ? (subtract_dep * Number(row.gst)) / 100 : 0);
-    const tell=(isIncludeGSTInEstimate ? (subtract_dep * Number(row.gst)) / 100 : 0);
-      console.log(overall_assessed,subtract_dep,"assessed",tell);
-
+    const subtract_dep = (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
+    const subtarct_final =  overall_assessed - subtract_dep;
+    total_assessed = total_assessed + subtarct_final  + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
+    
     //total calculation for every row
-    const overall = Number(row.assessed) * Number(row.qa);
-    const subtract =
-    overall -
-      String(policyType) === "" || String(policyType) === "Regular"
-        ? (overall * Number(row.dep)) / 100
-        : 0;
     const total =
-    subtract_dep  + (isIncludeGSTInEstimate ? (subtract_dep * Number(row.gst)) / 100 : 0);
+    subtract_dep  + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
     updatedRow.total = total;
     updatedOne.push(updatedRow)
     });
@@ -609,18 +607,19 @@ export default function Exemple_01({
     const dep = calculateDepreciationsPercenatge(
       allDepreciations,
       val,
-      claim.vehicleDetails?.VehicleAddedDate
+      claim.vehicleDetails?.VehicleDateOfRegistration
     );
 
     setMetalDep(dep);
 
-    // console.log(dep,val);
+    console.log(dep,val);
     const type =
       String(field) === "type" 
         ? String(currentField.type) === val
           ? val.slice(-1, 1)
           : val
         : currentField.type;
+        
 
     const overall = Number(currentField.assessed) * Number(currentField.qa);
     const subtract =
@@ -650,6 +649,8 @@ export default function Exemple_01({
 
     oldRow[index] = newOutput;
     setAllRows(oldRow);
+    calculateTotalAssessed();
+    calculateTotalEstimated();
     // console.log(allRows[index].field);
     setChange(true);
     // console.log(oldRow);
@@ -670,15 +671,16 @@ export default function Exemple_01({
           : val
         : currentField.gst;
 
-        console.log(policyType,toggleGST);
-    const overall = Number(currentField.assessed) * Number(currentField.qa);
-    const subtract =
-      String(policyType) === "" || String(currentPolicy) === "Regular"
-        ? (overall * Number(currentField.dep)) / 100
-        : 0;
-    // console.log(currentField.total,subtract);
-    const total_without = overall - subtract;
-    const total = total_without + (toggleGST%2 !== 0 && currentType === "Assessed" ? (total_without * Number(gst)) / 100 : 0);
+    const isIncludeGSTInAssessed = (toggleGST)%2 === 0 && String(currentType) === "Assessed"  ? true : false;
+    
+    //total assessed calculate
+    const overall_assessed = Number(currentField.assessed) * Number(currentField.qa);
+    const subtract_dep = (String(policyType) === "" || String(policyType) === "Regular") ? ((overall_assessed * Number(currentField.dep))/100): 0;
+    const subtarct_final =  overall_assessed - subtract_dep;
+    // console.log(overall_assessed-(String(policyType) === "" || String(policyType) === "Regular") ? ((overall_assessed * Number(currentField.dep))/100): 0);
+   const total =
+    subtarct_final + (isIncludeGSTInAssessed ? (subtarct_final * Number(gst)) / 100 : 0);
+    // console.log(total,subtarct_final,(String(policyType) === "" || String(policyType) === "Regular") ? ((overall_assessed * Number(currentField.dep))/100): 0,isIncludeGSTInAssessed,overall_assessed,currentField.dep,policyType,"total");
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -705,6 +707,7 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
+  console.log(toggleGST,currentType,"type");
 
   const gstToggleHandler = ()=>{
     setToggleGST( toggleGST+1);

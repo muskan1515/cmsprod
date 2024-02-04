@@ -2,6 +2,7 @@ import Link from "next/link";
 import SmartTable_01 from "./SmartTable_01";
 import { useEffect, useState } from "react";
 import { all } from "axios";
+import { SERVER_DIRECTORY } from "next/dist/shared/lib/constants";
 
 const headCells = [
   {
@@ -69,10 +70,27 @@ const headCells = [
   // },
 ];
 
-export default function Exemple_01() {
+export default function Exemple_01({
+  currentGst,
+  setTotalAssessed,
+   totalAssessed,
+   totalEstimate,
+   setTotalEstimate,
+   taxAmount,
+   allRows,
+   setAllRows,
+   setTaxAmount,
+   toggleEstimate,
+   setToggleEstimate,
+   reload,
+   setReload,
+   toggleLabor,
+   setToggleLabor
+}) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
   // const []
+ 
   const [change, setChange] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
   const [openSave, setOpenSave] = useState(false);
@@ -82,22 +100,32 @@ export default function Exemple_01() {
   const [assessed, setAssessed] = useState(0);
   const [type, setType] = useState("");
   const [remark, setRemark] = useState("");
-  const [currentGst, setCurrentGst] = useState(0);
+  // const [currentGst, setCurrentGst] = useState(0);
+
+  // const [totalAssessed,setTotalAssessed]=useState(0);
+  // const [totalEstimate,setTotalEstimate]=useState(0);
+
+  // const [taxAmount,setTaxAmount]=useState(0);
+
+
+  // const [toggleEstimate,setToggleEstimate]=useState(0);
+  // const [toggleLabor,setToggleLabor]=useState(0);
 
   const [edit, setEdit] = useState(false);
 
-  const [allRows, setAllRows] = useState(
-    Array.from({ length: 2 }, (_, index) => ({
-      _id: index + 1,
-      sno: index + 1,
-      description: "",
-      sac: "",
-      estimate: "",
-      assessed: "",
-      bill_sr: index + 123, // Assuming bill_sr increments with each new row
-      gst: 0
-    }))
-  );
+  // const [allRows, setAllRows] = useState(
+  //   Array.from({ length: 2 }, (_, index) => ({
+  //     _id: index + 1,
+  //     sno: index + 1,
+  //     description: "",
+  //     sac: "",
+  //     estimate: 0,
+  //     assessed: 0,
+  //     bill_sr: "", // Assuming bill_sr increments with each new row
+  //     gst: 0
+  //   }))
+  // );
+
 
 
   const handleAddRow = () => {
@@ -105,8 +133,9 @@ export default function Exemple_01() {
       _id: allRows.length, // You may use a more robust ID ge
       description: "",
       sac: "",
-      estimate: 0,
-      assessed: 0,
+      estimate: "",
+      assessed: "",
+      bill_sr:"",
       gst: 0
     };
 
@@ -125,22 +154,50 @@ export default function Exemple_01() {
     setEdit(false);
   };
 
+  const sliceVal = (val)=>{
+    return val.slice(-1,1);
+  }
+
+  const returnValue = (row,type)=>{
+   
+    if(String(type)=== "sac")
+    return row.sac;
+    if(String(type)=== "bill_sr")
+    return row.sac;
+    if(String(type)=== "description")
+    return row.sac;
+    if(String(type)=== "assessed")
+    return row.sac; 
+  if(String(type)=== "estimate")
+    return row.sac;
+
+  }
+
   const handleChange = (index, val, field) => {
 
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
+    
+
     const description =
+   
       String(field) === "description"
         ? String(currentField.description) === val
           ? val.slice(-1, 1)
-          : val
+          : currentField.description + val 
         : currentField.description;
+        const bill_sr =
+        String(field) === "bill_sr"
+          ? String(currentField.bill_sr) === val
+            ? val.slice(-1, 1)
+            : val
+          : currentField.bill_sr;
     const sac =
       String(field) === "sac"
-        ? String(currentField.sac) === val
-          ? val.slice(-1, 1)
+        ? String(currentField.sac) === val 
+          ? val.slice(-1,1)
           : val
         : currentField.sac;
     const estimate =
@@ -170,13 +227,18 @@ export default function Exemple_01() {
       sac: sac,
       estimate: estimate,
       assessed: assessed,
-      gst: gst
+      gst: gst,
+      bill_sr:bill_sr
     };
+
+    // console.log(newOutput);
 
     oldRow[index] = newOutput;
     setAllRows(oldRow);
     // console.log(allRows[index].field);
     setChange(true);
+    setReload(true);
+    
     // console.log(oldRow);
   };
   useEffect(() => {
@@ -294,6 +356,11 @@ export default function Exemple_01() {
       title=""
       data={updatedCode}
       headCells={headCells}
+      setToggleEstimate={setToggleEstimate}
+      toggleEstimate={toggleEstimate}
+      totalAssessed={totalAssessed}
+      taxAmount={taxAmount}
+      totalEstimate={totalEstimate}
       handleAddRow={handleAddRow}
       editHandler={editHandler}
       updateHandler={updateHandler}

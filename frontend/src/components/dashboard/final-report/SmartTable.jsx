@@ -413,7 +413,8 @@ function SmartTable(props) {
                           <input
                             className="form-check-input m-1"
                             type="checkbox"
-                            value=""
+                            value={1}
+                            defaultChecked={true}
                             onClick={props.gstToggleHandler}
                             id="remeberMe"
                           />
@@ -428,7 +429,7 @@ function SmartTable(props) {
                             data-width="100%"
 
                             // disabled={!edit}
-                            onChange={(e) =>
+                            onClick={(e) =>
                               props.changeTotalAccordingToPolicyType(e.target.value)
                             }
                           >
@@ -557,7 +558,7 @@ function SmartTable(props) {
                               fontSize: "14px",
                             }}
                           >
-                            Age of Vehicle
+                            Age of Vehicle(months)
                           </label>
                         </div>
                         <div className="col-lg-8">
