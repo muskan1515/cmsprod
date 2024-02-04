@@ -37,7 +37,7 @@ const Index = ({}) => {
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState(
     claim?.claimDetails?.PolicyIssuingOffice
       ? claim?.claimDetails?.PolicyIssuingOffice
-      : ""
+      : "NA"
   );
 
   const [claimRegion, setClaimRegion] = useState(
@@ -47,29 +47,29 @@ const Index = ({}) => {
   const [claimServicingOffice, setClaimServicingOffice] = useState(
     claim?.claimDetails?.ClaimServicingOffice
       ? claim?.claimDetails?.ClaimServicingOffice
-      : ""
+      : "NA"
   );
 
   const [policyStartDate, setPolicyStartDate] = useState(
     claim?.claimDetails?.PolicyPeriodStart
       ? claim?.claimDetails?.PolicyPeriodStart
-      : ""
+      : "NA"
   );
   const [policyEndDate, setPolicyEndDate] = useState(
     claim?.claimDetails?.PolicyPeriodEnd
       ? claim?.claimDetails?.PolicyPeriodEnd
-      : ""
+      : "NA"
   );
   const [insuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
     useState(
       claim?.claimDetails?.InsuranceCompanyNameAddress
         ? claim?.claimDetails?.InsuranceCompanyNameAddress
-        : ""
+        : "NA"
     );
   const [insuredAddedBy, setInsuredAddedBy] = useState(
     claim?.insuredDetails?.InsuredAddedBy
       ? claim?.insuredDetails?.InsuredAddedBy
-      : ""
+      : "NA"
   );
 
   const [InsuredName, setInsuredName] = useState(
@@ -78,17 +78,17 @@ const Index = ({}) => {
   const [InsuredMailAddress, setInsuredMailAddress] = useState(
     claim?.insuredDetails?.InsuredMailAddress
       ? claim?.insuredDetails?.InsuredMailAddress
-      : ""
+      : "NA"
   );
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState(
     claim?.insuredDetails?.InsuredMobileNo1
       ? claim?.insuredDetails?.InsuredMobileNo1
-      : ""
+      : "NA"
   );
   const [InsuredMobileNo2, setInsuredMobileNo2] = useState(
     claim?.insuredDetails?.InsuredMobileNo2
       ? claim?.insuredDetails?.InsuredMobileNo2
-      : ""
+      : "NA"
   );
 
   const [subType, setSubType] = useState("Motor");
@@ -113,7 +113,7 @@ const Index = ({}) => {
   const [EngineType, setEngineType] = useState(
     claim?.vehicleDetails?.VehicleModeOfCheck
       ? claim?.vehicleDetails?.VehicleModeOfCheck
-      : ""
+      : "NA"
   );
   const [VehicleRegisteredOwner, setVehicleRegisteredOwner] = useState(
     claim?.vehicleDetails?.VehicleRegisteredOwner
@@ -131,42 +131,53 @@ const Index = ({}) => {
   const [TransferDate, setTransferDate] = useState(
     claim?.vehicleDetails?.VehicleTransferDate
       ? claim?.vehicleDetails?.VehicleTransferDate
-      : null
+      : "NA"
   );
+
+  const [VehicleInsuranceUpto , setVehicleInsuranceUpto] = useState(
+    claim?.vehicleDetails?.VehicleInsuranceUpto
+      ? claim?.vehicleDetails?.VehicleInsuranceUpto
+      : "NA"
+ 
+    );
+
   const [EngineNumber, setEngineNumber] = useState(
     claim?.vehicleDetails?.VehicleEngineNumber
       ? claim?.vehicleDetails?.VehicleEngineNumber
-      : null
+      : "NA"
   );
   const [AddedBy, setAddedBy] = useState(
     claim?.vehicleDetails?.VehicleAddedBy
       ? claim?.vehicleDetails?.VehicleAddedBy
-      : null
+      : "NA"
   );
   const [IssuingAuthority, setIssuingAuthority] = useState(
     claim?.vehicleDetails?.IssuingAuthority
       ? claim?.vehicleDetails?.IssuingAuthority
-      : null
+      : "NA"
   );
+
+
+
   const [LicenseNumber, setLicenseNumber] = useState(
     claim?.vehicleDetails?.LicenseNumber
       ? claim?.vehicleDetails?.LicenseNumber
-      : " "
+      : "NA"
   );
   const [LicenseType, setLicenseType] = useState(
     claim?.vehicleDetails?.LicenseType
       ? claim?.vehicleDetails?.LicenseType
-      : " "
+      : "NA"
   );
   const [VehicleChassisNumber, setVehicleChassisNumber] = useState(
     claim?.vehicleDetails?.VehicleChassisNumber
       ? claim?.vehicleDetails?.VehicleChassisNumber
-      : " "
+      : "NA"
   );
   const [VehicleFuelType, setVehicleFuelType] = useState(
     claim?.vehicleDetails?.VehicleFuelType
       ? claim?.vehicleDetails?.VehicleFuelType
-      : " "
+      : "NA"
   );
 
   const [DriverName, setDriverName] = useState(
@@ -175,12 +186,12 @@ const Index = ({}) => {
   const [DriverAddedDate, setDriverAddedDate] = useState(
     claim?.driverDetails?.DriverAddedDate
       ? claim?.driverDetails?.DriverAddedDate
-      : ""
+      : "NA"
   );
   const [Verification, setVerification] = useState(
     claim?.driverDetails?.DriverTypeOfVerification
       ? claim?.driverDetails?.DriverTypeOfVerification
-      : ""
+      : "NA"
   );
 
   const [status, setStatus] = useState(
@@ -190,22 +201,22 @@ const Index = ({}) => {
   const [GarageNameAndAddress, setGarageNameAndAddress] = useState(
     claim?.garageDetails?.GarageNameAndAddress
       ? claim?.garageDetails?.GarageNameAndAddress
-      : ""
+      : "NA"
   );
   const [GarageContactNo1, setGarageContactNo1] = useState(
     claim?.garageDetails?.GarageContactNo1
       ? claim?.garageDetails?.GarageContactNo1
-      : ""
+      : "NA"
   );
   const [GarageContactNo2, setGarageContactNo2] = useState(
     claim?.garageDetails?.GarageContactNo2
       ? claim?.garageDetails?.GarageContactNo2
-      : ""
+      : "NA"
   );
   const [GarageAddedBy, setGarageAddedBy] = useState(
     claim?.garageDetails?.GarageAddedBy
       ? claim?.garageDetails?.GarageAddedBy
-      : ""
+      : "NA"
   );
 
   const [editCase, setEditCase] = useState(false);
@@ -218,6 +229,10 @@ const Index = ({}) => {
   const [VehicleClassDescription, setVehicleClassDescription] = useState("");
   const [MakerDesc, setMakerDesc] = useState("");
   const [MakerModel, setMakerModel] = useState("");
+
+  console.log("CONTANT11111",MakerModel)
+
+
   const [ManufactureMonthYear, setManufactureMonthYear] = useState("");
   const [VehicleGvw, setVehicleGvw] = useState("");
   const [CubicCapacity, setCubicCapacity] = useState(claim?.vehicleDetails?.VehicleCubicCapacity );
@@ -383,10 +398,10 @@ const Index = ({}) => {
     setVehicleRegistedAt(claim?.vehicleDetails?.VehicleRegistedAt || "NA");
     setPermanentAddress(claim?.vehicleDetails?.PermanentAddress || "NA");
     setClassOfVehicle(claim?.vehicleDetails?.VehicleClassOfVehicle || "NA");
-  }, [leadId]);
+  }, []);
 
   
-  console.log("datat ", claim?.vehicleDetails?.VehicleCubicCapacity  , CubicCapacity);
+  console.log("datat ", VehicleInsuranceCompany);
 
   const generateRegion = (region) => {
     const firstThreeLetters = region?.slice(0, 3);
@@ -1115,6 +1130,9 @@ const Index = ({}) => {
                               setPermanentAddress={setPermanentAddress}
                               ClassOfVehicle={ClassOfVehicle}
                               setClassOfVehicle={setClassOfVehicle}
+                              VehicleInsuranceUpto={VehicleInsuranceUpto}
+                              setVehicleInsuranceUpto={setVehicleInsuranceUpto}
+
                             />
                           </div>
                         </div>

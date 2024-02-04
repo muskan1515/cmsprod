@@ -401,7 +401,7 @@ export default function DocumentUpload({
 
         mediaRecorder.onstop = () => {
           const blob = new Blob(chunksRef.current, { type: "video/webm" });
-          console.log("Blob", blob);
+          console.log("Blob>>", blob);
           const videoUrl = URL.createObjectURL(blob);
           const name = generateRandomFileName("mp4");
 

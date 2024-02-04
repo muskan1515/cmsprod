@@ -1,48 +1,48 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
-const fs = require('fs')
+const express = require("express");
+const bodyParser = require("body-parser");
+const mysql = require("mysql2");
+const fs = require("fs");
 
-const transporter = require("./Config/nodeMailerConfig")
+const transporter = require("./Config/nodeMailerConfig");
 
 const db = require("./Config/dbConfig");
 
-const session = require('express-session');
+const session = require("express-session");
 
-const pm2 = require("pm2")
+const pm2 = require("pm2");
 
-const { google } = require('googleapis');
-const { OAuth2Client } = require('google-auth-library');
+const { google } = require("googleapis");
+const { OAuth2Client } = require("google-auth-library");
 
 const contentFunc = require("./Config/getEmailContent");
-const emailHandler = require('./Config/getEmailContent');
-const { default: axios } = require('axios');
-const generateUniqueToken = require('./Config/generateToken');
-const upload = require('./Middleware/fileHalper');
-const uploadToS3 = require('./Middleware/awsUpload');
-const uploadToAWS = require('./Middleware/awsUpload');
+const emailHandler = require("./Config/getEmailContent");
+const { default: axios } = require("axios");
+const generateUniqueToken = require("./Config/generateToken");
+const upload = require("./Middleware/fileHalper");
+const uploadToS3 = require("./Middleware/awsUpload");
+const uploadToAWS = require("./Middleware/awsUpload");
 const uploadToAWSVideo = require("./Middleware/awsUploadVideo");
-const uploadToAWSChunk = require('./Middleware/awsUpload_Chunk');
+const uploadToAWSChunk = require("./Middleware/awsUpload_Chunk");
 const dotenv = require("dotenv").config();
 
 const app = express();
 
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 const port = 3006;
-app.use(session({
-  secret: 'your-secret-key', // Replace with a secret key for session management
-  resave: false,
-  saveUninitialized: true,
-}));
+app.use(
+  session({
+    secret: "your-secret-key", // Replace with a secret key for session management
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-
-
-const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
 
 // Load the credentials from your client_secret.json file obtained from the Google Cloud Console
-const credentials = JSON.parse(fs.readFileSync('./OAuthCredentials..json'));
+const credentials = JSON.parse(fs.readFileSync("./OAuthCredentials..json"));
 
 // Create an OAuth2 client
 const oAuth2Client = new OAuth2Client(
@@ -52,7 +52,7 @@ const oAuth2Client = new OAuth2Client(
 );
 
 const authUrl = oAuth2Client.generateAuthUrl({
-  access_type: 'offline',
+  access_type: "offline",
   scope: SCOPES,
 });
 
@@ -67,14 +67,11 @@ const checkAuth = (req, res, next) => {
 
 // Middleware to set up the Gmail API client
 const setupGmailClient = (req, res, next) => {
-  req.gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+  req.gmail = google.gmail({ version: "v1", auth: oAuth2Client });
   next();
 };
 
-
 // Set up the Express.js routes
-
-
 
 // const db = mysql.createConnection({
 //   host: 'your_mysql_host',
@@ -97,26 +94,27 @@ const setupGmailClient = (req, res, next) => {
 //   console.log('Connected to MySQL');
 // });
 
-
 // Middleware for user authentication
 function authenticateUser(req, res, next) {
   const authorizationHeader = req.headers.authorization;
 
-  if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
-    return res.status(401).send('Unauthorized: Missing or invalid Bearer token');
+  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+    return res
+      .status(401)
+      .send("Unauthorized: Missing or invalid Bearer token");
   }
 
-  const token = authorizationHeader.substring('Bearer '.length);
+  const token = authorizationHeader.substring("Bearer ".length);
 
-  const sql = 'SELECT * FROM Login WHERE Token = ?';
+  const sql = "SELECT * FROM Login WHERE Token = ?";
   db.query(sql, [token], (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Internal Server Error');
+      return res.status(500).send("Internal Server Error");
     }
 
     if (result.length === 0) {
-      return res.status(401).send('Unauthorized: Invalid token');
+      return res.status(401).send("Unauthorized: Invalid token");
     }
 
     // If the token is valid, add user information to the request for later use
@@ -130,18 +128,25 @@ function authenticateUser(req, res, next) {
   });
 }
 
-
 function parseInsuranceEmail(content) {
-  const regex = /Name of the Insured : (.+?)\s+Policy Number : (.+?)\s+Date of Loss : (.+?)\s+Claim No : (.+?)\s+Vehicle Particulars : (.+?)\s+/;
+  const regex =
+    /Name of the Insured : (.+?)\s+Policy Number : (.+?)\s+Date of Loss : (.+?)\s+Claim No : (.+?)\s+Vehicle Particulars : (.+?)\s+/;
   const matches = content.match(regex);
 
   if (!matches) {
     return null; // Return null if the regex doesn't match the content structure
   }
 
-  const [, insuredName, policyNumber, dateOfLoss, claimNumber, vehicleParticulars] = matches;
+  const [
+    ,
+    insuredName,
+    policyNumber,
+    dateOfLoss,
+    claimNumber,
+    vehicleParticulars,
+  ] = matches;
 
-  console.log( {
+  console.log({
     InsuredName: insuredName.trim(),
     PolicyNumber: policyNumber.trim(),
     DateOfLoss: dateOfLoss.trim(),
@@ -157,36 +162,37 @@ function parseInsuranceEmail(content) {
   };
 }
 
-
-
-app.get('/auth', (req, res) => {
+app.get("/auth", (req, res) => {
   res.redirect(authUrl);
 });
 
 // OAuth callback endpoint
-app.get('/auth/callback', async (req, res) => {
+app.get("/auth/callback", async (req, res) => {
   const code = req.query.code;
 
   const { tokens } = await oAuth2Client.getToken(code);
   // Save tokens to the session (you can use a database in a production environment)
   req.session.tokens = tokens;
 
-  res.redirect('/read-emails');
+  res.redirect("/read-emails");
 });
-app.get('/read-emails', checkAuth, setupGmailClient, async (req, res) => {
+app.get("/read-emails", checkAuth, setupGmailClient, async (req, res) => {
   try {
     const fromEmail = "ivijayrajsingh@gmail.com";
     const twentyMinutesAgo = new Date();
     twentyMinutesAgo.setMinutes(twentyMinutesAgo.getMinutes() - 20);
 
     // Format the date in the required format for the Gmail API (YYYY/MM/DD)
-    const formattedDate = twentyMinutesAgo.toISOString().slice(0, 10).replace(/-/g, '/');
+    const formattedDate = twentyMinutesAgo
+      .toISOString()
+      .slice(0, 10)
+      .replace(/-/g, "/");
 
     // Use the Gmail API to list messages matching the specified from email, label, and time frame
     const response = await req.gmail.users.messages.list({
-      userId: 'me',
+      userId: "me",
       q: `from:${fromEmail} after:${formattedDate}`,
-      labelIds: ['INBOX'],
+      labelIds: ["INBOX"],
     });
 
     const messages = response.data.messages || [];
@@ -199,35 +205,59 @@ app.get('/read-emails', checkAuth, setupGmailClient, async (req, res) => {
       messages.map(async (message) => {
         const messageId = message.id;
         const email = await req.gmail.users.messages.get({
-          userId: 'me',
+          userId: "me",
           id: messageId,
         });
 
         // Find the part that represents the text content (you may need to adjust this based on your specific use case)
-        const textPart = email.data.payload.parts.find(part => part.mimeType === 'text/plain' || part.mimeType === 'text/html');
+        const textPart = email.data.payload.parts.find(
+          (part) =>
+            part.mimeType === "text/plain" || part.mimeType === "text/html"
+        );
 
         if (textPart) {
           // Decode the content (it may be base64 encoded)
-          const decodedContent = Buffer.from(textPart.body.data, 'base64').toString('utf-8');
+          const decodedContent = Buffer.from(
+            textPart.body.data,
+            "base64"
+          ).toString("utf-8");
 
           // Extract the Reference Number, Department, Date
-          const referenceNumberMatch = decodedContent.match(/\*Reference Number:\* (.+?)\r\n/);
-          const referenceNumber = referenceNumberMatch ? referenceNumberMatch[1].trim() : 'Reference Number not found';
+          const referenceNumberMatch = decodedContent.match(
+            /\*Reference Number:\* (.+?)\r\n/
+          );
+          const referenceNumber = referenceNumberMatch
+            ? referenceNumberMatch[1].trim()
+            : "Reference Number not found";
 
-          const departmentMatch = decodedContent.match(/\*Department:\* (.+?)\r\n/);
-          const department = departmentMatch ? departmentMatch[1].trim() : 'Department not found';
+          const departmentMatch = decodedContent.match(
+            /\*Department:\* (.+?)\r\n/
+          );
+          const department = departmentMatch
+            ? departmentMatch[1].trim()
+            : "Department not found";
 
           const dateMatch = decodedContent.match(/\*Date:\* (.+?)\r\n/);
-          const date = dateMatch ? dateMatch[1].trim() : 'Date not found';
+          const date = dateMatch ? dateMatch[1].trim() : "Date not found";
 
           // Remove everything above "Name of the Insured"
-          const startIndex = decodedContent.indexOf('Name of the Insured');
-          const trimmedContent = startIndex !== -1 ? decodedContent.substring(startIndex) : decodedContent;
+          const startIndex = decodedContent.indexOf("Name of the Insured");
+          const trimmedContent =
+            startIndex !== -1
+              ? decodedContent.substring(startIndex)
+              : decodedContent;
 
           console.log(trimmedContent);
-          return { [messageId]: { content: trimmedContent, referenceNumber, department, date } };
+          return {
+            [messageId]: {
+              content: trimmedContent,
+              referenceNumber,
+              department,
+              date,
+            },
+          };
         } else {
-          return { [messageId]: 'No text/plain or text/html part found.' };
+          return { [messageId]: "No text/plain or text/html part found." };
         }
       })
     );
@@ -236,30 +266,30 @@ app.get('/read-emails', checkAuth, setupGmailClient, async (req, res) => {
 
     res.json({ emailContents: emailContentsObject });
   } catch (error) {
-    console.error('Error fetching emails:', error);
-    res.status(500).send('Error fetching emails');
+    console.error("Error fetching emails:", error);
+    res.status(500).send("Error fetching emails");
   }
 });
 
 // Create
-app.post('/claim-details', authenticateUser, (req, res) => {
-  const sql = 'INSERT INTO claim_details SET ?';
+app.post("/claim-details", authenticateUser, (req, res) => {
+  const sql = "INSERT INTO claim_details SET ?";
   db.query(sql, req.body, (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(`Claim Details added with ID: ${result.insertId}`);
   });
 });
 
-app.post('/vehicle-details', authenticateUser, (req, res) => {
-  const sql = 'INSERT INTO vehicle_details SET ?';
+app.post("/vehicle-details", authenticateUser, (req, res) => {
+  const sql = "INSERT INTO vehicle_details SET ?";
   db.query(sql, req.body, (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(`Vehicle Details added with ID: ${result.insertId}`);
@@ -267,67 +297,74 @@ app.post('/vehicle-details', authenticateUser, (req, res) => {
 });
 
 app.post("/uploadMedia", (req, res) => {
-  const { file ,name } = req.body;
+  const { file, name } = req.body;
 
   const extension = name.split(".")[1];
-  if(extension === "jpg"){
-  
-  uploadToAWS(file, name)
+  if (extension === "jpg") {
+    uploadToAWS(file, name)
       .then((Location) => {
-          return res.status(200).json({ Location });
+        return res.status(200).json({ Location });
       })
       .catch((err) => {
-          console.error(err);
-          return res.status(500).json({ error: "Internal Server Error" });
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
       });
-    }
-    else{
-      uploadToAWSVideo(file, name)
+  } else {
+    uploadToAWSVideo(file, name)
       .then((Location) => {
-          return res.status(200).json({ Location });
+        return res.status(200).json({ Location });
       })
       .catch((err) => {
-          console.error(err);
-          return res.status(500).json({ error: "Internal Server Error" });
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
       });
-    }
+  }
 });
 
-app.get("/getDepreciationRates",authenticateUser,(req,res)=>{
-  
-  const sql ="select * from DepreciationRates";
-  db.query(sql,(error, results) => {
+app.get("/getDepreciationRates", authenticateUser, (req, res) => {
+  const sql = "select * from DepreciationRates";
+  db.query(sql, (error, results) => {
     if (error) {
-      console.error('Error while getting the depreciations rates', error);
-      return res.status(500).json({ error: 'Error while getting the depreciations rates' });
+      console.error("Error while getting the depreciations rates", error);
+      return res
+        .status(500)
+        .json({ error: "Error while getting the depreciations rates" });
     }
 
     return res.status(200).json({ results });
-  })
-})
+  });
+});
 
-app.get("/getUploadDocuments",authenticateUser,(req,res)=>{
+app.get("/getUploadDocuments", authenticateUser, (req, res) => {
   const LeadId = req.query.leadId;
-  const sql ="SELECT * FROM ReportDocuments WHERE LeadId =?";
-  db.query(sql, [LeadId],(error, results) => {
+  const sql = "SELECT * FROM ReportDocuments WHERE LeadId =?";
+  db.query(sql, [LeadId], (error, results) => {
     if (error) {
-      console.error('Error inserting data into VehicleDetails:', error);
-      return res.status(500).json({ error: 'Error inserting data into VehicleDetails.' });
+      console.error("Error inserting data into VehicleDetails:", error);
+      return res
+        .status(500)
+        .json({ error: "Error inserting data into VehicleDetails." });
     }
 
     return res.status(200).json({ results });
-  })
-})
-
+  });
+});
 
 app.post("/uploadClaimMedia", (req, res) => {
-  
-    const {garage,fileUrl,fileName,reportType,LeadId,isLastChunk,uploadedBy,file}=req.body;
-    
-    uploadToAWS(file, fileName)
-      .then((Location) => {
+  const {
+    garage,
+    fileUrl,
+    fileName,
+    reportType,
+    LeadId,
+    isLastChunk,
+    uploadedBy,
+    file,
+  } = req.body;
 
-        const insertUploadDetails = `
+  uploadToAWS(file, fileName)
+    .then((Location) => {
+      const insertUploadDetails = `
         INSERT INTO ReportDocuments (
           LeadId,
           FileName,
@@ -346,88 +383,107 @@ app.post("/uploadClaimMedia", (req, res) => {
       `;
 
       // Execute the SQL queries individually
-      
-    
-        db.query(insertUploadDetails, (error, results) => {
-          if (error) {
-            console.error('Error inserting data into VehicleDetails:', error);
-            return res.status(500).json({ error: 'Error inserting data into VehicleDetails.' });
-          }
-    
-          return res.status(200).json({ Location });
-        })
-      })
-      .catch((err) => {
-          console.error(err);
-          return res.status(500).json({ error: "Internal Server Error" });
-      });
-    
 
- 
+      db.query(insertUploadDetails, (error, results) => {
+        if (error) {
+          console.error("Error inserting data into VehicleDetails:", error);
+          return res
+            .status(500)
+            .json({ error: "Error inserting data into VehicleDetails." });
+        }
+
+        return res.status(200).json({ Location });
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    });
 });
 
-
-app.post('/uploadDocument', (req, res) => {
-
-  const {data,leadId} = req.body;
+app.post("/uploadDocument", (req, res) => {
+  const { data, leadId } = req.body;
 
   const array = data;
 
-  const currentLeadId = (data[0].leadId);
-  
-  array.map((data,index)=>{
+  const currentLeadId = data[0].leadId;
 
-    let photo1="",photo2="",photo3="",photo4="",photo5="",photo6="";
-    let photoAtt1="",photoAtt2="",photoAtt3="",photoAtt4="",photoAtt5="",photoAtt6="";
-    let photo1Timestamp="",photo2Timestamp="",photo3Timestamp="",photo4Timestamp="",photo5Timestamp="",photo6Timestamp="";
-    let photo1Latitude="",photo2Latitude="",photo3Latitude="",photo4Latitude="",photo5Latitude="",photo6Latitude="";
-    let photo1Longitude="",photo2Longitude="",photo3Longitude="",photo4Longitude="",photo5Longitude="",photo6Longitude="";
-    
+  array.map((data, index) => {
+    let photo1 = "",
+      photo2 = "",
+      photo3 = "",
+      photo4 = "",
+      photo5 = "",
+      photo6 = "";
+    let photoAtt1 = "",
+      photoAtt2 = "",
+      photoAtt3 = "",
+      photoAtt4 = "",
+      photoAtt5 = "",
+      photoAtt6 = "";
+    let photo1Timestamp = "",
+      photo2Timestamp = "",
+      photo3Timestamp = "",
+      photo4Timestamp = "",
+      photo5Timestamp = "",
+      photo6Timestamp = "";
+    let photo1Latitude = "",
+      photo2Latitude = "",
+      photo3Latitude = "",
+      photo4Latitude = "",
+      photo5Latitude = "",
+      photo6Latitude = "";
+    let photo1Longitude = "",
+      photo2Longitude = "",
+      photo3Longitude = "",
+      photo4Longitude = "",
+      photo5Longitude = "",
+      photo6Longitude = "";
 
-    if(data.data[0][0]){
-      photo1=data.data[0][0].url;
+    if (data.data[0][0]) {
+      photo1 = data.data[0][0].url;
       photoAtt1 = data.data[0][0].name;
-      photo1Timestamp=data.data[0][0].time;
-      photo1Latitude=data.data[0][0].location.split(",")[0];
-      photo1Longitude=data.data[0][0].location.split(",")[1];
+      photo1Timestamp = data.data[0][0].time;
+      photo1Latitude = data.data[0][0].location.split(",")[0];
+      photo1Longitude = data.data[0][0].location.split(",")[1];
     }
 
-    if(data.data[1]?.length > 0){
-      photo2=data.data[1][0].url;
+    if (data.data[1]?.length > 0) {
+      photo2 = data.data[1][0].url;
       photoAtt2 = data.data[1][0].name;
-      photo2Timestamp=data.data[1][0].time;
-      photo2Latitude=data.data[1][0].location.split(",")[0];
-      photo2Longitude=data.data[1][0].location.split(",")[1];
+      photo2Timestamp = data.data[1][0].time;
+      photo2Latitude = data.data[1][0].location.split(",")[0];
+      photo2Longitude = data.data[1][0].location.split(",")[1];
     }
-    if(data.data[2]?.length > 0){
-      photo3=data.data[2][0].url;
+    if (data.data[2]?.length > 0) {
+      photo3 = data.data[2][0].url;
       photoAtt3 = data.data[2][0].name;
-      photo3Timestamp=data.data[2][0].time;
-      photo3Latitude=data.data[2][0].location.split(",")[0];
-      photo3Longitude=data.data[2][0].location.split(",")[1];
+      photo3Timestamp = data.data[2][0].time;
+      photo3Latitude = data.data[2][0].location.split(",")[0];
+      photo3Longitude = data.data[2][0].location.split(",")[1];
     }
-    if(data.data[3]?.length > 0){
-      photo4=data.data[3][0].url;
+    if (data.data[3]?.length > 0) {
+      photo4 = data.data[3][0].url;
       photoAtt4 = data.data[3][0].name;
-      photo4Timestamp=data.data[3][0].time;
-      photo4Latitude=data.data[3][0].location.split(",")[0];
-      photo4Longitude=data.data[3][0].location.split(",")[1];
+      photo4Timestamp = data.data[3][0].time;
+      photo4Latitude = data.data[3][0].location.split(",")[0];
+      photo4Longitude = data.data[3][0].location.split(",")[1];
     }
-    if(data.data[4]?.length > 0){
-      photo5=data.data[4][0].url;
-      photoAtt5= data.data[4][0].name;
-      photo5Timestamp=data.data[4][0].time;
-      photo5Latitude=data.data[4][0].location.split(",")[0];
-      photo5Longitude=data.data[4][0].location.split(",")[1];
+    if (data.data[4]?.length > 0) {
+      photo5 = data.data[4][0].url;
+      photoAtt5 = data.data[4][0].name;
+      photo5Timestamp = data.data[4][0].time;
+      photo5Latitude = data.data[4][0].location.split(",")[0];
+      photo5Longitude = data.data[4][0].location.split(",")[1];
     }
-    if(data.data[5]?.length > 0){
-      photo6=data.data[5][0].url;
+    if (data.data[5]?.length > 0) {
+      photo6 = data.data[5][0].url;
       photoAtt6 = data.data[5][0].name;
-      photo6Timestamp=data.data[5][0].time;
-      photo6Latitude=data.data[5][0].location.split(",")[0];
-      photo6Longitude=data.data[5][0].location.split(",")[1];
+      photo6Timestamp = data.data[5][0].time;
+      photo6Latitude = data.data[5][0].location.split(",")[0];
+      photo6Longitude = data.data[5][0].location.split(",")[1];
     }
-   
+
     const insertUploadDetails = `
     INSERT INTO DocumentList (
       LeadId,
@@ -498,90 +554,78 @@ app.post('/uploadDocument', (req, res) => {
     );
   `;
 
-  // console.log(insertUploadDetails);
+    // console.log(insertUploadDetails);
 
-
-  
     db.query(insertUploadDetails, (error, results) => {
       if (error) {
-        console.error('Error inserting data into Upload Details:', error);
-        return res.status(500).json({ error: 'Error inserting data into DocumentDetails.' });
+        console.error("Error inserting data into Upload Details:", error);
+        return res
+          .status(500)
+          .json({ error: "Error inserting data into DocumentDetails." });
       }
-      
     });
-
-   
-  })
+  });
 
   const claimToken = generateUniqueToken();
-
 
   const insertTokeDteials = `
   UPDATE ClaimDetails
   SET Token='${claimToken}'
   WHERE LeadId = ${currentLeadId};
-  `
-  
+  `;
+
   db.query(insertTokeDteials, (error, results) => {
     if (error) {
-      console.error('Error inserting data into CL Details:', error);
-      return res.status(500).json({ error: 'Error.' });
+      console.error("Error inserting data into CL Details:", error);
+      return res.status(500).json({ error: "Error." });
     }
-    return res.status(200).json({ message: 'Data inserted successfully.' });
-    
+    return res.status(200).json({ message: "Data inserted successfully." });
   });
-
-
- 
-
 });
 
-app.post('/driver-details', authenticateUser, (req, res) => {
-  const sql = 'INSERT INTO driver_details SET ?';
+app.post("/driver-details", authenticateUser, (req, res) => {
+  const sql = "INSERT INTO driver_details SET ?";
   db.query(sql, req.body, (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(`Driver Details added with ID: ${result.insertId}`);
   });
 });
 
-app.post("/login",(req,res)=>{
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   // console.log(username,password);
   if (!username || !password) {
-    return res.status(401).send('Unauthorized: Missing credentials');
+    return res.status(401).send("Unauthorized: Missing credentials");
   }
 
-  const sql = 'SELECT * FROM Login WHERE username = ? AND password = ?';
+  const sql = "SELECT * FROM Login WHERE username = ? AND password = ?";
   db.query(sql, [username, password], (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Internal Server Error');
+      return res.status(500).send("Internal Server Error");
     }
 
     if (result.length === 0) {
-      return res.status(401).send('Unauthorized: Invalid credentials');
+      return res.status(401).send("Unauthorized: Invalid credentials");
+    } else {
+      return res.send({ msg: "Successfully Logged In!", data: result });
     }
-    else{
-      return res.send({msg:"Successfully Logged In!",data : result})
-    }
-  })
+  });
+});
 
-})
-
-app.get('/getDocuments', (req, res) => {
- 
+app.get("/getDocuments", (req, res) => {
   const LeadId = req.query.LeadId;
-  console.log("get",LeadId);
-  const sql = 'SELECT * FROM DocumentList WHERE LeadId =?';
-  db.query(sql,[LeadId], (err, result) => {
+  console.log("get", LeadId);
+  const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
+  db.query(sql, [LeadId], (err, result) => {
     if (err) {
       // console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(result);
@@ -589,7 +633,7 @@ app.get('/getDocuments', (req, res) => {
 });
 
 // app.get('/getSpecificClaim',authenticateUser, (req, res) => {
- 
+
 //   const LeadId = req.query.LeadId;
 //   console.log(LeadId);
 //   const sql = "CALL GetInfoByLeadId(?)";
@@ -602,20 +646,36 @@ app.get('/getDocuments', (req, res) => {
 //     res.send(result);
 //   });
 // });
-app.get('/getSpecificClaim', authenticateUser, async (req, res) => {
+app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
   try {
     const leadId = req.query.LeadId;
     // const region = req.query.Region || null;
 
-    
     // Execute stored procedures for each table
-    const claimDetails = await executeStoredProc('GetClaimDetailsByLeadId', [leadId]);
-    const insuredDetails = await executeStoredProc('GetInsuredDetailsByLeadId', [leadId]);
-    const accidentDetails = await executeStoredProc('GetAccidentDetailsByLeadId', [leadId]);
-    const driverDetails = await executeStoredProc('GetDriverDetailsByLeadId', [leadId]);
-    const vehicleDetails = await executeStoredProc('GetVehicleDetailsByLeadId', [leadId]);
-    const garageDetails = await executeStoredProc('GetGarageDetailsByLeadId', [leadId]);
-    const claimStatus = await executeStoredProc('GetClaimStatusByLeadId', [leadId]);
+    const claimDetails = await executeStoredProc("GetClaimDetailsByLeadId", [
+      leadId,
+    ]);
+    const insuredDetails = await executeStoredProc(
+      "GetInsuredDetailsByLeadId",
+      [leadId]
+    );
+    const accidentDetails = await executeStoredProc(
+      "GetAccidentDetailsByLeadId",
+      [leadId]
+    );
+    const driverDetails = await executeStoredProc("GetDriverDetailsByLeadId", [
+      leadId,
+    ]);
+    const vehicleDetails = await executeStoredProc(
+      "GetVehicleDetailsByLeadId",
+      [leadId]
+    );
+    const garageDetails = await executeStoredProc("GetGarageDetailsByLeadId", [
+      leadId,
+    ]);
+    const claimStatus = await executeStoredProc("GetClaimStatusByLeadId", [
+      leadId,
+    ]);
 
     // Combine the results into a single variable or structure as needed
     const combinedResult = {
@@ -625,14 +685,14 @@ app.get('/getSpecificClaim', authenticateUser, async (req, res) => {
       driverDetails: driverDetails[0],
       vehicleDetails: vehicleDetails[0],
       garageDetails: garageDetails[0],
-      claimStatus: claimStatus[0]
+      claimStatus: claimStatus[0],
     };
 
     // Send the combined result to the client
     res.send(combinedResult);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -650,8 +710,8 @@ function executeStoredProc(procName, params) {
   });
 }
 
-app.post("/verifyReportUpload",authenticateUser,(req,res)=>{
-  const {userName,reportId} = req.body;
+app.post("/verifyReportUpload", authenticateUser, (req, res) => {
+  const { userName, reportId } = req.body;
   const updateVerifyReport = `
   UPDATE ReportDocuments
         SET
@@ -659,70 +719,64 @@ app.post("/verifyReportUpload",authenticateUser,(req,res)=>{
         IsVerified = '${1}'
         WHERE ReportId = ${reportId};
   `;
-    db.query(updateVerifyReport, (err, result2) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error while updating the verified status');
-        return;
-      }
-        // console.log(result2[0].Token === token);
-        res.status(200).send('Successfully Updated!!');
-    })
-
-});
-
-
-app.post("/getClaimDetails",(req,res)=>{
-  const {token,leadId} = req.body;
-  const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
-    db.query(sql,[leadId], (err, result2) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-      if(result2[0]?.Token === token){
-        // console.log(result2[0].Token === token);
-        res.status(200).send('Successfully found!!');
-      }
-      else{
-        res.status(403).send('Forbidden Access!');
-      }
-
-});
-});
-
-
-app.post("/sendEmail/1",authenticateUser,(req,res)=>{
-  const {vehicleNo,PolicyNo,Insured,Date,leadId,toMail} = req.body;
-
-  const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
-  db.query(sql,[leadId], (err, result) => {
+  db.query(updateVerifyReport, (err, result2) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res
+        .status(500)
+        .send("Internal Server Error while updating the verified status");
+      return;
+    }
+    // console.log(result2[0].Token === token);
+    res.status(200).send("Successfully Updated!!");
+  });
+});
+
+app.post("/getClaimDetails", (req, res) => {
+  const { token, leadId } = req.body;
+  const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
+  db.query(sql, [leadId], (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    if (result2[0]?.Token === token) {
+      // console.log(result2[0].Token === token);
+      res.status(200).send("Successfully found!!");
+    } else {
+      res.status(403).send("Forbidden Access!");
+    }
+  });
+});
+
+app.post("/sendEmail/1", authenticateUser, (req, res) => {
+  const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail } = req.body;
+
+  const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
+  db.query(sql, [leadId], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
       return;
     }
     const content = emailHandler(result[0].Status);
 
-        const generatedToken = generateUniqueToken();
-        const insertClaimDetails = `
+    const generatedToken = generateUniqueToken();
+    const insertClaimDetails = `
         UPDATE ClaimDetails
         SET
         Token = '${generatedToken}'
         WHERE LeadId = ${leadId};
       `;
-        db.query(insertClaimDetails, (err, result2) => {
-          if (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
-            return;
-          }
-       
-  
-      
-    
-  const emailContent = `
+    db.query(insertClaimDetails, (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+
+      const emailContent = `
     Dear Sir/Madam,
 
     Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
@@ -735,51 +789,58 @@ app.post("/sendEmail/1",authenticateUser,(req,res)=>{
     ${content}
 
         Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${''} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
 
     Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
             claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
   `;
 
+      const mailOptions = {
+        from: "infosticstech@gmail.com",
+        to: toMail,
+        subject: "Survey Request for Vehicle Claim",
+        text: emailContent,
+      };
 
-  const mailOptions = {
-    from: 'infosticstech@gmail.com',
-    to: toMail,
-    subject: 'Survey Request for Vehicle Claim',
-    text: emailContent,
-  };
-
-  // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).send('Email sent successfully');
-    }
-  });
+      // Send the email
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Internal Server Error");
+        } else {
+          console.log("Email sent: " + info.response);
+          res.status(200).send("Email sent successfully");
+        }
+      });
     });
+  });
 });
 
-})
-
-
-app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
-  const {vehicleNo,PolicyNo,Insured,Date,content,content2,leadId,toMail,fromEmail,subject,body} = req.body;
+app.post("/sendCustomEmail", authenticateUser, (req, res) => {
+  const {
+    vehicleNo,
+    PolicyNo,
+    Insured,
+    Date,
+    content,
+    content2,
+    leadId,
+    toMail,
+    fromEmail,
+    subject,
+    body,
+  } = req.body;
 
   const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
-  db.query(sql,[leadId], (err, result2) => {
+  db.query(sql, [leadId], (err, result2) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
-    
 
-    if(!result2[0].Token){
-
+    if (!result2[0].Token) {
       const generatedToken = generateUniqueToken();
       const insertClaimDetails = `
       UPDATE ClaimDetails
@@ -790,23 +851,60 @@ app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
       db.query(insertClaimDetails, (err, result2) => {
         if (err) {
           console.error(err);
-          res.status(500).send('Internal Server Error');
+          res.status(500).send("Internal Server Error");
           return;
         }
 
-     
         const emailContent = `
         ${body}
 
         ${content}
 
             Please provide the clear copy of all the documents so that the claim processing can be fast or
-          <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
+          <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${encodeURIComponent(
+          content2
+        )} target="_blank">Click me</a> to fill the documents information .</p>
 
         Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
                 claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
       `;
+
+        const mailOptions = {
+          from: fromEmail,
+          to: toMail,
+          subject: subject,
+          text: emailContent,
+        };
+
+        // Send the email
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+          } else {
+            console.log("Email sent: " + info.response);
+            res.status(200).send("Email sent successfully");
+          }
+        });
+      });
+    } else {
+      const emailContent = `
+      ${body}
+
+      ${content}
+
+          Please provide the clear copy of all the documents so that the claim processing can be fast or
+        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${
+        result2[0].Token
+      }&content=${encodeURIComponent(
+        content2
+      )} target="_blank">Click me</a> to fill the documents information .</p>
+
+      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+              claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+
+    `;
 
       const mailOptions = {
         from: fromEmail,
@@ -819,58 +917,19 @@ app.post("/sendCustomEmail",authenticateUser,(req,res)=>{
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.error(error);
-          res.status(500).send('Internal Server Error');
+          res.status(500).send("Internal Server Error");
         } else {
-          console.log('Email sent: ' + info.response);
-          res.status(200).send('Email sent successfully');
+          console.log("Email sent: " + info.response);
+          res.status(200).send("Email sent successfully");
         }
       });
-});
     }
-  else{
-   
-   
-      const emailContent = `
-      ${body}
-
-      ${content}
-
-          Please provide the clear copy of all the documents so that the claim processing can be fast or
-        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${result2[0].Token}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
-
-      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-              claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
-
-    `;
-
-
-const mailOptions = {
-from: fromEmail,
-to: toMail,
-subject: subject,
-text: emailContent,
-};
-
-// Send the email
-transporter.sendMail(mailOptions, (error, info) => {
-if (error) {
-  console.error(error);
-  res.status(500).send('Internal Server Error');
-} else {
-  console.log('Email sent: ' + info.response);
-  res.status(200).send('Email sent successfully');
-}
-});
-};
-  
-  
-  
-});
+  });
 });
 
-app.post("/sendEmail/2",authenticateUser,(req,res)=>{
+app.post("/sendEmail/2", authenticateUser, (req, res) => {
   //garage email
-  const {vehicleNo,PolicyNo,Insured,toMail,Date} = req.body;
+  const { vehicleNo, PolicyNo, Insured, toMail, Date } = req.body;
 
   const emailContent = `
     Dear Sir/Madam,
@@ -896,9 +955,9 @@ app.post("/sendEmail/2",authenticateUser,(req,res)=>{
   `;
 
   const mailOptions = {
-    from: 'infosticstech@gmail.com',
+    from: "infosticstech@gmail.com",
     to: toMail,
-    subject: 'Survey Request for Vehicle Claim',
+    subject: "Survey Request for Vehicle Claim",
     text: emailContent,
   };
 
@@ -906,19 +965,17 @@ app.post("/sendEmail/2",authenticateUser,(req,res)=>{
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error(error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
     } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).send('Email sent successfully');
+      console.log("Email sent: " + info.response);
+      res.status(200).send("Email sent successfully");
     }
   });
+});
 
-})
-
-app.post("/sendEmail/3",authenticateUser,(req,res)=>{
-
+app.post("/sendEmail/3", authenticateUser, (req, res) => {
   //
-  const {date,toMail} = req.body;
+  const { date, toMail } = req.body;
 
   const currentDate = new Date();
 
@@ -946,9 +1003,9 @@ app.post("/sendEmail/3",authenticateUser,(req,res)=>{
   `;
 
   const mailOptions = {
-    from: 'infosticstech@gmail.com',
+    from: "infosticstech@gmail.com",
     to: toMail,
-    subject: 'Survey Request for Vehicle Claim',
+    subject: "Survey Request for Vehicle Claim",
     text: emailContent,
   };
 
@@ -956,65 +1013,62 @@ app.post("/sendEmail/3",authenticateUser,(req,res)=>{
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error(error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
     } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).send('Email sent successfully');
+      console.log("Email sent: " + info.response);
+      res.status(200).send("Email sent successfully");
     }
   });
-
-})
-
-
+});
 
 // Read
-app.get('/claim-details/:claimNo', authenticateUser, (req, res) => {
-  const sql = 'SELECT * FROM claim_details WHERE claim_no = ?';
+app.get("/claim-details/:claimNo", authenticateUser, (req, res) => {
+  const sql = "SELECT * FROM claim_details WHERE claim_no = ?";
   db.query(sql, [req.params.claimNo], (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(result);
   });
 });
 
-app.get('/getAllClaims',authenticateUser, (req, res) => {
+app.get("/getAllClaims", authenticateUser, (req, res) => {
   const region = req.query.region;
   const sql = "CALL GetPolicyInfoByRegion(?)";
-  db.query(sql,[region], (err, result) => {
+  db.query(sql, [region], (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(result);
   });
 });
 
-app.get('/getStatus', (req, res) => {
+app.get("/getStatus", (req, res) => {
   const leadId = req.query.LeadId;
   const sql = "SELECT * FROM ClaimStatus";
   db.query(sql, (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(result);
   });
 });
 
-app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
-  const { LeadId,Status,subStage} = req.body;
-  const sql = 'SELECT * FROM DocumentList WHERE LeadId =?';
-  db.query(sql,[LeadId], (err, result) => {
+app.put("/updateStatus/:leadId", authenticateUser, (req, res) => {
+  const { LeadId, Status, subStage } = req.body;
+  const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
+  db.query(sql, [LeadId], (err, result) => {
     if (err) {
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
-  
+
     const statusDetails = `
     UPDATE ClaimStatus
     SET
@@ -1023,47 +1077,45 @@ app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
     WHERE LeadId = ${LeadId};
   `;
 
-  db.query(statusDetails, (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    res.send(result);
+    db.query(statusDetails, (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.send(result);
+    });
   });
-   
-  });
-
-  
-  
 });
 
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  console.log(username,password);
+  console.log(username, password);
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
+    return res
+      .status(400)
+      .json({ error: "Username and password are required" });
   }
 
-  const sql = 'SELECT * FROM Login WHERE username = ? AND password = ?';
+  const sql = "SELECT * FROM Login WHERE username = ? AND password = ?";
   db.query(sql, [username, password], (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Internal Server Error');
+      return res.status(500).send("Internal Server Error");
     }
 
     if (result.length === 1) {
       // Authentication successful
-      return res.status(200).json({ message: 'Login successful' });
+      return res.status(200).json({ message: "Login successful" });
     } else {
       // Authentication failed
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
   });
 });
 
-app.post('/addClaim', (req, res) => {
+app.post("/addClaim", (req, res) => {
   const {
     SurveyType,
     ReferenceNo,
@@ -1091,14 +1143,12 @@ app.post('/addClaim', (req, res) => {
     GarageContactNo2,
     PlaceOfLoss,
     NatureOfLoss,
-    EstimatedLoss
+    EstimatedLoss,
   } = req.body;
 
   const authorizationHeader = req.headers.authorization;
 
-  const token = authorizationHeader.substring('Bearer '.length);
-
-
+  const token = authorizationHeader.substring("Bearer ".length);
 
   const generatedToken = generateUniqueToken();
   const insertClaimDetails = `
@@ -1137,23 +1187,27 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
-
   db.query(insertClaimDetails, (error, results) => {
     if (error) {
-      console.error('Error inserting data into ClaimDetails:', error);
-      return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
+      console.error("Error inserting data into ClaimDetails:", error);
+      return res
+        .status(500)
+        .json({ error: "Error inserting data into ClaimDetails." });
     }
 
-    db.query("SELECT LeadId FROM ClaimDetails ORDER BY LeadId DESC LIMIT 1", (error, results) => {
-    if (error) {
-      console.error('Error inserting data into ClaimDetails:', error);
-      return res.status(500).json({ error: 'Error inserting data into ClaimDetails.' });
-    }
-    console.log(results);
-    const addLeadId = results[0].LeadId;
-    
-  
-  const insertVehicleDetails = `
+    db.query(
+      "SELECT LeadId FROM ClaimDetails ORDER BY LeadId DESC LIMIT 1",
+      (error, results) => {
+        if (error) {
+          console.error("Error inserting data into ClaimDetails:", error);
+          return res
+            .status(500)
+            .json({ error: "Error inserting data into ClaimDetails." });
+        }
+        console.log(results);
+        const addLeadId = results[0].LeadId;
+
+        const insertVehicleDetails = `
     INSERT INTO VehicleDetails (
       RegisteredNumber,
       LeadId 
@@ -1163,7 +1217,7 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
-  const statusDetails = `
+        const statusDetails = `
     INSERT INTO ClaimStatus (
       Status,
       SubStatus,
@@ -1175,8 +1229,7 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
-
-  const insertGarageDetails = `
+        const insertGarageDetails = `
     INSERT INTO GarageDetails (
       GarageNameAndAddress,
       GarageContactNo1,
@@ -1192,7 +1245,7 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
-  const insertAccidentDetails = `
+        const insertAccidentDetails = `
     INSERT INTO AccidentDetails (
       PlaceOfLoss,
       NatureOfLoss,
@@ -1206,7 +1259,7 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
-  const insertDriverDetails = `
+        const insertDriverDetails = `
     INSERT INTO DriverDetails (
       LeadId
     ) VALUES (
@@ -1214,20 +1267,19 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
+        // const updateDriverDetails = `
+        //   UPDATE DriverDetails
+        //   SET
+        //   IssuingAuthority = '${IssuingAuthority}',
+        //   LicenseNumber = '${LicenseNumber}',
+        //   LicenseType = '${LicenseType}',
+        //   DriverName = '${DriverName}',
+        //   AddedDate = '${DriverAddedDate}',
+        //   TypeOfVerification = '${DriverTypeOfVerification}'
+        //     WHERE LeadId = ${LeadId};
+        // `;
 
-  // const updateDriverDetails = `
-  //   UPDATE DriverDetails
-  //   SET
-  //   IssuingAuthority = '${IssuingAuthority}',
-  //   LicenseNumber = '${LicenseNumber}',
-  //   LicenseType = '${LicenseType}',
-  //   DriverName = '${DriverName}',
-  //   AddedDate = '${DriverAddedDate}',
-  //   TypeOfVerification = '${DriverTypeOfVerification}'
-  //     WHERE LeadId = ${LeadId};
-  // `;
-
-  const insertInsuredDetails = `
+        const insertInsuredDetails = `
     INSERT INTO InsuredDetails (
       InsuredName,
       InsuredMobileNo1,
@@ -1243,128 +1295,174 @@ app.post('/addClaim', (req, res) => {
     );
   `;
 
-  // Execute the SQL queries individually
-  
+        // Execute the SQL queries individually
 
-    db.query(insertVehicleDetails, (error, results) => {
-      if (error) {
-        console.error('Error inserting data into VehicleDetails:', error);
-        return res.status(500).json({ error: 'Error inserting data into VehicleDetails.' });
-      }
-
-      db.query(insertGarageDetails, (error, results) => {
-        if (error) {
-          console.error('Error inserting data into GarageDetails:', error);
-          return res.status(500).json({ error: 'Error inserting data into GarageDetails.' });
-        }
-
-        db.query(insertAccidentDetails, (error, results) => {
+        db.query(insertVehicleDetails, (error, results) => {
           if (error) {
-            console.error('Error inserting data into AccidentDetails:', error);
-            return res.status(500).json({ error: 'Error inserting data into AccidentDetails.' });
+            console.error("Error inserting data into VehicleDetails:", error);
+            return res
+              .status(500)
+              .json({ error: "Error inserting data into VehicleDetails." });
           }
 
-          db.query(insertInsuredDetails, (error, results) => {
+          db.query(insertGarageDetails, (error, results) => {
             if (error) {
-              console.error('Error inserting data into InsuredDetails:', error);
-              return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
-            } 
-            db.query(statusDetails, (error, results) => {
-            db.query(insertDriverDetails, (error, results) => {
+              console.error("Error inserting data into GarageDetails:", error);
+              return res
+                .status(500)
+                .json({ error: "Error inserting data into GarageDetails." });
+            }
+
+            db.query(insertAccidentDetails, (error, results) => {
               if (error) {
-                console.error('Error inserting data into DriverDetails:', error);
-                return res.status(500).json({ error: 'Error inserting data into InsuredDetails.' });
+                console.error(
+                  "Error inserting data into AccidentDetails:",
+                  error
+                );
+                return res
+                  .status(500)
+                  .json({
+                    error: "Error inserting data into AccidentDetails.",
+                  });
               }
 
-              axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/1`,{
-                vehicleNo : RegisteredNumber,
-                PolicyNo : ReferenceNo,
-                Insured : InsuredName,
-                toMail:InsuredMailAddress,
-                Date: new Date(),
-                leadId:addLeadId
-              },
-              {
-                headers:{
-                  Authorization:`Bearer ${token}`,
-                  "Content-Type":"application/json"
+              db.query(insertInsuredDetails, (error, results) => {
+                if (error) {
+                  console.error(
+                    "Error inserting data into InsuredDetails:",
+                    error
+                  );
+                  return res
+                    .status(500)
+                    .json({
+                      error: "Error inserting data into InsuredDetails.",
+                    });
                 }
-              }
-              ).then((ressss)=>{
-                if(GarageMailAddress !==""){
-                  axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/2`,{
-                    vehicleNo : RegisteredNumber,
-                    PolicyNo : ReferenceNo,
-                    Insured : InsuredName,
-                    toMail:GarageMailAddress,
-                    Date: new Date()
-                  },
-                  {
-                    headers:{
-                      Authorization:`Bearer ${token}`,
-                      "Content-Type":"application/json"
+                db.query(statusDetails, (error, results) => {
+                  db.query(insertDriverDetails, (error, results) => {
+                    if (error) {
+                      console.error(
+                        "Error inserting data into DriverDetails:",
+                        error
+                      );
+                      return res
+                        .status(500)
+                        .json({
+                          error: "Error inserting data into InsuredDetails.",
+                        });
                     }
-                  }
-                  ).then((ressss)=>{
-                    if(BrokerMailAddress !==""){
-                      axios.post(`${process.env.BACKEND_DOMAIN}/sendEmail/3`,{
-                      
-                        toMail:BrokerMailAddress,
-                        Date: new Date()
-                      },
-                      {
-                        headers:{
-                          Authorization:`Bearer ${token}`,
-                          "Content-Type":"application/json"
+
+                    axios
+                      .post(
+                        `${process.env.BACKEND_DOMAIN}/sendEmail/1`,
+                        {
+                          vehicleNo: RegisteredNumber,
+                          PolicyNo: ReferenceNo,
+                          Insured: InsuredName,
+                          toMail: InsuredMailAddress,
+                          Date: new Date(),
+                          leadId: addLeadId,
+                        },
+                        {
+                          headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                          },
                         }
-                      }
-                      ).then((ressss)=>{
-                        return res.status(200).json({ message: 'Data inserted successfully.' });
+                      )
+                      .then((ressss) => {
+                        if (GarageMailAddress !== "") {
+                          axios
+                            .post(
+                              `${process.env.BACKEND_DOMAIN}/sendEmail/2`,
+                              {
+                                vehicleNo: RegisteredNumber,
+                                PolicyNo: ReferenceNo,
+                                Insured: InsuredName,
+                                toMail: GarageMailAddress,
+                                Date: new Date(),
+                              },
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                  "Content-Type": "application/json",
+                                },
+                              }
+                            )
+                            .then((ressss) => {
+                              if (BrokerMailAddress !== "") {
+                                axios
+                                  .post(
+                                    `${process.env.BACKEND_DOMAIN}/sendEmail/3`,
+                                    {
+                                      toMail: BrokerMailAddress,
+                                      Date: new Date(),
+                                    },
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                        "Content-Type": "application/json",
+                                      },
+                                    }
+                                  )
+                                  .then((ressss) => {
+                                    return res
+                                      .status(200)
+                                      .json({
+                                        message: "Data inserted successfully.",
+                                      });
+                                  })
+                                  .catch((Er) => {
+                                    return res
+                                      .status(500)
+                                      .json({
+                                        error:
+                                          "Error sending email into Broker Mail.",
+                                      });
+                                  });
+                              }
+                            })
+                            .catch((Er) => {
+                              return res
+                                .status(500)
+                                .json({
+                                  error:
+                                    "Error sending email into Garage Mail.",
+                                });
+                            });
+                        }
                       })
-                      .catch((Er)=>{
-                        return res.status(500).json({ error: 'Error sending email into Broker Mail.' });
-                      })
-                    }
-                  })
-                  .catch((Er)=>{
-                    return res.status(500).json({ error: 'Error sending email into Garage Mail.' });
-                  })
-                }
-              })
-              .catch((Er)=>{
-                return res.status(500).json({ error: 'Error sending email into Acknowldegment Mail.' });
-              })
+                      .catch((Er) => {
+                        return res
+                          .status(500)
+                          .json({
+                            error:
+                              "Error sending email into Acknowldegment Mail.",
+                          });
+                      });
 
-             
+                    //garage
 
-              //garage
-
-            
-            
-              //broker
-             
-  });
-          }
-            );
-
+                    //broker
+                  });
+                });
+              });
+            });
           });
         });
-      });
-    });
+      }
+    );
   });
-  });
-
- 
 });
 
 // app.put('/updateStatus/:leadId',authenticateUser, (req, res) => {
 //   const leadId = req.params.leadId;
-  
-//   const {   
+
+//   const {
 //       Status ,
 //       subStage
 // } = req.body;
- 
+
 //   // Update InsuredDetails
 //   const statusDetails = `
 //     UPDATE ClaimStatus
@@ -1382,80 +1480,78 @@ app.post('/addClaim', (req, res) => {
 
 //           //   res.status(200).json({ message: 'Data updated successfully.' });
 //           // });
-        
+
 // });
 
-
-
-app.put('/updateClaim/:leadId',authenticateUser, (req, res) => {
+app.put("/updateClaim/:leadId", authenticateUser, (req, res) => {
   const leadId = req.params.leadId;
-  
-  const {   InsuredName ,
-      InsuredMailAddress,
-      InsuredMobileNo1,
-      InsuredMobileNo2,
-      ClaimNumber,
-      PolicyIssuingOffice,
-      ClaimRegion,
-      ClaimServicingOffice,
-      InspectionType,
-      SurveyType,
-      PolicyPeriodStart,
-      PolicyPeriodEnd,
-      InsuranceCompanyNameAddress,
-      InsuredAddedBy,
-      VehicleMakeVariantModelColor,
-      VehicleTypeOfBody ,
-      VehicleRegisteredNumber ,
-      VehicleDateOfRegistration ,
-      VehiclePucNumber,
-      VehicleTransferDate,
-      VehicleEngineNumber,
-      VehicleAddedBy,
-      IssuingAuthority,
-      LicenseNumber,
-      LicenseType,
-      VehicleChassisNumber,
-      VehicleFuelType,
-      DriverName,
-      DriverAddedDate,
-      DriverTypeOfVerification,
-      GarageNameAndAddress,
-      GarageAddedBy,
-      GarageContactNo1,
-      GarageContactNo2,
-      VehicleClassDescription,
-      MakerDesc,
-      MakerModel,
-      ManufactureMonth,
-      VehicleGvw,
-      VehicleCubicCap,
-      VehicleSeatingCapacity,
-      VehiclePermanentAddress,
-      FitUpto,
-      PasiaModelCode,
-      RcInsuranceComp,
-      RcInsuranceUpto,
-      RcRegisteredAt,
-      RcBlacklistStatus,
-      RcVehicleType,
-      BancsModelCode,
-      BancsMakeCode,
-      BancsSubtypeCode,
-      BancsBodyType,
-      BancsVehicleClass,
-      BancsVehicleSegment,
-      RcRtoCode,
-      VehicleRcStatus,
-      VehicleBlackListStatus,
-      VehicleRegistedAt,
-      VehicleInsuranceCompany,
-      ManufactureMonthYear,
-      PermanentAddress,
-      ClassOfVehicle,
-      LeadId
-} = req.body;
-console.log("Req.body", req.body);
+
+  const {
+    InsuredName,
+    InsuredMailAddress,
+    InsuredMobileNo1,
+    InsuredMobileNo2,
+    ClaimNumber,
+    PolicyIssuingOffice,
+    ClaimRegion,
+    ClaimServicingOffice,
+    InspectionType,
+    SurveyType,
+    PolicyPeriodStart,
+    PolicyPeriodEnd,
+    InsuranceCompanyNameAddress,
+    InsuredAddedBy,
+    VehicleMakeVariantModelColor,
+    VehicleTypeOfBody,
+    VehicleRegisteredNumber,
+    VehicleDateOfRegistration,
+    VehiclePucNumber,
+    VehicleTransferDate,
+    VehicleEngineNumber,
+    VehicleAddedBy,
+    IssuingAuthority,
+    LicenseNumber,
+    LicenseType,
+    VehicleChassisNumber,
+    VehicleFuelType,
+    DriverName,
+    DriverAddedDate,
+    DriverTypeOfVerification,
+    GarageNameAndAddress,
+    GarageAddedBy,
+    GarageContactNo1,
+    GarageContactNo2,
+    VehicleClassDescription,
+    MakerDesc,
+    MakerModel,
+    ManufactureMonth,
+    VehicleGvw,
+    VehicleCubicCap,
+    VehicleSeatingCapacity,
+    VehiclePermanentAddress,
+    FitUpto,
+    PasiaModelCode,
+    RcInsuranceComp,
+    RcInsuranceUpto,
+    RcRegisteredAt,
+    RcBlacklistStatus,
+    RcVehicleType,
+    BancsModelCode,
+    BancsMakeCode,
+    BancsSubtypeCode,
+    BancsBodyType,
+    BancsVehicleClass,
+    BancsVehicleSegment,
+    RcRtoCode,
+    VehicleRcStatus,
+    VehicleBlackListStatus,
+    VehicleRegistedAt,
+    VehicleInsuranceCompany,
+    ManufactureMonthYear,
+    PermanentAddress,
+    ClassOfVehicle,
+    LeadId,
+  } = req.body;
 
   const updateClaimDetails = `
   UPDATE ClaimDetails
@@ -1501,7 +1597,6 @@ console.log("Req.body", req.body);
       MakerDesc='${MakerDesc}',
       MakerModel='${MakerModel}',
       CubicCapacity='${VehicleCubicCap}',
-      VehicleSeatingCapacity='${VehicleSeatingCapacity}',
       FitUpto='${FitUpto}',
       PasiaModelCode='${PasiaModelCode}',
       VehicleType='${RcVehicleType}',
@@ -1521,19 +1616,18 @@ console.log("Req.body", req.body);
       ClassOfVehicle='${ClassOfVehicle}'
     WHERE LeadId = ${LeadId};
   `;
-
+  console.log("updateVehicleDetails", req.body);
   // Update GarageDetails
   const updateGarageDetails = `
     UPDATE GarageDetails
     SET
       GarageNameAndAddress = '${GarageNameAndAddress}',
       GarageContactNo1 = '${GarageContactNo1}',
-      GarageContactNo2 = '${GarageContactNo2 || ''}',
+      GarageContactNo2 = '${GarageContactNo2 || ""}',
       AddedBy = '${GarageAddedBy}'
       WHERE LeadId = ${LeadId};
   `;
 
- 
   // Update InsuredDetails
   const updateInsuredDetails = `
     UPDATE InsuredDetails
@@ -1547,62 +1641,70 @@ console.log("Req.body", req.body);
 
   db.query(updateClaimDetails, (error, results) => {
     if (error) {
-      console.error('Error updating data in ClaimDetails:', error);
-      return res.status(500).json({ error: 'Error updating data in ClaimDetails.' });
+      console.error("Error updating data in ClaimDetails:", error);
+      return res
+        .status(500)
+        .json({ error: "Error updating data in ClaimDetails." });
     }
 
-  db.query(updateDriverDetails, (error, results) => {
-    if (error) {
-      console.error('Error updating data in ClaimDetails:', error);
-      return res.status(500).json({ error: 'Error updating data in ClaimDetails.' });
-    }
-
-    db.query(updateVehicleDetails, (error, results) => {
+    db.query(updateDriverDetails, (error, results) => {
       if (error) {
-        console.error('Error updating data in VehicleDetails:', error);
-        return res.status(500).json({ error: 'Error updating data in VehicleDetails.' });
+        console.error("Error updating data in ClaimDetails:", error);
+        return res
+          .status(500)
+          .json({ error: "Error updating data in ClaimDetails." });
       }
 
-      db.query(updateGarageDetails, (error, results) => {
+      db.query(updateVehicleDetails, (error, results) => {
         if (error) {
-          console.error('Error updating data in GarageDetails:', error);
-          return res.status(500).json({ error: 'Error updating data in GarageDetails.' });
+          console.error("Error updating data in VehicleDetails:", error);
+          return res
+            .status(500)
+            .json({ error: "Error updating data in VehicleDetails." });
         }
+
+        db.query(updateGarageDetails, (error, results) => {
+          if (error) {
+            console.error("Error updating data in GarageDetails:", error);
+            return res
+              .status(500)
+              .json({ error: "Error updating data in GarageDetails." });
+          }
 
           db.query(updateInsuredDetails, (error, results) => {
             if (error) {
-              console.error('Error updating data in InsuredDetails:', error);
-              return res.status(500).json({ error: 'Error updating data in InsuredDetails.' });
+              console.error("Error updating data in InsuredDetails:", error);
+              return res
+                .status(500)
+                .json({ error: "Error updating data in InsuredDetails." });
             }
 
-            res.status(200).json({ message: 'Data updated successfully.' });
+            res.status(200).json({ message: "Data updated successfully." });
           });
-        
+        });
       });
-    });
     });
   });
 });
 
-
-app.get('/vehicle-details/:claimNo', authenticateUser, (req, res) => {
-  const sql = 'SELECT * FROM vehicle_details WHERE claim_no = ?';
+app.get("/vehicle-details/:claimNo", authenticateUser, (req, res) => {
+  const sql = "SELECT * FROM vehicle_details WHERE claim_no = ?";
   db.query(sql, [req.params.claimNo], (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(result);
   });
 });
 
-app.get('/driver-details/:claimNo', authenticateUser, (req, res) => {
-  const sql = 'SELECT * FROM driver_details WHERE claim_no = ?';
+app.get("/driver-details/:claimNo", authenticateUser, (req, res) => {
+  const sql = "SELECT * FROM driver_details WHERE claim_no = ?";
   db.query(sql, [req.params.claimNo], (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
     res.send(result);
@@ -1610,97 +1712,97 @@ app.get('/driver-details/:claimNo', authenticateUser, (req, res) => {
 });
 
 // Update
-app.put('/claim-details/:claimNo', authenticateUser, (req, res) => {
-  const sql = 'UPDATE claim_details SET ? WHERE claim_no = ?';
+app.put("/claim-details/:claimNo", authenticateUser, (req, res) => {
+  const sql = "UPDATE claim_details SET ? WHERE claim_no = ?";
   db.query(sql, [req.body, req.params.claimNo], (err) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
-    res.send('Claim Details updated');
+    res.send("Claim Details updated");
   });
 });
 
-app.put('/vehicle-details/:claimNo', authenticateUser, (req, res) => {
-  const sql = 'UPDATE vehicle_details SET ? WHERE claim_no = ?';
+app.put("/vehicle-details/:claimNo", authenticateUser, (req, res) => {
+  const sql = "UPDATE vehicle_details SET ? WHERE claim_no = ?";
   db.query(sql, [req.body, req.params.claimNo], (err) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
-    res.send('Vehicle Details updated');
+    res.send("Vehicle Details updated");
   });
 });
 
-app.put('/driver-details/:claimNo', authenticateUser, (req, res) => {
-  const sql = 'UPDATE driver_details SET ? WHERE claim_no = ?';
+app.put("/driver-details/:claimNo", authenticateUser, (req, res) => {
+  const sql = "UPDATE driver_details SET ? WHERE claim_no = ?";
   db.query(sql, [req.body, req.params.claimNo], (err) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
       return;
     }
-    res.send('Driver Details updated');
+    res.send("Driver Details updated");
   });
 });
 
-app.get('/getOnlineVehicleData', authenticateUser, (req, res) => {
+app.get("/getOnlineVehicleData", authenticateUser, (req, res) => {
   const responseData = {
-    "error_code": "SPC-200",
-    "message": "success",
-    "status": "Success",
-    "soft_ref_id": "SPRCV24012001234601797EOPBPB6B",
-    "vehicleDetails": {
-      "Validation": null,
-      "Service": null,
-      "UniqueTransID": "A7D9533E200120240123495732",
-      "Data": {
-        "id": "127f8472-8b05-45a6-aa41-368c99c9fcf2",
-        "env": 2,
-        "response_code": "101",
-        "response_msg": "Success",
-        "transaction_status": 0,
-        "result": {
-          "state_cd": "RJ",
-          "rc_regn_no": "RJ13CD0927",
-          "rc_regn_dt": "25-Feb-2020",
-          "rc_chasi_no": "MA3NYFB1SKM612415",
-          "rc_eng_no": "D13A-5883689",
-          "rc_vh_class_desc": "Motor Car(LMV)",
-          "rc_maker_desc": "MARUTI SUZUKI INDIA LTD",
-          "rc_maker_model": "MARUTI VITARA BREZZA ZDI",
-          "rc_manu_month_yr": "12/2019",
-          "rc_gvw": "1680",
-          "rc_cubic_cap": "1248.0",
-          "rc_seat_cap": "5",
-          "rc_owner_name": "MUTNEJA TECH INS SUR & LOSS ASS P L",
-          "rc_permanent_address": "58 , GANDHI NAGAR,, Ganganagar -335001",
-          "rc_fit_upto": "24-Feb-2035",
-          "rc_pasia_model_code": "ma0536",
-          "rc_insurance_comp": "National Insurance Co. Ltd.",
-          "rc_insurance_upto": "23-Feb-2024",
-          "rc_registered_at": "SRI GANGANAGAR DTO, Rajasthan",
-          "rc_blacklist_status": "NA",
-          "rc_status": "ACTIVE",
-          "rc_vehicle_type": "4W",
-          "bancs_model_code": "0928031",
-          "bancs_make_code": "0928",
-          "bancs_Subtype_code": "0928031015",
-          "bancs_Fuel_Type": "Diesel(D)",
-          "bancs_Body_Type": "SALOON",
-          "bancs_Vehicle_class": "22",
-          "bancs_Vehicle_Segment": null,
-          "rc_rto_code": null
+    error_code: "SPC-200",
+    message: "success",
+    status: "Success",
+    soft_ref_id: "SPRCV24012001234601797EOPBPB6B",
+    vehicleDetails: {
+      Validation: null,
+      Service: null,
+      UniqueTransID: "A7D9533E200120240123495732",
+      Data: {
+        id: "127f8472-8b05-45a6-aa41-368c99c9fcf2",
+        env: 2,
+        response_code: "101",
+        response_msg: "Success",
+        transaction_status: 0,
+        result: {
+          state_cd: "RJ",
+          rc_regn_no: "RJ13CD0927",
+          rc_regn_dt: "25-Feb-2020",
+          rc_chasi_no: "MA3NYFB1SKM612415",
+          rc_eng_no: "D13A-5883689",
+          rc_vh_class_desc: "Motor Car(LMV)",
+          rc_maker_desc: "MARUTI SUZUKI INDIA LTD",
+          rc_maker_model: "MARUTI VITARA BREZZA ZDI",
+          rc_manu_month_yr: "12/2019",
+          rc_gvw: "1680",
+          rc_cubic_cap: "1248.0",
+          rc_seat_cap: "5",
+          rc_owner_name: "MUTNEJA TECH INS SUR & LOSS ASS P L",
+          rc_permanent_address: "58 , GANDHI NAGAR,, Ganganagar -335001",
+          rc_fit_upto: "24-Feb-2035",
+          rc_pasia_model_code: "ma0536",
+          rc_insurance_comp: "National Insurance Co. Ltd.",
+          rc_insurance_upto: "23-Feb-2024",
+          rc_registered_at: "SRI GANGANAGAR DTO, Rajasthan",
+          rc_blacklist_status: "NA",
+          rc_status: "ACTIVE",
+          rc_vehicle_type: "4W",
+          bancs_model_code: "0928031",
+          bancs_make_code: "0928",
+          bancs_Subtype_code: "0928031015",
+          bancs_Fuel_Type: "Diesel(D)",
+          bancs_Body_Type: "SALOON",
+          bancs_Vehicle_class: "22",
+          bancs_Vehicle_Segment: null,
+          rc_rto_code: null,
         },
-        "request_timestamp": "0001-01-01T00:00:00",
-        "response_timestamp": "0001-01-01T00:00:00",
-        "task_id": "6ccb3019-277f-410c-967b-5554c37bb8fe"
+        request_timestamp: "0001-01-01T00:00:00",
+        response_timestamp: "0001-01-01T00:00:00",
+        task_id: "6ccb3019-277f-410c-967b-5554c37bb8fe",
       },
-      "StatusCode": "0",
-      "ErrorMessage": ""
-    }
+      StatusCode: "0",
+      ErrorMessage: "",
+    },
   };
 
   // Extracting relevant information from the response
@@ -1737,7 +1839,7 @@ app.get('/getOnlineVehicleData', authenticateUser, (req, res) => {
           bancs_Body_Type,
           bancs_Vehicle_class,
           bancs_Vehicle_Segment,
-          rc_rto_code
+          rc_rto_code,
         },
       },
     },
@@ -1774,33 +1876,30 @@ app.get('/getOnlineVehicleData', authenticateUser, (req, res) => {
     bancs_Body_Type,
     bancs_Vehicle_class,
     bancs_Vehicle_Segment,
-    rc_rto_code
+    rc_rto_code,
   };
   res.json(integratedData);
 });
 
 app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+  // pm2.connect((err) => {
+  //   if (err) {
+  //     console.error(err);
+  //     process.exit(2);
+  //   }
 
-  
-    console.log(`Server running on http://localhost:${port}`);
-    // pm2.connect((err) => {
-    //   if (err) {
-    //     console.error(err);
-    //     process.exit(2);
-    //   }
-    
-    //   pm2.start({
-    //     script: "./app.js",
-    //     name: "db",
-    //     autorestart: true,
-    //     watch: true, // Enable auto-restart on file changes
-    //     max_memory_restart: '1G', // Adjust as needed based on your server's memory requirements
-    //   }, (err, apps) => {
-    //     pm2.disconnect(); // Disconnect from pm2 once started
-    //     if (err) throw err;
-    //     console.log('Server started successfully using pm2.');
-    //   });
+  //   pm2.start({
+  //     script: "./app.js",
+  //     name: "db",
+  //     autorestart: true,
+  //     watch: true, // Enable auto-restart on file changes
+  //     max_memory_restart: '1G', // Adjust as needed based on your server's memory requirements
+  //   }, (err, apps) => {
+  //     pm2.disconnect(); // Disconnect from pm2 once started
+  //     if (err) throw err;
+  //     console.log('Server started successfully using pm2.');
+  //   });
 
-    // });
-    
-  });
+  // });
+});

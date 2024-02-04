@@ -103,8 +103,8 @@ const Form = ({
   PermanentAddress,
   setPermanentAddress,
   ClassOfVehicle,
-  setClassOfVehicle
-
+  setClassOfVehicle,
+  setVehicleInsuranceUpto,
 }) => {
   const router = useRouter();
   const [editCase_01, setEditCase_01] = useState(false);
@@ -117,12 +117,7 @@ const Form = ({
   //   const togglePasswordVisibility_01 = () => {
   //     setPasswordVisible_01(!passwordVisible_01);
   //   };
-
-  console.log("CAPP",CubicCapacity);
-
-
-
-
+  console.log("CONTANT", MakerModel);
 
   const formatDate = (val) => {
     const date = new Date(val);
@@ -145,6 +140,7 @@ const Form = ({
           },
         })
         .then((res) => {
+          // setMakerModel("Test")
           setDetails(res.data.data);
           console.log("datata", res.data.data);
         })
@@ -153,50 +149,53 @@ const Form = ({
         });
 
       // setEditCase_01(true);
-      console.log("data", data);
     } catch (error) {
       console.log("Error from Fetch Details-> ", error);
     }
   };
-  setVehicleModel(details?.rc_maker_model),
-    setVehicleRegisteredOwner(details?.rc_owner_name),
-    setDateRegistration(details?.rc_regn_dt),
-    setVehicleChassisNumber(details?.rc_chasi_no),
-    //New Fields
-    setVehicleClassDescription(details?.rc_vh_class_desc), //is it same as ClassOfVehicle ?
-    setMakerDesc(details?.rc_maker_desc),
-    setMakerModel(details?.rc_maker_model);
+
+  useEffect(() => {
+    setVehicleModel(details?.rc_maker_model),
+      setVehicleRegisteredOwner(details?.rc_owner_name),
+      setDateRegistration(details?.rc_regn_dt),
+      setVehicleChassisNumber(details?.rc_chasi_no),
+      //New Fields
+      setVehicleClassDescription(details?.rc_vh_class_desc), //is it same as ClassOfVehicle ?
+      setMakerDesc(details?.rc_maker_desc),
+      setMakerModel(details?.rc_maker_model);
     setManufactureMonthYear(details?.rc_manu_month_yr);
-  setVehicleGvw(details?.rc_gvw);
-  setCubicCapacity(details?.rc_cubic_cap);
-  setVehicleSeatingCapacity(details?.rc_seat_cap);
-  setVehiclePermanentAddress(details?.rc_permanent_address);
-  setFitUpto(details?.rc_fit_upto);
-  setPasiaModelCode(details?.rc_pasia_model_code);
-  setRcInsuranceComp(details?.rc_insurance_comp);
-  setRcInsuranceUpto(details?.rc_insurance_upto);
-  setRcVehicleType(details?.rc_vehicle_type);
-  setBancsModelCode(details?.bancs_model_code);
-  setBancsMakeCode(details?.bancs_make_code);
-  setBancsSubtypeCode(details?.bancs_Subtype_code);
-  setBancsBodyType(details?.bancs_Body_Type);
-  setBancsVehicleClass(details?.bancs_Vehicle_class);
-  setBancsVehicleSegment(details?.bancs_Vehicle_Segment);
-  setRcRtoCode(details?.rc_rto_code);
-  // setBancsFuelType(details?.bancs_Fuel_Type);
-  setEngineNumber(details?.rc_eng_no),
-    setLicenseNumber(details?.rc_regn_no),
-    setVehicleFuelType(details?.bancs_Fuel_Type),
-    setVehicleRcStatus(details?.rc_status);
-  setVehicleBlackListStatus(details?.rc_blacklist_status);
-  setVehicleRegistedAt(details?.rc_registered_at);
-  setVehicleInsuranceCompany(details?.rc_insurance_comp);
-  setPUCNumber,
-    setTransferDate,
-    setEngineType,
-    setAddedBy,
-    setLicenseType,
-    setIssuingAuthority;
+    setVehicleGvw(details?.rc_gvw);
+    setCubicCapacity(details?.rc_cubic_cap);
+    setVehicleSeatingCapacity(details?.rc_seat_cap);
+    setVehiclePermanentAddress(details?.rc_permanent_address);
+    setFitUpto(details?.rc_fit_upto);
+    setPasiaModelCode(details?.rc_pasia_model_code);
+    setRcInsuranceComp(details?.rc_insurance_comp);
+    setRcInsuranceUpto(details?.rc_insurance_upto);
+    setRcVehicleType(details?.rc_vehicle_type);
+    setBancsModelCode(details?.bancs_model_code);
+    setBancsMakeCode(details?.bancs_make_code);
+    setBancsSubtypeCode(details?.bancs_Subtype_code);
+    setBancsBodyType(details?.bancs_Body_Type);
+    setBancsVehicleClass(details?.bancs_Vehicle_class);
+    setBancsVehicleSegment(details?.bancs_Vehicle_Segment);
+    setRcRtoCode(details?.rc_rto_code);
+    // setBancsFuelType(details?.bancs_Fuel_Type);
+    setEngineNumber(details?.rc_eng_no),
+      setLicenseNumber(details?.rc_regn_no),
+      setVehicleFuelType(details?.bancs_Fuel_Type),
+      setVehicleRcStatus(details?.rc_status);
+    setVehicleBlackListStatus(details?.rc_blacklist_status);
+    setVehicleRegistedAt(details?.rc_registered_at);
+    setVehicleInsuranceCompany(details?.rc_insurance_comp);
+    setPUCNumber,
+      setTransferDate,
+      setEngineType,
+      setAddedBy,
+      setLicenseType,
+      setIssuingAuthority;
+  }, [details]);
+
   //permanenet Address
   return (
     <>
@@ -258,15 +257,16 @@ const Form = ({
                     )}
                   </div>
                   {editCase_01 && (
-                  <div className="col-lg-2 text-start">
-                    <button
-                      className="btn-thm"
-                      onClick={handleFetchData}
-                      style={{}}
-                    >
-                      Fetch Details
-                    </button>
-                  </div>)}
+                    <div className="col-lg-2 text-start">
+                      <button
+                        className="btn-thm"
+                        onClick={handleFetchData}
+                        style={{}}
+                      >
+                        Fetch Details
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {editCase_01 ? (
@@ -292,7 +292,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={!MakerModel? claim?.vehicleDetails?.MakerModel : MakerModel}
+                            value={MakerModel}
                             onChange={(e) => setMakerModel(e.target.value)}
                             disabled={false}
                             // placeholder="Enter Registration No."
@@ -356,7 +356,9 @@ const Form = ({
                                 ? VehicleRegisteredOwner
                                 : claim?.vehicleDetails?.VehicleRegisteredNumber
                             }
-                            onChange={(e) => setVehicleRegisteredOwner(e.target.value)}
+                            onChange={(e) =>
+                              setVehicleRegisteredOwner(e.target.value)
+                            }
 
                             // placeholder="Enter Registration No."
                           />
@@ -523,9 +525,9 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              AddedBy
-                                ? AddedBy
-                                : claim?.vehicleDetails?.VehicleAddedBy
+                              AddedBy && AddedBy
+                                ? claim?.vehicleDetails?.VehicleAddedBy
+                                : "NA"
                             }
                             onChange={(e) => setAddedBy(e.target.value)}
 
@@ -557,9 +559,9 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              IssuingAuthority
-                                ? IssuingAuthority
-                                : claim?.driverDetails?.IssuingAuthority
+                              IssuingAuthority && IssuingAuthority
+                                ? claim?.driverDetails?.IssuingAuthority
+                                : "NA"
                             }
                             onChange={(e) =>
                               setIssuingAuthority(e.target.value)
@@ -627,9 +629,9 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              LicenseType
-                                ? LicenseType
-                                : claim?.driverDetails?.LicenseType
+                              LicenseType && LicenseType
+                                ? claim?.driverDetails?.LicenseType
+                                : "NA"
                             }
                             onChange={(e) => setLicenseType(e.target.value)}
 
@@ -771,9 +773,7 @@ const Form = ({
                                 ? RcRtoCode
                                 : claim?.vehicleDetails?.RcRtoCode
                             }
-                            onChange={(e) =>
-                              setRcRtoCode(e.target.value)
-                            }
+                            onChange={(e) => setRcRtoCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -879,9 +879,7 @@ const Form = ({
                                 ? BancsBodyType
                                 : claim?.vehicleDetails?.BancsBodyType
                             }
-                            onChange={(e) =>
-                              setBancsBodyType(e.target.value)
-                            }
+                            onChange={(e) => setBancsBodyType(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -915,9 +913,7 @@ const Form = ({
                                 ? VehicleFuelType
                                 : claim?.vehicleDetails?.VehicleFuelType
                             }
-                            onChange={(e) =>
-                              setVehicleFuelType(e.target.value)
-                            }
+                            onChange={(e) => setVehicleFuelType(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -987,9 +983,7 @@ const Form = ({
                                 ? BancsMakeCode
                                 : claim?.vehicleDetails?.BancsMakeCode
                             }
-                            onChange={(e) =>
-                              setBancsMakeCode(e.target.value)
-                            }
+                            onChange={(e) => setBancsMakeCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1023,9 +1017,7 @@ const Form = ({
                                 ? BancsModelCode
                                 : claim?.vehicleDetails?.BancsModelCode
                             }
-                            onChange={(e) =>
-                              setBancsModelCode(e.target.value)
-                            }
+                            onChange={(e) => setBancsModelCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1059,9 +1051,7 @@ const Form = ({
                                 ? RcVehicleType
                                 : claim?.vehicleDetails?.VehicleType
                             }
-                            onChange={(e) =>
-                              setRcVehicleType(e.target.value)
-                            }
+                            onChange={(e) => setRcVehicleType(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1095,9 +1085,7 @@ const Form = ({
                                 ? VehicleRcStatus
                                 : claim?.vehicleDetails?.VehicleRcStatus
                             }
-                            onChange={(e) =>
-                              setVehicleRcStatus(e.target.value)
-                            }
+                            onChange={(e) => setVehicleRcStatus(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1241,11 +1229,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleInsuranceCompany
-                                ? VehicleInsuranceCompany
-                                : claim?.vehicleDetails?.VehicleInsuranceCompany
-                            }
+                            value={VehicleInsuranceCompany}
                             onChange={(e) =>
                               setVehicleInsuranceCompany(e.target.value)
                             }
@@ -1336,7 +1320,6 @@ const Form = ({
                       VehicleRegistedAt={VehicleRegistedAt}
                       ClassOfVehicle={ClassOfVehicle}
                       setClassOfVehicle={setClassOfVehicle}
-
                     />
                   </div>
                 )}
