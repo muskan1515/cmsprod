@@ -414,7 +414,7 @@ function SmartTable(props) {
                             className="form-check-input m-1"
                             type="checkbox"
                             value={1}
-                            defaultChecked={true}
+                            defaultChecked={props.preRender}
                             onClick={props.gstToggleHandler}
                             id="remeberMe"
                           />

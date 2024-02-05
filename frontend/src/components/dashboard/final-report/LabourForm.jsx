@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
 
 const LabourForm = ({
   currentGst,
@@ -7,6 +8,8 @@ const LabourForm = ({
   totalAssessed,
   totalEstimate,
   taxAmount,
+  allDepreciations,
+  claim,
   setTaxAmount,
   overallMetalDep,
   setCurrentGST,
@@ -17,6 +20,35 @@ const LabourForm = ({
   setToggleLabor,
   setReload
  }) => {
+
+  const calculateVehicleAge = ()=>{
+    if(! claim.vehicleDetails?.VehicleDateOfRegistration || !claim.claimDetails?.ClaimAddedDateTime){
+      return "0";
+    }
+    const a = getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
+    const b= getMonthsDifference(claim.claimDetails?.ClaimAddedDateTime);
+    
+    return `${a + (b)}`;
+    
+
+  }
+
+  const calculateDepreciationOnMetal = ()=>{
+    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
+    console.log(a);
+    return a;
+  }
+
+  const calculatePolicyAge = ()=>{
+    const end = getMonthsDifference(claim?.claimDetails?.PolicyPeriodEnd);
+    const start= getMonthsDifference(claim.claimDetails?.PolicyPeriodStart);
+
+    if(end >=0){
+      return "Already Ended";
+    }
+    else
+     return start;
+  }
   return (
     <>
       <div className="col-lg-12">
@@ -321,7 +353,7 @@ const LabourForm = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={totalAgeOfvehicle}
+                            value={calculateVehicleAge()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -352,7 +384,7 @@ const LabourForm = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={overallMetalDep}
+                            value={calculateDepreciationOnMetal()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 

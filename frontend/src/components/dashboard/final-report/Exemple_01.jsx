@@ -337,7 +337,7 @@ export default function Exemple_01({
                 className="form-check-input"
                 type="checkbox"
                 value={row.gst}
-                onChange={(e) => handleChange(index, currentGst+1, "gst")}
+                onChange={(e) => handleChange(index, row.gst+1, "gst")}
                 id="remeberMe"
               />
             </div>
