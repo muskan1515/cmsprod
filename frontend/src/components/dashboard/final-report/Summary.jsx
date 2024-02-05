@@ -188,7 +188,7 @@ const Summary = ({ isEditMode }) => {
                     className="text-color mb-0"
                     style={{
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
                     Total Labour
@@ -212,7 +212,7 @@ const Summary = ({ isEditMode }) => {
                     className="text-color mb-0"
                     style={{
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
                     Total Cost of Parts
@@ -237,7 +237,7 @@ const Summary = ({ isEditMode }) => {
                       className="text-color mb-0"
                       style={{
                         color: "#2e008b",
-                        fontWeight: "",
+                        fontSize: "14px",
                       }}
                     >
                       Total
@@ -382,7 +382,7 @@ const Summary = ({ isEditMode }) => {
           </div>
           <div className="row mt-5">
             <div className="col-lg-12">
-              <h4>Savage & Depreciation Details</h4>
+              <h5>Savage & Depreciation Details</h5>
               {/* <hr /> */}
             </div>
             <div className="col-lg-3">
@@ -394,6 +394,7 @@ const Summary = ({ isEditMode }) => {
                     style={{
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
                     Metal %
@@ -418,6 +419,7 @@ const Summary = ({ isEditMode }) => {
                     style={{
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
                     Expected Salvage
@@ -442,6 +444,7 @@ const Summary = ({ isEditMode }) => {
                     style={{
                       color: "#2e008b",
                       fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
                     Remark on Salvage
@@ -460,7 +463,7 @@ const Summary = ({ isEditMode }) => {
           </div>
           <div className="row">
             <hr />
-            <hr />
+            {/* <hr /> */}
           </div>
           <div className="row">
             <div className="col-lg-8 text-end">
@@ -470,6 +473,7 @@ const Summary = ({ isEditMode }) => {
                 style={{
                   paddingTop: "10px",
                   color: "#2e008b",
+                  fontSize: "14px",
                   fontWeight: "bold",
                 }}
               >
@@ -499,6 +503,7 @@ const Summary = ({ isEditMode }) => {
                   paddingTop: "10px",
                   color: "#2e008b",
                   fontWeight: "bold",
+                  fontSize: "14px",
                 }}
               >
                 Net Assessed Amount
@@ -525,11 +530,11 @@ const Summary = ({ isEditMode }) => {
               <h4>Notes :</h4>
               {/* <hr /> */}
             </div>
-            <div className="col-lg-6 text-end">
+            <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
               {isEditMode ? (
-                <button className="btn btn-color m-1">Update</button>
+                <button className="btn btn-color">Update</button>
               ) : (
-                <button className="btn btn-color m-1">Save</button>
+                <button className="btn btn-color">Update</button>
               )}
               {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
@@ -540,7 +545,7 @@ const Summary = ({ isEditMode }) => {
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <div className="card">
+                  <div className="card" style={{ height: "200px" }}>
                     <Editor />
                   </div>
                 </div>
@@ -553,10 +558,10 @@ const Summary = ({ isEditMode }) => {
               {/* <hr /> */}
             </div>
             <div className="col-lg-12">
-              <div className="row mt-1 mb-1">
+              <div className="row mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <textarea name="" id="" cols="67" rows="3"></textarea>
+                  <textarea name="" id="" cols="50" rows="3"></textarea>
                   {/* <div className="card">
                     <Editor />
                   </div> */}
@@ -570,10 +575,10 @@ const Summary = ({ isEditMode }) => {
               {/* <hr /> */}
             </div>
             <div className="col-lg-12">
-              <div className="row mt-1 mb-1">
+              <div className="row mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <textarea name="" id="" cols="67" rows="3"></textarea>
+                  <textarea name="" id="" cols="50" rows="3"></textarea>
                   {/* <div className="card">
                     <Editor />
                   </div> */}
@@ -582,7 +587,7 @@ const Summary = ({ isEditMode }) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-6">
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
@@ -590,10 +595,34 @@ const Summary = ({ isEditMode }) => {
                     className="text-color mb-0"
                     style={{
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
-                    Total Labour
+                    Repair Auto Date
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Repair Completion Date
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -614,10 +643,58 @@ const Summary = ({ isEditMode }) => {
                     className="text-color mb-0"
                     style={{
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
-                    Total Cost of Parts
+                    Party Agreed
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-8">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Reason thereof Delay
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Any Further Conversation
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -638,10 +715,130 @@ const Summary = ({ isEditMode }) => {
                     className="text-color mb-0"
                     style={{
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
-                    Total Cost of Parts
+                    Repairin Photo Date
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Reinspection Date
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Salve Destroy
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Bill No.
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Bill Date
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Bill Amount
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -663,7 +860,7 @@ const Summary = ({ isEditMode }) => {
             <div className="col-lg-5"></div>
             <div className="col-lg-2">
               <div className="row mt-1">
-                <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                <div className="col-lg-7 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -672,13 +869,13 @@ const Summary = ({ isEditMode }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
-                      fontSize: "14px",
+                      fontSize: "12px",
                     }}
                   >
                     Age of Vehicle
                   </label>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-lg-5">
                   <input
                     type="text"
                     className="form-control"
@@ -694,7 +891,7 @@ const Summary = ({ isEditMode }) => {
             </div>
             <div className="col-lg-2">
               <div className="row mt-1">
-                <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                <div className="col-lg-7 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -703,13 +900,13 @@ const Summary = ({ isEditMode }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
-                      fontSize: "14px",
+                      fontSize: "12px",
                     }}
                   >
                     Age of Policy
                   </label>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-lg-5">
                   <input
                     type="text"
                     className="form-control"
@@ -725,7 +922,7 @@ const Summary = ({ isEditMode }) => {
             </div>
             <div className="col-lg-3 ">
               <div className="row mt-1">
-                <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                <div className="col-lg-7 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
@@ -734,13 +931,13 @@ const Summary = ({ isEditMode }) => {
                       color: "#2e008b",
                       fontWeight: "",
                       // marginTop: "-13px",
-                      fontSize: "14px",
+                      fontSize: "12px",
                     }}
                   >
                     Depreciation on metal(%)
                   </label>
                 </div>
-                <div className="col-lg-3">
+                <div className="col-lg-4">
                   <input
                     type="text"
                     className="form-control"

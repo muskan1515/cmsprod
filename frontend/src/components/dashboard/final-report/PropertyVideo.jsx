@@ -299,6 +299,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
             Summary & Notes
           </a>
         </li>
+        <li className="nav-item" style={{ marginLeft: "360px" }}>
+          <a href={`/claim-details?leadId=${claim.LeadID}`}>
+            {claim.PolicyNo}Policy Number
+          </a>
+        </li>
       </ul>
       {/* End .nav-tabs */}
 

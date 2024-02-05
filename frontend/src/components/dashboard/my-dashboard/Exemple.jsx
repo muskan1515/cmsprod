@@ -175,8 +175,13 @@ export default function Exemple({
         reference_id: claim.ReferenceID,
         policy_holder: claim.PolicyHolder,
         policy_no: (
-          <div style={{ textDecorationLine:"underline" ,color:"lightskyblue"}}><a href={`/claim-details?leadId=${claim.LeadID}`}>
-            {claim.PolicyNo}</a></div>
+          <div
+            style={{ textDecorationLine: "underline", color: "lightskyblue" }}
+          >
+            <a href={`/claim-details?leadId=${claim.LeadID}`}>
+              {claim.PolicyNo}
+            </a>
+          </div>
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,

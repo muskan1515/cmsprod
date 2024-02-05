@@ -96,8 +96,8 @@ let data = [
     serial_num: "1",
     doc_name: "Driving licence",
     action: "2021-09-17 19:10:50",
-    status:"verified",
-    file:'',
+    status: "verified",
+    file: "",
     verify: (
       <input
         className="form-check-input"
@@ -114,7 +114,7 @@ let data = [
     serial_num: "2",
     doc_name: "Certificate of registration",
     action: "2021-09-17 19:10:50",
-    file:'',
+    file: "",
     verify: (
       <input
         className="form-check-input"
@@ -131,7 +131,7 @@ let data = [
     serial_num: "3",
     doc_name: "Repair Estimate",
     action: "2021-09-17 19:10:50",
-    file:'',
+    file: "",
     verify: (
       <input
         className="form-check-input"
@@ -147,7 +147,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "4",
     doc_name: "Claim form",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -164,7 +164,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "5",
     doc_name: "Insurance policy",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -181,7 +181,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "6",
     doc_name: "Damage vehicle photographs/video",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -198,7 +198,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "7",
     doc_name: "Aadhar card",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -215,7 +215,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "8",
     doc_name: "Pan card",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -232,7 +232,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "9",
     doc_name: " Cancel cheque",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -249,7 +249,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "10",
     doc_name: " Satisfaction voucher",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -266,7 +266,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "11",
     doc_name: "Discharge voucher",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -283,7 +283,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "12",
     doc_name: "Dismantle photographs",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -300,7 +300,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "13",
     doc_name: "Reinspection photographs",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -317,7 +317,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "14",
     doc_name: "Repair Invoice",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -334,7 +334,7 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "15",
     doc_name: "Payment/cash receipt",
-    file:'',
+    file: "",
     action: "2021-09-17 19:10:50",
     verify: (
       <input
@@ -349,58 +349,56 @@ let data = [
   },
 ];
 
-export default function Exemple({documents}) {
+export default function Exemple({ documents }) {
+  const [updatedCode, setUpdatedCode] = useState([]);
 
-  const [updatedCode,setUpdatedCode]=useState([]);
-
-  const checkValue = (label)=>{
-
+  const checkValue = (label) => {
     let requiredInfo = [];
-      documents.map((doc,index)=>{
-        if(String(doc.DocumentName) === String(label)){
-            console.log(doc);
-          if(doc.Photo1!=="" ){
-           requiredInfo .push({
-              name : doc.Attribute1,
-              url : doc.Photo1
-            });
-          }
-          if(doc.Photo2!=="" ){
-            requiredInfo .push({
-               name : doc.Attribute2,
-               url : doc.Photo2
-             });
-           }
-           if(doc.Photo3!=="" ){
-            requiredInfo .push({
-               name : doc.Attribute3,
-               url : doc.Photo3
-             });
-           }
-           if(doc.Photo4!==""){
-            requiredInfo .push({
-               name : doc.Attribute4,
-               url : doc.Photo4
-             });
-           }
-           if(doc.Photo5!==""){
-            requiredInfo .push({
-               name : doc.Attribute5,
-               url : doc.Photo5
-             });
-           }
-
-          //  console.log(requiredInfo);
+    documents.map((doc, index) => {
+      if (String(doc.DocumentName) === String(label)) {
+        console.log(doc);
+        if (doc.Photo1 !== "") {
+          requiredInfo.push({
+            name: doc.Attribute1,
+            url: doc.Photo1,
+          });
         }
-      });
+        if (doc.Photo2 !== "") {
+          requiredInfo.push({
+            name: doc.Attribute2,
+            url: doc.Photo2,
+          });
+        }
+        if (doc.Photo3 !== "") {
+          requiredInfo.push({
+            name: doc.Attribute3,
+            url: doc.Photo3,
+          });
+        }
+        if (doc.Photo4 !== "") {
+          requiredInfo.push({
+            name: doc.Attribute4,
+            url: doc.Photo4,
+          });
+        }
+        if (doc.Photo5 !== "") {
+          requiredInfo.push({
+            name: doc.Attribute5,
+            url: doc.Photo5,
+          });
+        }
 
-      return requiredInfo;
-  }
+        //  console.log(requiredInfo);
+      }
+    });
+
+    return requiredInfo;
+  };
 
   const downloadAllFiles = async () => {
     try {
       const zip = new JSZip();
-  
+
       // updatedCode.forEach((doc, index) => {
       //   doc.file.forEach((file, fileIndex) => {
       //     // Creating a unique file name for each file
@@ -409,33 +407,33 @@ export default function Exemple({documents}) {
       //   });
       // });
 
-      documents.map((data,index)=>{
-        if(data.Attribute1!== ""){
+      documents.map((data, index) => {
+        if (data.Attribute1 !== "") {
           const fileName = data.Attribute1;
           zip.file(fileName, data.Photo1, { binary: true });
         }
-        if(data.Attribute2!== ""){
+        if (data.Attribute2 !== "") {
           const fileName = data.Attribute2;
           zip.file(fileName, data.Photo2, { binary: true });
         }
-        if(data.Attribute3!== ""){
-          const fileName =data.Attribute3;
+        if (data.Attribute3 !== "") {
+          const fileName = data.Attribute3;
           zip.file(fileName, data.Photo3, { binary: true });
         }
-        if(data.Attribute4!== ""){
-          const fileName =data.Attribute4;
+        if (data.Attribute4 !== "") {
+          const fileName = data.Attribute4;
           zip.file(fileName, data.Photo4, { binary: true });
         }
-        if(data.Attribute5!== ""){
+        if (data.Attribute5 !== "") {
           const fileName = data.Attribute5;
           zip.file(fileName, data.Photo5, { binary: true });
         }
-      })
+      });
 
       // console.log(zip);
-  
+
       const content = await zip.generateAsync({ type: "blob" });
-  
+
       // Triggering the download
       const a = document.createElement("a");
       const url = URL.createObjectURL(content);
@@ -445,48 +443,51 @@ export default function Exemple({documents}) {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-  
+
       alert("Successfully downloaded the zip!");
     } catch (error) {
       console.error("Error during download:", error);
       alert("Error during download. Please try again.");
     }
   };
-  
-  
+
   let tempCode = [];
-  useEffect(()=>{
-    data.map((docs,index)=>{
+  useEffect(() => {
+    data.map((docs, index) => {
       const allInfo = checkValue(docs.doc_name);
       // console.log(allInfo);
       const alllinks = (
-        <div style={{display:"flex",flexDirection:"column"}}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
-            
-              <a href={info.url} key={idx} target="_blank">{info.name}</a>
-            
+            <a href={info.url} key={idx} target="_blank">
+              {info.name}
+            </a>
           ))}
-        </div>);
-      
+        </div>
+      );
+
       const temp = {
-        _id : docs._id,
-        serial_num : docs.serial_num,
-        doc_name : docs.doc_name,
-        file : alllinks,
-        action : docs.action,
-        verify : docs.verify
+        _id: docs._id,
+        serial_num: docs.serial_num,
+        doc_name: docs.doc_name,
+        file: alllinks,
+        action: docs.action,
+        verify: docs.verify,
       };
 
-      
       tempCode.push(temp);
-     
     });
     // data = tempCode;
     setUpdatedCode(tempCode);
-  },[documents]);
-  
+  }, [documents]);
+
   console.log(documents);
   return (
-    <SmartTable title="Customer Documents" data={updatedCode} headCells={headCells} downloadAllFiles={downloadAllFiles} />
+    <SmartTable
+      title="Customer Documents"
+      data={updatedCode}
+      headCells={headCells}
+      downloadAllFiles={downloadAllFiles}
+    />
   );
 }
