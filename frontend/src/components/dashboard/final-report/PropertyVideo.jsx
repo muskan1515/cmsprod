@@ -35,30 +35,31 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [currentGst, setCurrentGst] = useState(0);
 
-  const [overallMetalDep,setOverallMetailDep]=useState(0);
-  const [totalAgeOfvehicle,setTotalAgeOfVehicle]=useState(0);
+  const [overallMetalDep, setOverallMetailDep] = useState(0);
+  const [totalAgeOfvehicle, setTotalAgeOfVehicle] = useState(0);
 
-  const [totalAssessed,setTotalAssessed]=useState(0);
-  const [totalEstimate,setTotalEstimate]=useState(0);
+  const [totalAssessed, setTotalAssessed] = useState(0);
+  const [totalEstimate, setTotalEstimate] = useState(0);
 
-  const [taxAmount,setTaxAmount]=useState(0);
+  const [taxAmount, setTaxAmount] = useState(0);
 
-  const [reload,setReload]=useState(false);
+  const [reload, setReload] = useState(false);
 
-  const [allRows,setAllRows]=useState( Array.from({ length: 2 }, (_, index) => ({
-    _id: index + 1,
-    sno: index + 1,
-    description: "",
-    sac: "",
-    estimate: "",
-    assessed: "",
-    bill_sr: "", // Assuming bill_sr increments with each new row
-    gst: 0
-  })));
+  const [allRows, setAllRows] = useState(
+    Array.from({ length: 2 }, (_, index) => ({
+      _id: index + 1,
+      sno: index + 1,
+      description: "",
+      sac: "",
+      estimate: "",
+      assessed: "",
+      bill_sr: "", // Assuming bill_sr increments with each new row
+      gst: 0,
+    }))
+  );
 
-
-  const [toggleEstimate,setToggleEstimate]=useState(0);
-  const [toggleLabor,setToggleLabor]=useState(0);
+  const [toggleEstimate, setToggleEstimate] = useState(0);
+  const [toggleLabor, setToggleLabor] = useState(0);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -81,34 +82,41 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       });
   }, []);
 
-  const calculateGSTValue = (original,gstValue,gst)=>{
-    if(gst % 2 ==0){
-      return (Number(original) * Number(gstValue))/100;
+  const calculateGSTValue = (original, gstValue, gst) => {
+    if (gst % 2 == 0) {
+      return (Number(original) * Number(gstValue)) / 100;
     }
     return 0;
-  }
+  };
 
-  
-  useEffect(()=>{
-
-    console.log(toggleEstimate,"toggleestimate");
-    let total_estimate = 0,total_assessed=0,total_tax=0;
-    allRows.map((row,index)=>{
-      const current_row_estimate = Number(row?.estimate) + calculateGSTValue(row?.estimate,currentGst,toggleEstimate);
+  useEffect(() => {
+    console.log(toggleEstimate, "toggleestimate");
+    let total_estimate = 0,
+      total_assessed = 0,
+      total_tax = 0;
+    allRows.map((row, index) => {
+      const current_row_estimate =
+        Number(row?.estimate) +
+        calculateGSTValue(row?.estimate, currentGst, toggleEstimate);
       total_estimate = total_estimate + current_row_estimate;
-    })
-    allRows.map((row,index)=>{
-      const current_row_assessed = Number(row?.assessed) + calculateGSTValue(row?.assessed,currentGst,row?.gst);
-      const current_row_assessed_tax = calculateGSTValue(row?.assessed,currentGst,2);
+    });
+    allRows.map((row, index) => {
+      const current_row_assessed =
+        Number(row?.assessed) +
+        calculateGSTValue(row?.assessed, currentGst, row?.gst);
+      const current_row_assessed_tax = calculateGSTValue(
+        row?.assessed,
+        currentGst,
+        2
+      );
       total_assessed = total_assessed + current_row_assessed;
       total_tax = total_tax + current_row_assessed_tax;
-    })
+    });
     setTotalAssessed(total_assessed);
     setTotalEstimate(total_estimate);
     setTaxAmount(total_tax);
     setReload(false);
-
-  },[toggleEstimate,currentGst,reload,toggleEstimate]); 
+  }, [toggleEstimate, currentGst, reload, toggleEstimate]);
 
   const [subType, setSubType] = useState("Motor");
 
@@ -300,9 +308,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           </a>
         </li>
         <li className="nav-item" style={{ marginLeft: "360px" }}>
-          <a href={`/claim-details?leadId=${claim.LeadID}`}>
-            {claim.PolicyNo}Policy Number
-          </a>
+          <a href={`/claim-details?leadId=${claim.LeadID}`}>{claim.PolicyNo}</a>
         </li>
       </ul>
       {/* End .nav-tabs */}
@@ -548,7 +554,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   }
                   setOverallMetailDep={setOverallMetailDep}
                   setTotalAgeOfVehicle={setTotalAgeOfVehicle}
-                  
                 />
               </div>
             </div>
@@ -566,39 +571,39 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   className="col-lg-9"
                   style={{ borderRight: "1px solid black" }}
                 >
-                  <Exemple_01 
-                  currentGst={currentGst}
-                  setTotalAssessed={setTotalAssessed}
-                  totalAssessed={totalAssessed}
-                  setTotalEstimate={setTotalEstimate}
-                  totalEstimate={totalEstimate}
-                  taxAmount={taxAmount}
-                  setTaxAmount={setTaxAmount}
-                  toggleEstimate={toggleEstimate}
-                  setToggleEstimate={setToggleEstimate}
-                  toggleLabor={toggleLabor}
-                  setToggleLabor={setToggleLabor}
-                  allRows={allRows}
-                  setAllRows={setAllRows}
-                  setReload={setReload}
+                  <Exemple_01
+                    currentGst={currentGst}
+                    setTotalAssessed={setTotalAssessed}
+                    totalAssessed={totalAssessed}
+                    setTotalEstimate={setTotalEstimate}
+                    totalEstimate={totalEstimate}
+                    taxAmount={taxAmount}
+                    setTaxAmount={setTaxAmount}
+                    toggleEstimate={toggleEstimate}
+                    setToggleEstimate={setToggleEstimate}
+                    toggleLabor={toggleLabor}
+                    setToggleLabor={setToggleLabor}
+                    allRows={allRows}
+                    setAllRows={setAllRows}
+                    setReload={setReload}
                   />
                 </div>
                 <div className="col-lg-3">
-                  <LabourForm 
-                  currentGst={currentGst}
-                  setCurrentGST={setCurrentGst}
-                  setTotalAssessed={setTotalAssessed}
-                  totalAssessed={totalAssessed}
-                  totalEstimate={totalEstimate}
-                  taxAmount={taxAmount}
-                  setTaxAmount={setTaxAmount}
-                  toggleEstimate={toggleEstimate}
-                  setToggleEstimate={setToggleEstimate}
-                  toggleLabor={toggleLabor}
-                  setToggleLabor={setToggleLabor}
-                  setReload={setReload}
-                  overallMetalDep={overallMetalDep}
-                  totalAgeOfvehicle={totalAgeOfvehicle}
+                  <LabourForm
+                    currentGst={currentGst}
+                    setCurrentGST={setCurrentGst}
+                    setTotalAssessed={setTotalAssessed}
+                    totalAssessed={totalAssessed}
+                    totalEstimate={totalEstimate}
+                    taxAmount={taxAmount}
+                    setTaxAmount={setTaxAmount}
+                    toggleEstimate={toggleEstimate}
+                    setToggleEstimate={setToggleEstimate}
+                    toggleLabor={toggleLabor}
+                    setToggleLabor={setToggleLabor}
+                    setReload={setReload}
+                    overallMetalDep={overallMetalDep}
+                    totalAgeOfvehicle={totalAgeOfvehicle}
                   />
                 </div>
               </div>
