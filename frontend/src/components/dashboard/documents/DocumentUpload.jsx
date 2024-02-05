@@ -204,6 +204,8 @@ export default function DocumentUpload({
       width: "100%",
       height: "80%",
       top: "60%",
+      maxHeight: "80%", // Set a maximum height for the content
+      overflow: "auto",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -622,6 +624,14 @@ export default function DocumentUpload({
         // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
+        // style={{
+        //   overlay: { ...customStyles.overlay },
+        //   content: {
+        //     ...customStyles.content,
+        //     maxHeight: "80%", // Set a maximum height for the content
+        //     overflow: "auto", // Enable auto-scrolling
+        //   },
+        // }}
         contentLabel="Example Modal"
       >
         <div className="col-lg-12">
@@ -643,13 +653,12 @@ export default function DocumentUpload({
               videoConstraints={videoConst}
             />
           </div>
-        </div>
-
-        <div onClick={changeCameraConstraints}>
-          <img
-            src="https://th.bing.com/th?id=OIP.UKGBmbTeRXuAeK4TtheaOAEsEs&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
-            width={"20px"}
-          />
+          <div className="" onClick={changeCameraConstraints}>
+            <img
+              src="https://th.bing.com/th?id=OIP.UKGBmbTeRXuAeK4TtheaOAEsEs&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+              width={"20px"}
+            />
+          </div>
         </div>
 
         {/* {isImage && (
@@ -668,18 +677,21 @@ export default function DocumentUpload({
 
         {console.log("RETake", retake)}
 
-        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+        <div
+          className="mb-3"
+          style={{ display: "flex", justifyContent: "center", gap: "15px" }}
+        >
           {!uploadedUrl.length && webcamOpened && isCapturingEnabled ? (
             ""
           ) : (
             <>
               <button
-                className="btn btn-color w-100 mb-1"
+                className="btn btn-color w-50"
+                title="Retake"
                 onClick={cancelCapture}
                 disabled={!retake}
               >
                 <FontAwesomeIcon icon={faArrowsRotate} />
-                Retake
               </button>
               {/* Additional buttons or functionality can be added here */}
             </>
@@ -688,11 +700,11 @@ export default function DocumentUpload({
           {webcamOpened && isCapturingEnabled && (
             <>
               <button
-                className="btn btn-color w-100 mb-1"
+                className="btn btn-color w-50"
                 onClick={handleUploadImage}
+                title="Capture Image"
               >
                 <FontAwesomeIcon icon={faCamera} />
-                Capture Image
               </button>
               {/* <button
                 className="btn btn-color w-100 p-1"
@@ -709,32 +721,35 @@ export default function DocumentUpload({
           {uploadedUrl.length && (
             <>
               <button
-                className="btn btn-color w-100 mb-1"
+                className="btn btn-color w-50"
                 onClick={uploadCancelHandler}
+                title="Cancel"
               >
                 <FontAwesomeIcon icon={faXmark} />
-                Cancel
               </button>
 
               <button
-                className="btn btn-color w-100 mb-1"
+                className="btn btn-color w-100"
+                title="Upload"
                 onClick={uploadFiles}
               >
                 <FontAwesomeIcon icon={faCloudArrowUp} />
-                Upload
               </button>
             </>
           )}
         </div>
-
-        {uploadedUrl.map((url, index) => (
-          <img
-            key={`image_${index}`}
-            src={url}
-            alt={`Uploaded Image ${index + 1}`}
-          />
-        ))}
-
+        <div className="row">
+          <div className="col-lg-4">
+            {uploadedUrl.map((url, index) => (
+              <img
+                className="col-lg-3 mb-3"
+                key={`image_${index}`}
+                src={url}
+                alt={`Uploaded Image ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
         {isVideo && (
           <div>
             <h4 className="mt-4">Captured Video:</h4>
