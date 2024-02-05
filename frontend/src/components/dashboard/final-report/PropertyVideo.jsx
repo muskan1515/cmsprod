@@ -44,24 +44,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [taxAmount, setTaxAmount] = useState(0);
 
-<<<<<<< Updated upstream
-  const [reload, setReload] = useState(false);
-=======
   const [allDepreciations, setAllDepreciations] = useState([]);
 
   const [reload,setReload]=useState(false);
 
-  const [allRows,setAllRows]=useState( Array.from({ length: 2 }, (_, index) => ({
-    _id: index + 1,
-    sno: index + 1,
-    description: "",
-    sac: "",
-    estimate: "",
-    assessed: "",
-    bill_sr: "", // Assuming bill_sr increments with each new row
-    gst: 0
-  })));
->>>>>>> Stashed changes
+
 
   const [allRows, setAllRows] = useState(
     Array.from({ length: 2 }, (_, index) => ({
@@ -100,11 +87,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       });
   }, []);
 
-<<<<<<< Updated upstream
-  const calculateGSTValue = (original, gstValue, gst) => {
-    if (gst % 2 == 0) {
-      return (Number(original) * Number(gstValue)) / 100;
-=======
   const calculateGSTValue = (original,gstValue,gst)=>{
     if(gst % 2 !== 0){
       return (Number(original) * Number(gstValue))/100;
@@ -115,7 +97,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const calculateTaxValue = (original,gstValue,gst)=>{
     if(gst % 2 === 0){
       return (Number(original) * Number(gstValue))/100;
->>>>>>> Stashed changes
     }
     return 0;
   };
@@ -130,23 +111,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         Number(row?.estimate) +
         calculateGSTValue(row?.estimate, currentGst, toggleEstimate);
       total_estimate = total_estimate + current_row_estimate;
-<<<<<<< Updated upstream
-    });
-    allRows.map((row, index) => {
-      const current_row_assessed =
-        Number(row?.assessed) +
-        calculateGSTValue(row?.assessed, currentGst, row?.gst);
-      const current_row_assessed_tax = calculateGSTValue(
-        row?.assessed,
-        currentGst,
-        2
-      );
-=======
     })
     allRows.map((row,index)=>{ 
       const current_row_assessed = Number(row?.assessed) + calculateGSTValue(row?.assessed,currentGst,row?.gst);
       const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,2);
->>>>>>> Stashed changes
       total_assessed = total_assessed + current_row_assessed;
       total_tax = total_tax + current_row_assessed_tax;
     });
@@ -634,23 +602,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   />
                 </div>
                 <div className="col-lg-3">
-<<<<<<< Updated upstream
-                  <LabourForm
-                    currentGst={currentGst}
-                    setCurrentGST={setCurrentGst}
-                    setTotalAssessed={setTotalAssessed}
-                    totalAssessed={totalAssessed}
-                    totalEstimate={totalEstimate}
-                    taxAmount={taxAmount}
-                    setTaxAmount={setTaxAmount}
-                    toggleEstimate={toggleEstimate}
-                    setToggleEstimate={setToggleEstimate}
-                    toggleLabor={toggleLabor}
-                    setToggleLabor={setToggleLabor}
-                    setReload={setReload}
-                    overallMetalDep={overallMetalDep}
-                    totalAgeOfvehicle={totalAgeOfvehicle}
-=======
                   <LabourForm 
                   currentGst={currentGst}
                   setCurrentGST={setCurrentGst}
@@ -667,7 +618,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   setToggleLabor={setToggleLabor}
                   setReload={setReload}
                   claim={claim}
->>>>>>> Stashed changes
                   />
                 </div>
               </div>
