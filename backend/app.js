@@ -840,7 +840,7 @@ app.post("/sendCustomEmail", authenticateUser, (req, res) => {
       return;
     }
 
-    if (!result2[0].Token) {
+    if (!result2[0]?.Token) {
       const generatedToken = generateUniqueToken();
       const insertClaimDetails = `
       UPDATE ClaimDetails
