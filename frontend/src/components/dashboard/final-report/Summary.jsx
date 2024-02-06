@@ -531,10 +531,11 @@ const Summary = ({ isEditMode }) => {
               {/* <hr /> */}
             </div>
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
+              <button className="btn btn-color m-1">Cancel</button>
               {isEditMode ? (
-                <button className="btn btn-color">Update</button>
+                <button className="btn btn-color m-1">Update</button>
               ) : (
-                <button className="btn btn-color">Update</button>
+                <button className="btn btn-color m-1">Update</button>
               )}
               {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
@@ -545,8 +546,8 @@ const Summary = ({ isEditMode }) => {
               <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <div className="card" style={{ height: "200px" }}>
-                    <Editor />
+                  <div className="">
+                    <Editor style={{ height: "100px" }} />
                   </div>
                 </div>
               </div>

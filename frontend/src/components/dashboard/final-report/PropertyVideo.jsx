@@ -619,6 +619,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         >
           <div className="property_video">
             <div className="thumb">
+              {/* <LabourSection /> */}
               <div className="row">
                 <div
                   className="col-lg-9"
@@ -668,6 +669,111 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   depMetal={depMetal}
                   ageOfVehicle={ageOfVehicle}
                   />
+                </div>
+                <div className="col-lg-12 mt-5">
+                  <div className="row mt-1">
+                    <div className="col-lg-5">
+                      <button className="btn btn-color m-1">Cancel</button>
+                      {isEditMode ? (
+                        <button className="btn btn-color m-1">Update</button>
+                      ) : (
+                        <button className="btn btn-color m-1">Save</button>
+                      )}
+                    </div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-7 my_profile_setting_input form-group text-end">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Age of Vehicle
+                          </label>
+                        </div>
+                        <div className="col-lg-5">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // value={props.assessed}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-2">
+                      <div className="row mt-1">
+                        <div className="col-lg-7 my_profile_setting_input form-group text-end">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Age of Policy
+                          </label>
+                        </div>
+                        <div className="col-lg-5">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // value={props.assessed}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 ">
+                      <div className="row mt-1">
+                        <div className="col-lg-7 my_profile_setting_input form-group text-end">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Depreciation on metal(%)
+                          </label>
+                        </div>
+                        <div className="col-lg-4">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // value={props.difference}
+                            // readOnly={!isEditMode}
+                            // onChange={(e) => setLicenseType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

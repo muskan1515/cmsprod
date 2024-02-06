@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
+import {
+  calculateDepreciationsPercenatge,
+  getMonthsDifference,
+} from "./functions";
 
 const LabourForm = ({
   currentGst,
@@ -27,40 +30,46 @@ const LabourForm = ({
   depMetal,
   ageOfVehicle,
   setCabin,
-  setReload
- }) => {
-
-
-
-  const calculatePolicyAge = ()=>{
+  setReload,
+}) => {
+  const calculatePolicyAge = () => {
     const end = getMonthsDifference(claim?.claimDetails?.PolicyPeriodEnd);
-    const start= getMonthsDifference(claim.claimDetails?.PolicyPeriodStart);
+    const start = getMonthsDifference(claim.claimDetails?.PolicyPeriodStart);
 
-    if(end >=0){
+    if (end >= 0) {
       return "Already Ended";
-    }
-    else
-     return start;
-  }
+    } else return start;
+  };
   return (
     <>
       <div className="col-lg-12">
         <div className="row">
           <div className="col-lg-12 mb-2 mt-2">
             <div className="row mt-1">
-              <div className="col-lg-8">
-                <input
-                  className="form-check-input m-1"
-                  type="checkbox"
-                  value=""
-                  onChange={()=>{
-                    setToggleEstimate(toggleEstimate+1);
-                    setReload(true);
-                  }}
-                  id="remeberMe"
-                />
-                Estimate W/o Tax :{totalEstimate}
-                (Assessed) : {totalAssessed}
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div className="col-lg-12">
+                      <input
+                        className="form-check-input m-1"
+                        type="checkbox"
+                        value=""
+                        onChange={() => {
+                          setToggleEstimate(toggleEstimate + 1);
+                          setReload(true);
+                        }}
+                        id="remeberMe"
+                      />
+                      Estimate W/o Tax :
+                    </div>
+                    <div className="col-lg-12 text-center">{totalEstimate}</div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="col-lg-12 text-end">[Assessed] :</div>
+                    <div className="col-lg-12 text-end">{totalAssessed}</div>
+                  </div>
+                  {"   "}
+                </div>
               </div>
               {/* <div className="col-lg-6">
                 <select
@@ -117,7 +126,7 @@ const LabourForm = ({
                   className="form-control"
                   id="propertyTitle"
                   value={cabin}
-                  onChange={(e)=>setCabin(e.target.value)}
+                  onChange={(e) => setCabin(e.target.value)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -143,7 +152,7 @@ const LabourForm = ({
                   className="form-control"
                   id="propertyTitle"
                   value={loadBody}
-                  onChange={(e)=>setLoadBody(e.target.value)}
+                  onChange={(e) => setLoadBody(e.target.value)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -169,7 +178,7 @@ const LabourForm = ({
                   className="form-control"
                   id="propertyTitle"
                   value={towingCharges}
-                  onChange={(e)=>setTowingCharges(e.target.value)}
+                  onChange={(e) => setTowingCharges(e.target.value)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -195,7 +204,6 @@ const LabourForm = ({
                   className="form-control"
                   id="propertyTitle"
                   value={totalAssessed}
-
                 />
               </div>
             </div>
@@ -221,7 +229,7 @@ const LabourForm = ({
                     className="form-control"
                     id="propertyTitle"
                     value={currentGst}
-                    onChange={(e)=>{
+                    onChange={(e) => {
                       setCurrentGST(e.target.value);
                       setReload(true);
                     }}
@@ -247,7 +255,6 @@ const LabourForm = ({
                     className="form-control"
                     id="propertyTitle"
                     value={taxAmount}
-
                   />
                 </div>
               </div>
@@ -287,7 +294,7 @@ const LabourForm = ({
                       fontWeight: "",
                     }}
                   >
-                    Amount 
+                    Amount
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -321,79 +328,119 @@ const LabourForm = ({
                   type="text"
                   className="form-control form-control-table"
                   id="propertyTitle"
-                  value={totalAssessed+taxAmount+Number(cabin)+Number(loadBody)+Number(towingCharges)-Number(laborWOPaint)}
+                  value={
+                    totalAssessed +
+                    taxAmount +
+                    Number(cabin) +
+                    Number(loadBody) +
+                    Number(towingCharges) -
+                    Number(laborWOPaint)
+                  }
                   // placeholder="Enter Registration No."
                 />
               </div>
             </div>
           </div>
           <div className="col-lg-12">
-                  <div className="row mt-1">
-                    <div className="col-lg-5"></div>
-                    <div className="col-lg-2">
-                      <div className="row mt-1">
-                        <div className="col-lg-8 my_profile_setting_input form-group text-end">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Age of Vehicle(months)
-                          </label>
-                        </div>
-                        <div className="col-lg-8">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={ageOfVehicle}
-                            // readOnly={!isEditMode}
-                            // onChange={(e) => setLicenseType(e.target.value)}
+            <div className="row mt-1">
+              <div className="col-lg-5"></div>
+              <div className="col-lg-2">
+                <div className="row mt-1">
+                  <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                    <label
+                      htmlFor=""
+                      className="text-color"
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#2e008b",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Age of Vehicle(months)
+                    </label>
+                  </div>
+                  <div className="col-lg-8">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      value={ageOfVehicle}
+                      // readOnly={!isEditMode}
+                      // onChange={(e) => setLicenseType(e.target.value)}
 
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 ">
-                      <div className="row mt-1">
-                        <div className="col-lg-8 my_profile_setting_input form-group text-end">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Depreciation on metal(%)
-                          </label>
-                        </div>
-                        <div className="col-lg-4">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={depMetal}
-                            // readOnly={!isEditMode}
-                            // onChange={(e) => setLicenseType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      // placeholder="Enter Registration No."
+                    />
                   </div>
                 </div>
+              </div>
+              <div className="col-lg-3 ">
+                <div className="row mt-1">
+                  <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                    <label
+                      htmlFor=""
+                      className="text-color"
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#2e008b",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Depreciation on metal(%)
+                    </label>
+                  </div>
+                  <div className="col-lg-4">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      value={depMetal}
+                      // readOnly={!isEditMode}
+                      // onChange={(e) => setLicenseType(e.target.value)}
+
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 ">
+            <div className="row mt-1">
+              <div className="col-lg-8 my_profile_setting_input form-group text-end">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                    fontSize: "14px",
+                  }}
+                >
+                  Depreciation on metal(%)
+                </label>
+              </div>
+              <div className="col-lg-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  value={overallMetalDep}
+                  // readOnly={!isEditMode}
+                  // onChange={(e) => setLicenseType(e.target.value)}
+
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+
           {/* <div className="col-lg-12 text-center mt-2">
             <div className="my_profile_setting_input">
               <button className="btn btn-color w-100">Update Status</button>

@@ -200,7 +200,7 @@ const Servey = ({
             </div>
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                <div className="col-lg-3 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -211,7 +211,7 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Date of Accident <span class="text-danger">*</span> :
+                    Date of Accident
                   </label>
                 </div>
                 <div className="col-lg-8">
@@ -225,7 +225,7 @@ const Servey = ({
             </div>
             <div className="col-lg-12">
               <div className="row mt-1 mb-1">
-                <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                <div className="col-lg-3 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -234,7 +234,7 @@ const Servey = ({
                       fontWeight: "",
                     }}
                   >
-                    Time of Accident <span class="text-danger">*</span> :
+                    Time of Accident
                   </label>
                 </div>
                 <div className="col-lg-7">
@@ -247,9 +247,9 @@ const Servey = ({
                 </div>
               </div>
             </div>
-            <div className="col-lg-12">
+            <div className="col-lg-7">
               <div className="row">
-                <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                <div className="col-lg-5 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -260,10 +260,40 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Place of Accident <span class="text-danger">*</span> :
+                    Place of Accident
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-7" style={{ marginRight: "-10px" }}>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+              {/* <div className="my_profile_setting_input form-group">
+          <label htmlFor="propertyTitle">Property Title</label>
+          <input type="text" className="form-control" id="propertyTitle" />
+        </div> */}
+            </div>
+            <div className="col-lg-5">
+              <div className="row">
+                <div className="col-lg-3 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                    }}
+                  >
+                    Pin
+                  </label>
+                </div>
+                <div className="col-lg-9">
                   <input
                     type="text"
                     className="form-control"
@@ -280,7 +310,7 @@ const Servey = ({
             </div>
             <div className="col-lg-12">
               <div className="row">
-                <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                <div className="col-lg-3 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -291,10 +321,10 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Place of Survey <span class="text-danger">*</span> :
+                    Place of Survey
                   </label>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-9">
                   <input
                     type="text"
                     className="form-control"
@@ -316,23 +346,23 @@ const Servey = ({
             <hr />
           </div>
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <div className="row mt-1">
-                <div className="col-lg-6 my_profile_setting_input form-group">
+                <div className="col-lg-7 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"
                     style={{
                       // paddingTop: "15px",
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
-                    Allotment Date <span class="text-danger">*</span> :
+                    Allotment Date :
                   </label>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-5">
                   {/* <input
               type="date"
               className="form-control"
@@ -343,7 +373,7 @@ const Servey = ({
                 </div>
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-5">
               <div className="row mt-1">
                 <div className="col-lg-5 my_profile_setting_input form-group text-end">
                   <label
@@ -352,11 +382,11 @@ const Servey = ({
                     style={{
                       // paddingTop: "15px",
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
-                    Inspection <span class="text-danger">*</span> :
+                    Inspection :
                   </label>
                 </div>
                 <div className="col-lg-7">
@@ -374,14 +404,14 @@ const Servey = ({
 
           <div className="col-lg-12 mt-2">
             <div className="row">
-              <div className="col-lg-4 my_profile_setting_input form-group">
+              <div className="col-lg-4 my_profile_setting_input form-group text-end">
                 <label
                   htmlFor=""
                   className="text-color"
                   style={{
                     paddingTop: "5px",
                     color: "#2e008b",
-                    fontWeight: "",
+                    fontSize: "14px",
                     // marginTop: "-13px",
                   }}
                 >
@@ -408,8 +438,8 @@ const Servey = ({
           </div>
           <div className="col-lg-12">
             <div>
-              <div className="card">
-                <Editor />
+              <div className="">
+                <Editor style={{ height: "150px" }} />
               </div>
               {/*  <Editor/>*/}
               {/* <textarea
@@ -439,13 +469,13 @@ const Servey = ({
               required
             /> */}
           </div>
-          <div className="col-lg-12 mb-3 mt-2">
+          <div className="col-lg-12 mb-3">
             <h4>Police Action :</h4>
             <hr />
           </div>
           <div className="col-lg-12 mb-2">
-            <div className="card">
-              <Editor />
+            <div className="">
+              <Editor style={{ height: "80px" }} />
             </div>
           </div>
         </div>
@@ -456,6 +486,7 @@ const Servey = ({
               <hr />
             </div>
             <div className="col-lg-6 text-end">
+              <button className="btn btn-color m-1">Cancel</button>
               {isEditMode ? (
                 <button className="btn btn-color m-1">Update</button>
               ) : (
@@ -468,29 +499,127 @@ const Servey = ({
             </div>
           </div>
           <div className="row">
-            <div className="card" style={{ height: "200px" }}>
-              <Editor />
+            <div className="">
+              <Editor style={{ height: "100px" }} />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
           <div className="col-lg-12 mt-3">
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
-            <div className="card" style={{ height: "200px" }}>
-              <Editor />
+            <div className="">
+              <Editor style={{ height: "100px" }} />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
-            <div className="card" style={{ height: "200px" }}>
-              <Editor />
+            <div className="">
+              <Editor style={{ height: "300px" }} />
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>
         </div>
         <hr />
+      </div>
+      <div className="col-lg-12 mt-3">
+        <div className="row mt-1">
+          <div className="col-lg-3"></div>
+          <div className="col-lg-2">
+            <div className="row mt-1">
+              <div className="col-lg-7 my_profile_setting_input form-group text-end">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                    fontSize: "13px",
+                  }}
+                >
+                  Age of Vehicle
+                </label>
+              </div>
+              <div className="col-lg-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // value={props.assessed}
+                  // readOnly={!isEditMode}
+                  // onChange={(e) => setLicenseType(e.target.value)}
+
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-2">
+            <div className="row mt-1">
+              <div className="col-lg-7 my_profile_setting_input form-group text-end">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                    fontSize: "13px",
+                  }}
+                >
+                  Age of Policy
+                </label>
+              </div>
+              <div className="col-lg-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // value={props.assessed}
+                  // readOnly={!isEditMode}
+                  // onChange={(e) => setLicenseType(e.target.value)}
+
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 ">
+            <div className="row mt-1">
+              <div className="col-lg-7 my_profile_setting_input form-group text-end">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontWeight: "",
+                    // marginTop: "-13px",
+                    fontSize: "13px",
+                  }}
+                >
+                  Depreciation on metal(%)
+                </label>
+              </div>
+              <div className="col-lg-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="propertyTitle"
+                  // value={props.difference}
+                  // readOnly={!isEditMode}
+                  // onChange={(e) => setLicenseType(e.target.value)}
+
+                  // placeholder="Enter Registration No."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {/* <div className="row">
         <div className="text-center">
@@ -513,7 +642,7 @@ const Servey = ({
                 // marginTop: "-13px",
               }}
             >
-              Endo. Doc <span class="text-danger">*</span>
+              Endo. Doc 
             </label>
           </div>
           <div className="col-lg-8">

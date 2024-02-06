@@ -194,7 +194,6 @@ function SmartTable(props) {
   const [tableWidth, setTableWidth] = useState(1000);
   const [data, setData] = useState(props.data);
 
-
   const [search, setSearch] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage ?? 10);
   const [rowsPerPageOptions] = useState(
@@ -392,34 +391,11 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <div className="col-lg-12">
+                <div className="col-lg-12 offset-3">
                   <div className="row">
-                    {/* <div className="col-lg-3">
-                      <button
-                        className="btn btn-color w-15"
-                        onClick={() => props.handleAddRow()}
-                      >
-                        <span className="flaticon-plus"></span>
-                      </button>
-                      {props.edit ? (
-                        <button
-                          className="btn btn-color w-15"
-                          onClick={() => props.updateHandler()}
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-color w-15"
-                          onClick={() => props.editHandler()}
-                        >
-                          <span className="flaticon-edit"></span>
-                        </button>
-                      )}
-                    </div>
                     <div className="col-lg-3">
-                      <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group">
+                      <div className="row mt-3">
+                        <div className="col-lg-4 my_profile_setting_input form-group text-end">
                           <label
                             htmlFor=""
                             className="text-color"
@@ -431,7 +407,7 @@ function SmartTable(props) {
                               fontSize: "14px",
                             }}
                           >
-                            Estimated
+                            Paint
                           </label>
                         </div>
                         <div className="col-lg-8">
@@ -449,70 +425,32 @@ function SmartTable(props) {
                       </div>
                     </div>
                     <div className="col-lg-3">
-                      <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Assessed
-                          </label>
-                        </div>
-                        <div className="col-lg-8">
+                      <div className="row">
+                        <div className="col-lg-8 mt-3">
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.assessed}
+                            value={props.estimate}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
+                        </div>
+                        <div className="col-lg-4 mt-1">
+                          <button
+                            className="btn btn-color w-15"
+                            onClick={() => props.updateHandler()}
+                          >
+                            Update
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-3">
-                      <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Difference
-                          </label>
-                        </div>
-                        <div className="col-lg-8">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={props.difference}
-                            // readOnly={!isEditMode}
-                            // onChange={(e) => setLicenseType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
                 </div>
-                <div className="col-lg-12"></div>
+                {/* <div className="col-lg-12"></div> */}
               </div>
             </div>
           ) : (
@@ -524,9 +462,9 @@ function SmartTable(props) {
           )}
           {props.noPagination || data.length === 0 || !props.url ? (
             <div className="row">
-              <div className="col-12 text-end p-3">
+              {/* <div className="col-12 text-end p-3">
                 {props.data.length > 0 ? props.data.length : 0} Rows
-              </div>
+              </div> */}
             </div>
           ) : (
             <div className="row">

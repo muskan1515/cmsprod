@@ -427,20 +427,18 @@ function SmartTable(props) {
                             style={{ fontSize: "smaller" }}
                             data-live-search="true"
                             data-width="100%"
-
                             // disabled={!edit}
                             onClick={(e) =>
-                              props.changeTotalAccordingToPolicyType(e.target.value)
+                              props.changeTotalAccordingToPolicyType(
+                                e.target.value
+                              )
                             }
                           >
                             <option data-tokens="Status1" value={"Estimate"}>
                               Estimate
                             </option>
-                            <option
-                              data-tokens="Status2"
-                              value={"Assessed"}
-                            >
-                            Assessed
+                            <option data-tokens="Status2" value={"Assessed"}>
+                              Assessed
                             </option>
                           </select>
                         </div>
@@ -448,7 +446,7 @@ function SmartTable(props) {
                     </div>
                     <div className="col-lg-2">
                       <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group text-start">
+                        <div className="col-lg-5 my_profile_setting_input form-group text-start">
                           <label
                             htmlFor=""
                             className="text-color"
@@ -463,7 +461,7 @@ function SmartTable(props) {
                             Estimated
                           </label>
                         </div>
-                        <div className="col-lg-8">
+                        <div className="col-lg-7">
                           <input
                             type="text"
                             className="form-control"
@@ -479,7 +477,7 @@ function SmartTable(props) {
                     </div>
                     <div className="col-lg-2">
                       <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group text-start">
+                        <div className="col-lg-5 my_profile_setting_input form-group text-start">
                           <label
                             htmlFor=""
                             className="text-color"
@@ -494,7 +492,7 @@ function SmartTable(props) {
                             Assessed
                           </label>
                         </div>
-                        <div className="col-lg-8">
+                        <div className="col-lg-7">
                           <input
                             type="text"
                             className="form-control"
@@ -510,7 +508,7 @@ function SmartTable(props) {
                     </div>
                     <div className="col-lg-2">
                       <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group text-start">
+                        <div className="col-lg-5 my_profile_setting_input form-group text-start">
                           <label
                             htmlFor=""
                             className="text-color"
@@ -525,7 +523,7 @@ function SmartTable(props) {
                             Difference
                           </label>
                         </div>
-                        <div className="col-lg-8">
+                        <div className="col-lg-7">
                           <input
                             type="text"
                             className="form-control"
@@ -544,7 +542,7 @@ function SmartTable(props) {
                 <div className="col-lg-12">
                   <div className="row mt-1">
                     <div className="col-lg-5"></div>
-                    <div className="col-lg-2">
+                    <div className="col-lg-4">
                       <div className="row mt-1">
                         <div className="col-lg-8 my_profile_setting_input form-group text-end">
                           <label
@@ -561,7 +559,7 @@ function SmartTable(props) {
                             Age of Vehicle(months)
                           </label>
                         </div>
-                        <div className="col-lg-8">
+                        <div className="col-lg-4">
                           <input
                             type="text"
                             className="form-control"

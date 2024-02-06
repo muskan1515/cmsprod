@@ -307,6 +307,9 @@ const PolicyDetails = ({
         </div> */}
         </div>
         <div className="col-lg-4 text-end">
+          <button className="btn btn-color m-1" onClick={handleEditClick}>
+            Cancel
+          </button>
           {isEditMode ? (
             <button className="btn btn-color m-1" onClick={handleUpdateClick}>
               Update
@@ -1139,9 +1142,9 @@ const PolicyDetails = ({
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-12">
+                    <div className="col-lg-7">
                       <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                        <div className="col-lg-7 my_profile_setting_input form-group text-end">
                           <label
                             htmlFor=""
                             className="text-color"
@@ -1156,7 +1159,10 @@ const PolicyDetails = ({
                             Cubic Capacity
                           </label>
                         </div>
-                        <div className="col-lg-8">
+                        <div
+                          className="col-lg-5"
+                          style={{ marginLeft: "-4px" }}
+                        >
                           <input
                             type="text"
                             className="form-control"
@@ -1172,9 +1178,40 @@ const PolicyDetails = ({
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-12">
+                    <div className="col-lg-5">
                       <div className="row mt-1">
-                        <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                        <div className="col-lg-5 text-end my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              paddingTop: "5px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Anti theft
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="color"
+                            // value={VehicleModel}
+                            readOnly={!isEditMode}
+                            // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-7">
+                      <div className="row mt-1">
+                        <div className="col-lg-6 my_profile_setting_input form-group text-end">
                           <label
                             htmlFor=""
                             className="text-color"
@@ -1186,18 +1223,21 @@ const PolicyDetails = ({
                               fontSize: "14px",
                             }}
                           >
-                            Remark
+                            PUC Details
                           </label>
                         </div>
-                        <div className="col-lg-8">
+                        <div
+                          className="col-lg-5"
+                          style={{ marginLeft: "20px" }}
+                        >
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
+                            value={VehicleTypeOfBody}
                             readOnly={!isEditMode}
-                            value={VehicleTaxParticulars}
                             onChange={(e) =>
-                              setVehicleTaxParticulars(e.target.value)
+                              setVehicleTypeOfBody(e.target.value)
                             }
 
                             // placeholder="Enter Registration No."
@@ -1205,6 +1245,38 @@ const PolicyDetails = ({
                         </div>
                       </div>
                     </div>
+                    <div className="col-lg-5">
+                      <div className="row mt-1">
+                        <div className="col-lg-3 text-end my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              paddingTop: "5px",
+                              color: "#2e008b",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            Upto
+                          </label>
+                        </div>
+                        <div className="col-lg-9">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="color"
+                            // value={VehicleModel}
+                            readOnly={!isEditMode}
+                            // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
                     {/* <div className="col-lg-12">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group text-end">
@@ -1644,6 +1716,43 @@ const PolicyDetails = ({
                       </div>
                     </div>
                   </div>
+                  <div className="col-lg-12">
+                    <div className="row mt-1">
+                      <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                        <label
+                          htmlFor=""
+                          className="text-color"
+                          style={{
+                            // paddingTop: "15px",
+                            color: "#2e008b",
+                            fontWeight: "",
+                            // marginTop: "-13px",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Remark
+                        </label>
+                      </div>
+                      <div className="col-lg-8">
+                        <select
+                          style={{ padding: "2px" }}
+                          className="selectpicker form-select"
+                          data-live-search="true"
+                          data-width="100%"
+                        >
+                          <option data-tokens="Status1">
+                            Verified from Original
+                          </option>
+                          <option data-tokens="Status2">
+                            Verified from Online
+                          </option>
+                          <option data-tokens="Status3">
+                            Verified from Orified
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                   {/* <div className="col-lg-12">
                 <div className="row mt-1">
                   <div className="col-lg-4 my_profile_setting_input form-group text-end">
@@ -1745,6 +1854,38 @@ const PolicyDetails = ({
 
                     // placeholder="Enter Registration No."
                   />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color"
+                    style={{
+                      // paddingTop: "15px",
+                      color: "#2e008b",
+                      fontWeight: "",
+                      // marginTop: "-13px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Date of Birth
+                  </label>
+                </div>
+                <div className="col-lg-8">
+                  <MyDatePicker />
+                  {/* <input
+                    type="date"
+                    className="form-control"
+                    id="propertyTitle"
+                    value={LicenseNumber}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setLicenseNumber(e.target.value)}
+
+                    // placeholder="Enter Registration No."
+                  /> */}
                 </div>
               </div>
             </div>
@@ -1978,14 +2119,18 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    readOnly={!isEditMode}
-
-                    // placeholder="Enter Registration No."
-                  />
+                  <select
+                    style={{ padding: "2px" }}
+                    className="selectpicker form-select"
+                    data-live-search="true"
+                    data-width="100%"
+                  >
+                    <option data-tokens="Status1">
+                      Verified from Original
+                    </option>
+                    <option data-tokens="Status2">Verified from Online</option>
+                    <option data-tokens="Status3">Verified from Orified</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -2264,6 +2409,43 @@ const PolicyDetails = ({
 
                         // placeholder="Enter Registration No."
                       />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-5 my_profile_setting_input form-group text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          paddingTop: "5px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Remark
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <select
+                        style={{ padding: "2px" }}
+                        className="selectpicker form-select"
+                        data-live-search="true"
+                        data-width="100%"
+                      >
+                        <option data-tokens="Status1">
+                          Verified from Original
+                        </option>
+                        <option data-tokens="Status2">
+                          Verified from Online
+                        </option>
+                        <option data-tokens="Status3">
+                          Verified from Orified
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>
