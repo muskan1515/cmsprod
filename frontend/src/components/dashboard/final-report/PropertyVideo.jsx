@@ -579,6 +579,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setVehicleTaxParticulars={setVehicleTaxParticulars}
                 VehicleSeatingCapacity={VehicleSeatingCapacity}
                 setVehicleSeatingCapacity={setVehicleSeatingCapacity}
+                claim={claim}
               />
             </div>
           </div>

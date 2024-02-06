@@ -13,6 +13,7 @@ const Servey = ({
   setPhoneNumber,
   applicantNumber,
   setApplicantNumber,
+  
 
   ReferenceNo,
   setReferenceNo,
@@ -104,7 +105,33 @@ const Servey = ({
   setVehicleTaxParticulars,
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
+  claim
 }) => {
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+
+  const formatTime = (dateString) => {
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -122,6 +149,7 @@ const Servey = ({
 
   // const Editor = SomeComponent.Editor;
   const [editorContent, setEditorContent] = useState("");
+  
 
   const formatText = (command) => {
     if (typeof window !== "undefined") {
@@ -187,13 +215,11 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  {/* <input
-              type="date"
+                  <input
+              value={formatDate(claim?.accidentDetails?.AccidentAddedDateTime)}
               className="form-control"
               id="propertyTitle"
-            /> */}
-                  <MyDatePicker />
-                  <span className="flaticon-calendar m-1 text-dark"></span>
+            /> 
                 </div>
               </div>
             </div>
@@ -212,12 +238,12 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    // placeholder="Enter Registration No."
-                  />
+                <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={formatTime(claim?.accidentDetails?.AccidentAddedDateTime)}
+              />
                 </div>
               </div>
             </div>
@@ -242,6 +268,7 @@ const Servey = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={claim?.accidentDetails?.PlaceOfLoss}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -311,7 +338,7 @@ const Servey = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <MyDatePicker />
+                  <MyDatePicker selectedDate={claim?.accidentDetails?.SurveyAllotmentDate} />
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
