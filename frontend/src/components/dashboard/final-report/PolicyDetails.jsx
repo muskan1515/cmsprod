@@ -1916,7 +1916,7 @@ return formattedDateString;
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <MyDatePicker />
+                 
                   {/* <input
                     type="date"
                     className="form-control"
