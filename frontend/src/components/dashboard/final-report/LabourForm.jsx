@@ -18,26 +18,19 @@ const LabourForm = ({
   setToggleEstimate,
   toggleLabor,
   setToggleLabor,
+  laborWOPaint,
+  towingCharges,
+  setTowingCharges,
+  loadBody,
+  setLoadBody,
+  cabin,
+  depMetal,
+  ageOfVehicle,
+  setCabin,
   setReload
  }) => {
 
-  const calculateVehicleAge = ()=>{
-    if(! claim.vehicleDetails?.VehicleDateOfRegistration || !claim.claimDetails?.ClaimAddedDateTime){
-      return "0";
-    }
-    const a = getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
-    const b= getMonthsDifference(claim.claimDetails?.ClaimAddedDateTime);
-    
-    return `${a + (b)}`;
-    
 
-  }
-
-  const calculateDepreciationOnMetal = ()=>{
-    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
-    console.log(a);
-    return a;
-  }
 
   const calculatePolicyAge = ()=>{
     const end = getMonthsDifference(claim?.claimDetails?.PolicyPeriodEnd);
@@ -91,7 +84,7 @@ const LabourForm = ({
                   value=""
                   id="remeberMe"
                 />
-                Labour W/O Paint :{" "}
+                Labour W/O Paint :{laborWOPaint}
               </div>
               <div className="col-lg-8">
                 <input
@@ -123,6 +116,8 @@ const LabourForm = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
+                  value={cabin}
+                  onChange={(e)=>setCabin(e.target.value)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -147,6 +142,8 @@ const LabourForm = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
+                  value={loadBody}
+                  onChange={(e)=>setLoadBody(e.target.value)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -171,6 +168,8 @@ const LabourForm = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
+                  value={towingCharges}
+                  onChange={(e)=>setTowingCharges(e.target.value)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -322,7 +321,7 @@ const LabourForm = ({
                   type="text"
                   className="form-control form-control-table"
                   id="propertyTitle"
-                  value={totalAssessed+taxAmount}
+                  value={totalAssessed+taxAmount+Number(cabin)+Number(loadBody)+Number(towingCharges)-Number(laborWOPaint)}
                   // placeholder="Enter Registration No."
                 />
               </div>
@@ -353,7 +352,7 @@ const LabourForm = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={calculateVehicleAge()}
+                            value={ageOfVehicle}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -384,7 +383,7 @@ const LabourForm = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={calculateDepreciationOnMetal()}
+                            value={depMetal}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 

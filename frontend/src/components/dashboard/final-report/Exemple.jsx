@@ -367,10 +367,7 @@ export default function Exemple_01({
         : currentField.type;
 
     const overall = Number(assessed) * Number(currentField.qa);
-    const subtract =
-      String(policyType) === "" || String(policyType) === "Regular"
-        ? (overall * Number(currentField.dep)) / 100
-        : 0;
+    const subtract =0;
     const total_without = overall - subtract;
     const total =
       total_without +( toggleGST%2 !== 0 ? (total_without * Number(currentField.gst)) / 100 : 0);
@@ -405,9 +402,7 @@ export default function Exemple_01({
     allRows.map((row, index) => {
       let current_total = Number(row.assessed) * Number(row.qa);
       const subtract =
-      String(policyType) === "" || String(policyType) === "Regular"
-        ? (current_total * Number(row.dep)) / 100
-        : 0;
+      0;
         without_gst = without_gst  + (current_total -subtract) ;
         with_gst = with_gst  + (     ((current_total-subtract) * Number(row.gst)) /100);
     });
@@ -435,8 +430,8 @@ export default function Exemple_01({
 
     setPreRender(true);
 
-    const isIncludeGSTInAssessed = (toggleGST)%2 !== 0 && currentType === "Assessed"  ? true : false;
-    const isIncludeGSTInEstimate = (toggleGST)%2 !== 0 && currentType === "Estimate"  ? true : false;
+    const isIncludeGSTInAssessed = (toggleGST)%2 === 0 && currentType === "Assessed"  ? true : false;
+    const isIncludeGSTInEstimate = (toggleGST)%2 === 0 && currentType === "Estimate"  ? true : false;
 
     let total_estimate =0;
     let total_assessed=0;
@@ -451,7 +446,7 @@ export default function Exemple_01({
 
     //total assessed calculate
     const overall_assessed = Number(row.assessed) * Number(row.qa);
-    const subtract_dep =   (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
+    const subtract_dep =   0;
     const subtarct_final =  overall_assessed - subtract_dep;
     
     total_estimate = total_estimate + subtarct_final  + (isIncludeGSTInAssessed ? (overall_assessed * Number(row.gst)) / 100 : 0);
@@ -460,12 +455,10 @@ export default function Exemple_01({
     //total calculation for every row
     const overall = Number(row.assessed) * Number(row.qa);
     const subtract_before =
-      String(policyType) === "" || String(policyType) === "Regular"
-        ? (overall * Number(row.dep)) / 100
-        : 0;
+     0;
     const subtract = overall - subtract_before;
     const total =
-      subtarct_final +(isIncludeGSTInAssessed ? (subtract * Number(row.gst)) / 100 : 0);
+      (Number(row.assessed)*Number(row.qa)) +(isIncludeGSTInAssessed ? (subtract * Number(row.gst)) / 100 : 0);
     updatedRow.total = total;
     updatedOne.push(updatedRow)
     });
@@ -487,8 +480,8 @@ export default function Exemple_01({
     setPreRender(false);
 
     
-    const isIncludeGSTInAssessed = (toggleGST+1)%2 !== 0 && currentType === "Assessed"  ? true : false;
-    const isIncludeGSTInEstimate = (toggleGST+1)%2 !== 0 && currentType === "Estimate"  ? true : false;
+    const isIncludeGSTInAssessed = (toggleGST+1)%2 === 0 && currentType === "Assessed"  ? true : false;
+    const isIncludeGSTInEstimate = (toggleGST+1)%2 === 0 && currentType === "Estimate"  ? true : false;
 
     let total_estimate =0;
     let total_assessed=0;
@@ -503,13 +496,13 @@ export default function Exemple_01({
 
     //total assessed calculate
     const overall_assessed = Number(row.assessed) * Number(row.qa);
-    const subtract_dep = (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
+    const subtract_dep = 0;
     const subtarct_final =  overall_assessed - subtract_dep;
     total_assessed = total_assessed + subtarct_final  + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
     
     //total calculation for every row
     const total =
-    subtract_dep  + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
+    (Number(row.assessed)*Number(row.qa)) + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
     updatedRow.total = total;
     updatedOne.push(updatedRow)
     });
@@ -528,7 +521,7 @@ export default function Exemple_01({
   
       //total assessed calculate
       const overall_assessed = Number(row.assessed) * Number(row.qa);
-      const subtract_dep = (String(policyType) === "" || String(policyType) === "Regular") ? (overall_assessed * Number(row.dep))/100: 0;
+      const subtract_dep = 0;
       const subtarct_final =  overall_assessed - subtract_dep;
       
       //total calculation for every row
@@ -571,7 +564,7 @@ export default function Exemple_01({
     // console.log(currentField.total,subtract);
     const total_without = overall - subtract;
     const total =
-      total_without +( toggleGST%2 !== 0 && currentType === "Assessed"  ? (total_without * Number(currentField.gst)) / 100 : 0);
+    (Number(currentField.assessed) * Number(qa)) +( toggleGST%2 === 0 && currentType === "Assessed"  ? (total_without * Number(currentField.gst)) / 100 : 0);
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -660,10 +653,9 @@ export default function Exemple_01({
 
     const overall = Number(currentField.assessed) * Number(currentField.qa);
     const subtract =
-      String(policyType) === "" || String(currentPolicy) === "Regular" ? (overall * Number(dep)) / 100 : 0;
-    // console.log(currentField.total,subtract);
+     0;
     const total_without = overall - subtract;
-    const total = total_without + (toggleGST%2 !== 0 && currentType === "Assessed"  ? (total_without * Number(gst)) / 100 : 0);
+    const total = (Number(currentField.assessed) * Number(currentField.qa)) + (toggleGST%2 === 0 && currentType === "Assessed"  ? (total_without * Number(gst)) / 100 : 0);
 
 
     const newOutput = {
@@ -708,7 +700,7 @@ export default function Exemple_01({
           : val
         : currentField.gst;
 
-    const isIncludeGSTInAssessed = (toggleGST)%2 !== 0 && String(currentType) === "Assessed"  ? true : false;
+    const isIncludeGSTInAssessed = (toggleGST)%2 === 0 && String(currentType) === "Assessed"  ? true : false;
     
     //total assessed calculate
     const overall_assessed = Number(currentField.assessed) * Number(currentField.qa);
@@ -716,7 +708,7 @@ export default function Exemple_01({
     const subtarct_final =  overall_assessed - subtract_dep;
     // console.log(overall_assessed-(String(policyType) === "" || String(policyType) === "Regular") ? ((overall_assessed * Number(currentField.dep))/100): 0);
    const total =
-    subtarct_final + (isIncludeGSTInAssessed ? (subtarct_final * Number(gst)) / 100 : 0);
+    (Number(currentField.assessed) * Number(currentField.qa)) + (isIncludeGSTInAssessed ? (subtarct_final * Number(gst)) / 100 : 0);
     // console.log(total,subtarct_final,(String(policyType) === "" || String(policyType) === "Regular") ? ((overall_assessed * Number(currentField.dep))/100): 0,isIncludeGSTInAssessed,overall_assessed,currentField.dep,policyType,"total");
 
     const newOutput = {

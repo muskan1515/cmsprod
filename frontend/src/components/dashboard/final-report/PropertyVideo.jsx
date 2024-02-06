@@ -10,7 +10,7 @@ import Summary from "./Summary";
 import Table from "./Table";
 import EditableTable from "./Editable";
 import LabourForm from "./LabourForm";
-import { getMonthsDifference } from "./functions";
+import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -47,6 +47,17 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [allDepreciations, setAllDepreciations] = useState([]);
 
   const [reload,setReload]=useState(false);
+
+  const [cabin,setCabin]=useState(0);
+  const [loadBody,setLoadBody]=useState(0);
+  const [towingCharges,setTowingCharges]=useState(0);
+
+  const [laborWOPaint,setLaborWOPaint]=useState(0);
+
+  const [ageOfVehicle,setAgeOfVehicle]=useState(0);
+  const [depMetal,setDepMetal]=useState(0);
+
+
 
 
 
@@ -105,6 +116,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     console.log(toggleEstimate, "toggleestimate");
     let total_estimate = 0,
       total_assessed = 0,
+      total_paint =0,
       total_tax = 0;
     allRows.map((row, index) => {
       const current_row_estimate =
@@ -117,14 +129,41 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,2);
       total_assessed = total_assessed + current_row_assessed;
       total_tax = total_tax + current_row_assessed_tax;
+      total_paint = total_paint +( (Number(row?.assessed)*13)/100);
     });
     setTotalAssessed(total_assessed);
     setTotalEstimate(total_estimate);
     setTaxAmount(total_tax);
+    setLaborWOPaint(total_paint);
     setReload(false);
   }, [toggleEstimate, currentGst, reload, toggleEstimate]);
 
 
+  const calculateVehicleAge = ()=>{
+    if(! claim.vehicleDetails?.VehicleDateOfRegistration || !claim.claimDetails?.ClaimAddedDateTime){
+      return "0";
+    }
+    const a = getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
+
+
+    const b= getMonthsDifference(claim.claimDetails?.ClaimAddedDateTime);
+    setAgeOfVehicle(a+b);
+    return `${a + (b)}`;
+    
+
+  }
+
+  const calculateDepreciationOnMetal = ()=>{
+    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
+   setDepMetal(a);
+    return a;
+  }
+
+  useEffect(()=>{
+
+    calculateVehicleAge();
+    calculateDepreciationOnMetal();
+  },[claim]);
 
  
 
@@ -617,7 +656,16 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   toggleLabor={toggleLabor}
                   setToggleLabor={setToggleLabor}
                   setReload={setReload}
+                  laborWOPaint={laborWOPaint}
+                  towingCharges={towingCharges}
+                  setTowingCharges={setTowingCharges}
+                  loadBody={loadBody}
+                  setLoadBody={setLoadBody}
+                  cabin={cabin}
+                  setCabin={setCabin}
                   claim={claim}
+                  depMetal={depMetal}
+                  ageOfVehicle={ageOfVehicle}
                   />
                 </div>
               </div>
