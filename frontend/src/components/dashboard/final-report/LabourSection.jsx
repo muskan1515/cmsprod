@@ -5,6 +5,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import Exemple_01 from "./Exemple_01";
 import "react-datepicker/dist/react-datepicker.css";
+import LabourForm from "./LabourForm";
 
 const LabourSection = ({}) => {
   return (
