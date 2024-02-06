@@ -410,14 +410,14 @@ function SmartTable(props) {
                     <div className="col-lg-3">
                       <div className="row mt-1">
                         <div className="col-lg-5 text-end">
-                          <input
-                            className="form-check-input m-1"
-                            type="checkbox"
-                            value={1}
-                            defaultChecked={props.preRender}
-                            onClick={props.gstToggleHandler}
-                            id="remeberMe"
-                          />
+                        <input
+                        className="form-check-input m-1"
+                        type="checkbox"
+                        value={1}
+                        checked={props.toggleGST === 2}
+                        onChange={props.gstToggleHandler}
+                        id="remeberMe"
+                      />
                           W/o Tax :{" "}
                         </div>
                         <div className="col-lg-6">

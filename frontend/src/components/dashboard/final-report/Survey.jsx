@@ -1,5 +1,4 @@
 import { useState } from "react";
-import MyDatePicker from "../../common/MyDatePicker";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
@@ -14,6 +13,14 @@ const Servey = ({
   applicantNumber,
   setApplicantNumber,
   
+  AccidentAddedDateTime,
+  setAccidentAddedDateTime,
+  setPlaceOfLoss,
+  PlaceOfLoss,
+  SurveyAllotmentDate,
+  setSurveyAllotmentDate,
+  setSurveyConductedDate,
+  SurveyConductedDate,
 
   ReferenceNo,
   setReferenceNo,
@@ -216,9 +223,10 @@ const Servey = ({
                 </div>
                 <div className="col-lg-8">
                   <input
-              value={formatDate(claim?.accidentDetails?.AccidentAddedDateTime)}
-              className="form-control"
-              id="propertyTitle"
+                  type="date"
+              value={formatDate(AccidentAddedDateTime)}
+              onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
+             
             /> 
                 </div>
               </div>
@@ -242,7 +250,7 @@ const Servey = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={formatTime(claim?.accidentDetails?.AccidentAddedDateTime)}
+                value={formatTime(AccidentAddedDateTime)}
               />
                 </div>
               </div>
@@ -298,7 +306,8 @@ const Servey = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={claim?.accidentDetails?.PlaceOfLoss}
+                    value={PlaceOfLoss}
+                    onChange={(e)=>setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -329,6 +338,8 @@ const Servey = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={PlaceOfLoss}
+                    onChange={(e)=>setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -368,7 +379,7 @@ const Servey = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <MyDatePicker selectedDate={claim?.accidentDetails?.SurveyAllotmentDate} />
+                  <input type="date" value={SurveyAllotmentDate} onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -395,7 +406,7 @@ const Servey = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <MyDatePicker />
+                 
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -420,9 +431,10 @@ const Servey = ({
               </div>
               <div className="col-lg-8">
                 <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
+                type="date"
+                value={SurveyConductedDate}
+                onChange={(e)=>setSurveyConductedDate(e.target.value)}
+                  
                   // placeholder="Enter Registration No."
                 />
               </div>

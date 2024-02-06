@@ -48,6 +48,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [reload,setReload]=useState(false);
 
+  const [AddedDateTime,setAddedDateTime]=useState("");
+  const [PlaceOfLoss,setPlaceOfLoss]=useState("");
+  
   const [cabin,setCabin]=useState(0);
   const [loadBody,setLoadBody]=useState(0);
   const [towingCharges,setTowingCharges]=useState(0);
@@ -58,6 +61,12 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [depMetal,setDepMetal]=useState(0);
 
 
+  const [PolicyPeriodEnd,setPolicyPeriodEnd]=useState("");
+  const [PolicyPeriodStart,setPolicyPeriodStart]=useState("");
+
+  const [HPA,setHPA]=useState("");
+  const [InsuranceCompanyNameAddress,setInsuranceCompanyNameAddress]=useState(""
+  )
 
 
 
@@ -185,12 +194,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [GarageAddedBy, setGarageAddedBy] = useState("");
   const [ClaimAddedDateTime, setClaimAddedDateTime] = useState("");
   const [ClaimIsActive, setClaimIsActive] = useState("");
-  const [PolicyIssuingOffice, setPolicyIssuingOffice] = useState("");
-
-  //Policy Details
+  
   const [PolicyNumber, setPolicyNumber] = useState("");
-  const [InsuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
-    useState("");
+ 
   const [InsuredAddress, setInsuredAddress] = useState("");
   const [InsuredName, setInsuredName] = useState("");
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
@@ -204,6 +210,17 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [LicenseType, setLicenseType] = useState("");
   const [BadgeNumber, setBadgeNumber] = useState("");
   //Vehicle Details
+  const [ValidUntilNtv,setValidUntilNtv]=useState("");
+  const [ValidUntilTv,setValidUntilTv]=useState("");
+  const [ValidFrom,setValidFrom]=useState("");
+
+  const [DateOfIssue,setDateOfIssue]=useState("");
+ 
+  const [AccidentAddedDateTime,setAccidentAddedDateTime]=useState("");
+  const [CauseOfAccident,setCauseOfAccident]=useState("");
+  const [SurveyAllotmentDate,setSurveyAllotmentDate]=useState("");
+  const [SurveyConductedDate,setSurveyConductedDate]=useState("")
+  const [driverRemark,setDriverRemark]=useState("");
   const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState("");
   const [RegisteredOwner, setRegisteredOwner] = useState("");
   const [VehicleChassisNumber, setVehicleChassisNumber] = useState("");
@@ -220,22 +237,33 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [VehicleSeatingCapacity, setVehicleSeatingCapacity] = useState();
   // const [PolicyType, setPolicyType] = useState();
 
-  useEffect(() => {
-    setInsuredMailAddress(claim?.InsuredMailAddress || "");
-    setInsuredMobileNo1(claim?.InsuredMobileNo1 || "");
-    setInsuredMobileNo2(claim?.InsuredMobileNo2 || "");
-    setClaimNumber(claim?.ClaimNumber || "");
-    setEngineType(claim?.VehicleModeOfCheck || "");
-    setDateRegistration(claim?.VehicleDateOfRegistration || "");
-    setTransferDate(claim?.VehicleTransferDate || "");
-    setAddedBy(claim?.VehicleAddedBy || "");
-    setVerification(claim?.DriverTypeOfVerification || "");
-    setGarageNameAndAddress(claim?.GarageNameAndAddress || "");
-    setGarageContactNo1(claim?.GarageContactNo1 || "");
-    setGarageContactNo2(claim?.GarageContactNo2 || "");
-    setGarageAddedBy(claim?.GarageAddedBy || "");
-    setClaimAddedDateTime(claim?.ClaimAddedDateTime || "");
-    setClaimIsActive(claim?.ClaimIsActive?.type || "");
+  const [VehicleEngineNumber,setVehicleEngineNumber]=useState("");
+  const [VehicleDateOfRegistration,setVehicleDateOfRegistration]=useState("");
+  const [OwnerSRST,setOwnerSRST]=useState("");
+
+  const [VehicleRemark,setVehicleRemark]=useState("");
+  const [VehicleColor,setVehicleColor]=useState("");
+  const [VehicleMakeVariantModelColor,setVehicleMakeVariantModelColor]=useState("");
+  const [PolicyIssuingOffice,setPolicyIssuingOffice]=useState("");
+  const [ClaimServicingOffice,setClaimServicingOffice]=useState("");
+  const [IDV,setIDV]=useState("");
+
+ useEffect(() => {
+    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress || "");
+    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 || "");
+    setInsuredMobileNo2(claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 || "");
+    setClaimNumber(claim?.claimDetails?.ClaimNumber || "");
+    setEngineType(claim?.vehicleDetails?.ModeOfCheck || "");
+    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration || "");
+    setTransferDate(claim?.vehicleDetails?.TransferDate || "");
+    setAddedBy(claim?.vehicleDetails?.VehicleAddedBy || "");
+    setVerification(claim?.driverDetails?.DriverTypeOfVerification || "");
+    setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress || "");
+    setGarageContactNo1(claim?.garageDetails?.GarageContactNo1 || "");
+    setGarageContactNo2(claim?.garageDetails?.GarageContactNo2 || "");
+    setGarageAddedBy(claim?.garageDetails?.GarageAddedBy || "");
+    setClaimAddedDateTime(claim?.claimDetails?.AddedDateTime || "");
+    setClaimIsActive(claim?.claimDetails?.IsActive?.data[0] || "");
     // Policy Detail
     setReferenceNo(claim?.claimDetails?.ReferenceNo || "");
     setPolicyNumber(claim?.claimDetails?.PolicyNumber || "");
@@ -249,6 +277,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setPolicyType(claim?.insuredDetails?.PolicyType || "");
     console.log("reference no", VehicleSeatingCapacity);
 
+
+    setAccidentAddedDateTime(claim?.accidentDetails?.AccidentAddedDateTime||"");
+    setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
+    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||"");
     //Drivers Details
     setDriverName(claim?.driverDetails?.DriverName || "");
     setDriverAddedDate(claim?.driverDetails?.DriverAddedDate || "");
@@ -259,35 +292,131 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
     //Vehicle Detais
     setVehicleRegisteredNumber(
-      claim?.vehicleDetails?.VehicleRegisteredNumber || ""
+      claim?.vehicleDetails?.RegisteredNumber || ""
     );
-    setRegisteredOwner(claim?.vehicleDetails?.VehicleRegisteredOwner || "");
-    setVehicleChassisNumber(claim?.vehicleDetails?.VehicleChassisNumber || "");
-    setEngineNumber(claim?.vehicleDetails?.VehicleEngineNumber || "");
+      setVehicleEngineNumber(claim?.vehicleDetails?.EngineNumber||"");
+
+    setVehicleDateOfRegistration(claim?.claimDetails?.DateOfRegistration || "");
+    setInsuranceCompanyNameAddress(
+      claim?.claimDetails?.InsuranceCompanyNameAddress || "United India Insurance Company Limited");
+      setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd || "");
+      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart || "");
+    setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor
+ || "" );
+ setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor||"");
+    setRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner || "");
+    setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber || "");
+    setEngineNumber(claim?.vehicleDetails?.EngineNumber || "");
     setVehicleModel(
       claim?.VehicleMakeVariantModelColor
         ? `${claim.VehicleMakeVariantModelColor}`
         : ""
     );
-    setVehicleTypeOfBody(claim?.vehicleDetails?.VehicleTypeOfBody || "");
-    setVehicleCubicCapacity(claim?.vehicleDetails?.VehicleCubicCapacity);
-    setVehicleClassOfVehicle(claim?.vehicleDetails?.VehicleClassOfVehicle);
-    setVehicleFuelType(claim?.vehicleDetails?.VehicleFuelType || "");
+    setVehicleTypeOfBody(claim?.vehicleDetails?.TypeOfBody || "");
+    setVehicleCubicCapacity(claim?.vehicleDetails?.CubicCapacity);
+    setVehicleClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle);
+    setVehicleFuelType(claim?.vehicleDetails?.FuelType || "");
     setVehicleOdometerReading(
-      claim?.vehicleDetails?.VehicleOdometerReading || ""
+      claim?.vehicleDetails?.OdometerReading || ""
     );
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue || "");
     setVehiclePreAccidentCondition(
-      claim?.vehicleDetails?.VehiclePreAccidentCondition || ""
+      claim?.vehicleDetails?.PreAccidentCondition || ""
     );
+    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate || "");
     setVehicleTaxParticulars(
-      claim?.vehicleDetails?.VehicleTaxParticulars || ""
+      claim?.vehicleDetails?.TaxParticulars || ""
     );
-    setPUCNumber(claim?.vehicleDetails?.VehiclePucNumber || "");
+    setPUCNumber(claim?.vehicleDetails?.PucNumber || "");
     setVehicleSeatingCapacity(
-      claim?.vehicleDetails?.VehicleSeatingCapacity || 0
+      claim?.vehicleDetails?.SeatingCapacity || 0
     );
+    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice || "");
 
   }, [claim]);
+
+  const saveHandler = ()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const payload={
+      policyType,
+      IDV,
+      PolicyPeriodStart,
+      PolicyPeriodEnd,
+      HPA,
+      ClaimServicingOffice,
+      OwnerSRST,
+      VehicleMakeVariantModelColor : VehicleMakeVariantModelColor + ","+VehicleColor,
+      DateOfIssue,
+      ValidFrom,
+      ValidUntilNtv,
+      ValidUntilTv,
+      phoneNumber,
+      InsuranceCompanyNameAddress,
+      InsuredAddress,InsuredMailAddress,
+      InsuredMobileNo1,
+      InsuredMobileNo2,
+      InsuredName,
+      requestType,
+      ClaimNumber,
+      EngineType,
+      DateRegistration,
+      PUCNumber,
+      TransferDate,
+      AddedBy,
+      Verification,
+      GarageAddedBy,
+      GarageContactNo1,
+      GarageContactNo2,
+      GarageNameAndAddress,
+      ClaimAddedDateTime,
+      PolicyIssuingOffice,
+      PolicyNumber,
+      DriverName,
+      DriverAddedDate,
+      IssuingAuthority,
+      LicenseNumber,
+      LicenseType,
+      BadgeNumber,
+      VehicleRegisteredNumber,
+      RegisteredOwner,
+      VehicleChassisNumber,
+      EngineNumber,
+      VehicleTypeOfBody,
+      VehicleCubicCapacity,
+      VehicleClassOfVehicle,
+      VehicleFuelType,
+      VehicleOdometerReading,
+      VehiclePreAccidentCondition,
+      VehicleModel,
+      VehicleTaxParticulars,
+      VehicleSeatingCapacity,
+      AccidentAddedDateTime,
+      PlaceOfLoss,
+      SurveyAllotmentDate,
+      SurveyConductedDate,
+      leadId
+    };
+
+    axios.put("/api/updateFinalReport",payload,{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        leadId:leadId
+      }
+    })
+    .then((res)=>{
+      alert("Successfully updated!");
+      window.location.reload();
+    })
+    .catch((Err)=>{
+      alert(Err);
+    })
+  }
+
 
   useEffect(() => {
     if (String(policyType) === "Add on Policy") {
@@ -376,6 +505,32 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 policyType={policyType}
                 isEditMode={isEditMode}
                 setIsEditMode={setIsEditMode}
+
+                IDV={IDV}
+                setIDV={setIDV}
+                PolicyPeriodEnd={PolicyPeriodEnd}
+                setPolicyPeriodEnd={setPolicyPeriodEnd}
+                setPolicyPeriodStart={setPolicyPeriodStart}
+                PolicyPeriodStart={PolicyPeriodStart}
+                HPA={HPA}
+                setHPA={setHPA}
+                ClaimServicingOffice={ClaimServicingOffice}
+                setClaimServicingOffice={setClaimServicingOffice}
+                OwnerSRST={OwnerSRST}
+                setOwnerSRST={setOwnerSRST}
+                VehicleMakeVariantModelColor={VehicleMakeVariantModelColor}
+                setVehicleMakeVariantModelColor={setVehicleMakeVariantModelColor}
+                VehicleColor={VehicleColor}
+                DateOfIssue={DateOfIssue}
+                setDateOfIssue={setDateOfIssue}
+                setVehicleColor={setVehicleColor}
+                ValidUntilNtv={ValidUntilNtv}
+                setValidUntilNtv={setValidUntilNtv}
+                ValidFrom={ValidFrom}
+                setValidFrom={setValidFrom}
+                ValidUntilTv={ValidUntilTv}
+                setValidUntilTv={setValidUntilTv}
+
                 phoneNumber={phoneNumber}
                 setPhoneNumber={setPhoneNumber}
                 applicantNumber={applicantNumber}
@@ -438,6 +593,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 LicenseType={LicenseType}
                 setLicenseType={setLicenseType}
                 BadgeNumber={BadgeNumber}
+                setBadgeNumber={setBadgeNumber}
                 VehicleRegisteredNumber={VehicleRegisteredNumber}
                 setVehicleRegisteredNumber={setVehicleRegisteredNumber}
                 RegisteredOwner={RegisteredOwner}
@@ -464,6 +620,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setVehicleTaxParticulars={setVehicleTaxParticulars}
                 VehicleSeatingCapacity={VehicleSeatingCapacity}
                 setVehicleSeatingCapacity={setVehicleSeatingCapacity}
+                handleUpdateClick={saveHandler}
               />
               {/* <Image
                 width={692}
@@ -579,6 +736,16 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setVehicleTaxParticulars={setVehicleTaxParticulars}
                 VehicleSeatingCapacity={VehicleSeatingCapacity}
                 setVehicleSeatingCapacity={setVehicleSeatingCapacity}
+
+                AccidentAddedDateTime={AccidentAddedDateTime}
+                setAccidentAddedDateTime={setAccidentAddedDateTime}
+                setPlaceOfLoss={setPlaceOfLoss}
+                PlaceOfLoss={PlaceOfLoss}
+                SurveyAllotmentDate={SurveyAllotmentDate}
+                setSurveyAllotmentDate={setSurveyAllotmentDate}
+                setSurveyConductedDate={setSurveyConductedDate}
+                SurveyConductedDate={SurveyConductedDate}
+
                 claim={claim}
               />
             </div>

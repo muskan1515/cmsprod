@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import MyDatePicker from "../../common/MyDatePicker";
 import toast from "react-hot-toast";
 import axios from "axios";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const PolicyDetails = ({
@@ -15,6 +13,29 @@ const PolicyDetails = ({
   setPhoneNumber,
   applicantNumber,
   setApplicantNumber,
+
+  handleUpdateClick,
+  IDV,
+  setIDV,
+  PolicyPeriodEnd,
+  setPolicyPeriodEnd,
+  setPolicyPeriodStart,
+  PolicyPeriodStart,
+  HPA,
+  setHPA,
+  ClaimServicingOffice,
+  setClaimServicingOffice,
+  OwnerSRST,
+  setOwnerSRST,
+  VehicleMakeVariantModelColor,
+  setVehicleMakeVariantModelColor,
+  VehicleColor,setVehicleColor,
+  ValidUntilNtv,
+  setValidUntilNtv,
+  ValidFrom,
+  setValidFrom,
+  ValidUntilTv,
+  setValidUntilTv,
 
   ReferenceNo,
   setReferenceNo,
@@ -78,6 +99,7 @@ const PolicyDetails = ({
   LicenseType,
   setLicenseType,
   BadgeNumber,
+  setBadgeNumber,
 
   VehicleRegisteredNumber,
   setVehicleRegisteredNumber,
@@ -99,7 +121,8 @@ const PolicyDetails = ({
   setVehicleOdometerReading,
   VehiclePreAccidentCondition,
   setVehiclePreAccidentCondition,
-
+  DateOfIssue,
+  setDateOfIssue,
   VehicleModel,
   setVehicleModel,
   VehicleTaxParticulars,
@@ -107,6 +130,21 @@ const PolicyDetails = ({
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
 }) => {
+
+  const converttoDDMMYYYY=(date)=>{
+    return date;
+    const inputDate = new Date(date);
+
+// Get day, month, and year components
+const day = inputDate.getUTCDate().toString().padStart(2, '0');
+const month = (inputDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+const year = inputDate.getUTCFullYear();
+
+// Construct the formatted string in "ddmmyyyy" format
+const formattedDateString = `${day}${month}${year}`;
+return formattedDateString;
+
+  }
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -131,75 +169,73 @@ const PolicyDetails = ({
     setIsEditMode(true);
   };
 
-  const handleUpdateClick = () => {
-    const payload = {
-      // Insured Details
-      InsuredMailAddress,
-      InsuredMobileNo1,
-      InsuredMobileNo2,
-      ClaimNumber,
-      EngineType,
-      DateRegistration,
-      TransferDate,
-      AddedBy,
-      Verification,
-      GarageNameAndAddress,
-      GarageContactNo1,
-      GarageContactNo2,
-      GarageAddedBy,
-      ClaimAddedDateTime,
-      ClaimIsActive,
+  // const handleUpdateClick = () => {
+  //   const payload = {
+  //     // Insured Details
+  //     InsuredMailAddress,
+  //     InsuredMobileNo1,
+  //     InsuredMobileNo2,
+  //     ClaimNumber,
+  //     EngineType,
+  //     DateRegistration,
+  //     TransferDate,
+  //     AddedBy,
+  //     Verification,
+  //     GarageNameAndAddress,
+  //     GarageContactNo2,
+  //     GarageAddedBy,
+  //     ClaimAddedDateTime,
+  //     ClaimIsActive,
 
-      // Policy Detail
-      ReferenceNo,
-      PolicyNumber,
-      PolicyIssuingOffice,
-      InsuranceCompanyNameAddress,
-      ClaimRegion,
-      InsuredName,
-      InsuredAddress,
-      PolicyType,
+  //     // Policy Detail
+  //     ReferenceNo,
+  //     PolicyNumber,
+  //     PolicyIssuingOffice,
+  //     InsuranceCompanyNameAddress,
+  //     ClaimRegion,
+  //     InsuredName,
+  //     InsuredAddress,
 
-      // Drivers Details
-      DriverName,
-      DriverAddedDate,
-      IssuingAuthority,
-      LicenseNumber,
-      LicenseType,
-      BadgeNumber,
+  //     // Drivers Details
+  //     DriverName,
+  //     DriverAddedDate,
+  //     IssuingAuthority,
+  //     LicenseNumber,
+  //     LicenseType,
+  //     BadgeNumber,
 
-      // Vehicle Details
-      VehicleRegisteredNumber,
-      RegisteredOwner,
-      VehicleChassisNumber,
-      EngineNumber,
-      VehicleModel,
-      VehicleTypeOfBody,
-      VehicleCubicCapacity,
-      VehicleClassOfVehicle,
-      VehicleFuelType,
-      VehicleOdometerReading,
-      VehiclePreAccidentCondition,
-      VehicleTaxParticulars,
-      PUCNumber,
-      VehicleSeatingCapacity,
+  //     // Vehicle Details
+  //     VehicleRegisteredNumber,
+  //     RegisteredOwner,
+  //     VehicleChassisNumber,
+  //     EngineNumber,
+  //     VehicleModel,
+  //     VehicleTypeOfBody,
+  //     VehicleCubicCapacity,
+  //     VehicleClassOfVehicle,
+  //     VehicleFuelType,
+  //     VehicleOdometerReading,
+  //     VehiclePreAccidentCondition,
+  //     VehicleTaxParticulars,
+  //     PUCNumber,
+  //     VehicleSeatingCapacity,
 
-      LeadId,
-    };
-    console.log("payload", payload);
-    try {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      axios.put(`/api/updateClaimDetails`, payload, {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      setIsEditMode(false);
-    } catch (error) {
-      console.log("Error in Updating Claim: ", error);
-    }
-  };
+  //     LeadId,
+  //   };
+  //   console.log("payload", payload);
+  //   try {
+  //     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //     axios.put(`/api/updateClaimDetails`, payload, {
+  //       headers: {
+  //         Authorization: `Bearer ${userInfo[0].Token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     setIsEditMode(false);
+  //   } catch (error) {
+  //     console.log("Error in Updating Claim: ", error);
+  //   }
+  // };
   const [startDate, setStartDate] = useState(new Date());
 
   return (
@@ -261,7 +297,6 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-              <MyDatePicker />
             </div>
             <span
               className="col-lg-1 flaticon-calendar text-dark fs-6"
@@ -316,7 +351,7 @@ const PolicyDetails = ({
             </button>
           ) : (
             <button className="btn btn-color m-1" onClick={handleEditClick}>
-              Save
+              Edit
             </button>
           )}
           {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
@@ -426,6 +461,8 @@ const PolicyDetails = ({
                         type="number"
                         className="form-control"
                         id="propertyTitle"
+                        value={IDV}
+                        onChange={(e)=>setIDV(e.target.value)}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -516,7 +553,7 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <MyDatePicker />
+                      <input type="date" value={(PolicyPeriodStart)} onChange={(e)=>setPolicyPeriodStart(e.target.value)}/>
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                       {/* <input
                         type="date"
@@ -545,7 +582,7 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <MyDatePicker />
+                      <input placeholder={PolicyPeriodEnd} type="date" value={(PolicyPeriodEnd)} onChange={(e)=>setPolicyPeriodEnd(e.target.value)}/>
                     </div>
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
@@ -576,9 +613,9 @@ const PolicyDetails = ({
                         type="number"
                         className="form-control"
                         id="mobile"
-                        value={InsuredMobileNo1}
+                        value={HPA}
                         readOnly={!isEditMode}
-                        onChange={(e) => setInsuredMobileNo1(e.target.value)}
+                        onChange={(e) => setHPA(e.target.value)}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -671,9 +708,9 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={ClaimIsActive}
+                        value={ClaimNumber}
                         readOnly={!isEditMode}
-                        onChange={(e) => setClaimIsActive(e.target.value)}
+                        onChange={(e) => setClaimNumber(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -703,6 +740,8 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
+                        value={PolicyIssuingOffice}
+                        onChange={(e)=>setPolicyIssuingOffice(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -775,8 +814,8 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={PolicyIssuingOffice}
-                        onChange={(e) => setPolicyIssuingOffice(e.target.value)}
+                        value={ClaimServicingOffice}
+                        onChange={(e) => setClaimServicingOffice(e.target.value)}
                         readOnly={!isEditMode}
                         // placeholder="Enter Registration No."
                       />
@@ -886,6 +925,8 @@ const PolicyDetails = ({
                             className="form-control"
                             id="propertyTitle"
                             readOnly={!isEditMode}
+                            value={OwnerSRST}
+                            onChange={(e)=>setOwnerSRST(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -922,7 +963,7 @@ const PolicyDetails = ({
                           </select>
                         </div>
                         <div className="col-lg-4">
-                          <MyDatePicker />
+                         
                           {/* <span className="flaticon-calendar text-dark"></span> */}
                         </div>
                       </div>
@@ -1065,9 +1106,9 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleModel}
+                            value={VehicleMakeVariantModelColor}
                             readOnly={!isEditMode}
-                            onChange={(e) => setVehicleModel(e.target.value)}
+                            onChange={(e) => setVehicleMakeVariantModelColor(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1133,9 +1174,9 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="color"
-                            // value={VehicleModel}
+                            value={VehicleColor}
                             readOnly={!isEditMode}
-                            // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+                            onChange={(e) => setVehicleColor(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1912,7 +1953,7 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <MyDatePicker />
+                  <input type="date" value={(DateOfIssue)} onChange={(e)=>setDateOfIssue(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -1941,7 +1982,7 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <MyDatePicker />
+                  <input type="date" value={(ValidUntilNtv)} onChange={(e)=>setValidUntilNtv(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -1970,7 +2011,7 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <MyDatePicker />
+                  <input type="date" value={(ValidFrom)} onChange={(e)=>setValidFrom(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -1999,7 +2040,7 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <MyDatePicker />
+                  <input value={(ValidUntilTv)} onChange={(e)=>setValidUntilTv(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2197,7 +2238,7 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                      <MyDatePicker />
+                      <input />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
                   </div>
@@ -2226,7 +2267,7 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                      <MyDatePicker />
+                      <input />
                     </div>
                   </div>
                 </div>
@@ -2286,7 +2327,7 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                      <MyDatePicker />
+                      <input />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
                   </div>
@@ -2315,7 +2356,7 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                      <MyDatePicker />
+                      <input />
                     </div>
                   </div>
                 </div>

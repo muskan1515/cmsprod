@@ -1,28 +1,43 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 
-const MyDatePicker = ({selectedDate,setSelectedDate}) => {
-  // const [selectedDate, setSelectedDate] = useState(null);
+const MyDatePicker = ({ selectedDate, setSelectedDate }) => {
+  const [currentDate, setCurrentDate] = useState(
+    selectedDate ? format(new Date(selectedDate), "MM/dd/yyyy") : ""
+  );
+
+  const formatDate = (date) => {
+    const isoFormat = date.toISOString(); // Store in "2024-02-06T18:30:00.000Z" format
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    };
+
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    setCurrentDate(formattedDate);
+    setSelectedDate(isoFormat);
+  };
 
   return (
     <DatePicker
       className="form-control"
-      selected={selectedDate}
-      onChange={(date) => setSelectedDate(date)}
+      selected={currentDate ? new Date(currentDate) : null}
+      onChange={(date) => formatDate(date)}
       showYearDropdown
-      dateFormat="dd/MM/yyyy"
-      // placeholderText="MM/DD/YYYY"
+      dateFormat="MM/dd/yyyy"
       popperPlacement="bottom-end"
       popperModifiers={{
         flip: {
-          behavior: ["bottom"], // don't allow it to flip to be above
+          behavior: ["bottom"],
         },
         preventOverflow: {
-          enabled: false, // tell it not to try to stay within the view (even if it means disappearing off-screen)
+          enabled: false,
         },
         hide: {
-          enabled: false, // turn off since needs preventOverflow to be enabled
+          enabled: false,
         },
       }}
     />

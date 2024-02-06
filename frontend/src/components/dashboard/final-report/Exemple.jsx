@@ -404,9 +404,9 @@ export default function Exemple_01({
       const subtract =
       0;
         without_gst = without_gst  + (current_total -subtract) ;
-        with_gst = with_gst  + (     ((current_total-subtract) * Number(row.gst)) /100);
+        with_gst = with_gst  + (   current_total +  ((current_total-subtract) * Number(row.gst)) /100);
     });
-    if(String(currentType) === "Assessed" && toggleGST%2 === 0){
+    if(String(currentType) === "Assessed" && toggleGST%2 !== 0){
       return with_gst;
     }
     return without_gst;
@@ -418,9 +418,9 @@ export default function Exemple_01({
       let current_total = Number(row.estimate) * Number(row.qe);
       const subtract =0;
         without_gst = without_gst  + (current_total -subtract) ;
-        with_gst = with_gst  + (  ((current_total-subtract) * Number(row.gst)) /100);
+        with_gst = with_gst  + ( current_total+ ((current_total-subtract) * Number(row.gst)) /100);
     });
-    if((String(currentType) === "Estimate") && toggleGST%2 === 0){
+    if((String(currentType) === "Estimate") && toggleGST%2 !== 0){
       return with_gst;
     }
     return without_gst;
@@ -429,6 +429,7 @@ export default function Exemple_01({
   const changeTotalAccordingToPolicyType = (policy) => {
 
     setPreRender(true);
+    setToggleGST(2);
 
     const isIncludeGSTInAssessed = (toggleGST)%2 === 0 && currentType === "Assessed"  ? true : false;
     const isIncludeGSTInEstimate = (toggleGST)%2 === 0 && currentType === "Estimate"  ? true : false;
