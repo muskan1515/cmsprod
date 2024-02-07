@@ -663,16 +663,6 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
   };
 
   try {
-<<<<<<< Updated upstream
-    const claimDetails = await executeQuery("SELECT * FROM ClaimDetails WHERE LeadID=?", [leadId]);
-    const insuredDetails = await executeQuery("SELECT * FROM InsuredDetails WHERE LeadID=?", [leadId]);
-    const accidentDetails = await executeQuery("SELECT * FROM AccidentDetails WHERE LeadID=?", [leadId]);
-    const driverDetails = await executeQuery("SELECT * FROM DriverDetails WHERE LeadID=?", [leadId]);
-    const vehicleDetails = await executeQuery("SELECT * FROM VehicleDetails WHERE LeadID=?", [leadId]);
-    const garageDetails = await executeQuery("SELECT * FROM GarageDetails WHERE LeadID=?", [leadId]);
-    const claimStatus = await executeQuery("SELECT * FROM ClaimStatus WHERE LeadID=?", [leadId]);
-    const commercialVehicleDetails = await executeQuery("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?", [leadId]);
-=======
     const claimDetails = await executeQuery(
       "SELECT * FROM ClaimDetails WHERE LeadID=?",
       [leadId]
@@ -701,7 +691,6 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
       "SELECT * FROM ClaimStatus WHERE LeadID=?",
       [leadId]
     );
->>>>>>> Stashed changes
 
     const combinedResult = {
       claimDetails,
@@ -737,107 +726,6 @@ function executeStoredProc(procName, params) {
   });
 }
 
-<<<<<<< Updated upstream
-
-app.put("/updateNewParts/:leadId",authenticateUser,(req,res)=>{
-  const leadId = req.params.leadId;
-  const data = JSON.parse(req.body.allRows);
-  console.log(data)
-})
-
-app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
-
-  const {
-      policyType,
-      IDV,
-      PolicyPeriodStart,
-      PolicyPeriodEnd,
-      HPA,
-      ClaimServicingOffice,
-      OwnerSRST,
-      VehicleMakeVariantModelColor,
-      DateOfIssue,
-      ValidFrom,
-      VehicleType,
-      ValidUntilNtv,
-      ValidUntilTv,
-      phoneNumber,
-      AntiTheft,
-      RegLadenWt,
-      RemarkIfRLW,
-      UnladenWT,
-      RemarkIfULW,
-      VehicleRemark,
-      InsuranceCompanyNameAddress,
-      InsuredAddress,InsuredMailAddress,
-      InsuredMobileNo1,
-      InsuredMobileNo2,
-      InsuredName,
-      requestType,
-      ClaimNumber,
-      EngineType,
-      PUCNumber,
-      TransferDate,
-      AddedBy,
-      Verification,
-      GarageAddedBy,
-      GarageContactNo1,
-      GarageContactNo2,
-      GarageNameAndAddress,
-      ClaimAddedDateTime,
-      PolicyIssuingOffice,
-      PolicyNumber,
-      DriverName,
-      DriverAddedDate,
-      IssuingAuthority,
-      LicenseNumber,
-      LicenseType,
-      BadgeNumber,
-      driverRemark,
-      VehicleRegisteredNumber,
-      RegisteredOwner,
-      VehicleChassisNumber,
-      EngineNumber,
-      VehicleTypeOfBody,
-      VehicleCubicCapacity,
-      VehicleClassOfVehicle,
-      VehicleFuelType,
-      VehicleOdometerReading,
-      VehiclePreAccidentCondition,
-      VehicleModel,
-      VehicleTaxParticulars,
-      VehicleSeatingCapacity,
-      AccidentAddedDateTime,
-      DateOfRegistration,
-      MailRecieveDate,
-      PlaceOfLoss,
-      Pin,
-      PlaceOfSurvey,
-      SurveyAllotmentDate,
-      SurveyConductedDate,
-      DateRegistration,
-      FitnessCertificate,
-      FitnessFrom,
-      FitnessTo,
-      PermitTo,
-      PermitNo,
-      PermitFrom,
-      TypeOfPermit,
-      Authorization,
-      AreasOfoperation,
-      commercialRemark,
-
-      DetailsOfLoads,
-      CauseOfAccident,
-      PoliceAction,
-      ThirdPartyLoss,
-      Assessment,
-      leadId
-  } = req.body;
-
-
-    const updateDriverDetails=`
-=======
 app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
   const {
     policyType,
@@ -901,7 +789,6 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
   } = req.body;
 
   const updateDriverDetails = `
->>>>>>> Stashed changes
     UPDATE DriverDetails
     SET
     AddedDate = '${DriverAddedDate}',
@@ -989,11 +876,6 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
         WHERE LeadID = ${leadId};
   `;
 
-<<<<<<< Updated upstream
-
-  console.log(updateVehicleDetails);
-=======
->>>>>>> Stashed changes
   const updateAccidentDetails = `
   UPDATE AccidentDetails
         SET
