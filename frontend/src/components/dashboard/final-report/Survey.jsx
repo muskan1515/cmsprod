@@ -5,6 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Calendar } from "primereact/calendar";
 import { Editor } from "primereact/editor";
 import { AccidentContent, AssessmentContent } from "./Content";
+import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
 
 const Servey = ({
   
@@ -13,7 +14,6 @@ const Servey = ({
   setPhoneNumber,
   applicantNumber,
   setApplicantNumber,
-
   DetailsOfLoads,
   setDetailsOfLoads,
   CauseOfAccident,
@@ -80,6 +80,7 @@ const Servey = ({
   setInsuranceCompanyNameAddress,
   InsuredAddress,
   setInsuredAddress,
+  allDepreciations,
   InsuredName,
   setInsuredName,
   InsuredMobileNo1,
@@ -153,6 +154,30 @@ const Servey = ({
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   };
+
+  
+  const calculateVehicleAge = ()=>{
+    if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
+      return "0";
+    }
+    const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
+
+
+    const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
+    // setAgeOfVehicle(a+b);
+    console.log("age",a);
+    return `${a}`;
+    
+
+  }
+
+  const calculateDepreciationOnMetal = ()=>{
+    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
+  //  setDepMetal(a);
+   console.log("dep",a);
+    return a;
+  }
+
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -248,7 +273,7 @@ const Servey = ({
                 <div className="col-lg-8">
                   <input
                   type={isEditMode ? "date" : "text"}
-                  disabled={!isEditMode}
+                  readonly={!isEditMode}
               value={isEditMode? AccidentAddedDateTime : formatDate(AccidentAddedDateTime)}
               onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
              
@@ -275,7 +300,7 @@ const Servey = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                disabled={!isEditMode}
+                readonly={!isEditMode}
                 value={formatTime(AccidentAddedDateTime)}
               />
                 </div>
@@ -302,7 +327,7 @@ const Servey = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    disabled={!isEditMode}
+                    readonly={!isEditMode}
                     value={PlaceOfLoss}
                     onChange={(e)=>setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
@@ -336,7 +361,7 @@ const Servey = ({
                     className="form-control"
                     id="propertyTitle"
                     value={Pin}
-                    disabled={!isEditMode}
+                    readonly={!isEditMode}
                     onChange={(e)=>setPin(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -369,7 +394,7 @@ const Servey = ({
                     className="form-control"
                     id="propertyTitle"
                     value={PlaceOfSurvey}
-                    disabled={!isEditMode}
+                    readonly={!isEditMode}
                     onChange={(e)=>setPlaceOfSurvey(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -412,7 +437,7 @@ const Servey = ({
             /> */}
                   <input
                   type={isEditMode ? "date" : "text"}
-                    disabled={!isEditMode}
+                    readonly={!isEditMode}
 
                    value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
                    onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />
@@ -469,7 +494,7 @@ const Servey = ({
               <div className="col-lg-8">
                 <input
                 type={isEditMode ? "date" : "text"}
-                disabled={!isEditMode}
+                readonly={!isEditMode}
                 value={ isEditMode ? SurveyConductedDate : formatDate(SurveyConductedDate)}
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
@@ -488,7 +513,7 @@ const Servey = ({
           <div className="col-lg-12">
             <div>
               <div className="">
-                <Editor placeholder={AccidentContent(claim?.insuredDetails?.InsuredName)} disabled={!isEditMode} value={CauseOfAccident} onChange={setCauseOfAccident} style={{ height: "150px" }} />
+                <Editor placeholder={AccidentContent(claim?.insuredDetails?.InsuredName)} readonly={!isEditMode} value={CauseOfAccident} onChange={setCauseOfAccident} style={{ height: "150px" }} />
               </div>
               {/*  <Editor/>*/}
               {/* <textarea
@@ -524,7 +549,7 @@ const Servey = ({
           </div>
           <div className="col-lg-12 mb-2">
             <div className="">
-              <Editor disabled={!isEditMode} value={PoliceAction} onChange={setPoliceAction}  style={{ height: "80px" }} />
+              <Editor readonly={!isEditMode} value={PoliceAction} onChange={setPoliceAction}  style={{ height: "80px" }} />
             </div>
           </div>
         </div>
@@ -552,7 +577,7 @@ const Servey = ({
           </div>
           <div className="row">
             <div className="">
-              <Editor disabled={!isEditMode}  value={DetailsOfLoads} onChange={setDetailsOfLoads} style={{ height: "100px" }} />
+              <Editor readonly={!isEditMode}  value={DetailsOfLoads} onChange={setDetailsOfLoads} style={{ height: "100px" }} />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -560,7 +585,7 @@ const Servey = ({
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
             <div className="">
-              <Editor disabled={!isEditMode} value={ThirdPartyLoss} onChange={setThirdPartyLoss} style={{ height: "100px" }} />
+              <Editor readonly={!isEditMode} value={ThirdPartyLoss} onChange={setThirdPartyLoss} style={{ height: "100px" }} />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -568,7 +593,7 @@ const Servey = ({
             <h4>Assesment :</h4>
             <hr />
             <div className="">
-              <Editor placeholder={AssessmentContent(claim?.claimDetails?.InsuranceCompanyNameAddress , ClaimAddedDateTime, new Date())} disabled={!isEditMode} value={Assessment} onChange={setAssessment} style={{ height: "300px" }} />
+              <Editor placeholder={AssessmentContent(claim?.claimDetails?.InsuranceCompanyNameAddress ,formatDate( claim?.claimDetails?.AddedDateTime),formatDate( new Date()))} readonly={!isEditMode} value={Assessment} onChange={setAssessment} style={{ height: "300px" }} />
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>
@@ -631,6 +656,7 @@ const Servey = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
+                  value={calculateVehicleAge()}
                   // value={props.assessed}
                   // readOnly={!isEditMode}
                   // onChange={(e) => setLicenseType(e.target.value)}
@@ -662,6 +688,7 @@ const Servey = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
+                  value={calculateDepreciationOnMetal()}
                   // value={props.difference}
                   // readOnly={!isEditMode}
                   // onChange={(e) => setLicenseType(e.target.value)}

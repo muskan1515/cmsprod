@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 const MyDatePicker = ({ selectedDate, setSelectedDate }) => {
   const [currentDate, setCurrentDate] = useState(
-    selectedDate ? format(new Date(selectedDate), "MM/dd/yyyy") : ""
+    selectedDate 
   );
 
   const formatDate = (date) => {

@@ -155,6 +155,8 @@ const PolicyDetails = ({
   setFitnessTo,
   FitnessTo,
   PermitNo,
+  MailRecieveDate,
+  setMailRecieveDate,
   setPermitNo,
   PermitFrom,
   setPermitFrom,
@@ -333,7 +335,13 @@ const PolicyDetails = ({
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               /> */}
-              <input type="date" className="form-control" id="propertyTitle" />
+              <input 
+              readonly={!isEditMode}
+              type={isEditMode ? "date" : "text"}
+              value={formatDate(MailRecieveDate)}
+              onChange={(e)=>setMailRecieveDate(e.target.value)}
+              className="form-control" 
+              id="propertyTitle" />
             </div>
             {/* <span
               className="col-lg-1 flaticon-calendar text-dark fs-6"
@@ -367,7 +375,7 @@ const PolicyDetails = ({
                 data-width="100%"
                 value={VehicleType}
                 onChange={(e)=>setVehicleType(e.target.value)}
-                disabled={!isEditMode}
+                readonly={!isEditMode}
               >
                 <option data-tokens="Status1">Select</option>
                 <option data-tokens="Status2">Swift</option>
@@ -507,6 +515,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         value={IDV}
                         onChange={(e) => setIDV(e.target.value)}
+                        readonly={!isEditMode}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -535,7 +544,7 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
-                        disabled={!isEditMode}
+                        readonly={!isEditMode}
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
                       >
@@ -600,7 +609,7 @@ const PolicyDetails = ({
                     <div className="col-lg-5">
                       <input 
                       type={isEditMode ? "date" : "text"} 
-                      disabled={!isEditMode} 
+                      readonly={!isEditMode} 
                       value={isEditMode ? PolicyPeriodStart : formatDate(PolicyPeriodStart)} 
                       onChange={(e)=>setPolicyPeriodStart(e.target.value)}/>
                       {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -633,7 +642,7 @@ const PolicyDetails = ({
                     <div className="col-lg-10">
                      <input 
                       type={isEditMode ? "date" : "text"} 
-                      disabled={!isEditMode}
+                      readonly={!isEditMode}
                       value={ isEditMode ? PolicyPeriodEnd : formatDate(PolicyPeriodEnd)} 
                       onChange={(e)=>setPolicyPeriodEnd(e.target.value)}/>
                     </div>
@@ -1011,6 +1020,11 @@ const PolicyDetails = ({
                             className="selectpicker form-select"
                             data-live-search="true"
                             data-width="100%"
+                            type={isEditMode ? "date" : "text"}
+                            readonly={!isEditMode}
+                            
+                            onChange={(e)=>setDateRegistration(e.target.value)}
+                           
                           >
                             <option data-tokens="Status1">choose..</option>
                             <option data-tokens="Status2">Purchase</option>
@@ -1019,10 +1033,12 @@ const PolicyDetails = ({
                         </div>
                         <div className="col-lg-4">
                           <input
-                            type="date"
+                            type={isEditMode ? "date" : "text"}
+                            readonly={!isEditMode}
                             className="form-control"
                             id="propertyTitle"
-
+                            value={isEditMode ? DateRegistration : formatDate(DateRegistration)}
+                            onChange={(e)=>setDateRegistration(e.target.value)}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -1526,7 +1542,7 @@ const PolicyDetails = ({
                       <div className="col-lg-5">
                         <input
                           type="text"
-                          disabled={!isEditMode}
+                          readonly={!isEditMode}
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
@@ -1591,7 +1607,7 @@ const PolicyDetails = ({
                       <div className="col-lg-5">
                         <input
                           type="text"
-                          disabled={!isEditMode}
+                          readonly={!isEditMode}
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
@@ -1850,7 +1866,7 @@ const PolicyDetails = ({
                       </div>
                       <div className="col-lg-8">
                         <select
-                        disabled={!isEditMode}
+                        readonly={!isEditMode}
                           style={{ padding: "2px" }}
                           className="selectpicker form-select"
                           data-live-search="true"
@@ -2001,7 +2017,7 @@ const PolicyDetails = ({
                   /> */}
                   <input 
                   type={isEditMode ? "date" : "text"} 
-                  disabled={!isEditMode} 
+                  readonly={!isEditMode} 
                   value={isEditMode ? DateOfIssue : formatDate(DateOfIssue)} 
                   onChange={(e)=>setDateOfIssue(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2034,7 +2050,7 @@ const PolicyDetails = ({
             /> */}
                   <input 
                   type={isEditMode ? "date" : "text"} 
-                  disabled={!isEditMode}
+                  readonly={!isEditMode}
                   value={isEditMode ? ValidUntilNtv: formatDate(ValidUntilNtv)} 
                   onChange={(e)=>setValidUntilNtv(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2067,7 +2083,7 @@ const PolicyDetails = ({
                   /> */}
                   <input 
                   type={isEditMode ? "date" : "text"} 
-                  disabled={!isEditMode} 
+                  readonly={!isEditMode} 
                   value={isEditMode ? ValidFrom:formatDate(ValidFrom)} 
                   onChange={(e)=>setValidFrom(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2100,7 +2116,7 @@ const PolicyDetails = ({
             /> */}
                   <input 
                   type={isEditMode ? "date" : "text"} 
-                  disabled={!isEditMode} 
+                  readonly={!isEditMode} 
                   value={isEditMode ? ValidUntilTv : formatDate(ValidUntilTv)} 
                   onChange={(e)=>setValidUntilTv(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2227,7 +2243,7 @@ const PolicyDetails = ({
                     className="selectpicker form-select"
                     data-live-search="true"
                     data-width="100%"
-                    disabled={!isEditMode}
+                    readonly={!isEditMode}
                     value={driverRemark}
                     onChange={(e)=>setDriverRemark(e.target.value)}
                   >
@@ -2307,7 +2323,7 @@ const PolicyDetails = ({
             /> */}
                       <input 
                       type={isEditMode ? "date" : "text"}
-                      disabled={!isEditMode}
+                      readonly={!isEditMode}
                       value={isEditMode ? FitnessFrom : formatDate(FitnessFrom)}
                       onChange={(e)=>setFitnessFrom(e.target.value)}
                       />
@@ -2341,7 +2357,7 @@ const PolicyDetails = ({
             /> */}
                       <input
                       type={isEditMode ? "date" : "text"}
-                      disabled={!isEditMode}
+                      readonly={!isEditMode}
                       value={isEditMode ? FitnessTo : formatDate(FitnessTo)}
                       onChange={(e)=>setFitnessTo(e.target.value)}
                       />
@@ -2408,7 +2424,7 @@ const PolicyDetails = ({
             /> */}
                       <input 
                       type={isEditMode ? "date" : "text"}
-                      disabled={!isEditMode}
+                      readonly={!isEditMode}
                       value={isEditMode ? PermitFrom  :formatDate(PermitFrom)}
                       onChange={(e)=>setPermitFrom(e.target.value)}
                       />
@@ -2442,7 +2458,7 @@ const PolicyDetails = ({
             /> */}
                       <input 
                       type={isEditMode ? "date" : "text"}
-                      disabled={!isEditMode}
+                      readonly={!isEditMode}
                       value={isEditMode ? PermitTo : formatDate(PermitTo)}
                       onChange={(e)=>setPermitTo(e.target.value)}
                       />
@@ -2571,7 +2587,7 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
-                        disabled={!isEditMode}
+                        readonly={!isEditMode}
                         value={commercialRemark}
                         onChange={(e)=>setcommercialRemark(e.target.value)}
                       >

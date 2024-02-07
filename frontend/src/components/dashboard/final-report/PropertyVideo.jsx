@@ -148,26 +148,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   }, [toggleEstimate, currentGst, reload, toggleEstimate]);
 
 
-  const calculateVehicleAge = ()=>{
-    if(! claim.vehicleDetails?.VehicleDateOfRegistration || !claim.claimDetails?.ClaimAddedDateTime){
-      return "0";
-    }
-    const a = getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
-
-
-    const b= getMonthsDifference(claim.claimDetails?.ClaimAddedDateTime);
-    setAgeOfVehicle(a+b);
-    return `${a + (b)}`;
-    
-
-  }
-
-  const calculateDepreciationOnMetal = ()=>{
-    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
-   setDepMetal(a);
-    return a;
-  }
-
   useEffect(()=>{
 
     calculateVehicleAge();
@@ -272,6 +252,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [AreasOfoperation,setAreasOfoperation]=useState("");
   const [commercialRemark,setcommercialRemark]=useState("");
 
+  const [MailRecieveDate,setMailRecieveDate]=useState("");
+
+  const [DateOfRegistration,setDateOfRegistration]=useState("");
 
   //SURVEY DETAILS
   const [DetailsOfLoads,setDetailsOfLoads]=useState("");
@@ -303,6 +286,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
+
+    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration || "");
+    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate || "");
+    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate || "");
     setClaimRegion(claim?.claimDetails?.ClaimRegion || "");
     setInsuredName(claim?.insuredDetails?.InsuredName || "");
     setInsuredAddress(claim?.insuredDetails?.InsuredAddress || "");
@@ -401,9 +388,25 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation || "");
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark || "");
 
-
-
   }, [claim]);
+
+  const calculateVehicleAge = ()=>{
+    if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
+      return "0";
+    }
+    const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
+    const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
+ 
+    return `${a }`;
+    
+  }
+
+  const calculateDepreciationOnMetal = ()=>{
+    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
+   
+    console.log(a);
+    return a;
+  }
 
   const saveHandler = ()=>{
 
@@ -418,6 +421,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       OwnerSRST,
       VehicleMakeVariantModelColor : VehicleMakeVariantModelColor + ","+VehicleColor,
       DateOfIssue,
+      MailRecieveDate,
       ValidFrom,
       VehicleType,
       ValidUntilNtv,
@@ -427,6 +431,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       RegLadenWt,
       RemarkIfRLW,
       Pin,
+      DateOfRegistration,
       PlaceOfSurvey,
       UnladenWT,
       RemarkIfULW,
@@ -472,6 +477,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       VehicleTaxParticulars,
       VehicleSeatingCapacity,
       AccidentAddedDateTime,
+
       PlaceOfLoss,
       SurveyAllotmentDate,
       SurveyConductedDate,
@@ -495,6 +501,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       Assessment,
       leadId
     };
+
 
     axios.put("/api/updateFinalReport",payload,{
       headers:{
@@ -610,6 +617,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setPolicyPeriodStart={setPolicyPeriodStart}
                 PolicyPeriodStart={PolicyPeriodStart}
 
+                MailRecieveDate={MailRecieveDate}
+                setMailRecieveDate={setMailRecieveDate}
 
                 OwnerSRST={OwnerSRST}
                 setOwnerSRST={setOwnerSRST}
@@ -668,7 +677,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setValidFrom={setValidFrom}
                 ValidUntilTv={ValidUntilTv}
                 setValidUntilTv={setValidUntilTv}
-
+                DateOfRegistration={DateOfRegistration}
+                setDateOfRegistration={setDateOfRegistration}
                 phoneNumber={phoneNumber}
                 setPhoneNumber={setPhoneNumber}
                 applicantNumber={applicantNumber}
@@ -786,7 +796,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 SomeComponent={SomeComponent}
                 isEditMode={isEditMode}
                 setIsEditMode={setIsEditMode}
+                allDepreciations={allDepreciations}
                 phoneNumber={phoneNumber}
+                calculateDepreciationOnMetal={calculateDepreciationOnMetal}
+                calculateVehicleAge={calculateVehicleAge}
                 setPhoneNumber={setPhoneNumber}
                 applicantNumber={applicantNumber}
                 setApplicantNumber={setApplicantNumber}
@@ -916,6 +929,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
+                LeadId={leadId}
                   claim={claim}
                   policyType={policyType}
                   includeDepreciation={includeDepreciation}

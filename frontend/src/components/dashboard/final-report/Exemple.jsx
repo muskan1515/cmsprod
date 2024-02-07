@@ -113,6 +113,7 @@ export default function Exemple_01({
   allDepreciations,
   setAllDepreciations,
   ClaimAddedDateTime,
+  LeadId,
   PolicyStartDate,
   VehicleAddedDate,
 }) {
@@ -258,13 +259,13 @@ export default function Exemple_01({
   };
 
   const calculateVehicleAge = ()=>{
-    if(! claim.vehicleDetails?.VehicleDateOfRegistration || !claim.claimDetails?.ClaimAddedDateTime){
+    if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
       return "0";
     }
-    const a = getMonthsDifference(claim.vehicleDetails?.VehicleDateOfRegistration);
-    const b= getMonthsDifference(claim.claimDetails?.ClaimAddedDateTime);
+    const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
+    const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
     setTotalAgeOfVehicle(a+b);
-    return `${a + (b)}`;
+    return `${a }`;
     
   }
 
@@ -280,7 +281,7 @@ export default function Exemple_01({
   }
 
   const calculateDepreciationOnMetal = ()=>{
-    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.VehicleDateOfRegistration);
+    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
     setOverallMetailDep(a);
     console.log(a);
     return a;
@@ -425,6 +426,35 @@ export default function Exemple_01({
     }
     return without_gst;
   };
+
+
+  const onSaveHandler = ()=>{
+
+    const LeadID = window.location.pathname.split("/final-report/")[1];
+    console.log(LeadID)
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+    const payload={
+      allRows : JSON.stringify(allRows)
+    };
+
+    axios.put("/api/updateNewParts",payload,{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        LeadId : LeadID
+      }
+    })
+    .then((res)=>{
+      alert("Successfully updated!!");
+    })
+    .catch((Err)=>{
+      alert(Err)
+    })
+  }
 
   const changeTotalAccordingToPolicyType = (policy) => {
 
@@ -993,7 +1023,7 @@ export default function Exemple_01({
       handleAddRow={handleAddRow}
       handleRemoveRow={handleRemoveRow}
       editHandler={editHandler}
-      updateHandler={updateHandler}
+      updateHandler={onSaveHandler}
       estimate={totalAssessed}
       vehicleAge = {calculateVehicleAge}
       gstToggleHandler={handleToggleGSTHandler}

@@ -707,6 +707,13 @@ function executeStoredProc(procName, params) {
   });
 }
 
+
+app.put("/updateNewParts/:leadId",authenticateUser,(req,res)=>{
+  const leadId = req.params.leadId;
+  const data = JSON.parse(req.body.allRows);
+  console.log(data)
+})
+
 app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
 
   const {
@@ -738,7 +745,6 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
       requestType,
       ClaimNumber,
       EngineType,
-      DateRegistration,
       PUCNumber,
       TransferDate,
       AddedBy,
@@ -771,12 +777,14 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
       VehicleTaxParticulars,
       VehicleSeatingCapacity,
       AccidentAddedDateTime,
+      DateOfRegistration,
+      MailRecieveDate,
       PlaceOfLoss,
       Pin,
       PlaceOfSurvey,
       SurveyAllotmentDate,
       SurveyConductedDate,
-
+      DateRegistration,
       FitnessCertificate,
       FitnessFrom,
       FitnessTo,
@@ -828,6 +836,7 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
         InspectionType = '${""}',
         PolicyType='${policyType}',
         IDV='${IDV}',
+        MailRecieveDate='${MailRecieveDate}',
         HPA='${HPA}'
         WHERE LeadID = ${leadId};
   `;
@@ -885,7 +894,7 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
   `;
 
 
-
+  console.log(updateVehicleDetails);
   const updateAccidentDetails = `
   UPDATE AccidentDetails
         SET
@@ -898,7 +907,8 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
         CauseOfAccident='${CauseOfAccident}',
         PoliceAction='${PoliceAction}',
         ThirdPartyLoss='${ThirdPartyLoss}',
-        Assessment='${Assessment}'
+        Assessment='${Assessment}',
+        AddedDateTime='${AccidentAddedDateTime}'
         WHERE LeadID = ${leadId};
   `;
 
