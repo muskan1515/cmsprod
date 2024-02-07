@@ -669,6 +669,7 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
     const vehicleDetails = await executeQuery("SELECT * FROM VehicleDetails WHERE LeadID=?", [leadId]);
     const garageDetails = await executeQuery("SELECT * FROM GarageDetails WHERE LeadID=?", [leadId]);
     const claimStatus = await executeQuery("SELECT * FROM ClaimStatus WHERE LeadID=?", [leadId]);
+    const commercialVehicleDetails = await executeQuery("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?", [leadId]);
 
     const combinedResult = {
       claimDetails,
@@ -678,7 +679,10 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
       vehicleDetails,
       garageDetails,
       claimStatus,
+      commercialVehicleDetails
     };
+
+    console.log(combinedResult)
 
     res.json(combinedResult);
   } catch (error) {
@@ -706,65 +710,92 @@ function executeStoredProc(procName, params) {
 app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
 
   const {
-    policyType,
-    IDV,
-    PolicyPeriodStart,
-    PolicyPeriodEnd,
-    HPA,
-    ClaimServicingOffice,
-    OwnerSRST,
-    VehicleMakeVariantModelColor,
-    DateOfIssue,
-    ValidFrom,
-    ValidUntilNtv,
-    ValidUntilTv,
-    phoneNumber,
-    InsuranceCompanyNameAddress,
-    InsuredAddress,
-    InsuredMailAddress,
-    InsuredMobileNo1,
-    InsuredMobileNo2,
-    InsuredName,
-    requestType,
-    ClaimNumber,
-    EngineType,
-    DateRegistration,
-    PUCNumber,
-    TransferDate,
-    AddedBy,
-    Verification,
-    GarageAddedBy,
-    GarageContactNo1,
-    GarageContactNo2,
-    GarageNameAndAddress,
-    ClaimAddedDateTime,
-    PolicyIssuingOffice,
-    PolicyNumber,
-    DriverName,
-    DriverAddedDate,
-    IssuingAuthority,
-    LicenseNumber,
-    LicenseType,
-    BadgeNumber,
-    VehicleRegisteredNumber,
-    RegisteredOwner,
-    VehicleChassisNumber,
-    EngineNumber,
-    VehicleTypeOfBody,
-    VehicleCubicCapacity,
-    VehicleClassOfVehicle,
-    VehicleFuelType,
-    VehicleOdometerReading,
-    VehiclePreAccidentCondition,
-    VehicleModel,
-    VehicleTaxParticulars,
-    VehicleSeatingCapacity,
-    AccidentAddedDateTime,
-    PlaceOfLoss,
-    SurveyAllotmentDat,
-    SurveyConductedDate,
-    leadId
+      policyType,
+      IDV,
+      PolicyPeriodStart,
+      PolicyPeriodEnd,
+      HPA,
+      ClaimServicingOffice,
+      OwnerSRST,
+      VehicleMakeVariantModelColor,
+      DateOfIssue,
+      ValidFrom,
+      VehicleType,
+      ValidUntilNtv,
+      ValidUntilTv,
+      phoneNumber,
+      AntiTheft,
+      RegLadenWt,
+      RemarkIfRLW,
+      UnladenWT,
+      RemarkIfULW,
+      VehicleRemark,
+      InsuranceCompanyNameAddress,
+      InsuredAddress,InsuredMailAddress,
+      InsuredMobileNo1,
+      InsuredMobileNo2,
+      InsuredName,
+      requestType,
+      ClaimNumber,
+      EngineType,
+      DateRegistration,
+      PUCNumber,
+      TransferDate,
+      AddedBy,
+      Verification,
+      GarageAddedBy,
+      GarageContactNo1,
+      GarageContactNo2,
+      GarageNameAndAddress,
+      ClaimAddedDateTime,
+      PolicyIssuingOffice,
+      PolicyNumber,
+      DriverName,
+      DriverAddedDate,
+      IssuingAuthority,
+      LicenseNumber,
+      LicenseType,
+      BadgeNumber,
+      driverRemark,
+      VehicleRegisteredNumber,
+      RegisteredOwner,
+      VehicleChassisNumber,
+      EngineNumber,
+      VehicleTypeOfBody,
+      VehicleCubicCapacity,
+      VehicleClassOfVehicle,
+      VehicleFuelType,
+      VehicleOdometerReading,
+      VehiclePreAccidentCondition,
+      VehicleModel,
+      VehicleTaxParticulars,
+      VehicleSeatingCapacity,
+      AccidentAddedDateTime,
+      PlaceOfLoss,
+      Pin,
+      PlaceOfSurvey,
+      SurveyAllotmentDate,
+      SurveyConductedDate,
+
+      FitnessCertificate,
+      FitnessFrom,
+      FitnessTo,
+      PermitTo,
+      PermitNo,
+      PermitFrom,
+      TypeOfPermit,
+      Authorization,
+      AreasOfoperation,
+      commercialRemark,
+
+      DetailsOfLoads,
+      CauseOfAccident,
+      PoliceAction,
+      ThirdPartyLoss,
+      Assessment,
+      leadId
   } = req.body;
+
 
     const updateDriverDetails=`
     UPDATE DriverDetails
@@ -778,7 +809,8 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
     ValidFrom='${ValidFrom}',
     ValidUntilNtv = '${ValidUntilNtv}',
     ValidUntilTv = '${ValidUntilTv}',
-    BadgeNumber='${BadgeNumber}'
+    BadgeNumber='${BadgeNumber}',
+    Remark='${driverRemark}'
     WHERE LeadID = ${leadId};
   `;
 
@@ -794,7 +826,9 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
         ClaimNumber = '${ClaimNumber}',
         ClaimServicingOffice='${ClaimServicingOffice}',
         InspectionType = '${""}',
-        PolicyType='${policyType}'
+        PolicyType='${policyType}',
+        IDV='${IDV}',
+        HPA='${HPA}'
         WHERE LeadID = ${leadId};
   `;
 
@@ -817,7 +851,15 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
         FuelType = '${VehicleFuelType}',
         TaxParticulars='${VehicleTaxParticulars}',
         OdometerReading = '${VehicleOdometerReading}',
-        PucNumber='${PUCNumber}'
+        PucNumber='${PUCNumber}',
+        OwnerSrDate='${OwnerSRST}',
+        RegLadenWt='${RegLadenWt}',
+        RemarkIfRLW='${RemarkIfRLW}',
+        UnladenWT='${UnladenWT}',
+        RemarkIfULW='${RemarkIfULW}',
+        Remark='${VehicleRemark}',
+        VehicleType='${VehicleType}',
+        AntiTheft='${AntiTheft}'
         WHERE LeadID = ${leadId};
   `;
 
@@ -848,9 +890,44 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
   UPDATE AccidentDetails
         SET
         PlaceOfLoss = '${PlaceOfLoss}',
-        SurveyAllotmentDate = '${SurveyAllotmentDat}',
-        SurveyConductedDate='${SurveyConductedDate}'
+        SurveyAllotmentDate = '${SurveyAllotmentDate}',
+        SurveyConductedDate='${SurveyConductedDate}',
+        Pin='${Pin}',
+        PlaceOfSurvey='${PlaceOfSurvey}',
+        DetailsOfLoads='${DetailsOfLoads}',
+        CauseOfAccident='${CauseOfAccident}',
+        PoliceAction='${PoliceAction}',
+        ThirdPartyLoss='${ThirdPartyLoss}',
+        Assessment='${Assessment}'
         WHERE LeadID = ${leadId};
+  `;
+
+  const insertIntoCommercialVehicleDetails = `
+  INSERT INTO CommercialVehicleDetails (
+    FitnessCertificate,
+      FitnessFrom,
+      FitnessTo,
+      PermitTo,
+      PermitNo,
+      PermitFrom,
+    TypeOfPermit,
+    Authorization,
+    AreasOfoperation,
+    Remark,
+    LeadId 
+  ) VALUES (
+    '${FitnessCertificate}',
+    '${FitnessFrom}',
+    '${FitnessTo}',
+    '${PermitTo}',
+    '${PermitNo}',
+    '${PermitFrom}',
+    '${TypeOfPermit}',
+    '${Authorization}',
+    '${AreasOfoperation}',
+    '${commercialRemark}',
+    '${parseInt(leadId)}'
+  );
   `;
 
   db.query(updateClaimDetails, (err, result2) => {
@@ -901,6 +978,16 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
     }
     console.log(result2);
   });
+
+  db.query(insertIntoCommercialVehicleDetails, (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    console.log(result2);
+  });
+
 
   res.status(200).send("Successfully Updated!!");
 

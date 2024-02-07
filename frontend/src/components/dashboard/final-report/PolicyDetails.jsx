@@ -88,6 +88,7 @@ const PolicyDetails = ({
   setInsuredMobileNo2,
   ClaimRegion,
   setClaimRegion,
+  setClaimNumber,
 
   DriverName,
   setDriverName,
@@ -130,20 +131,46 @@ const PolicyDetails = ({
   setVehicleTaxParticulars,
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
+
+  VehicleType,
+  setVehicleType,
+  AntiTheft,
+  setAntiTheft,
+  RegLadenWt,
+  setRegLadenWt,
+  RemarkIfRLW,
+  setRemarkIfRLW,
+  RemarkIfULW,
+  setRemarkIfULW,
+  UnladenWT,
+  setUnladenWT,
+  VehicleRemark,
+  setVehicleRemark,
+  driverRemark,
+  setDriverRemark,
+  FitnessCertificate,
+  setFitnessCertificate,
+  FitnessFrom,
+  setFitnessFrom,
+  setFitnessTo,
+  FitnessTo,
+  PermitNo,
+  setPermitNo,
+  PermitFrom,
+  setPermitFrom,
+  PermitTo,
+  setPermitTo,
+  TypeOfPermit,
+  setTypeOfPermit,
+  Authorization,
+  setAuthorization,
+  AreasOfoperation,
+  setAreasOfoperation,
+  commercialRemark,
+  setcommercialRemark
+                
 }) => {
-  const converttoDDMMYYYY = (date) => {
-    return date;
-    const inputDate = new Date(date);
 
-    // Get day, month, and year components
-    const day = inputDate.getUTCDate().toString().padStart(2, "0");
-    const month = (inputDate.getUTCMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
-    const year = inputDate.getUTCFullYear();
-
-    // Construct the formatted string in "ddmmyyyy" format
-    const formattedDateString = `${day}${month}${year}`;
-    return formattedDateString;
-  };
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -166,6 +193,17 @@ const PolicyDetails = ({
   //Update Document
   const handleEditClick = () => {
     setIsEditMode(true);
+  };
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
   };
 
   // const handleUpdateClick = () => {
@@ -237,6 +275,10 @@ const PolicyDetails = ({
   // };
   const [startDate, setStartDate] = useState(new Date());
 
+  const handleCancelHnadler = ()=>{
+    setIsEditMode(false);
+  }
+ 
   return (
     <>
       <div className="row">
@@ -323,6 +365,9 @@ const PolicyDetails = ({
                 className="selectpicker form-select"
                 data-live-search="true"
                 data-width="100%"
+                value={VehicleType}
+                onChange={(e)=>setVehicleType(e.target.value)}
+                disabled={!isEditMode}
               >
                 <option data-tokens="Status1">Select</option>
                 <option data-tokens="Status2">Swift</option>
@@ -337,13 +382,17 @@ const PolicyDetails = ({
         </div> */}
         </div>
         <div className="col-lg-4 text-end">
-          <button className="btn btn-color m-1" onClick={handleEditClick}>
+         
+          {isEditMode ? (
+            <>
+            <button className="btn btn-color m-1" onClick={handleCancelHnadler}>
             Cancel
           </button>
-          {isEditMode ? (
             <button className="btn btn-color m-1" onClick={handleUpdateClick}>
               Update
             </button>
+            </>
+
           ) : (
             <button className="btn btn-color m-1" onClick={handleEditClick}>
               Edit
@@ -486,6 +535,7 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
+                        disabled={!isEditMode}
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
                       >
@@ -548,13 +598,11 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <input
-                        type="date"
-                        className="form-control"
-                        style={{ fontSize: "12px" }}
-                        value={PolicyPeriodStart}
-                        onChange={(e) => setPolicyPeriodStart(e.target.value)}
-                      />
+                      <input 
+                      type={isEditMode ? "date" : "text"} 
+                      disabled={!isEditMode} 
+                      value={isEditMode ? PolicyPeriodStart : formatDate(PolicyPeriodStart)} 
+                      onChange={(e)=>setPolicyPeriodStart(e.target.value)}/>
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                       {/* <input
                         type="date"
@@ -583,14 +631,11 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <input
-                        className="form-control"
-                        placeholder={PolicyPeriodEnd}
-                        type="date"
-                        style={{ fontSize: "12px" }}
-                        value={PolicyPeriodEnd}
-                        onChange={(e) => setPolicyPeriodEnd(e.target.value)}
-                      />
+                     <input 
+                      type={isEditMode ? "date" : "text"} 
+                      disabled={!isEditMode}
+                      value={ isEditMode ? PolicyPeriodEnd : formatDate(PolicyPeriodEnd)} 
+                      onChange={(e)=>setPolicyPeriodEnd(e.target.value)}/>
                     </div>
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
@@ -1259,6 +1304,8 @@ const PolicyDetails = ({
                             className="form-control"
                             id="color"
                             // value={VehicleModel}
+                            value={AntiTheft}
+                            onChange={(e)=>setAntiTheft(e.target.value)}
                             readOnly={!isEditMode}
                             // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
 
@@ -1451,6 +1498,8 @@ const PolicyDetails = ({
                           type="text"
                           className="form-control"
                           id="propertyTitle"
+                          value={RegLadenWt}
+                          onChange={(e)=>setRegLadenWt(e.target.value)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -1477,9 +1526,12 @@ const PolicyDetails = ({
                       <div className="col-lg-5">
                         <input
                           type="text"
+                          disabled={!isEditMode}
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
+                          value={RemarkIfRLW}
+                          onChange={(e)=>setRemarkIfRLW(e.target.value)}
 
                           // placeholder="Enter Registration No."
                         />
@@ -1510,6 +1562,8 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
+                          value={UnladenWT}
+                          onChange={(e)=>setUnladenWT(e.target.value)}
 
                           // placeholder="Enter Registration No."
                         />
@@ -1537,9 +1591,12 @@ const PolicyDetails = ({
                       <div className="col-lg-5">
                         <input
                           type="text"
+                          disabled={!isEditMode}
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
+                          value={RemarkIfULW}
+                          onChange={(e)=>setRemarkIfULW(e.target.value)}
 
                           // placeholder="Enter Registration No."
                         />
@@ -1793,10 +1850,13 @@ const PolicyDetails = ({
                       </div>
                       <div className="col-lg-8">
                         <select
+                        disabled={!isEditMode}
                           style={{ padding: "2px" }}
                           className="selectpicker form-select"
                           data-live-search="true"
                           data-width="100%"
+                          value={VehicleRemark}
+                          onChange={(e)=>setVehicleRemark(e.target.value)}
                         >
                           <option data-tokens="Status1">
                             Verified from Original
@@ -1933,7 +1993,8 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <input
+                  
+                  {/* <input
                     type="date"
                     className="form-control"
                     id="propertyTitle"
@@ -1969,13 +2030,11 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <input
-                    className="form-control"
-                    style={{ fontSize: "12px" }}
-                    type="date"
-                    value={DateOfIssue}
-                    onChange={(e) => setDateOfIssue(e.target.value)}
-                  />
+                  <input 
+                  type={isEditMode ? "date" : "text"} 
+                  disabled={!isEditMode} 
+                  value={isEditMode ? DateOfIssue : formatDate(DateOfIssue)} 
+                  onChange={(e)=>setDateOfIssue(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2004,13 +2063,11 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <input
-                    className="form-control"
-                    style={{ fontSize: "12px" }}
-                    type="date"
-                    value={ValidUntilNtv}
-                    onChange={(e) => setValidUntilNtv(e.target.value)}
-                  />
+                  <input 
+                  type={isEditMode ? "date" : "text"} 
+                  disabled={!isEditMode}
+                  value={isEditMode ? ValidUntilNtv: formatDate(ValidUntilNtv)} 
+                  onChange={(e)=>setValidUntilNtv(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2039,13 +2096,11 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <input
-                    className="form-control"
-                    style={{ fontSize: "12px" }}
-                    type="date"
-                    value={ValidFrom}
-                    onChange={(e) => setValidFrom(e.target.value)}
-                  />
+                  <input 
+                  type={isEditMode ? "date" : "text"} 
+                  disabled={!isEditMode} 
+                  value={isEditMode ? ValidFrom:formatDate(ValidFrom)} 
+                  onChange={(e)=>setValidFrom(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2069,12 +2124,16 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-10">
-                  <input
-                    className="form-control"
-                    style={{ fontSize: "12px" }}
-                    value={ValidUntilTv}
-                    onChange={(e) => setValidUntilTv(e.target.value)}
-                  />
+                  {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                  <input 
+                  type={isEditMode ? "date" : "text"} 
+                  disabled={!isEditMode} 
+                  value={isEditMode ? ValidUntilTv : formatDate(ValidUntilTv)} 
+                  onChange={(e)=>setValidUntilTv(e.target.value)}/>
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2199,6 +2258,9 @@ const PolicyDetails = ({
                     className="selectpicker form-select"
                     data-live-search="true"
                     data-width="100%"
+                    disabled={!isEditMode}
+                    value={driverRemark}
+                    onChange={(e)=>setDriverRemark(e.target.value)}
                   >
                     <option data-tokens="Status1">
                       Verified from Original
@@ -2242,6 +2304,8 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
+                        value={FitnessCertificate}
+                        onChange={(e)=>setFitnessCertificate(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2267,11 +2331,16 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <input
-                        type="date"
-                        className="form-control"
-                        style={{ fontSize: "12px" }}
-                        id="propertyTitle"
+                      {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                      <input 
+                      type={isEditMode ? "date" : "text"}
+                      disabled={!isEditMode}
+                      value={isEditMode ? FitnessFrom : formatDate(FitnessFrom)}
+                      onChange={(e)=>setFitnessFrom(e.target.value)}
                       />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
@@ -2296,11 +2365,16 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
+                      {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
                       <input
-                        type="date"
-                        className="form-control"
-                        style={{ fontSize: "12px" }}
-                        id="propertyTitle"
+                      type={isEditMode ? "date" : "text"}
+                      disabled={!isEditMode}
+                      value={isEditMode ? FitnessTo : formatDate(FitnessTo)}
+                      onChange={(e)=>setFitnessTo(e.target.value)}
                       />
                     </div>
                   </div>
@@ -2331,6 +2405,8 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
+                        value={PermitNo}
+                      onChange={(e)=>setPermitNo(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2356,13 +2432,18 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <input
-                        type="date"
-                        className="form-control"
-                        style={{ fontSize: "12px" }}
-                        // className="form-control"
-                        id="propertyTitle"
+                      {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                      <input 
+                      type={isEditMode ? "date" : "text"}
+                      disabled={!isEditMode}
+                      value={isEditMode ? PermitFrom  :formatDate(PermitFrom)}
+                      onChange={(e)=>setPermitFrom(e.target.value)}
                       />
+                      {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
                   </div>
                 </div>
@@ -2385,11 +2466,16 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <input
-                        type="date"
-                        className="form-control"
-                        style={{ fontSize: "12px" }}
-                        id="propertyTitle"
+                      {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                      <input 
+                      type={isEditMode ? "date" : "text"}
+                      disabled={!isEditMode}
+                      value={isEditMode ? PermitTo : formatDate(PermitTo)}
+                      onChange={(e)=>setPermitTo(e.target.value)}
                       />
                     </div>
                   </div>
@@ -2419,6 +2505,8 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
+                        value={TypeOfPermit}
+                      onChange={(e)=>setTypeOfPermit(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2450,6 +2538,8 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
+                        value={Authorization}
+                      onChange={(e)=>setAuthorization(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2481,6 +2571,8 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
+                        value={AreasOfoperation}
+                      onChange={(e)=>setAreasOfoperation(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2510,6 +2602,9 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
+                        disabled={!isEditMode}
+                        value={commercialRemark}
+                        onChange={(e)=>setcommercialRemark(e.target.value)}
                       >
                         <option data-tokens="Status1">
                           Verified from Original

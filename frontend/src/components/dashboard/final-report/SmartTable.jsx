@@ -413,7 +413,6 @@ function SmartTable(props) {
                         <input
                         className="form-check-input m-1"
                         type="checkbox"
-                        value={1}
                         checked={props.toggleGST === 2}
                         onChange={props.gstToggleHandler}
                         id="remeberMe"

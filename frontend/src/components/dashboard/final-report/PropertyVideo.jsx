@@ -215,9 +215,19 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [ValidFrom,setValidFrom]=useState("");
 
   const [DateOfIssue,setDateOfIssue]=useState("");
+
+  const [VehicleRemark,setVehicleRemark] = useState("");
+  const [RegLadenWt,setRegLadenWt] = useState("");
+  const [RemarkIfRLW,setRemarkIfRLW]=useState("");
+  const [UnladenWT,setUnladenWT]=useState("");
+  const [RemarkIfULW,setRemarkIfULW]=useState("");
+
+  const [Pin,setPin]=useState("");
+  const [PlaceOfSurvey,setPlaceOfSurvey]=useState("");
+
  
   const [AccidentAddedDateTime,setAccidentAddedDateTime]=useState("");
-  const [CauseOfAccident,setCauseOfAccident]=useState("");
+
   const [SurveyAllotmentDate,setSurveyAllotmentDate]=useState("");
   const [SurveyConductedDate,setSurveyConductedDate]=useState("")
   const [driverRemark,setDriverRemark]=useState("");
@@ -241,12 +251,34 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [VehicleDateOfRegistration,setVehicleDateOfRegistration]=useState("");
   const [OwnerSRST,setOwnerSRST]=useState("");
 
-  const [VehicleRemark,setVehicleRemark]=useState("");
   const [VehicleColor,setVehicleColor]=useState("");
   const [VehicleMakeVariantModelColor,setVehicleMakeVariantModelColor]=useState("");
   const [PolicyIssuingOffice,setPolicyIssuingOffice]=useState("");
   const [ClaimServicingOffice,setClaimServicingOffice]=useState("");
   const [IDV,setIDV]=useState("");
+  const [AntiTheft,setAntiTheft]=useState("");
+
+  const [VehicleType,setVehicleType] = useState("");
+
+  //commercial vehicle details
+  const [FitnessCertificate,setFitnessCertificate]=useState("");
+  const [FitnessFrom,setFitnessFrom]=useState("");
+  const [FitnessTo,setFitnessTo]=useState("");
+  const [PermitNo,setPermitNo]=useState("");
+  const [PermitFrom,setPermitFrom]=useState("");
+  const [PermitTo,setPermitTo]=useState("");
+  const [TypeOfPermit,setTypeOfPermit]=useState("");
+  const [Authorization,setAuthorization]=useState("");
+  const [AreasOfoperation,setAreasOfoperation]=useState("");
+  const [commercialRemark,setcommercialRemark]=useState("");
+
+
+  //SURVEY DETAILS
+  const [DetailsOfLoads,setDetailsOfLoads]=useState("");
+  const [CauseOfAccident,setCauseOfAccident]=useState("");
+  const [PoliceAction,setPoliceAction]=useState("");
+  const [ThirdPartyLoss,setThirdPartyLoss]=useState("");
+  const [Assessment,setAssessment]=useState("");
 
  useEffect(() => {
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress || "");
@@ -275,10 +307,12 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuredName(claim?.insuredDetails?.InsuredName || "");
     setInsuredAddress(claim?.insuredDetails?.InsuredAddress || "");
     setPolicyType(claim?.insuredDetails?.PolicyType || "");
+    setVehicleType(claim?.vehicleDetails?.VehicleType);
     console.log("reference no", VehicleSeatingCapacity);
 
 
-    setAccidentAddedDateTime(claim?.accidentDetails?.AccidentAddedDateTime||"");
+
+    setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime||"");
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
     setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
     setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||"");
@@ -295,15 +329,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       claim?.vehicleDetails?.RegisteredNumber || ""
     );
       setVehicleEngineNumber(claim?.vehicleDetails?.EngineNumber||"");
-
+      setAntiTheft(claim?.vehicleDetails?.AntiTheft || "");
     setVehicleDateOfRegistration(claim?.claimDetails?.DateOfRegistration || "");
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress || "United India Insurance Company Limited");
       setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd || "");
       setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart || "");
-    setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor
+    setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor.split(",")[0]
  || "" );
- setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor||"");
+ setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor.split(",")[1]||"");
     setRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner || "");
     setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber || "");
     setEngineNumber(claim?.vehicleDetails?.EngineNumber || "");
@@ -334,25 +368,69 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     );
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice || "");
 
+    setIDV(claim?.claimDetails?.IDV || "");
+    setHPA(claim?.claimDetails?.HPA || "");
+    setVehicleRemark(claim?.vehicleDetails?.Remark || "");
+    setRegLadenWt(claim?.vehicleDetails?.RegLadenWt || "");
+    setRemarkIfRLW(claim?.vehicleDetails?.RemarkIfRLW || "");
+    setUnladenWT(claim?.vehicleDetails?.UnladenWT || "");
+    setRemarkIfULW(claim?.vehicleDetails?.RemarkIfULW || "");
+
+    setPin(claim?.accidentDetails?.Pin || "");
+    setPlaceOfSurvey(claim?.accidentDetails?.PlaceOfSurvey || "");
+    setDetailsOfLoads(claim?.driverDetails?.DetailsOfLoads||"");
+    setCauseOfAccident(claim?.driverDetails?.CauseOfAccident ||"");
+    setPoliceAction(claim?.driverDetails?.PoliceAction || ""); 
+    setThirdPartyLoss(claim?.driverDetails?.ThirdPartyLoss || "");
+    setAssessment(claim?.driverDetails?.Assessment||"");
+
+    setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv || "") ;
+    setValidUntilTv(claim?.driverDetails?.ValidUntilTv || "");
+    setValidFrom(claim?.driverDetails?.ValidFrom || "");
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue || "");
+
+    //commercial
+    setFitnessCertificate(claim?.commercialVehicleDetails?.FitnessCertificate || "");
+    setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom || "");
+    setFitnessTo(claim?.commercialVehicleDetails?.FitnessTo || "");
+    setPermitNo(claim?.commercialVehicleDetails?.PermitNo || "");
+    setPermitFrom(claim?.commercialVehicleDetails?.PermitFrom || "");
+    setPermitTo(claim?.commercialVehicleDetails?.PermitTo||"");
+    setTypeOfPermit(claim?.commercialVehicleDetails?.TypeOfPermit || "");
+    setAuthorization(claim?.commercialVehicleDetails?.Authorization || "");
+    setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfoperation || "");
+    setcommercialRemark(claim?.commercialVehicleDetails?.commercialRemark || "");
+
+
+
   }, [claim]);
 
   const saveHandler = ()=>{
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload={
-      policyType,
-      IDV,
-      PolicyPeriodStart,
-      PolicyPeriodEnd,
-      HPA,
+      policyType : policyType ? policyType : claim?.insuredDetails?.PolicyType,
+      IDV : IDV ? IDV : claim?.claimDetails?.IDV ,
+      PolicyPeriodStart : PolicyPeriodStart ? PolicyPeriodStart : claim?.claimDetails?.PolicyPeriodStart,
+      PolicyPeriodEnd : PolicyPeriodEnd ? PolicyPeriodEnd : claim?.claimDetails?.PolicyPeriodEnd,
+      HPA : HPA ? HPA : claim.claimDetails?.HPA,
       ClaimServicingOffice,
       OwnerSRST,
       VehicleMakeVariantModelColor : VehicleMakeVariantModelColor + ","+VehicleColor,
       DateOfIssue,
       ValidFrom,
+      VehicleType,
       ValidUntilNtv,
       ValidUntilTv,
       phoneNumber,
+      AntiTheft,
+      RegLadenWt,
+      RemarkIfRLW,
+      Pin,
+      PlaceOfSurvey,
+      UnladenWT,
+      RemarkIfULW,
+      VehicleRemark,
       InsuranceCompanyNameAddress,
       InsuredAddress,InsuredMailAddress,
       InsuredMobileNo1,
@@ -379,6 +457,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       LicenseNumber,
       LicenseType,
       BadgeNumber,
+      driverRemark,
       VehicleRegisteredNumber,
       RegisteredOwner,
       VehicleChassisNumber,
@@ -396,6 +475,24 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       PlaceOfLoss,
       SurveyAllotmentDate,
       SurveyConductedDate,
+
+      FitnessCertificate,
+      FitnessFrom,
+      FitnessTo,
+      PermitTo,
+      PermitNo,
+      PermitFrom,
+      TypeOfPermit,
+      Authorization,
+      AreasOfoperation,
+      commercialRemark,
+
+      PlaceOfSurvey,
+      DetailsOfLoads,
+      CauseOfAccident,
+      PoliceAction,
+      ThirdPartyLoss,
+      Assessment,
       leadId
     };
 
@@ -512,12 +609,53 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setPolicyPeriodEnd={setPolicyPeriodEnd}
                 setPolicyPeriodStart={setPolicyPeriodStart}
                 PolicyPeriodStart={PolicyPeriodStart}
+
+
+                OwnerSRST={OwnerSRST}
+                setOwnerSRST={setOwnerSRST}
+                AntiTheft={AntiTheft}
+                setAntiTheft={setAntiTheft}
+                RegLadenWt={RegLadenWt}
+                setRegLadenWt={setRegLadenWt}
+                RemarkIfRLW={RemarkIfRLW}
+                setRemarkIfRLW={setRemarkIfRLW}
+                RemarkIfULW={RemarkIfULW}
+                setRemarkIfULW={setRemarkIfULW}
+                UnladenWT={UnladenWT}
+                setUnladenWT={setUnladenWT}
+                VehicleType={VehicleType}
+                setVehicleType={setVehicleType}
+                VehicleRemark={VehicleRemark}
+                setVehicleRemark={setVehicleRemark}
+                driverRemark={driverRemark}
+                setDriverRemark={setDriverRemark}
+                FitnessCertificate={FitnessCertificate}
+                setFitnessCertificate={setFitnessCertificate}
+                FitnessFrom={FitnessFrom}
+                setFitnessFrom={setFitnessFrom}
+                setFitnessTo={setFitnessTo}
+                FitnessTo={FitnessTo}
+                PermitNo={PermitNo}
+                setPermitNo={setPermitNo}
+                PermitFrom={PermitFrom}
+                setPermitFrom={setPermitFrom}
+                PermitTo={PermitTo}
+                setPermitTo={setPermitTo}
+                TypeOfPermit={TypeOfPermit}
+                setTypeOfPermit={setTypeOfPermit}
+                Authorization={Authorization}
+                setAuthorization={setAuthorization}
+                AreasOfoperation={AreasOfoperation}
+                setAreasOfoperation={setAreasOfoperation}
+                setcommercialRemark={setcommercialRemark}
+                commercialRemark={commercialRemark}
+
                 HPA={HPA}
+                setClaimNumber={setClaimNumber}
                 setHPA={setHPA}
                 ClaimServicingOffice={ClaimServicingOffice}
                 setClaimServicingOffice={setClaimServicingOffice}
-                OwnerSRST={OwnerSRST}
-                setOwnerSRST={setOwnerSRST}
+                
                 VehicleMakeVariantModelColor={VehicleMakeVariantModelColor}
                 setVehicleMakeVariantModelColor={setVehicleMakeVariantModelColor}
                 VehicleColor={VehicleColor}
@@ -745,6 +883,22 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setSurveyAllotmentDate={setSurveyAllotmentDate}
                 setSurveyConductedDate={setSurveyConductedDate}
                 SurveyConductedDate={SurveyConductedDate}
+
+                Pin={Pin}
+                setPin={setPin}
+                PlaceOfSurvey={PlaceOfSurvey}
+                setPlaceOfSurvey={setPlaceOfSurvey}
+                DetailsOfLoads={DetailsOfLoads}
+                setDetailsOfLoads={setDetailsOfLoads}
+                CauseOfAccident={CauseOfAccident}
+                setCauseOfAccident={setCauseOfAccident}
+                PoliceAction={PoliceAction}
+                setPoliceAction={setPoliceAction}
+                ThirdPartyLoss={ThirdPartyLoss}
+                setThirdPartyLoss={setThirdPartyLoss}
+                Assessment={Assessment}
+                setAssessment={setAssessment}
+                SaveHandler={saveHandler}
 
                 claim={claim}
               />
