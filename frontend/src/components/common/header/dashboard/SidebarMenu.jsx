@@ -16,9 +16,7 @@ import {
   FaThList,
 } from "react-icons/fa";
 
-const SidebarMenu = ({leadId,email,policyNo,vehicleNo,Insured}) => {
-
-  
+const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
   console.log(leadId);
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -113,7 +111,10 @@ const SidebarMenu = ({leadId,email,policyNo,vehicleNo,Insured}) => {
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive(`/final-report/${leadId}`, route.pathname)
+                      isSinglePageActive(
+                        `/final-report/${leadId}`,
+                        route.pathname
+                      )
                         ? "active"
                         : ""
                     }`}
@@ -125,14 +126,32 @@ const SidebarMenu = ({leadId,email,policyNo,vehicleNo,Insured}) => {
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive(`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`, route.pathname)
+                      isSinglePageActive(
+                        `/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`,
+                        route.pathname
+                      )
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href={`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`} title="Send Mail">
+                    <Link
+                      href={`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`}
+                      title="Send Mail"
+                    >
                       <i className="flaticon-envelope"></i>
                       {/* <span> Message</span> */}
+                    </Link>
+                  </li>
+                  <li
+                    className={`treeview ${
+                      isSinglePageActive("/bill-creation", route.pathname)
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <Link href="/bill-creation" title="Bill Creation">
+                      <i className="flaticon-document"></i>
+                      <span> </span>
                     </Link>
                   </li>
                 </ul>
@@ -190,18 +209,6 @@ const SidebarMenu = ({leadId,email,policyNo,vehicleNo,Insured}) => {
                   </li> */}
                   {/* End Review */}
 
-                  {/* <li
-                    className={`treeview ${
-                      isSinglePageActive("/my-favourites", route.pathname)
-                        ? "active"
-                        : ""
-                    }`}
-                  >
-                    <Link href="/my-favourites">
-                      <i className="flaticon-magnifying-glass"></i>
-                      <span> My Favorites</span>
-                    </Link>
-                  </li> */}
                   {/* <li
                     className={`treeview ${
                       isSinglePageActive("/my-saved-search", route.pathname)

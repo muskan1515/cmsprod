@@ -1871,37 +1871,6 @@ const PolicyDetails = ({
                       </div>
                     </div>
                   </div>
-                  {/* <div className="col-lg-12">
-                <div className="row mt-1">
-                  <div className="col-lg-4 my_profile_setting_input form-group text-end">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                        fontSize:"14px"
-                      }}
-                    >
-                      Remark
-                    </label>
-                  </div>
-                  <div className="col-lg-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      readOnly={!isEditMode}
-                      value={VehicleTaxParticulars}
-                      onChange={(e) => setVehicleTaxParticulars(e.target.value)}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div> */}
                 </div>
               </div>
             </div>
