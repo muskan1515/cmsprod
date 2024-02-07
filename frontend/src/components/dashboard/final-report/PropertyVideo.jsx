@@ -335,15 +335,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       claim?.claimDetails?.InsuranceCompanyNameAddress || "United India Insurance Company Limited");
       setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd || "");
       setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart || "");
-    setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor.split(",")[0]
+    setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[0]
  || "" );
- setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor.split(",")[1]||"");
+ setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[1]||"");
     setRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner || "");
     setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber || "");
     setEngineNumber(claim?.vehicleDetails?.EngineNumber || "");
     setVehicleModel(
       claim?.VehicleMakeVariantModelColor
-        ? `${claim.VehicleMakeVariantModelColor}`
+        ? `${claim?.VehicleMakeVariantModelColor}`
         : ""
     );
     setVehicleTypeOfBody(claim?.vehicleDetails?.TypeOfBody || "");
