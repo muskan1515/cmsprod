@@ -421,7 +421,7 @@ const CreateList = () => {
                     fontSize: "14px",
                   }}
                 >
-                  Photo's Rate
+                  Photos Rate
                 </label>
               </div>
               <div className="col-lg-3">
