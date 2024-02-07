@@ -29,7 +29,8 @@ const PolicyDetails = ({
   setOwnerSRST,
   VehicleMakeVariantModelColor,
   setVehicleMakeVariantModelColor,
-  VehicleColor,setVehicleColor,
+  VehicleColor,
+  setVehicleColor,
   ValidUntilNtv,
   setValidUntilNtv,
   ValidFrom,
@@ -130,21 +131,19 @@ const PolicyDetails = ({
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
 }) => {
-
-  const converttoDDMMYYYY=(date)=>{
+  const converttoDDMMYYYY = (date) => {
     return date;
     const inputDate = new Date(date);
 
-// Get day, month, and year components
-const day = inputDate.getUTCDate().toString().padStart(2, '0');
-const month = (inputDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
-const year = inputDate.getUTCFullYear();
+    // Get day, month, and year components
+    const day = inputDate.getUTCDate().toString().padStart(2, "0");
+    const month = (inputDate.getUTCMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
+    const year = inputDate.getUTCFullYear();
 
-// Construct the formatted string in "ddmmyyyy" format
-const formattedDateString = `${day}${month}${year}`;
-return formattedDateString;
-
-  }
+    // Construct the formatted string in "ddmmyyyy" format
+    const formattedDateString = `${day}${month}${year}`;
+    return formattedDateString;
+  };
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -273,7 +272,7 @@ return formattedDateString;
 
         <div className="col-lg-2">
           <div className="row mt-1">
-            <div className="col-lg-4 text-end my_profile_setting_input form-group">
+            <div className="col-lg-3 text-end my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
@@ -287,21 +286,17 @@ return formattedDateString;
                 Date
               </label>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-9">
               {/* <DatePicker
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               /> */}
-              {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
+              <input type="date" className="form-control" id="propertyTitle" />
             </div>
-            <span
+            {/* <span
               className="col-lg-1 flaticon-calendar text-dark fs-6"
               style={{ marginLeft: "-20px" }}
-            ></span>
+            ></span> */}
           </div>
         </div>
 
@@ -462,7 +457,7 @@ return formattedDateString;
                         className="form-control"
                         id="propertyTitle"
                         value={IDV}
-                        onChange={(e)=>setIDV(e.target.value)}
+                        onChange={(e) => setIDV(e.target.value)}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -553,7 +548,13 @@ return formattedDateString;
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <input type="date" value={(PolicyPeriodStart)} onChange={(e)=>setPolicyPeriodStart(e.target.value)}/>
+                      <input
+                        type="date"
+                        className="form-control"
+                        style={{ fontSize: "12px" }}
+                        value={PolicyPeriodStart}
+                        onChange={(e) => setPolicyPeriodStart(e.target.value)}
+                      />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                       {/* <input
                         type="date"
@@ -582,7 +583,14 @@ return formattedDateString;
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <input placeholder={PolicyPeriodEnd} type="date" value={(PolicyPeriodEnd)} onChange={(e)=>setPolicyPeriodEnd(e.target.value)}/>
+                      <input
+                        className="form-control"
+                        placeholder={PolicyPeriodEnd}
+                        type="date"
+                        style={{ fontSize: "12px" }}
+                        value={PolicyPeriodEnd}
+                        onChange={(e) => setPolicyPeriodEnd(e.target.value)}
+                      />
                     </div>
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
@@ -741,7 +749,7 @@ return formattedDateString;
                         id="propertyTitle"
                         readOnly={!isEditMode}
                         value={PolicyIssuingOffice}
-                        onChange={(e)=>setPolicyIssuingOffice(e.target.value)}
+                        onChange={(e) => setPolicyIssuingOffice(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -815,7 +823,9 @@ return formattedDateString;
                         className="form-control"
                         id="propertyTitle"
                         value={ClaimServicingOffice}
-                        onChange={(e) => setClaimServicingOffice(e.target.value)}
+                        onChange={(e) =>
+                          setClaimServicingOffice(e.target.value)
+                        }
                         readOnly={!isEditMode}
                         // placeholder="Enter Registration No."
                       />
@@ -926,7 +936,7 @@ return formattedDateString;
                             id="propertyTitle"
                             readOnly={!isEditMode}
                             value={OwnerSRST}
-                            onChange={(e)=>setOwnerSRST(e.target.value)}
+                            onChange={(e) => setOwnerSRST(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -957,14 +967,19 @@ return formattedDateString;
                             data-live-search="true"
                             data-width="100%"
                           >
-                            <option data-tokens="Status1">1</option>
-                            <option data-tokens="Status2">2</option>
-                            <option data-tokens="Status3">3</option>
+                            <option data-tokens="Status1">choose..</option>
+                            <option data-tokens="Status2">Purchase</option>
+                            <option data-tokens="Status3">Registration</option>
                           </select>
                         </div>
                         <div className="col-lg-4">
-                         
-                          {/* <span className="flaticon-calendar text-dark"></span> */}
+                          <input
+                            type="date"
+                            className="form-control"
+                            id="propertyTitle"
+
+                            // placeholder="Enter Registration No."
+                          />
                         </div>
                       </div>
                     </div>
@@ -1108,7 +1123,9 @@ return formattedDateString;
                             id="propertyTitle"
                             value={VehicleMakeVariantModelColor}
                             readOnly={!isEditMode}
-                            onChange={(e) => setVehicleMakeVariantModelColor(e.target.value)}
+                            onChange={(e) =>
+                              setVehicleMakeVariantModelColor(e.target.value)
+                            }
 
                             // placeholder="Enter Registration No."
                           />
@@ -1916,17 +1933,16 @@ return formattedDateString;
                   </label>
                 </div>
                 <div className="col-lg-8">
-                 
-                  {/* <input
+                  <input
                     type="date"
                     className="form-control"
                     id="propertyTitle"
-                    value={LicenseNumber}
-                    readOnly={!isEditMode}
-                    onChange={(e) => setLicenseNumber(e.target.value)}
+                    // value={LicenseNumber}
+                    // readOnly={!isEditMode}
+                    // onChange={(e) => setLicenseNumber(e.target.value)}
 
                     // placeholder="Enter Registration No."
-                  /> */}
+                  />
                 </div>
               </div>
             </div>
@@ -1953,7 +1969,13 @@ return formattedDateString;
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <input type="date" value={(DateOfIssue)} onChange={(e)=>setDateOfIssue(e.target.value)}/>
+                  <input
+                    className="form-control"
+                    style={{ fontSize: "12px" }}
+                    type="date"
+                    value={DateOfIssue}
+                    onChange={(e) => setDateOfIssue(e.target.value)}
+                  />
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -1982,7 +2004,13 @@ return formattedDateString;
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <input type="date" value={(ValidUntilNtv)} onChange={(e)=>setValidUntilNtv(e.target.value)}/>
+                  <input
+                    className="form-control"
+                    style={{ fontSize: "12px" }}
+                    type="date"
+                    value={ValidUntilNtv}
+                    onChange={(e) => setValidUntilNtv(e.target.value)}
+                  />
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2011,7 +2039,13 @@ return formattedDateString;
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <input type="date" value={(ValidFrom)} onChange={(e)=>setValidFrom(e.target.value)}/>
+                  <input
+                    className="form-control"
+                    style={{ fontSize: "12px" }}
+                    type="date"
+                    value={ValidFrom}
+                    onChange={(e) => setValidFrom(e.target.value)}
+                  />
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2035,12 +2069,12 @@ return formattedDateString;
                   </label>
                 </div>
                 <div className="col-lg-10">
-                  {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                  <input value={(ValidUntilTv)} onChange={(e)=>setValidUntilTv(e.target.value)}/>
+                  <input
+                    className="form-control"
+                    style={{ fontSize: "12px" }}
+                    value={ValidUntilTv}
+                    onChange={(e) => setValidUntilTv(e.target.value)}
+                  />
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2233,12 +2267,12 @@ return formattedDateString;
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                      <input />
+                      <input
+                        type="date"
+                        className="form-control"
+                        style={{ fontSize: "12px" }}
+                        id="propertyTitle"
+                      />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
                   </div>
@@ -2262,12 +2296,12 @@ return formattedDateString;
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                      <input />
+                      <input
+                        type="date"
+                        className="form-control"
+                        style={{ fontSize: "12px" }}
+                        id="propertyTitle"
+                      />
                     </div>
                   </div>
                 </div>
@@ -2322,13 +2356,13 @@ return formattedDateString;
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                      <input />
-                      {/* <span className="flaticon-calendar text-dark"></span> */}
+                      <input
+                        type="date"
+                        className="form-control"
+                        style={{ fontSize: "12px" }}
+                        // className="form-control"
+                        id="propertyTitle"
+                      />
                     </div>
                   </div>
                 </div>
@@ -2351,12 +2385,12 @@ return formattedDateString;
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                      <input />
+                      <input
+                        type="date"
+                        className="form-control"
+                        style={{ fontSize: "12px" }}
+                        id="propertyTitle"
+                      />
                     </div>
                   </div>
                 </div>

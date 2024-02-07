@@ -12,7 +12,7 @@ const Servey = ({
   setPhoneNumber,
   applicantNumber,
   setApplicantNumber,
-  
+
   AccidentAddedDateTime,
   setAccidentAddedDateTime,
   setPlaceOfLoss,
@@ -112,20 +112,18 @@ const Servey = ({
   setVehicleTaxParticulars,
   VehicleSeatingCapacity,
   setVehicleSeatingCapacity,
-  claim
+  claim,
 }) => {
-
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
       month: "short",
-      day: "numeric"
+      day: "numeric",
     };
 
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   };
-
 
   const formatTime = (dateString) => {
     const options = {
@@ -137,7 +135,6 @@ const Servey = ({
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   };
-
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -156,7 +153,6 @@ const Servey = ({
 
   // const Editor = SomeComponent.Editor;
   const [editorContent, setEditorContent] = useState("");
-  
 
   const formatText = (command) => {
     if (typeof window !== "undefined") {
@@ -223,11 +219,12 @@ const Servey = ({
                 </div>
                 <div className="col-lg-8">
                   <input
-                  type="date"
-              value={formatDate(AccidentAddedDateTime)}
-              onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
-             
-            /> 
+                    type="date"
+                    className="form-control"
+                    // style={{ fontSize: "12px" }}
+                    value={formatDate(AccidentAddedDateTime)}
+                    onChange={(e) => setAccidentAddedDateTime(e.target.value)}
+                  />
                 </div>
               </div>
             </div>
@@ -246,12 +243,12 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                <input
-                type="text"
-                className="form-control"
-                id="propertyTitle"
-                value={formatTime(AccidentAddedDateTime)}
-              />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    value={formatTime(AccidentAddedDateTime)}
+                  />
                 </div>
               </div>
             </div>
@@ -307,7 +304,7 @@ const Servey = ({
                     className="form-control"
                     id="propertyTitle"
                     value={PlaceOfLoss}
-                    onChange={(e)=>setPlaceOfLoss(e.target.value)}
+                    onChange={(e) => setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -339,7 +336,7 @@ const Servey = ({
                     className="form-control"
                     id="propertyTitle"
                     value={PlaceOfLoss}
-                    onChange={(e)=>setPlaceOfLoss(e.target.value)}
+                    onChange={(e) => setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -379,7 +376,11 @@ const Servey = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <input type="date" value={SurveyAllotmentDate} onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />
+                  <input
+                    type="date"
+                    value={SurveyAllotmentDate}
+                    onChange={(e) => setSurveyAllotmentDate(e.target.value)}
+                  />
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -406,7 +407,7 @@ const Servey = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                 
+
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -431,10 +432,10 @@ const Servey = ({
               </div>
               <div className="col-lg-8">
                 <input
-                type="date"
-                value={SurveyConductedDate}
-                onChange={(e)=>setSurveyConductedDate(e.target.value)}
-                  
+                  type="date"
+                  value={SurveyConductedDate}
+                  onChange={(e) => setSurveyConductedDate(e.target.value)}
+
                   // placeholder="Enter Registration No."
                 />
               </div>
