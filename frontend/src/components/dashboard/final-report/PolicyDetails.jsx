@@ -976,11 +976,11 @@ const PolicyDetails = ({
                         </div>
                         <div className="col-lg-8">
                           <input
-                            type="text"
+                            type={isEditMode?"date":"text"}
                             className="form-control"
                             id="propertyTitle"
                             readOnly={!isEditMode}
-                            value={OwnerSRST}
+                            value={formatDate(OwnerSRST)}
                             onChange={(e) => setOwnerSRST(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -1495,7 +1495,7 @@ const PolicyDetails = ({
                       </div>
                       <div className="col-lg-5">
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           id="propertyTitle"
                           value={RegLadenWt}
@@ -1558,7 +1558,7 @@ const PolicyDetails = ({
                       </div>
                       <div className="col-lg-5">
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}

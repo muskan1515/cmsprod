@@ -853,9 +853,9 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
         OdometerReading = '${VehicleOdometerReading}',
         PucNumber='${PUCNumber}',
         OwnerSrDate='${OwnerSRST}',
-        RegLadenWt='${RegLadenWt}',
+        RegLadenWt='${parseInt(RegLadenWt)}',
         RemarkIfRLW='${RemarkIfRLW}',
-        UnladenWT='${UnladenWT}',
+        UnladenWT='${parseInt(UnladenWT)}',
         RemarkIfULW='${RemarkIfULW}',
         Remark='${VehicleRemark}',
         VehicleType='${VehicleType}',
@@ -914,7 +914,7 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
     Authorization,
     AreasOfoperation,
     Remark,
-    LeadId 
+    LeadID 
   ) VALUES (
     '${FitnessCertificate}',
     '${FitnessFrom}',
@@ -929,6 +929,24 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
     '${parseInt(leadId)}'
   );
   `;
+
+
+  const updateCommercialVehicleDetails = `
+  UPDATE CommercialVehicleDetails
+        SET
+        FitnessCertificate = '${FitnessCertificate}',
+        FitnessFrom = '${FitnessFrom}',
+        FitnessTo='${FitnessTo}',
+        PermitTo='${PermitTo}',
+        PermitNo='${PermitNo}',
+        PermitFrom='${PermitFrom}',
+        TypeOfPermit='${TypeOfPermit}',
+        Authorization='${Authorization}',
+        AreasOfoperation='${AreasOfoperation}',
+        Remark='${commercialRemark}'
+        WHERE LeadID = ${leadId};
+  `;
+
 
   db.query(updateClaimDetails, (err, result2) => {
     if (err) {
@@ -979,14 +997,26 @@ app.put("/updateFinalReport/:leadId",authenticateUser,(req,res)=>{
     console.log(result2);
   });
 
-  db.query(insertIntoCommercialVehicleDetails, (err, result2) => {
+  db.query("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",[leadId], (err, result2) => {
     if (err) {
       console.error(err);
       res.status(500).send("Internal Server Error");
       return;
     }
-    console.log(result2);
+      const query = result2 ? updateCommercialVehicleDetails : insertIntoCommercialVehicleDetails;
+    db.query(query, (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log(result2);
+    });
+  
   });
+
+
+  
 
 
   res.status(200).send("Successfully Updated!!");

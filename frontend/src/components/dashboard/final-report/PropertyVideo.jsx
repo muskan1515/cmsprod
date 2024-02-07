@@ -398,8 +398,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setPermitTo(claim?.commercialVehicleDetails?.PermitTo||"");
     setTypeOfPermit(claim?.commercialVehicleDetails?.TypeOfPermit || "");
     setAuthorization(claim?.commercialVehicleDetails?.Authorization || "");
-    setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfoperation || "");
-    setcommercialRemark(claim?.commercialVehicleDetails?.commercialRemark || "");
+    setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation || "");
+    setcommercialRemark(claim?.commercialVehicleDetails?.Remark || "");
 
 
 
