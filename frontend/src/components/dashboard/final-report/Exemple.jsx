@@ -143,6 +143,11 @@ export default function Exemple_01({
   const [change2, setChange2] = useState(false);
 
   
+  
+  const [allRows, setAllRows] = useState([]);
+  const [newParts,setNewParts]=useState([]);
+
+  const [changeParts,setChangeParts]=useState(false);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -159,31 +164,85 @@ export default function Exemple_01({
       .catch((Err) => {
         alert(Err);
       });
+
+      const LeadID = window.location.pathname.split("/final-report/")[1];
+  
+      axios.get("/api/getNewParts",{
+        headers:{
+          Authorization:`Bearer ${userInfo[0].Token}`,
+          "Content-Type":"application/json"
+        },
+        params:{
+          LeadId : LeadID
+        }
+      })
+      .then((res)=>{
+        console.log(res);
+        
+        // setNewParts(res.data.userData);
+        let newPart = res.data.userData;
+        let temp_row =[];
+        newPart.map((part,index)=>{
+          if(String(part.LeadID) === String(LeadID)){
+            console.log(part)
+          const temp = {
+            description:part.ItemName,
+            dep:part.DepreciationPct,
+            sac:part.HSNCode,
+            remark:part.Remark,
+            estimate:part.Estimate,
+            assessed:part.Assessed,
+            qa:part.QA,
+            qe:part.QE,
+            bill_sr:part.BillSr,
+            gst:part.GSTPct,
+            type:part.TypeOfMaterial,
+            total:part.WithoutTax,
+            sno:part.ReportID
+          };
+          temp_row.push(temp)
+        }
+        });
+        console.log(temp_row);
+        setAllRows(temp_row);
+        setChangeParts(true);
+      })
+      .catch((Err)=>{
+        alert(Err)
+      })
   }, []);
+
+  
+
+
+  // useEffect(()=>{
+  //   let temp_row =[];
+  //   newParts.map((part,index)=>{
+  //     const temp = {
+  //       description:part.ItemName,
+  //       dep:part.DepreciationPct,
+  //       sac:part.HSNCode,
+  //       remark:part.Remark,
+  //       estimate:part.Estimate,
+  //       assessed:part.Assessed,
+  //       qa:part.QA,
+  //       qe:part.QE,
+  //       bill_sr:part.BillSr,
+  //       gst:part.GSTPct,
+  //       type:part.TypeOfMaterial,
+  //       total:part.WithoutTax,
+  //       sno:part.ReportID
+  //     };
+  //     temp_row.push(temp)
+  //   });
+  //   setAllRows(temp_row);
+  // },[changeParts]);
+
+
+
 
   const [edit, setEdit] = useState(false);
 
-
-
-  const [allRows, setAllRows] = useState(
-    Array.from({ length: 2 }, (_, index) => ({
-      _id: index + 1,
-      row: "",
-      sno: index + 1,
-      dep: 0, // Add default values or leave empty as needed
-      description: "",
-      sac: "",
-      remark: "",
-      estimate: "",
-      assessed: "",
-      qe: "01",
-      qa: "01",
-      bill_sr: "", // Assuming bill_sr increments with each new row
-      gst: 0,
-      total: 0,
-      type: "",
-    }))
-  );
 
   useEffect(() => {
     setChange2(false);
@@ -296,6 +355,7 @@ export default function Exemple_01({
 
   const editHandler = () => {
     setEdit(true);
+    console.log(allRows);
   };
 
   const updateHandler = () => {
@@ -431,7 +491,7 @@ export default function Exemple_01({
   const onSaveHandler = ()=>{
 
     const LeadID = window.location.pathname.split("/final-report/")[1];
-    console.log(LeadID)
+    // console.log(LeadID)
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     
@@ -450,6 +510,7 @@ export default function Exemple_01({
     })
     .then((res)=>{
       alert("Successfully updated!!");
+      window.location.reload();
     })
     .catch((Err)=>{
       alert(Err)
@@ -567,6 +628,20 @@ export default function Exemple_01({
       setToggleGST(toggleGST+1);
       setChange(true)
   };
+
+  // DepreciationPct = '${row.dep}',
+  //   ItemName = '${row.description}',
+  //   HSNCode='${row.sac}',
+  //   Remark='${row.remark}',
+  //   Estimate = '${row.estimate}',
+  //   Assessed = '${row.assessed}',
+  //   QA='${row.qa}',
+  //   QE = '${row.qe}',
+  //   BillSr = '${row.Bill_sr}',
+  //   GSTPct='${row.gst}',
+  //   TypeOfMaterial='${row.type}',
+  //   WithoutTax='${row.total}'
+  //   WHERE ReportID = ${row.sno};
 
   const handleQeQaChange = (index, val, field) => {
     setChange2(true);
@@ -689,6 +764,7 @@ export default function Exemple_01({
     const total = (Number(currentField.assessed) * Number(currentField.qa)) + (toggleGST%2 === 0 && currentType === "Assessed"  ? (total_without * Number(gst)) / 100 : 0);
 
 
+
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
       row: currentField.row,
@@ -778,6 +854,7 @@ export default function Exemple_01({
     let temp = [];
     const getData = () => {
       allRows.map((row, index) => {
+        console.log(row);
         const newRow = {
           _id: index + 1, // You may use a more robust ID generation logic
           row: (
@@ -1007,11 +1084,11 @@ export default function Exemple_01({
       });
     };
     getData();
+
     setUpdatedCode(temp);
     setChange(false);
-  }, [change, edit,policyType]);
+  }, [change, edit,policyType,setAllRows,changeParts]);
 
-  console.log(allDepreciations);
 
   return (
     <SmartTable

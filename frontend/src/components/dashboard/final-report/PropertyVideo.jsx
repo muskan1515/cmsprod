@@ -975,6 +975,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                     allRows={allRows}
                     setAllRows={setAllRows}
                     setReload={setReload}
+                    setCurrentGST={setCurrentGst}
                   />
                 </div>
                 <div className="col-lg-3">

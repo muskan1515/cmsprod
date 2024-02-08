@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SmartTable_01 from "./SmartTable_01";
 import { useEffect, useState } from "react";
-import { all } from "axios";
+import axios, { all } from "axios";
 import { SERVER_DIRECTORY } from "next/dist/shared/lib/constants";
 
 const headCells = [
@@ -77,6 +77,7 @@ export default function Exemple_01({
    totalEstimate,
    setTotalEstimate,
    taxAmount,
+   setCurrentGST,
    allRows,
    setAllRows,
    setTaxAmount,
@@ -127,6 +128,52 @@ export default function Exemple_01({
   // );
 
 
+  useEffect(()=>{ 
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+   
+    const LeadID = window.location.pathname.split("/final-report/")[1];
+  
+    axios.get("/api/getLabrorer",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        LeadId : LeadID
+      }
+    })
+    .then((res)=>{
+      console.log(res);
+      
+      // setNewParts(res.data.userData);
+      let newPart = res.data.userData;
+      let temp_row =[];
+      let gst_pct = 0;
+      newPart.map((part,index)=>{
+        if(String(part.LeadId) === String(LeadID)){
+        gst_pct = part.GSTPercentage;
+        const temp = {
+          description:part.Description,
+          sac:part.SAC,
+          estimate:part.Estimate,
+          assessed:part.Assessed,
+          bill_sr:part.BillSr,
+          gst:part.gst,
+          job_type:"",
+          sno:part.ReportID
+        };
+        temp_row.push(temp)
+      }
+      });
+      
+      setCurrentGST(Number(gst_pct));
+      setAllRows(temp_row);
+      setChange(true)
+    })
+    .catch((Err)=>{
+      alert(Err)
+    })
+  },[]);
 
   const handleAddRow = () => {
     const newRow = {
@@ -136,7 +183,8 @@ export default function Exemple_01({
       estimate: "",
       assessed: "",
       bill_sr:"",
-      gst: 0
+      gst: 0,
+      gstPct:currentGst
     };
 
     const old = allRows;
@@ -153,6 +201,37 @@ export default function Exemple_01({
   const updateHandler = () => {
     setEdit(false);
   };
+
+  const onSaveHandler = ()=>{
+
+    const LeadID = window.location.pathname.split("/final-report/")[1];
+    // console.log(LeadID)
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+    const payload={
+      gstPct:currentGst,
+      allRows : JSON.stringify(allRows)
+    };
+
+    axios.put("/api/updateLabrorer",payload,{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        LeadId : LeadID
+      }
+    })
+    .then((res)=>{
+      alert("Successfully updated!!");
+      window.location.reload();
+    })
+    .catch((Err)=>{
+      alert(Err)
+    })
+  }
+
 
   const sliceVal = (val)=>{
     return val.slice(-1,1);
@@ -228,7 +307,8 @@ export default function Exemple_01({
       estimate: estimate,
       assessed: assessed,
       gst: gst,
-      bill_sr:bill_sr
+      bill_sr:bill_sr,
+      gstPct:currentField.gstPct
     };
 
     // console.log(newOutput);
@@ -243,6 +323,7 @@ export default function Exemple_01({
   };
   useEffect(() => {
     let temp = [];
+    if(allRows){
     const getData = () => {
       allRows.map((row, index) => {
         const newRow = {
@@ -349,7 +430,8 @@ export default function Exemple_01({
     getData();
     setUpdatedCode(temp);
     setChange(false);
-  }, [change, edit]);
+  }
+  }, [change, edit,allRows]);
 
   return (
     <SmartTable_01
@@ -363,7 +445,7 @@ export default function Exemple_01({
       totalEstimate={totalEstimate}
       handleAddRow={handleAddRow}
       editHandler={editHandler}
-      updateHandler={updateHandler}
+      updateHandler={onSaveHandler}
       edit={edit}
     />
   );

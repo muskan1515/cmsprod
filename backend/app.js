@@ -726,7 +726,229 @@ function executeStoredProc(procName, params) {
   });
 }
 
+<<<<<<< Updated upstream
 app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
+=======
+app.get("/getNewParts/:leadId",authenticateUser,(req,res)=>{
+  const leadId = req.params.leadId;
+  db.query("SELECT * FROM NewPartsReport", (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    res.status(200).send(result2);
+  });
+})
+
+app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
+  try {
+    const leadId = req.params.leadId;
+    const data = JSON.parse(req.body.allRows);
+
+    const promises = data.map((row) => {
+      return new Promise((resolve, reject) => {
+        const insertQuery = `
+          INSERT INTO NewPartsReport (
+            DepreciationPct,
+            ItemName,
+            HSNCode,
+            Remark,
+            Estimate,
+            Assessed,
+            QE,
+            QA,
+            BillSr,
+            GSTPct,
+            TypeOfMaterial,
+            WithoutTax,
+            ReportID,
+            LeadID
+          ) VALUES (
+            '${row.dep}',
+            '${row.description}',
+            '${row.sac}',
+            '${row.reamrk}',
+            '${row.estimate}',
+            '${row.assessed}',
+            '${row.qe}',
+            '${row.qa}',
+            '${row.bill_sr}',
+            '${row.gst}',
+            '${row.type}',
+            '${row.total}',
+            '${row.sno}',
+            '${parseInt(leadId)}'
+          );
+        `;
+
+        const updateQuery = `
+          UPDATE NewPartsReport
+          SET
+            DepreciationPct = '${row.dep}',
+            ItemName = '${row.description}',
+            HSNCode='${row.sac}',
+            Remark='${row.remark}',
+            Estimate = '${row.estimate}',
+            Assessed = '${row.assessed}',
+            QA='${row.qa}',
+            QE = '${row.qe}',
+            BillSr = '${row.Bill_sr}',
+            GSTPct='${row.gst}',
+            TypeOfMaterial='${row.type}',
+            WithoutTax='${row.total}'
+          WHERE ReportID = '${row.sno}' AND
+          LeadID = '${leadId}';
+        `;
+
+        db.query("SELECT * FROM NewPartsReport WHERE ReportID = ? AND LeadID=?", [row.sno,leadId], (err, result2) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+
+          console.log(result2);
+
+          if (result2.length > 0) {
+            db.query(updateQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          } else {
+            console.log(insertQuery);
+            db.query(insertQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          }
+        });
+      });
+    });
+
+    await Promise.all(promises);
+
+    res.status(200).send("Successfully updated!");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.get("/getLabrorer/:leadId",authenticateUser,(req,res)=>{
+  const leadId = req.params.leadId;
+  db.query("SELECT * FROM LabourReport", (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    res.status(200).send(result2);
+  });
+})
+
+app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
+  try {
+    const leadId = req.params.leadId;
+
+    const data = JSON.parse(req.body.allRows);
+    const gstPct = (req.body.gstPct);
+
+    const promises = data.map((row) => {
+      return new Promise((resolve, reject) => {
+        const insertQuery = `
+          INSERT INTO LabourReport (
+            Description,
+            SAC,
+            Estimate,
+            Assessed,
+            BillSr,
+            IsGSTIncluded,
+            GSTPercentage,
+            ReportID,
+            LeadID
+          ) VALUES (
+            '${row.description}',
+            '${row.sac}',
+            '${row.estimate}',
+            '${row.assessed}',
+            '${row.bill_sr}',
+            '${row.gst}',
+            '${gstPct}',
+            '${row.sno}',
+            '${parseInt(leadId)}'
+          );
+        `;
+
+        const updateQuery = `
+          UPDATE LabourReport
+          SET
+          Description = '${row.description}',
+            SAC='${row.sac}',
+            Estimate = '${row.estimate}',
+            Assessed = '${row.assessed}',
+            BillSr = '${row.Bill_sr}',
+            IsGSTIncluded='${row.gst}',
+            GSTPercentage='${gstPct}'
+          WHERE ReportID = '${row.sno}' AND
+          LeadID = '${leadId}';
+        `;
+
+        db.query("SELECT * FROM NewPartsReport WHERE ReportID = ? AND LeadID=?", [row.sno,leadId], (err, result2) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+
+          console.log(result2);
+
+          if (result2.length > 0) {
+            db.query(updateQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          } else {
+            console.log(insertQuery);
+            db.query(insertQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          }
+        });
+      });
+    });
+
+    await Promise.all(promises);
+
+    res.status(200).send("Successfully updated!");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
+
+>>>>>>> Stashed changes
   const {
     policyType,
     IDV,

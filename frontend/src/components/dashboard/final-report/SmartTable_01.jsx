@@ -92,101 +92,23 @@ const headCells = [
   },
 ];
 
-const data = [
-  {
-    _id: "6144145976c7fe",
-    sno: "1",
-    dep: "0",
-    item_name: (
-      <select
-        style={{ marginTop: "-5px" }}
-        className="selectpicker form-select"
-        data-live-search="true"
-        data-width="100%"
-      >
-        <option data-tokens="Status1">Regular</option>
-        <option data-tokens="Status2">Add on Policy</option>
-        <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-      </select>
-    ),
-    hsh_code: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    remark: (
-      <select
-        style={{ marginTop: "-5px" }}
-        className="selectpicker form-select"
-        data-live-search="true"
-        data-width="100%"
-      >
-        <option data-tokens="Status1">Regular</option>
-        <option data-tokens="Status2">Add on Policy</option>
-        <option data-tokens="Status3">Add on Policy(Not Effective)</option>
-      </select>
-    ),
-    estimate: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    assessed: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    qe_qa: "01-02",
-    bill_sr: "1",
-    gst: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    total: (
-      <input
-        className="form-control"
-        type="text"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    type: "Plastic",
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-    action: <span className="flaticon-edit"></span>,
-  },
-];
+const calculateVehicleAge = ()=>{
+  if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
+    return "0";
+  }
+  const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
+  const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
+
+  return `${a }`;
+  
+}
+
+const calculateDepreciationOnMetal = ()=>{
+  const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
+ 
+  console.log(a);
+  return a;
+}
 
 function SmartTable(props) {
   const [loading, setLoading] = useState(false);
