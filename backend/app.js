@@ -692,6 +692,11 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
       [leadId]
     );
 
+    const commercialVehicleDetails = await executeQuery(
+      "SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",
+      [leadId]
+    );
+
     const combinedResult = {
       claimDetails,
       insuredDetails,
@@ -726,9 +731,6 @@ function executeStoredProc(procName, params) {
   });
 }
 
-<<<<<<< Updated upstream
-app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
-=======
 app.get("/getNewParts/:leadId",authenticateUser,(req,res)=>{
   const leadId = req.params.leadId;
   db.query("SELECT * FROM NewPartsReport", (err, result2) => {
@@ -948,24 +950,33 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
 
 app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
 
->>>>>>> Stashed changes
   const {
-    policyType,
-    IDV,
+    policyType ,
+    IDV  ,
     PolicyPeriodStart,
-    PolicyPeriodEnd,
-    HPA,
+    PolicyPeriodEnd ,
+    HPA ,
     ClaimServicingOffice,
     OwnerSRST,
     VehicleMakeVariantModelColor,
     DateOfIssue,
+    MailRecieveDate,
     ValidFrom,
+    VehicleType,
     ValidUntilNtv,
     ValidUntilTv,
     phoneNumber,
+    AntiTheft,
+    RegLadenWt,
+    RemarkIfRLW,
+    Pin,
+    DateOfRegistration,
+    PlaceOfSurvey,
+    UnladenWT,
+    RemarkIfULW,
+    VehicleRemark,
     InsuranceCompanyNameAddress,
-    InsuredAddress,
-    InsuredMailAddress,
+    InsuredAddress,InsuredMailAddress,
     InsuredMobileNo1,
     InsuredMobileNo2,
     InsuredName,
@@ -990,6 +1001,7 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
     LicenseNumber,
     LicenseType,
     BadgeNumber,
+    driverRemark,
     VehicleRegisteredNumber,
     RegisteredOwner,
     VehicleChassisNumber,
@@ -1004,10 +1016,28 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
     VehicleTaxParticulars,
     VehicleSeatingCapacity,
     AccidentAddedDateTime,
+
     PlaceOfLoss,
-    SurveyAllotmentDat,
+    SurveyAllotmentDate,
     SurveyConductedDate,
-    leadId,
+
+    FitnessCertificate,
+    FitnessFrom,
+    FitnessTo,
+    PermitTo,
+    PermitNo,
+    PermitFrom,
+    TypeOfPermit,
+    Authorization,
+    AreasOfoperation,
+    commercialRemark,
+
+    DetailsOfLoads,
+    CauseOfAccident,
+    PoliceAction,
+    ThirdPartyLoss,
+    Assessment,
+    leadId
   } = req.body;
 
   const updateDriverDetails = `
@@ -1161,6 +1191,8 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
   `;
 
 
+  // console.log(updateCommercialVehicleDetails,insertIntoCommercialVehicleDetails);
+  // return ;
   db.query(updateClaimDetails, (err, result2) => {
     if (err) {
       console.error(err);
@@ -1216,7 +1248,9 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
       res.status(500).send("Internal Server Error");
       return;
     }
-      const query = result2 ? updateCommercialVehicleDetails : insertIntoCommercialVehicleDetails;
+    console.log(result2?.length);
+      const query = result2?.length ? updateCommercialVehicleDetails : insertIntoCommercialVehicleDetails;
+      console.log("commercial vehicle",query);
     db.query(query, (err, result2) => {
       if (err) {
         console.error(err);

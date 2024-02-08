@@ -171,6 +171,34 @@ const PolicyDetails = ({
   setAreasOfoperation,
   commercialRemark,
   setcommercialRemark,
+
+
+  RCOwner,
+  setRCOwner,
+  RCSDW,
+  setRCSDW,
+  RCMakerName,
+  setRCMakerName,
+  RCModelName,
+  setRCModelName,
+  RCTaxValidUpto,
+  setRCTaxValidUpto,
+  RCVehicleDescription,
+  setRCVehicleDescription,
+  EmissionNorm,
+  setEmissionNorm,
+  StandingCapacity,
+  setStandingCapacity,
+  Financier,
+  setFinancier,
+  InsuranceValidUpto,
+  setInsuranceValidUpto,
+  PUCCNumber,
+  setPUCCNumber,
+  PUCCValidUpto,
+  setPUCCValidUpto,
+  RegisteringAuthority,
+  setRegisteringAuthority
 }) => {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -2335,6 +2363,8 @@ const PolicyDetails = ({
                   <div className="row mt-1">
                     <div className="col-lg-2 my_profile_setting_input form-group text-end">
                       <label
+                        
+
                         htmlFor=""
                         className="text-color"
                         style={{
@@ -2567,6 +2597,7 @@ const PolicyDetails = ({
                   <div className="row mt-1">
                     <div className="col-lg-5 my_profile_setting_input form-group text-end">
                       <label
+                     
                         htmlFor=""
                         className="text-color"
                         style={{
@@ -2582,6 +2613,7 @@ const PolicyDetails = ({
                     </div>
                     <div className="col-lg-7">
                       <select
+                     
                         style={{ padding: "2px" }}
                         className="selectpicker form-select"
                         data-live-search="true"
@@ -2608,7 +2640,64 @@ const PolicyDetails = ({
           </div>
         </div>
         <div className="row">
-          <RcDetails />
+          <RcDetails
+          RCOwner={RCOwner}
+                setRCOwner={setRCOwner}
+                RCSDW={RCSDW}
+                setRCSDW={setRCSDW}
+                RCMakerName={RCMakerName}
+                setRCMakerName={setRCMakerName}
+                RCModelName={RCModelName}
+                setRCModelName={setRCModelName}
+                RCTaxValidUpto={RCTaxValidUpto}
+                setRCTaxValidUpto={setRCTaxValidUpto}
+                RCVehicleDescription={RCVehicleDescription}
+                setRCVehicleDescription={setRCVehicleDescription}
+                EmissionNorm={EmissionNorm}
+                setEmissionNorm={setEmissionNorm}
+                StandingCapacity={StandingCapacity}
+                setStandingCapacity={setStandingCapacity}
+                Financier={Financier}
+                setFinancier={setFinancier}
+                InsuranceValidUpto={InsuranceValidUpto}
+                setInsuranceValidUpto={setInsuranceValidUpto}
+                PUCCNumber={PUCCNumber}
+                setPUCCNumber={setPUCCNumber}
+                PUCCValidUpto={PUCCValidUpto}
+                setPUCCValidUpto={setPUCCValidUpto}
+                RegisteringAuthority={RegisteringAuthority}
+                setRegisteringAuthority={setRegisteringAuthority}
+
+                VehicleRegisteredNumber={VehicleRegisteredNumber}
+                setVehicleRegisteredNumber={setVehicleRegisteredNumber}
+
+                RegisteredOwner={RegisteredOwner}
+                setRegisteredOwner={setRegisteredOwner}
+
+                PolicyNumber={PolicyNumber}
+                setPolicyNumber={setPolicyNumber}
+
+                formatDate={formatDate}
+                FitnessTo={FitnessTo}
+                setFitnessTo={setFitnessTo}
+                isEditMode={isEditMode}
+                VehicleChassisNumber={VehicleChassisNumber}
+                        setVehicleChassisNumber={setVehicleChassisNumber}
+                        EngineNumber={EngineNumber}
+                        setEngineNumber={setEngineNumber}
+                        DateRegistration={DateRegistration}
+                        setDateRegistration={setDateRegistration}
+                        VehicleClassOfVehicle={VehicleClassOfVehicle}
+                        setVehicleClassOfVehicle={setVehicleClassOfVehicle}
+                        VehicleFuelType={VehicleFuelType}
+                        setVehicleFuelType={setVehicleFuelType}
+                        setVehicleColor={setVehicleColor}
+                        VehicleColor={VehicleColor}
+                        VehicleSeatingCapacity={VehicleSeatingCapacity}
+                        setVehicleSeatingCapacity={setVehicleSeatingCapacity}
+                        InsuranceCompanyNameAddress={InsuranceCompanyNameAddress}
+                        setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
+          />
         </div>
       </div>
 

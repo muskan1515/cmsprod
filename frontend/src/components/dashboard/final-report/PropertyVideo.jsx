@@ -263,6 +263,21 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [ThirdPartyLoss,setThirdPartyLoss]=useState("");
   const [Assessment,setAssessment]=useState("");
 
+  //RC
+  const [RCOwner,setRCOwner]=useState("");
+  const [RCSDW,setRCSDW]=useState("");
+  const [RCMakerName,setRCMakerName]=useState("");
+  const [RCModelName,setRCModelName]=useState("");
+  const [RCTaxValidUpto,setRCTaxValidUpto]=useState("");
+  const [RCVehicleDescription,setRCVehicleDescription]=useState("");
+  const [EmissionNorm,setEmissionNorm]=useState("");
+  const [StandingCapacity,setStandingCapacity]=useState("");
+  const [Financier,setFinancier]=useState("");
+  const [InsuranceValidUpto,setInsuranceValidUpto]=useState("");
+  const [PUCCNumber,setPUCCNumber]=useState("");
+  const [PUCCValidUpto,setPUCCValidUpto]=useState("");
+  const [RegisteringAuthority,setRegisteringAuthority]=useState("");
+
  useEffect(() => {
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress || "");
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 || "");
@@ -493,7 +508,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       AreasOfoperation,
       commercialRemark,
 
-      PlaceOfSurvey,
       DetailsOfLoads,
       CauseOfAccident,
       PoliceAction,
@@ -769,6 +783,33 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 VehicleSeatingCapacity={VehicleSeatingCapacity}
                 setVehicleSeatingCapacity={setVehicleSeatingCapacity}
                 handleUpdateClick={saveHandler}
+
+                RCOwner={RCOwner}
+                setRCOwner={setRCOwner}
+                RCSDW={RCSDW}
+                setRCSDW={setRCSDW}
+                RCMakerName={RCMakerName}
+                setRCMakerName={setRCMakerName}
+                RCModelName={RCModelName}
+                setRCModelName={setRCModelName}
+                RCTaxValidUpto={RCTaxValidUpto}
+                setRCTaxValidUpto={setRCTaxValidUpto}
+                RCVehicleDescription={RCVehicleDescription}
+                setRCVehicleDescription={setRCVehicleDescription}
+                EmissionNorm={EmissionNorm}
+                setEmissionNorm={setEmissionNorm}
+                StandingCapacity={StandingCapacity}
+                setStandingCapacity={setStandingCapacity}
+                Financier={Financier}
+                setFinancier={setFinancier}
+                InsuranceValidUpto={InsuranceValidUpto}
+                setInsuranceValidUpto={setInsuranceValidUpto}
+                PUCCNumber={PUCCNumber}
+                setPUCCNumber={setPUCCNumber}
+                PUCCValidUpto={PUCCValidUpto}
+                setPUCCValidUpto={setPUCCValidUpto}
+                RegisteringAuthority={RegisteringAuthority}
+                setRegisteringAuthority={setRegisteringAuthority}
               />
               {/* <Image
                 width={692}
@@ -931,6 +972,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 <Exemple
                 LeadId={leadId}
                   claim={claim}
+                  DateOfRegistration={DateRegistration}
                   policyType={policyType}
                   includeDepreciation={includeDepreciation}
                   allDepreciations={allDepreciations}

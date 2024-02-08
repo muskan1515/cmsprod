@@ -1,5 +1,61 @@
 import { useEffect, useState } from "react";
-const RcDetails = () => {
+const RcDetails = ({
+  RCOwner,
+  setRCOwner,
+  formatDate,
+  RCSDW,
+  setRCSDW,
+  RCMakerName,
+  setRCMakerName,
+  RCModelName,
+  setRCModelName,
+  RCTaxValidUpto,
+  setRCTaxValidUpto,
+  RCVehicleDescription,
+  setRCVehicleDescription,
+  EmissionNorm,
+  setEmissionNorm,
+  StandingCapacity,
+  setStandingCapacity,
+  Financier,
+  setFinancier,
+  InsuranceValidUpto,
+  setInsuranceValidUpto,
+  PUCCNumber,
+  setPUCCNumber,
+  PUCCValidUpto,
+  setPUCCValidUpto,
+  RegisteringAuthority,
+  setRegisteringAuthority,
+
+
+  VehicleChassisNumber,
+  setVehicleChassisNumber,
+  EngineNumber,
+  setEngineNumber,
+  DateRegistration,
+  setDateRegistration,
+  VehicleClassOfVehicle,
+  setVehicleClassOfVehicle,
+  VehicleFuelType,
+  setVehicleFuelType,
+  setVehicleColor,
+  VehicleColor,
+  VehicleSeatingCapacity,
+  setVehicleSeatingCapacity,
+  InsuranceCompanyNameAddress,
+  setInsuranceCompanyNameAddress,
+
+  VehicleRegisteredNumber,
+  setVehicleRegisteredNumber,
+  RegisteredOwner,
+  setRegisteredOwner,
+  PolicyNumber,
+  setPolicyNumber,
+  isEditMode,
+  FitnessTo,
+  setFitnessTo
+}) => {
   return (
     <>
       <div className="row">
@@ -31,11 +87,11 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleRegisteredNumber}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) =>
-                    //   setVehicleRegisteredNumber(e.target.value)
-                    // }
+                    value={VehicleRegisteredNumber}
+                    readOnly={!isEditMode}
+                    onChange={(e) =>
+                      setVehicleRegisteredNumber(e.target.value)
+                    }
 
                     // placeholder="Enter Registration No."
                   />
@@ -63,10 +119,10 @@ const RcDetails = () => {
                   <input
                     type="text"
                     className="form-control"
-                    // id="propertyTitle"
-                    // readOnly={!isEditMode}
-                    // value={RegisteredOwner}
-                    // onChange={(e) => setRegisteredOwner(e.target.value)}
+                    id="propertyTitle"
+                    readOnly={!isEditMode}
+                    value={RegisteredOwner}
+                    onChange={(e) => setRegisteredOwner(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -95,9 +151,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-                    // value={formatDate(OwnerSRST)}
-                    // onChange={(e) => setOwnerSRST(e.target.value)}
+                    readOnly={!isEditMode}
+                    value={RCSDW}
+                    onChange={(e) => setRCSDW(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -126,11 +182,11 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleChassisNumber}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) =>
-                    //   setVehicleChassisNumber(e.target.value)
-                    // }
+                    value={VehicleChassisNumber}
+                    readOnly={!isEditMode}
+                    onChange={(e) =>
+                      setVehicleChassisNumber(e.target.value)
+                    }
 
                     // placeholder="Enter Registration No."
                   />
@@ -159,9 +215,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={EngineNumber}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) => setEngineNumber(e.target.value)}
+                    value={EngineNumber}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setEngineNumber(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -190,11 +246,11 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleMakeVariantModelColor}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) =>
-                    //   setVehicleMakeVariantModelColor(e.target.value)
-                    // }
+                    value={RCMakerName}
+                    readOnly={!isEditMode}
+                    onChange={(e) =>
+                      setRCMakerName(e.target.value)
+                    }
 
                     // placeholder="Enter Registration No."
                   />
@@ -223,9 +279,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleTypeOfBody}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+                    value={RCModelName}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setRCModelName(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -251,10 +307,13 @@ const RcDetails = () => {
                 </div>
                 <div className="col-lg-8">
                   <input
-                    type="date"
+                    type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
 
+                    value={formatDate(DateRegistration)}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setDateRegistration(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -279,9 +338,12 @@ const RcDetails = () => {
                 </div>
                 <div className="col-lg-7">
                   <input
-                    type="date"
+                    type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
+                    value={formatDate(RCTaxValidUpto)}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setRCTaxValidUpto(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -310,9 +372,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleClassOfVehicle}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) => setVehicleClassOfVehicle(e.target.value)}
+                    value={VehicleClassOfVehicle}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setVehicleClassOfVehicle(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -342,9 +404,9 @@ const RcDetails = () => {
                     // disabled={!isEditMode}
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-                    // value={RemarkIfRLW}
-                    // onChange={(e) => setRemarkIfRLW(e.target.value)}
+                    readOnly={!isEditMode}
+                    value={RCVehicleDescription}
+                    onChange={(e) => setRCVehicleDescription(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -373,9 +435,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-
-                    // placeholder="Enter Registration No."
+                    value={VehicleFuelType}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setVehicleFuelType(e.target.value)}
                   />
                 </div>
               </div>
@@ -403,9 +465,9 @@ const RcDetails = () => {
                     // disabled={!isEditMode}
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-                    // value={RemarkIfULW}
-                    // onChange={(e) => setRemarkIfULW(e.target.value)}
+                    readOnly={!isEditMode}
+                    value={EmissionNorm}
+                    onChange={(e) => setEmissionNorm(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -434,9 +496,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="color"
-                    // value={VehicleColor}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) => setVehicleColor(e.target.value)}
+                    value={VehicleColor}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setVehicleColor(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -465,11 +527,11 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleCubicCapacity}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) =>
-                    //   setVehicleCubicCapacity(e.target.value)
-                    // }
+                    value={VehicleSeatingCapacity}
+                    readOnly={!isEditMode}
+                    onChange={(e) =>
+                      setVehicleSeatingCapacity(e.target.value)
+                    }
 
                     // placeholder="Enter Registration No."
                   />
@@ -498,11 +560,11 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleSeatingCapacity}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) =>
-                    //   setVehicleSeatingCapacity(e.target.value)
-                    // }
+                    value={StandingCapacity}
+                    readOnly={!isEditMode}
+                    onChange={(e) =>
+                      setStandingCapacity(e.target.value)
+                    }
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -530,9 +592,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-                    // value={VehicleClassOfVehicle}
-                    // placeholder="Enter Registration No."
+                    readOnly={!isEditMode}
+                    value={Financier}
+                    onChange={(e)=>setFinancier(e.target.value)}
                   />
                 </div>
               </div>
@@ -559,8 +621,9 @@ const RcDetails = () => {
                     type="number"
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-
+                    value={InsuranceCompanyNameAddress}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setInsuranceCompanyNameAddress(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -588,9 +651,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-
-                    // placeholder="Enter Registration No."
+                    value={PolicyNumber}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setPolicyNumber(e.target.value)}
                   />
                 </div>
               </div>
@@ -614,12 +677,12 @@ const RcDetails = () => {
                 </div>
                 <div className="col-lg-7">
                   <input
-                    type="date"
+                    type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
-                    // readOnly={!isEditMode}
-
-                    // placeholder="Enter Registration No."
+                    value={formatDate(InsuranceValidUpto)}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setInsuranceValidUpto(e.target.value)}
                   />
                 </div>
               </div>
@@ -643,13 +706,13 @@ const RcDetails = () => {
                 </div>
                 <div className="col-lg-7">
                   <input
-                    type="date"
+                    type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="color"
                     // value={VehicleModel}
-                    // value={AntiTheft}
-                    // onChange={(e) => setAntiTheft(e.target.value)}
-                    // readOnly={!isEditMode}
+                    value={formatDate(FitnessTo)}
+                    onChange={(e) => setFitnessTo(e.target.value)}
+                    readOnly={!isEditMode}
                     // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
 
                     // placeholder="Enter Registration No."
@@ -679,9 +742,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    // value={VehicleTypeOfBody}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+                    value={PUCCNumber}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setPUCCNumber(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -710,9 +773,9 @@ const RcDetails = () => {
                     type="text"
                     className="form-control"
                     id="color"
-                    // value={VehicleModel}
-                    // readOnly={!isEditMode}
-                    // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+                    value={PUCCValidUpto}
+                    readOnly={!isEditMode}
+                    onChange={(e) => setPUCCValidUpto(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -742,9 +805,9 @@ const RcDetails = () => {
                   type="number"
                   className="form-control"
                   id="propertyTitle"
-                  // value={RegLadenWt}
-                  // onChange={(e) => setRegLadenWt(e.target.value)}
-                  // placeholder="Enter Registration No."
+                  value={RegisteringAuthority}
+                  onChange={(e) => setRegisteringAuthority(e.target.value)}
+                  placeholder="Enter Registration No."
                 />
               </div>
             </div>

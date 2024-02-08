@@ -107,6 +107,7 @@ const headCells = [
 export default function Exemple_01({
   policyType,
   claim,
+  DateOfRegistration,
   setOverallMetailDep,
   setTotalAgeOfVehicle,
   includeDepreciation,
@@ -743,12 +744,12 @@ export default function Exemple_01({
     const dep = calculateDepreciationsPercenatge(
       allDepreciations,
       val,
-      claim.vehicleDetails?.VehicleDateOfRegistration
+      DateOfRegistration
     );
 
     setMetalDep(dep);
 
-    console.log(dep,val);
+    console.log(dep,val, DateOfRegistration);
     const type =
       String(field) === "type" 
         ? String(currentField.type) === val
