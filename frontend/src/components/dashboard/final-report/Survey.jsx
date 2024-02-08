@@ -272,10 +272,15 @@ const Servey = ({
                 </div>
                 <div className="col-lg-8">
                   <input
-                  type={isEditMode ? "date" : "text"}
+                  type={isEditMode ? "datetime-local" : "text"}
+                className="form-control"
+                id="formGroupExampleInput3"
+                onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
+                value={isEditMode? AccidentAddedDateTime : formatDate(AccidentAddedDateTime)}
+                placeholder="MM-DD-YYYY"
+                min={AccidentAddedDateTime}
+                  
                   readonly={!isEditMode}
-              value={isEditMode? AccidentAddedDateTime : formatDate(AccidentAddedDateTime)}
-              onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
              
             /> 
                 </div>

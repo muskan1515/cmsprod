@@ -314,13 +314,8 @@ function SmartTable(props) {
                     <div className="col-lg-3">
                       <div className="row mt-1">
                         <div className="col-lg-5 text-end">
-                        <input
-                        className="form-check-input m-1"
-                        type="checkbox"
-                        onChange={props.gstToggleHandler}
-                        id="remeberMe"
-                      />
-                          W/o Tax :{" "}
+                      
+                          With Tax :
                         </div>
                         <div className="col-lg-6">
                           <select
@@ -336,6 +331,9 @@ function SmartTable(props) {
                               )
                             }
                           >
+                           <option data-tokens="Status1" value={"Both"}>
+                              Both
+                            </option>
                             <option data-tokens="Status1" value={"Estimate"}>
                               Estimate
                             </option>

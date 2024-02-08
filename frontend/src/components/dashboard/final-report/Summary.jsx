@@ -5,7 +5,23 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Editor } from "primereact/editor";
 
-const Summary = ({ isEditMode }) => {
+const Summary = ({ 
+  isEditMode ,
+  metaldepPct,
+  ageOfVehicleTotal,
+  totalPartsEstimate,
+  totalLabrorEstimate,
+  totalPartsAssessed,
+  totalLabrorAssessed,
+  setLessImposed,
+  lessImposed,
+  setLessExcess,
+  lessExcess,
+  other,
+  setOther,
+  metalSalvageValue
+
+}) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -94,6 +110,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={totalLabrorEstimate}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -118,6 +135,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                  value={totalPartsEstimate}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -142,6 +160,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={totalPartsEstimate + totalLabrorEstimate}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -199,6 +218,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={totalLabrorAssessed}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -223,6 +243,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={totalPartsAssessed}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -248,6 +269,7 @@ const Summary = ({ isEditMode }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      value={totalLabrorAssessed + totalPartsAssessed}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -272,6 +294,8 @@ const Summary = ({ isEditMode }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      value={lessExcess}
+                      onChange={(e)=>setLessExcess(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -296,6 +320,8 @@ const Summary = ({ isEditMode }) => {
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                      value={lessImposed}
+                      onChange={(e)=>setLessImposed(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -323,6 +349,8 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={other}
+                      onChange={(e)=>setOther(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -374,6 +402,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={(totalLabrorAssessed + totalPartsAssessed) + (lessExcess - lessImposed + other )}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -405,6 +434,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={metalSalvageValue}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -430,6 +460,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={((totalLabrorAssessed + totalPartsAssessed) * metalSalvageValue)/100}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -517,6 +548,7 @@ const Summary = ({ isEditMode }) => {
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={((totalLabrorAssessed + totalPartsAssessed) + (lessExcess - lessImposed + other )) - ((totalLabrorAssessed + totalPartsAssessed) * metalSalvageValue)/100}
                     // placeholder="Enter Registration No."
                   />
                 </div>

@@ -810,7 +810,7 @@ app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
             return;
           }
 
-          console.log(result2);
+          
 
           if (result2.length > 0) {
             db.query(updateQuery, (err) => {
@@ -905,15 +905,14 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
           LeadID = '${leadId}';
         `;
 
-        db.query("SELECT * FROM NewPartsReport WHERE ReportID = ? AND LeadID=?", [row.sno,leadId], (err, result2) => {
+        db.query("SELECT * FROM LabourReport WHERE ReportID = ? AND LeadID=?", [row.sno,leadId], (err, result2) => {
           if (err) {
             console.error(err);
             reject(err);
             return;
           }
 
-          console.log(result2);
-
+          return ;
           if (result2.length > 0) {
             db.query(updateQuery, (err) => {
               if (err) {
@@ -952,6 +951,7 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
 
   const {
     policyType ,
+    TypeOfDate,
     IDV  ,
     PolicyPeriodStart,
     PolicyPeriodEnd ,
@@ -1040,6 +1040,7 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
     leadId
   } = req.body;
 
+
   const updateDriverDetails = `
     UPDATE DriverDetails
     SET
@@ -1103,7 +1104,8 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
         RemarkIfULW='${RemarkIfULW}',
         Remark='${VehicleRemark}',
         VehicleType='${VehicleType}',
-        AntiTheft='${AntiTheft}'
+        AntiTheft='${AntiTheft}',
+        TypeOfDate='${TypeOfDate}'
         WHERE LeadID = ${leadId};
   `;
 

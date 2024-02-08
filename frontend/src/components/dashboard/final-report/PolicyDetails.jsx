@@ -3,11 +3,14 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import RcDetails from "./RcDetails";
+import { BsTypeH3 } from "react-icons/bs";
 
 const PolicyDetails = ({
   setIsStatusModal,
   setPolicyType,
   policyType,
+  TypeOfDate,
+  setTypeOfDate,
   isEditMode,
   setIsEditMode,
   phoneNumber,
@@ -573,12 +576,12 @@ const PolicyDetails = ({
                         data-live-search="true"
                         data-width="100%"
                         readonly={!isEditMode}
-                        value={policyType}
+                        value={BsTypeH3}
                         onChange={(e) => setPolicyType(e.target.value)}
                       >
-                        <option data-tokens="Status1">Regular</option>
-                        <option data-tokens="Status2">Add on Policy</option>
-                        <option data-tokens="Status3">
+                        <option data-tokens="Status1" value={"Regular"}>Regular</option>
+                        <option data-tokens="Status2" value={"Add on Policy"}>Add on Policy</option>
+                        <option data-tokens="Status3" value={"Add on Policy(Not Effective)"}>
                           Add on Policy(Not Effective)
                         </option>
                       </select>
@@ -1049,14 +1052,13 @@ const PolicyDetails = ({
                             data-live-search="true"
                             data-width="100%"
                             type={isEditMode ? "date" : "text"}
-                            readonly={!isEditMode}
-                            
-                            onChange={(e)=>setDateRegistration(e.target.value)}
-                           
+                            readOnly={!isEditMode}
+                            value={TypeOfDate}
+                            onChange={(e)=>setTypeOfDate(e.target.value)}
                           >
                             <option data-tokens="Status1">choose..</option>
-                            <option data-tokens="Status2">Purchase</option>
-                            <option data-tokens="Status3">Registration</option>
+                            <option data-tokens="Status2" value="Purchase">Purchase</option>
+                            <option data-tokens="Status3" value="Registration">Registration</option>
                           </select>
                         </div>
                         <div className="col-lg-4">

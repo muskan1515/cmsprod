@@ -115,14 +115,14 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   }
 
   const calculateTaxValue = (original,gstValue,gst)=>{
-    if(gst % 2 === 0){
+    console.log(gst);
+    if(gst % 2 !== 0){
       return (Number(original) * Number(gstValue))/100;
     }
     return 0;
   };
 
   useEffect(() => {
-    console.log(toggleEstimate, "toggleestimate");
     let total_estimate = 0,
       total_assessed = 0,
       total_paint =0,
@@ -130,22 +130,25 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     allRows.map((row, index) => {
       const current_row_estimate =
         Number(row?.estimate) +
-        calculateGSTValue(row?.estimate, currentGst, toggleEstimate);
+        calculateGSTValue(row?.estimate, currentGst, toggleEstimate +1 );
       total_estimate = total_estimate + current_row_estimate;
     })
     allRows.map((row,index)=>{ 
+      console.log("assessed",row);
       const current_row_assessed = Number(row?.assessed) + calculateGSTValue(row?.assessed,currentGst,row?.gst);
-      const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,2);
+      const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,row.gst);
       total_assessed = total_assessed + current_row_assessed;
       total_tax = total_tax + current_row_assessed_tax;
       total_paint = total_paint +( (Number(row?.assessed)*13)/100);
     });
     setTotalAssessed(total_assessed);
+    setTotalLabrorAssessed(total_assessed);
+    setTotalLabrorEstimate(total_estimate);
     setTotalEstimate(total_estimate);
     setTaxAmount(total_tax);
     setLaborWOPaint(total_paint);
     setReload(false);
-  }, [toggleEstimate, currentGst, reload, toggleEstimate]);
+  }, [toggleEstimate, currentGst, reload, allRows,toggleEstimate]);
 
 
   useEffect(()=>{
@@ -278,6 +281,24 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [PUCCValidUpto,setPUCCValidUpto]=useState("");
   const [RegisteringAuthority,setRegisteringAuthority]=useState("");
 
+  const [TypeOfDate,setTypeOfDate]=useState("");
+
+  const [metaldepPct,setmetaldepPct]=useState(0);
+  const [ageOfVehicleTotal,setAgeOfvehicleTotal]=useState(0);
+  const [totalPartsEstimate,setTotalPartsEstimate]=useState(0);
+  const [totalLabrorEstimate,setTotalLabrorEstimate]=useState(0);
+  
+  const [totalPartsAssessed,setTotalPartsAssessed]=useState(0);
+  const [totalLabrorAssessed,setTotalLabrorAssessed]=useState(0);
+
+  
+  const [lessExcess,setLessExcess]=useState(0);
+  const [lessImposed,setLessImposed]=useState(0);
+  const [other,setOther]=useState(0);
+  const [metalSalvageValue,setMetalSalvageValue]=useState(0);
+
+ 
+
  useEffect(() => {
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress || "");
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 || "");
@@ -348,6 +369,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         ? `${claim?.VehicleMakeVariantModelColor}`
         : ""
     );
+    const temp = claim?.vehicleDetails?.TypeOfDate ? "Registration" : "Purchase";
+    setTypeOfDate(temp );
     setVehicleTypeOfBody(claim?.vehicleDetails?.TypeOfBody || "");
     setVehicleCubicCapacity(claim?.vehicleDetails?.CubicCapacity);
     setVehicleClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle);
@@ -412,6 +435,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
     const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
  
+   setAgeOfvehicleTotal(a);
     return `${a }`;
     
   }
@@ -419,6 +443,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const calculateDepreciationOnMetal = ()=>{
     const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
    
+    setmetaldepPct(a);
     console.log(a);
     return a;
   }
@@ -459,6 +484,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       requestType,
       ClaimNumber,
       EngineType,
+      TypeOfDate :TypeOfDate === "Registration" ? 1 : 0,
       DateRegistration,
       PUCNumber,
       TransferDate,
@@ -619,6 +645,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           <div className="property_video">
             <div className="thumb">
               <PolicyDetails
+
+              TypeOfDate={TypeOfDate}
+              setTypeOfDate={setTypeOfDate}
                 setPolicyType={setPolicyType}
                 policyType={policyType}
                 isEditMode={isEditMode}
@@ -984,6 +1013,19 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   }
                   setOverallMetailDep={setOverallMetailDep}
                   setTotalAgeOfVehicle={setTotalAgeOfVehicle}
+
+                  ageOfVehicleTotal={ageOfVehicleTotal}
+                  metaldepPct={metaldepPct}
+                totalPartsEstimate={totalPartsEstimate}
+                totalLabrorEstimate={totalLabrorEstimate}
+                totalPartsAssessed={totalPartsAssessed}
+                totalLabrorAssessed={totalLabrorAssessed}
+
+                setTotalPartsEstimate={setTotalPartsEstimate}
+                setTotalLabrorEstimate={setTotalLabrorEstimate}
+                setTotalPartsAssessed={setTotalPartsAssessed}
+                setTotalLabrorAssessed={setTotalLabrorAssessed}
+                setMetalSalvageValue={setMetalSalvageValue}
                 />
               </div>
             </div>
@@ -1003,6 +1045,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   style={{ borderRight: "1px solid black" }}
                 >
                   <Exemple_01
+                  claim={claim}
                     currentGst={currentGst}
                     setTotalAssessed={setTotalAssessed}
                     totalAssessed={totalAssessed}
@@ -1018,6 +1061,18 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                     setAllRows={setAllRows}
                     setReload={setReload}
                     setCurrentGST={setCurrentGst}
+
+                    ageOfVehicleTotal={ageOfVehicleTotal}
+                    metaldepPct={metaldepPct}
+                  totalPartsEstimate={totalPartsEstimate}
+                  totalLabrorEstimate={totalLabrorEstimate}
+                  totalPartsAssessed={totalPartsAssessed}
+                  totalLabrorAssessed={totalLabrorAssessed}
+
+                  setTotalPartsEstimate={setTotalPartsEstimate}
+                  setTotalLabrorEstimate={setTotalLabrorEstimate}
+                  setTotalPartsAssessed={setTotalPartsAssessed}
+                  setTotalLabrorAssessed={setTotalLabrorAssessed}
                   />
                 </div>
                 <div className="col-lg-3">
@@ -1046,6 +1101,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   claim={claim}
                   depMetal={depMetal}
                   ageOfVehicle={ageOfVehicle}
+
+                  metaldepPct={metaldepPct}
+                  setmetaldepPct={setmetaldepPct}
+                  ageOfVehicleTotal={ageOfVehicleTotal}
+                  setAgeOfvehicleTotal={setAgeOfvehicleTotal}
                   />
                 </div>
                 <div className="col-lg-12 mt-5">
@@ -1164,7 +1224,22 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <Summary />
+              <Summary 
+              metaldepPct={metaldepPct}
+                  ageOfVehicleTotal={ageOfVehicleTotal}
+                  totalPartsEstimate={totalPartsEstimate}
+                  totalLabrorEstimate={totalLabrorEstimate}
+                  totalPartsAssessed={totalPartsAssessed}
+                  totalLabrorAssessed={totalLabrorAssessed}
+
+                  lessExcess={lessExcess}
+                  setLessExcess={setLessExcess}
+                  lessImposed={lessImposed}
+                  setLessImposed={setLessImposed}
+                  other={other}
+                  setOther={setOther}
+                  metalSalvageValue={metalSalvageValue}
+              />
             </div>
           </div>
         </div>

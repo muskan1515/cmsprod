@@ -3,6 +3,7 @@ import SmartTable_01 from "./SmartTable_01";
 import { useEffect, useState } from "react";
 import axios, { all } from "axios";
 import { SERVER_DIRECTORY } from "next/dist/shared/lib/constants";
+import { ro } from "date-fns/locale";
 
 const headCells = [
   {
@@ -76,6 +77,7 @@ export default function Exemple_01({
    totalAssessed,
    totalEstimate,
    setTotalEstimate,
+   claim,
    taxAmount,
    setCurrentGST,
    allRows,
@@ -86,7 +88,19 @@ export default function Exemple_01({
    reload,
    setReload,
    toggleLabor,
-   setToggleLabor
+   setToggleLabor,
+
+   ageOfVehicleTotal,
+   metaldepPct,
+    totalPartsEstimate,
+    totalLabrorEstimate,
+    totalPartsAssessed,
+    totalLabrorAssessed,
+
+    setTotalPartsEstimate,
+    setTotalLabrorEstimate,
+    setTotalPartsAssessed,
+    setTotalLabrorAssessed
 }) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
@@ -158,9 +172,9 @@ export default function Exemple_01({
           estimate:part.Estimate,
           assessed:part.Assessed,
           bill_sr:part.BillSr,
-          gst:part.gst,
+          gst:part.gst ? part.gst : 0 ,
           job_type:"",
-          sno:part.ReportID
+          sno:part.ReportID ? part.ReportID : index+1
         };
         temp_row.push(temp)
       }
@@ -208,10 +222,24 @@ export default function Exemple_01({
     // console.log(LeadID)
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    let temp=[];
+    allRows.map((row,index)=>{
+      const row2 = {
+        sno:index+1,
+        description:row.description,
+        assessed:row.assessed,
+        estimate:row.estimate,
+        sac:row.sac,
+        gst:row.gst,
+        bill_sr:row.bill_sr
+      };
+      temp.push(row2);
+    })
     
     const payload={
       gstPct:currentGst,
-      allRows : JSON.stringify(allRows)
+      allRows : JSON.stringify(temp)
     };
 
     axios.put("/api/updateLabrorer",payload,{
@@ -316,6 +344,8 @@ export default function Exemple_01({
     oldRow[index] = newOutput;
     setAllRows(oldRow);
     // console.log(allRows[index].field);
+    // setToggleEstimate(true);
+    
     setChange(true);
     setReload(true);
     
@@ -445,6 +475,8 @@ export default function Exemple_01({
       totalEstimate={totalEstimate}
       handleAddRow={handleAddRow}
       editHandler={editHandler}
+      allDepreciations
+      claim={claim}
       updateHandler={onSaveHandler}
       edit={edit}
     />

@@ -31,24 +31,31 @@ const LabourForm = ({
   ageOfVehicle,
   setCabin,
   setReload,
+
+  ageOfVehicleTotal,
+   metaldepPct,
+   
 }) => {
+
   const calculateVehicleAge = ()=>{
     if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
     const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
- 
+  
     return `${a }`;
     
   }
-
+  
   const calculateDepreciationOnMetal = ()=>{
     const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
    
     console.log(a);
     return a;
   }
+  
+
   return (
     <>
       <div className="col-lg-12">
@@ -69,7 +76,7 @@ const LabourForm = ({
                         }}
                         id="remeberMe"
                       />
-                      Estimate W/o Tax :
+                      Estimate Wtih Tax :
                     </div>
                     <div className="col-lg-12 text-center">{totalEstimate}</div>
                   </div>
@@ -102,7 +109,7 @@ const LabourForm = ({
                   value=""
                   id="remeberMe"
                 />
-                Labour W/O Paint :{laborWOPaint}
+                Labour W/O Paint :{((totalAssessed) * (Number(12.5))/100)}
               </div>
               <div className="col-lg-8">
                 <input
@@ -111,7 +118,7 @@ const LabourForm = ({
                   value=""
                   id="remeberMe"
                 />
-                Paint :{" "}
+                Paint :{totalAssessed}
               </div>
             </div>
           </div>
@@ -375,7 +382,7 @@ const LabourForm = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                      value={calculateVehicleAge()}
+                      value={ageOfVehicleTotal}
                       // readOnly={!isEditMode}
                       // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -398,7 +405,7 @@ const LabourForm = ({
                         fontSize: "14px",
                       }}
                     >
-                      de on metal(%)
+                      dep on metal(%)
                     </label>
                   </div>
                   <div className="col-lg-4">
@@ -406,7 +413,7 @@ const LabourForm = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                      value={calculateDepreciationOnMetal()}
+                      value={metaldepPct}
                       // readOnly={!isEditMode}
                       // onChange={(e) => setLicenseType(e.target.value)}
 

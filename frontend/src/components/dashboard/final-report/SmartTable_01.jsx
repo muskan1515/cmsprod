@@ -92,23 +92,6 @@ const headCells = [
   },
 ];
 
-const calculateVehicleAge = ()=>{
-  if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
-    return "0";
-  }
-  const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
-  const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
-
-  return `${a }`;
-  
-}
-
-const calculateDepreciationOnMetal = ()=>{
-  const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
- 
-  console.log(a);
-  return a;
-}
 
 function SmartTable(props) {
   const [loading, setLoading] = useState(false);
