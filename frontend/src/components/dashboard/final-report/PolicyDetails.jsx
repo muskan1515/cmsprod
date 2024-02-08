@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import RcDetails from "./RcDetails";
 
 const PolicyDetails = ({
   setIsStatusModal,
@@ -169,10 +170,8 @@ const PolicyDetails = ({
   AreasOfoperation,
   setAreasOfoperation,
   commercialRemark,
-  setcommercialRemark
-                
+  setcommercialRemark,
 }) => {
-
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -277,10 +276,10 @@ const PolicyDetails = ({
   // };
   const [startDate, setStartDate] = useState(new Date());
 
-  const handleCancelHnadler = ()=>{
+  const handleCancelHnadler = () => {
     setIsEditMode(false);
-  }
- 
+  };
+
   return (
     <>
       <div className="row">
@@ -390,17 +389,18 @@ const PolicyDetails = ({
         </div> */}
         </div>
         <div className="col-lg-4 text-end">
-         
           {isEditMode ? (
             <>
-            <button className="btn btn-color m-1" onClick={handleCancelHnadler}>
-            Cancel
-          </button>
-            <button className="btn btn-color m-1" onClick={handleUpdateClick}>
-              Update
-            </button>
+              <button
+                className="btn btn-color m-1"
+                onClick={handleCancelHnadler}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-color m-1" onClick={handleUpdateClick}>
+                Update
+              </button>
             </>
-
           ) : (
             <button className="btn btn-color m-1" onClick={handleEditClick}>
               Edit
@@ -985,7 +985,7 @@ const PolicyDetails = ({
                         </div>
                         <div className="col-lg-8">
                           <input
-                            type={isEditMode?"date":"text"}
+                            type={isEditMode ? "date" : "text"}
                             className="form-control"
                             id="propertyTitle"
                             readOnly={!isEditMode}
@@ -1321,7 +1321,7 @@ const PolicyDetails = ({
                             id="color"
                             // value={VehicleModel}
                             value={AntiTheft}
-                            onChange={(e)=>setAntiTheft(e.target.value)}
+                            onChange={(e) => setAntiTheft(e.target.value)}
                             readOnly={!isEditMode}
                             // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
 
@@ -1515,7 +1515,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           value={RegLadenWt}
-                          onChange={(e)=>setRegLadenWt(e.target.value)}
+                          onChange={(e) => setRegLadenWt(e.target.value)}
                           // placeholder="Enter Registration No."
                         />
                       </div>
@@ -1547,7 +1547,7 @@ const PolicyDetails = ({
                           id="propertyTitle"
                           readOnly={!isEditMode}
                           value={RemarkIfRLW}
-                          onChange={(e)=>setRemarkIfRLW(e.target.value)}
+                          onChange={(e) => setRemarkIfRLW(e.target.value)}
 
                           // placeholder="Enter Registration No."
                         />
@@ -1579,7 +1579,7 @@ const PolicyDetails = ({
                           id="propertyTitle"
                           readOnly={!isEditMode}
                           value={UnladenWT}
-                          onChange={(e)=>setUnladenWT(e.target.value)}
+                          onChange={(e) => setUnladenWT(e.target.value)}
 
                           // placeholder="Enter Registration No."
                         />
@@ -1612,7 +1612,7 @@ const PolicyDetails = ({
                           id="propertyTitle"
                           readOnly={!isEditMode}
                           value={RemarkIfULW}
-                          onChange={(e)=>setRemarkIfULW(e.target.value)}
+                          onChange={(e) => setRemarkIfULW(e.target.value)}
 
                           // placeholder="Enter Registration No."
                         />
@@ -1872,7 +1872,7 @@ const PolicyDetails = ({
                           data-live-search="true"
                           data-width="100%"
                           value={VehicleRemark}
-                          onChange={(e)=>setVehicleRemark(e.target.value)}
+                          onChange={(e) => setVehicleRemark(e.target.value)}
                         >
                           <option data-tokens="Status1">
                             Verified from Original
@@ -1978,7 +1978,6 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  
                   {/* <input
                     type="date"
                     className="form-control"
@@ -2245,7 +2244,7 @@ const PolicyDetails = ({
                     data-width="100%"
                     readonly={!isEditMode}
                     value={driverRemark}
-                    onChange={(e)=>setDriverRemark(e.target.value)}
+                    onChange={(e) => setDriverRemark(e.target.value)}
                   >
                     <option data-tokens="Status1">
                       Verified from Original
@@ -2290,7 +2289,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         readOnly={!isEditMode}
                         value={FitnessCertificate}
-                        onChange={(e)=>setFitnessCertificate(e.target.value)}
+                        onChange={(e) => setFitnessCertificate(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2391,7 +2390,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         readOnly={!isEditMode}
                         value={PermitNo}
-                      onChange={(e)=>setPermitNo(e.target.value)}
+                        onChange={(e) => setPermitNo(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2491,7 +2490,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         readOnly={!isEditMode}
                         value={TypeOfPermit}
-                      onChange={(e)=>setTypeOfPermit(e.target.value)}
+                        onChange={(e) => setTypeOfPermit(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2524,7 +2523,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         readOnly={!isEditMode}
                         value={Authorization}
-                      onChange={(e)=>setAuthorization(e.target.value)}
+                        onChange={(e) => setAuthorization(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2557,7 +2556,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         readOnly={!isEditMode}
                         value={AreasOfoperation}
-                      onChange={(e)=>setAreasOfoperation(e.target.value)}
+                        onChange={(e) => setAreasOfoperation(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
@@ -2589,7 +2588,7 @@ const PolicyDetails = ({
                         data-width="100%"
                         readonly={!isEditMode}
                         value={commercialRemark}
-                        onChange={(e)=>setcommercialRemark(e.target.value)}
+                        onChange={(e) => setcommercialRemark(e.target.value)}
                       >
                         <option data-tokens="Status1">
                           Verified from Original
@@ -2607,6 +2606,9 @@ const PolicyDetails = ({
               </div>
             </div>
           </div>
+        </div>
+        <div className="row">
+          <RcDetails />
         </div>
       </div>
 

@@ -10,9 +10,9 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
   const [date, setDate] = useState(new Date());
 
-  const [fromEmail,setFromEmail]=useState('infosticstech@gmail.com');
-  const [subject,setSubject]=useState('Survey Request for Vehicle Claim');
-  const [body,setBody]=useState(` Dear Sir/Madam,
+  const [fromEmail, setFromEmail] = useState("infosticstech@gmail.com");
+  const [subject, setSubject] = useState("Survey Request for Vehicle Claim");
+  const [body, setBody] = useState(` Dear Sir/Madam,
 
   Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
 
@@ -60,57 +60,50 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   };
 
   const handleSubmit = () => {
-    if(!(policyNos && policyNo) || !date){
+    if (!(policyNos && policyNo) || !date) {
       alert("All Marked field should be filled!!");
-    }
-    else if(!(email || emailAddress)){
+    } else if (!(email || emailAddress)) {
       alert("Email is required field !!");
-    }
-    else{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // /console.log(selectedItems);
-    const payload = {
-      toMail: emailAddress ? emailAddress : email,
-      PolicyNo: policyNos ? policyNos : policyNo,
-      Date: date ? date : new Date(),
-      vehicleNo: vehicleNo,
-      Insured: Insured,
-      content: createStringFromSelectedItems(selectedItems),
-      content2: createStringFromSelectedItems2(selectedItems),
-      leadId: leadId,
-      subject:subject,
-      body:body,
-      fromEmail:fromEmail
-    };
+    } else {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      // /console.log(selectedItems);
+      const payload = {
+        toMail: emailAddress ? emailAddress : email,
+        PolicyNo: policyNos ? policyNos : policyNo,
+        Date: date ? date : new Date(),
+        vehicleNo: vehicleNo,
+        Insured: Insured,
+        content: createStringFromSelectedItems(selectedItems),
+        content2: createStringFromSelectedItems2(selectedItems),
+        leadId: leadId,
+        subject: subject,
+        body: body,
+        fromEmail: fromEmail,
+      };
 
-    if(!payload.toMail || String(payload.toMail)==="None"  ){
-      alert("Email is required field !!");
+      if (!payload.toMail || String(payload.toMail) === "None") {
+        alert("Email is required field !!");
+      } else if (!payload.PolicyNo) {
+        alert("PolicyNo is required field !!");
+      } else if (!payload.content || !payload.content2) {
+        alert("Please select the documents to be passed over email!");
+      } else {
+        axios
+          .post("/api/sendCustomEmail", payload, {
+            headers: {
+              Authorization: `Bearer ${userInfo[0].Token}`,
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            alert("Successfully sent!!");
+            router.push(`/claim-details?leadId=${leadId}`);
+          })
+          .catch((Err) => {
+            alert("Try again!");
+          });
+      }
     }
-    else if(!payload.PolicyNo){
-      alert("PolicyNo is required field !!");
-    }
-    else if(!payload.content || !payload.content2){
-      alert("Please select the documents to be passed over email!");
-    }
-    else{
-  
-
-    axios
-      .post("/api/sendCustomEmail", payload, {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        alert("Successfully sent!!");
-        router.push(`/claim-details?leadId=${leadId}`);
-      })
-      .catch((Err) => {
-        alert("Try again!");
-      });
-    }
-  }
   };
 
   const [selectedOption, setSelectedOption] = useState("showDocument");
@@ -128,7 +121,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
             id="documentType"
             value={selectedOption}
             onChange={handleSelectChange}
-            className="form-control"
+            className="form-control p-1"
           >
             <option value="showDocument">Send Documents</option>
             <option value="showInput">Send Documents -1</option>
@@ -281,20 +274,30 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                 <div className="row card">
                   <h4 className="col-12 text-center mt-1">Mail Box</h4>
                   <hr />
-                  <div className="row" >
+                  <div className="row">
                     <h5 className="">To :</h5>
-                    <input value={fromEmail} onChange={(e)=>setFromEmail(e.target.value)}/>
+                    <input
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
+                    />
                   </div>
                   <hr />
                   <div className="row">
                     <h5 className="">Subject :</h5>
-                    <input value={subject} onChange={(e)=>setSubject(e.target.value)}/>
+                    <input
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                    />
                   </div>
                   <hr />
-                  <div className="row" style={{ height: "100px" }}></div>
+                  <div className="row" style={{ height: "200px" }}>
+                    <textarea
+                      value={body}
+                      onChange={(e) => setBody(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
-              <textarea value={body} onChange={(e)=>setBody(e.target.value)}/>
               <div className="col-lg-12 text-end">
                 <button className="btn btn-color w-10" onClick={handleSubmit}>
                   Send
