@@ -542,10 +542,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       leadId
     };
 
-<<<<<<< Updated upstream
-    
-=======
->>>>>>> Stashed changes
     axios.put("/api/updateFinalReport",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,
