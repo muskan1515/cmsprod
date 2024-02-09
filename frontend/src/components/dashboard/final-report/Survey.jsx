@@ -3,10 +3,13 @@ import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Calendar } from "primereact/calendar";
+
 import { Editor } from "primereact/editor";
 import { AccidentContent, AssessmentContent } from "./Content";
 import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
 import MyDatePicker from "../../common/MyDatePicker";
+import getTime from "date-fns/getTime";
+import MyDatePickerTime from "../../common/MyDatePickerTime";
 
 const Servey = ({
   
@@ -134,7 +137,7 @@ const Servey = ({
   SaveHandler,
   claim
 }) => {
-  const formatDate = (dateString) => {
+  const  formatDate = (dateString) => {
     const options = {
       year: "numeric",
       month: "short",
@@ -272,11 +275,22 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                <MyDatePicker
+                { !isEditMode ? 
+                  <input 
+              readOnly={!isEditMode}
+              type={ "text"}
+              value={AccidentAddedDateTime ? formatDate(AccidentAddedDateTime) : ""}
+             
+              className="form-control" 
+            id="propertyTitle" />
+            :
+                <MyDatePickerTime
                 disable={!isEditMode}
-                  selectedDate={AccidentAddedDateTime ? new Date(AccidentAddedDateTime) : new Date()}
+                  selectedDate={AccidentAddedDateTime ? new Date(AccidentAddedDateTime) : ""}
                   setSelectedDate={setAccidentAddedDateTime}
+                  isTime={true}
                 /> 
+                }
                  {/*<input
                   type={isEditMode ? "datetime-local" : "text"}
                 className="form-control"
@@ -307,12 +321,14 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
+               
                 <input
                 type="text"
                 className="form-control"
                 id="propertyTitle"
                 readonly={!isEditMode}
-                value={formatTime(AccidentAddedDateTime)}
+                
+                value={AccidentAddedDateTime ? formatTime(AccidentAddedDateTime) : ""}
               />
                 </div>
               </div>
@@ -452,11 +468,21 @@ const Servey = ({
 
                    value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
           onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
+          { !isEditMode ? 
+            <input 
+        readOnly={!isEditMode}
+        type={ "text"}
+        value={SurveyAllotmentDate ? formatDate(SurveyAllotmentDate) : ""}
+       
+        className="form-control" 
+      id="propertyTitle" />
+      :
                 <MyDatePicker
                 disable={!isEditMode}
-                  selectedDate={SurveyAllotmentDate ? new Date(SurveyAllotmentDate) : new Date()}
+                  selectedDate={SurveyAllotmentDate ? new Date(SurveyAllotmentDate) : ""}
                   setSelectedDate={setSurveyAllotmentDate}
                 /> 
+          }
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -515,11 +541,21 @@ const Servey = ({
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
                 />*/}
+                { !isEditMode ? 
+                  <input 
+              readOnly={!isEditMode}
+              type={ "text"}
+              value={SurveyConductedDate ? formatDate(SurveyConductedDate) : ""}
+             
+              className="form-control" 
+            id="propertyTitle" />
+            :
                 <MyDatePicker
                   disable={!isEditMode}
-                    selectedDate={SurveyConductedDate ? new Date(SurveyConductedDate) : new Date()}
+                    selectedDate={SurveyConductedDate ? new Date(SurveyConductedDate) : ""}
                     setSelectedDate={setSurveyConductedDate}
                   /> 
+                }
               </div>
             </div>
             {/* <div className="my_profile_setting_input form-group">
@@ -614,7 +650,7 @@ const Servey = ({
             <h4>Assesment :</h4>
             <hr />
             <div className="">
-              <Editor placeholder={AssessmentContent(claim?.claimDetails?.InsuranceCompanyNameAddress ,formatDate( claim?.claimDetails?.AddedDateTime),formatDate( new Date()))} readonly={!isEditMode} value={Assessment} onChange={setAssessment} style={{ height: "300px" }} />
+              <Editor placeholder={AssessmentContent(claim?.claimDetails?.InsuranceCompanyNameAddress ,formatDate( claim?.claimDetails?.AddedDateTime),formatDate( ""))} readonly={!isEditMode} value={Assessment} onChange={setAssessment} style={{ height: "300px" }} />
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>

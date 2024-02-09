@@ -307,11 +307,20 @@ const RcDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
+                { !isEditMode ? 
+                  <input 
+              readOnly={!isEditMode}
+              type={ "text"}
+              value={DateRegistration ? formatDate(DateRegistration) : ""}
+             
+              className="form-control" 
+            id="propertyTitle" />
+            :
                 <MyDatePicker
                 disable={!isEditMode}
-                selectedDate={DateRegistration ? new Date(DateRegistration) : new Date()}
+                selectedDate={DateRegistration ? new Date(DateRegistration) : ""}
                 setSelectedDate={setDateRegistration}
-                />
+                />}
                   {/*<input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
@@ -353,11 +362,20 @@ const RcDetails = ({
 
                     // placeholder="Enter Registration No."
                   />*/}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={RCTaxValidUpto ? formatDate(RCTaxValidUpto) : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
                   <MyDatePicker
                     disable={!isEditMode}
-                    selectedDate={RCTaxValidUpto ? new Date(RCTaxValidUpto) : new Date()}
+                    selectedDate={RCTaxValidUpto ? new Date(RCTaxValidUpto) : ""}
                     setSelectedDate={setRCTaxValidUpto}
-                    />
+                    />}
                 </div>
               </div>
             </div>
@@ -695,11 +713,20 @@ const RcDetails = ({
                     readOnly={!isEditMode}
                     onChange={(e) => setInsuranceValidUpto(e.target.value)}
                   />*/}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={InsuranceValidUpto ? formatDate(InsuranceValidUpto) : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
                   <MyDatePicker
                   disable={!isEditMode}
-                    selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : new Date()}
+                    selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : ""}
                     setSelectedDate={setInsuranceValidUpto}
-                  /> 
+                  /> }
                   
                 </div>
               </div>
@@ -734,11 +761,20 @@ const RcDetails = ({
 
                     // placeholder="Enter Registration No."
                   />*/}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={FitnessTo ? formatDate(FitnessTo)  : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
                   <MyDatePicker
                   disable={!isEditMode}
-                    selectedDate={FitnessTo ? new Date(FitnessTo) : new Date()}
+                    selectedDate={FitnessTo ? new Date(FitnessTo) : ""}
                     setSelectedDate={setFitnessTo}
-                  /> 
+                  /> }
                 </div>
               </div>
             </div>

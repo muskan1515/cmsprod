@@ -325,8 +325,9 @@ function SmartTable(props) {
                             data-live-search="true"
                             data-width="100%"
                             // disabled={!edit}
-                            onClick={(e) =>
-                              props.changeTotalAccordingToPolicyType(
+                            value={props.currentType}
+                            onChange={(e) =>
+                              props.setCurrentType(
                                 e.target.value
                               )
                             }

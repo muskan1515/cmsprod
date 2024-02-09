@@ -357,7 +357,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress || "United India Insurance Company Limited");
       setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd || "");
-      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart || "");
+      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodEnd || "");
     setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[0]
  || "" );
  setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[1]||"");
@@ -542,7 +542,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       leadId
     };
 
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
     axios.put("/api/updateFinalReport",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,

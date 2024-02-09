@@ -318,7 +318,7 @@ return formatDate(dateObject);
   //     console.log("Error in Updating Claim: ", error);
   //   }
   // };
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState("");
 
   const handleCancelHnadler = () => {
     setIsEditMode(false);
@@ -374,11 +374,21 @@ return formatDate(dateObject);
               </label>
             </div>
             <div className="col-lg-9">
+                { !isEditMode ? 
+                  <input 
+              readOnly={!isEditMode}
+              type={ "text"}
+              value={MailRecieveDate ? formatDate(MailRecieveDate) : ""}
+             
+              className="form-control" 
+            id="propertyTitle" />
+            :
                <MyDatePicker
                disable={!isEditMode}
-                selectedDate={MailRecieveDate ? new Date(MailRecieveDate) : new Date()}
+                selectedDate={MailRecieveDate ? new Date(MailRecieveDate) : ""}
                 setSelectedDate={setMailRecieveDate}
               /> 
+                }
               {/*<input 
               readOnly={!isEditMode}
               type={isEditMode ? "date" : "text"}
@@ -589,12 +599,10 @@ return formatDate(dateObject);
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
-                        readOnly={!isEditMode}
+                        disabled={!isEditMode}
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
                       >
-                      <option data-tokens="Status1" value={""}></option>
-                        
                         <option data-tokens="Status1" value={"Regular"}>Regular</option>
                         <option data-tokens="Status2" value={"Add on Policy"}>Add on Policy</option>
                         <option data-tokens="Status3" value={"Add on Policy(Not Effective)"}>
@@ -666,11 +674,21 @@ return formatDate(dateObject);
                         id="propertyTitle"
                       /> */}
 
+                      { !isEditMode ? 
+                        <input 
+                    readOnly={!isEditMode}
+                    type={ "text"}
+                    value={PolicyPeriodStart ? formatDate(PolicyPeriodStart) : ""}
+                   
+                    className="form-control" 
+                  id="propertyTitle" />
+                  :
                       <MyDatePicker
                       disable={!isEditMode}
-                        selectedDate={PolicyPeriodStart ? new Date(PolicyPeriodStart) : new Date()}
+                        selectedDate={PolicyPeriodStart ? new Date(PolicyPeriodStart) : ""}
                         setSelectedDate={setPolicyPeriodStart}
                       /> 
+                      }
                     </div>
                   </div>
                 </div>
@@ -696,7 +714,7 @@ return formatDate(dateObject);
 
                      <input
                       readOnly={!isEditMode}
-                      value={formatDateNextyear(PolicyPeriodStart)}
+                      value={PolicyPeriodStart? formatDateNextyear(PolicyPeriodStart):""}
                        
                       />
                     {/* <input 
@@ -1053,12 +1071,21 @@ return formatDate(dateObject);
 
                             // placeholder="Enter Registration No."
                           />*/}
-
+                          { !isEditMode ? 
+                            <input 
+                        readOnly={!isEditMode}
+                        type={ "text"}
+                        value={OwnerSRST ? formatDate(OwnerSRST) : ""}
+                       
+                        className="form-control" 
+                      id="propertyTitle" />
+                      :
                           <MyDatePicker
                           disable={!isEditMode}
-                          selectedDate={OwnerSRST ? new Date(OwnerSRST) : new Date()}
+                          selectedDate={OwnerSRST ? new Date(OwnerSRST) : ""}
                           setSelectedDate={setOwnerSRST}
                           />
+                          }
                         </div>
                       </div>
                     </div>
@@ -1096,11 +1123,20 @@ return formatDate(dateObject);
                           </select>
                         </div>
                         <div className="col-lg-4">
+                        { !isEditMode ? 
+                          <input 
+                      readOnly={!isEditMode}
+                      type={ "text"}
+                      value={DateRegistration ? formatDate(DateRegistration) : ""}
+                     
+                      className="form-control" 
+                    id="propertyTitle" />
+                    :
                         <MyDatePicker
                         disable={!isEditMode}
-                        selectedDate={DateRegistration ? new Date(DateRegistration) : new Date()}
+                        selectedDate={DateRegistration ? new Date(DateRegistration) : ""}
                         setSelectedDate={setDateRegistration}
-                      /> 
+                      /> }
                          {/* <input
                             type={isEditMode ? "date" : "text"}
                             readonly={!isEditMode}
@@ -2089,11 +2125,21 @@ return formatDate(dateObject);
                   className="form-control"
                   id="propertyTitle"
                   /> */}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={DateOfIssue ? formatDate(DateOfIssue) : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
                   <MyDatePicker
                   disable={!isEditMode}
-                    selectedDate={DateOfIssue ? new Date(DateOfIssue) : new Date()}
+                    selectedDate={DateOfIssue ? new Date(DateOfIssue) : ""}
                     setSelectedDate={setDateOfIssue}
                   /> 
+                  }
                   {/*<input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode} 
@@ -2128,11 +2174,22 @@ return formatDate(dateObject);
               id="propertyTitle"
             /> */}
 
+            { !isEditMode ? 
+              <input 
+          readOnly={!isEditMode}
+          type={ "text"}
+          value={ ValidUntilNtv ? formatDate(ValidUntilNtv) : ""}
+         
+          className="form-control" 
+        id="propertyTitle" />
+        :
+
                   <MyDatePicker
                   disable={!isEditMode}
-                    selectedDate={ValidUntilNtv ? new Date(ValidUntilNtv) : new Date()}
+                    selectedDate={ValidUntilNtv ? new Date(ValidUntilNtv) :""}
                     setSelectedDate={setValidUntilNtv}
                   /> 
+            }
                  {/* <input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode}
@@ -2166,11 +2223,21 @@ return formatDate(dateObject);
                   className="form-control"
                   id="propertyTitle"
                   /> */}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={ ValidFrom ? formatDate(ValidFrom) : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
                   <MyDatePicker
                       disable={!isEditMode}
-                        selectedDate={ValidFrom ? new Date(ValidFrom) : new Date()}
+                        selectedDate={ValidFrom ? new Date(ValidFrom) : ""}
                         setSelectedDate={setValidFrom}
                       /> 
+                  }
                 {/*<input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode} 
@@ -2204,11 +2271,21 @@ return formatDate(dateObject);
               className="form-control"
               id="propertyTitle"
             /> */}
+            { !isEditMode ? 
+              <input 
+          readOnly={!isEditMode}
+          type={ "text"}
+          value={ ValidUntilTv ? formatDate(ValidUntilTv) : ""}
+         
+          className="form-control" 
+        id="propertyTitle" />
+        :
                   <MyDatePicker
                   disable={!isEditMode}
-                    selectedDate={ValidUntilTv ? new Date(ValidUntilTv) : new Date()}
+                    selectedDate={ValidUntilTv ? new Date(ValidUntilTv) : ""}
                     setSelectedDate={setValidUntilTv}
                   /> 
+            }
                   {/*<input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode} 
@@ -2422,11 +2499,21 @@ return formatDate(dateObject);
                       value={isEditMode ? FitnessFrom : formatDate(FitnessFrom)}
                       onChange={(e)=>setFitnessFrom(e.target.value)}
           />*/}
+                          { !isEditMode ? 
+                            <input 
+                        readOnly={!isEditMode}
+                        type={ "text"}
+                        value={ FitnessFrom ? formatDate(FitnessFrom) : ""}
+                      
+                        className="form-control" 
+                      id="propertyTitle" />
+                      :
                       <MyDatePicker
                       disable={!isEditMode}
-                      selectedDate={ FitnessFrom ? new Date(FitnessFrom) : new Date()}
+                      selectedDate={ FitnessFrom ? new Date(FitnessFrom) : ""}
                       setSelectedDate={setFitnessFrom}
                       />
+                          }
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
                   </div>
@@ -2463,11 +2550,21 @@ return formatDate(dateObject);
                       value={isEditMode ? FitnessTo : formatDate(FitnessTo)}
                       onChange={(e)=>setFitnessTo(e.target.value)}
           />*/}
+          { !isEditMode ? 
+            <input 
+        readOnly={!isEditMode}
+        type={ "text"}
+        value={ FitnessTo ? formatDate(FitnessTo) : ""}
+       
+        className="form-control" 
+      id="propertyTitle" />
+      :
                       <MyDatePicker
                       disable={!isEditMode}
-                      selectedDate={FitnessTo ? new Date(FitnessTo) : new Date()}
+                      selectedDate={FitnessTo ? new Date(FitnessTo) : ""}
                       setSelectedDate={setFitnessTo}
                       />
+          }
                     </div>
                   </div>
                 </div>
@@ -2524,12 +2621,20 @@ return formatDate(dateObject);
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <input
-                        type={isEditMode ? "date" : "text"}
+
+                      {!isEditMode ? <input
+                        type={ "text"}
                         readonly={!isEditMode}
-                        value={isEditMode ? PermitFrom : formatDate(PermitFrom)}
-                        onChange={(e) => setPermitFrom(e.target.value)}
+                        value={PermitFrom ? formatDate(PermitFrom) : ""}
+                       
                       />
+                      :
+                      <MyDatePicker
+                      disable={!isEditMode}
+                      selectedDate={PermitFrom ? new Date(PermitFrom) : ""}
+                      setSelectedDate={setFitnessFrom}
+                      />
+                      }
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
                   </div>
@@ -2558,11 +2663,21 @@ return formatDate(dateObject);
               className="form-control"
               id="propertyTitle"
             /> */}
+            { !isEditMode ? 
+              <input 
+          readOnly={!isEditMode}
+          type={ "text"}
+          value={ PermitTo ? formatDate(PermitTo) : ""}
+         
+          className="form-control" 
+        id="propertyTitle" />
+        :
                       <MyDatePicker
                       disable={!isEditMode}
-                      selectedDate={PermitTo ? new Date(PermitTo) : new Date()}
+                      selectedDate={PermitTo ? new Date(PermitTo) : ""}
                       setSelectedDate={setPermitTo}
                       />
+            }
                      {/* <input 
                       type={isEditMode ? "date" : "text"}
                       readonly={!isEditMode}

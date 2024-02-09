@@ -746,6 +746,8 @@ app.get("/getNewParts/:leadId",authenticateUser,(req,res)=>{
 app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
   try {
     const leadId = req.params.leadId;
+
+    
     const data = JSON.parse(req.body.allRows);
 
     const promises = data.map((row) => {
@@ -810,7 +812,7 @@ app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
             return;
           }
 
-          
+         
 
           if (result2.length > 0) {
             db.query(updateQuery, (err) => {
@@ -1065,8 +1067,8 @@ app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
         SurveyType = '${""}',
         PolicyIssuingOffice='${PolicyIssuingOffice}',
         PolicyNumber = '${PolicyNumber}',
-        PolicyPeriodStart='${PolicyPeriodEnd}',
-        PolicyPeriodEnd = '${PolicyPeriodStart}',
+        PolicyPeriodStart='${PolicyPeriodStart}',
+        PolicyPeriodEnd = '${PolicyPeriodEnd}',
         ClaimNumber = '${ClaimNumber}',
         ClaimServicingOffice='${ClaimServicingOffice}',
         InspectionType = '${""}',

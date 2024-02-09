@@ -200,6 +200,7 @@ export default function Exemple_01({
         
 
         let total_assessed=0,total_estimate=0,total_metal=0;
+        let type = "Both";
         newPart.map((part,index)=>{
           if(String(part.LeadID) === String(LeadID)){
             console.log(part)
@@ -223,6 +224,8 @@ export default function Exemple_01({
             total:(overall + GSTT),
             sno:part.ReportID
           };
+
+          type = String(part.WithTax) === "1" ? "Both" : String(part.WithTax) === "2" ? "Estimate" : "Assessed";
           total_assessed = total_assessed + (overall + GSTT);
 
           total_metal = total_metal + (part.TypeOfMaterial === "Metal" ?  ((Number(part.Assessed ) * (Number(part.QA)) * (Number(part.DepreciationPct)))/100): 0)
@@ -232,11 +235,13 @@ export default function Exemple_01({
         });
         console.log(temp_row);
         setAllRows(temp_row);
+        setCurrentType(type);
         setMetalSalvageValue(total_metal)
         setTotaAssessed(total_assessed);
         setTotalPartsAssessed(total_estimate);
         setTotalPartsEstimate(total_estimate);
         setTotalEstimate(total_estimate);
+        setCurrentType(type);
         setChangeParts(true);
       })
       .catch((Err)=>{
@@ -244,8 +249,7 @@ export default function Exemple_01({
       })
   }, []);
 
-  
-
+ 
 
   // useEffect(()=>{
   //   let temp_row =[];
@@ -271,6 +275,10 @@ export default function Exemple_01({
   // },[changeParts]);
 
 
+  useEffect(()=>{
+    console.log(currentType);
+    changeTotalAccordingToPolicyType(currentType);
+  },[currentType])
 
 
   const [edit, setEdit] = useState(false);
@@ -392,7 +400,7 @@ export default function Exemple_01({
         updatedRowsss.push(row);
       }
     });
-    
+  
 
     console.log(updatedRowsss);
     setAllRows(updatedRowsss);
@@ -545,9 +553,29 @@ export default function Exemple_01({
     // console.log(LeadID)
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    let tempRows = [];
+    allRows.map((row,index)=>{
+      const r = {
+        sno: row.sno,
+        dep: row.dep, // Add default values or lea ve empty as needed
+        description: row.description,
+        sac: row.sac,
+        remark: row.remark,
+        estimate: row.estimate,
+        assessed: row.assessed,
+        qa: row.qa,
+        qe: row.qe,
+        bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
+        gst: row.gst,
+        total: (String(currentType) === "Both" ? 1 : String(currentType) === "Estimate" ? 2 : 3),
+        type: row.type,
+      };
+      tempRows.push(r);
+    })
     
     const payload={
-      allRows : JSON.stringify(allRows)
+      allRows : JSON.stringify(tempRows)
     };
 
     axios.put("/api/updateNewParts",payload,{
@@ -569,6 +597,8 @@ export default function Exemple_01({
   }
 
   const changeTotalAccordingToPolicyType = (policy) => {
+    
+    setCurrentType(policy);
 
     setPreRender(true);
     setToggleGST(2);
@@ -614,7 +644,6 @@ export default function Exemple_01({
     setTotalEstimate(total_estimate);
     // setToggleGST(toggleGST+1);
     setChange(true)
-    setCurrentType(policy);
     setChange2(true);
     setChange(true);
 
@@ -1178,6 +1207,7 @@ export default function Exemple_01({
       handleRemoveRow={handleRemoveRow}
       editHandler={editHandler}
       updateHandler={onSaveHandler}
+      currentType={currentType}
       estimate={totalAssessed}
       vehicleAge = {calculateVehicleAge}
       gstToggleHandler={""}
@@ -1187,6 +1217,7 @@ export default function Exemple_01({
       difference={totalEstimate - totalAssessed}
       calculateDepreciationOnMetal={calculateDepreciationOnMetal}
       edit={edit}
+      setCurrentType={setCurrentType}
       changeTotalAccordingToPolicyType={changeTotalAccordingToPolicyType}
     />
   );
