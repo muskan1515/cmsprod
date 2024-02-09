@@ -154,6 +154,18 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                       <span> </span>
                     </Link>
                   </li>
+                  <li
+                    className={`treeview ${
+                      isSinglePageActive("/mis-sheet", route.pathname)
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <Link href="/mis-sheet" title="MIS Sheet">
+                      <i className="flaticon-document"></i>
+                      <span> </span>
+                    </Link>
+                  </li>
                 </ul>
               </li>
               {/* End Main */}
