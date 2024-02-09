@@ -542,8 +542,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       leadId
     };
 
-    console.log(payload);
-    return ;
+    
     axios.put("/api/updateFinalReport",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,
