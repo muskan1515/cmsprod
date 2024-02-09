@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import MyDatePicker from "../../common/MyDatePicker";
 const RcDetails = ({
   RCOwner,
   setRCOwner,
@@ -306,7 +307,12 @@ const RcDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <input
+                <MyDatePicker
+                disable={!isEditMode}
+                selectedDate={DateRegistration ? new Date(DateRegistration) : new Date()}
+                setSelectedDate={setDateRegistration}
+                />
+                  {/*<input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
@@ -315,7 +321,7 @@ const RcDetails = ({
                     readOnly={!isEditMode}
                     onChange={(e) => setDateRegistration(e.target.value)}
                     // placeholder="Enter Registration No."
-                  />
+                  />*/}
                 </div>
               </div>
             </div>
@@ -337,7 +343,7 @@ const RcDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <input
+                 {/* <input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
@@ -346,7 +352,12 @@ const RcDetails = ({
                     onChange={(e) => setRCTaxValidUpto(e.target.value)}
 
                     // placeholder="Enter Registration No."
-                  />
+                  />*/}
+                  <MyDatePicker
+                    disable={!isEditMode}
+                    selectedDate={RCTaxValidUpto ? new Date(RCTaxValidUpto) : new Date()}
+                    setSelectedDate={setRCTaxValidUpto}
+                    />
                 </div>
               </div>
             </div>
@@ -676,14 +687,20 @@ const RcDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <input
+                  {/*<input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
                     value={formatDate(InsuranceValidUpto)}
                     readOnly={!isEditMode}
                     onChange={(e) => setInsuranceValidUpto(e.target.value)}
-                  />
+                  />*/}
+                  <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : new Date()}
+                    setSelectedDate={setInsuranceValidUpto}
+                  /> 
+                  
                 </div>
               </div>
             </div>
@@ -705,7 +722,7 @@ const RcDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <input
+                  {/*<input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="color"
@@ -716,7 +733,12 @@ const RcDetails = ({
                     // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
 
                     // placeholder="Enter Registration No."
-                  />
+                  />*/}
+                  <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={FitnessTo ? new Date(FitnessTo) : new Date()}
+                    setSelectedDate={setFitnessTo}
+                  /> 
                 </div>
               </div>
             </div>

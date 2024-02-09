@@ -4,6 +4,8 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import RcDetails from "./RcDetails";
 import { BsTypeH3 } from "react-icons/bs";
+import DateComponent from './dateComponent';
+import MyDatePicker from "../../common/MyDatePicker";
 
 const PolicyDetails = ({
   setIsStatusModal,
@@ -222,11 +224,7 @@ const PolicyDetails = ({
     setIsStatusModal(true);
   };
 
-  //Update Document
-  const handleEditClick = () => {
-    setIsEditMode(true);
-  };
-
+  
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -237,6 +235,21 @@ const PolicyDetails = ({
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   };
+
+
+  const formatDateNextyear=(date)=>{
+    const dateObject = new Date(date);
+
+  // Add 1 year to the date
+  dateObject.setFullYear(dateObject.getFullYear() + 1);
+return formatDate(dateObject);
+  }
+
+  //Update Document
+  const handleEditClick = () => {
+    setIsEditMode(true);
+  };
+
 
   // const handleUpdateClick = () => {
   //   const payload = {
@@ -361,18 +374,18 @@ const PolicyDetails = ({
               </label>
             </div>
             <div className="col-lg-9">
-              {/* <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-              /> */}
-              <input
-                readonly={!isEditMode}
-                type={isEditMode ? "date" : "text"}
-                value={formatDate(MailRecieveDate)}
-                onChange={(e) => setMailRecieveDate(e.target.value)}
-                className="form-control"
-                id="propertyTitle"
-              />
+               <MyDatePicker
+               disable={!isEditMode}
+                selectedDate={MailRecieveDate ? new Date(MailRecieveDate) : new Date()}
+                setSelectedDate={setMailRecieveDate}
+              /> 
+              {/*<input 
+              readOnly={!isEditMode}
+              type={isEditMode ? "date" : "text"}
+              value={formatDate(MailRecieveDate)}
+              onChange={(e)=>setMailRecieveDate(e.target.value)}
+              className="form-control" 
+            id="propertyTitle" />*/}
             </div>
             {/* <span
               className="col-lg-1 flaticon-calendar text-dark fs-6"
@@ -405,8 +418,8 @@ const PolicyDetails = ({
                 data-live-search="true"
                 data-width="100%"
                 value={VehicleType}
-                onChange={(e) => setVehicleType(e.target.value)}
-                readonly={!isEditMode}
+                onChange={(e)=>setVehicleType(e.target.value)}
+                disabled={!isEditMode}
               >
                 <option data-tokens="Status1">Select</option>
                 <option data-tokens="Status2">Swift</option>
@@ -576,10 +589,12 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
-                        readonly={!isEditMode}
-                        value={BsTypeH3}
+                        readOnly={!isEditMode}
+                        value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
                       >
+                      <option data-tokens="Status1" value={""}></option>
+                        
                         <option data-tokens="Status1" value={"Regular"}>Regular</option>
                         <option data-tokens="Status2" value={"Add on Policy"}>Add on Policy</option>
                         <option data-tokens="Status3" value={"Add on Policy(Not Effective)"}>
@@ -639,22 +654,23 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-5">
-                      <input
-                        type={isEditMode ? "date" : "text"}
-                        readonly={!isEditMode}
-                        value={
-                          isEditMode
-                            ? PolicyPeriodStart
-                            : formatDate(PolicyPeriodStart)
-                        }
-                        onChange={(e) => setPolicyPeriodStart(e.target.value)}
-                      />
+                     {/* <input 
+                      type={isEditMode ? "date" : "text"} 
+                      readOnly={!isEditMode} 
+                      value={isEditMode ? PolicyPeriodStart : formatDate(PolicyPeriodStart)} 
+                      onChange={(e)=>setPolicyPeriodStart(e.target.value)}/>
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                       {/* <input
                         type="date"
                         className="form-control"
                         id="propertyTitle"
                       /> */}
+
+                      <MyDatePicker
+                      disable={!isEditMode}
+                        selectedDate={PolicyPeriodStart ? new Date(PolicyPeriodStart) : new Date()}
+                        setSelectedDate={setPolicyPeriodStart}
+                      /> 
                     </div>
                   </div>
                 </div>
@@ -677,16 +693,17 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <input
-                        type={isEditMode ? "date" : "text"}
-                        readonly={!isEditMode}
-                        value={
-                          isEditMode
-                            ? PolicyPeriodEnd
-                            : formatDate(PolicyPeriodEnd)
-                        }
-                        onChange={(e) => setPolicyPeriodEnd(e.target.value)}
+
+                     <input
+                      readOnly={!isEditMode}
+                      value={formatDateNextyear(PolicyPeriodStart)}
+                       
                       />
+                    {/* <input 
+                      type={"text"} 
+                      readOnly={!isEditMode}
+                      value={ formatDateNextyear(PolicyPeriodStart)} 
+                      />*/}
                     </div>
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
@@ -1026,7 +1043,7 @@ const PolicyDetails = ({
                           </label>
                         </div>
                         <div className="col-lg-8">
-                          <input
+                          {/*<input
                             type={isEditMode ? "date" : "text"}
                             className="form-control"
                             id="propertyTitle"
@@ -1035,6 +1052,12 @@ const PolicyDetails = ({
                             onChange={(e) => setOwnerSRST(e.target.value)}
 
                             // placeholder="Enter Registration No."
+                          />*/}
+
+                          <MyDatePicker
+                          disable={!isEditMode}
+                          selectedDate={OwnerSRST ? new Date(OwnerSRST) : new Date()}
+                          setSelectedDate={setOwnerSRST}
                           />
                         </div>
                       </div>
@@ -1073,7 +1096,12 @@ const PolicyDetails = ({
                           </select>
                         </div>
                         <div className="col-lg-4">
-                          <input
+                        <MyDatePicker
+                        disable={!isEditMode}
+                        selectedDate={DateRegistration ? new Date(DateRegistration) : new Date()}
+                        setSelectedDate={setDateRegistration}
+                      /> 
+                         {/* <input
                             type={isEditMode ? "date" : "text"}
                             readonly={!isEditMode}
                             className="form-control"
@@ -1087,7 +1115,7 @@ const PolicyDetails = ({
                               setDateRegistration(e.target.value)
                             }
                             // placeholder="Enter Registration No."
-                          />
+                          />*/}
                         </div>
                       </div>
                     </div>
@@ -2061,12 +2089,16 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <input
-                    type={isEditMode ? "date" : "text"}
-                    readonly={!isEditMode}
-                    value={isEditMode ? DateOfIssue : formatDate(DateOfIssue)}
-                    onChange={(e) => setDateOfIssue(e.target.value)}
-                  />
+                  <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={DateOfIssue ? new Date(DateOfIssue) : new Date()}
+                    setSelectedDate={setDateOfIssue}
+                  /> 
+                  {/*<input 
+                  type={isEditMode ? "date" : "text"} 
+                  readonly={!isEditMode} 
+                  value={isEditMode ? DateOfIssue : formatDate(DateOfIssue)} 
+                onChange={(e)=>setDateOfIssue(e.target.value)}/>*/}
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2095,14 +2127,17 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <input
-                    type={isEditMode ? "date" : "text"}
-                    readonly={!isEditMode}
-                    value={
-                      isEditMode ? ValidUntilNtv : formatDate(ValidUntilNtv)
-                    }
-                    onChange={(e) => setValidUntilNtv(e.target.value)}
-                  />
+
+                  <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={ValidUntilNtv ? new Date(ValidUntilNtv) : new Date()}
+                    setSelectedDate={setValidUntilNtv}
+                  /> 
+                 {/* <input 
+                  type={isEditMode ? "date" : "text"} 
+                  readonly={!isEditMode}
+                  value={isEditMode ? ValidUntilNtv: formatDate(ValidUntilNtv)} 
+          onChange={(e)=>setValidUntilNtv(e.target.value)}/>*/}
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2131,12 +2166,16 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   /> */}
-                  <input
-                    type={isEditMode ? "date" : "text"}
-                    readonly={!isEditMode}
-                    value={isEditMode ? ValidFrom : formatDate(ValidFrom)}
-                    onChange={(e) => setValidFrom(e.target.value)}
-                  />
+                  <MyDatePicker
+                      disable={!isEditMode}
+                        selectedDate={ValidFrom ? new Date(ValidFrom) : new Date()}
+                        setSelectedDate={setValidFrom}
+                      /> 
+                {/*<input 
+                  type={isEditMode ? "date" : "text"} 
+                  readonly={!isEditMode} 
+                  value={isEditMode ? ValidFrom:formatDate(ValidFrom)} 
+                onChange={(e)=>setValidFrom(e.target.value)}/>*/}
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2165,12 +2204,16 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <input
-                    type={isEditMode ? "date" : "text"}
-                    readonly={!isEditMode}
-                    value={isEditMode ? ValidUntilTv : formatDate(ValidUntilTv)}
-                    onChange={(e) => setValidUntilTv(e.target.value)}
-                  />
+                  <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={ValidUntilTv ? new Date(ValidUntilTv) : new Date()}
+                    setSelectedDate={setValidUntilTv}
+                  /> 
+                  {/*<input 
+                  type={isEditMode ? "date" : "text"} 
+                  readonly={!isEditMode} 
+                  value={isEditMode ? ValidUntilTv : formatDate(ValidUntilTv)} 
+          onChange={(e)=>setValidUntilTv(e.target.value)}/>*/}
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2373,13 +2416,16 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                      <input
-                        type={isEditMode ? "date" : "text"}
-                        readonly={!isEditMode}
-                        value={
-                          isEditMode ? FitnessFrom : formatDate(FitnessFrom)
-                        }
-                        onChange={(e) => setFitnessFrom(e.target.value)}
+                      {/*<input 
+                      type={isEditMode ? "date" : "text"}
+                      readonly={!isEditMode}
+                      value={isEditMode ? FitnessFrom : formatDate(FitnessFrom)}
+                      onChange={(e)=>setFitnessFrom(e.target.value)}
+          />*/}
+                      <MyDatePicker
+                      disable={!isEditMode}
+                      selectedDate={ FitnessFrom ? new Date(FitnessFrom) : new Date()}
+                      setSelectedDate={setFitnessFrom}
                       />
                       {/* <span className="flaticon-calendar text-dark"></span> */}
                     </div>
@@ -2411,11 +2457,16 @@ const PolicyDetails = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                      <input
-                        type={isEditMode ? "date" : "text"}
-                        readonly={!isEditMode}
-                        value={isEditMode ? FitnessTo : formatDate(FitnessTo)}
-                        onChange={(e) => setFitnessTo(e.target.value)}
+                      {/*<input
+                      type={isEditMode ? "date" : "text"}
+                      readonly={!isEditMode}
+                      value={isEditMode ? FitnessTo : formatDate(FitnessTo)}
+                      onChange={(e)=>setFitnessTo(e.target.value)}
+          />*/}
+                      <MyDatePicker
+                      disable={!isEditMode}
+                      selectedDate={FitnessTo ? new Date(FitnessTo) : new Date()}
+                      setSelectedDate={setFitnessTo}
                       />
                     </div>
                   </div>
@@ -2502,12 +2553,22 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <input
-                        type={isEditMode ? "date" : "text"}
-                        readonly={!isEditMode}
-                        value={isEditMode ? PermitTo : formatDate(PermitTo)}
-                        onChange={(e) => setPermitTo(e.target.value)}
+                      {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                      <MyDatePicker
+                      disable={!isEditMode}
+                      selectedDate={PermitTo ? new Date(PermitTo) : new Date()}
+                      setSelectedDate={setPermitTo}
                       />
+                     {/* <input 
+                      type={isEditMode ? "date" : "text"}
+                      readonly={!isEditMode}
+                      value={isEditMode ? PermitTo : formatDate(PermitTo)}
+                      onChange={(e)=>setPermitTo(e.target.value)}
+                      />*/}
                     </div>
                   </div>
                 </div>

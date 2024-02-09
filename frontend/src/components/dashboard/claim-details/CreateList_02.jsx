@@ -263,7 +263,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {checkStatus(claim?.claimStatus?.ClaimStatus)}
+                        {checkStatus(claim?.claimStatus?.Status)}
                       </label>
                     </div>
                   </div>
@@ -355,7 +355,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        SPOT
+                        {claim?.claimDetails?.InspectionType ? claim?.claimDetails?.InspectionType : "Final"}
                       </label>
                     </div>
                   </div>
@@ -415,7 +415,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.claimDetails?.ClaimRegion}
+                        {claim.claimDetails?.Region}
                       </label>
                     </div>
                   </div>

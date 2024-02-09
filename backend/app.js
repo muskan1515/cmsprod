@@ -2099,6 +2099,7 @@ app.put("/updateClaim/:leadId", authenticateUser, (req, res) => {
     LeadId,
   } = req.body;
 
+  
   const updateClaimDetails = `
   UPDATE ClaimDetails
   SET
@@ -2181,7 +2182,8 @@ app.put("/updateClaim/:leadId", authenticateUser, (req, res) => {
       InsuredName = '${InsuredName}',
       InsuredMobileNo1 = '${InsuredMobileNo1}',
       InsuredMobileNo2 = '${InsuredMobileNo2}',
-      InsuredMailAddress = '${InsuredMailAddress}'
+      InsuredMailAddress = '${InsuredMailAddress}',
+      AddedBy='${InsuredAddedBy}'
     WHERE LeadId = ${LeadId};
   `;
 

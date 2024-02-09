@@ -6,6 +6,7 @@ import { Calendar } from "primereact/calendar";
 import { Editor } from "primereact/editor";
 import { AccidentContent, AssessmentContent } from "./Content";
 import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
+import MyDatePicker from "../../common/MyDatePicker";
 
 const Servey = ({
   
@@ -271,7 +272,12 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <input
+                <MyDatePicker
+                disable={!isEditMode}
+                  selectedDate={AccidentAddedDateTime ? new Date(AccidentAddedDateTime) : new Date()}
+                  setSelectedDate={setAccidentAddedDateTime}
+                /> 
+                 {/*<input
                   type={isEditMode ? "datetime-local" : "text"}
                 className="form-control"
                 id="formGroupExampleInput3"
@@ -282,7 +288,7 @@ const Servey = ({
                   
                   readonly={!isEditMode}
              
-            /> 
+                  /> */}
                 </div>
               </div>
             </div>
@@ -440,12 +446,17 @@ const Servey = ({
               className="form-control"
               id="propertyTitle"
             /> */}
-                  <input
+                  {/*<input
                   type={isEditMode ? "date" : "text"}
                     readonly={!isEditMode}
 
                    value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
-                   onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />
+          onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
+                <MyDatePicker
+                disable={!isEditMode}
+                  selectedDate={SurveyAllotmentDate ? new Date(SurveyAllotmentDate) : new Date()}
+                  setSelectedDate={setSurveyAllotmentDate}
+                /> 
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -497,13 +508,18 @@ const Servey = ({
                 </label>
               </div>
               <div className="col-lg-8">
-                <input
+               {/*} <input
                 type={isEditMode ? "date" : "text"}
                 readonly={!isEditMode}
                 value={ isEditMode ? SurveyConductedDate : formatDate(SurveyConductedDate)}
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
-                />
+                />*/}
+                <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={SurveyConductedDate ? new Date(SurveyConductedDate) : new Date()}
+                    setSelectedDate={setSurveyConductedDate}
+                  /> 
               </div>
             </div>
             {/* <div className="my_profile_setting_input form-group">

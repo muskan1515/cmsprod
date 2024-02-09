@@ -1,7 +1,5 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import Link from "next/link";
-import ReactDatePicker from "react-datepicker";
 import MyDatePicker from "../../common/MyDatePicker";
 
 const CreateList = ({
@@ -19,8 +17,6 @@ const CreateList = ({
   requestType,
   setSubType,
   subType,
-  ClaimNumber,
-  setClaimNumber,
   subTypeTypes,
   policyIssuingOffice,
   setPolicyIssuingOffice,
@@ -40,8 +36,8 @@ const CreateList = ({
   setIsStatusModal,
 }) => {
 
-  console.log(policyEndDate,policyStartDate)
 
+  console.log(InsuredName,InsuredMobileNo1,InsuredMailAddress,insuranceCompanyNameAddress)
    const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
@@ -424,15 +420,18 @@ const CreateList = ({
             </label>
           </div>
           <div className="col-lg-6">
-            <input
+            {/*<input
             // type="date"
               className="form-control"
               id="propertyTitle"
               value={formatDate(policyStartDate)}
               // onChange={(e)=>setPolicyStartDate(e.target.value)}
               // placeholder="Enter Registration No."
-            />
-            <MyDatePicker selectedDate={""} setSelectedDate={setPolicyStartDate}/>
+            />*/}
+            <MyDatePicker 
+            disable={!edit} 
+            selectedDate={policyStartDate? new Date(policyStartDate) : new Date()} 
+            setSelectedDate={setPolicyStartDate}/>
           </div>
         </div>
       </div>
@@ -454,15 +453,18 @@ const CreateList = ({
           </label>
         </div>
         <div className="col-lg-6">
-          <input
+          {/*<input
           // type="date"
             className="form-control"
             id="propertyTitle"
             value={formatDate(policyEndDate)}
             // onChange={(e)=>setPolicyEndDate(e.target.value)}
             // placeholder="Enter Registration No."
-          />
-          <MyDatePicker selectedDate={""} setSelectedDate={setPolicyEndDate}/>
+          />*/}
+          <MyDatePicker 
+          disable={!edit}
+          selectedDate={policyEndDate ? new Date(policyEndDate) : new Date()} 
+          setSelectedDate={setPolicyEndDate}/>
 
         </div>
       </div>
@@ -801,12 +803,7 @@ const CreateList = ({
                 </label>
               </div>
               <div className="col-lg-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
-                  // placeholder="Enter Registration No."
-                />
+                
               </div>
             </div>
           </div>
@@ -824,7 +821,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Request Type <span class="req-btn">*</span>
+                  Inspection Type <span class="req-btn">*</span>
                 </label>
               </div>
               <div className="col-lg-7">
@@ -832,8 +829,8 @@ const CreateList = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={requestType}
-                  onChange={(e)=>setRequestType(e.target.value)}
+                  value={inspectionType}
+                  onChange={(e)=>setInspectionType(e.target.value)}
                 />
               </div>
             </div>

@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 
-const MyDatePicker = ({ selectedDate, setSelectedDate }) => {
+const MyDatePicker = ({ selectedDate, setSelectedDate,disable }) => {
   const [currentDate, setCurrentDate] = useState(
     selectedDate 
   );
@@ -23,6 +23,7 @@ const MyDatePicker = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <DatePicker
+    readOnly={disable}
       className="form-control"
       selected={currentDate ? new Date(currentDate) : null}
       onChange={(date) => formatDate(date)}

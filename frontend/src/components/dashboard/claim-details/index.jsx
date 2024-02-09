@@ -95,7 +95,7 @@ const Index = ({}) => {
   const [inspectionType, setInspectionType] = useState(
     claim?.claimDetails?.InspectionType
       ? claim?.claimDetails?.InspectionType
-      : "SPOT"
+      : "Final"
   );
 
   const [documents, setDocuments] = useState([]);
@@ -324,9 +324,9 @@ const Index = ({}) => {
   ];
 
   useEffect(() => {
-    setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice);
-    setClaimRegion(claim?.claimDetails?.ClaimRegion);
-    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice);
+    setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice || "");
+    setClaimRegion(claim?.claimDetails?.Region ||"");
+    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice||"");
     setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart);
     setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
     setInsuranceCompanyNameAddress(
@@ -339,33 +339,33 @@ const Index = ({}) => {
     setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2);
     setSubType(claim?.claimDetails?.SurveyType);
     setInspectionType(claim?.claimDetails?.InspectionType);
-    setVehicleModel(claim.vehicleDetails?.VehicleTypeOfBody);
-    setEngineType(claim?.vehicleDetails?.VehicleModeOfCheck);
-    setVehicleRegisteredOwner(claim?.vehicleDetails?.VehicleVehicleRegisteredOwner);
+    setVehicleModel(claim.vehicleDetails?.TypeOfBody);
+    setEngineType(claim?.vehicleDetails?.ModeOfCheck);
+    setVehicleRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner);
     setDateRegistration(claim?.claimDetails?.ReferenceNo);
-    setPUCNumber(claim?.vehicleDetails?.VehiclePucNumber);
-    setTransferDate(claim?.vehicleDetails?.VehicleTransferDate);
-    setEngineNumber(claim?.vehicleDetails?.VehicleEngineNumber);
-    setAddedBy(claim?.vehicleDetails?.VehicleAddedBy);
+    setPUCNumber(claim?.vehicleDetails?.PucNumber);
+    setTransferDate(claim?.vehicleDetails?.TransferDate);
+    setEngineNumber(claim?.vehicleDetails?.EngineNumber);
+    setAddedBy(claim?.vehicleDetails?.AddedBy);
     setIssuingAuthority(claim?.vehicleDetails?.IssuingAuthority);
     setLicenseNumber(claim?.vehicleDetails?.LicenseNumber);
     setLicenseType(claim?.vehicleDetails?.LicenseType);
-    setVehicleChassisNumber(claim?.vehicleDetails?.VehicleChassisNumber);
+    setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber);
     setVehicleFuelType(
-      claim?.vehicleDetails?.VehicleFuelType ||
+      claim?.vehicleDetails?.FuelType ||
         claim?.vehicleDetails?.BancsFuelType
     );
     setDriverName(claim?.driverDetails?.DriverName);
-    setDriverAddedDate(claim?.driverDetails?.DriverAddedDate);
-    setVerification(claim?.driverDetails?.DriverTypeOfVerification);
+    setDriverAddedDate(claim?.driverDetails?.AddedDate);
+    setVerification(claim?.driverDetails?.TypeOfVerification);
     setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress);
     setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
     setGarageContactNo2(claim?.garageDetails?.GarageContactNo2);
-    setGarageAddedBy(claim?.garageDetails?.GarageAddedBy);
+    setGarageAddedBy(claim?.garageDetails?.AddedBy);
 
     // New Fields
     setVehicleClassDescription(
-      claim?.vehicleDetails?.VehicleClassDescription || "NA"
+      claim?.vehicleDetails?.ClassDescription || "NA"
     );
     setMakerDesc(claim?.vehicleDetails?.MakerDesc || "NA");
     setMakerModel(claim?.vehicleDetails?.MakerModel || "NA");
@@ -387,18 +387,18 @@ const Index = ({}) => {
     setVehicleInsuranceCompany(
       claim?.vehicleDetails?.VehicleInsuranceCompany || "NA"
     );
-    setVehicleSeatingCapacity(claim?.vehicleDetails?.VehicleSeatingCapacity || "NA");
-    setRcInsuranceComp(claim?.vehicleDetails?.VehicleInsuranceCompany || "NA");
-    setRcInsuranceUpto(claim?.vehicleDetails?.VehicleInsuranceUpto || "NA");
+    setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || "NA");
+    setRcInsuranceComp(claim?.vehicleDetails?.InsuranceCompany || "NA");
+    setRcInsuranceUpto(claim?.vehicleDetails?.InsuranceUpto || "NA");
     setRcVehicleType(claim?.vehicleDetails?.VehicleType || "NA");
     setVehicleRcStatus(claim?.vehicleDetails?.VehicleRcStatus || "NA");
     setVehicleBlackListStatus(
       claim?.vehicleDetails?.VehicleBlackListStatus || "NA"
     );
-    setVehicleRegistedAt(claim?.vehicleDetails?.VehicleRegistedAt || "NA");
+    setVehicleRegistedAt(claim?.vehicleDetails?.RegistedAt || "NA");
     setPermanentAddress(claim?.vehicleDetails?.PermanentAddress || "NA");
-    setClassOfVehicle(claim?.vehicleDetails?.VehicleClassOfVehicle || "NA");
-  }, []);
+    setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle || "NA");
+  }, [claim]);
 
   
   console.log("datat ", VehicleInsuranceCompany);
@@ -468,7 +468,7 @@ const Index = ({}) => {
       // VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
       //   ? claim?.claimDetails?.ReferenceNo
       //   : generateRegion(claim?.ClaimRegion),
-      SurveyType: subType ? subType : claim.claimDetails?.SurveyType,
+      SurveyType: subType ,
       InspectionType: inspectionType
         ? inspectionType
         : claim?.claimDetails?.InspectionType,
@@ -517,7 +517,7 @@ const Index = ({}) => {
       GarageContactNo2: GarageContactNo2
         ? GarageContactNo2
         : claim.garageDetails?.GarageContactNo2,
-      LeadId: claim.claimDetails?.LeadId,
+      LeadId: claim.claimDetails?.LeadID,
       //New Fields
       VehicleClassDescription,
       MakerDesc,
@@ -548,6 +548,7 @@ const Index = ({}) => {
       VehicleRegisteredNumber,
       token: userInfo[0].Token,
     };
+
     if (
       // !payload.InsuredName |
       !payload.InsuredMailAddress
@@ -885,6 +886,9 @@ const Index = ({}) => {
                           ) : (
                             <CreateList
                               claim={claim}
+
+                              inspectionType={inspectionType}
+                              setInspectionType={setInspectionType}
                               InsuredName={InsuredName}
                               setInsuredName={setInsuredName}
                               InsuredMailAddress={InsuredMailAddress}

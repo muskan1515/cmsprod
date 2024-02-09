@@ -452,7 +452,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload={
-      policyType : policyType ? policyType : claim?.insuredDetails?.PolicyType,
+      policyType,
       IDV : IDV ? IDV : claim?.claimDetails?.IDV ,
       PolicyPeriodStart : PolicyPeriodStart ? PolicyPeriodStart : claim?.claimDetails?.PolicyPeriodStart,
       PolicyPeriodEnd : PolicyPeriodEnd ? PolicyPeriodEnd : claim?.claimDetails?.PolicyPeriodEnd,
@@ -542,7 +542,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       leadId
     };
 
-
+    console.log(payload);
+    return ;
     axios.put("/api/updateFinalReport",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,
