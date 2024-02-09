@@ -29,7 +29,6 @@ const RcDetails = ({
   RegisteringAuthority,
   setRegisteringAuthority,
 
-
   VehicleChassisNumber,
   setVehicleChassisNumber,
   EngineNumber,
@@ -55,12 +54,15 @@ const RcDetails = ({
   setPolicyNumber,
   isEditMode,
   FitnessTo,
-  setFitnessTo
+  setFitnessTo,
 }) => {
   return (
     <>
       <div className="row">
-        <div className="col-lg-12" style={{ borderRight: "1px solid grey" }}>
+        <div
+          className="col-lg-12 mt-3"
+          style={{ borderBottom: "3px solid grey" }}
+        >
           <h4 className="text-dark" style={{ fontSize: "17px" }}>
             RC Details :
           </h4>
@@ -90,9 +92,7 @@ const RcDetails = ({
                     id="propertyTitle"
                     value={VehicleRegisteredNumber}
                     readOnly={!isEditMode}
-                    onChange={(e) =>
-                      setVehicleRegisteredNumber(e.target.value)
-                    }
+                    onChange={(e) => setVehicleRegisteredNumber(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -185,9 +185,7 @@ const RcDetails = ({
                     id="propertyTitle"
                     value={VehicleChassisNumber}
                     readOnly={!isEditMode}
-                    onChange={(e) =>
-                      setVehicleChassisNumber(e.target.value)
-                    }
+                    onChange={(e) => setVehicleChassisNumber(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -249,9 +247,7 @@ const RcDetails = ({
                     id="propertyTitle"
                     value={RCMakerName}
                     readOnly={!isEditMode}
-                    onChange={(e) =>
-                      setRCMakerName(e.target.value)
-                    }
+                    onChange={(e) => setRCMakerName(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -352,7 +348,7 @@ const RcDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                 {/* <input
+                  {/* <input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
                     id="propertyTitle"
@@ -558,9 +554,7 @@ const RcDetails = ({
                     id="propertyTitle"
                     value={VehicleSeatingCapacity}
                     readOnly={!isEditMode}
-                    onChange={(e) =>
-                      setVehicleSeatingCapacity(e.target.value)
-                    }
+                    onChange={(e) => setVehicleSeatingCapacity(e.target.value)}
 
                     // placeholder="Enter Registration No."
                   />
@@ -591,9 +585,7 @@ const RcDetails = ({
                     id="propertyTitle"
                     value={StandingCapacity}
                     readOnly={!isEditMode}
-                    onChange={(e) =>
-                      setStandingCapacity(e.target.value)
-                    }
+                    onChange={(e) => setStandingCapacity(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -623,7 +615,7 @@ const RcDetails = ({
                     id="propertyTitle"
                     readOnly={!isEditMode}
                     value={Financier}
-                    onChange={(e)=>setFinancier(e.target.value)}
+                    onChange={(e) => setFinancier(e.target.value)}
                   />
                 </div>
               </div>
@@ -652,7 +644,9 @@ const RcDetails = ({
                     id="propertyTitle"
                     value={InsuranceCompanyNameAddress}
                     readOnly={!isEditMode}
-                    onChange={(e) => setInsuranceCompanyNameAddress(e.target.value)}
+                    onChange={(e) =>
+                      setInsuranceCompanyNameAddress(e.target.value)
+                    }
                     // placeholder="Enter Registration No."
                   />
                 </div>
