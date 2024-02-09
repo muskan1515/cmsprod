@@ -763,7 +763,7 @@ app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
             BillSr,
             GSTPct,
             TypeOfMaterial,
-            WithoutTax,
+            WithTax,
             ReportID,
             LeadID
           ) VALUES (
@@ -798,7 +798,7 @@ app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
             BillSr = '${row.Bill_sr}',
             GSTPct='${row.gst}',
             TypeOfMaterial='${row.type}',
-            WithoutTax='${row.total}'
+            WithTax='${row.total}'
           WHERE ReportID = '${row.sno}' AND
           LeadID = '${leadId}';
         `;
