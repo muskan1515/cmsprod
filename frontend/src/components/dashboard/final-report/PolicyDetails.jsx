@@ -1086,7 +1086,7 @@ return formatDate(dateObject);
                             data-live-search="true"
                             data-width="100%"
                             type={isEditMode ? "date" : "text"}
-                            readOnly={!isEditMode}
+                            disabled={!isEditMode}
                             value={TypeOfDate}
                             onChange={(e)=>setTypeOfDate(e.target.value)}
                           >
