@@ -296,37 +296,31 @@ app.post("/vehicle-details", authenticateUser, (req, res) => {
   });
 });
 
-
-app.post("/uploadMedia", async (req, res) => {
-  try {
-    const { file: filesData, name } = req.body; // Use a different name for the file data
-    const results = [];
+app.post("/uploadMedia", (req, res) => {
+  const { file, name } = req.body;
+  console.log("Upload Media ", req.body.file,req.body.name);
   
-    for (let i = 0; i < filesData.length; i++) {
-      const fileData = filesData[i]; // Use a different name for the loop iteration
-      const fileName = name[i];
-  
-      // Check if the file data starts with "data:image/"
-      if (fileData.startsWith("data:image/")) {
-        const data = await uploadToAWS(fileData, fileName);
-        results.push(data);
-      } else if (fileData.startsWith("blob:http://")) {
-        const data = await uploadToAWSVideo(fileData, fileName);
-        results.push(data);
-      } else {
-        console.log(`Unsupported file format for ${fileName}`);
-        // Optionally handle the error or skip the file
-        continue;
-      }
-    }
-    return res.status(200).json({ data: results });
-  } catch (error) {
-    console.log("Error", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+  const extension = name.split(".")[1];
+  if (extension === "jpg") {
+    uploadToAWS(file, name)
+      .then((Location) => {
+        return res.status(200).json({ Location });
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      });
+  } else {
+    uploadToAWSVideo(file, name)
+      .then((Location) => {
+        return res.status(200).json({ Location });
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      });
   }
-  
 });
-
 
 app.get("/getDepreciationRates", authenticateUser, (req, res) => {
   const sql = "select * from DepreciationRates";
@@ -698,6 +692,11 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
       [leadId]
     );
 
+    const commercialVehicleDetails = await executeQuery(
+      "SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",
+      [leadId]
+    );
+
     const combinedResult = {
       claimDetails,
       insuredDetails,
@@ -706,10 +705,10 @@ app.get("/getSpecificClaim", authenticateUser, async (req, res) => {
       vehicleDetails,
       garageDetails,
       claimStatus,
-      commercialVehicleDetails,
+      commercialVehicleDetails
     };
 
-    console.log(combinedResult);
+    console.log(combinedResult)
 
     res.json(combinedResult);
   } catch (error) {
@@ -732,14 +731,247 @@ function executeStoredProc(procName, params) {
   });
 }
 
-app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
+app.get("/getNewParts/:leadId",authenticateUser,(req,res)=>{
+  const leadId = req.params.leadId;
+  db.query("SELECT * FROM NewPartsReport", (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    res.status(200).send(result2);
+  });
+})
+
+app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
+  try {
+    const leadId = req.params.leadId;
+
+    
+    const data = JSON.parse(req.body.allRows);
+    
+    console.log(data);
+
+
+    const promises = data.map((row) => {
+      return new Promise((resolve, reject) => {
+        const insertQuery = `
+          INSERT INTO NewPartsReport (
+            DepreciationPct,
+            ItemName,
+            HSNCode,
+            Remark,
+            Estimate,
+            Assessed,
+            QE,
+            QA,
+            BillSr,
+            GSTPct,
+            TypeOfMaterial,
+            WithTax,
+            IsActive,
+            ReportID,
+            LeadID
+          ) VALUES (
+            '${row.dep}',
+            '${row.description}',
+            '${row.sac}',
+            '${row.remark}',
+            '${row.estimate}',
+            '${row.assessed}',
+            '${row.qe}',
+            '${row.qa}',
+            '${row.bill_sr}',
+            '${row.gst}',
+            '${row.type}',
+            '${row.total}',
+            '${row.isActive}',
+            '${row.sno}',
+            '${parseInt(leadId)}'
+          );
+        `;
+
+        const updateQuery = `
+          UPDATE NewPartsReport
+          SET
+            DepreciationPct = '${row.dep}',
+            ItemName = '${row.description}',
+            HSNCode='${row.sac}',
+            Remark='${row.remark}',
+            Estimate = '${row.estimate}',
+            Assessed = '${row.assessed}',
+            QA='${row.qa}',
+            QE = '${row.qe}',
+            BillSr = '${row.Bill_sr}',
+            GSTPct='${row.gst}',
+            TypeOfMaterial='${row.type}',
+            WithTax='${row.total}',
+            IsActive='${row.isActive}'
+          WHERE ReportID = '${row.sno}' AND
+          LeadID = '${leadId}';
+        `;
+
+
+       
+        db.query("SELECT * FROM NewPartsReport WHERE ReportID = ? AND LeadID =?", [row.sno,leadId], (err, result2) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+
+          if (result2.length ) {
+            console.log("updatedQuery",updateQuery);
+            db.query(updateQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          } else {
+            console.log(insertQuery);
+            db.query(insertQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          }
+        });
+      
+      });
+    });
+
+    await Promise.all(promises);
+
+    res.status(200).send("Successfully updated!");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.get("/getLabrorer/:leadId",authenticateUser,(req,res)=>{
+  const leadId = req.params.leadId;
+  db.query("SELECT * FROM LabourReport", (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    res.status(200).send(result2);
+  });
+})
+
+app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
+  try {
+    const leadId = req.params.leadId;
+
+    const data = JSON.parse(req.body.allRows);
+    const gstPct = (req.body.gstPct);
+
+   
+    const promises = data.map((row) => {
+      return new Promise((resolve, reject) => {
+        const insertQuery = `
+          INSERT INTO LabourReport (
+            Description,
+            SAC,
+            Estimate,
+            Assessed,
+            BillSr,
+            IsGSTIncluded,
+            GSTPercentage,
+            IsActive,
+            ReportID,
+            LeadID
+          ) VALUES (
+            '${row.description}',
+            '${row.sac}',
+            '${row.estimate}',
+            '${row.assessed}',
+            '${row.bill_sr}',
+            '${row.gst}',
+            '${gstPct}',
+            '${isActive}',
+            '${row.sno}',
+            '${parseInt(leadId)}'
+          );
+        `;
+
+        const updateQuery = `
+          UPDATE LabourReport
+          SET
+          Description = '${row.description}',
+            SAC='${row.sac}',
+            Estimate = '${row.estimate}',
+            Assessed = '${row.assessed}',
+            BillSr = '${row.Bill_sr}',
+            IsGSTIncluded='${row.gst}',
+            GSTPercentage='${gstPct}',
+            IsActive='${row.isActive}'
+          WHERE ReportID = '${row.sno}' AND
+          LeadID = '${leadId}';
+        `;
+
+       
+        db.query("SELECT * FROM LabourReport WHERE ReportID = ?AND LeadID=? ", [row.sno,leadId], (err, result2) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+
+          if (result2.length > 0) {
+            console.log(updateQuery);
+            db.query(updateQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          } else {
+            console.log(insertQuery);
+            db.query(insertQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          }
+        });
+      
+      });
+    });
+
+    await Promise.all(promises);
+
+    res.status(200).send("Successfully updated!");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
+
   const {
-    policyType,
+    policyType ,
     TypeOfDate,
-    IDV,
+    IDV  ,
     PolicyPeriodStart,
-    PolicyPeriodEnd,
-    HPA,
+    PolicyPeriodEnd ,
+    HPA ,
     ClaimServicingOffice,
     OwnerSRST,
     VehicleMakeVariantModelColor,
@@ -760,8 +992,7 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
     RemarkIfULW,
     VehicleRemark,
     InsuranceCompanyNameAddress,
-    InsuredAddress,
-    InsuredMailAddress,
+    InsuredAddress,InsuredMailAddress,
     InsuredMobileNo1,
     InsuredMobileNo2,
     InsuredName,
@@ -805,8 +1036,26 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
     PlaceOfLoss,
     SurveyAllotmentDate,
     SurveyConductedDate,
-    leadId,
+
+    FitnessCertificate,
+    FitnessFrom,
+    FitnessTo,
+    PermitTo,
+    PermitNo,
+    PermitFrom,
+    TypeOfPermit,
+    Authorization,
+    AreasOfoperation,
+    commercialRemark,
+
+    DetailsOfLoads,
+    CauseOfAccident,
+    PoliceAction,
+    ThirdPartyLoss,
+    Assessment,
+    leadId
   } = req.body;
+
 
   const updateDriverDetails = `
     UPDATE DriverDetails
@@ -942,6 +1191,7 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
   );
   `;
 
+
   const updateCommercialVehicleDetails = `
   UPDATE CommercialVehicleDetails
         SET
@@ -957,6 +1207,7 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
         Remark='${commercialRemark}'
         WHERE LeadID = ${leadId};
   `;
+
 
   // console.log(updateCommercialVehicleDetails,insertIntoCommercialVehicleDetails);
   // return ;
@@ -1008,6 +1259,30 @@ app.put("/updateFinalReport/:leadId", authenticateUser, (req, res) => {
     }
     console.log(result2);
   });
+
+  db.query("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",[leadId], (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    console.log(result2?.length);
+      const query = result2?.length ? updateCommercialVehicleDetails : insertIntoCommercialVehicleDetails;
+      console.log("commercial vehicle",query);
+    db.query(query, (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log(result2);
+    });
+  
+  });
+
+
+  
+
 
   res.status(200).send("Successfully Updated!!");
 });
@@ -1840,6 +2115,7 @@ app.put("/updateClaim/:leadId", authenticateUser, (req, res) => {
     LeadId,
   } = req.body;
 
+  
   const updateClaimDetails = `
   UPDATE ClaimDetails
   SET
