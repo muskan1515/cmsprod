@@ -744,16 +744,132 @@ app.get("/getNewParts/:leadId",authenticateUser,(req,res)=>{
 })
 
 app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
+  // try {
+  //   const leadId = req.params.leadId;
+
+    
+  //   const data = JSON.parse(req.body.allRows);
+    
+  //   console.log("data");
+
+
+  //   const promises = data.map((row,index) => {
+  //     return new Promise((resolve, reject) => {
+  //       const insertQuery = `
+  //         INSERT INTO NewPartsReport (
+  //           DepreciationPct,
+  //           ItemName,
+  //           HSNCode,
+  //           Remark,
+  //           Estimate,
+  //           Assessed,
+  //           QE,
+  //           QA,
+  //           BillSr,
+  //           GSTPct,
+  //           TypeOfMaterial,
+  //           WithTax,
+  //           IsActive,
+  //           ReportID,
+  //           LeadID
+  //         ) VALUES (
+  //           '${row.dep}',
+  //           '${row.description}',
+  //           '${row.sac}',
+  //           '${row.remark}',
+  //           '${row.estimate}',
+  //           '${row.assessed}',
+  //           '${row.qe}',
+  //           '${row.qa}',
+  //           '${row.bill_sr}',
+  //           '${row.gst}',
+  //           '${row.type}',
+  //           '${row.total}',
+  //           '${row.isActive}',
+  //           '${row.sno}',
+  //           '${parseInt(leadId)}'
+  //         );
+  //       `;
+
+  //       const updateQuery = `
+  //         UPDATE NewPartsReport
+  //         SET
+  //           DepreciationPct = '${row.dep}',
+  //           ItemName = '${row.description}',
+  //           HSNCode='${row.sac}',
+  //           Remark='${row.remark}',
+  //           Estimate = '${row.estimate}',
+  //           Assessed = '${row.assessed}',
+  //           QA='${row.qa}',
+  //           QE = '${row.qe}',
+  //           BillSr = '${row.Bill_sr}',
+  //           GSTPct='${row.gst}',
+  //           TypeOfMaterial='${row.type}',
+  //           WithTax='${row.total}',
+  //           IsActive='${row.isActive}'
+  //         WHERE ReportID = '${row.sno}' AND
+  //         LeadID = '${leadId}';
+  //       `;
+
+
+       
+  //       db.query("SELECT * FROM NewPartsReport WHERE ReportID = ? AND LeadID =?", [row.sno,leadId], (err, result2) => {
+  //         if (err) {
+  //           console.error(err);
+  //           reject(err);
+  //           return;
+  //         }
+
+  //         // console.log(result2,index);
+         
+  //         if (result2.length ) {
+  //           console.log("updatedQuery");
+  //           // db.query(updateQuery, (err) => {
+  //           //   if (err) {
+  //           //     console.error(err);
+  //           //     reject(err);
+  //           //     return;
+  //           //   }
+  //           //   resolve();
+  //           // });
+  //         } else {
+  //           console.log("insertQuery");
+  //           // db.query(insertQuery, (err) => {
+  //           //   if (err) {
+  //           //     console.error(err);
+  //           //     reject(err);
+  //           //     return;
+  //           //   }
+  //           //   resolve();
+  //           // });
+  //         }
+  //       });
+      
+  //     });
+  //   });
+
+  //   await Promise.all(promises);
+
+  //   res.status(200).send("Successfully updated!");
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).send("Internal Server Error");
+  // }
+});
+
+
+app.put("/updateNewParts1/:leadId", authenticateUser, async (req, res) => {
+ 
   try {
     const leadId = req.params.leadId;
 
     
     const data = JSON.parse(req.body.allRows);
     
-    console.log(data);
+    console.log("data");
 
 
-    const promises = data.map((row) => {
+    const promises = data.map((row,index) => {
       return new Promise((resolve, reject) => {
         const insertQuery = `
           INSERT INTO NewPartsReport (
@@ -820,26 +936,28 @@ app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
             return;
           }
 
+          // console.log(result2,index);
+         
           if (result2.length ) {
-            console.log("updatedQuery",updateQuery);
-            db.query(updateQuery, (err) => {
-              if (err) {
-                console.error(err);
-                reject(err);
-                return;
-              }
-              resolve();
-            });
+            console.log("updatedQuery");
+            // db.query(updateQuery, (err) => {
+            //   if (err) {
+            //     console.error(err);
+            //     reject(err);
+            //     return;
+            //   }
+            //   resolve();
+            // });
           } else {
-            console.log(insertQuery);
-            db.query(insertQuery, (err) => {
-              if (err) {
-                console.error(err);
-                reject(err);
-                return;
-              }
-              resolve();
-            });
+            console.log("insertQuery");
+            // db.query(insertQuery, (err) => {
+            //   if (err) {
+            //     console.error(err);
+            //     reject(err);
+            //     return;
+            //   }
+            //   resolve();
+            // });
           }
         });
       
@@ -853,8 +971,8 @@ app.put("/updateNewParts/:leadId", authenticateUser, async (req, res) => {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
+   
 });
-
 
 app.get("/getLabrorer/:leadId",authenticateUser,(req,res)=>{
   const leadId = req.params.leadId;

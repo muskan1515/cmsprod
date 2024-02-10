@@ -173,8 +173,9 @@ export default function Exemple_01({
           assessed:part.Assessed,
           bill_sr:part.BillSr,
           gst:part.gst ? part.gst : 0 ,
-          job_type:"",
-          sno:part.ReportID ? part.ReportID : index+1
+          type:part.JobType,
+          sno:part.ReportID ,
+          isActive:Number(part.IsActive)
         };
         temp_row.push(temp)
       }
@@ -192,13 +193,15 @@ export default function Exemple_01({
   const handleAddRow = () => {
     const newRow = {
       _id: allRows.length, // You may use a more robust ID ge
-      description: "",
+      description: "Regular",
       sac: "",
       estimate: "",
       assessed: "",
       bill_sr:"",
       gst: 0,
-      gstPct:currentGst
+      type:0,
+      gstPct:currentGst,
+      isActive:1
     };
 
     const old = allRows;
@@ -232,11 +235,15 @@ export default function Exemple_01({
         estimate:row.estimate,
         sac:row.sac,
         gst:row.gst,
-        bill_sr:row.bill_sr
+        type:row.type,
+        bill_sr:row.bill_sr,
+        isActive:row.isActive
       };
       temp.push(row2);
     })
-    
+
+    console.log(payload);
+    return ;
     const payload={
       gstPct:currentGst,
       allRows : JSON.stringify(temp)
@@ -287,13 +294,14 @@ export default function Exemple_01({
     const len = val.length;
 
     
+    console.log(val);
 
     const description =
    
       String(field) === "description"
         ? String(currentField.description) === val
           ? val.slice(-1, 1)
-          : currentField.description + val 
+          : val 
         : currentField.description;
         const bill_sr =
         String(field) === "bill_sr"
@@ -301,6 +309,12 @@ export default function Exemple_01({
             ? val.slice(-1, 1)
             : val
           : currentField.bill_sr;
+          const type =
+          String(field) === "type"
+            ? String(currentField.type) === val
+              ? val.slice(-1, 1)
+              : Number(val)
+            : currentField.type;
     const sac =
       String(field) === "sac"
         ? String(currentField.sac) === val 
@@ -336,6 +350,8 @@ export default function Exemple_01({
       assessed: assessed,
       gst: gst,
       bill_sr:bill_sr,
+      type:type,
+      isActive:currentField.isActive,
       gstPct:currentField.gstPct
     };
 
@@ -355,10 +371,12 @@ export default function Exemple_01({
     let temp = [];
     if(allRows){
     const getData = () => {
+     
       allRows.map((row, index) => {
+        if(Number(row.isActive) === 1 ){
         const newRow = {
           _id: index + 1, // You may use a more robust ID generation logic
-          sno: index + 1,
+          sno: row.sno,
           dep: row.dep, // Add default values or leave empty as needed
           description: (
             <select
@@ -392,16 +410,16 @@ export default function Exemple_01({
               className="selectpicker form-select"
               data-live-search="true"
               data-width="100%"
-              value={row.description}
+              value={(row.type) }
               disabled={!edit}
               onChange={(e) =>
-                handleChange(index, e.target.value, "description")
+                handleChange(index, e.target.value, "type")
               }
             >
-              <option data-tokens="Status1" value={"Non-Paint"}>
+              <option data-tokens="Status1" value={0}>
                 Non-Paint
               </option>
-              <option data-tokens="Status2" value={"Paint"}>
+              <option data-tokens="Status2" value={1}>
                 Paint
               </option>
             </select>
@@ -455,6 +473,7 @@ export default function Exemple_01({
           )
         };
         temp.push(newRow);
+      }
       });
     };
     getData();

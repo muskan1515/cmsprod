@@ -222,7 +222,8 @@ export default function Exemple_01({
             gst:part.GSTPct,
             type:part.TypeOfMaterial,
             total:(overall + GSTT),
-            sno:part.ReportID
+            sno:part.ReportID,
+            isActive:Number(part.IsActive)
           };
 
           type = String(part.WithTax) === "1" ? "Both" : String(part.WithTax) === "2" ? "Estimate" : "Assessed";
@@ -329,12 +330,29 @@ export default function Exemple_01({
     setChange(true);
     setOpenSave(false);
   };
+
+  const generateReprotId = () => {
+    const now = new Date();
+    const yyyy = String(now.getFullYear());
+    const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
+    const dd = String(now.getDate()).padStart(2, "0");
+    const hh = String(now.getHours()).padStart(2, "0");
+    const min = String(now.getMinutes()).padStart(2, "0");
+    const ss = String(now.getSeconds()).padStart(2, "0");
+    const ms = String(now.getMilliseconds()).padStart(2, "0");
+    const result = `${yyyy}${mm}${dd}${hh}${min}${ss}${ms}`;
+  
+    console.log(result);
+    return result;
+  };
+  
+
   const handleAddRow = () => {
     console.log("inside");
     // Assuming a new row has a specific structure, adjust this as needed
     const newRow = {
       _id: allRows.length, // You may use a more robust ID generation logic
-      sno: allRows.length,
+      sno: generateReprotId(),
       dep: 0, // Add default values or leave empty as needed
       description: "",
       sac: "",
@@ -347,6 +365,7 @@ export default function Exemple_01({
       gst: 0,
       total: 0,
       type: "",
+      isActive:1
     };
 
     const old = allRows;
@@ -392,17 +411,29 @@ export default function Exemple_01({
 
     let updatedRowsss = [];
     allRows.filter((row, i)=>{
-      if(String(i+1) === String(index)){
-        console.log("row",row)
-        
-      }
-      else{
-        updatedRowsss.push(row);
-      }
+      const active = (String(row.sno) === String(index)) ? 0 : row.isActive;
+      const newRow = {
+        sno: row.sno,
+        dep: row.dep, // Add default values or leave empty as needed
+        description: row.description,
+        sac: row.sac,
+        remark: row.remark,
+        estimate: row.estimate,
+        assessed: row.assessed,
+        qe: row.qe,
+        qa: row.qa,
+        bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
+        gst: row.gst,
+        total: row.total,
+        type: row.type,
+        isActive:Number(active)
+      };
+
+      updatedRowsss.push(newRow);
     });
   
 
-    console.log(updatedRowsss);
+    console.log(updatedRowsss,index);
     setAllRows(updatedRowsss);
     setChange(true);   
   };
@@ -502,6 +533,7 @@ export default function Exemple_01({
       bill_sr: bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
       total: total,
+      isActive:currentField.isActive,
       type: type,
     };
 
@@ -547,6 +579,9 @@ export default function Exemple_01({
   };
 
 
+
+
+
   const onSaveHandler = ()=>{
 
     const LeadID = window.location.pathname.split("/final-report/")[1];
@@ -569,6 +604,7 @@ export default function Exemple_01({
         bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
         gst: row.gst,
         total: (String(currentType) === "Both" ? 1 : String(currentType) === "Estimate" ? 2 : 3),
+        isActive:row.isActive,
         type: row.type,
       };
       tempRows.push(r);
@@ -770,6 +806,7 @@ export default function Exemple_01({
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
+      isActive:currentField.isActive,
       type: currentField.type,
     };
 
@@ -864,6 +901,7 @@ export default function Exemple_01({
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
+      isActive:currentField.isActive,
       type: type,
     };
 
@@ -934,6 +972,7 @@ export default function Exemple_01({
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
       total: total,
+      isActive:currentField.isActive,
       type: currentField.type,
     };
 
@@ -959,12 +998,13 @@ export default function Exemple_01({
     const getData = () => {
       allRows.map((row, index) => {
         // console.log(row);
+      if(Number(row.isActive) === 1 ){
         const newRow = {
           _id: index + 1, // You may use a more robust ID generation logic
           row: (
             <button
               className="flaticon-minus"
-              onClick={() => handleRemoveRow(index)}
+              onClick={() => handleRemoveRow(row.sno)}
             ></button>
           ),
           sno: index + 1,
@@ -1185,6 +1225,7 @@ export default function Exemple_01({
           ),
         };
         temp.push(newRow);
+      }
       });
     };
     getData();

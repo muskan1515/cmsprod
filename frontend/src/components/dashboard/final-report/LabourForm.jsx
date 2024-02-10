@@ -76,7 +76,7 @@ const LabourForm = ({
                         }}
                         id="remeberMe"
                       />
-                      Estimate Wtih Tax :
+                      Estimate W/O Tax :
                     </div>
                     <div className="col-lg-12 text-center">{totalEstimate}</div>
                   </div>
@@ -103,13 +103,8 @@ const LabourForm = ({
                 </select>
               </div> */}
               <div className="col-lg-8">
-                <input
-                  className="form-check-input m-1"
-                  type="checkbox"
-                  value=""
-                  id="remeberMe"
-                />
-                Labour W/O Paint :{((totalAssessed) * (Number(12.5))/100)}
+               
+                Labour With Paint  Dep%:{((laborWOPaint) * (Number(12.5))/100)}
               </div>
               <div className="col-lg-8">
                 <input
@@ -118,7 +113,7 @@ const LabourForm = ({
                   value=""
                   id="remeberMe"
                 />
-                Paint :{totalAssessed}
+                Paint :{laborWOPaint}
               </div>
             </div>
           </div>

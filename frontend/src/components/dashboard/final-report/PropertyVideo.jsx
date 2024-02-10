@@ -85,6 +85,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [toggleEstimate, setToggleEstimate] = useState(0);
   const [toggleLabor, setToggleLabor] = useState(0);
+  const [totalPaint,setTotalPaint]=useState(0);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -126,6 +127,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     let total_estimate = 0,
       total_assessed = 0,
       total_paint =0,
+
       total_tax = 0;
     allRows.map((row, index) => {
       const current_row_estimate =
@@ -139,8 +141,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,row.gst);
       total_assessed = total_assessed + current_row_assessed;
       total_tax = total_tax + current_row_assessed_tax;
-      total_paint = total_paint +( (Number(row?.assessed)*13)/100);
+      total_paint = total_paint +( row.type  === 1 ? (Number(row?.assessed)) :  0);
     });
+
+    console.log("total_paint",total_paint);
     setTotalAssessed(total_assessed);
     setTotalLabrorAssessed(total_assessed);
     setTotalLabrorEstimate(total_estimate);
@@ -438,7 +442,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
    setAgeOfvehicleTotal(a);
     return `${a }`;
     
+    
   }
+
+  
 
   const calculateDepreciationOnMetal = ()=>{
     const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
@@ -1238,6 +1245,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   other={other}
                   setOther={setOther}
                   metalSalvageValue={metalSalvageValue}
+
+                  calculateDepreciationOnMetal={calculateDepreciationOnMetal}
+                  calculateVehicleAge={calculateVehicleAge}
               />
             </div>
           </div>

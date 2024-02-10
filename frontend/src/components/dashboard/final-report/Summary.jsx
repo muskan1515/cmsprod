@@ -19,14 +19,27 @@ const Summary = ({
   lessExcess,
   other,
   setOther,
-  metalSalvageValue
+  metalSalvageValue,
+
+  calculateDepreciationOnMetal
+  ,calculateVehicleAge
 
 }) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const returnTotal = ()=>{
+    const a = (Number(totalLabrorAssessed) + Number(totalPartsAssessed)) + (Number(lessExcess) - Number(lessImposed) + Number(other) );
+    const b = (((Number(totalLabrorAssessed + totalPartsAssessed)) *( Number(metalSalvageValue)))/100);
+
+
+    return (a-b) > 1 ? (a-b) : 0; 
+  }
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
+
+ 
 
     // Allow only numeric input
     const numericValue = inputValue.replace(/\D/g, "");
@@ -349,8 +362,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={other}
-                      onChange={(e)=>setOther(e.target.value)}
+                    
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -375,6 +387,8 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={other}
+                      onChange={(e)=>setOther(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -402,7 +416,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={(totalLabrorAssessed + totalPartsAssessed) + (lessExcess - lessImposed + other )}
+                    value={(Number(totalLabrorAssessed) + Number(totalPartsAssessed)) + (Number(lessExcess) - Number(lessImposed) + Number(other) )}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -460,7 +474,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={((totalLabrorAssessed + totalPartsAssessed) * metalSalvageValue)/100}
+                    value={((Number(totalLabrorAssessed + totalPartsAssessed)) *( Number(metalSalvageValue)))/100}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -487,6 +501,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     // placeholder="Enter Registration No."
+                    placeholder="This is a metal salvage depreciation %"
                   />
                 </div>
               </div>
@@ -519,6 +534,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={((Number(totalLabrorAssessed + totalPartsAssessed)) *( Number(metalSalvageValue)))/100}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -548,7 +564,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={((totalLabrorAssessed + totalPartsAssessed) + (lessExcess - lessImposed + other )) - ((totalLabrorAssessed + totalPartsAssessed) * metalSalvageValue)/100}
+                    value={returnTotal}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -913,6 +929,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={calculateVehicleAge()}
                     // value={props.assessed}
                     // readOnly={!isEditMode}
                     // onChange={(e) => setLicenseType(e.target.value)}
@@ -975,6 +992,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={calculateDepreciationOnMetal()}
                     // value={props.difference}
                     // readOnly={!isEditMode}
                     // onChange={(e) => setLicenseType(e.target.value)}
