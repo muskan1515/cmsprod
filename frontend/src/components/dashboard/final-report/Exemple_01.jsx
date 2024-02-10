@@ -7,11 +7,18 @@ import { ro } from "date-fns/locale";
 
 const headCells = [
   {
+    id: "row",
+    numeric: false,
+    label: "",
+    width: 10,
+  },
+  {
     id: "sno",
     numeric: false,
     label: "#",
     width: 10,
   },
+
   {
     id: "bill_sr",
     numeric: false,
@@ -74,38 +81,40 @@ const headCells = [
 export default function Exemple_01({
   currentGst,
   setTotalAssessed,
-   totalAssessed,
-   totalEstimate,
-   setTotalEstimate,
-   claim,
-   taxAmount,
-   setCurrentGST,
-   allRows,
-   setAllRows,
-   setTaxAmount,
-   toggleEstimate,
-   setToggleEstimate,
-   reload,
-   setReload,
-   toggleLabor,
-   setToggleLabor,
+  totalAssessed,
+  totalEstimate,
+  setTotalEstimate,
+  claim,
+  taxAmount,
+  setCurrentGST,
+  allRows,
+  setAllRows,
+  setTaxAmount,
+  toggleEstimate,
+  setToggleEstimate,
+  reload,
+  setReload,
+  toggleLabor,
+  setToggleLabor,
 
-   ageOfVehicleTotal,
-   metaldepPct,
-    totalPartsEstimate,
-    totalLabrorEstimate,
-    totalPartsAssessed,
-    totalLabrorAssessed,
+  ageOfVehicleTotal,
+  metaldepPct,
+  totalPartsEstimate,
+  totalLabrorEstimate,
+  totalPartsAssessed,
+  totalLabrorAssessed,
 
-    setTotalPartsEstimate,
-    setTotalLabrorEstimate,
-    setTotalPartsAssessed,
-    setTotalLabrorAssessed
+  setTotalPartsEstimate,
+  setTotalLabrorEstimate,
+  setTotalPartsAssessed,
+  setTotalLabrorAssessed,
 }) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
   // const []
- 
+
+  const [lastIndex, setLastIndex] = useState(1000);
+
   const [change, setChange] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
   const [openSave, setOpenSave] = useState(false);
@@ -121,7 +130,6 @@ export default function Exemple_01({
   // const [totalEstimate,setTotalEstimate]=useState(0);
 
   // const [taxAmount,setTaxAmount]=useState(0);
-
 
   // const [toggleEstimate,setToggleEstimate]=useState(0);
   // const [toggleLabor,setToggleLabor]=useState(0);
@@ -141,72 +149,74 @@ export default function Exemple_01({
   //   }))
   // );
 
-
-  useEffect(()=>{ 
+  useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-   
+
     const LeadID = window.location.pathname.split("/final-report/")[1];
-  
-    axios.get("/api/getLabrorer",{
-      headers:{
-        Authorization:`Bearer ${userInfo[0].Token}`,
-        "Content-Type":"application/json"
-      },
-      params:{
-        LeadId : LeadID
-      }
-    })
-    .then((res)=>{
-      console.log(res);
-      
-      // setNewParts(res.data.userData);
-      let newPart = res.data.userData;
-      let temp_row =[];
-      let gst_pct = 0;
-      newPart.map((part,index)=>{
-        if(String(part.LeadId) === String(LeadID)){
-        gst_pct = part.GSTPercentage;
-        const temp = {
-          description:part.Description,
-          sac:part.SAC,
-          estimate:part.Estimate,
-          assessed:part.Assessed,
-          bill_sr:part.BillSr,
-          gst:part.gst ? part.gst : 0 ,
-          type:part.JobType,
-          sno:part.ReportID ,
-          isActive:Number(part.IsActive)
-        };
-        temp_row.push(temp)
-      }
+
+    axios
+      .get("/api/getLabrorer", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: LeadID,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+
+        // setNewParts(res.data.userData);
+        let newPart = res.data.userData;
+        let temp_row = [];
+        let gst_pct = 0;
+        newPart.map((part, index) => {
+          if (String(part.LeadId) === String(LeadID)) {
+            gst_pct = part.GSTPercentage;
+            const temp = {
+              description: part.Description,
+              sac: part.SAC,
+              estimate: part.Estimate,
+              assessed: part.Assessed,
+              bill_sr: part.BillSr,
+              gst: part.gst ? part.gst : 0,
+              type: part.JobType,
+              sno: part.ReportID,
+              isActive: Number(part.IsActive),
+            };
+            temp_row.push(temp);
+            setLastIndex(part.ReportID);
+          }
+        });
+
+        setCurrentGST(Number(gst_pct));
+        setAllRows(temp_row);
+        setChange(true);
+      })
+      .catch((Err) => {
+        alert(Err);
       });
-      
-      setCurrentGST(Number(gst_pct));
-      setAllRows(temp_row);
-      setChange(true)
-    })
-    .catch((Err)=>{
-      alert(Err)
-    })
-  },[]);
+  }, []);
 
   const handleAddRow = () => {
     const newRow = {
-      _id: allRows.length, // You may use a more robust ID ge
+      _id: allRows.length,
+      sno: lastIndex + 1, // You may use a more robust ID ge
       description: "Regular",
       sac: "",
       estimate: "",
       assessed: "",
-      bill_sr:"",
+      bill_sr: "",
       gst: 0,
-      type:0,
-      gstPct:currentGst,
-      isActive:1
+      type: 0,
+      gstPct: currentGst,
+      isActive: 1,
     };
 
     const old = allRows;
     old.push(newRow);
-
+    setLastIndex(lastIndex + 1);
     setChange(true);
     setAllRows(old);
   };
@@ -219,106 +229,121 @@ export default function Exemple_01({
     setEdit(false);
   };
 
-  const onSaveHandler = ()=>{
+  const handleRemoveRow = (index) => {
+    console.log(allRows);
 
+    let updatedRowsss = [];
+    allRows.filter((row, i) => {
+      console.log(row.sno, index);
+      const active = String(row.sno) === String(index) ? 0 : row.isActive;
+      const newRow = {
+        sno: row.sno, // Add default values or leave empty as needed
+        description: row.description,
+        sac: row.sac,
+        estimate: row.estimate,
+        assessed: row.assessed,
+        bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
+        gst: row.gst,
+        gstPct: row.gstPct,
+        type: row.type,
+        isActive: Number(active),
+      };
+
+      updatedRowsss.push(newRow);
+    });
+
+    console.log(updatedRowsss, index);
+    setAllRows(updatedRowsss);
+    setChange(true);
+  };
+
+  const onSaveHandler = () => {
     const LeadID = window.location.pathname.split("/final-report/")[1];
     // console.log(LeadID)
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    let temp=[];
-    allRows.map((row,index)=>{
+    let temp = [];
+    allRows.map((row, index) => {
       const row2 = {
-        sno:index+1,
-        description:row.description,
-        assessed:row.assessed,
-        estimate:row.estimate,
-        sac:row.sac,
-        gst:row.gst,
-        type:row.type,
-        bill_sr:row.bill_sr,
-        isActive:row.isActive
+        sno: row.sno,
+        description: row.description,
+        assessed: row.assessed,
+        estimate: row.estimate,
+        sac: row.sac,
+        gst: row.gst,
+        type: row.type,
+        bill_sr: row.bill_sr,
+        isActive: row.isActive,
       };
       temp.push(row2);
-    })
+    });
 
-    console.log(payload);
-    return ;
-    const payload={
-      gstPct:currentGst,
-      allRows : JSON.stringify(temp)
+    const payload = {
+      gstPct: currentGst,
+      allRows: JSON.stringify(temp),
     };
 
-    axios.put("/api/updateLabrorer",payload,{
-      headers:{
-        Authorization:`Bearer ${userInfo[0].Token}`,
-        "Content-Type":"application/json"
-      },
-      params:{
-        LeadId : LeadID
-      }
-    })
-    .then((res)=>{
-      alert("Successfully updated!!");
-      window.location.reload();
-    })
-    .catch((Err)=>{
-      alert(Err)
-    })
-  }
+    axios
+      .put("/api/updateLabrorer", payload, {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: LeadID,
+        },
+      })
+      .then((res) => {
+        alert("Successfully updated!!");
+        window.location.reload();
+      })
+      .catch((Err) => {
+        alert(Err);
+      });
+  };
 
+  const sliceVal = (val) => {
+    return val.slice(-1, 1);
+  };
 
-  const sliceVal = (val)=>{
-    return val.slice(-1,1);
-  }
-
-  const returnValue = (row,type)=>{
-   
-    if(String(type)=== "sac")
-    return row.sac;
-    if(String(type)=== "bill_sr")
-    return row.sac;
-    if(String(type)=== "description")
-    return row.sac;
-    if(String(type)=== "assessed")
-    return row.sac; 
-  if(String(type)=== "estimate")
-    return row.sac;
-
-  }
+  const returnValue = (row, type) => {
+    if (String(type) === "sac") return row.sac;
+    if (String(type) === "bill_sr") return row.sac;
+    if (String(type) === "description") return row.sac;
+    if (String(type) === "assessed") return row.sac;
+    if (String(type) === "estimate") return row.sac;
+  };
 
   const handleChange = (index, val, field) => {
-
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
-    
     console.log(val);
 
     const description =
-   
       String(field) === "description"
         ? String(currentField.description) === val
           ? val.slice(-1, 1)
-          : val 
+          : val
         : currentField.description;
-        const bill_sr =
-        String(field) === "bill_sr"
-          ? String(currentField.bill_sr) === val
-            ? val.slice(-1, 1)
-            : val
-          : currentField.bill_sr;
-          const type =
-          String(field) === "type"
-            ? String(currentField.type) === val
-              ? val.slice(-1, 1)
-              : Number(val)
-            : currentField.type;
+    const bill_sr =
+      String(field) === "bill_sr"
+        ? String(currentField.bill_sr) === val
+          ? val.slice(-1, 1)
+          : val
+        : currentField.bill_sr;
+    const type =
+      String(field) === "type"
+        ? String(currentField.type) === val
+          ? val.slice(-1, 1)
+          : Number(val)
+        : currentField.type;
     const sac =
       String(field) === "sac"
-        ? String(currentField.sac) === val 
-          ? val.slice(-1,1)
+        ? String(currentField.sac) === val
+          ? val.slice(-1, 1)
           : val
         : currentField.sac;
     const estimate =
@@ -349,10 +374,10 @@ export default function Exemple_01({
       estimate: estimate,
       assessed: assessed,
       gst: gst,
-      bill_sr:bill_sr,
-      type:type,
-      isActive:currentField.isActive,
-      gstPct:currentField.gstPct
+      bill_sr: bill_sr,
+      type: type,
+      isActive: currentField.isActive,
+      gstPct: currentField.gstPct,
     };
 
     // console.log(newOutput);
@@ -361,126 +386,135 @@ export default function Exemple_01({
     setAllRows(oldRow);
     // console.log(allRows[index].field);
     // setToggleEstimate(true);
-    
+
     setChange(true);
     setReload(true);
-    
+
     // console.log(oldRow);
   };
   useEffect(() => {
     let temp = [];
-    if(allRows){
-    const getData = () => {
-     
-      allRows.map((row, index) => {
-        if(Number(row.isActive) === 1 ){
-        const newRow = {
-          _id: index + 1, // You may use a more robust ID generation logic
-          sno: row.sno,
-          dep: row.dep, // Add default values or leave empty as needed
-          description: (
-            <select
-              style={{ marginTop: "-5px" }}
-              className="selectpicker form-select"
-              data-live-search="true"
-              data-width="100%"
-              value={row.description}
-              disabled={!edit}
-              onChange={(e) =>
-                handleChange(index, e.target.value, "description")
-              }
-            >
-              <option data-tokens="Status1" value={"Regular"}>
-                Regular
-              </option>
-              <option data-tokens="Status2" value={"Add on Policy"}>
-                Add on Policy
-              </option>
-              <option
-                data-tokens="Status3"
-                value={"Add on Policy(Not Effective)"}
-              >
-                Add on Policy(Not Effective)
-              </option>
-            </select>
-          ),
-          job_type: (
-            <select
-              style={{ marginTop: "-5px" }}
-              className="selectpicker form-select"
-              data-live-search="true"
-              data-width="100%"
-              value={(row.type) }
-              disabled={!edit}
-              onChange={(e) =>
-                handleChange(index, e.target.value, "type")
-              }
-            >
-              <option data-tokens="Status1" value={0}>
-                Non-Paint
-              </option>
-              <option data-tokens="Status2" value={1}>
-                Paint
-              </option>
-            </select>
-          ),
-          sac: (
-            <input
-              className="form-control"
-              type="text"
-              value={row.sac}
-              onChange={(e) => handleChange(index, e.target.value, "sac")}
-              required
-              disabled={!edit}
-              id="terms"
-              style={{ border: "1px solid black" }}
-            />
-          ),
-          estimate: (
-            <input
-              className="form-control"
-              type="text"
-              value={row.estimate}
-              disabled={!edit}
-              onChange={(e) => handleChange(index, e.target.value, "estimate")}
-              required
-              id="terms"
-              style={{ border: "1px solid black" }}
-            />
-          ),
-          assessed: (
-            <input
-              className="form-control"
-              type="text"
-              value={row.assessed}
-              onChange={(e) => handleChange(index, e.target.value, "assessed")}
-              required
-              disabled={!edit}
-              id="terms"
-              style={{ border: "1px solid black" }}
-            />
-          ),
-          gst: (
-            <div className="col-lg-12 text-center">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value={row.gst}
-                onChange={(e) => handleChange(index, row.gst+1, "gst")}
-                id="remeberMe"
-              />
-            </div>
-          )
-        };
-        temp.push(newRow);
-      }
-      });
-    };
-    getData();
-    setUpdatedCode(temp);
-    setChange(false);
-  }
-  }, [change, edit,allRows]);
+    if (allRows) {
+      const getData = () => {
+        let count = 1;
+        allRows.map((row, index) => {
+          if (Number(row.isActive) === 1) {
+            const newRow = {
+              _id: index + 1, // You may use a more robust ID generation logic
+              row: (
+                <button
+                  className="flaticon-minus"
+                  onClick={() => handleRemoveRow(row.sno)}
+                ></button>
+              ),
+              sno: count,
+              dep: row.dep, // Add default values or leave empty as needed
+              description: (
+                <select
+                  style={{ marginTop: "-5px" }}
+                  className="selectpicker form-select"
+                  data-live-search="true"
+                  data-width="100%"
+                  value={row.description}
+                  disabled={!edit}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "description")
+                  }
+                >
+                  <option data-tokens="Status1" value={"Regular"}>
+                    Regular
+                  </option>
+                  <option data-tokens="Status2" value={"Add on Policy"}>
+                    Add on Policy
+                  </option>
+                  <option
+                    data-tokens="Status3"
+                    value={"Add on Policy(Not Effective)"}
+                  >
+                    Add on Policy(Not Effective)
+                  </option>
+                </select>
+              ),
+              job_type: (
+                <select
+                  style={{ marginTop: "-5px" }}
+                  className="selectpicker form-select"
+                  data-live-search="true"
+                  data-width="100%"
+                  value={row.type}
+                  disabled={!edit}
+                  onChange={(e) => handleChange(index, e.target.value, "type")}
+                >
+                  <option data-tokens="Status1" value={0}>
+                    Non-Paint
+                  </option>
+                  <option data-tokens="Status2" value={1}>
+                    Paint
+                  </option>
+                </select>
+              ),
+              sac: (
+                <input
+                  className="form-control"
+                  type="text"
+                  value={row.sac}
+                  onChange={(e) => handleChange(index, e.target.value, "sac")}
+                  required
+                  disabled={!edit}
+                  id="terms"
+                  style={{ border: "1px solid black" }}
+                />
+              ),
+              estimate: (
+                <input
+                  className="form-control"
+                  type="text"
+                  value={row.estimate}
+                  disabled={!edit}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "estimate")
+                  }
+                  required
+                  id="terms"
+                  style={{ border: "1px solid black" }}
+                />
+              ),
+              assessed: (
+                <input
+                  className="form-control"
+                  type="text"
+                  value={row.assessed}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "assessed")
+                  }
+                  required
+                  disabled={!edit}
+                  id="terms"
+                  style={{ border: "1px solid black" }}
+                />
+              ),
+              gst: (
+                <div className="col-lg-12 text-center">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value={row.gst}
+                    onChange={(e) => handleChange(index, row.gst + 1, "gst")}
+                    id="remeberMe"
+                  />
+                </div>
+              ),
+            };
+            temp.push(newRow);
+            count = count + 1;
+          }
+        });
+      };
+      getData();
+      setUpdatedCode(temp);
+      setChange(false);
+    }
+  }, [change, edit, allRows]);
 
   return (
     <SmartTable_01
