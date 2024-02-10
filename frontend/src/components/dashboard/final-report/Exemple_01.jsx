@@ -6,12 +6,20 @@ import { SERVER_DIRECTORY } from "next/dist/shared/lib/constants";
 import { ro } from "date-fns/locale";
 
 const headCells = [
+  
+  {
+    id: "row",
+    numeric: false,
+    label: "",
+    width: 10,
+  },
   {
     id: "sno",
     numeric: false,
     label: "#",
     width: 10,
   },
+ 
   {
     id: "bill_sr",
     numeric: false,
@@ -105,6 +113,8 @@ export default function Exemple_01({
   const [updatedCode, setUpdatedCode] = useState([]);
 
   // const []
+
+  const [lastIndex,setLastIndex]=useState(1000);
  
   const [change, setChange] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
@@ -177,7 +187,8 @@ export default function Exemple_01({
           sno:part.ReportID ,
           isActive:Number(part.IsActive)
         };
-        temp_row.push(temp)
+        temp_row.push(temp);
+        setLastIndex(part.ReportID);
       }
       });
       
@@ -192,7 +203,8 @@ export default function Exemple_01({
 
   const handleAddRow = () => {
     const newRow = {
-      _id: allRows.length, // You may use a more robust ID ge
+      _id: allRows.length,
+      sno:lastIndex+1, // You may use a more robust ID ge
       description: "Regular",
       sac: "",
       estimate: "",
@@ -206,7 +218,7 @@ export default function Exemple_01({
 
     const old = allRows;
     old.push(newRow);
-
+    setLastIndex(lastIndex+1);
     setChange(true);
     setAllRows(old);
   };
@@ -219,6 +231,37 @@ export default function Exemple_01({
     setEdit(false);
   };
 
+
+  const handleRemoveRow = (index) => {
+
+    console.log(allRows);
+
+    let updatedRowsss = [];
+    allRows.filter((row, i)=>{
+      console.log(row.sno, index);
+      const active = (String(row.sno) === String(index)) ? 0 : row.isActive;
+      const newRow = {
+        sno: row.sno,// Add default values or leave empty as needed
+        description: row.description,
+        sac: row.sac,
+        estimate: row.estimate,
+        assessed: row.assessed,
+        bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
+        gst: row.gst,
+        gstPct:row.gstPct,
+        type: row.type,
+        isActive:Number(active)
+      };
+
+      updatedRowsss.push(newRow);
+    });
+  
+
+    console.log(updatedRowsss,index);
+    setAllRows(updatedRowsss);
+    setChange(true);   
+  };
+
   const onSaveHandler = ()=>{
 
     const LeadID = window.location.pathname.split("/final-report/")[1];
@@ -229,7 +272,7 @@ export default function Exemple_01({
     let temp=[];
     allRows.map((row,index)=>{
       const row2 = {
-        sno:index+1,
+        sno:row.sno,
         description:row.description,
         assessed:row.assessed,
         estimate:row.estimate,
@@ -242,8 +285,8 @@ export default function Exemple_01({
       temp.push(row2);
     })
 
-    console.log(payload);
-    return ;
+   
+
     const payload={
       gstPct:currentGst,
       allRows : JSON.stringify(temp)
@@ -372,11 +415,18 @@ export default function Exemple_01({
     if(allRows){
     const getData = () => {
      
+      let count = 1;
       allRows.map((row, index) => {
         if(Number(row.isActive) === 1 ){
         const newRow = {
           _id: index + 1, // You may use a more robust ID generation logic
-          sno: row.sno,
+          row: (
+            <button
+              className="flaticon-minus"
+              onClick={() => handleRemoveRow(row.sno)}
+            ></button>
+          ),
+          sno: count ,
           dep: row.dep, // Add default values or leave empty as needed
           description: (
             <select
@@ -473,6 +523,7 @@ export default function Exemple_01({
           )
         };
         temp.push(newRow);
+        count = count +1;
       }
       });
     };

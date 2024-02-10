@@ -661,7 +661,7 @@ const Servey = ({
         <div className="row mt-1">
           <div className="col-lg-3"></div>
           <div className="col-lg-2">
-            <div className="row mt-1">
+           {/*} <div className="row mt-1">
               <div className="col-lg-7 my_profile_setting_input form-group text-end">
                 <label
                   htmlFor=""
@@ -689,7 +689,7 @@ const Servey = ({
                   // placeholder="Enter Registration No."
                 />
               </div>
-            </div>
+                </div>*/}
           </div>
           <div className="col-lg-2">
             <div className="row mt-1">

@@ -886,7 +886,6 @@ app.put("/updateNewParts1/:leadId", authenticateUser, async (req, res) => {
             TypeOfMaterial,
             WithTax,
             IsActive,
-            ReportID,
             LeadID
           ) VALUES (
             '${row.dep}',
@@ -902,7 +901,6 @@ app.put("/updateNewParts1/:leadId", authenticateUser, async (req, res) => {
             '${row.type}',
             '${row.total}',
             '${row.isActive}',
-            '${row.sno}',
             '${parseInt(leadId)}'
           );
         `;
@@ -936,28 +934,25 @@ app.put("/updateNewParts1/:leadId", authenticateUser, async (req, res) => {
             return;
           }
 
-          // console.log(result2,index);
          
           if (result2.length ) {
-            console.log("updatedQuery");
-            // db.query(updateQuery, (err) => {
-            //   if (err) {
-            //     console.error(err);
-            //     reject(err);
-            //     return;
-            //   }
-            //   resolve();
-            // });
+            db.query(updateQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
           } else {
-            console.log("insertQuery");
-            // db.query(insertQuery, (err) => {
-            //   if (err) {
-            //     console.error(err);
-            //     reject(err);
-            //     return;
-            //   }
-            //   resolve();
-            // });
+            db.query(insertQuery, (err) => {
+              if (err) {
+                console.error(err);
+                reject(err);
+                return;
+              }
+              resolve();
+            });
           }
         });
       
@@ -986,14 +981,100 @@ app.get("/getLabrorer/:leadId",authenticateUser,(req,res)=>{
   });
 })
 
-app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
+// app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
+//   try {
+//     const leadId = req.params.leadId;
+//     const data = JSON.parse(req.body.allRows);
+//     const gstPct = (req.body.gstPct);
+//     const promises = data.map((row) => {
+//       return new Promise((resolve, reject) => {
+//         const insertQuery = `
+//           INSERT INTO LabourReport (
+//             Description,
+//             SAC,
+//             Estimate,
+//             Assessed,
+//             BillSr,
+//             IsGSTIncluded,
+//             GSTPercentage,
+//             IsActive,
+//             LeadID
+//           ) VALUES (
+//             '${row.description}',
+//             '${row.sac}',
+//             '${row.estimate}',
+//             '${row.assessed}',
+//             '${row.bill_sr}',
+//             '${row.gst}',
+//             '${gstPct}',
+//             '${isActive}',
+//             '${parseInt(leadId)}'
+//           );
+//         `;
+
+//         const updateQuery = `
+//           UPDATE LabourReport
+//           SET
+//           Description = '${row.description}',
+//             SAC='${row.sac}',
+//             Estimate = '${row.estimate}',
+//             Assessed = '${row.assessed}',
+//             BillSr = '${row.Bill_sr}',
+//             IsGSTIncluded='${row.gst}',
+//             GSTPercentage='${gstPct}',
+//             IsActive='${row.isActive}'
+//           WHERE ReportID = '${row.sno}' AND
+//           LeadID = '${leadId}';
+//         `;
+       
+//         db.query("SELECT * FROM LabourReport WHERE ReportID = ? AND LeadID=? ", [row.sno,leadId], (err, result2) => {
+//           if (err) {
+//             console.error(err);
+//             reject(err);
+//             return;
+//           }
+
+//           if (result2.length > 0) {
+//             console.log("updateQuery");
+//             // db.query(updateQuery, (err) => {
+//             //   if (err) {
+//             //     console.error(err);
+//             //     reject(err);
+//             //     return;
+//             //   }
+//             //   resolve();
+//             // });
+//           } else {
+//             console.log("insertQuery");
+//             // db.query(insertQuery, (err) => {
+//             //   if (err) {
+//             //     console.error(err);
+//             //     reject(err);
+//             //     return;
+//             //   }
+//             //   resolve();
+//             // });
+//           }
+//         });
+      
+//       });
+//     });
+
+//     await Promise.all(promises);
+
+//     res.status(200).send("Successfully updated!");
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+app.put("/updateLabrorer1/:leadId", authenticateUser, async (req, res) => {
   try {
     const leadId = req.params.leadId;
-
     const data = JSON.parse(req.body.allRows);
-    const gstPct = (req.body.gstPct);
 
-   
+    const gstPct = (req.body.gstPct);
     const promises = data.map((row) => {
       return new Promise((resolve, reject) => {
         const insertQuery = `
@@ -1006,7 +1087,6 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
             IsGSTIncluded,
             GSTPercentage,
             IsActive,
-            ReportID,
             LeadID
           ) VALUES (
             '${row.description}',
@@ -1016,8 +1096,7 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
             '${row.bill_sr}',
             '${row.gst}',
             '${gstPct}',
-            '${isActive}',
-            '${row.sno}',
+            '${row.isActive}',
             '${parseInt(leadId)}'
           );
         `;
@@ -1036,9 +1115,8 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
           WHERE ReportID = '${row.sno}' AND
           LeadID = '${leadId}';
         `;
-
        
-        db.query("SELECT * FROM LabourReport WHERE ReportID = ?AND LeadID=? ", [row.sno,leadId], (err, result2) => {
+        db.query("SELECT * FROM LabourReport WHERE ReportID = ? AND LeadID=? ", [row.sno,leadId], (err, result2) => {
           if (err) {
             console.error(err);
             reject(err);
@@ -1046,7 +1124,7 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
           }
 
           if (result2.length > 0) {
-            console.log(updateQuery);
+            // console.log("updateQuery");
             db.query(updateQuery, (err) => {
               if (err) {
                 console.error(err);
@@ -1056,7 +1134,7 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
               resolve();
             });
           } else {
-            console.log(insertQuery);
+            // console.log("insertQuery");
             db.query(insertQuery, (err) => {
               if (err) {
                 console.error(err);
@@ -1079,7 +1157,6 @@ app.put("/updateLabrorer/:leadId", authenticateUser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 app.put("/updateFinalReport/:leadId", authenticateUser,(req,res)=>{
 
