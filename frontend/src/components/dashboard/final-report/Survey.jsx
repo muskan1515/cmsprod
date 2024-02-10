@@ -255,7 +255,7 @@ const Servey = ({
         <div className="col-lg-6" style={{ borderRight: "1px solid black" }}>
           <div className="row">
             <div className="col-lg-12">
-              <h4>Account Details :</h4>
+              <h4>Accident Details :</h4>
               <hr />
             </div>
             <div className="col-lg-12">
