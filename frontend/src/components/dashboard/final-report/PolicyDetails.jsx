@@ -332,7 +332,7 @@ const PolicyDetails = ({
                 className="text-color"
                 style={{
                   color: "#2e008b",
-                  fontWeight: "",
+                  fontSize: "14px",
                   marginTop: "5px",
                 }}
               >
@@ -362,7 +362,7 @@ const PolicyDetails = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#2e008b",
-                  fontWeight: "",
+                  fontSize: "14px",
                   marginTop: "5px",
                 }}
               >
@@ -412,6 +412,7 @@ const PolicyDetails = ({
                   // paddingTop: "15px",
                   color: "#2e008b",
                   fontWeight: "",
+                  fontSize: "14px",
                   marginTop: "5px",
                 }}
               >
@@ -531,7 +532,7 @@ const PolicyDetails = ({
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Insured :
@@ -591,7 +592,7 @@ const PolicyDetails = ({
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Type
@@ -634,7 +635,7 @@ const PolicyDetails = ({
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Address :
@@ -729,6 +730,7 @@ const PolicyDetails = ({
                     </div>
                     <div className="col-lg-10">
                       <input
+                        className="form-control"
                         readOnly={!isEditMode}
                         value={
                           PolicyPeriodStart
@@ -760,7 +762,7 @@ const PolicyDetails = ({
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         H.P.A. :
@@ -822,7 +824,7 @@ const PolicyDetails = ({
                           color: "#2e008b",
                           fontWeight: "",
                           // marginTop: "-13px",
-                          fontSize: "15px",
+                          fontSize: "14px",
                         }}
                       >
                         Insurers :
@@ -985,7 +987,8 @@ const PolicyDetails = ({
               </div>
             </div>
           </div>
-          <hr />
+          {/* <hr /> */}
+          <div className="mb-2" style={{ border: "2px solid grey" }}></div>
           <div className="row">
             <div className="col-lg-12" style={{ borderTop: "" }}>
               <h4 className="text-dark" style={{ fontSize: "17px" }}>
@@ -2120,7 +2123,7 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  {/* <input
+                  <input
                     type="date"
                     className="form-control"
                     id="propertyTitle"
@@ -2152,9 +2155,9 @@ const PolicyDetails = ({
                 </div>
                 <div className="col-lg-6">
                   {/* <input
-                  type="date"
-                  className="form-control"
-                  id="propertyTitle"
+                    type="date"
+                    className="form-control"
+                    id="propertyTitle"
                   /> */}
                   {!isEditMode ? (
                     <input
@@ -2171,11 +2174,11 @@ const PolicyDetails = ({
                       setSelectedDate={setDateOfIssue}
                     />
                   )}
-                  {/*<input 
+                  {/* <input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode} 
                   value={isEditMode ? DateOfIssue : formatDate(DateOfIssue)} 
-                onChange={(e)=>setDateOfIssue(e.target.value)}/>*/}
+                onChange={(e)=>setDateOfIssue(e.target.value)}/> */}
                   {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
@@ -2461,7 +2464,8 @@ const PolicyDetails = ({
               </div>
             </div>
           </div>
-          <hr />
+          {/* <hr /> */}
+          <div className="mb-2" style={{ border: "2px solid grey" }}></div>
           <div className="row" style={{ borderBottom: "" }}>
             <div className="col-lg-12">
               <h4 className="text-dark" style={{ fontSize: "17px" }}>
@@ -2655,6 +2659,7 @@ const PolicyDetails = ({
                     <div className="col-lg-5">
                       {!isEditMode ? (
                         <input
+                          className="form-control"
                           type={"text"}
                           readonly={!isEditMode}
                           value={PermitFrom ? formatDate(PermitFrom) : ""}

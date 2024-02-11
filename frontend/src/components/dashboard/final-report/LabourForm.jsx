@@ -8,7 +8,9 @@ import {
 const LabourForm = ({
   currentGst,
   setTotalAssessed,
+  totalRemainingAssessed,
   totalAssessed,
+  totalTaxableAMount,
   totalEstimate,
   taxAmount,
   allDepreciations,
@@ -46,6 +48,11 @@ const LabourForm = ({
   
     return `${a }`;
     
+  }
+
+  const calculateTotalGSTForAssessed=()=>{
+    const a = Number(totalAssessed)*(Number(currentGst))/100;
+    const b = totalAssessed + a;
   }
   
   const calculateDepreciationOnMetal = ()=>{
@@ -102,10 +109,10 @@ const LabourForm = ({
                   </option>
                 </select>
               </div> */}
-              <div className="col-lg-8">
+              {/*<div className="col-lg-8">
                
                 Labour With Paint  Dep%:{((laborWOPaint) * (Number(12.5))/100)}
-              </div>
+            </div>*/}
               <div className="col-lg-8">
                 <input
                   className="form-check-input m-1"
@@ -118,8 +125,8 @@ const LabourForm = ({
             </div>
           </div>
           <div className="col-lg-12">
-            <div className="row mt-1 mb-1">
-              <div className="col-lg-4 my_profile_setting_input form-group text-end">
+           {/*<div className="row mt-1 mb-1">
+              {/*} <div className="col-lg-4 my_profile_setting_input form-group text-end">
                 <label
                   htmlFor=""
                   className="text-color mt-2"
@@ -130,7 +137,7 @@ const LabourForm = ({
                 >
                   Cabin :
                 </label>
-              </div>
+                </div>
               <div className="col-lg-8">
                 <input
                   type="text"
@@ -141,9 +148,9 @@ const LabourForm = ({
                   // placeholder="Enter Registration No."
                 />
               </div>
-            </div>
+            </div>*/}
           </div>
-          <div className="col-lg-12">
+          {/*<div className="col-lg-12">
             <div className="row">
               <div className="col-lg-4 my_profile_setting_input form-group text-end mt-1 mb-0">
                 <label
@@ -167,10 +174,10 @@ const LabourForm = ({
                   // placeholder="Enter Registration No."
                 />
               </div>
-            </div>
-          </div>
+                </div>
+          </div>*/}
           <div className="col-lg-12">
-            <div className="row">
+            {/*<div className="row">
               <div className="col-lg-12 my_profile_setting_input form-group text-end mt-1 mb-0">
                 <label
                   htmlFor=""
@@ -193,8 +200,8 @@ const LabourForm = ({
                   // placeholder="Enter Registration No."
                 />
               </div>
-            </div>
-          </div>
+                </div>*/}
+                </div>
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-12 my_profile_setting_input form-group text-end mt-1 mb-0">
@@ -214,7 +221,7 @@ const LabourForm = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={totalAssessed}
+                  value={totalTaxableAMount}
                 />
               </div>
             </div>
@@ -242,7 +249,7 @@ const LabourForm = ({
                     value={currentGst}
                     onChange={(e) => {
                       setCurrentGST(e.target.value);
-                      setReload(true);
+                      
                     }}
                   />
                 </div>
@@ -313,7 +320,7 @@ const LabourForm = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalAssessed}
+                    value={totalTaxableAMount+taxAmount}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -340,12 +347,10 @@ const LabourForm = ({
                   className="form-control form-control-table"
                   id="propertyTitle"
                   value={
-                    totalAssessed +
+                    totalTaxableAMount +
                     taxAmount +
-                    Number(cabin) +
-                    Number(loadBody) +
-                    Number(towingCharges) -
-                    Number(laborWOPaint)
+                    totalRemainingAssessed 
+                   
                   }
                   // placeholder="Enter Registration No."
                 />

@@ -34,7 +34,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [currentGst, setCurrentGst] = useState(0);
+  const [currentGst, setCurrentGst] = useState(18);
 
   const [overallMetalDep, setOverallMetailDep] = useState(0);
   const [totalAgeOfvehicle, setTotalAgeOfVehicle] = useState(0);
@@ -87,6 +87,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [toggleLabor, setToggleLabor] = useState(0);
   const [totalPaint,setTotalPaint]=useState(0);
 
+  const [totalRemainingAssessed,settotalRemainingAssessed]=useState(0);
+
+  const [totalTaxableAMount,setTotalTaxbleAmount]=useState(0);
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     axios
@@ -115,8 +119,26 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     return 0;
   }
 
+  const calculateGSTWithPaintValue = (original,type,gst)=>{
+   
+    // console.log(original,type,gst,((Number(original) * (12.5))/100));
+    if(String(type) === "1" && gst%2!==0){
+      return ((Number(original) * (12.5))/100);
+    }
+    return 0;
+  }
+
+  const calculateGSTWithoutPaintValue = (original,type,gst)=>{
+   
+    // console.log(original,type,gst,((Number(original) * (12.5))/100));
+    if(String(type) === "1" && gst%2===0){
+      return ((Number(original) * (12.5))/100);
+    }
+    return 0;
+  }
+
   const calculateTaxValue = (original,gstValue,gst)=>{
-    console.log(gst);
+  
     if(gst % 2 !== 0){
       return (Number(original) * Number(gstValue))/100;
     }
@@ -127,29 +149,44 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     let total_estimate = 0,
       total_assessed = 0,
       total_paint =0,
-
-      total_tax = 0;
+      total_taxable_amount=0,
+      total_tax = 0,
+      total_aassessed_wihtout_tax=0;
     allRows.map((row, index) => {
+      if(String(row.isActive) === "1"){
       const current_row_estimate =
         Number(row?.estimate) +
         calculateGSTValue(row?.estimate, currentGst, toggleEstimate +1 );
       total_estimate = total_estimate + current_row_estimate;
+      }
     })
     allRows.map((row,index)=>{ 
-      console.log("assessed",row);
-      const current_row_assessed = Number(row?.assessed) + calculateGSTValue(row?.assessed,currentGst,row?.gst);
+      if(String(row.isActive) === "1"){
+      const current_row_assessed = Number(row?.assessed) - calculateGSTWithPaintValue(row?.assessed,row.type,row.gst);
+      console.log("sum",Number(row?.assessed)-calculateGSTWithPaintValue(row?.assessed,row.type,row.gst));
+      total_taxable_amount = total_taxable_amount + (Number(row.gst)%2 !==0 ? current_row_assessed : 0);
+
+
       const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,row.gst);
-      total_assessed = total_assessed + current_row_assessed;
+      total_assessed = total_assessed + Number(row?.assessed);
+
+      const remained_assessed_paint_dep = Number(row?.assessed) - calculateGSTWithoutPaintValue(row.assessed,row.type,row.gst);
+      total_aassessed_wihtout_tax = total_aassessed_wihtout_tax + (row.gst%2=== 0 )? remained_assessed_paint_dep : 0;
+
       total_tax = total_tax + current_row_assessed_tax;
       total_paint = total_paint +( row.type  === 1 ? (Number(row?.assessed)) :  0);
+      }
     });
 
-    console.log("total_paint",total_paint);
     setTotalAssessed(total_assessed);
     setTotalLabrorAssessed(total_assessed);
     setTotalLabrorEstimate(total_estimate);
+    setTotalTaxbleAmount(total_taxable_amount);
     setTotalEstimate(total_estimate);
-    setTaxAmount(total_tax);
+
+    console.log("total_aassessed_wihtout_tax",total_aassessed_wihtout_tax)
+    settotalRemainingAssessed(total_aassessed_wihtout_tax);
+    setTaxAmount(((total_taxable_amount)*Number(currentGst))/100);
     setLaborWOPaint(total_paint);
     setReload(false);
   }, [toggleEstimate, currentGst, reload, allRows,toggleEstimate]);
@@ -299,7 +336,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [lessExcess,setLessExcess]=useState(0);
   const [lessImposed,setLessImposed]=useState(0);
   const [other,setOther]=useState(0);
-  const [metalSalvageValue,setMetalSalvageValue]=useState(0);
+  const [metalSalvageValue,setMetalSalvageValue]=useState(5);
 
  
 
@@ -439,7 +476,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
     const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
  
-   setAgeOfvehicleTotal(a);
+  //  setAgeOfvehicleTotal(a);
     return `${a }`;
     
     
@@ -450,7 +487,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const calculateDepreciationOnMetal = ()=>{
     const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
    
-    setmetaldepPct(a);
+    // setmetaldepPct(a);
     console.log(a);
     return a;
   }
@@ -1083,7 +1120,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 </div>
                 <div className="col-lg-3">
                   <LabourForm 
+
+                  totalRemainingAssessed={totalRemainingAssessed}
+
                   currentGst={currentGst}
+                  totalTaxableAMount={totalTaxableAMount}
                   setCurrentGST={setCurrentGst}
                   setTotalAssessed={setTotalAssessed}
                   totalAssessed={totalAssessed}
@@ -1125,7 +1166,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                       )}
                     </div>
                     <div className="col-lg-2">
-                      <div className="row mt-1">
+                     {/* <div className="row mt-1">
                         <div className="col-lg-7 my_profile_setting_input form-group text-end">
                           <label
                             htmlFor=""
@@ -1146,14 +1187,14 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            // value={props.assessed}
+                            value={calculateVehicleAge()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
                         </div>
-                      </div>
+                          </div>*/}
                     </div>
                     <div className="col-lg-2">
                       <div className="row mt-1">
@@ -1177,6 +1218,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
+                            value={calculateVehicleAge()}
                             // value={props.assessed}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
@@ -1208,7 +1250,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            // value={props.difference}
+                            value={calculateDepreciationOnMetal()}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 

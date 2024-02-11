@@ -235,17 +235,19 @@ export default function Exemple_01({
                 : String(part.WithTax) === "2"
                 ? "Estimate"
                 : "Assessed";
-            total_assessed = total_assessed + (overall + GSTT);
+            if (part.IsActive === 1) {
+              total_assessed = total_assessed + (overall + GSTT);
 
-            total_metal =
-              total_metal +
-              (part.TypeOfMaterial === "Metal"
-                ? (Number(part.Assessed) *
-                    Number(part.QA) *
-                    Number(part.DepreciationPct)) /
-                  100
-                : 0);
-            total_estimate = total_estimate + (overall_e + GSTT_e);
+              total_metal =
+                total_metal +
+                (part.TypeOfMaterial === "Metal"
+                  ? (Number(part.Assessed) *
+                      Number(part.QA) *
+                      Number(part.DepreciationPct)) /
+                    100
+                  : 0);
+              total_estimate = total_estimate + (overall_e + GSTT_e);
+            }
             temp_row.push(temp);
           }
         });
@@ -561,12 +563,15 @@ export default function Exemple_01({
     let without_gst = 0,
       with_gst = 0;
     allRows.map((row, index) => {
-      let current_total = Number(row.assessed) * Number(row.qa);
-      const subtract = 0;
-      without_gst = without_gst + (current_total - subtract);
-      with_gst =
-        with_gst +
-        (current_total + ((current_total - subtract) * Number(row.gst)) / 100);
+      if (row.isActive === 1) {
+        let current_total = Number(row.assessed) * Number(row.qa);
+        const subtract = 0;
+        without_gst = without_gst + (current_total - subtract);
+        with_gst =
+          with_gst +
+          (current_total +
+            ((current_total - subtract) * Number(row.gst)) / 100);
+      }
     });
     if (String(currentType) === "Assessed" || String(currentType) === "Both") {
       setTotalPartsAssessed(with_gst);
@@ -581,12 +586,15 @@ export default function Exemple_01({
     let without_gst = 0,
       with_gst = 0;
     allRows.map((row, index) => {
-      let current_total = Number(row.estimate) * Number(row.qe);
-      const subtract = 0;
-      without_gst = without_gst + (current_total - subtract);
-      with_gst =
-        with_gst +
-        (current_total + ((current_total - subtract) * Number(row.gst)) / 100);
+      if (row.isActive === 1) {
+        let current_total = Number(row.estimate) * Number(row.qe);
+        const subtract = 0;
+        without_gst = without_gst + (current_total - subtract);
+        with_gst =
+          with_gst +
+          (current_total +
+            ((current_total - subtract) * Number(row.gst)) / 100);
+      }
     });
     if (String(currentType) === "Estimate" || String(currentType) === "Both") {
       setTotalPartsEstimate(with_gst);
@@ -1030,6 +1038,8 @@ export default function Exemple_01({
   useEffect(() => {
     let temp = [];
 
+    let count = 1;
+
     const getData = () => {
       allRows.map((row, index) => {
         // console.log(row);
@@ -1042,7 +1052,7 @@ export default function Exemple_01({
                 onClick={() => handleRemoveRow(row.sno)}
               ></button>
             ),
-            sno: index + 1,
+            sno: count,
             dep: (
               <input
                 className="form-control form-control-table p-1"
@@ -1054,43 +1064,31 @@ export default function Exemple_01({
               />
             ), // Add default values or leave empty as needed
             item_name: (
-              // <select
-              //   // style={{ marginTop: "-5px" }}
-              //   className="selectpicker form-select p-1"
-              //   style={{ fontSize: "smaller" }}
-              //   data-live-search="true"
-              //   data-width="100%"
-              //   value={row.description}
-              //   disabled={!edit}
-              //   onChange={(e) =>
-              //     handleChange(index, e.target.value, "description")
-              //   }
-              // >
-              //   <option data-tokens="Status1" value={"Regular"}>
-              //     Regular
-              //   </option>
-              //   <option data-tokens="Status2" value={"Add on Policy"}>
-              //     Add on Policy
-              //   </option>
-              //   <option
-              //     data-tokens="Status3"
-              //     value={"Add on Policy(Not Effective)"}
-              //   >
-              //     Add on Policy(Not Effective)
-              //   </option>
-              // </select>
-              <input
-                className="form-control form-control-table p-1"
-                type="text"
+              <select
+                // style={{ marginTop: "-5px" }}
+                className="selectpicker form-select p-1"
+                style={{ fontSize: "smaller" }}
+                data-live-search="true"
+                data-width="100%"
                 value={row.description}
                 disabled={!edit}
                 onChange={(e) =>
                   handleChange(index, e.target.value, "description")
                 }
-                required
-                id="terms"
-                style={{ border: "1px solid black" }}
-              />
+              >
+                <option data-tokens="Status1" value={"Regular"}>
+                  Regular
+                </option>
+                <option data-tokens="Status2" value={"Add on Policy"}>
+                  Add on Policy
+                </option>
+                <option
+                  data-tokens="Status3"
+                  value={"Add on Policy(Not Effective)"}
+                >
+                  Add on Policy(Not Effective)
+                </option>
+              </select>
             ),
             description: (
               <select
@@ -1278,6 +1276,7 @@ export default function Exemple_01({
             ),
           };
           temp.push(newRow);
+          count = count + 1;
         }
       });
     };

@@ -180,7 +180,7 @@ const Summary = ({
               </div>
             </div>
             <div className="col-lg-12">
-              <div className="row mt-1 mb-1">
+             {/*} <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
                     htmlFor=""
@@ -201,7 +201,7 @@ const Summary = ({
                     // placeholder="Enter Registration No."
                   />
                 </div>
-              </div>
+                  </div>*/}
             </div>
           </div>
           <hr />
@@ -416,7 +416,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={(Number(totalLabrorAssessed) + Number(totalPartsAssessed)) + (Number(lessExcess) - Number(lessImposed) + Number(other) )}
+                    value={(Number(totalLabrorAssessed) + Number(totalPartsAssessed)) - (Number(lessExcess) + Number(lessImposed) + Number(other) )}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -564,7 +564,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={returnTotal}
+                    value={returnTotal()}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -908,7 +908,7 @@ const Summary = ({
           <div className="row mt-1">
             <div className="col-lg-5"></div>
             <div className="col-lg-2">
-              <div className="row mt-1">
+              {/*<div className="row mt-1">
                 <div className="col-lg-7 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
@@ -929,7 +929,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={calculateVehicleAge()}
+                    
                     // value={props.assessed}
                     // readOnly={!isEditMode}
                     // onChange={(e) => setLicenseType(e.target.value)}
@@ -937,7 +937,7 @@ const Summary = ({
                     // placeholder="Enter Registration No."
                   />
                 </div>
-              </div>
+                  </div>*/}
             </div>
             <div className="col-lg-2">
               <div className="row mt-1">
@@ -961,6 +961,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={calculateVehicleAge()}
                     // value={props.assessed}
                     // readOnly={!isEditMode}
                     // onChange={(e) => setLicenseType(e.target.value)}

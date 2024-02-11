@@ -6,14 +6,15 @@ import { Calendar } from "primereact/calendar";
 
 import { Editor } from "primereact/editor";
 import { AccidentContent, AssessmentContent } from "./Content";
-import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
+import {
+  calculateDepreciationsPercenatge,
+  getMonthsDifference,
+} from "./functions";
 import MyDatePicker from "../../common/MyDatePicker";
 import getTime from "date-fns/getTime";
 import MyDatePickerTime from "../../common/MyDatePickerTime";
 
 const Servey = ({
-  
-  
   phoneNumber,
   setPhoneNumber,
   applicantNumber,
@@ -31,7 +32,7 @@ const Servey = ({
   Pin,
   setPlaceOfSurvey,
   PlaceOfSurvey,
-  
+
   AccidentAddedDateTime,
   setAccidentAddedDateTime,
   setPlaceOfLoss,
@@ -135,9 +136,9 @@ const Servey = ({
   setVehicleSeatingCapacity,
 
   SaveHandler,
-  claim
+  claim,
 }) => {
-  const  formatDate = (dateString) => {
+  const formatDate = (dateString) => {
     const options = {
       year: "numeric",
       month: "short",
@@ -159,33 +160,35 @@ const Servey = ({
     return formattedDate;
   };
 
-  
-  const calculateVehicleAge = ()=>{
-    if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
+  const calculateVehicleAge = () => {
+    if (
+      !claim.vehicleDetails?.DateOfRegistration ||
+      !claim.claimDetails?.AddedDateTime
+    ) {
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
 
-
-    const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
+    const b = getMonthsDifference(claim.claimDetails?.AddedDateTime);
     // setAgeOfVehicle(a+b);
-    console.log("age",a);
+    console.log("age", a);
     return `${a}`;
-    
+  };
 
-  }
-
-  const calculateDepreciationOnMetal = ()=>{
-    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
-  //  setDepMetal(a);
-   console.log("dep",a);
+  const calculateDepreciationOnMetal = () => {
+    const a = calculateDepreciationsPercenatge(
+      allDepreciations,
+      "Metal",
+      claim.vehicleDetails?.DateOfRegistration
+    );
+    //  setDepMetal(a);
+    console.log("dep", a);
     return a;
-  }
-
+  };
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    
+
     // Allow only numeric input
     const numericValue = inputValue.replace(/\D/g, "");
 
@@ -239,15 +242,15 @@ const Servey = ({
   };
   const [text, setText] = useState("");
 
-  const [isEditMode,setIsEditMode]=useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  const handleCancelHandler=()=>{
+  const handleCancelHandler = () => {
     setIsEditMode(false);
-  }
+  };
 
-  const editHandler = ()=>{
+  const editHandler = () => {
     setIsEditMode(true);
-  }
+  };
 
   return (
     <>
@@ -255,7 +258,7 @@ const Servey = ({
         <div className="col-lg-6" style={{ borderRight: "1px solid black" }}>
           <div className="row">
             <div className="col-lg-12">
-              <h4>Account Details :</h4>
+              <h4>Accident Details :</h4>
               <hr />
             </div>
             <div className="col-lg-12">
@@ -267,7 +270,7 @@ const Servey = ({
                     style={{
                       // paddingTop: "15px",
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
@@ -275,23 +278,31 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                { !isEditMode ? 
-                  <input 
-              readOnly={!isEditMode}
-              type={ "text"}
-              value={AccidentAddedDateTime ? formatDate(AccidentAddedDateTime) : ""}
-             
-              className="form-control" 
-            id="propertyTitle" />
-            :
-                <MyDatePickerTime
-                disable={!isEditMode}
-                  selectedDate={AccidentAddedDateTime ? new Date(AccidentAddedDateTime) : ""}
-                  setSelectedDate={setAccidentAddedDateTime}
-                  isTime={true}
-                /> 
-                }
-                 {/*<input
+                  {!isEditMode ? (
+                    <input
+                      readOnly={!isEditMode}
+                      type={"text"}
+                      value={
+                        AccidentAddedDateTime
+                          ? formatDate(AccidentAddedDateTime)
+                          : ""
+                      }
+                      className="form-control"
+                      id="propertyTitle"
+                    />
+                  ) : (
+                    <MyDatePickerTime
+                      disable={!isEditMode}
+                      selectedDate={
+                        AccidentAddedDateTime
+                          ? new Date(AccidentAddedDateTime)
+                          : ""
+                      }
+                      setSelectedDate={setAccidentAddedDateTime}
+                      isTime={true}
+                    />
+                  )}
+                  {/*<input
                   type={isEditMode ? "datetime-local" : "text"}
                 className="form-control"
                 id="formGroupExampleInput3"
@@ -314,22 +325,24 @@ const Servey = ({
                     className="text-color mt-2"
                     style={{
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                     }}
                   >
                     Time of Accident
                   </label>
                 </div>
                 <div className="col-lg-7">
-               
-                <input
-                type="text"
-                className="form-control"
-                id="propertyTitle"
-                readonly={!isEditMode}
-                
-                value={AccidentAddedDateTime ? formatTime(AccidentAddedDateTime) : ""}
-              />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    readonly={!isEditMode}
+                    value={
+                      AccidentAddedDateTime
+                        ? formatTime(AccidentAddedDateTime)
+                        : ""
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -342,7 +355,7 @@ const Servey = ({
                     style={{
                       // paddingTop: "15px",
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
@@ -356,7 +369,7 @@ const Servey = ({
                     id="propertyTitle"
                     readonly={!isEditMode}
                     value={PlaceOfLoss}
-                    onChange={(e)=>setPlaceOfLoss(e.target.value)}
+                    onChange={(e) => setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -375,7 +388,7 @@ const Servey = ({
                     style={{
                       // paddingTop: "15px",
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
@@ -389,7 +402,7 @@ const Servey = ({
                     id="propertyTitle"
                     value={Pin}
                     readonly={!isEditMode}
-                    onChange={(e)=>setPin(e.target.value)}
+                    onChange={(e) => setPin(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -408,7 +421,7 @@ const Servey = ({
                     style={{
                       // paddingTop: "15px",
                       color: "#2e008b",
-                      fontWeight: "",
+                      fontSize: "14px",
                       // marginTop: "-13px",
                     }}
                   >
@@ -422,7 +435,7 @@ const Servey = ({
                     id="propertyTitle"
                     value={PlaceOfSurvey}
                     readonly={!isEditMode}
-                    onChange={(e)=>setPlaceOfSurvey(e.target.value)}
+                    onChange={(e) => setPlaceOfSurvey(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -468,21 +481,27 @@ const Servey = ({
 
                    value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
           onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
-          { !isEditMode ? 
-            <input 
-        readOnly={!isEditMode}
-        type={ "text"}
-        value={SurveyAllotmentDate ? formatDate(SurveyAllotmentDate) : ""}
-       
-        className="form-control" 
-      id="propertyTitle" />
-      :
-                <MyDatePicker
-                disable={!isEditMode}
-                  selectedDate={SurveyAllotmentDate ? new Date(SurveyAllotmentDate) : ""}
-                  setSelectedDate={setSurveyAllotmentDate}
-                /> 
-          }
+                  {!isEditMode ? (
+                    <input
+                      readOnly={!isEditMode}
+                      type={"text"}
+                      value={
+                        SurveyAllotmentDate
+                          ? formatDate(SurveyAllotmentDate)
+                          : ""
+                      }
+                      className="form-control"
+                      id="propertyTitle"
+                    />
+                  ) : (
+                    <MyDatePicker
+                      disable={!isEditMode}
+                      selectedDate={
+                        SurveyAllotmentDate ? new Date(SurveyAllotmentDate) : ""
+                      }
+                      setSelectedDate={setSurveyAllotmentDate}
+                    />
+                  )}
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -504,13 +523,13 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-7">
-                   <input
+                  <input
                     type="text"
                     value={claim?.claimDetails?.InspectionType}
                     className="form-control"
                     id="propertyTitle"
-                  /> 
-                 
+                  />
+
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -534,28 +553,32 @@ const Servey = ({
                 </label>
               </div>
               <div className="col-lg-8">
-               {/*} <input
+                {/*} <input
                 type={isEditMode ? "date" : "text"}
                 readonly={!isEditMode}
                 value={ isEditMode ? SurveyConductedDate : formatDate(SurveyConductedDate)}
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
                 />*/}
-                { !isEditMode ? 
-                  <input 
-              readOnly={!isEditMode}
-              type={ "text"}
-              value={SurveyConductedDate ? formatDate(SurveyConductedDate) : ""}
-             
-              className="form-control" 
-            id="propertyTitle" />
-            :
-                <MyDatePicker
-                  disable={!isEditMode}
-                    selectedDate={SurveyConductedDate ? new Date(SurveyConductedDate) : ""}
+                {!isEditMode ? (
+                  <input
+                    readOnly={!isEditMode}
+                    type={"text"}
+                    value={
+                      SurveyConductedDate ? formatDate(SurveyConductedDate) : ""
+                    }
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                ) : (
+                  <MyDatePicker
+                    disable={!isEditMode}
+                    selectedDate={
+                      SurveyConductedDate ? new Date(SurveyConductedDate) : ""
+                    }
                     setSelectedDate={setSurveyConductedDate}
-                  /> 
-                }
+                  />
+                )}
               </div>
             </div>
             {/* <div className="my_profile_setting_input form-group">
@@ -570,7 +593,15 @@ const Servey = ({
           <div className="col-lg-12">
             <div>
               <div className="">
-                <Editor placeholder={AccidentContent(claim?.insuredDetails?.InsuredName)} readonly={!isEditMode} value={CauseOfAccident} onChange={setCauseOfAccident} style={{ height: "150px" }} />
+                <Editor
+                  placeholder={AccidentContent(
+                    claim?.insuredDetails?.InsuredName
+                  )}
+                  readonly={!isEditMode}
+                  value={CauseOfAccident}
+                  onChange={setCauseOfAccident}
+                  style={{ height: "150px" }}
+                />
               </div>
               {/*  <Editor/>*/}
               {/* <textarea
@@ -606,7 +637,12 @@ const Servey = ({
           </div>
           <div className="col-lg-12 mb-2">
             <div className="">
-              <Editor readonly={!isEditMode} value={PoliceAction} onChange={setPoliceAction}  style={{ height: "80px" }} />
+              <Editor
+                readonly={!isEditMode}
+                value={PoliceAction}
+                onChange={setPoliceAction}
+                style={{ height: "80px" }}
+              />
             </div>
           </div>
         </div>
@@ -617,14 +653,22 @@ const Servey = ({
               <hr />
             </div>
             <div className="col-lg-6 text-end">
-              
               {isEditMode ? (
                 <>
-                <button className="btn btn-color m-1" onClick={handleCancelHandler}>Cancel</button>
-                <button className="btn btn-color m-1" onClick={SaveHandler}>Update</button>
+                  <button
+                    className="btn btn-color m-1"
+                    onClick={handleCancelHandler}
+                  >
+                    Cancel
+                  </button>
+                  <button className="btn btn-color m-1" onClick={SaveHandler}>
+                    Update
+                  </button>
                 </>
               ) : (
-                <button className="btn btn-color m-1" onClick={editHandler}>Edit</button>
+                <button className="btn btn-color m-1" onClick={editHandler}>
+                  Edit
+                </button>
               )}
               {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
@@ -634,7 +678,12 @@ const Servey = ({
           </div>
           <div className="row">
             <div className="">
-              <Editor readonly={!isEditMode}  value={DetailsOfLoads} onChange={setDetailsOfLoads} style={{ height: "100px" }} />
+              <Editor
+                readonly={!isEditMode}
+                value={DetailsOfLoads}
+                onChange={setDetailsOfLoads}
+                style={{ height: "100px" }}
+              />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -642,7 +691,12 @@ const Servey = ({
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
             <div className="">
-              <Editor readonly={!isEditMode} value={ThirdPartyLoss} onChange={setThirdPartyLoss} style={{ height: "100px" }} />
+              <Editor
+                readonly={!isEditMode}
+                value={ThirdPartyLoss}
+                onChange={setThirdPartyLoss}
+                style={{ height: "100px" }}
+              />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -650,7 +704,17 @@ const Servey = ({
             <h4>Assesment :</h4>
             <hr />
             <div className="">
-              <Editor placeholder={AssessmentContent(claim?.claimDetails?.InsuranceCompanyNameAddress ,formatDate( claim?.claimDetails?.AddedDateTime),formatDate( ""))} readonly={!isEditMode} value={Assessment} onChange={setAssessment} style={{ height: "300px" }} />
+              <Editor
+                placeholder={AssessmentContent(
+                  claim?.claimDetails?.InsuranceCompanyNameAddress,
+                  formatDate(claim?.claimDetails?.AddedDateTime),
+                  formatDate("")
+                )}
+                readonly={!isEditMode}
+                value={Assessment}
+                onChange={setAssessment}
+                style={{ height: "300px" }}
+              />
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>
@@ -661,7 +725,7 @@ const Servey = ({
         <div className="row mt-1">
           <div className="col-lg-3"></div>
           <div className="col-lg-2">
-            <div className="row mt-1">
+            {/*} <div className="row mt-1">
               <div className="col-lg-7 my_profile_setting_input form-group text-end">
                 <label
                   htmlFor=""
@@ -689,7 +753,7 @@ const Servey = ({
                   // placeholder="Enter Registration No."
                 />
               </div>
-            </div>
+                </div>*/}
           </div>
           <div className="col-lg-2">
             <div className="row mt-1">
@@ -702,7 +766,7 @@ const Servey = ({
                     color: "#2e008b",
                     fontWeight: "",
                     // marginTop: "-13px",
-                    fontSize: "13px",
+                    fontSize: "14px",
                   }}
                 >
                   Age of Policy
@@ -725,7 +789,7 @@ const Servey = ({
           </div>
           <div className="col-lg-3 ">
             <div className="row mt-1">
-              <div className="col-lg-7 my_profile_setting_input form-group text-end">
+              <div className="col-lg-8 my_profile_setting_input form-group text-end">
                 <label
                   htmlFor=""
                   className="text-color"
@@ -734,7 +798,7 @@ const Servey = ({
                     color: "#2e008b",
                     fontWeight: "",
                     // marginTop: "-13px",
-                    fontSize: "13px",
+                    fontSize: "14px",
                   }}
                 >
                   Depreciation on metal(%)
