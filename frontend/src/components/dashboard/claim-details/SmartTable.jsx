@@ -4,8 +4,10 @@ import SVGArrowDown from "./icons/SVGArrowDown";
 import SVGArrowUp from "./icons/SVGArrowUp";
 import SVGChevronLeft from "./icons/SVGChevronLeft";
 import SVGChevronRight from "./icons/SVGChevronRight";
+import Modal from "react-modal";
 
 function SmartTable(props) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sortDesc, setSortDesc] = useState({});
   const [tableWidth, setTableWidth] = useState(1000);
@@ -41,6 +43,14 @@ function SmartTable(props) {
     },
     [props.url]
   );
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const tableWidthFunc = useCallback(() => {
     let tempTableWidth = 0;
@@ -172,11 +182,19 @@ function SmartTable(props) {
                       >
                         {/* {props.title} */}
                       </div>
-                      <div className="col-lg-1">
+                      <div className="row">
+                        <div className="col-lg-10"></div>
                         <div
-                          className="btn-thm w-50 flaticon-pdf"
+                          className="col-lg-1 btn-thm w-10 flaticon-plus"
+                          title="Add Document"
+                          style={{ marginLeft: "" }}
+                          // onClick={props.downloadAllFiles}
+                          onClick={openModal}
+                        ></div>
+                        <div
+                          className="col-lg-1 btn-thm w-10 flaticon-pdf"
                           title="pdf zip download"
-                          style={{ marginLeft: "50px" }}
+                          // style={{ marginLeft: "50px" }}
                           onClick={props.downloadAllFiles}
                         ></div>
                       </div>
@@ -186,7 +204,7 @@ function SmartTable(props) {
                         <div className="smartTable-tableContainer">
                           <table
                             className={
-                              "smartTable-table table table-striped border"
+                              "smartTable-table table table-striped border text-start"
                             }
                             style={{ minWidth: tableWidth }}
                           >
@@ -337,6 +355,62 @@ function SmartTable(props) {
                     )}
                   </div>
                 </div>
+                {/* Modal */}
+                <Modal
+                  className=" text-center mt-5 "
+                  // style={{ marginTop: "150px" }}
+                  isOpen={isModalOpen}
+                  onRequestClose={closeModal}
+                  contentLabel=""
+                >
+                  <div className="col-lg-12" style={{ marginTop: "150px" }}>
+                    <div className="row">
+                      <div className="col-lg-4"></div>
+                      <div
+                        className="col-lg-4 p-5"
+                        style={{
+                          borderRadius: "5px",
+                          backgroundColor: "#f2f2f2",
+                        }}
+                      >
+                        <div className="col-lg-12"></div>
+                        <h3 style={{ color: "#2e008b" }}>Add Document</h3>
+                        <hr />
+                        <div className="row mt-1 mb-1">
+                          <div className="col-lg-5 my_profile_setting_input form-group">
+                            <label
+                              htmlFor=""
+                              className="text-color"
+                              style={{
+                                color: "#2e008b",
+                                fontWeight: "",
+                              }}
+                            >
+                              Document Name
+                            </label>
+                          </div>
+                          <div className="col-lg-7">
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="propertyTitle"
+                              // placeholder="Enter Registration No."
+                            />
+                          </div>
+                        </div>
+                        <hr />
+                        <button
+                          onClick={closeModal}
+                          className="btn btn-color m-1"
+                        >
+                          Cancel
+                        </button>
+                        <button className="btn btn-color m-1">Submit</button>
+                      </div>
+                      <div className="col-lg-4"></div>
+                    </div>
+                  </div>
+                </Modal>
               </div>{" "}
             </div>
           </div>

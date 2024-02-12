@@ -6,9 +6,13 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Exemple from "./Exemple_01";
 // import toast from "react-hot-toast";
+import PaymentDetails_01 from "./PaymentsDetails_01";
+import { useState } from "react";
 
 const PaymentDetails = (edit) => {
   const router = useRouter();
+
+  const [editCase_11, setEditCase_11] = useState(false);
 
   const editHandler = () => {
     setEdit(true);
@@ -39,15 +43,7 @@ const PaymentDetails = (edit) => {
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Payment Details</h4>
-                <div className="col-lg-1 m-1">
-                  {/*<button
-                    className="btn-thm mb-1"
-                    style={{ marginTop: "-10px" }}
-                    onClick={editHandler}
-                  >
-                    {edit ? "Save" : <span className="flaticon-edit"></span>}
-  </button>*/}
-                </div>
+                <div className="col-lg-1 m-1"></div>
               </button>
             </h2>
             <div
@@ -58,112 +54,154 @@ const PaymentDetails = (edit) => {
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Estimate Amount
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
+                  <div className="col-lg-1 text-end">
+                    {editCase_11 ? (
+                      <button
+                        className="btn-thm"
+                        style={{}}
+                        onClick={() => onSaveHandler(setEditCase_11)}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-thm"
+                        style={{}}
+                        onClick={() => setEditCase_11(true)}
+                      >
+                        <span
+                          className="flaticon-edit"
+                          style={{ fontSize: "14px" }}
+                        ></span>
+                      </button>
+                    )}
                   </div>
-                  <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Invoice Amount
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
+                  {editCase_11 && (
+                    <div className="col-lg-2 text-start">
+                      <button
+                        className="btn-thm"
+                        // onClick={handleFetchData}
+                        style={{}}
+                      >
+                        Fetch Details
+                      </button>
                     </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Allowed Amount
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  )}
+                </div>
 
-                  <div className="col-lg-6">
-                    <div className="row mt-1 mb-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            color: "#1560bd",
-                            fontWeight: "",
-                          }}
-                        >
-                          Customer Share
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                      <div className="col-lg-12 text-end">
-                        <button className="btn btn-color mt-1 ">Save</button>
+                {editCase_11 ? (
+                  <div className="row">
+                    <PaymentDetails_01 />
+                  </div>
+                ) : (
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Estimate Amount
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* <div className="col-lg-12">
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Invoice Amount
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Allowed Amount
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Customer Share
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                        <div className="col-lg-12 text-end">
+                          <button className="btn btn-color mt-1 ">Save</button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div className="col-lg-12">
                     <div className="row">
                       <Exemple />
                     </div>
                   </div> */}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -134,12 +134,11 @@ const Index = ({}) => {
       : "NA"
   );
 
-  const [VehicleInsuranceUpto , setVehicleInsuranceUpto] = useState(
+  const [VehicleInsuranceUpto, setVehicleInsuranceUpto] = useState(
     claim?.vehicleDetails?.VehicleInsuranceUpto
       ? claim?.vehicleDetails?.VehicleInsuranceUpto
       : "NA"
- 
-    );
+  );
 
   const [EngineNumber, setEngineNumber] = useState(
     claim?.vehicleDetails?.VehicleEngineNumber
@@ -156,8 +155,6 @@ const Index = ({}) => {
       ? claim?.vehicleDetails?.IssuingAuthority
       : "NA"
   );
-
-
 
   const [LicenseNumber, setLicenseNumber] = useState(
     claim?.vehicleDetails?.LicenseNumber
@@ -230,12 +227,13 @@ const Index = ({}) => {
   const [MakerDesc, setMakerDesc] = useState("");
   const [MakerModel, setMakerModel] = useState("");
 
-  console.log("CONTANT11111",MakerModel)
-
+  console.log("CONTANT11111", MakerModel);
 
   const [ManufactureMonthYear, setManufactureMonthYear] = useState("");
   const [VehicleGvw, setVehicleGvw] = useState("");
-  const [CubicCapacity, setCubicCapacity] = useState(claim?.vehicleDetails?.VehicleCubicCapacity );
+  const [CubicCapacity, setCubicCapacity] = useState(
+    claim?.vehicleDetails?.VehicleCubicCapacity
+  );
   const [BancsBodyType, setBancsBodyType] = useState("");
   const [BancsMakeCode, setBancsMakeCode] = useState("");
   const [BancsModelCode, setBancsModelCode] = useState("");
@@ -325,8 +323,8 @@ const Index = ({}) => {
 
   useEffect(() => {
     setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice || "");
-    setClaimRegion(claim?.claimDetails?.Region ||"");
-    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice||"");
+    setClaimRegion(claim?.claimDetails?.Region || "");
+    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice || "");
     setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart);
     setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
     setInsuranceCompanyNameAddress(
@@ -352,8 +350,7 @@ const Index = ({}) => {
     setLicenseType(claim?.vehicleDetails?.LicenseType);
     setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber);
     setVehicleFuelType(
-      claim?.vehicleDetails?.FuelType ||
-        claim?.vehicleDetails?.BancsFuelType
+      claim?.vehicleDetails?.FuelType || claim?.vehicleDetails?.BancsFuelType
     );
     setDriverName(claim?.driverDetails?.DriverName);
     setDriverAddedDate(claim?.driverDetails?.AddedDate);
@@ -364,9 +361,7 @@ const Index = ({}) => {
     setGarageAddedBy(claim?.garageDetails?.AddedBy);
 
     // New Fields
-    setVehicleClassDescription(
-      claim?.vehicleDetails?.ClassDescription || "NA"
-    );
+    setVehicleClassDescription(claim?.vehicleDetails?.ClassDescription || "NA");
     setMakerDesc(claim?.vehicleDetails?.MakerDesc || "NA");
     setMakerModel(claim?.vehicleDetails?.MakerModel || "NA");
     setManufactureMonthYear(
@@ -400,7 +395,6 @@ const Index = ({}) => {
     setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle || "NA");
   }, [claim]);
 
-  
   console.log("datat ", VehicleInsuranceCompany);
 
   const generateRegion = (region) => {
@@ -468,7 +462,7 @@ const Index = ({}) => {
       // VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
       //   ? claim?.claimDetails?.ReferenceNo
       //   : generateRegion(claim?.ClaimRegion),
-      SurveyType: subType ,
+      SurveyType: subType,
       InspectionType: inspectionType
         ? inspectionType
         : claim?.claimDetails?.InspectionType,
@@ -875,7 +869,9 @@ const Index = ({}) => {
                               <CreateList_02
                                 claim={claim}
                                 InsuredName={InsuredName}
-                                VehicleRegisteredNumber={VehicleRegisteredNumber}
+                                VehicleRegisteredNumber={
+                                  VehicleRegisteredNumber
+                                }
                                 subType={subType}
                                 InsuredMobileNo1={InsuredMobileNo1}
                                 ClaimNumber={ClaimNumber}
@@ -886,7 +882,6 @@ const Index = ({}) => {
                           ) : (
                             <CreateList
                               claim={claim}
-
                               inspectionType={inspectionType}
                               setInspectionType={setInspectionType}
                               InsuredName={InsuredName}
@@ -925,8 +920,10 @@ const Index = ({}) => {
                               }
                               insuredAddedBy={insuredAddedBy}
                               setInsuredAddedBy={setInsuredAddedBy}
-                              VehicleRegisteredNumber = {VehicleRegisteredNumber}
-                              setVehicleRegisteredNumber = {setVehicleRegisteredNumber}
+                              VehicleRegisteredNumber={VehicleRegisteredNumber}
+                              setVehicleRegisteredNumber={
+                                setVehicleRegisteredNumber
+                              }
                             />
                           )}
                         </div>
@@ -1052,7 +1049,9 @@ const Index = ({}) => {
                               setEngineType={setEngineType}
                               EngineType={EngineType}
                               VehicleRegisteredOwner={VehicleRegisteredOwner}
-                              setVehicleRegisteredOwner={setVehicleRegisteredOwner}
+                              setVehicleRegisteredOwner={
+                                setVehicleRegisteredOwner
+                              }
                               DateRegistration={DateRegistration}
                               setDateRegistration={setDateRegistration}
                               PUCNumber={PUCNumber}
@@ -1081,7 +1080,9 @@ const Index = ({}) => {
                               setMakerModel={setMakerModel}
                               setVehicleGvw={setVehicleGvw}
                               setCubicCapacity={setCubicCapacity}
-                              setVehicleSeatingCapacity={setVehicleSeatingCapacity}
+                              setVehicleSeatingCapacity={
+                                setVehicleSeatingCapacity
+                              }
                               setVehiclePermanentAddress={
                                 setVehiclePermanentAddress
                               }
@@ -1136,7 +1137,6 @@ const Index = ({}) => {
                               setClassOfVehicle={setClassOfVehicle}
                               VehicleInsuranceUpto={VehicleInsuranceUpto}
                               setVehicleInsuranceUpto={setVehicleInsuranceUpto}
-
                             />
                           </div>
                         </div>
@@ -1211,7 +1211,7 @@ const Index = ({}) => {
                           style={{ marginLeft: "-15px" }}
                         >
                           <div className="col-lg-12">
-                            <EstimateList />
+                            <EstimateList onSaveHandler={onSaveHandler} />
                           </div>
                         </div>
 

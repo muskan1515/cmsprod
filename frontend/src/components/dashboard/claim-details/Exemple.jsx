@@ -2,6 +2,7 @@ import Link from "next/link";
 import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
 import JSZip from "jszip";
+import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
 
 const headCells = [
   {
@@ -34,60 +35,12 @@ const headCells = [
     label: "File",
     width: 150,
   },
-  // {
-  //   id: "subject",
-  //   numeric: false,
-  //   label: "Registration No.",
-  //   width: 150,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "City",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "State",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Assigned Garage",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Case Age (Days)",
-  //   width: 150,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Case Age (Insurer)",
-  //   width: 150,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Officer",
-  //   width: 100,
-  // },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Request Type",
-  //   width: 100,
-  // },
-  // {
-  //   id: "serial",
-  //   numeric: false,
-  //   label: "Insurer Claim ID.",
-  //   width: 100,
-  // },
+  {
+    id: "action",
+    numeric: false,
+    label: "Action",
+    width: 100,
+  },
 ];
 
 let data = [
@@ -95,7 +48,11 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "1",
     doc_name: "Driving licence",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     status: "verified",
     file: "",
     verify: (
@@ -113,7 +70,11 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "2",
     doc_name: "Certificate of registration",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     file: "",
     verify: (
       <input
@@ -130,7 +91,11 @@ let data = [
     _id: "6144145976c7fe",
     serial_num: "3",
     doc_name: "Repair Estimate",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     file: "",
     verify: (
       <input
@@ -148,7 +113,11 @@ let data = [
     serial_num: "4",
     doc_name: "Claim form",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -165,7 +134,11 @@ let data = [
     serial_num: "5",
     doc_name: "Insurance policy",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -182,7 +155,11 @@ let data = [
     serial_num: "6",
     doc_name: "Damage vehicle photographs/video",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -199,7 +176,11 @@ let data = [
     serial_num: "7",
     doc_name: "Aadhar card",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -216,7 +197,11 @@ let data = [
     serial_num: "8",
     doc_name: "Pan card",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -233,7 +218,11 @@ let data = [
     serial_num: "9",
     doc_name: " Cancel cheque",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -250,7 +239,11 @@ let data = [
     serial_num: "10",
     doc_name: " Satisfaction voucher",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -267,7 +260,11 @@ let data = [
     serial_num: "11",
     doc_name: "Discharge voucher",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -284,7 +281,11 @@ let data = [
     serial_num: "12",
     doc_name: "Dismantle photographs",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -301,7 +302,11 @@ let data = [
     serial_num: "13",
     doc_name: "Reinspection photographs",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -318,7 +323,11 @@ let data = [
     serial_num: "14",
     doc_name: "Repair Invoice",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"
@@ -335,7 +344,11 @@ let data = [
     serial_num: "15",
     doc_name: "Payment/cash receipt",
     file: "",
-    action: "2021-09-17 19:10:50",
+    action: (
+      <button className="btn btn-color w-15">
+        <FaUpload />
+      </button>
+    ),
     verify: (
       <input
         className="form-check-input"

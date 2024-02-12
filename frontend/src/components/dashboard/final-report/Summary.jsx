@@ -5,8 +5,8 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Editor } from "primereact/editor";
 
-const Summary = ({ 
-  isEditMode ,
+const Summary = ({
+  isEditMode,
   metaldepPct,
   ageOfVehicleTotal,
   totalPartsEstimate,
@@ -21,25 +21,27 @@ const Summary = ({
   setOther,
   metalSalvageValue,
 
-  calculateDepreciationOnMetal
-  ,calculateVehicleAge
-
+  calculateDepreciationOnMetal,
+  calculateVehicleAge,
 }) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const returnTotal = ()=>{
-    const a = (Number(totalLabrorAssessed) + Number(totalPartsAssessed)) + (Number(lessExcess) - Number(lessImposed) + Number(other) );
-    const b = (((Number(totalLabrorAssessed + totalPartsAssessed)) *( Number(metalSalvageValue)))/100);
+  const returnTotal = () => {
+    const a =
+      Number(totalLabrorAssessed) +
+      Number(totalPartsAssessed) +
+      (Number(lessExcess) - Number(lessImposed) + Number(other));
+    const b =
+      (Number(totalLabrorAssessed + totalPartsAssessed) *
+        Number(metalSalvageValue)) /
+      100;
 
-
-    return (a-b) > 1 ? (a-b) : 0; 
-  }
+    return a - b > 1 ? a - b : 0;
+  };
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-
- 
 
     // Allow only numeric input
     const numericValue = inputValue.replace(/\D/g, "");
@@ -148,7 +150,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                  value={totalPartsEstimate}
+                    value={totalPartsEstimate}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -180,7 +182,7 @@ const Summary = ({
               </div>
             </div>
             <div className="col-lg-12">
-             {/*} <div className="row mt-1 mb-1">
+              {/*} <div className="row mt-1 mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group">
                   <label
                     htmlFor=""
@@ -308,7 +310,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       value={lessExcess}
-                      onChange={(e)=>setLessExcess(e.target.value)}
+                      onChange={(e) => setLessExcess(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -334,7 +336,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       value={lessImposed}
-                      onChange={(e)=>setLessImposed(e.target.value)}
+                      onChange={(e) => setLessImposed(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -362,7 +364,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    
+
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -388,7 +390,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={other}
-                      onChange={(e)=>setOther(e.target.value)}
+                    onChange={(e) => setOther(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -416,7 +418,11 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={(Number(totalLabrorAssessed) + Number(totalPartsAssessed)) - (Number(lessExcess) + Number(lessImposed) + Number(other) )}
+                    value={
+                      Number(totalLabrorAssessed) +
+                      Number(totalPartsAssessed) -
+                      (Number(lessExcess) + Number(lessImposed) + Number(other))
+                    }
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -474,7 +480,11 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={((Number(totalLabrorAssessed + totalPartsAssessed)) *( Number(metalSalvageValue)))/100}
+                    value={
+                      (Number(totalLabrorAssessed + totalPartsAssessed) *
+                        Number(metalSalvageValue)) /
+                      100
+                    }
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -534,7 +544,11 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={((Number(totalLabrorAssessed + totalPartsAssessed)) *( Number(metalSalvageValue)))/100}
+                    value={
+                      (Number(totalLabrorAssessed + totalPartsAssessed) *
+                        Number(metalSalvageValue)) /
+                      100
+                    }
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -603,8 +617,23 @@ const Summary = ({
           </div>
           <div className="row">
             <div className="col-lg-8">
-              <h5>Enclosure Remarks & Other Details </h5>
+              <h5>Enclosure, Remarks & Other Details </h5>
               {/* <hr /> */}
+            </div>
+            <div className="row">
+              <span className="col-lg-7">Endurance :</span>
+              <div className="col-lg-4">
+                <label htmlFor="" className="m-1">
+                  Cash Less
+                </label>
+                <input
+                  className="form-check-input mt-2"
+                  type="checkbox"
+                  // value={row.gst}
+                  // onChange={(e) => handleChange(index, row.gst + 1, "gst")}
+                  id="remeberMe"
+                />
+              </div>
             </div>
             <div className="col-lg-12">
               <div className="row mb-1">

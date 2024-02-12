@@ -77,7 +77,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                     src="/assets/images/header-logo2.png"
                     alt="header-logo2.png"
                   />
-                  <span>FindHouse</span>
+                  <span style={{ fontSize: "21px" }}>Claim Management</span>
                 </Link>
               </li>
               {/* End header */}

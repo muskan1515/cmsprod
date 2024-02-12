@@ -114,17 +114,23 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
 
   return (
     <>
-      <div className="col-lg-12">
+      <div className="row">
+        <div className="col-lg-1 mt-1 mb-2">
+          <label htmlFor="documentType" className="text-dark fw-bold">
+            Mail Type:
+          </label>
+        </div>
         <div className="col-lg-3">
-          <label htmlFor="documentType">Select Option:</label>
           <select
             id="documentType"
             value={selectedOption}
             onChange={handleSelectChange}
-            className="form-control p-1"
+            className="form-select"
           >
             <option value="showDocument">Send Documents</option>
             <option value="showInput">Send Documents -1</option>
+            <option value="showInput_01">Send Documents -2</option>
+            <option value="showInput_02">Send Documents -3</option>
           </select>
         </div>
 
@@ -133,6 +139,362 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
           className="col-lg-12"
           style={{
             display: selectedOption === "showDocument" ? "block" : "none",
+          }}
+        >
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="row mt-3 mb-1">
+                <div className="col-lg-4 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-1"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Type of Documents:
+                  </label>
+                </div>
+                <div className="col-lg-8">
+                  {data?.map((stat, index) => (
+                    <div key={index} className="row">
+                      <div className="col-lg-4">
+                        <input
+                          type="checkbox"
+                          id={`checkbox-${index}`}
+                          data-tokens="Status1"
+                          value={stat.serial_num}
+                          onChange={(e) =>
+                            handleCheckboxChange(
+                              stat.serial_num,
+                              stat.doc_name,
+                              e.target.checked
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="col-lg-8">
+                        <label htmlFor={`checkbox-${index}`}>
+                          {stat.doc_name}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4>Selected Items:</h4>
+                <ul>
+                  {selectedItems.map((item) => (
+                    <li key={item.id}>{item.value}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-1"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Email Address :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      placeholder={email}
+                      value={emailAddress}
+                      onChange={(e) => setEmailAddress(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-1"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Policy No. :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      placeholder={policyNo}
+                      value={policyNos}
+                      onChange={(e) => setPolicyNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-2"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Date :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="date"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row card">
+                  <h4 className="col-12 text-center mt-1">Mail Box</h4>
+                  <hr />
+                  <div className="row">
+                    <h5 className="">To :</h5>
+                    <input
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
+                    />
+                  </div>
+                  <hr />
+                  <div className="row">
+                    <h5 className="">Subject :</h5>
+                    <input
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                    />
+                  </div>
+                  <hr />
+                  <div className="row" style={{ height: "200px" }}>
+                    <textarea
+                      value={body}
+                      onChange={(e) => setBody(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12 text-end">
+                <button className="btn btn-color w-10" onClick={handleSubmit}>
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          id="input-section"
+          className="col-lg-12"
+          style={{ display: selectedOption === "showInput" ? "block" : "none" }}
+        >
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="row mt-3 mb-1">
+                <div className="col-lg-4 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mt-1"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Type of Documents:
+                  </label>
+                </div>
+                <div className="col-lg-8">
+                  {data?.map((stat, index) => (
+                    <div key={index} className="row">
+                      <div className="col-lg-4">
+                        <input
+                          type="checkbox"
+                          id={`checkbox-${index}`}
+                          data-tokens="Status1"
+                          value={stat.serial_num}
+                          onChange={(e) =>
+                            handleCheckboxChange(
+                              stat.serial_num,
+                              stat.doc_name,
+                              e.target.checked
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="col-lg-8">
+                        <label htmlFor={`checkbox-${index}`}>
+                          {stat.doc_name}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4>Selected Items:</h4>
+                <ul>
+                  {selectedItems.map((item) => (
+                    <li key={item.id}>{item.value}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className="col-lg-12">
+                <div className="row mt-3 mb-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-1"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Email Address :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      placeholder={email}
+                      value={emailAddress}
+                      onChange={(e) => setEmailAddress(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-3 mb-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-1"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Policy No. :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      placeholder={policyNo}
+                      value={policyNos}
+                      onChange={(e) => setPolicyNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-3 mb-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mt-2"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Date :
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      required
+                      type="date"
+                      className="form-control"
+                      id="otherInput"
+                      name="otherInput"
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row card">
+                  <h4 className="col-12 text-center mt-1">Mail Box</h4>
+                  <hr />
+                  <div className="row">
+                    <h5 className="">To :</h5>
+                    <input
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
+                    />
+                  </div>
+                  <hr />
+                  <div className="row">
+                    <h5 className="">Subject :</h5>
+                    <input
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                    />
+                  </div>
+                  <hr />
+                  <div className="row" style={{ height: "200px" }}>
+                    <textarea
+                      value={body}
+                      onChange={(e) => setBody(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12 text-end">
+                <button className="btn btn-color w-10" onClick={handleSubmit}>
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          id="input-section"
+          className="col-lg-12"
+          style={{
+            display: selectedOption === "showInput_01" ? "block" : "none",
           }}
         >
           <div className="row">
@@ -310,7 +672,9 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
         <div
           id="input-section"
           className="col-lg-12"
-          style={{ display: selectedOption === "showInput" ? "block" : "none" }}
+          style={{
+            display: selectedOption === "showInput_02" ? "block" : "none",
+          }}
         >
           {/* Input section content */}
         </div>
