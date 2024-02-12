@@ -8,7 +8,7 @@ async function handler(request, response) {
     const {token,fileName,fileUrl,garage,reportType,LeadId,file,isLastChunk,uploadedBy} = request.body;
     // console.log(request.body)
     
-    const userResponse = await axios.post(`${domain}/uploadClaimMedia`, {
+    const userResponse = await axios.post(`${domain}/upload/uploadClaimMedia`, {
         fileUrl : fileUrl,
         fileName:fileName,
         garage:garage,

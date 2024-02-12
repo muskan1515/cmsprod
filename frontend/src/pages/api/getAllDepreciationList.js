@@ -8,7 +8,7 @@ import axios from "axios";
     const domain = process.env.BACKEND_DOMAIN;
 
 
-    const userResponse = await axios.get(`${domain}/getDepreciationRates`,
+    const userResponse = await axios.get(`${domain}/depreciation/getDepreciationRates`,
     {
         headers: {
           Authorization:token,

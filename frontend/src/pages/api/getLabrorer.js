@@ -12,7 +12,7 @@ async function handler(request, response) {
 
     console.log("token",token);
 
-    const userResponse = await axios.get(`${domain}/getLabrorer/${leadId}`, {
+    const userResponse = await axios.get(`${domain}/labourer/getLabrorer/${leadId}`, {
       headers: {
         Authorization: token,
         'Content-Type': 'application/json',

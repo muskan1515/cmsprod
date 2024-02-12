@@ -12,7 +12,7 @@ async function handler(request, response) {
 
     console.log(token)
     
-    const userResponse = await axios.put(`${domain}/updateFinalReport/${leadId}`, payload, {
+    const userResponse = await axios.put(`${domain}/finalReport/updateFinalReport/${leadId}`, payload, {
       headers: {
         Authorization: token,
         'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ async function handler(request, response) {
     const domain = process.env.BACKEND_DOMAIN;
     const { username, password } = request.body;
 
-    const userResponse = await axios.post(`${domain}/login`, {
+    const userResponse = await axios.post(`${domain}/login/login`, {
       username: username,
       password: password,
     });

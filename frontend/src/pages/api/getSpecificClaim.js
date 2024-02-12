@@ -10,7 +10,7 @@ import axios from "axios";
     console.log(leadId);
 
 
-    const userResponse = await axios.get(`${domain}/getSpecificClaim`,
+    const userResponse = await axios.get(`${domain}/claim/getSpecificClaim`,
     {
         headers: {
           Authorization:token,

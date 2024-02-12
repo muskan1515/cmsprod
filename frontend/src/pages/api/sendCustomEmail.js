@@ -8,7 +8,7 @@ async function handler(request, response) {
     
     const { vehicleNo,PolicyNo,Insured,date,content,content2,subject,body,fromEmail,leadId,toMail } = request.body;
 
-    const userResponse = await axios.post(`${domain}/sendCustomEmail`, {
+    const userResponse = await axios.post(`${domain}/email/sendCustomEmail`, {
         vehicleNo: vehicleNo,
         PolicyNo: PolicyNo,
         Insured:Insured,

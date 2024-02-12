@@ -8,7 +8,7 @@ async function handler(request, response) {
     const payload = request.body;
     // console.log(payload);
 
-    const userResponse = await axios.post(`${domain}/getClaimDetails`, payload,{
+    const userResponse = await axios.post(`${domain}/claim/getClaimDetails`, payload,{
         headers:{
             Authorization:token,
             "Content-Type":"application/json"

@@ -9,7 +9,7 @@ import axios from "axios";
 
 
     console.log("leadId",leadId);
-    const userResponse = await axios.get(`${domain}/getStatus`,
+    const userResponse = await axios.get(`${domain}/status/getStatus`,
     {
         headers: {
           Authorization:token,

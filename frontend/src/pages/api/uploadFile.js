@@ -11,7 +11,7 @@ async function handler(request, response) {
     // formData.append('file', file);
     
     // console.log(formData);
-    const userResponse = await axios.post(`${domain}/uploadMedia`, {
+    const userResponse = await axios.post(`${domain}/upload/uploadMedia`, {
       file : file,
       name:name
     }, {

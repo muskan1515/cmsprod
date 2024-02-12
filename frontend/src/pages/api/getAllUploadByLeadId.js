@@ -9,7 +9,7 @@ import axios from "axios";
     const leadId = request.query.leadId;
 
 
-    const userResponse = await axios.get(`${domain}/getUploadDocuments`,
+    const userResponse = await axios.get(`${domain}/upload/getUploadDocuments`,
     {
         headers: {
           Authorization:token,
