@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import Page1 from "./AllPages/Page1";
-const LinksComponent = () => {
+const LinksComponent = ({allInfo}) => {
+  console.log(allInfo)
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleButtonClick = (page) => {
@@ -14,7 +15,7 @@ const LinksComponent = () => {
   const renderContent = () => {
     switch (currentPage) {
       case 1:
-        return <Page1/>;
+        return <Page1 allInfo={allInfo}/>;
       case 2:
         return <div>This is Page 2 content.</div>;
       case 3:

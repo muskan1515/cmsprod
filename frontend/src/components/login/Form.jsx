@@ -23,7 +23,9 @@ const Form = () => {
     axios.post("/api/login",payload)
     .then((res)=>{
       toast.dismiss();
-      localStorage.setItem("userInfo",JSON.stringify(res.data.userData.data));
+      console.log(res.data.userData.result);
+     
+      localStorage.setItem("userInfo",JSON.stringify(res.data.userData.result));
       alert("Successfully logged in!");
       router.push("/my-dashboard");
     })

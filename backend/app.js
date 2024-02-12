@@ -11,6 +11,7 @@ const newPartsRoute = require("./Routes/newPartsRoute");
 const statusRoute=require("./Routes/statusRoute");
 const uploadRoute = require("./Routes/uploadRoute");
 const vehicleDetailsRoute = require("./Routes/vehicleDetailRoutes");
+const reportRoutes = require("./Routes/reportRoutes");
 
 const dotenv = require("dotenv").config();
 
@@ -39,7 +40,15 @@ app.use("/status",statusRoute);
 
 app.use("/upload",uploadRoute);
 
+app.use("/report",reportRoutes);
+
 app.use("/vehicleDetails",vehicleDetailsRoute);
+
+app.use("/report",reportRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello, this is your Express server!');
+});
 
 
 app.listen(port, () => {

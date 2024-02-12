@@ -21,7 +21,7 @@ const db = require("../Config/dbConfig");
   
       if (result.length === 1) {
         // Authentication successful
-        return res.status(200).json({ message: "Login successful" });
+        return res.status(200).json({ message: "Login successful",result });
       } else {
         // Authentication failed
         return res.status(401).json({ error: "Invalid credentials" });

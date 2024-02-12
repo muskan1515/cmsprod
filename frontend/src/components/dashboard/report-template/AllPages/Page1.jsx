@@ -1,6 +1,44 @@
 import React from 'react';
 
-const InsuranceReport = () => {
+const InsuranceReport = ({allInfo}) => {
+  const currentDate = new Date();
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+  const formatJustDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+  const formatTime = (dateString) => {
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
   return (
     <div>
       <img style={{ position: 'absolute', top: '1.71in', left: '0.32in', width: '8.54in', height: '0.02in' }} src="vi_1.png" />
@@ -29,12 +67,12 @@ const InsuranceReport = () => {
       </div>
 
       <div style={{ position: 'absolute', top: '2.18in', left: '2.94in', width: '4.03in', lineHeight: '0.16in' }}>
-        <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>MOTOR FINAL SURVEY REPORT (CASH LESS)- (NIL DEPRECIATION)</span><span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+        <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>{allInfo?.otherInfo[0]?.SurveyType} {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT ({allInfo?.otherInfo[0]?.SettlementType})- (NIL DEPRECIATION)</span><span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
       </div>
 
       <div style={{ position: 'absolute', top: '1.84in', left: '7.72in', width: '0.97in', lineHeight: '0.16in' }}>
         <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>Date : </span>
-        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>08-Jan-24</span>
+        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{formatDate(currentDate)}</span>
         <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
       </div>
 
@@ -179,16 +217,16 @@ const InsuranceReport = () => {
 
     <div style={{ position: 'absolute', top: '3.21in', left: '2.45in', width: '3.77in', lineHeight: '0.16in' }}>
       <div style={{ position: 'relative', left: '0.12in' }}>
-        <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>33030331230100004487 </span>
+        <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}> </span>
       </div><br />
     </div>
 
     <div style={{ position: 'absolute', top: '3.45in', left: '2.45in', width: '3.77in', lineHeight: '0.18in' }}>
       <div style={{ position: 'relative', left: '3.19in' }}>
         <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Claim No.</span>
-        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>  : - {allInfo?.otherInfo[0]?.ClaimNumber} </span><br />
       </div>
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  - </span><br />
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  -{formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)} </span><br />
     </div>
 
     <div style={{ position: 'absolute', top: '3.45in', left: '6.46in', width: '0.13in', lineHeight: '0.16in' }}>
@@ -201,25 +239,25 @@ const InsuranceReport = () => {
         <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>IDV</span>
         <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
       </div>
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  27-Nov-23 </span><br />
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>: {allInfo?.otherInfo[0]?.PolicyNumber}  </span><br />
     </div>
 
     <div style={{ position: 'absolute', top: '3.21in', left: '6.46in', width: '0.83in', lineHeight: '0.16in' }}>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  </span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'rupi-foradian', color: '#000000' }}>F </span>
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> 175,000.00  </span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.IDV} </span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
     </div>
 
     <div style={{ position: 'absolute', top: '3.43in', left: '2.45in', width: '3.77in', lineHeight: '0.16in' }}>
       <div style={{ position: 'relative', left: '0.82in' }}>
-        <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>to   </span>
+        <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>   </span>
       </div><br />
     </div>
 
     <div style={{ position: 'absolute', top: '3.43in', left: '2.45in', width: '3.77in', lineHeight: '0.16in' }}>
       <div style={{ position: 'relative', left: '1.03in' }}>
-        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> 26-Nov-24 </span>
+        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>   </span>
       </div><br />
     </div>
 
@@ -235,17 +273,17 @@ const InsuranceReport = () => {
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Token No. </span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
     </div>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  The New India Assurance Co. Ltd.</span>
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>: {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
   </div>
 
   <div style={{ position: 'absolute', top: '3.65in', left: '6.48in', width: '0.13in', lineHeight: '0.16in' }}>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>: - </span>
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>: -  </span>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
   </div>
 
   <div style={{ position: 'absolute', top: '4.72in', left: '2.45in', width: '0.94in', lineHeight: '0.20in' }}>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  - </span>
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  - {allInfo?.otherInfo[0]?.HPA}</span>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>:  330300- SGNR </span>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
@@ -295,15 +333,15 @@ const InsuranceReport = () => {
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>
         Verified From Original{' '}
       </span>
-      <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>RJ31CA6796</span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>{allInfo?.otherInfo[0]?.RegisteredOwner}</span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Ramesh Kumar S/o Dulichand </span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.InsuredName} {allInfo?.otherInfo[0]?.InsuredMobileNo1} {allInfo?.otherInfo[0]?.InsuredAddress}</span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>01</span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.OwnerSerialNo}</span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>23-Dec-13</span>
-      <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>MALA851DLDM031812K</span>
-      <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>D3FADM031729</span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{formatDate(allInfo?.otherInfo[0]?.DateOfregistration)}</span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>{allInfo?.otherInfo[0]?.ChassisNumber}</span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>{allInfo?.otherInfo[0]?.EngineNumber}</span>
       <br />
     </div>
 
@@ -342,14 +380,14 @@ const InsuranceReport = () => {
 
     <div style={{ position: 'absolute', top: '6.78in', left: '3.98in', width: '2.63in', lineHeight: '0.20in' }}>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>
-        Hyunda/Grand I10 1.1 Gls Magna/2013 - White{' '}
+        {allInfo?.otherInfo[0]?.MakerModel}{' '}
       </span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Car (S) - LMVCAR </span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo?.TypeOfBody} {allInfo?.otherInfo?.ClassOfVehicle} </span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Average</span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo?.PreAccidentCondition}</span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>05 Nos. </span>
+      <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo?.SeatingCapacity} </span>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
     </div>
 
@@ -439,7 +477,7 @@ const InsuranceReport = () => {
 
     <div style={{ position: 'absolute', top: '7.64in', left: '0.54in', width: '2.14in', lineHeight: '0.18in' }}>
       <div style={{ position: 'relative', left: '0.27in' }}>
-        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Cubic Capacity </span>
+        <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo?.CubicCapacity} </span>
         <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
       </div>
       <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>(m) </span>
@@ -453,11 +491,11 @@ const InsuranceReport = () => {
 <div style={{ position: 'absolute', top: '7.62in', left: '3.98in', width: '1.95in', lineHeight: '0.21in' }}>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>1120 CC </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>OTT</span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.TaxParticulars}</span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Verified From Original </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.ModeOfCheck}</span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-  <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>Ramesh Kumar S/o Duli Chand </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>{allInfo?.otherInfo[0]?.RegisteredOwner}</span>
   <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}> </span><br />
 </div>
 <div style={{ position: 'absolute', top: '7.62in', left: '6.42in', width: '0.54in', lineHeight: '0.16in' }}>
@@ -465,7 +503,7 @@ const InsuranceReport = () => {
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
 </div>
 <div style={{ position: 'absolute', top: '7.62in', left: '7.24in', width: '0.42in', lineHeight: '0.16in' }}>
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>: Diesel </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>: {allInfo?.otherInfo[0]?.FuelType} </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
 </div>
 <div style={{ position: 'absolute', top: '7.85in', left: '0.54in', width: '2.14in', lineHeight: '0.21in' }}>
@@ -503,9 +541,9 @@ const InsuranceReport = () => {
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
 </div>
 <div style={{ position: 'absolute', top: '8.53in', left: '3.98in', width: '1.28in', lineHeight: '0.25in' }}>
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>32 Years ( 01-Aug-91 ) </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.Age}</span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-  <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>RJ31 20100082557 </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}>{allInfo?.otherInfo[0]?.LicenseNumber} </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'bold', fontSize: '8pt', fontFamily: 'Tahoma-Bold', color: '#000000' }}> </span><br />
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>10-Dec-10</span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
@@ -523,11 +561,11 @@ const InsuranceReport = () => {
   </div>
   <div style={{ position: 'relative', left: '0.30in' }}>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Date of Issue </span>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.DateOfIssue}</span><br />
   </div>
   <div style={{ position: 'relative', left: '0.30in' }}>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Valid from </span>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.ValidFrom}</span><br />
   </div>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>(c) </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
@@ -539,7 +577,7 @@ const InsuranceReport = () => {
 <div style={{ position: 'absolute', top: '9.63in', left: '0.54in', width: '2.14in', lineHeight: '0.19in' }}>
   <div style={{ position: 'relative', left: '0.27in' }}>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Type of License </span>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.LicenseType}</span><br />
   </div>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>(e) </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
@@ -551,7 +589,7 @@ const InsuranceReport = () => {
 <div style={{ position: 'absolute', top: '9.39in', left: '0.54in', width: '2.14in', lineHeight: '0.19in' }}>
   <div style={{ position: 'relative', left: '0.27in' }}>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Issuing Authority </span>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo.otherInfo[0]?.IssuingAuthority}</span><br />
   </div>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>(d) </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
@@ -574,9 +612,9 @@ const InsuranceReport = () => {
 </div>
 <div style={{ position: 'absolute', top: '8.97in', left: '5.56in', width: '0.93in', lineHeight: '0.18in' }}>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Valid upto (NTV) </span>
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.ValidUntilNtv}</span><br />
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Valid upto (TV) </span>
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.ValidUntilTv}</span><br />
 </div>
 
 <div style={{ position: 'absolute', top: '9.63in', left: '0.54in', width: '2.14in', lineHeight: '0.19in' }}>
@@ -632,7 +670,7 @@ const InsuranceReport = () => {
 <div style={{ position: 'absolute', top: '10.30in', left: '0.54in', width: '2.14in', lineHeight: '0.19in' }}>
   <div style={{ position: 'relative', left: '0.27in' }}>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Date & Time of Accident </span>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {allInfo?.otherInfo[0]?.DateOfAccident}</span><br />
   </div>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>(b) </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
@@ -644,17 +682,17 @@ const InsuranceReport = () => {
 </div>
 
 <div style={{ position: 'absolute', top: '10.34in', left: '3.98in', width: '2.36in', lineHeight: '0.16in' }}>
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>28-Nov-23 </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> {formatJustDate(allInfo?.otherInfo[0]?.DateOfAccident)}</span>
 </div>
 
 <div style={{ position: 'absolute', top: '10.34in', left: '3.98in', width: '2.36in', lineHeight: '0.20in' }}>
   <div style={{ position: 'relative', left: '1.19in' }}>
-    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>07:30 AM </span>
+    <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{formatTime(allInfo?.otherInfo[0]?.DateOfAccident)} </span>
     <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
   </div>
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Between Rawatsar To Lakhuwali </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.PlaceOfLoss} </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
-  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>Sri Ganganagar Gurunanak Maruti Garage, </span>
+  <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}>{allInfo?.otherInfo[0]?.GarageNameAndAddress} </span>
   <span style={{ fontStyle: 'normal', fontWeight: 'normal', fontSize: '8pt', fontFamily: 'Tahoma', color: '#000000' }}> </span><br />
 </div>
 
