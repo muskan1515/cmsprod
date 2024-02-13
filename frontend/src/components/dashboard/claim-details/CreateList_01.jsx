@@ -10,18 +10,14 @@ const CreateList_01 = ({
   InsuredMobileNo1,
   ClaimNumber,
   InsuredMailAddress,
-  requestType
-
+  requestType,
 }) => {
-
- 
-
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-  
+
   return (
     <>
       <div className="col-lg-12">
@@ -36,8 +32,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Name
@@ -47,8 +43,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim?.InsuredName}
@@ -62,9 +58,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Phone
@@ -74,8 +69,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.InsuredMobileNo1}
@@ -89,9 +84,8 @@ const CreateList_01 = ({
                       className="col-lg-2 text-color text-start"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Email
@@ -101,8 +95,8 @@ const CreateList_01 = ({
                       className="col-lg-10 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.InsuredMailAddress}
@@ -118,9 +112,8 @@ const CreateList_01 = ({
                       className="col-lg-7 text-color text-start"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Lead No.
@@ -130,11 +123,11 @@ const CreateList_01 = ({
                       className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
-                     {claim.LeadId}
+                      {claim.LeadId}
                     </label>
                   </div>
                 </td>
@@ -145,9 +138,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Insurer ClaimID
@@ -157,8 +149,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.ClaimNumber}
@@ -172,9 +164,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-start"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
-
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       Added Date
@@ -184,8 +175,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {formatDate(claim.InsuredAddedDateTime)}
@@ -194,7 +185,6 @@ const CreateList_01 = ({
                 </td>
               </tr>
               <tr>
-                
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -202,21 +192,21 @@ const CreateList_01 = ({
                       className="col-lg-5 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
                     >
-                      Claim Region 
+                      Claim Region
                     </label>
                     <label
                       htmlFor=""
                       className="col-lg-5 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.ClaimRegion}
@@ -230,8 +220,8 @@ const CreateList_01 = ({
                       className="col-lg-4 text-color"
                       style={{
                         color: "black",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
                         marginRight: "50px",
                       }}
@@ -243,8 +233,8 @@ const CreateList_01 = ({
                       className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
-                        fontSize:"15px",
-                        fontWeight:"bold",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
                       {claim.ClaimServicingOffice}
@@ -252,35 +242,35 @@ const CreateList_01 = ({
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
-                <div className="row">
-                  <label
-                    htmlFor=""
-                    className="col-lg-4 text-color"
-                    style={{
-                      color: "black",
-                      fontSize:"15px",
-                      fontWeight:"bold",
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-4 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "bold",
 
-                      marginRight: "50px",
-                    }}
-                  >
-                    Liscence Number
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="col-lg-6 text-color text-end"
-                    style={{
-                      color: "#1560bd",
-                      fontSize:"15px",
-                      fontWeight:"bold",
-                    }}
-                  >
-                    {claim.LicenseNumber}
-                  </label>
-                </div>
-              </td>
+                        marginRight: "50px",
+                      }}
+                    >
+                      Liscence Number
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim.LicenseNumber}
+                    </label>
+                  </div>
+                </td>
               </tr>
-             {/* <tr>
+              {/* <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
