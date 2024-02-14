@@ -750,23 +750,83 @@ const ErrorPageContent = () => {
       </div>
       <div>
         <h4>SUMMARY OF ASSESSMENT</h4>
-        <table>
+        <table border={1}>
           <tr>
-            <th>PARTICULARS</th>
-            <th>ORIGINAL ESTIMATE</th>
-            <th>ASSESSED FOR</th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              PARTICULARS
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              ORIGINAL ESTIMATE
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              ASSESSED FOR
+            </th>
           </tr>
           <tr>
-            <td>Total Labour Charges</td>
-            <td>87678</td>
-            <td>876868</td>
+            <td style={{ paddingRight: "30px", paddingLeft: "20px" }}>
+              Total Labour Charges
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>87678</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              876868
+            </td>
           </tr>
           <tr>
-            <td>Total Cost of Parts</td>
-            <td>87678</td>
-            <td>876868</td>
+            <td style={{ paddingRight: "30px", paddingLeft: "20px" }}>
+              Total Cost of Parts
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>87678</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              876868
+            </td>
           </tr>
-          <tr></tr>
+          <tr>
+            <td
+              colSpan={2}
+              rowSpan={6}
+              style={{
+                border: "1px solid black",
+                padding: "5px",
+                textAlign: "end",
+              }}
+            >
+              Total : <br />
+              Less : Excess <br />
+              Total : <br />
+              Less : Salvage
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>767t</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>35454</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>35454</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>35454</td>
+          </tr>
+          <tr>
+            <td>35454</td>
+          </tr>
         </table>
       </div>
       <hr style={{ border: "2px solid black" }} />
