@@ -377,37 +377,37 @@ const ErrorPageContent = () => {
           <tr>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               E. No.
             </th>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               Parts Description
             </th>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               HSN Code
             </th>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               Bill S. No
             </th>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               Remark
             </th>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               Estimated
             </th>
@@ -415,7 +415,7 @@ const ErrorPageContent = () => {
               colSpan={3}
               style={{
                 border: "1px solid black",
-                padding: "20px",
+                padding: "10px",
                 textAlign: "center",
               }}
             >
@@ -423,24 +423,353 @@ const ErrorPageContent = () => {
             </th>
             <th
               rowSpan={2}
-              style={{ border: "1px solid black", padding: "20px" }}
+              style={{ border: "1px solid black", padding: "10px" }}
             >
               GST
             </th>
           </tr>
           <tr>
-            <th style={{ border: "1px solid black", padding: "20px" }}>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
               Glass/ 2nd Hand/ Repair
             </th>
-            <th style={{ border: "1px solid black", padding: "20px" }}>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
               Metal (40)
             </th>
-            <th style={{ border: "1px solid black", padding: "20px" }}>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
               Non Metal
             </th>
           </tr>
+          <tr>
+            <th colSpan={2}>Parts with 28.00 % GST</th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+            <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              Carriar assy-front end modul
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>671-1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Damaged
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              28.00
+            </td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              Carriar assy-front end modul
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>671-1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Damaged
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              28.00
+            </td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              Carriar assy-front end modul
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>671-1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Damaged
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              28.00
+            </td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              Carriar assy-front end modul
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>671-1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Damaged
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              6419.54
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              28.00
+            </td>
+          </tr>
+          <tr>
+            <td
+              rowSpan={3}
+              style={{ border: "1px solid black", padding: "5px" }}
+            ></td>
+            <td
+              colSpan={5}
+              rowSpan={3}
+              className="text-end"
+              style={{ border: "1px solid black", padding: "5px" }}
+            >
+              Total :<br />
+              GST @ 28.00 % :<br />
+              Sub Total :
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+          </tr>
+          <tr>
+            <td
+              colSpan={5}
+              rowSpan={6}
+              style={{ border: "1px solid black", padding: "5px" }}
+              className="text-end"
+            >
+              Total : <br />
+              Less: Depreciation : <br />
+              Total : <br />
+              Add : Applicable GST : <br />
+              Net Total F :
+              <br />
+              Grand Total F : <br />
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td
+              rowSpan={5}
+              style={{ border: "1px solid black", padding: "5px" }}
+            ></td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
+            <td
+              colSpan={3}
+              style={{
+                border: "1px solid black",
+                padding: "5px",
+                textAlign: "center",
+              }}
+            >
+              000
+            </td>
+          </tr>
         </table>
       </div>
+      <br />
+      <div>
+        <h4>LABOUR & REPAIRS :</h4>
+        <table border={1}>
+          <tr>
+            <th style={{ border: "1px solid black", padding: "10px" }}>S.No</th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>SAC</th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Bill S.No.
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                textAlign: "center",
+              }}
+            >
+              Labour Description
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Estimated
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Assessed
+            </th>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              radiator khulayi fitting
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Ac Condenser Opening Fitting & Ac Charge (Condenser 2000.00 300.00
+              Opening Fitting)
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Tie- Member Opening Fitting
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Bumper Opening Fitting
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Head Light Opening Fitting (Not Allowed)
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td
+              rowSpan={3}
+              style={{ border: "1px solid black", padding: "5px" }}
+            ></td>
+            <td
+              colSpan={3}
+              rowSpan={3}
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                textAlign: "end",
+              }}
+            >
+              Sub Total Labour Charges : F <br />
+              Add : GST on F 0.00 @ 18.00% : <br />
+              Total Labour Charges : F
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>897</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>8768</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>897</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>8768</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>897</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>8768</td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h4>SUMMARY OF ASSESSMENT</h4>
+        <table>
+          <tr>
+            <th>PARTICULARS</th>
+            <th>ORIGINAL ESTIMATE</th>
+            <th>ASSESSED FOR</th>
+          </tr>
+          <tr>
+            <td>Total Labour Charges</td>
+            <td>87678</td>
+            <td>876868</td>
+          </tr>
+          <tr>
+            <td>Total Cost of Parts</td>
+            <td>87678</td>
+            <td>876868</td>
+          </tr>
+          <tr></tr>
+        </table>
+      </div>
+      <hr style={{ border: "2px solid black" }} />
     </div>
   );
 };
