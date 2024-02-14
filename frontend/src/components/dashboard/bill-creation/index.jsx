@@ -6,7 +6,7 @@ import CreateList from "./CreateList";
 import axios from "axios";
 
 
-const index = () => {
+const Index = () => {
 
   const [allInfo,setAllInfo]=useState(null);
   const [leadID,setLeadID]=useState(0);
@@ -157,4 +157,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
