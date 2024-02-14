@@ -313,7 +313,7 @@ const ErrorPageContent = () => {
         <span>
           As filled in the claim form and discussion with the Insured that on
           the day and time of accident <b>Ramesh Kumar S/o Duli Chand</b> was
-          driving the subject vehicle. "Mein meri gaadi se rawatsar se
+          driving the subject vehicle. &quot;Mein meri gaadi se rawatsar se
           hanumangarh ja rha tha tbhi lakhuwali ke pass saamne se aa rhe truck
           ne over-take kiya to mene meri gaadi apne bchav mein sadak se niche
           utaari to gaadi ka hissa niche lga, jisse gaadi ka tie-member or plate
@@ -370,12 +370,74 @@ const ErrorPageContent = () => {
           report of accident not carried out by Insured.
         </span>
       </div>
+      <br />
       <div>
-        <h5>New Parts :</h5>
-        <table>
+        <h4>New Parts :</h4>
+        <table border={1}>
           <tr>
-            <th>E. No.</th>
-            <th>Parts Description</th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              E. No.
+            </th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              Parts Description
+            </th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              HSN Code
+            </th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              Bill S. No
+            </th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              Remark
+            </th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              Estimated
+            </th>
+            <th
+              colSpan={3}
+              style={{
+                border: "1px solid black",
+                padding: "20px",
+                textAlign: "center",
+              }}
+            >
+              Assessed
+            </th>
+            <th
+              rowSpan={2}
+              style={{ border: "1px solid black", padding: "20px" }}
+            >
+              GST
+            </th>
+          </tr>
+          <tr>
+            <th style={{ border: "1px solid black", padding: "20px" }}>
+              Glass/ 2nd Hand/ Repair
+            </th>
+            <th style={{ border: "1px solid black", padding: "20px" }}>
+              Metal (40)
+            </th>
+            <th style={{ border: "1px solid black", padding: "20px" }}>
+              Non Metal
+            </th>
           </tr>
         </table>
       </div>
