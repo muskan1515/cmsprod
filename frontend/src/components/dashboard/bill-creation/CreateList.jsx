@@ -444,6 +444,46 @@ const CreateList = ({allInfo,leadID}) => {
                     // paddingTop: "15px",
                     color: "#2e008b",
                     fontWeight: "",
+                    marginTop: "5px",
+                  }}
+                >
+                  Bill To
+                </label>
+              </div>
+              <div className="col-lg-7">
+                <select
+                  className="selectpicker form-select"
+                  data-live-search="true"
+                  data-width="100%"
+                  value={inspectionType}
+                  onChange={(e) => setInspectionType(e.target.value)}
+                >
+                  <option data-tokens="Status1" value={""}>
+                    Select Type
+                  </option>
+                  <option data-tokens="Status1" value={"spot"}>
+                    Spot
+                  </option>
+                  <option data-tokens="Status2" value={"final"}>
+                    Final
+                  </option>
+                  <option data-tokens="Status3" value={"re-inspection"}>
+                    Pre-inspection
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-12">
+            <div className="row mt-1">
+              <div className="col-lg-2 my_profile_setting_input form-group">
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontWeight: "",
                     // marginTop: "-13px",
                   }}
                 >
