@@ -110,7 +110,7 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {MakerModel ? MakerModel : claim?.vehicleDetails?.MakerModel}
+                        {MakerModel}
                       </label>
                     </div>
                   </div>
@@ -140,9 +140,7 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {EngineNumber
-                          ? EngineNumber
-                          : claim?.vehicleDetails?.VehicleEngineNumber}
+                        {EngineType}
                       </label>
                     </div>
                   </div>
@@ -172,9 +170,7 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {!VehicleRegisteredOwner
-                          ? "NA"
-                          : claim?.vehicleDetails?.VehicleRegisteredOwner}
+                        {VehicleRegisteredOwner}
                       </label>
                     </div>
                   </div>
@@ -204,10 +200,7 @@ const Form_vehicle = ({
                       }}
                     >
                       {formatDate(
-                        DateRegistration
-                          ? DateRegistration
-                          : claim?.vehicleDetails?.VehicleDateOfRegistration
-                      )}
+                        DateRegistration)}
                     </label>
                   </div>
                 </td>
@@ -233,9 +226,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {PUCNumber
-                        ? PUCNumber
-                        : claim?.vehicleDetails?.VehiclePucNumber}
+                      {PUCNumber}
                     </label>
                   </div>
                 </td>
@@ -263,8 +254,6 @@ const Form_vehicle = ({
                     >
                       {formatDate(
                         TransferDate
-                          ? TransferDate
-                          : claim?.vehicleDetails?.VehicleTransferDate
                       )}
                     </label>
                   </div>
@@ -293,9 +282,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {EngineNumber
-                        ? EngineNumber
-                        : claim?.vehicleDetails?.VehicleEngineNumber}
+                      {EngineNumber}
                     </label>
                   </div>
                 </td>
@@ -321,9 +308,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {AddedBy
-                        ? AddedBy
-                        : claim?.vehicleDetails?.VehicleAddedBy}
+                      {AddedBy}
                     </label>
                   </div>
                 </td>
@@ -349,9 +334,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {IssuingAuthority
-                        ? IssuingAuthority
-                        : claim?.driverDetails?.IssuingAuthority}
+                      {IssuingAuthority}
                     </label>
                   </div>
                 </td>
@@ -379,9 +362,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {LicenseNumber
-                        ? LicenseNumber
-                        : claim?.driverDetails?.LicenseNumber}
+                      {LicenseNumber}
                     </label>
                   </div>
                 </td>
@@ -407,9 +388,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {LicenseType
-                        ? LicenseType
-                        : claim?.driverDetails?.LicenseType}
+                      {LicenseType}
                     </label>
                   </div>
                 </td>
@@ -435,9 +414,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleChassisNumber
-                        ? VehicleChassisNumber
-                        : claim?.vehicleDetails?.VehicleChassisNumber}
+                      {VehicleChassisNumber}
                     </label>
                   </div>
                 </td>
@@ -465,9 +442,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleFuelType
-                        ? VehicleFuelType
-                        : claim?.vehicleDetails?.VehicleFuelType}
+                      {VehicleFuelType}
                     </label>
                   </div>
                 </td>
@@ -493,9 +468,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleRegisteredNumber
-                        ? VehicleRegisteredNumber
-                        : claim?.vehicleDetails?.VehicleRegisteredNumber}
+                      {VehicleRegisteredNumber}
                     </label>
                   </div>
                 </td>
@@ -521,9 +494,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {ClassOfVehicle
-                        ? ClassOfVehicle
-                        : claim?.vehicleDetails?.ClassOfVehicle}
+                      {ClassOfVehicle}
                     </label>
                   </div>
                 </td>
@@ -609,7 +580,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {MakerDesc ? MakerDesc : claim?.vehicleDetails?.MakerDesc}
+                      {MakerDesc}
                     </label>
                   </div>
                 </td>
@@ -635,9 +606,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {MakerModel
-                        ? MakerModel
-                        : claim?.vehicleDetails?.MakerModel}
+                      {MakerModel}
                     </label>
                   </div>
                 </td>
@@ -663,9 +632,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {ManufactureMonthYear
-                        ? ManufactureMonthYear
-                        : claim?.vehicleDetails?.ManufactureMonthYear}
+                      {ManufactureMonthYear}
                     </label>
                   </div>
                 </td>
@@ -694,9 +661,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {CubicCapacity
-                        ? CubicCapacity
-                        : claim?.vehicleDetails?.CubicCapacity}
+                      {CubicCapacity}
                     </label>
                   </div>
                 </td>
@@ -722,9 +687,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleSeatingCapacity
-                        ? VehicleSeatingCapacity
-                        : claim?.vehicleDetails?.VehicleSeatingCapacity}
+                      {VehicleSeatingCapacity}
                     </label>
                   </div>
                 </td>
@@ -750,9 +713,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {PermanentAddress
-                        ? PermanentAddress
-                        : claim?.vehicleDetails?.PermanentAddress}
+                      {PermanentAddress}
                     </label>
                   </div>
                 </td>
@@ -781,7 +742,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {FitUpto ? FitUpto : claim?.vehicleDetails?.FitUpto}
+                      {FitUpto}
                     </label>
                   </div>
                 </td>
@@ -807,9 +768,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {PasiaModelCode
-                        ? PasiaModelCode
-                        : claim?.vehicleDetails?.PasiaModelCode}
+                      {PasiaModelCode}
                     </label>
                   </div>
                 </td>
@@ -835,9 +794,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleInsuranceCompany
-                        ? VehicleInsuranceCompany
-                        : claim?.vehicleDetails?.VehicleInsuranceCompany}
+                      {VehicleInsuranceCompany}
                     </label>
                   </div>
                 </td>
@@ -866,9 +823,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcInsuranceUpto
-                        ? RcInsuranceUpto
-                        : claim?.vehicleDetails?.RcInsuranceUpto}
+                      {RcInsuranceUpto}
                     </label>
                   </div>
                 </td>
@@ -894,9 +849,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleRegistedAt
-                        ? VehicleRegistedAt
-                        : claim?.vehicleDetails?.VehicleRegistedAt}
+                      {VehicleRegistedAt}
                     </label>
                   </div>
                 </td>
@@ -922,9 +875,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleBlackListStatus
-                        ? VehicleBlackListStatus
-                        : claim?.vehicleDetails?.VehicleBlackListStatus}
+                      {VehicleBlackListStatus}
                     </label>
                   </div>
                 </td>
@@ -953,9 +904,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleRcStatus
-                        ? VehicleRcStatus
-                        : claim?.vehicleDetails?.VehicleRcStatus}
+                      {VehicleRcStatus}
                     </label>
                   </div>
                 </td>
@@ -981,9 +930,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleType
-                        ? VehicleType
-                        : claim?.vehicleDetails?.VehicleType}
+                      {VehicleType}
                     </label>
                   </div>
                 </td>
@@ -1009,9 +956,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {BancsModelCode
-                        ? BancsModelCode
-                        : claim?.vehicleDetails?.BancsModelCode}
+                      {BancsModelCode}
                     </label>
                   </div>
                 </td>
@@ -1040,9 +985,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {BancsMakeCode
-                        ? BancsMakeCode
-                        : claim?.vehicleDetails?.BancsMakeCode}
+                      {BancsMakeCode}
                     </label>
                   </div>
                 </td>
@@ -1069,9 +1012,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleFuelType
-                        ? VehicleFuelType
-                        : claim?.vehicleDetails?.VehicleFuelType}
+                      {VehicleFuelType}
                     </label>
                   </div>
                 </td>
@@ -1097,9 +1038,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {BancsBodyType
-                        ? BancsBodyType
-                        : claim?.vehicleDetails?.BancsBodyType}
+                      {BancsBodyType}
                     </label>
                   </div>
                 </td>
@@ -1128,9 +1067,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {BancsVehicleClass
-                        ? BancsVehicleClass
-                        : claim?.vehicleDetails?.BancsVehicleClass}
+                      {BancsVehicleClass}
                     </label>
                   </div>
                 </td>
@@ -1156,9 +1093,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {BancsVehicleSegment
-                        ? BancsVehicleSegment
-                        : claim?.vehicleDetails?.BancsVehicleSegment}
+                      {BancsVehicleSegment}
                     </label>
                   </div>
                 </td>
@@ -1184,7 +1119,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcRtoCode ? RcRtoCode : claim?.vehicleDetails?.RcRtoCode}
+                      {RcRtoCode}
                     </label>
                   </div>
                 </td>

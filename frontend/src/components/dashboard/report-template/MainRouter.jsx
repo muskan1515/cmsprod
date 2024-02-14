@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 import Page1 from "./AllPages/Page1";
+import Page2 from "./AllPages/Page2";
+import Page3 from "./AllPages/Page3";
+import Page4 from "./AllPages/Page4";
 const LinksComponent = ({allInfo}) => {
   console.log(allInfo)
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,11 +20,11 @@ const LinksComponent = ({allInfo}) => {
       case 1:
         return <Page1 allInfo={allInfo}/>;
       case 2:
-        return <div>This is Page 2 content.</div>;
+        return <Page2 allInfo={allInfo}/>;
       case 3:
-        return <div>This is Page 3 content.</div>;
+        return <Page3 allInfo={allInfo}/>;
       case 4:
-        return <div>This is Page 4 content.</div>;
+        return <Page4 allInfo={allInfo}/>;
       default:
         return null;
     }
@@ -41,3 +44,5 @@ const LinksComponent = ({allInfo}) => {
 };
 
 export default LinksComponent;
+
+

@@ -122,8 +122,6 @@ const Form_01 = ({
                             onChange={(e) => setDriverName(e.target.value)}
                             value={
                               DriverName
-                                ? DriverName
-                                : claim.driverDetails?.DriverName
                             }
                             // placeholder="Enter Registration No."
                           />
@@ -159,8 +157,6 @@ const Form_01 = ({
                             onChange={(e) => setDriverAddedDate(e.target.value)}
                             value={formatDate(
                               DriverAddedDate
-                                ? DriverAddedDate
-                                : claim.driverDetails?.DriverAddedDate
                             )}
 
                             // placeholder="Enter Registration No."
@@ -186,19 +182,17 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
+                          <select
                             type="text"
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setVerification(e.target.value)}
-                            value={
-                              Verification
-                                ? Verification
-                                : claim.driverDetails?.DriverTypeOfVerification
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
+                            
+                            // placeholder="Enter Registration No.
+                          >
+                          <option value={0} >Verified By Online</option>
+                          <option value={1} >Verified Manually</option>
+                          </select>
                         </div>
                       </div>
                     </div>

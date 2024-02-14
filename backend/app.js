@@ -12,6 +12,7 @@ const statusRoute=require("./Routes/statusRoute");
 const uploadRoute = require("./Routes/uploadRoute");
 const vehicleDetailsRoute = require("./Routes/vehicleDetailRoutes");
 const reportRoutes = require("./Routes/reportRoutes");
+const feeReportRoutes = require("./Routes/feereportRoute");
 
 const dotenv = require("dotenv").config();
 
@@ -45,6 +46,8 @@ app.use("/report",reportRoutes);
 app.use("/vehicleDetails",vehicleDetailsRoute);
 
 app.use("/report",reportRoutes);
+
+app.use("/fee",feeReportRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello, this is your Express server!');

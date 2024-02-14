@@ -1,6 +1,19 @@
 import React from "react";
 
-const MyFunctionalComponent = () => {
+const MyFunctionalComponent = ({allInfo}) => {
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+
   return (
     <div>
       <link rel="stylesheet" type="text/css" href="style.css" />
@@ -149,7 +162,7 @@ const MyFunctionalComponent = () => {
           }}
         >
           {" "}
-          RJ31CA6796
+         {allInfo?.otherInfo[0]?.ClaimNumber}
         </span>
         <span
           style={{
@@ -364,7 +377,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          28-Nov-23
+          {formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)}
         </span>
         <span
           style={{
@@ -387,7 +400,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          28-Nov-23{" "}
+        {formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)}{" "}
         </span>
         <span
           style={{
@@ -989,7 +1002,7 @@ const MyFunctionalComponent = () => {
               color: "#000000",
             }}
           >
-            Ramesh{" "}
+           {allInfo?.otherInfo[0]?.InsuredName}{" "}
           </span>
         </div>
         <br />
@@ -1003,92 +1016,10 @@ const MyFunctionalComponent = () => {
           lineHeight: "0.16in",
         }}
       >
-        <div style={{ position: "relative", left: "7.39in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "bold",
-              fontSize: "8pt",
-              fontFamily: "Tahoma-Bold",
-              color: "#000000",
-            }}
-          >
-            Kumar{" "}
-          </span>
-        </div>
-        <br />
+      
       </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.54in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.17in",
-        }}
-      >
-        <div style={{ position: "relative", left: "7.92in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "bold",
-              fontSize: "8pt",
-              fontFamily: "Tahoma-Bold",
-              color: "#000000",
-            }}
-          >
-            S/o{" "}
-          </span>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "bold",
-              fontSize: "8pt",
-              fontFamily: "Tahoma-Bold",
-              color: "#000000",
-            }}
-          >
-            {" "}
-          </span>
-          <br />
-        </div>
-        <span
-          style={{
-            fontStyle: "normal",
-            fontWeight: "bold",
-            fontSize: "8pt",
-            fontFamily: "Tahoma-Bold",
-            color: "#000000",
-          }}
-        >
-          Duli{" "}
-        </span>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "0.37in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "bold",
-              fontSize: "8pt",
-              fontFamily: "Tahoma-Bold",
-              color: "#000000",
-            }}
-          >
-            Chand{" "}
-          </span>
-        </div>
-        <br />
-      </div>
+      
+      
       <div
         style={{
           position: "absolute",
@@ -1228,822 +1159,7 @@ const MyFunctionalComponent = () => {
               color: "#000000",
             }}
           >
-            &quot;Mein{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "3.49in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            meri{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "3.85in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            gaadi{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "4.27in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            se{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "4.51in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            rawatsar{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "5.11in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            se{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "5.35in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            hanumangarh{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "6.24in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            ja{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "6.46in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            rha{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "6.76in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            tha{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "7.06in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            tbhi{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "7.38in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            lakhuwali{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.72in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.17in",
-        }}
-      >
-        <div style={{ position: "relative", left: "8.02in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            ke{" "}
-          </span>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            {" "}
-          </span>
-          <br />
-        </div>
-        <span
-          style={{
-            fontStyle: "normal",
-            fontWeight: "normal",
-            fontSize: "8pt",
-            fontFamily: "Tahoma",
-            color: "#000000",
-          }}
-        >
-          pass{" "}
-        </span>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "0.36in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            saamne{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "0.90in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            se{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "1.13in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            aa{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "1.38in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            rhe{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "1.67in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            truck{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "2.06in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            ne{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "2.31in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            over-take{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "2.94in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            kiya{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "3.27in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            to{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "3.50in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            mene{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "3.92in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            meri{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "4.27in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            gaadi{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "4.68in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            apne{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "5.07in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            bchav{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "5.50in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            mein{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "5.89in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            sadak{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "6.32in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            se{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "6.55in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            niche{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "6.96in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            utaari{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "7.39in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            to{" "}
-          </span>
-        </div>
-        <br />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.90in",
-          left: "0.54in",
-          width: "8.15in",
-          lineHeight: "0.16in",
-        }}
-      >
-        <div style={{ position: "relative", left: "7.61in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            gaadi{" "}
+            {allInfo?.otherInfo[0]?.CauseOfAccident}{" "}
           </span>
         </div>
         <br />
@@ -2057,31 +1173,7 @@ const MyFunctionalComponent = () => {
           lineHeight: "0.17in",
         }}
       >
-        <div style={{ position: "relative", left: "8.02in" }}>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            ka{" "}
-          </span>
-          <span
-            style={{
-              fontStyle: "normal",
-              fontWeight: "normal",
-              fontSize: "8pt",
-              fontFamily: "Tahoma",
-              color: "#000000",
-            }}
-          >
-            {" "}
-          </span>
-          <br />
-        </div>
+        
         <span
           style={{
             fontStyle: "normal",
@@ -2091,7 +1183,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          hissa niche lga, jisse gaadi ka tie-member or plate tut gyi, causing
+          , causing
           damages.
         </span>
         <span
@@ -2194,7 +1286,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          Not Reported, As stated by the insured.
+          {allInfo?.otherInfo[0]?.PoliceAction}
         </span>
         <span
           style={{
@@ -2217,7 +1309,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          No, As stated by the insured No, As stated by the insured
+          {allInfo?.otherInfo[0]?.DetailsOfLoads}
         </span>
         <span
           style={{
@@ -2240,7 +1332,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          No, As Stated by the insured No, As Stated by the insured
+         {allInfo?.otherInfo[0]?.ThirdPartyLoss}
         </span>
         <span
           style={{
@@ -2366,8 +1458,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          The New India Assurance Co. Ltd. 330300- SGNR The New India Assurance
-          Co. Ltd. 330300- SGNR
+          {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}
         </span>
         <span
           style={{
@@ -2401,7 +1492,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          28-11-2023{" "}
+          {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}{" "}
         </span>
         <span
           style={{
@@ -2424,7 +1515,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          Gurunanak Maruti Garage, Sri Ganganagar
+         {allInfo?.otherInfo[0]?.GarageNameAndAddress}
         </span>
         <span
           style={{
@@ -2470,7 +1561,7 @@ const MyFunctionalComponent = () => {
             color: "#000000",
           }}
         >
-          28-11-2023{" "}
+         {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)}{" "}
         </span>
         <span
           style={{
@@ -2482,7 +1573,7 @@ const MyFunctionalComponent = () => {
           }}
         >
           {" "}
-          Between Rawatsar To Lakhuwali and
+          {allInfo?.otherInfo[0]?.PlaceOfLoss} and
         </span>
         <span
           style={{

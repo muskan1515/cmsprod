@@ -29,4 +29,4 @@ const db = require("../Config/dbConfig");
     });
   };
 
-  module.exports={login}
+  module.exports={login};

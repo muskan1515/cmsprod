@@ -13,6 +13,7 @@ const Form = ({
   claim,
   edit,
   editHandler,
+  
   VehicleModel,
   setVehicleModel,
   VehicleRegisteredNumber,
@@ -110,6 +111,7 @@ const Form = ({
   const [editCase_01, setEditCase_01] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
   const [details, setDetails] = useState();
+  const [vehicleFetchDetails,setvehicleFetchDetails]=useState({});
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
   //   };
@@ -125,12 +127,20 @@ const Form = ({
     return formattedDate;
   };
 
+  const [saveDetails,setSaveDetails]=useState(false)
+
   const handleFetchData = async (req, res) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+    const details = JSON.parse(localStorage.getItem("fetchVehicleDetails"));
+    const vehicleNo = claim?.driverDetails?.LicenseNumber;
     if (!userInfo) {
       router.push("/login");
     }
+    else if (details ){
+        alert("Already Fetched!!")
+    }
+    else{
     try {
       const response = axios
         .get("/api/getOnlineVehicleData", {
@@ -138,33 +148,48 @@ const Form = ({
             Authorization: `Bearer ${userInfo[0].Token}`,
             "Content-Type": "application/json",
           },
+          params:{
+            vehicleNo:vehicleNo
+          }
         })
         .then((res) => {
-          // setMakerModel("Test")
-          setDetails(res.data.data);
-          console.log("datata", res.data.data);
+         
+
+          setDetails(res.data.data.vehicleDetails?.Data.result);
+          // localStorage.setItem("details",JSON.stringify(res.data.data))
+          
+          // console.log("datata", res.data.data);
         })
         .catch((err) => {
           console.log("err", err);
         });
 
-      // setEditCase_01(true);
+     
     } catch (error) {
       console.log("Error from Fetch Details-> ", error);
     }
+  }
   };
 
+
   useEffect(() => {
+    // details = JSON.parse(localStorage.getItem("details"))
     setVehicleModel(details?.rc_maker_model),
       setVehicleRegisteredOwner(details?.rc_owner_name),
       setDateRegistration(details?.rc_regn_dt),
       setVehicleChassisNumber(details?.rc_chasi_no),
       //New Fields
+      setVehicleChassisNumber(details?.rc_chasi_no);
+      setDateRegistration(details?.rc_regn_dt);
+      setVehicleRegisteredNumber(details?.rc_regn_no);
+    setEngineNumber(details?.rc_eng_no);
+      setVehicleRegisteredOwner(details?.rc_owner_name)
       setVehicleClassDescription(details?.rc_vh_class_desc), //is it same as ClassOfVehicle ?
       setMakerDesc(details?.rc_maker_desc),
       setMakerModel(details?.rc_maker_model);
     setManufactureMonthYear(details?.rc_manu_month_yr);
     setVehicleGvw(details?.rc_gvw);
+    setVehicleRegisteredOwner(details?.rc_owner_name);
     setCubicCapacity(details?.rc_cubic_cap);
     setVehicleSeatingCapacity(details?.rc_seat_cap);
     setVehiclePermanentAddress(details?.rc_permanent_address);
@@ -182,19 +207,20 @@ const Form = ({
     setRcRtoCode(details?.rc_rto_code);
     // setBancsFuelType(details?.bancs_Fuel_Type);
     setEngineNumber(details?.rc_eng_no),
-      setLicenseNumber(details?.rc_regn_no),
+      // setLicenseNumber(details?.rc_regn_no),
       setVehicleFuelType(details?.bancs_Fuel_Type),
       setVehicleRcStatus(details?.rc_status);
     setVehicleBlackListStatus(details?.rc_blacklist_status);
     setVehicleRegistedAt(details?.rc_registered_at);
     setVehicleInsuranceCompany(details?.rc_insurance_comp);
-    setPUCNumber,
-      setTransferDate,
-      setEngineType,
-      setAddedBy,
-      setLicenseType,
-      setIssuingAuthority;
+    
   }, [details]);
+
+  useEffect(()=>{
+      const details = JSON.parse(localStorage.getItem("vehicleFetchedDetails"));
+
+      setvehicleFetchDetails(details);
+  },[]);
 
   //permanenet Address
   return (
@@ -256,7 +282,7 @@ const Form = ({
                       </button>
                     )}
                   </div>
-                  {editCase_01 && (
+                  {editCase_01 && claim?.driverDetails?.LicenseNumber && (
                     <div className="col-lg-2 text-start">
                       <button
                         className="btn-thm"
@@ -322,7 +348,7 @@ const Form = ({
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={RegisteredNumber ? RegisteredNumber : claim?.vehicleDetails?.VehicleRegisteredNumber}
+                          value={VehicleRegisteredNumber }
                           
                           // placeholder="Enter Registration No."
                         />
@@ -353,8 +379,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleRegisteredOwner
-                                ? VehicleRegisteredOwner
-                                : claim?.vehicleDetails?.VehicleRegisteredNumber
                             }
                             onChange={(e) =>
                               setVehicleRegisteredOwner(e.target.value)
@@ -384,15 +408,10 @@ const Form = ({
                         </div>
                         <div className="col-lg-7">
                           <input
-                            type="text"
+                            type="date"
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(
-                              DateRegistration
-                                ? DateRegistration
-                                : claim?.vehicleDetails
-                                    ?.VehicleDateOfRegistration
-                            )}
+                            value={DateRegistration}
                             onChange={(e) =>
                               setDateRegistration(e.target.value)
                             }
@@ -426,8 +445,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               PUCNumber
-                                ? PUCNumber
-                                : claim?.vehicleDetails?.VehiclePucNumber
                             }
                             onChange={(e) => setPUCNumber(e.target.value)}
                           />
@@ -458,8 +475,6 @@ const Form = ({
                             id="propertyTitle"
                             value={formatDate(
                               TransferDate
-                                ? TransferDate
-                                : claim?.vehicleDetails?.VehicleTransferDate
                             )}
                             onChange={(e) => setTransferDate(e.target.value)}
 
@@ -492,8 +507,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               EngineNumber
-                                ? EngineNumber
-                                : claim?.vehicleDetails?.VehicleEngineNumber
                             }
                             onChange={(e) => setEngineNumber(e.target.value)}
 
@@ -525,9 +538,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              AddedBy && AddedBy
-                                ? claim?.vehicleDetails?.VehicleAddedBy
-                                : "NA"
+                              AddedBy
                             }
                             onChange={(e) => setAddedBy(e.target.value)}
 
@@ -559,9 +570,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              IssuingAuthority && IssuingAuthority
-                                ? claim?.driverDetails?.IssuingAuthority
-                                : "NA"
+                              IssuingAuthority 
                             }
                             onChange={(e) =>
                               setIssuingAuthority(e.target.value)
@@ -596,8 +605,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               LicenseNumber
-                                ? LicenseNumber
-                                : claim?.driverDetails?.LicenseNumber
                             }
                             onChange={(e) => setLicenseNumber(e.target.value)}
 
@@ -629,9 +636,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              LicenseType && LicenseType
-                                ? claim?.driverDetails?.LicenseType
-                                : "NA"
+                              LicenseType
                             }
                             onChange={(e) => setLicenseType(e.target.value)}
 
@@ -664,8 +669,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleChassisNumber
-                                ? VehicleChassisNumber
-                                : claim?.vehicleDetails?.VehicleChassisNumber
                             }
                             onChange={(e) =>
                               setVehicleChassisNumber(e.target.value)
@@ -700,8 +703,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleFuelType
-                                ? VehicleFuelType
-                                : claim?.vehicleDetails?.VehicleFuelType
                             }
                             onChange={(e) => setVehicleFuelType(e.target.value)}
 
@@ -734,8 +735,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleRegisteredNumber
-                                ? VehicleRegisteredNumber
-                                : claim?.vehicleDetails?.VehicleRegisteredNumber
                             }
                             onChange={(e) =>
                               setVehicleRegisteredNumber(e.target.value)
@@ -770,8 +769,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               RcRtoCode
-                                ? RcRtoCode
-                                : claim?.vehicleDetails?.RcRtoCode
                             }
                             onChange={(e) => setRcRtoCode(e.target.value)}
 
@@ -804,8 +801,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               BancsVehicleSegment
-                                ? BancsVehicleSegment
-                                : claim?.vehicleDetails?.BancsVehicleSegment
                             }
                             onChange={(e) =>
                               setBancsVehicleSegment(e.target.value)
@@ -840,8 +835,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               BancsVehicleClass
-                                ? BancsVehicleClass
-                                : claim?.vehicleDetails?.BancsVehicleClass
                             }
                             onChange={(e) =>
                               setBancsVehicleClass(e.target.value)
@@ -876,8 +869,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               BancsBodyType
-                                ? BancsBodyType
-                                : claim?.vehicleDetails?.BancsBodyType
                             }
                             onChange={(e) => setBancsBodyType(e.target.value)}
 
@@ -910,8 +901,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleFuelType
-                                ? VehicleFuelType
-                                : claim?.vehicleDetails?.VehicleFuelType
                             }
                             onChange={(e) => setVehicleFuelType(e.target.value)}
 
@@ -944,8 +933,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               BancsSubtypeCode
-                                ? BancsSubtypeCode
-                                : claim?.vehicleDetails?.BancsSubtypeCode
                             }
                             onChange={(e) =>
                               setBancsSubtypeCode(e.target.value)
@@ -980,8 +967,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               BancsMakeCode
-                                ? BancsMakeCode
-                                : claim?.vehicleDetails?.BancsMakeCode
                             }
                             onChange={(e) => setBancsMakeCode(e.target.value)}
 
@@ -1014,8 +999,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               BancsModelCode
-                                ? BancsModelCode
-                                : claim?.vehicleDetails?.BancsModelCode
                             }
                             onChange={(e) => setBancsModelCode(e.target.value)}
 
@@ -1048,8 +1031,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               RcVehicleType
-                                ? RcVehicleType
-                                : claim?.vehicleDetails?.VehicleType
                             }
                             onChange={(e) => setRcVehicleType(e.target.value)}
 
@@ -1082,8 +1063,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleRcStatus
-                                ? VehicleRcStatus
-                                : claim?.vehicleDetails?.VehicleRcStatus
                             }
                             onChange={(e) => setVehicleRcStatus(e.target.value)}
 
@@ -1118,8 +1097,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleBlackListStatus
-                                ? VehicleBlackListStatus
-                                : claim?.vehicleDetails?.VehicleBlackListStatus
                             }
                             onChange={(e) =>
                               setVehicleBlackListStatus(e.target.value)
@@ -1155,8 +1132,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleRegistedAt
-                                ? VehicleRegistedAt
-                                : claim?.vehicleDetails?.VehicleRegistedAt
                             }
                             onChange={(e) =>
                               setVehicleRegistedAt(e.target.value)
@@ -1193,8 +1168,6 @@ const Form = ({
                             id="propertyTitle"
                             value={
                               VehicleInsuranceUpto
-                                ? VehicleInsuranceUpto
-                                : claim?.vehicleDetails?.VehicleInsuranceUpto
                             }
                             onChange={(e) =>
                               setVehicleInsuranceUpto(e.target.value)

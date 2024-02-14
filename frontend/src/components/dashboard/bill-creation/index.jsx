@@ -1,13 +1,39 @@
+import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
-// import DetailedInfo from "./DetailedInfo";
-// import FloorPlans from "./FloorPlans";
-// import LocationField from "./LocationField";
-// import PropertyMediaUploader from "./PropertyMediaUploader";
+import axios from "axios";
+
 
 const index = () => {
+
+  const [allInfo,setAllInfo]=useState(null);
+  const [leadID,setLeadID]=useState(0);
+
+  useEffect(()=>{
+    const userData = JSON.parse(localStorage.getItem("userInfo"));
+    const url = window.location.pathname;
+    const leadId = url.split("/bill-creation/")[1];
+    setLeadID(leadId);
+
+    console.log(leadId)
+    axios.get("/api/getReportInfo",{
+      headers:{
+        Authorization:`Bearer ${userData[0].Token}`
+      },
+      params:{
+        LeadId : leadId
+      }
+    })
+    .then((res)=>{
+      setAllInfo(res.data.data);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  },[]);
+
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -75,7 +101,8 @@ const index = () => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <CreateList />
+                        <CreateList allInfo={allInfo}
+                        leadID={leadID}/>
                       </div>
                     </div>
                     {/* <div className="my_dashboard_review mt30">

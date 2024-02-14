@@ -227,7 +227,7 @@ const Index = ({}) => {
   const [MakerDesc, setMakerDesc] = useState("");
   const [MakerModel, setMakerModel] = useState("");
 
-  console.log("CONTANT11111", MakerModel);
+  // console.log("CONTANT11111", MakerModel);
 
   const [ManufactureMonthYear, setManufactureMonthYear] = useState("");
   const [VehicleGvw, setVehicleGvw] = useState("");
@@ -354,7 +354,7 @@ const Index = ({}) => {
     );
     setDriverName(claim?.driverDetails?.DriverName);
     setDriverAddedDate(claim?.driverDetails?.AddedDate);
-    setVerification(claim?.driverDetails?.TypeOfVerification);
+    setVerification(claim?.driverDetails?.TypeOfVerification === 0 ? "Verified By Online" : "Verified Manually");
     setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress);
     setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
     setGarageContactNo2(claim?.garageDetails?.GarageContactNo2);
@@ -1048,6 +1048,8 @@ const Index = ({}) => {
                               setVehicleModel={setVehicleModel}
                               setEngineType={setEngineType}
                               EngineType={EngineType}
+                              VehicleRegisteredNumber={VehicleRegisteredNumber}
+                              setVehicleRegisteredNumber={setVehicleRegisteredNumber}
                               VehicleRegisteredOwner={VehicleRegisteredOwner}
                               setVehicleRegisteredOwner={
                                 setVehicleRegisteredOwner
