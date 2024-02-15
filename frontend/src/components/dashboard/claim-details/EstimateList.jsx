@@ -78,13 +78,13 @@ const EstimateList = ({ edit, onSaveHandler }) => {
                   </div>
                   {editCase_10 && (
                     <div className="col-lg-2 text-start">
-                      <button
+                      {/* <button
                         className="btn-thm"
                         // onClick={handleFetchData}
                         style={{}}
                       >
                         Fetch Details
-                      </button>
+                      </button> */}
                     </div>
                   )}
                 </div>
@@ -238,6 +238,14 @@ const EstimateList = ({ edit, onSaveHandler }) => {
                           </td>
                         </tr>
                       </table>
+                      <div className="col-lg-12 text-end">
+                        <button
+                          className="col-lg-12 btn btn-color"
+                          style={{ marginLeft: "" }}
+                        >
+                          Approve
+                        </button>
+                      </div>
                     </div>
                     <div className="col-lg-4">
                       <div

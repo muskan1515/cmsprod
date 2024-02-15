@@ -49,10 +49,10 @@ const index = () => {
                 </div>
                 {/* End Dashboard Navigation */}
 
-                <div className="col-lg-12 mb10">
+                <div className="col-lg-12">
                   <div className="breadcrumb_content style2">
                     <h2 className="breadcrumb_title">My Profile</h2>
-                    <p>We are glad to see you again!</p>
+                    {/* <p>We are glad to see you again!</p> */}
                   </div>
                 </div>
                 {/* End .col */}
@@ -70,7 +70,7 @@ const index = () => {
                   </div>
                   {/* End prifle info wrapper end */}
 
-                  <div className="my_dashboard_review mt30">
+                  {/* <div className="my_dashboard_review mt30">
                     <div className="row">
                       <div className="col-xl-2">
                         <h4>Social Media</h4>
@@ -79,10 +79,10 @@ const index = () => {
                         <SocialMedia />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {/* End .SocialMedia */}
 
-                  <div className="my_dashboard_review mt30">
+                  {/* <div className="my_dashboard_review mt30">
                     <div className="row">
                       <div className="col-xl-2">
                         <h4>Change password</h4>
@@ -91,7 +91,7 @@ const index = () => {
                         <ChangePassword />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               {/* End .row */}
@@ -99,7 +99,7 @@ const index = () => {
               <div className="row mt50">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    <p>© 2020 Find House. Made with love.</p>
+                    {/* <p>© 2020 Find House. Made with love.</p> */}
                   </div>
                 </div>
               </div>

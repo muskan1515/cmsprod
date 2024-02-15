@@ -78,13 +78,13 @@ const PaymentDetails = (edit) => {
                   </div>
                   {editCase_11 && (
                     <div className="col-lg-2 text-start">
-                      <button
+                      {/* <button
                         className="btn-thm"
                         // onClick={handleFetchData}
                         style={{}}
                       >
                         Fetch Details
-                      </button>
+                      </button> */}
                     </div>
                   )}
                 </div>

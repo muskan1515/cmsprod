@@ -93,9 +93,9 @@ const Form = ({
                     )}
                   </div>
                   <div className="col-lg-2 text-start">
-                    <button className="btn-thm" style={{}}>
+                    {/* <button className="btn-thm" style={{}}>
                       Fetch Details
-                    </button>
+                    </button> */}
                   </div>
                 </div>
                 {editCase_03 ? (

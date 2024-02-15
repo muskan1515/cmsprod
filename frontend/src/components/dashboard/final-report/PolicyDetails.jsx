@@ -2336,7 +2336,7 @@ const PolicyDetails = ({
 
             <div className="col-lg-12">
               <div className="row mt-1">
-                <div className="col-lg-4 my_profile_setting_input form-group">
+                <div className="col-lg-4 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color"

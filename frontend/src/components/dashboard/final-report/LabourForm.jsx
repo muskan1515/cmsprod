@@ -35,33 +35,36 @@ const LabourForm = ({
   setReload,
 
   ageOfVehicleTotal,
-   metaldepPct,
-   
+  metaldepPct,
 }) => {
-
-  const calculateVehicleAge = ()=>{
-    if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
+  const calculateVehicleAge = () => {
+    if (
+      !claim.vehicleDetails?.DateOfRegistration ||
+      !claim.claimDetails?.AddedDateTime
+    ) {
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
-    const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
-  
-    return `${a }`;
-    
-  }
+    const b = getMonthsDifference(claim.claimDetails?.AddedDateTime);
 
-  const calculateTotalGSTForAssessed=()=>{
-    const a = Number(totalAssessed)*(Number(currentGst))/100;
+    return `${a}`;
+  };
+
+  const calculateTotalGSTForAssessed = () => {
+    const a = (Number(totalAssessed) * Number(currentGst)) / 100;
     const b = totalAssessed + a;
-  }
-  
-  const calculateDepreciationOnMetal = ()=>{
-    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
-   
+  };
+
+  const calculateDepreciationOnMetal = () => {
+    const a = calculateDepreciationsPercenatge(
+      allDepreciations,
+      "Metal",
+      claim.vehicleDetails?.DateOfRegistration
+    );
+
     console.log(a);
     return a;
-  }
-  
+  };
 
   return (
     <>
@@ -125,7 +128,7 @@ const LabourForm = ({
             </div>
           </div>
           <div className="col-lg-12">
-           {/*<div className="row mt-1 mb-1">
+            {/*<div className="row mt-1 mb-1">
               {/*} <div className="col-lg-4 my_profile_setting_input form-group text-end">
                 <label
                   htmlFor=""
@@ -201,7 +204,7 @@ const LabourForm = ({
                 />
               </div>
                 </div>*/}
-                </div>
+          </div>
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-12 my_profile_setting_input form-group text-end mt-1 mb-0">
@@ -249,7 +252,6 @@ const LabourForm = ({
                     value={currentGst}
                     onChange={(e) => {
                       setCurrentGST(e.target.value);
-                      
                     }}
                   />
                 </div>
@@ -320,7 +322,7 @@ const LabourForm = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalTaxableAMount+taxAmount}
+                    value={totalTaxableAMount + taxAmount}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -347,10 +349,7 @@ const LabourForm = ({
                   className="form-control form-control-table"
                   id="propertyTitle"
                   value={
-                    totalTaxableAMount +
-                    taxAmount +
-                    totalRemainingAssessed 
-                   
+                    totalTaxableAMount + taxAmount + totalRemainingAssessed
                   }
                   // placeholder="Enter Registration No."
                 />
@@ -358,71 +357,7 @@ const LabourForm = ({
             </div>
           </div>
           <div className="col-lg-12">
-            <div className="row mt-1">
-              <div className="col-lg-5"></div>
-              <div className="col-lg-2">
-                <div className="row mt-1">
-                  <div className="col-lg-8 my_profile_setting_input form-group text-end">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                        fontSize: "14px",
-                      }}
-                    >
-                      Age of Vehicle(months)
-                    </label>
-                  </div>
-                  <div className="col-lg-8">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={ageOfVehicleTotal}
-                      // readOnly={!isEditMode}
-                      // onChange={(e) => setLicenseType(e.target.value)}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 ">
-                <div className="row mt-1">
-                  <div className="col-lg-8 my_profile_setting_input form-group text-end">
-                    <label
-                      htmlFor=""
-                      className="text-color"
-                      style={{
-                        // paddingTop: "15px",
-                        color: "#2e008b",
-                        fontWeight: "",
-                        // marginTop: "-13px",
-                        fontSize: "14px",
-                      }}
-                    >
-                      dep on metal(%)
-                    </label>
-                  </div>
-                  <div className="col-lg-4">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={metaldepPct}
-                      // readOnly={!isEditMode}
-                      // onChange={(e) => setLicenseType(e.target.value)}
-
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="row mt-1"></div>
           </div>
 
           {/* <div className="col-lg-12 text-center mt-2">

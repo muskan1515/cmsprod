@@ -92,9 +92,9 @@ const Form_01 = ({
                     )}
                   </div>
                   <div className="col-lg-2 text-start">
-                    <button className="btn-thm" style={{}}>
+                    {/* <button className="btn-thm" style={{}}>
                       Fetch Details
-                    </button>
+                    </button> */}
                   </div>
                 </div>
                 {editCase_02 ? (
@@ -121,9 +121,7 @@ const Form_01 = ({
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setDriverName(e.target.value)}
-                            value={
-                              DriverName
-                            }
+                            value={DriverName}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -187,11 +185,11 @@ const Form_01 = ({
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setVerification(e.target.value)}
-                            
+
                             // placeholder="Enter Registration No.
                           >
-                          <option value={0} >Verified By Online</option>
-                          <option value={1} >Verified Manually</option>
+                            <option value={0}>Verified By Online</option>
+                            <option value={1}>Verified Manually</option>
                           </select>
                         </div>
                       </div>

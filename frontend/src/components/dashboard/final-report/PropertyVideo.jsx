@@ -10,7 +10,10 @@ import Summary from "./Summary";
 import Table from "./Table";
 import EditableTable from "./Editable";
 import LabourForm from "./LabourForm";
-import { calculateDepreciationsPercenatge, getMonthsDifference } from "./functions";
+import {
+  calculateDepreciationsPercenatge,
+  getMonthsDifference,
+} from "./functions";
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -46,29 +49,26 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [allDepreciations, setAllDepreciations] = useState([]);
 
-  const [reload,setReload]=useState(false);
+  const [reload, setReload] = useState(false);
 
-  const [AddedDateTime,setAddedDateTime]=useState("");
-  const [PlaceOfLoss,setPlaceOfLoss]=useState("");
-  
-  const [cabin,setCabin]=useState(0);
-  const [loadBody,setLoadBody]=useState(0);
-  const [towingCharges,setTowingCharges]=useState(0);
+  const [AddedDateTime, setAddedDateTime] = useState("");
+  const [PlaceOfLoss, setPlaceOfLoss] = useState("");
 
-  const [laborWOPaint,setLaborWOPaint]=useState(0);
+  const [cabin, setCabin] = useState(0);
+  const [loadBody, setLoadBody] = useState(0);
+  const [towingCharges, setTowingCharges] = useState(0);
 
-  const [ageOfVehicle,setAgeOfVehicle]=useState(0);
-  const [depMetal,setDepMetal]=useState(0);
+  const [laborWOPaint, setLaborWOPaint] = useState(0);
 
+  const [ageOfVehicle, setAgeOfVehicle] = useState(0);
+  const [depMetal, setDepMetal] = useState(0);
 
-  const [PolicyPeriodEnd,setPolicyPeriodEnd]=useState("");
-  const [PolicyPeriodStart,setPolicyPeriodStart]=useState("");
+  const [PolicyPeriodEnd, setPolicyPeriodEnd] = useState("");
+  const [PolicyPeriodStart, setPolicyPeriodStart] = useState("");
 
-  const [HPA,setHPA]=useState("");
-  const [InsuranceCompanyNameAddress,setInsuranceCompanyNameAddress]=useState(""
-  )
-
-
+  const [HPA, setHPA] = useState("");
+  const [InsuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
+    useState("");
 
   const [allRows, setAllRows] = useState(
     Array.from({ length: 2 }, (_, index) => ({
@@ -85,11 +85,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [toggleEstimate, setToggleEstimate] = useState(0);
   const [toggleLabor, setToggleLabor] = useState(0);
-  const [totalPaint,setTotalPaint]=useState(0);
+  const [totalPaint, setTotalPaint] = useState(0);
 
-  const [totalRemainingAssessed,settotalRemainingAssessed]=useState(0);
+  const [totalRemainingAssessed, settotalRemainingAssessed] = useState(0);
 
-  const [totalTaxableAMount,setTotalTaxbleAmount]=useState(0);
+  const [totalTaxableAMount, setTotalTaxbleAmount] = useState(0);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -112,35 +112,32 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       });
   }, []);
 
-  const calculateGSTValue = (original,gstValue,gst)=>{
-    if(gst % 2 !== 0){
-      return (Number(original) * Number(gstValue))/100;
+  const calculateGSTValue = (original, gstValue, gst) => {
+    if (gst % 2 !== 0) {
+      return (Number(original) * Number(gstValue)) / 100;
     }
     return 0;
-  }
+  };
 
-  const calculateGSTWithPaintValue = (original,type,gst)=>{
-   
+  const calculateGSTWithPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
-    if(String(type) === "1" && gst%2!==0){
-      return ((Number(original) * (12.5))/100);
+    if (String(type) === "1" && gst % 2 !== 0) {
+      return (Number(original) * 12.5) / 100;
     }
     return 0;
-  }
+  };
 
-  const calculateGSTWithoutPaintValue = (original,type,gst)=>{
-   
+  const calculateGSTWithoutPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
-    if(String(type) === "1" && gst%2===0){
-      return ((Number(original) * (12.5))/100);
+    if (String(type) === "1" && gst % 2 === 0) {
+      return (Number(original) * 12.5) / 100;
     }
     return 0;
-  }
+  };
 
-  const calculateTaxValue = (original,gstValue,gst)=>{
-  
-    if(gst % 2 !== 0){
-      return (Number(original) * Number(gstValue))/100;
+  const calculateTaxValue = (original, gstValue, gst) => {
+    if (gst % 2 !== 0) {
+      return (Number(original) * Number(gstValue)) / 100;
     }
     return 0;
   };
@@ -148,33 +145,50 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   useEffect(() => {
     let total_estimate = 0,
       total_assessed = 0,
-      total_paint =0,
-      total_taxable_amount=0,
+      total_paint = 0,
+      total_taxable_amount = 0,
       total_tax = 0,
-      total_aassessed_wihtout_tax=0;
+      total_aassessed_wihtout_tax = 0;
     allRows.map((row, index) => {
-      if(String(row.isActive) === "1"){
-      const current_row_estimate =
-        Number(row?.estimate) +
-        calculateGSTValue(row?.estimate, currentGst, toggleEstimate +1 );
-      total_estimate = total_estimate + current_row_estimate;
+      if (String(row.isActive) === "1") {
+        const current_row_estimate =
+          Number(row?.estimate) +
+          calculateGSTValue(row?.estimate, currentGst, toggleEstimate + 1);
+        total_estimate = total_estimate + current_row_estimate;
       }
-    })
-    allRows.map((row,index)=>{ 
-      if(String(row.isActive) === "1"){
-      const current_row_assessed = Number(row?.assessed) - calculateGSTWithPaintValue(row?.assessed,row.type,row.gst);
-      console.log("sum",Number(row?.assessed)-calculateGSTWithPaintValue(row?.assessed,row.type,row.gst));
-      total_taxable_amount = total_taxable_amount + (Number(row.gst)%2 !==0 ? current_row_assessed : 0);
+    });
+    allRows.map((row, index) => {
+      if (String(row.isActive) === "1") {
+        const current_row_assessed =
+          Number(row?.assessed) -
+          calculateGSTWithPaintValue(row?.assessed, row.type, row.gst);
+        console.log(
+          "sum",
+          Number(row?.assessed) -
+            calculateGSTWithPaintValue(row?.assessed, row.type, row.gst)
+        );
+        total_taxable_amount =
+          total_taxable_amount +
+          (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
 
+        const current_row_assessed_tax = calculateTaxValue(
+          row?.assessed,
+          currentGst,
+          row.gst
+        );
+        total_assessed = total_assessed + Number(row?.assessed);
 
-      const current_row_assessed_tax = calculateTaxValue(row?.assessed,currentGst,row.gst);
-      total_assessed = total_assessed + Number(row?.assessed);
+        const remained_assessed_paint_dep =
+          Number(row?.assessed) -
+          calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst);
+        total_aassessed_wihtout_tax =
+          total_aassessed_wihtout_tax + (row.gst % 2 === 0)
+            ? remained_assessed_paint_dep
+            : 0;
 
-      const remained_assessed_paint_dep = Number(row?.assessed) - calculateGSTWithoutPaintValue(row.assessed,row.type,row.gst);
-      total_aassessed_wihtout_tax = total_aassessed_wihtout_tax + (row.gst%2=== 0 )? remained_assessed_paint_dep : 0;
-
-      total_tax = total_tax + current_row_assessed_tax;
-      total_paint = total_paint +( row.type  === 1 ? (Number(row?.assessed)) :  0);
+        total_tax = total_tax + current_row_assessed_tax;
+        total_paint =
+          total_paint + (row.type === 1 ? Number(row?.assessed) : 0);
       }
     });
 
@@ -184,21 +198,17 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setTotalTaxbleAmount(total_taxable_amount);
     setTotalEstimate(total_estimate);
 
-    console.log("total_aassessed_wihtout_tax",total_aassessed_wihtout_tax)
+    console.log("total_aassessed_wihtout_tax", total_aassessed_wihtout_tax);
     settotalRemainingAssessed(total_aassessed_wihtout_tax);
-    setTaxAmount(((total_taxable_amount)*Number(currentGst))/100);
+    setTaxAmount((total_taxable_amount * Number(currentGst)) / 100);
     setLaborWOPaint(total_paint);
     setReload(false);
-  }, [toggleEstimate, currentGst, reload, allRows,toggleEstimate]);
+  }, [toggleEstimate, currentGst, reload, allRows, toggleEstimate]);
 
-
-  useEffect(()=>{
-
+  useEffect(() => {
     calculateVehicleAge();
     calculateDepreciationOnMetal();
-  },[claim]);
-
- 
+  }, [claim]);
 
   const [subType, setSubType] = useState("Motor");
 
@@ -218,9 +228,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [GarageAddedBy, setGarageAddedBy] = useState("");
   const [ClaimAddedDateTime, setClaimAddedDateTime] = useState("");
   const [ClaimIsActive, setClaimIsActive] = useState("");
-  
+
   const [PolicyNumber, setPolicyNumber] = useState("");
- 
+
   const [InsuredAddress, setInsuredAddress] = useState("");
   const [InsuredName, setInsuredName] = useState("");
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
@@ -234,27 +244,26 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [LicenseType, setLicenseType] = useState("");
   const [BadgeNumber, setBadgeNumber] = useState("");
   //Vehicle Details
-  const [ValidUntilNtv,setValidUntilNtv]=useState("");
-  const [ValidUntilTv,setValidUntilTv]=useState("");
-  const [ValidFrom,setValidFrom]=useState("");
+  const [ValidUntilNtv, setValidUntilNtv] = useState("");
+  const [ValidUntilTv, setValidUntilTv] = useState("");
+  const [ValidFrom, setValidFrom] = useState("");
 
-  const [DateOfIssue,setDateOfIssue]=useState("");
+  const [DateOfIssue, setDateOfIssue] = useState("");
 
-  const [VehicleRemark,setVehicleRemark] = useState("");
-  const [RegLadenWt,setRegLadenWt] = useState("");
-  const [RemarkIfRLW,setRemarkIfRLW]=useState("");
-  const [UnladenWT,setUnladenWT]=useState("");
-  const [RemarkIfULW,setRemarkIfULW]=useState("");
+  const [VehicleRemark, setVehicleRemark] = useState("");
+  const [RegLadenWt, setRegLadenWt] = useState("");
+  const [RemarkIfRLW, setRemarkIfRLW] = useState("");
+  const [UnladenWT, setUnladenWT] = useState("");
+  const [RemarkIfULW, setRemarkIfULW] = useState("");
 
-  const [Pin,setPin]=useState("");
-  const [PlaceOfSurvey,setPlaceOfSurvey]=useState("");
+  const [Pin, setPin] = useState("");
+  const [PlaceOfSurvey, setPlaceOfSurvey] = useState("");
 
- 
-  const [AccidentAddedDateTime,setAccidentAddedDateTime]=useState("");
+  const [AccidentAddedDateTime, setAccidentAddedDateTime] = useState("");
 
-  const [SurveyAllotmentDate,setSurveyAllotmentDate]=useState("");
-  const [SurveyConductedDate,setSurveyConductedDate]=useState("")
-  const [driverRemark,setDriverRemark]=useState("");
+  const [SurveyAllotmentDate, setSurveyAllotmentDate] = useState("");
+  const [SurveyConductedDate, setSurveyConductedDate] = useState("");
+  const [driverRemark, setDriverRemark] = useState("");
   const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState("");
   const [RegisteredOwner, setRegisteredOwner] = useState("");
   const [VehicleChassisNumber, setVehicleChassisNumber] = useState("");
@@ -271,72 +280,68 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [VehicleSeatingCapacity, setVehicleSeatingCapacity] = useState();
   // const [PolicyType, setPolicyType] = useState();
 
-  const [VehicleEngineNumber,setVehicleEngineNumber]=useState("");
-  const [VehicleDateOfRegistration,setVehicleDateOfRegistration]=useState("");
-  const [OwnerSRST,setOwnerSRST]=useState("");
+  const [VehicleEngineNumber, setVehicleEngineNumber] = useState("");
+  const [VehicleDateOfRegistration, setVehicleDateOfRegistration] =
+    useState("");
+  const [OwnerSRST, setOwnerSRST] = useState("");
 
-  const [VehicleColor,setVehicleColor]=useState("");
-  const [VehicleMakeVariantModelColor,setVehicleMakeVariantModelColor]=useState("");
-  const [PolicyIssuingOffice,setPolicyIssuingOffice]=useState("");
-  const [ClaimServicingOffice,setClaimServicingOffice]=useState("");
-  const [IDV,setIDV]=useState("");
-  const [AntiTheft,setAntiTheft]=useState("");
+  const [VehicleColor, setVehicleColor] = useState("");
+  const [VehicleMakeVariantModelColor, setVehicleMakeVariantModelColor] =
+    useState("");
+  const [PolicyIssuingOffice, setPolicyIssuingOffice] = useState("");
+  const [ClaimServicingOffice, setClaimServicingOffice] = useState("");
+  const [IDV, setIDV] = useState("");
+  const [AntiTheft, setAntiTheft] = useState("");
 
-  const [VehicleType,setVehicleType] = useState("");
+  const [VehicleType, setVehicleType] = useState("");
 
   //commercial vehicle details
-  const [FitnessCertificate,setFitnessCertificate]=useState("");
-  const [FitnessFrom,setFitnessFrom]=useState("");
-  const [FitnessTo,setFitnessTo]=useState("");
-  const [PermitNo,setPermitNo]=useState("");
-  const [PermitFrom,setPermitFrom]=useState("");
-  const [PermitTo,setPermitTo]=useState("");
-  const [TypeOfPermit,setTypeOfPermit]=useState("");
-  const [Authorization,setAuthorization]=useState("");
-  const [AreasOfoperation,setAreasOfoperation]=useState("");
-  const [commercialRemark,setcommercialRemark]=useState("");
+  const [FitnessCertificate, setFitnessCertificate] = useState("");
+  const [FitnessFrom, setFitnessFrom] = useState("");
+  const [FitnessTo, setFitnessTo] = useState("");
+  const [PermitNo, setPermitNo] = useState("");
+  const [PermitFrom, setPermitFrom] = useState("");
+  const [PermitTo, setPermitTo] = useState("");
+  const [TypeOfPermit, setTypeOfPermit] = useState("");
+  const [Authorization, setAuthorization] = useState("");
+  const [AreasOfoperation, setAreasOfoperation] = useState("");
+  const [commercialRemark, setcommercialRemark] = useState("");
 
-  const [MailRecieveDate,setMailRecieveDate]=useState("");
+  const [MailRecieveDate, setMailRecieveDate] = useState("");
 
-  const [DateOfRegistration,setDateOfRegistration]=useState("");
+  const [DateOfRegistration, setDateOfRegistration] = useState("");
 
   //SURVEY DETAILS
-  const [DetailsOfLoads,setDetailsOfLoads]=useState("");
-  const [CauseOfAccident,setCauseOfAccident]=useState("");
-  const [PoliceAction,setPoliceAction]=useState("");
-  const [ThirdPartyLoss,setThirdPartyLoss]=useState("");
-  const [Assessment,setAssessment]=useState("");
+  const [DetailsOfLoads, setDetailsOfLoads] = useState("");
+  const [CauseOfAccident, setCauseOfAccident] = useState("");
+  const [PoliceAction, setPoliceAction] = useState("");
+  const [ThirdPartyLoss, setThirdPartyLoss] = useState("");
+  const [Assessment, setAssessment] = useState("");
 
   //RC
-  const [RCOwner,setRCOwner]=useState("");
-  const [RCSDW,setRCSDW]=useState("");
-  const [RCMakerName,setRCMakerName]=useState("");
-  const [RCModelName,setRCModelName]=useState("");
-  const [RCTaxValidUpto,setRCTaxValidUpto]=useState("");
-  const [RCVehicleDescription,setRCVehicleDescription]=useState("");
-  const [EmissionNorm,setEmissionNorm]=useState("");
-  const [StandingCapacity,setStandingCapacity]=useState("");
-  const [Financier,setFinancier]=useState("");
-  const [InsuranceValidUpto,setInsuranceValidUpto]=useState("");
-  const [PUCCNumber,setPUCCNumber]=useState("");
-  const [PUCCValidUpto,setPUCCValidUpto]=useState("");
-  const [RegisteringAuthority,setRegisteringAuthority]=useState("");
+  const [RCOwner, setRCOwner] = useState("");
+  const [RCSDW, setRCSDW] = useState("");
+  const [RCMakerName, setRCMakerName] = useState("");
+  const [RCModelName, setRCModelName] = useState("");
+  const [RCTaxValidUpto, setRCTaxValidUpto] = useState("");
+  const [RCVehicleDescription, setRCVehicleDescription] = useState("");
+  const [EmissionNorm, setEmissionNorm] = useState("");
+  const [StandingCapacity, setStandingCapacity] = useState("");
+  const [Financier, setFinancier] = useState("");
+  const [InsuranceValidUpto, setInsuranceValidUpto] = useState("");
+  const [PUCCNumber, setPUCCNumber] = useState("");
+  const [PUCCValidUpto, setPUCCValidUpto] = useState("");
+  const [RegisteringAuthority, setRegisteringAuthority] = useState("");
 
-  const [TypeOfDate,setTypeOfDate]=useState("");
+  const [TypeOfDate, setTypeOfDate] = useState("");
 
-  const [metaldepPct,setmetaldepPct]=useState(0);
-  const [ageOfVehicleTotal,setAgeOfvehicleTotal]=useState(0);
-  const [totalPartsEstimate,setTotalPartsEstimate]=useState(0);
-  const [totalLabrorEstimate,setTotalLabrorEstimate]=useState(0);
-  
-  const [totalPartsAssessed,setTotalPartsAssessed]=useState(0);
-  const [totalLabrorAssessed,setTotalLabrorAssessed]=useState(0);
+  const [metaldepPct, setmetaldepPct] = useState(0);
+  const [ageOfVehicleTotal, setAgeOfvehicleTotal] = useState(0);
+  const [totalPartsEstimate, setTotalPartsEstimate] = useState(0);
+  const [totalLabrorEstimate, setTotalLabrorEstimate] = useState(0);
 
-  
-  const [lessExcess,setLessExcess]=useState(0);
-  const [lessImposed,setLessImposed]=useState(0);
-  const [other,setOther]=useState(0);
-  const [metalSalvageValue,setMetalSalvageValue]=useState(5);
+  const [totalPartsAssessed, setTotalPartsAssessed] = useState(0);
+  const [totalLabrorAssessed, setTotalLabrorAssessed] = useState(0);
 
  
   const getNextYear=()=>{
@@ -352,10 +357,12 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     return '';
   }
 
- useEffect(() => {
+  useEffect(() => {
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress || "");
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 || "");
-    setInsuredMobileNo2(claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 || "");
+    setInsuredMobileNo2(
+      claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 || ""
+    );
     setClaimNumber(claim?.claimDetails?.ClaimNumber || "");
     setEngineType(claim?.vehicleDetails?.ModeOfCheck || "");
     setDateRegistration(claim?.vehicleDetails?.DateOfRegistration || null);
@@ -422,15 +429,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         ? `${claim?.VehicleMakeVariantModelColor}`
         : ""
     );
-    const temp = claim?.vehicleDetails?.TypeOfDate ? "Registration" : "Purchase";
-    setTypeOfDate(temp );
+    const temp = claim?.vehicleDetails?.TypeOfDate
+      ? "Registration"
+      : "Purchase";
+    setTypeOfDate(temp);
     setVehicleTypeOfBody(claim?.vehicleDetails?.TypeOfBody || "");
     setVehicleCubicCapacity(claim?.vehicleDetails?.CubicCapacity);
     setVehicleClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle);
     setVehicleFuelType(claim?.vehicleDetails?.FuelType || "");
-    setVehicleOdometerReading(
-      claim?.vehicleDetails?.OdometerReading || ""
-    );
+    setVehicleOdometerReading(claim?.vehicleDetails?.OdometerReading || "");
     setDateOfIssue(claim?.driverDetails?.DateOfIssue || "");
     setVehiclePreAccidentCondition(
       claim?.vehicleDetails?.PreAccidentCondition || ""
@@ -441,9 +448,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       claim?.vehicleDetails?.TaxParticulars || ""
     );
     setPUCNumber(claim?.vehicleDetails?.PucNumber || "");
-    setVehicleSeatingCapacity(
-      claim?.vehicleDetails?.SeatingCapacity || 0
-    );
+    setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || 0);
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice || "");
 
     setIDV(claim?.claimDetails?.IDV || "");
@@ -456,11 +461,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
     setPin(claim?.accidentDetails?.Pin || "");
     setPlaceOfSurvey(claim?.accidentDetails?.PlaceOfSurvey || "");
-    setDetailsOfLoads(claim?.driverDetails?.DetailsOfLoads||"");
-    setCauseOfAccident(claim?.driverDetails?.CauseOfAccident ||"");
-    setPoliceAction(claim?.driverDetails?.PoliceAction || ""); 
+    setDetailsOfLoads(claim?.driverDetails?.DetailsOfLoads || "");
+    setCauseOfAccident(claim?.driverDetails?.CauseOfAccident || "");
+    setPoliceAction(claim?.driverDetails?.PoliceAction || "");
     setThirdPartyLoss(claim?.driverDetails?.ThirdPartyLoss || "");
-    setAssessment(claim?.driverDetails?.Assessment||"");
+    setAssessment(claim?.driverDetails?.Assessment || "");
 
     setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv || null) ;
     setValidUntilTv(claim?.driverDetails?.ValidUntilTv || null);
@@ -476,38 +481,41 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setPermitTo(claim?.commercialVehicleDetails?.PermitTo||null);
     setTypeOfPermit(claim?.commercialVehicleDetails?.TypeOfPermit || "");
     setAuthorization(claim?.commercialVehicleDetails?.Authorization || "");
-    setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation || "");
+    setAreasOfoperation(
+      claim?.commercialVehicleDetails?.AreasOfOperation || ""
+    );
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark || "");
-
   }, [claim]);
 
-  const calculateVehicleAge = ()=>{
-    if(! claim.vehicleDetails?.DateOfRegistration || !claim.claimDetails?.AddedDateTime){
+  const calculateVehicleAge = () => {
+    if (
+      !claim.vehicleDetails?.DateOfRegistration ||
+      !claim.claimDetails?.AddedDateTime
+    ) {
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
-    const b= getMonthsDifference(claim.claimDetails?.AddedDateTime);
- 
-  //  setAgeOfvehicleTotal(a);
-    return `${a }`;
-    
-    
-  }
+    const b = getMonthsDifference(claim.claimDetails?.AddedDateTime);
 
-  
+    //  setAgeOfvehicleTotal(a);
+    return `${a}`;
+  };
 
-  const calculateDepreciationOnMetal = ()=>{
-    const a= calculateDepreciationsPercenatge(allDepreciations,"Metal",claim.vehicleDetails?.DateOfRegistration);
-   
+  const calculateDepreciationOnMetal = () => {
+    const a = calculateDepreciationsPercenatge(
+      allDepreciations,
+      "Metal",
+      claim.vehicleDetails?.DateOfRegistration
+    );
+
     // setmetaldepPct(a);
     console.log(a);
     return a;
-  }
+  };
 
-  const saveHandler = ()=>{
-
+  const saveHandler = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const payload={
+    const payload = {
       policyType,
       IDV : IDV ? IDV : claim?.claimDetails?.IDV ,
       PolicyPeriodStart : PolicyPeriodStart ? PolicyPeriodStart : claim?.claimDetails?.PolicyPeriodStart,
@@ -533,7 +541,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       RemarkIfULW,
       VehicleRemark,
       InsuranceCompanyNameAddress,
-      InsuredAddress,InsuredMailAddress,
+      InsuredAddress,
+      InsuredMailAddress,
       InsuredMobileNo1,
       InsuredMobileNo2,
       InsuredName,
@@ -595,7 +604,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       PoliceAction,
       ThirdPartyLoss,
       Assessment,
-      leadId
+      leadId,
     };
 
 
@@ -701,24 +710,20 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           <div className="property_video">
             <div className="thumb">
               <PolicyDetails
-
-              TypeOfDate={TypeOfDate}
-              setTypeOfDate={setTypeOfDate}
+                TypeOfDate={TypeOfDate}
+                setTypeOfDate={setTypeOfDate}
                 setPolicyType={setPolicyType}
                 policyType={policyType}
                 isEditMode={isEditMode}
                 setIsEditMode={setIsEditMode}
-
                 IDV={IDV}
                 setIDV={setIDV}
                 PolicyPeriodEnd={PolicyPeriodEnd}
                 setPolicyPeriodEnd={setPolicyPeriodEnd}
                 setPolicyPeriodStart={setPolicyPeriodStart}
                 PolicyPeriodStart={PolicyPeriodStart}
-
                 MailRecieveDate={MailRecieveDate}
                 setMailRecieveDate={setMailRecieveDate}
-
                 OwnerSRST={OwnerSRST}
                 setOwnerSRST={setOwnerSRST}
                 AntiTheft={AntiTheft}
@@ -757,15 +762,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setAreasOfoperation={setAreasOfoperation}
                 setcommercialRemark={setcommercialRemark}
                 commercialRemark={commercialRemark}
-
                 HPA={HPA}
                 setClaimNumber={setClaimNumber}
                 setHPA={setHPA}
                 ClaimServicingOffice={ClaimServicingOffice}
                 setClaimServicingOffice={setClaimServicingOffice}
-                
                 VehicleMakeVariantModelColor={VehicleMakeVariantModelColor}
-                setVehicleMakeVariantModelColor={setVehicleMakeVariantModelColor}
+                setVehicleMakeVariantModelColor={
+                  setVehicleMakeVariantModelColor
+                }
                 VehicleColor={VehicleColor}
                 DateOfIssue={DateOfIssue}
                 setDateOfIssue={setDateOfIssue}
@@ -868,7 +873,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 VehicleSeatingCapacity={VehicleSeatingCapacity}
                 setVehicleSeatingCapacity={setVehicleSeatingCapacity}
                 handleUpdateClick={saveHandler}
-
                 RCOwner={RCOwner}
                 setRCOwner={setRCOwner}
                 RCSDW={RCSDW}
@@ -1013,7 +1017,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setVehicleTaxParticulars={setVehicleTaxParticulars}
                 VehicleSeatingCapacity={VehicleSeatingCapacity}
                 setVehicleSeatingCapacity={setVehicleSeatingCapacity}
-
                 AccidentAddedDateTime={AccidentAddedDateTime}
                 setAccidentAddedDateTime={setAccidentAddedDateTime}
                 setPlaceOfLoss={setPlaceOfLoss}
@@ -1022,7 +1025,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setSurveyAllotmentDate={setSurveyAllotmentDate}
                 setSurveyConductedDate={setSurveyConductedDate}
                 SurveyConductedDate={SurveyConductedDate}
-
                 Pin={Pin}
                 setPin={setPin}
                 PlaceOfSurvey={PlaceOfSurvey}
@@ -1038,7 +1040,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 Assessment={Assessment}
                 setAssessment={setAssessment}
                 SaveHandler={saveHandler}
-
                 claim={claim}
               />
             </div>
@@ -1055,7 +1056,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
-                LeadId={leadId}
+                  LeadId={leadId}
                   claim={claim}
                   DateOfRegistration={DateRegistration}
                   policyType={policyType}
@@ -1069,19 +1070,17 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   }
                   setOverallMetailDep={setOverallMetailDep}
                   setTotalAgeOfVehicle={setTotalAgeOfVehicle}
-
                   ageOfVehicleTotal={ageOfVehicleTotal}
                   metaldepPct={metaldepPct}
-                totalPartsEstimate={totalPartsEstimate}
-                totalLabrorEstimate={totalLabrorEstimate}
-                totalPartsAssessed={totalPartsAssessed}
-                totalLabrorAssessed={totalLabrorAssessed}
-
-                setTotalPartsEstimate={setTotalPartsEstimate}
-                setTotalLabrorEstimate={setTotalLabrorEstimate}
-                setTotalPartsAssessed={setTotalPartsAssessed}
-                setTotalLabrorAssessed={setTotalLabrorAssessed}
-                setMetalSalvageValue={setMetalSalvageValue}
+                  totalPartsEstimate={totalPartsEstimate}
+                  totalLabrorEstimate={totalLabrorEstimate}
+                  totalPartsAssessed={totalPartsAssessed}
+                  totalLabrorAssessed={totalLabrorAssessed}
+                  setTotalPartsEstimate={setTotalPartsEstimate}
+                  setTotalLabrorEstimate={setTotalLabrorEstimate}
+                  setTotalPartsAssessed={setTotalPartsAssessed}
+                  setTotalLabrorAssessed={setTotalLabrorAssessed}
+                  setMetalSalvageValue={setMetalSalvageValue}
                 />
               </div>
             </div>
@@ -1101,7 +1100,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                   style={{ borderRight: "1px solid black" }}
                 >
                   <Exemple_01
-                  claim={claim}
+                    claim={claim}
                     currentGst={currentGst}
                     setTotalAssessed={setTotalAssessed}
                     totalAssessed={totalAssessed}
@@ -1117,69 +1116,64 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                     setAllRows={setAllRows}
                     setReload={setReload}
                     setCurrentGST={setCurrentGst}
-
                     ageOfVehicleTotal={ageOfVehicleTotal}
                     metaldepPct={metaldepPct}
-                  totalPartsEstimate={totalPartsEstimate}
-                  totalLabrorEstimate={totalLabrorEstimate}
-                  totalPartsAssessed={totalPartsAssessed}
-                  totalLabrorAssessed={totalLabrorAssessed}
-
-                  setTotalPartsEstimate={setTotalPartsEstimate}
-                  setTotalLabrorEstimate={setTotalLabrorEstimate}
-                  setTotalPartsAssessed={setTotalPartsAssessed}
-                  setTotalLabrorAssessed={setTotalLabrorAssessed}
+                    totalPartsEstimate={totalPartsEstimate}
+                    totalLabrorEstimate={totalLabrorEstimate}
+                    totalPartsAssessed={totalPartsAssessed}
+                    totalLabrorAssessed={totalLabrorAssessed}
+                    setTotalPartsEstimate={setTotalPartsEstimate}
+                    setTotalLabrorEstimate={setTotalLabrorEstimate}
+                    setTotalPartsAssessed={setTotalPartsAssessed}
+                    setTotalLabrorAssessed={setTotalLabrorAssessed}
                   />
                 </div>
                 <div className="col-lg-3">
-                  <LabourForm 
-
-                  totalRemainingAssessed={totalRemainingAssessed}
-
-                  currentGst={currentGst}
-                  totalTaxableAMount={totalTaxableAMount}
-                  setCurrentGST={setCurrentGst}
-                  setTotalAssessed={setTotalAssessed}
-                  totalAssessed={totalAssessed}
-                  totalEstimate={totalEstimate}
-                  allDepreciations={allDepreciations}
-                  setAllDepreciations={setAllDepreciations}
-                  taxAmount={taxAmount}
-                  setTaxAmount={setTaxAmount}
-                  toggleEstimate={toggleEstimate}
-                  setToggleEstimate={setToggleEstimate}
-                  toggleLabor={toggleLabor}
-                  setToggleLabor={setToggleLabor}
-                  setReload={setReload}
-                  laborWOPaint={laborWOPaint}
-                  towingCharges={towingCharges}
-                  setTowingCharges={setTowingCharges}
-                  loadBody={loadBody}
-                  setLoadBody={setLoadBody}
-                  cabin={cabin}
-                  setCabin={setCabin}
-                  claim={claim}
-                  depMetal={depMetal}
-                  ageOfVehicle={ageOfVehicle}
-
-                  metaldepPct={metaldepPct}
-                  setmetaldepPct={setmetaldepPct}
-                  ageOfVehicleTotal={ageOfVehicleTotal}
-                  setAgeOfvehicleTotal={setAgeOfvehicleTotal}
+                  <LabourForm
+                    totalRemainingAssessed={totalRemainingAssessed}
+                    currentGst={currentGst}
+                    totalTaxableAMount={totalTaxableAMount}
+                    setCurrentGST={setCurrentGst}
+                    setTotalAssessed={setTotalAssessed}
+                    totalAssessed={totalAssessed}
+                    totalEstimate={totalEstimate}
+                    allDepreciations={allDepreciations}
+                    setAllDepreciations={setAllDepreciations}
+                    taxAmount={taxAmount}
+                    setTaxAmount={setTaxAmount}
+                    toggleEstimate={toggleEstimate}
+                    setToggleEstimate={setToggleEstimate}
+                    toggleLabor={toggleLabor}
+                    setToggleLabor={setToggleLabor}
+                    setReload={setReload}
+                    laborWOPaint={laborWOPaint}
+                    towingCharges={towingCharges}
+                    setTowingCharges={setTowingCharges}
+                    loadBody={loadBody}
+                    setLoadBody={setLoadBody}
+                    cabin={cabin}
+                    setCabin={setCabin}
+                    claim={claim}
+                    depMetal={depMetal}
+                    ageOfVehicle={ageOfVehicle}
+                    metaldepPct={metaldepPct}
+                    setmetaldepPct={setmetaldepPct}
+                    ageOfVehicleTotal={ageOfVehicleTotal}
+                    setAgeOfvehicleTotal={setAgeOfvehicleTotal}
                   />
                 </div>
                 <div className="col-lg-12 mt-5">
                   <div className="row mt-1">
-                    <div className="col-lg-5">
+                    {/* <div className="col-lg-5">
                       <button className="btn btn-color m-1">Cancel</button>
                       {isEditMode ? (
                         <button className="btn btn-color m-1">Update</button>
                       ) : (
                         <button className="btn btn-color m-1">Save</button>
                       )}
-                    </div>
+                    </div> */}
                     <div className="col-lg-2">
-                     {/* <div className="row mt-1">
+                      {/* <div className="row mt-1">
                         <div className="col-lg-7 my_profile_setting_input form-group text-end">
                           <label
                             htmlFor=""
@@ -1285,24 +1279,22 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         >
           <div className="property_video">
             <div className="thumb">
-              <Summary 
-              metaldepPct={metaldepPct}
-                  ageOfVehicleTotal={ageOfVehicleTotal}
-                  totalPartsEstimate={totalPartsEstimate}
-                  totalLabrorEstimate={totalLabrorEstimate}
-                  totalPartsAssessed={totalPartsAssessed}
-                  totalLabrorAssessed={totalLabrorAssessed}
-
-                  lessExcess={lessExcess}
-                  setLessExcess={setLessExcess}
-                  lessImposed={lessImposed}
-                  setLessImposed={setLessImposed}
-                  other={other}
-                  setOther={setOther}
-                  metalSalvageValue={metalSalvageValue}
-
-                  calculateDepreciationOnMetal={calculateDepreciationOnMetal}
-                  calculateVehicleAge={calculateVehicleAge}
+              <Summary
+                metaldepPct={metaldepPct}
+                ageOfVehicleTotal={ageOfVehicleTotal}
+                totalPartsEstimate={totalPartsEstimate}
+                totalLabrorEstimate={totalLabrorEstimate}
+                totalPartsAssessed={totalPartsAssessed}
+                totalLabrorAssessed={totalLabrorAssessed}
+                lessExcess={lessExcess}
+                setLessExcess={setLessExcess}
+                lessImposed={lessImposed}
+                setLessImposed={setLessImposed}
+                other={other}
+                setOther={setOther}
+                metalSalvageValue={metalSalvageValue}
+                calculateDepreciationOnMetal={calculateDepreciationOnMetal}
+                calculateVehicleAge={calculateVehicleAge}
               />
             </div>
           </div>
