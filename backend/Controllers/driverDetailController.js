@@ -1,22 +1,21 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
 
- const getOnlineVehicleData = (req, res) => {
+ const getOnlineDriverDetails = (req, res) => {
 
-  const vehicleNo=req.query.vehicleNo;
+  const dl_number=req.query.dl_number;
 
-
-    axios.get("https://api.apiseva.co.in/api/verification_pv2/rc_verify",{
+  axios.get("https://api.apiseva.co.in/api/verification_pv2/dl_verify_v2",{
       params:{
         apikey:process.env.API_KEY_VEHICLE_DETAIL,
         agent_code:process.env.AGENT_CODE,
         client_order_id:process.env.CLIENT_ORDER_ID,
-        vehicle_number:vehicleNo
+        dl_number:dl_number
       }
     })
     .then((result)=>{
      
-      return res.status(200).send(result.data);
+      return res.status(200).send(result.data.data);
     })
     .catch((Err)=>{
       return res.status(500).send("Internal Server Error");
@@ -156,5 +155,5 @@ const axios = require("axios");
     // res.json(integratedData);
   };
 
-  module.exports={getOnlineVehicleData}
+  module.exports={getOnlineDriverDetails}
   

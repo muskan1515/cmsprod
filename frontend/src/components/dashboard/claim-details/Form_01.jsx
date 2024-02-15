@@ -5,7 +5,7 @@ import { FaEye } from "react-icons/fa";
 // import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
 import Form_driver from "./Form_driver";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 // import toast from "react-hot-toast";
 
@@ -24,7 +24,49 @@ const Form_01 = ({
   const router = useRouter();
   const [editCase_02, setEditCase_02] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
+  const [details,setDetails]=useState([])
 
+  const handleFetchData = async (req, res) => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    const details = JSON.parse(localStorage.getItem("fetchVehicleDetails"));
+    const dl_number = claim?.driverDetails?.LicenseNumber;
+    if (!userInfo) {
+      router.push("/login");
+    }
+    else if (details ){
+        alert("Already Fetched!!")
+    }
+    else{
+    try {
+      const response = axios
+        .get("/api/getOnlineDriverData", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params:{
+            dl_number:dl_number
+          }
+        })
+        .then((res) => {
+         
+
+          setDetails(res.data);
+          // localStorage.setItem("details",JSON.stringify(res.data.data))
+          
+          // console.log("datata", res.data.data);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+
+     
+    } catch (error) {
+      console.log("Error from Fetch Details-> ", error);
+    }
+  }
+  };
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
   //   };
@@ -41,6 +83,10 @@ const Form_01 = ({
   // const editHandler = () => {
   //   setEdit(true);
   // };
+
+  useEffect(() => {
+    
+  }, [details]);
 
   return (
     <>
@@ -92,9 +138,9 @@ const Form_01 = ({
                     )}
                   </div>
                   <div className="col-lg-2 text-start">
-                    {/* <button className="btn-thm" style={{}}>
+                    <button className="btn-thm" style={{}} onClick={handleFetchData}>
                       Fetch Details
-                    </button> */}
+                    </button> 
                   </div>
                 </div>
                 {editCase_02 ? (
@@ -534,12 +580,13 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
+                            value={Verification ? Verification : claim?.driverDetails?.TypeOfVerification}
                             onChange={(e) => setVerification(e.target.value)}
 
                             // placeholder="Enter Registration No.
                           >
-                            <option value={0}>Verified By Online</option>
-                            <option value={1}>Verified Manually</option>
+                          <option value={"Verified By Online"} >Verified By Online</option>
+                          <option value={"Verified Manually"} >Verified Manually</option>
                           </select>
                         </div>
                       </div>

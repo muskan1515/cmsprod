@@ -18,6 +18,65 @@ const Form_driver = ({
     return formattedDate;
   };
 
+  const statusOptions = [
+    {
+      id: 1,
+      value: "Claim Appointment",
+    },
+    {
+      id: 2,
+      value: "Estimate Approval Pending",
+    },
+    {
+      id: 3,
+      value: "Vehicle Under repair",
+    },
+    {
+      id: 4,
+      value: "Invoice Approval Pending",
+    },
+    {
+      id: 5,
+      value: "Surveyor Report Pending",
+    },
+    {
+      id: 6,
+      value: "Hard Copies Pending",
+    },
+    {
+      id: 7,
+      value: "Soft Copy Completed",
+    },
+    {
+      id: 8,
+      value: "Payment Pending",
+    },
+    {
+      id: 9,
+      value: "Settled Cases",
+    },
+    {
+      id: 10,
+      value: "Withdrawl/Rejected",
+    },
+    {
+      id: 11,
+      value: "More Info Required",
+    },
+    {
+      id: 12,
+      value: "My Claims",
+    },
+  ];
+
+  const checkStatus = (val) => {
+    let status = "";
+    statusOptions.map((stat, index) => {
+      if (String(stat.id) === String(val)) status = stat.value;
+    });
+    return status;
+  };
+
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -101,7 +160,13 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
+<<<<<<< Updated upstream
                       {claim?.driverDetails?.DriverTypeOfVerification}
+=======
+                    {
+                      claim?.driverDetails?.TypeOfVerification
+                    }
+>>>>>>> Stashed changes
                     </label>
                   </div>
                 </td>
@@ -479,7 +544,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.claimStatus?.ClaimStatus}
+                      {checkStatus(claim?.claimStatus?.Status)}
                     </label>
                   </div>
                 </td>

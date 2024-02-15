@@ -9,6 +9,8 @@ async function handler(request, response) {
    
    
     
+    console.log(payload);
+    
     const userResponse = await axios.put(`${domain}/claim/updateClaim/${payload.LeadId}`, payload,{
         headers:{
             Authorization:token,

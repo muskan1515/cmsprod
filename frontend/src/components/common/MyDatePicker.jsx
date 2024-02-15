@@ -9,7 +9,8 @@ const MyDatePicker = ({ selectedDate, setSelectedDate,disable }) => {
   );
 
   const formatDate = (date) => {
-    const isoFormat = date.toISOString(); // Store in "2024-02-06T18:30:00.000Z" format
+    const isoFormat = date.toISOString().split('T')[0]; // Store in "2024-02-06" format
+    
     const options = {
       year: "numeric",
       month: "2-digit",
@@ -19,6 +20,7 @@ const MyDatePicker = ({ selectedDate, setSelectedDate,disable }) => {
     const formattedDate = date.toLocaleDateString("en-US", options);
     setCurrentDate(formattedDate);
     setSelectedDate(isoFormat);
+   
   };
 
   return (

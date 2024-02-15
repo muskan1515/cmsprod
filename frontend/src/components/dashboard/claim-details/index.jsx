@@ -188,7 +188,7 @@ const Index = ({}) => {
   const [Verification, setVerification] = useState(
     claim?.driverDetails?.DriverTypeOfVerification
       ? claim?.driverDetails?.DriverTypeOfVerification
-      : 0
+      : "verified By Online"
   );
 
   const [status, setStatus] = useState(
@@ -234,6 +234,14 @@ const Index = ({}) => {
     }
     return null;
   }
+ 
+ 
+  
+  const getDateConversion=(date)=>{
+    const formattedOneYearLater = date?.split("T")[0];
+    return (formattedOneYearLater);
+  }
+ 
   //New Fields
   const [VehicleClassDescription, setVehicleClassDescription] = useState("");
   const [MakerDesc, setMakerDesc] = useState("");
@@ -354,13 +362,13 @@ const Index = ({}) => {
     setClaimRegion(claim?.claimDetails?.Region || "");
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice || "");
    
-      setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart )
-      setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd)
+      setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart || null )
+      setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd || null)
     
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
-    setInsuredAddedBy(claim?.insuredDetails?.InsuredAddedBy);
+    setInsuredAddedBy(claim?.insuredDetails?.AddedBy);
     setInsuredName(claim?.insuredDetails?.InsuredName);
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
@@ -412,6 +420,7 @@ const Index = ({}) => {
     setVehicleInsuranceCompany(
       claim?.vehicleDetails?.VehicleInsuranceCompany || "NA"
     );
+    setVerification(claim?.driverDetails?.TypeOfVerification || "Verified By Online");
     setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || "NA");
     setRcInsuranceComp(claim?.vehicleDetails?.InsuranceCompany || "NA");
     setRcInsuranceUpto(claim?.vehicleDetails?.InsuranceUpto || "NA");
@@ -472,12 +481,12 @@ const Index = ({}) => {
       ClaimServicingOffice: claimServicingOffice
         ? claimServicingOffice
         : claim.claimDetails?.ClaimServicingOffice,
-      PolicyPeriodStart: policyStartDate
-        ? policyStartDate
-        : claim.claimDetails?.PolicyPeriodStart,
-      PolicyPeriodEnd: policyEndDate
-        ? getNextYear(policyStartDate)
-        : claim.claimDetails?.PolicyPeriodEnd,
+      PolicyPeriodStart: policyStartDate!==null
+        ? new Date(policyStartDate)
+        : claim?.claimDetails?.policyStartDate,
+      PolicyPeriodEnd: policyEndDate!==null
+        ? new Date(getNextYear(policyStartDate))
+        : claim?.claimDetails?.PolicyPeriodEnd,
       InsuranceCompanyNameAddress: insuranceCompanyNameAddress
         ? insuranceCompanyNameAddress
         : claim.claimDetails?.InsuranceCompanyNameAddress,
@@ -491,22 +500,19 @@ const Index = ({}) => {
       VehicleTypeOfBody: VehicleModel
         ? VehicleModel
         : claim.claimDetails?.VehicleModel,
-      // VehicleRegisteredNumber: claim?.claimDetails?.ReferenceNo
-      //   ? claim?.claimDetails?.ReferenceNo
-      //   : generateRegion(claim?.ClaimRegion),
       SurveyType: subType,
       InspectionType: inspectionType
         ? inspectionType
         : claim?.claimDetails?.InspectionType,
-      VehicleDateOfRegistration: DateRegistration
-        ? DateRegistration
-        : claim.vehicleDetails?.VehicleDateOfRegistration,
+      VehicleDateOfRegistration: DateRegistration!==null
+        ? new Date(DateRegistration)
+        : claim?.vehicleDetails?.DateOfRegistration ,
       VehiclePucNumber: PUCNumber
         ? PUCNumber
         : claim.vehicleDetails?.VehiclePucNumber,
-      VehicleTransferDate: TransferDate
-        ? TransferDate
-        : claim.vehicleDetails?.VehicleTransferDate,
+      VehicleTransferDate: TransferDate!==null
+        ? new Date(TransferDate) 
+        : claim?.vehicleDetails?.TransferDate,
       VehicleEngineNumber: EngineNumber
         ? EngineNumber
         : claim.vehicleDetails?.VehicleEngineNumber,
@@ -525,9 +531,7 @@ const Index = ({}) => {
         ? VehicleFuelType
         : claim.vehicleDetails?.VehicleFuelType,
       DriverName: DriverName ? DriverName : claim.driverDetails?.DriverName,
-      DriverAddedDate: DriverAddedDate
-        ? DriverAddedDate
-        : claim.driverDetails?.DriverAddedDate,
+      DriverAddedDate: DriverAddedDate!==null ? new Date(DriverAddedDate) : claim?.driverDetails?.AddedDate,
       DriverTypeOfVerification: Verification
         ? Verification
         : claim.driverDetails?.DriverTypeOfVerification,
@@ -544,7 +548,7 @@ const Index = ({}) => {
         ? GarageContactNo2
         : claim.garageDetails?.GarageContactNo2,
       LeadId: claim.claimDetails?.LeadID,
-      //New Fields
+  
       VehicleClassDescription,
       MakerDesc,
       MakerModel,
@@ -552,7 +556,7 @@ const Index = ({}) => {
       CubicCapacity,
       VehicleSeatingCapacity,
       VehiclePermanentAddress,
-      FitUpto,
+      FitUpto: FitUpto!==null ? new Date(FitUpto) : claim?.vehicleDetails?.FitUpto,
       PasiaModelCode,
       RcInsuranceComp,
       RcInsuranceUpto,
@@ -571,6 +575,7 @@ const Index = ({}) => {
       ManufactureMonthYear,
       PermanentAddress,
       ClassOfVehicle,
+      insuredAddedBy,
       VehicleRegisteredNumber,
       token: userInfo[0].Token,
     };

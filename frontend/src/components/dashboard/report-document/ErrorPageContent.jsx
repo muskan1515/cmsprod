@@ -2,7 +2,61 @@ import Link from "next/link";
 import Form from "./Form";
 import Image from "next/image";
 
-const ErrorPageContent = () => {
+const ErrorPageContent = ({allInfo}) => {
+
+  
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+  const formatDateTime = (dateString)=>{
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  }
+
+  const  calculateGlassDept = (part)=>{
+   const assessed= Number(part.NewPartsAssessed)*Number(part.QA);
+   const Depreciation = (assessed * Number(part.NewPartsDepreciationPct))/100;
+   if(String(part.NewPartsTypeOfMaterial === "Glass")){
+    return Depreciation;
+   }
+   return 0;
+  }
+
+  const calculateMetalDept = (part)=>{
+    const assessed= Number(part.NewPartsAssessed)*Number(part.QA);
+    const Depreciation = (assessed * Number(part.NewPartsDepreciationPct))/100;
+    if(String(part.NewPartsTypeOfMaterial === "Metal")){
+     return Depreciation;
+    }
+    return 0;
+  }
+
+  const calculateNonMetalDept = (part)=>{
+    const assessed= Number(part.NewPartsAssessed)*Number(part.QA);
+    const Depreciation = (assessed * Number(part.NewPartsDepreciationPct))/100;
+    if(String(part.NewPartsTypeOfMaterial !== "Glass" || String(part.NewPartsTypeOfMaterial === "Metal"))){
+     return Depreciation;
+    }
+    return 0;
+  }
+
   return (
     <div className="">
       {/* Header Content */}
@@ -13,7 +67,7 @@ const ErrorPageContent = () => {
           Mobile : 9910995122(DLH
           NCR),9468881222(GURUGRAM),9414088243,6378710966,7597233966(RAJASTHAN)
         </p>
-        <p>Email: Info@mutnejatech.co.in</p>
+        <p>Email: {allInfo.otherInfo[0]?.BrokerMailAddress}</p>
         <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p>
       </div>
       <hr style={{ border: "2px solid black" }} />
@@ -22,15 +76,15 @@ const ErrorPageContent = () => {
       <div className="d-flex justify-content-between">
         <div>
           <label htmlFor="">Ref No. :</label>
-          <span> MSL/HMH/2024/11/10043</span>
+          <span> {allInfo?.otherInfo[0]?.ReferenceNo}</span>
         </div>
         <div>
           <label htmlFor="">Date : </label>
-          <span> 08-Jan-24</span>
+          <span> {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</span>
         </div>
       </div>
       <div className="text-center mt-5">
-        <h4>MOTOR FINAL SURVEY REPORT (NON CASH LESS)- (REGULAR)</h4>
+        <h4>{allInfo?.otherInfo[0].SurveyType} FINAL {allInfo?.otherInfo[0]?.InspectionType} REPORT ({allInfo?.otherInfo[0]?.SettlementType})- ({allInfo?.otherInfo[0]?.PolicyType})</h4>
       </div>
       <div>
         <p>
@@ -45,21 +99,21 @@ const ErrorPageContent = () => {
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(a) Policy / Cover Note No. : </label>
-            <span> 33030331230100004487</span>
+            <span> {allInfo?.otherInfo[0]?.PolicyNumber}</span>
           </div>
           <div>
             <label htmlFor="">IDV : -</label>
-            <span> F 175,000.00 </span>
+            <span> F {allInfo?.otherInfo[0]?.IDV}</span>
           </div>
         </div>
         <div className="d-flex gap-5">
           <div>
             <label htmlFor="">(b) Period of Insurance</label>
-            <span> 27-Nov-23 to 26-Nov-24</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to  {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}</span>
           </div>
           <div>
             <label htmlFor="">Claim No. : -</label>
-            <span> F 175,000.00 </span>
+            <span> {allInfo?.otherInfo[0].ClaimNumber} </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
@@ -69,7 +123,7 @@ const ErrorPageContent = () => {
           </div>
           <div>
             <label htmlFor="">Token No. : -</label>
-            <span> F 175,000.00 </span>
+            <span> {allInfo?.otherInfo[0].Token}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
@@ -77,8 +131,7 @@ const ErrorPageContent = () => {
             <label htmlFor="">(d) Insurers : </label>
             <span>
               {" "}
-              The New India Assurance Co. Ltd. 330303- Branch Hanumangarh Sri
-              Ganganagar Road, Hanumangarh
+              {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}
             </span>
           </div>
         </div>
@@ -87,21 +140,22 @@ const ErrorPageContent = () => {
             <label htmlFor="">(e) Insured : </label>
             <span>
               {" "}
-              Ramesh Kumar S/o Dulichand Godara (9950078225) VPO Dabli Kalan,
-              Teh. Tibbi, Distt. Hanumangarh Rajasthan 335512
+            {allInfo?.otherInfo[0]?.InsuredName } {" "}
+            {allInfo?.otherInfo[0]?.InsuredMobileNo1} {" "}
+            {allInfo?.otherInfo[0]?.InsuredAddress} 
             </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(f) H. P. A. : </label>
-            <span> 330300- SGNR</span>
+            <span> {allInfo?.otherInfo[0]?.HPA} - SGNR</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(g) Appointed By : </label>
-            <span> 330300- SGNR</span>
+            <span> {allInfo?.otherInfo[0]?.VehicleInsuranceCompany}</span>
           </div>
         </div>
       </div>
@@ -109,81 +163,81 @@ const ErrorPageContent = () => {
       <div>
         <div className="d-flex gap-5">
           <h5>VEHICLE PARTICULARS :</h5>
-          <span>Verified From Original</span>
+          <span>{allInfo?.otherInfo[0]?.Remark}</span>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(a) Registered Number :</label>
-            <span> RJ31CA6796</span>
+            <span> {allInfo?.otherInfo[0]?.RegisteredNumber}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(b) Registered Owner :</label>
-            <span> Ramesh Kumar S/o Dulichand</span>
+            <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">Owner Serial No. / Transfer Date :</label>
-            <span> 01</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.TransferDate)}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(c) Date of Registration :</label>
-            <span> 23-Dec-13</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(d) Chassis Number :</label>
-            <span> MALA851DLDM031812K</span>
+            <span> {allInfo?.otherInfo[0]?.ChassisNumber}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(f) Make / Variant/ Model /Color :</label>
-            <span> Hyunda/Grand I10 1.1 Gls Magna/2013 - White</span>
+            <span> {allInfo?.otherInfo[0]?.MakeVariantModelColor}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(g) Type of Body and Class of vehicle :</label>
-            <span> Car (S) - LMVCAR</span>
+            <span> {allInfo?.otherInfo[0]?.TypeOfBody} (S) - {allInfo?.otherInfo[0]?.ClassOfVehicle}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(h) Pre Accident Condition :</label>
-            <span> Average</span>
+            <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(k) Seating Capacity :</label>
-            <span> 05 Nos.</span>
+            <span> {allInfo?.otherInfo[0]?.SeatingCapacity} Nos.</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(l) Cubic Capacity :</label>
-            <span> 1120 CC</span>
+            <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(m) Tax particulars :</label>
-            <span> OTT</span>
+            <span> {allInfo?.otherInfo[0]?.TaxParticulars}</span>
           </div>
         </div>
       </div>
@@ -191,60 +245,61 @@ const ErrorPageContent = () => {
       <div>
         <div className="d-flex gap-5">
           <h5>DRIVER PARTICULARS :</h5>
-          <span>Verified From Original</span>
+          <span>{allInfo?.otherInfo[0]?.Remark}</span>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(a) Name of Driver :</label>
-            <span> Ramesh Kumar S/o Duli Chand</span>
+            <span> {allInfo?.otherInfo[0]?.DriverName}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">Age :</label>
-            <span> 32 Years ( 01-Aug-91 )</span>
+            <span> {allInfo?.otherInfo[0]?.Age} Years ( {allInfo?.otherInfo[0]?.DateOfBirth ? 
+              formatDate(allInfo?.otherInfo[0]?.DateOfBirth) :""})</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(b) Motor Driver License Number :</label>
-            <span> RJ31 20100082557</span>
+            <span>{allInfo?.otherInfo[0].LicenseNumber} </span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">Date of Issue :</label>
-            <span> 10-Dec-10</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.DateOfIssue)}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">Valid from :</label>
-            <span> MALA851DLDM031812K</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.ValidFrom)}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(c) Issuing Authority :</label>
-            <span> DTO Hanumangarh</span>
+            <span> {allInfo?.otherInfo[0]?.IssuingAuthority}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(d) Type of License :</label>
-            <span> LMV, MCWG</span>
+            <span>{allInfo?.otherInfo[0]?.LicenseType}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(e) Badge Number :</label>
-            <span> Average</span>
+            <span> {allInfo?.otherInfo[0]?.BadgeNumber}</span>
           </div>
         </div>
       </div>
@@ -256,31 +311,31 @@ const ErrorPageContent = () => {
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(a) Date & Time of Accident :</label>
-            <span> 28-Nov-23 07:30 AM</span>
+            <span> {formatDateTime(allInfo?.otherInfo[0]?.TimeOfAccident)}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(b) Place of Accident :</label>
-            <span> Between Rawatsar To Lakhuwali</span>
+            <span> {allInfo?.otherInfo[0]?.PlaceOfLoss}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(c) Place of Survey :</label>
-            <span> Gurunanak Maruti Garage, Sri Ganganagar</span>
+            <span>{allInfo?.otherInfo[0]?.PlaceOfSurvey}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(d) Date of Allotment of Survey :</label>
-            <span> 28-Nov-23 </span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(e) Date & Time of Survey :</label>
-            <span> 28-Nov-23</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
@@ -312,32 +367,28 @@ const ErrorPageContent = () => {
         <h5>CAUSE & NATURE OF ACCIDENT :</h5>
         <span>
           As filled in the claim form and discussion with the Insured that on
-          the day and time of accident <b>Ramesh Kumar S/o Duli Chand</b> was
-          driving the subject vehicle. &quot;Mein meri gaadi se rawatsar se
-          hanumangarh ja rha tha tbhi lakhuwali ke pass saamne se aa rhe truck
-          ne over-take kiya to mene meri gaadi apne bchav mein sadak se niche
-          utaari to gaadi ka hissa niche lga, jisse gaadi ka tie-member or plate
-          tut gyi, causing damages.
+          the day and time of accident <b>{allInfo?.otherInfo[0]?.InsuredName}</b> was
+          driving the subject vehicle. &quot; {allInfo?.otherInfo[0]?.CauseOfAccident} , causing damages.
         </span>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
           <div>
             <h5 htmlFor="">POLICE ACTION :</h5>
-            <span> Not Reported, As stated by the insured.</span>
+            <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
           <div>
             <h5 htmlFor="">DETAILS OF LOAD / PASSENGER :</h5>
-            <span> No, As stated by the insured</span>
+            <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
           <div>
             <h5 htmlFor="">THIRD PARTY LOSS/ INJURIES :</h5>
-            <span> No, As Stated by the insured.</span>
+            <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
@@ -346,12 +397,12 @@ const ErrorPageContent = () => {
         <h5>PARTICULARS OF LOSS/DAMAGES :</h5>
         <span className="">
           In accordance with the instructions received from
-          <b>The New India Assurance Co. Ltd. 330300- SGNR</b> dated{" "}
-          <b>28-11-2023</b>I visited{" "}
-          <b>Gurunanak Maruti Garage, Sri Ganganagar</b> and inspected the
+          <b>{allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress} {allInfo?.otherInfo[0]?.HPA}- SGNR</b> dated{" "}
+          <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b>I visited{" "}
+          <b>{allInfo?.otherInfo[0]?.InsuredName}</b> and inspected the
           subject vehicle, reported to have met with an accident on{" "}
-          <b>28-11-2023</b>
-          Between Rawatsar To Lakhuwali and snapped the vehicle from different
+          <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b>
+          Between {allInfo?.otherInfo[0]?.PlaceOfLoss} and snapped the vehicle from different
           angles before and after dismantling. <br />
           <br />
           <span className="">
@@ -374,60 +425,61 @@ const ErrorPageContent = () => {
       <div>
         <h4>New Parts :</h4>
         <table border={1}>
-          <tr>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              E. No.
-            </th>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              Parts Description
-            </th>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              HSN Code
-            </th>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              Bill S. No
-            </th>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              Remark
-            </th>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              Estimated
-            </th>
-            <th
-              colSpan={3}
-              style={{
-                border: "1px solid black",
-                padding: "10px",
-                textAlign: "center",
-              }}
-            >
-              Assessed
-            </th>
-            <th
-              rowSpan={2}
-              style={{ border: "1px solid black", padding: "10px" }}
-            >
-              GST
-            </th>
-          </tr>
+        <tr>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            E. No.
+          </th>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            Parts Description
+          </th>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            HSN Code
+          </th>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            Bill S. No
+          </th>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            Remark
+          </th>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            Estimated
+          </th>
+          <th
+            colSpan={3}
+            style={{
+              border: "1px solid black",
+              padding: "10px",
+              textAlign: "center",
+            }}
+          >
+            Assessed
+          </th>
+          <th
+            rowSpan={2}
+            style={{ border: "1px solid black", padding: "10px" }}
+          >
+            GST
+          </th>
+        </tr>
+       
           <tr>
             <th style={{ border: "1px solid black", padding: "10px" }}>
               Glass/ 2nd Hand/ Repair
@@ -449,7 +501,35 @@ const ErrorPageContent = () => {
             <th style={{ border: "1px solid black", padding: "10px" }}></th>
             <th style={{ border: "1px solid black", padding: "10px" }}></th>
           </tr>
-          <tr>
+
+          {allInfo?.newPartsDetails.map((part,index)=>{
+            return  part.NewPartsIsActive === 1 ?
+              <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>{part.NewPartsReportID}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              {part.NewPartsItemName}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>{part.NewPartsBillSr}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+             {part.NewPartsRemark}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {part.NewPartsEstimate}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateGlassDept(part)}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateMetalDept(part)}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateNonMetalDept(part)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {" "}
+              {part.NewPartsGSTPct}.00
+            </td>
+          </tr> : null
+          })}
+          {/*<tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {" "}
@@ -564,7 +644,7 @@ const ErrorPageContent = () => {
             <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>98977</td>
             <td style={{ border: "1px solid black", padding: "5px" }}></td>
-          </tr>
+        </tr>*/}
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>000</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>000</td>

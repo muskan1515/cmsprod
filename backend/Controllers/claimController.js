@@ -461,10 +461,10 @@ const getSpecificClaim = async (req, res) => {
       ManufactureMonthYear,
       PermanentAddress,
       ClassOfVehicle,
+      insuredAddedBy,
       LeadId,
     } = req.body;
   
-    
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -473,8 +473,8 @@ const getSpecificClaim = async (req, res) => {
     ClaimServicingOffice = '${ClaimServicingOffice}',
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = ${PolicyPeriodStart},
-    PolicyPeriodEnd = ${PolicyPeriodEnd},
+    PolicyPeriodStart = CAST('${PolicyPeriodStart}' AS DATETIME),
+    PolicyPeriodEnd = CAST('${PolicyPeriodEnd}' AS DATETIME),
     InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}'
       WHERE LeadId = ${LeadId};
     `;
@@ -488,7 +488,7 @@ const getSpecificClaim = async (req, res) => {
       LicenseNumber = '${LicenseNumber}',
       LicenseType = '${LicenseType}',
       DriverName = '${DriverName}',
-      AddedDate =${DriverAddedDate},
+      AddedDate = CAST('${DriverAddedDate}' AS DATETIME),
       TypeOfVerification = '${DriverTypeOfVerification}'
         WHERE LeadId = ${LeadId};
     `;
@@ -500,9 +500,9 @@ const getSpecificClaim = async (req, res) => {
         RegisteredNumber = '${VehicleRegisteredNumber}',
         MakeVariantModelColor='${VehicleMakeVariantModelColor}',
         TypeOfBody='${VehicleTypeOfBody}',
-        DateOfRegistration=${VehicleDateOfRegistration},
+        DateOfRegistration=CAST('${VehicleDateOfRegistration}' AS DATETIME),
         PucNumber='${VehiclePucNumber}',
-        TransferDate=${VehicleTransferDate},
+        TransferDate=CAST('${VehicleTransferDate}' AS DATETIME),
         EngineNumber='${VehicleEngineNumber}',
         AddedBy='${VehicleAddedBy}',
         ChassisNumber='${VehicleChassisNumber}',
@@ -510,7 +510,7 @@ const getSpecificClaim = async (req, res) => {
         MakerDesc='${MakerDesc}',
         MakerModel='${MakerModel}',
         CubicCapacity='${VehicleCubicCap}',
-        FitUpto=${FitUpto},
+        FitUpto=CAST('${FitUpto}' AS DATETIME),
         PasiaModelCode='${PasiaModelCode}',
         VehicleType='${RcVehicleType}',
         BancsModelCode='${BancsModelCode}',
@@ -529,7 +529,6 @@ const getSpecificClaim = async (req, res) => {
         ClassOfVehicle='${ClassOfVehicle}'
       WHERE LeadId = ${LeadId};
     `;
-    console.log("updateVehicleDetails", req.body);
     // Update GarageDetails
     const updateGarageDetails = `
       UPDATE GarageDetails
@@ -549,9 +548,10 @@ const getSpecificClaim = async (req, res) => {
         InsuredMobileNo1 = '${InsuredMobileNo1}',
         InsuredMobileNo2 = '${InsuredMobileNo2}',
         InsuredMailAddress = '${InsuredMailAddress}',
-        AddedBy='${InsuredAddedBy}'
+        AddedBy='${insuredAddedBy}'
       WHERE LeadId = ${LeadId};
     `;
+
   
     db.query(updateClaimDetails, (error, results) => {
       if (error) {

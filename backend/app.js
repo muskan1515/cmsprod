@@ -13,6 +13,7 @@ const uploadRoute = require("./Routes/uploadRoute");
 const vehicleDetailsRoute = require("./Routes/vehicleDetailRoutes");
 const reportRoutes = require("./Routes/reportRoutes");
 const feeReportRoutes = require("./Routes/feereportRoute");
+const driverDetailsRoute=require("./Routes/driverDetailRoutes");
 
 const dotenv = require("dotenv").config();
 
@@ -44,6 +45,8 @@ app.use("/upload",uploadRoute);
 app.use("/report",reportRoutes);
 
 app.use("/vehicleDetails",vehicleDetailsRoute);
+
+app.use("/driverDetails",driverDetailsRoute);
 
 app.use("/report",reportRoutes);
 
