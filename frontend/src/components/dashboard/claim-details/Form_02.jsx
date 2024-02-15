@@ -124,9 +124,7 @@ const Form = ({
                             onChange={(e) =>
                               setGarageNameAndAddress(e.target.value)
                             }
-                            value={
-                              GarageNameAndAddress
-                            }
+                            value={GarageNameAndAddress}
                             // disabled={!edit}
                             // placeholder="Enter Registration No."
                           />
@@ -159,9 +157,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              GarageContactNo1
-                            }
+                            value={GarageContactNo1}
                             onChange={(e) =>
                               setGarageContactNo1(e.target.value)
                             }
@@ -173,9 +169,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              GarageContactNo2
-                            }
+                            value={GarageContactNo2}
                             onChange={(e) =>
                               setGarageContactNo2(e.target.value)
                             }
@@ -204,15 +198,15 @@ const Form = ({
                         </div>
                         <div className="col-lg-7">
                           <MyDatePicker
-                          
-
                             disable={true}
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={claim.garageDetails?.AddedDate ? new Date(
+                            selectedDate={
                               claim.garageDetails?.AddedDate
-                            ) : ""}
-                           
+                                ? new Date(claim.garageDetails?.AddedDate)
+                                : ""
+                            }
+
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -240,9 +234,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              GarageAddedBy
-                            }
+                            value={GarageAddedBy}
                             onChange={(e) => setGarageAddedBy(e.target.value)}
                             // disabled={!edit}
                             // placeholder="Enter Registration No."
@@ -269,13 +261,14 @@ const Form = ({
                         </div>
                         <div className="col-lg-7">
                           <MyDatePicker
-                            
                             disable={true}
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={ claim.garageDetails?.ModifiedDate ? new Date(
+                            selectedDate={
                               claim.garageDetails?.ModifiedDate
-                            ) : ""}
+                                ? new Date(claim.garageDetails?.ModifiedDate)
+                                : ""
+                            }
                             // placeholder="Enter Registration No."
                           />
                         </div>

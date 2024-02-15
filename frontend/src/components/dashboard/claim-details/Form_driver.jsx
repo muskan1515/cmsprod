@@ -34,7 +34,6 @@ const Form_driver = ({
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
-                        
                       }}
                     >
                       Name
@@ -48,7 +47,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {claim?.driverDetails?.DriverName}
+                      {claim?.driverDetails?.DriverName}
                     </label>
                   </div>
                 </td>
@@ -61,8 +60,6 @@ const Form_driver = ({
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
-
-                        
                       }}
                     >
                       Added Date
@@ -76,9 +73,9 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {claim?.driverDetails?.AddedDate ? formatDate(
-                     claim?.driverDetails?.AddedDate
-                    ) :""}
+                      {claim?.driverDetails?.AddedDate
+                        ? formatDate(claim?.driverDetails?.AddedDate)
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -91,8 +88,6 @@ const Form_driver = ({
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
-
-                        
                       }}
                     >
                       Type of Verification
@@ -106,9 +101,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      claim?.driverDetails?.DriverTypeOfVerification
-                    }
+                      {claim?.driverDetails?.DriverTypeOfVerification}
                     </label>
                   </div>
                 </td>
@@ -123,8 +116,302 @@ const Form_driver = ({
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
-
-                        
+                      }}
+                    >
+                      DL No.
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Father Name
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-7 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Gender
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Blood Group
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Mobile
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-7 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Address
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Date Of Birth
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      RTO Name
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-7 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Issued Date
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Valid Upto
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Cov
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-7 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Photo
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    ></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
                       }}
                     >
                       Modified Date
@@ -138,7 +425,9 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {claim?.driverDetails?.ModifiedDate ? formatDate(claim?.driverDetails?.ModifiedDate):""}
+                      {claim?.driverDetails?.ModifiedDate
+                        ? formatDate(claim?.driverDetails?.ModifiedDate)
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -151,8 +440,6 @@ const Form_driver = ({
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
-
-                        
                       }}
                     >
                       Insurer ClaimID
@@ -179,8 +466,6 @@ const Form_driver = ({
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
-
-                        
                       }}
                     >
                       Status

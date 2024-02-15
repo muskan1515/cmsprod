@@ -112,7 +112,7 @@ const Form_01 = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Name <span class="req-btn">*</span>
+                            Name
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -126,10 +126,6 @@ const Form_01 = ({
                           />
                         </div>
                       </div>
-                      {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
                     </div>
 
                     <div className="col-lg-6">
@@ -145,17 +141,191 @@ const Form_01 = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Added Date <span class="req-btn">*</span>
+                            Father Name
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Driving Lic. No.
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Gender
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Blood Group
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Mobile
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Address
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Date of Birth
                           </label>
                         </div>
                         <div className="col-lg-7">
                           <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            setSelectedDate={ setDriverAddedDate}
-                            selectedDate={DriverAddedDate ? new Date(
-                              DriverAddedDate
-                            ) : ""}
+                            setSelectedDate={setDriverAddedDate}
+                            selectedDate={
+                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                            }
 
                             // placeholder="Enter Registration No."
                           />
@@ -176,7 +346,187 @@ const Form_01 = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Type of Verification <span class="req-btn">*</span>
+                            RTO Name
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Issue Date
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <MyDatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            setSelectedDate={setDriverAddedDate}
+                            selectedDate={
+                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Valid Upto
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <MyDatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            setSelectedDate={setDriverAddedDate}
+                            selectedDate={
+                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Cov
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Photo
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            onChange={(e) => setDriverName(e.target.value)}
+                            value={DriverName}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Added Date
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <MyDatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            setSelectedDate={setDriverAddedDate}
+                            selectedDate={
+                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Type of Verification
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -208,7 +558,7 @@ const Form_01 = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Modified Date <span class="req-btn">*</span>
+                            Modified Date
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -216,9 +566,11 @@ const Form_01 = ({
                             disable={true}
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={claim.driverDetails?.ModifiedDate ? new Date(
+                            selectedDate={
                               claim.driverDetails?.ModifiedDate
-                            ):""}
+                                ? new Date(claim.driverDetails?.ModifiedDate)
+                                : ""
+                            }
                             // placeholder="Enter Registration No."
                           />
                         </div>
