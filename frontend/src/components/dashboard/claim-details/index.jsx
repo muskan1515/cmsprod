@@ -37,7 +37,7 @@ const Index = ({}) => {
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState(
     claim?.claimDetails?.PolicyIssuingOffice
       ? claim?.claimDetails?.PolicyIssuingOffice
-      : "NA"
+      : ""
   );
 
   const [claimRegion, setClaimRegion] = useState(
@@ -47,7 +47,7 @@ const Index = ({}) => {
   const [claimServicingOffice, setClaimServicingOffice] = useState(
     claim?.claimDetails?.ClaimServicingOffice
       ? claim?.claimDetails?.ClaimServicingOffice
-      : "NA"
+      : ""
   );
 
   const [policyStartDate, setPolicyStartDate] = useState(
@@ -64,12 +64,12 @@ const Index = ({}) => {
     useState(
       claim?.claimDetails?.InsuranceCompanyNameAddress
         ? claim?.claimDetails?.InsuranceCompanyNameAddress
-        : "NA"
+        : ""
     );
   const [insuredAddedBy, setInsuredAddedBy] = useState(
     claim?.insuredDetails?.InsuredAddedBy
       ? claim?.insuredDetails?.InsuredAddedBy
-      : "NA"
+      : ""
   );
 
   const [InsuredName, setInsuredName] = useState(
@@ -78,17 +78,17 @@ const Index = ({}) => {
   const [InsuredMailAddress, setInsuredMailAddress] = useState(
     claim?.insuredDetails?.InsuredMailAddress
       ? claim?.insuredDetails?.InsuredMailAddress
-      : "NA"
+      : ""
   );
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState(
     claim?.insuredDetails?.InsuredMobileNo1
       ? claim?.insuredDetails?.InsuredMobileNo1
-      : "NA"
+      : ""
   );
   const [InsuredMobileNo2, setInsuredMobileNo2] = useState(
     claim?.insuredDetails?.InsuredMobileNo2
       ? claim?.insuredDetails?.InsuredMobileNo2
-      : "NA"
+      : ""
   );
 
   const [subType, setSubType] = useState("Motor");
@@ -107,18 +107,18 @@ const Index = ({}) => {
   const [VehicleModel, setVehicleModel] = useState(
     claim.vehicleDetails?.VehicleTypeOfBody
       ? claim.vehicleDetails?.VehicleTypeOfBody
-      : "NA"
+      : ""
   );
 
   const [EngineType, setEngineType] = useState(
     claim?.vehicleDetails?.VehicleModeOfCheck
       ? claim?.vehicleDetails?.VehicleModeOfCheck
-      : "NA"
+      : ""
   );
   const [VehicleRegisteredOwner, setVehicleRegisteredOwner] = useState(
     claim?.vehicleDetails?.VehicleRegisteredOwner
       ? claim?.vehicleDetails?.VehicleRegisteredOwner
-      : "NA"
+      : ""
   );
   const [DateRegistration, setDateRegistration] = useState(
     claim?.claimDetails?.ReferenceNo ? claim?.claimDetails?.ReferenceNo : null
@@ -126,7 +126,7 @@ const Index = ({}) => {
   const [PUCNumber, setPUCNumber] = useState(
     claim?.vehicleDetails?.VehiclePucNumber
       ? claim?.vehicleDetails?.VehiclePucNumber
-      : "NA"
+      : ""
   );
   const [TransferDate, setTransferDate] = useState(
     claim?.vehicleDetails?.VehicleTransferDate
@@ -137,44 +137,44 @@ const Index = ({}) => {
   const [VehicleInsuranceUpto, setVehicleInsuranceUpto] = useState(
     claim?.vehicleDetails?.VehicleInsuranceUpto
       ? claim?.vehicleDetails?.VehicleInsuranceUpto
-      : "NA"
+      : ""
   );
 
   const [EngineNumber, setEngineNumber] = useState(
     claim?.vehicleDetails?.VehicleEngineNumber
       ? claim?.vehicleDetails?.VehicleEngineNumber
-      : "NA"
+      : ""
   );
   const [AddedBy, setAddedBy] = useState(
     claim?.vehicleDetails?.VehicleAddedBy
       ? claim?.vehicleDetails?.VehicleAddedBy
-      : "NA"
+      : ""
   );
   const [IssuingAuthority, setIssuingAuthority] = useState(
     claim?.driverDetails?.IssuingAuthority
       ? claim?.vehicleDetails?.IssuingAuthority
-      : "NA"
+      : ""
   );
 
   const [LicenseNumber, setLicenseNumber] = useState(
     claim?.driverDetails?.LicenseNumber
       ? claim?.vehicleDetails?.LicenseNumber
-      : "NA"
+      : ""
   );
   const [LicenseType, setLicenseType] = useState(
     claim?.driverDetails?.LicenseType
       ? claim?.vehicleDetails?.LicenseType
-      : "NA"
+      : ""
   );
   const [VehicleChassisNumber, setVehicleChassisNumber] = useState(
     claim?.vehicleDetails?.VehicleChassisNumber
       ? claim?.vehicleDetails?.VehicleChassisNumber
-      : "NA"
+      : ""
   );
   const [VehicleFuelType, setVehicleFuelType] = useState(
     claim?.vehicleDetails?.VehicleFuelType
       ? claim?.vehicleDetails?.VehicleFuelType
-      : "NA"
+      : ""
   );
 
   const [DriverName, setDriverName] = useState(
@@ -198,7 +198,7 @@ const Index = ({}) => {
   const [GarageNameAndAddress, setGarageNameAndAddress] = useState(
     claim?.garageDetails?.GarageNameAndAddress
       ? claim?.garageDetails?.GarageNameAndAddress
-      : "NA"
+      : ""
   );
   const [GarageContactNo1, setGarageContactNo1] = useState(
     claim?.garageDetails?.GarageContactNo1
@@ -213,7 +213,7 @@ const Index = ({}) => {
   const [GarageAddedBy, setGarageAddedBy] = useState(
     claim?.garageDetails?.GarageAddedBy
       ? claim?.garageDetails?.GarageAddedBy
-      : "NA"
+      : ""
   );
 
   const [editCase, setEditCase] = useState(false);
@@ -391,8 +391,11 @@ const Index = ({}) => {
     setLicenseType(claim?.driverDetails?.LicenseType);
     setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber);
     setVehicleFuelType(
-      claim?.vehicleDetails?.FuelType || claim?.vehicleDetails?.BancsFuelType
+      claim?.
+      vehicleDetails?.FuelType || claim?.vehicleDetails?.BancsFuelType
     );
+
+    setVehicleRegisteredOwner(claim.vehicleDetails?.RegisteredOwner || "");
     setDriverName(claim?.driverDetails?.DriverName);
     setDriverAddedDate(claim?.driverDetails?.AddedDate || null);
     setVerification(claim?.driverDetails?.TypeOfVerification === 0 ? "Verified By Online" : "Verified Manually");
@@ -402,39 +405,39 @@ const Index = ({}) => {
     setGarageAddedBy(claim?.garageDetails?.AddedBy);
 
     // New Fields
-    setVehicleClassDescription(claim?.vehicleDetails?.ClassDescription || "NA");
-    setMakerDesc(claim?.vehicleDetails?.MakerDesc || "NA");
-    setMakerModel(claim?.vehicleDetails?.MakerModel || "NA");
+    setVehicleClassDescription(claim?.vehicleDetails?.ClassDescription || "");
+    setMakerDesc(claim?.vehicleDetails?.MakerDesc || "");
+    setMakerModel(claim?.vehicleDetails?.MakerModel || "");
     setManufactureMonthYear(
-      claim?.vehicleDetails?.ManufactureMonthYear || "NA"
+      claim?.vehicleDetails?.ManufactureMonthYear || ""
     );
-    setVehicleGvw(claim?.vehicleDetails?.VehicleGvw || "NA");
-    setCubicCapacity(claim?.vehicleDetails?.VehicleCubicCapacity || "NA");
-    setBancsBodyType(claim?.vehicleDetails?.BancsBodyType || "NA");
-    setBancsMakeCode(claim?.vehicleDetails?.BancsMakeCode || "NA");
-    setBancsModelCode(claim?.vehicleDetails?.BancsModelCode || "NA");
-    setBancsSubtypeCode(claim?.vehicleDetails?.BancsSubtypeCode || "NA");
-    setBancsVehicleClass(claim?.vehicleDetails?.BancsVehicleClass || "NA");
-    setBancsVehicleSegment(claim?.vehicleDetails?.BancsVehicleSegment || "NA");
+    setVehicleGvw(claim?.vehicleDetails?.VehicleGvw || "");
+    setCubicCapacity(claim?.vehicleDetails?.VehicleCubicCapacity || "");
+    setBancsBodyType(claim?.vehicleDetails?.BancsBodyType || "");
+    setBancsMakeCode(claim?.vehicleDetails?.BancsMakeCode || "");
+    setBancsModelCode(claim?.vehicleDetails?.BancsModelCode || "");
+    setBancsSubtypeCode(claim?.vehicleDetails?.BancsSubtypeCode || "");
+    setBancsVehicleClass(claim?.vehicleDetails?.BancsVehicleClass || "");
+    setBancsVehicleSegment(claim?.vehicleDetails?.BancsVehicleSegment || "");
     setFitUpto(claim?.vehicleDetails?.FitUpto || null);
-    setPasiaModelCode(claim?.vehicleDetails?.PasiaModelCode || "NA");
-    setVehiclePermanentAddress(claim?.vehicleDetails?.PermanentAddress || "NA");
-    setRcRtoCode(claim?.vehicleDetails?.RcRtoCode || "NA");
+    setPasiaModelCode(claim?.vehicleDetails?.PasiaModelCode || "");
+    setVehiclePermanentAddress(claim?.vehicleDetails?.PermanentAddress || "");
+    setRcRtoCode(claim?.vehicleDetails?.RcRtoCode || "");
     setVehicleInsuranceCompany(
-      claim?.vehicleDetails?.VehicleInsuranceCompany || "NA"
+      claim?.vehicleDetails?.VehicleInsuranceCompany || ""
     );
     setVerification(claim?.driverDetails?.TypeOfVerification || "Verified By Online");
-    setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || "NA");
-    setRcInsuranceComp(claim?.vehicleDetails?.InsuranceCompany || "NA");
-    setRcInsuranceUpto(claim?.vehicleDetails?.InsuranceUpto || "NA");
-    setRcVehicleType(claim?.vehicleDetails?.VehicleType || "NA");
-    setVehicleRcStatus(claim?.vehicleDetails?.VehicleRcStatus || "NA");
+    setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || "");
+    setRcInsuranceComp(claim?.vehicleDetails?.VehicleInsuranceCompany || "");
+    setRcInsuranceUpto(claim?.vehicleDetails?.VehicleInsuranceUpto || "");
+    setRcVehicleType(claim?.vehicleDetails?.VehicleType || "");
+    setVehicleRcStatus(claim?.vehicleDetails?.VehicleRcStatus || "");
     setVehicleBlackListStatus(
-      claim?.vehicleDetails?.VehicleBlackListStatus || "NA"
+      claim?.vehicleDetails?.VehicleBlackListStatus || ""
     );
-    setVehicleRegistedAt(claim?.vehicleDetails?.RegistedAt || "NA");
-    setPermanentAddress(claim?.vehicleDetails?.PermanentAddress || "NA");
-    setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle || "NA");
+    setVehicleRegistedAt(claim?.vehicleDetails?.RegistedAt || "");
+    setPermanentAddress(claim?.vehicleDetails?.PermanentAddress || "");
+    setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle || "");
     // getNextYear();
   }, [claim]);
 
@@ -457,7 +460,7 @@ const Index = ({}) => {
 
 
   const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState(
-    claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : "NA"
+    claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
   );
 
   const onSaveHandler = (func) => {
@@ -503,10 +506,10 @@ const Index = ({}) => {
       VehicleTypeOfBody: VehicleModel
         ? VehicleModel
         : claim.claimDetails?.VehicleModel,
-      SurveyType: subType,
+      SurveyType: subType ? subType : "Final",
       InspectionType: inspectionType
         ? inspectionType
-        : claim?.claimDetails?.InspectionType,
+        : "Motor",
       VehicleDateOfRegistration: DateRegistration!==null
         ? new Date(DateRegistration)
         : claim?.vehicleDetails?.DateOfRegistration ,
@@ -580,6 +583,7 @@ const Index = ({}) => {
       ClassOfVehicle,
       insuredAddedBy,
       VehicleRegisteredNumber,
+      VehicleRegisteredOwner,
       token: userInfo[0].Token,
     };
 
@@ -1174,6 +1178,12 @@ const Index = ({}) => {
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               edit={editCase_02}
+                              LicenseNumber={LicenseNumber}
+                              setLicenseNumber={setLicenseNumber}
+                              LicenseType={LicenseType}
+                              setLicenseType={setLicenseType}
+                              IssuingAuthority={IssuingAuthority}
+                              setIssuingAuthority={setIssuingAuthority}
                               editHandler={editHandler}
                               DriverName={DriverName}
                               setDriverName={setDriverName}

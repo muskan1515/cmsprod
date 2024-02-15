@@ -312,86 +312,7 @@ const Form_vehicle = ({
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Issuing Authority
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {IssuingAuthority}
-                    </label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      License Number
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {LicenseNumber}
-                    </label>
-                  </div>
-                </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      License Type
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {LicenseType}
-                    </label>
-                  </div>
-                </td>
+               
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -794,7 +715,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleInsuranceCompany}
+                      {claim?.vehicleDetails?.VehicleInsuranceCompany}
                     </label>
                   </div>
                 </td>
@@ -823,7 +744,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcInsuranceUpto}
+                      {RcInsuranceUpto ? formatDate(RcInsuranceUpto) : ""}
                     </label>
                   </div>
                 </td>
@@ -904,7 +825,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleRcStatus}
+                      {claim?.vehicleDetails?.VehicleRcStatus}
                     </label>
                   </div>
                 </td>
@@ -930,7 +851,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleType}
+                      {claim?.vehicleDetails?.VehicleType}
                     </label>
                   </div>
                 </td>
@@ -1091,7 +1012,7 @@ const Form_vehicle = ({
                         color: "#1560bd",
                         fontSize: "13px",
                         fontWeight: "bold",
-                      }}
+                      }} 
                     >
                       {BancsVehicleSegment}
                     </label>
@@ -1119,7 +1040,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcRtoCode}
+                      {claim?.vehicleDetails?.RcRtoCode}
                     </label>
                   </div>
                 </td>

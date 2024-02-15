@@ -67,7 +67,7 @@ const ErrorPageContent = ({allInfo}) => {
           Mobile : 9910995122(DLH
           NCR),9468881222(GURUGRAM),9414088243,6378710966,7597233966(RAJASTHAN)
         </p>
-        <p>Email: {allInfo.otherInfo[0]?.BrokerMailAddress}</p>
+        <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p>
         <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p>
       </div>
       <hr style={{ border: "2px solid black" }} />

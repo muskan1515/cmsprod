@@ -417,6 +417,7 @@ const getSpecificClaim = async (req, res) => {
       VehicleRegisteredNumber,
       VehicleDateOfRegistration,
       VehiclePucNumber,
+      VehicleRegisteredOwner,
       VehicleTransferDate,
       VehicleEngineNumber,
       VehicleAddedBy,
@@ -526,7 +527,9 @@ const getSpecificClaim = async (req, res) => {
         VehicleInsuranceCompany='${VehicleInsuranceCompany}',
         ManufactureMonthYear='${ManufactureMonthYear}',
         PermanentAddress='${PermanentAddress}',
-        ClassOfVehicle='${ClassOfVehicle}'
+        ClassOfVehicle='${ClassOfVehicle}',
+        RegisteredOwner='${VehicleRegisteredOwner}',
+        VehicleInsuranceUpto=CAST('${RcInsuranceUpto}' AS DATETIME)
       WHERE LeadId = ${LeadId};
     `;
     // Update GarageDetails

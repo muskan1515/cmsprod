@@ -554,103 +554,7 @@ const Form = ({
                       </div>
                     </div>
 
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Issuing Authority <span class="req-btn">*</span>
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              IssuingAuthority 
-                            }
-                            onChange={(e) =>
-                              setIssuingAuthority(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            License Number <span class="req-btn">*</span>
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              LicenseNumber
-                            }
-                            onChange={(e) => setLicenseNumber(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            License Type <span class="req-btn">*</span>
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              LicenseType
-                            }
-                            onChange={(e) => setLicenseType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    
 
                     <div className="col-lg-6">
                       <div className="row mt-1">
@@ -1168,16 +1072,17 @@ const Form = ({
                         </div>
 
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                          
+                            <MyDatePicker
+                            
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleInsuranceUpto
+                            selectedDate={ VehicleInsuranceUpto ? new Date(
+                              VehicleInsuranceUpto) : ""}
+                            setSelectedDate={
+                              setVehicleInsuranceUpto
                             }
-                            onChange={(e) =>
-                              setVehicleInsuranceUpto(e.target.value)
-                            }
+
 
                             // placeholder="Enter Registration No."
                           />
