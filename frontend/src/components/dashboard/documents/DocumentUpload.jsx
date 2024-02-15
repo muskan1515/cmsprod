@@ -251,26 +251,27 @@ export default function DocumentUpload({
   const [isCapturingVideo, setIsCapturingVideo] = useState(false);
   const [modalDocName, setModalDocName] = useState("");
   const [capturedMedia, setCapturedMedia] = useState({});
-
+  
   const [retake, setRetake] = useState(false);
-
+  
   const [isImage, setIsImage] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
-
+  
   const [uploadedUrl, setUploadedUrl] = useState([]);
-
+  const [blob , setBlob] = useState([]);
+  
   const [uploadedImages, setUploadedImages] = useState([]);
   const [uploadedVideos, setuploadedVideos] = useState([]);
   const [uploadedFileName, setUploadedFileName] = useState([]);
 
-  console.log("Video00", uploadedVideos);
+  console.log("Video00",uploadedVideos);
 
   console.log("ImgURL", uploadedUrl);
   const [imageFileName, setImageFileName] = useState("");
   const cancelCapture = () => {
     // Remove the last captured image from the array
     // setUploadedImages((prevImages) => prevImages.slice(0, -1));
-    setuploadedVideos((prev) => prev.slice(0, -1));
+    setuploadedVideos((prev) => prev.slice(0, -1))
     setUploadedUrl((prevImages) => prevImages.slice(0, -1));
     setIsImage(false);
     setRetake(false);
@@ -278,7 +279,7 @@ export default function DocumentUpload({
 
   useEffect(() => {
     setMediaArray([...uploadedUrl, ...uploadedVideos]);
-  }, [uploadedUrl, uploadedVideos]);
+  }, [uploadedUrl, uploadedVideos]);  
   // const proceedToNextCapture = () => {
   //   // Do any necessary logic before proceeding to the next capture
   //   // For example, you might want to clear the webcam capture or reset states
@@ -325,9 +326,14 @@ export default function DocumentUpload({
     return `video_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
   }
 
+
+
+  console.log('BLOBB>>>',blob);
+
   const uploadFiles = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload = {
+      blob:blob,
       file: uploadedUrl,
       name: uploadedFileName,
       token: userInfo[0].Token,
@@ -371,7 +377,7 @@ export default function DocumentUpload({
       });
     setIsOpen(false);
     setUploadedUrl([]);
-    setuploadedVideos([]);
+    setuploadedVideos([])
     setIsImage(false);
     setIsVideo(false);
     setUploadedFileName([]);
@@ -405,10 +411,19 @@ export default function DocumentUpload({
     }
   };
 
+  // const blobToBase64 = (blob) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => resolve(reader.result.split(",")[1]);
+  //     reader.onerror = reject;
+  //     reader.readAsDataURL(blob);
+  //   });
+  // };
+
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result.split(",")[1]);
+      reader.onloadend = () => resolve(reader.result);
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
@@ -430,8 +445,8 @@ export default function DocumentUpload({
     }
   };
 
-  const handleUploadVideo = () => {
-    console.log("isCapturingVideo00000000", isCapturingVideo);
+  const handleUploadVideo = async() => {
+    console.log('isCapturingVideo00000000',isCapturingVideo);
     try {
       if (!isCapturingVideo) {
         // Start capturing video
@@ -443,30 +458,30 @@ export default function DocumentUpload({
           height: 720,
           facingMode: "user", // or 'environment' for rear camera
         };
-
+        
         const mediaRecorder = new MediaRecorder(webcamRef.current.stream);
+        console.log('webcamRef.current.stream ->>',webcamRef.current.stream);
         console.log("MEdia", mediaRecorder);
         mediaRecorderRef.current = mediaRecorder;
-
+        
         mediaRecorder.ondataavailable = (event) => {
           if (event.data.size > 0) {
             chunksRef.current.push(event.data);
           }
         };
-
-        mediaRecorder.onstop = () => {
+        
+        mediaRecorder.onstop = async () => {
           const blob = new Blob(chunksRef.current, { type: "video/webm" });
-          console.log("Blob>>", blob);
+          const base64 = await blobToBase64(blob)
+          setUploadedUrl((prevBase64Array) => [...prevBase64Array, base64]);
+          // console.log("Blob>>", blob,chunksRef.current);
           const videoUrl = URL.createObjectURL(blob);
           const name = generateRandomFileName("mp4");
-          if (videoUrl) {
+          if(videoUrl){
             setUploadedUrl((prevVideos) => [...prevVideos, videoUrl]);
             setUploadedFileName((prevName) => [...prevName, name]);
           }
 
-          console.log("VIDEOOO", videoUrl);
-
-          console.log("isCapturingVideo ", isCapturingVideo);
           // blobToBase64(blob)
           //   .then((res) => {
 
@@ -525,7 +540,7 @@ export default function DocumentUpload({
 
   const uploadCancelHandler = () => {
     setUploadedUrl([]);
-    setuploadedVideos([]);
+    setuploadedVideos([])
     setUploadedFileName([]);
     setIsCapturingVideo(false);
   };
@@ -550,7 +565,7 @@ export default function DocumentUpload({
           ? checkWithinTheContent(row)
           : checkId(status, row);
         console.log(isAccordingToStatus);
-
+       
         if (!isDone && isAccordingToStatus) {
           const updatedRow = {
             _id: index + 1,
@@ -565,28 +580,31 @@ export default function DocumentUpload({
                     key={idx}
                   >
                     {console.log("UPLOAD", file)}
-
+        
                     {/* Check if it's an image or video based on file extension */}
-                    {fileName.endsWith(".jpg") || fileName.endsWith(".png") ? (
+                    {fileName.endsWith('.jpg') || fileName.endsWith('.png') ? (
                       <img
-                        src={fileName} // Use the 'name' field for images
+                        src={fileName}  // Use the 'name' field for images
                         alt="Image"
                         width={90}
                         height={90}
                       />
                     ) : (
-                      <video width={90} height={90} controls>
-                        <source src={fileName} type="video/mp4" />{" "}
-                        {/* Use the 'name' field for videos */}
+                      <video
+                        width={90}
+                        height={90}
+                        controls
+                      >
+                        <source src={fileName} type="video/mp4" />  {/* Use the 'name' field for videos */}
                       </video>
                     )}
-
+        
                     <a>{fileName}</a>
                     <div className="row">
                       <div className="col-lg-12">
                         <a
                           className="btn btn-color w-25"
-                          href={fileName} // Use the 'name' field for links
+                          href={fileName}  // Use the 'name' field for links
                           target="_blank"
                           rel="noopener noreferrer"
                           title="View"
@@ -607,27 +625,27 @@ export default function DocumentUpload({
               }
               return null;
             }),
-            action: (
-              <div>
-                <div className="">
-                  <button
-                    className="btn btn-color w-100"
-                    style={{}}
-                    onClick={() => openModal(row.doc_name, index)}
-                    title="Upload File"
-                  >
-                    <span className="">
-                      {" "}
-                      <FaUpload />
-                    </span>
-                  </button>
-                </div>
+          action: (
+            <div>
+              <div className="">
+                <button
+                  className="btn btn-color w-100"
+                  style={{}}
+                  onClick={() => openModal(row.doc_name, index)}
+                  title="Upload File"
+                >
+                  <span className="">
+                    {" "}
+                    <FaUpload />
+                  </span>
+                </button>
               </div>
-            ),
-          };
+            </div>
+          ),
+        };
 
-          tempData.push(updatedRow);
-        }
+        tempData.push(updatedRow);
+      }
       });
       return tempData;
     };
@@ -772,32 +790,32 @@ export default function DocumentUpload({
           )}
         </div>
         <div className="row">
-          <div className="col-lg-4">
-            {uploadedUrl.map((media, index) => (
-              <div key={`media_${index}`} className="mb-3">
-                {media.startsWith("data:image") ? (
-                  // Display Image
-                  <>
-                    <img
-                      className="col-lg-3"
-                      src={media}
-                      alt={`Uploaded Media ${index + 1}`}
-                      width={300}
-                      height={200}
-                    />
-                    <label className="mb-3">{uploadedFileName[index]}</label>
-                  </>
-                ) : (
-                  // Display Video
-                  <video width={300} height={200} controls>
-                    <source src={media} type="video/webm" />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
-              </div>
-            ))}
-          </div>
+        <div className="col-lg-4">
+          {uploadedUrl.map((media, index) => (
+            <div key={`media_${index}`} className="mb-3">
+              {media.startsWith("data:image") ? (
+                // Display Image
+                <>
+                  <img
+                    className="col-lg-3"
+                    src={media}
+                    alt={`Uploaded Media ${index + 1}`}
+                    width={300}
+                    height={200}
+                  />
+                  <label className="mb-3">{uploadedFileName[index]}</label>
+                </>
+              ) : (
+                // Display Video
+                <video width={300} height={200} controls>
+                  <source src={media} type="video/webm" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+            </div>
+          ))}
         </div>
+      </div>
         {/* <div className="row">
           <div className="col-lg-4">
             {uploadedUrl.map((url, index) => (

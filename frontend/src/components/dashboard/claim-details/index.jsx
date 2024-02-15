@@ -151,18 +151,18 @@ const Index = ({}) => {
       : "NA"
   );
   const [IssuingAuthority, setIssuingAuthority] = useState(
-    claim?.vehicleDetails?.IssuingAuthority
+    claim?.driverDetails?.IssuingAuthority
       ? claim?.vehicleDetails?.IssuingAuthority
       : "NA"
   );
 
   const [LicenseNumber, setLicenseNumber] = useState(
-    claim?.vehicleDetails?.LicenseNumber
+    claim?.driverDetails?.LicenseNumber
       ? claim?.vehicleDetails?.LicenseNumber
       : "NA"
   );
   const [LicenseType, setLicenseType] = useState(
-    claim?.vehicleDetails?.LicenseType
+    claim?.driverDetails?.LicenseType
       ? claim?.vehicleDetails?.LicenseType
       : "NA"
   );
@@ -368,8 +368,11 @@ const Index = ({}) => {
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
+    setLicenseNumber(claim?.driverDetails?.LicenseNumber || "");
+    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority || "");
     setInsuredAddedBy(claim?.insuredDetails?.AddedBy);
-    setInsuredName(claim?.insuredDetails?.InsuredName);
+    setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber || '')
+    setInsuredName(claim?. zinsuredDetails?.InsuredName);
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
     setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2);
@@ -383,9 +386,9 @@ const Index = ({}) => {
     setTransferDate(claim?.vehicleDetails?.TransferDate || null);
     setEngineNumber(claim?.vehicleDetails?.EngineNumber);
     setAddedBy(claim?.vehicleDetails?.AddedBy);
-    setIssuingAuthority(claim?.vehicleDetails?.IssuingAuthority);
-    setLicenseNumber(claim?.vehicleDetails?.LicenseNumber);
-    setLicenseType(claim?.vehicleDetails?.LicenseType);
+    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority);
+    setLicenseNumber(claim?.driverDetails?.LicenseNumber || "");
+    setLicenseType(claim?.driverDetails?.LicenseType);
     setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber);
     setVehicleFuelType(
       claim?.vehicleDetails?.FuelType || claim?.vehicleDetails?.BancsFuelType

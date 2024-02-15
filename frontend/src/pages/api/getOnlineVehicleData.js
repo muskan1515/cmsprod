@@ -7,6 +7,7 @@ async function handler(request, response) {
 
     const vehicleNo =  request.query.vehicleNo;
 
+
     const vehicle_data = await axios.get(`${domain}/vehicleDetails/getOnlineVehicleData`, {
       headers: {
         Authorization: token,

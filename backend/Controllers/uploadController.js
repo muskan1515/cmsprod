@@ -267,30 +267,37 @@ const getDocuments = (req, res) => {
   };
 
 
- const uploadMedia = (req, res) => {
-    const { file, name } = req.body;
-    console.log("Upload Media ", req.body.file,req.body.name);
-    
-    const extension = name.split(".")[1];
-    if (extension === "jpg") {
-      uploadToAWS(file, name)
-        .then((Location) => {
-          return res.status(200).json({ Location });
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.status(500).json({ error: "Internal Server Error" });
-        });
-    } else {
-      uploadToAWSVideo(file, name)
-        .then((Location) => {
-          return res.status(200).json({ Location });
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.status(500).json({ error: "Internal Server Error" });
-        });
+ const uploadMedia = async(req, res) => {
+  try {
+    const { file: filesData, name } = req.body; // Use a different name for the file data
+    const results = [];
+    console.log('LOGG',req.body);
+  
+
+    for (let i = 0; i < filesData.length; i++) {
+      const fileData = filesData[i]; // Use a different name for the loop iteration
+      const fileName = name[i];
+  
+
+      // Check if the file data starts with "data:image/"
+      if (fileData.startsWith("data:image/")) {
+        const data = await uploadToAWS(fileData, fileName);
+        results.push(data);
+      } else if (fileData.startsWith("data:video/")) {
+        const data = await uploadToAWSVideo(fileData, fileName);
+        results.push(data);
+      } else {
+        console.log(`Unsupported file format for ${fileName}`);
+        // Optionally handle the error or skip the file
+        continue;
+      }
     }
+    return res.status(200).json({ data: results });
+  } catch (error) {
+    console.log("Error log", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+  
   };
 
   const verifyReportUpload = (req, res) => {

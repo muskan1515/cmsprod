@@ -160,13 +160,9 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-<<<<<<< Updated upstream
-                      {claim?.driverDetails?.DriverTypeOfVerification}
-=======
                     {
                       claim?.driverDetails?.TypeOfVerification
                     }
->>>>>>> Stashed changes
                     </label>
                   </div>
                 </td>

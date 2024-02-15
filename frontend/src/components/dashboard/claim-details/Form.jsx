@@ -139,7 +139,7 @@ const Form = ({
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     const details = JSON.parse(localStorage.getItem("fetchVehicleDetails"));
-    const vehicleNo = claim?.driverDetails?.RegisteredNumber;
+    const vehicleNo = claim?.vehicleDetails?.RegisteredNumber;
     if (!userInfo) {
       router.push("/login");
     }
