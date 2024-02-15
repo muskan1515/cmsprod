@@ -242,6 +242,20 @@ const PolicyDetails = ({
     return formatDate(dateObject);
   };
 
+
+  const getNextYear=()=>{
+    if (PolicyPeriodStart && !isNaN(new Date(PolicyPeriodStart).getTime())) {
+      const oneYearLater = new Date(PolicyPeriodStart);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      return (formattedOneYearLater);
+    }
+    return '';
+  }
+
   //Update Document
   const handleEditClick = () => {
     setIsEditMode(true);
@@ -428,7 +442,7 @@ const PolicyDetails = ({
                 data-width="100%"
                 value={VehicleType}
                 onChange={(e) => setVehicleType(e.target.value)}
-                disabled={!isEditMode}
+                readOnly={!isEditMode}
               >
                 <option data-tokens="Status1">Select</option>
                 <option data-tokens="Status2">Swift</option>
@@ -575,7 +589,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                         value={IDV}
                         onChange={(e) => setIDV(e.target.value)}
-                        readonly={!isEditMode}
+                        readOnly={!isEditMode}
                         // placeholder="Enter Registration No."
                       />
                     </div>
@@ -604,7 +618,7 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
-                        disabled={!isEditMode}
+                        readOnly={!isEditMode}
                         value={policyType}
                         onChange={(e) => setPolicyType(e.target.value)}
                       >
@@ -686,19 +700,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                       /> */}
 
-                      {!isEditMode ? (
-                        <input
-                          readOnly={!isEditMode}
-                          type={"text"}
-                          value={
-                            PolicyPeriodStart
-                              ? formatDate(PolicyPeriodStart)
-                              : ""
-                          }
-                          className="form-control"
-                          id="propertyTitle"
-                        />
-                      ) : (
+                      
                         <MyDatePicker
                           disable={!isEditMode}
                           selectedDate={
@@ -706,7 +708,7 @@ const PolicyDetails = ({
                           }
                           setSelectedDate={setPolicyPeriodStart}
                         />
-                      )}
+                      
                     </div>
                   </div>
                 </div>
@@ -729,12 +731,12 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      <input
+                      <MyDatePicker
                         className="form-control"
-                        readOnly={!isEditMode}
+                        disable={!isEditMode}
                         value={
                           PolicyPeriodStart
-                            ? formatDateNextyear(PolicyPeriodStart)
+                            ? getNextYear()
                             : ""
                         }
                       />
@@ -1134,7 +1136,7 @@ const PolicyDetails = ({
                             data-live-search="true"
                             data-width="100%"
                             type={isEditMode ? "date" : "text"}
-                            disabled={!isEditMode}
+                            readOnly={!isEditMode}
                             value={TypeOfDate}
                             onChange={(e) => setTypeOfDate(e.target.value)}
                           >
@@ -2123,8 +2125,9 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <input
-                    type="date"
+                  <MyDatePicker
+                   disable={!isEditMode}
+                   selectedDate={""}
                     className="form-control"
                     id="propertyTitle"
                     // value={LicenseNumber}

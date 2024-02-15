@@ -21,8 +21,8 @@ const CreateList = () => {
   const [inspectionType, setInspectionType] = useState("");
   const [policyNumber, setPolicyNumber] = useState("");
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState("");
-  const [policyStartDate, setPolicyStartDate] = useState("");
-  const [policyStartEnd, setPolicyStartEnd] = useState("");
+  const [policyStartDate, setPolicyStartDate] = useState(null);
+  const [policyStartEnd, setPolicyStartEnd] = useState(null);
   const [claimSurvicingOffice, setClaimSurvicingOffice] = useState("");
   const [insuredName, setInsuredName] = useState("");
   const [insuredMobileNo1, setInsuredMobileNo1] = useState("");
@@ -45,6 +45,7 @@ const CreateList = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
       const oneYearLater = new Date(policyStartDate);
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
 
       const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
@@ -53,7 +54,7 @@ const CreateList = () => {
   }, [policyStartDate]);
 
   const generateRegion = (region) => {
-    const firstThreeLetters = region.slice(0, 3);
+    const firstThreeLetters = region?.slice(0, 3);
 
     const now = new Date();
     const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
@@ -71,6 +72,19 @@ const CreateList = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+ 
 
   const submitHandler = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -105,6 +119,15 @@ const CreateList = () => {
       EstimatedLoss: estimatedLoss,
     };
 
+    if(!payload.PolicyNumber){
+      alert("Policy Number should be filled!!");
+    }
+    if(!region){
+      alert("Region should be filled!!");
+    }
+    else{
+
+    
     axios
       .post("/api/addClaim", payload, {
         headers: {
@@ -119,6 +142,7 @@ const CreateList = () => {
       .catch((err) => {
         alert("Error");
       });
+    }
   };
 
   const handleInputChange_01 = (e) => {
@@ -318,12 +342,12 @@ const CreateList = () => {
               </label>
             </div>
             <div className="col-lg-7">
-              <input
+              <MyDatePicker
                 type="date"
                 className="form-control"
                 id="propertyTitle"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                selectedDate={date}
+                setSelectedDate={(e) => setDate(e.target.value)}
                 // placeholder="Enter Registration No."
               />
 
@@ -408,12 +432,12 @@ const CreateList = () => {
             </div>
             <div className="col-lg-7">
               {/* <MyDatePicker /> */}
-              <input
+              <MyDatePicker
                 type="date"
                 className="form-control"
                 id="propertyTitle"
-                value={policyStartDate}
-                onChange={(e) => setPolicyStartDate(e.target.value)}
+                selectedDate={policyStartDate}
+                setSelectedDate={setPolicyStartDate}
                 // placeholder="Enter Registration No."
               />
             </div>
@@ -438,11 +462,12 @@ const CreateList = () => {
             </div>
             <div className="col-lg-7">
               <input
-                type="date"
+                type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={policyStartEnd}
-                onChange={(e) => setPolicyStartEnd(e.target.value)}
+                value={policyStartDate ? formatDate(policyStartEnd) : ""}
+                disable={true}
+                // onChange={(e) => setPolicyStartEnd(e.target.value)}
                 // placeholder="Enter Registration No."
               />
               {/* <MyDatePicker

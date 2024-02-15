@@ -53,12 +53,12 @@ const Index = ({}) => {
   const [policyStartDate, setPolicyStartDate] = useState(
     claim?.claimDetails?.PolicyPeriodStart
       ? claim?.claimDetails?.PolicyPeriodStart
-      : "NA"
+      : null
   );
   const [policyEndDate, setPolicyEndDate] = useState(
     claim?.claimDetails?.PolicyPeriodEnd
       ? claim?.claimDetails?.PolicyPeriodEnd
-      : "NA"
+      : null
   );
   const [insuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
     useState(
@@ -121,7 +121,7 @@ const Index = ({}) => {
       : "NA"
   );
   const [DateRegistration, setDateRegistration] = useState(
-    claim?.claimDetails?.ReferenceNo ? claim?.claimDetails?.ReferenceNo : ""
+    claim?.claimDetails?.ReferenceNo ? claim?.claimDetails?.ReferenceNo : null
   );
   const [PUCNumber, setPUCNumber] = useState(
     claim?.vehicleDetails?.VehiclePucNumber
@@ -131,7 +131,7 @@ const Index = ({}) => {
   const [TransferDate, setTransferDate] = useState(
     claim?.vehicleDetails?.VehicleTransferDate
       ? claim?.vehicleDetails?.VehicleTransferDate
-      : "NA"
+      : null
   );
 
   const [VehicleInsuranceUpto, setVehicleInsuranceUpto] = useState(
@@ -183,12 +183,12 @@ const Index = ({}) => {
   const [DriverAddedDate, setDriverAddedDate] = useState(
     claim?.driverDetails?.DriverAddedDate
       ? claim?.driverDetails?.DriverAddedDate
-      : "NA"
+      : null
   );
   const [Verification, setVerification] = useState(
     claim?.driverDetails?.DriverTypeOfVerification
       ? claim?.driverDetails?.DriverTypeOfVerification
-      : "NA"
+      : 0
   );
 
   const [status, setStatus] = useState(
@@ -203,12 +203,12 @@ const Index = ({}) => {
   const [GarageContactNo1, setGarageContactNo1] = useState(
     claim?.garageDetails?.GarageContactNo1
       ? claim?.garageDetails?.GarageContactNo1
-      : "NA"
+      : ""
   );
   const [GarageContactNo2, setGarageContactNo2] = useState(
     claim?.garageDetails?.GarageContactNo2
       ? claim?.garageDetails?.GarageContactNo2
-      : "NA"
+      : ""
   );
   const [GarageAddedBy, setGarageAddedBy] = useState(
     claim?.garageDetails?.GarageAddedBy
@@ -222,6 +222,18 @@ const Index = ({}) => {
   const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
 
+  const getNextYear=()=>{
+    if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+      const oneYearLater = new Date(policyStartDate);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      return (formattedOneYearLater);
+    }
+    return null;
+  }
   //New Fields
   const [VehicleClassDescription, setVehicleClassDescription] = useState("");
   const [MakerDesc, setMakerDesc] = useState("");
@@ -321,12 +333,30 @@ const Index = ({}) => {
     },
   ];
 
+  
+  useEffect(() => {
+    console.log("policy",policyStartDate)
+    // Update policyStartEnd when policyStartDate changes
+    if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+      const oneYearLater = new Date(policyStartDate);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      setPolicyEndDate(formattedOneYearLater);
+    }
+  }, [policyStartDate]);
+
+
   useEffect(() => {
     setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice || "");
     setClaimRegion(claim?.claimDetails?.Region || "");
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice || "");
-    setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart);
-    setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
+   
+      setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart )
+      setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd)
+    
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
@@ -340,9 +370,9 @@ const Index = ({}) => {
     setVehicleModel(claim.vehicleDetails?.TypeOfBody);
     setEngineType(claim?.vehicleDetails?.ModeOfCheck);
     setVehicleRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner);
-    setDateRegistration(claim?.claimDetails?.ReferenceNo);
+    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration || null);
     setPUCNumber(claim?.vehicleDetails?.PucNumber);
-    setTransferDate(claim?.vehicleDetails?.TransferDate);
+    setTransferDate(claim?.vehicleDetails?.TransferDate || null);
     setEngineNumber(claim?.vehicleDetails?.EngineNumber);
     setAddedBy(claim?.vehicleDetails?.AddedBy);
     setIssuingAuthority(claim?.vehicleDetails?.IssuingAuthority);
@@ -353,7 +383,7 @@ const Index = ({}) => {
       claim?.vehicleDetails?.FuelType || claim?.vehicleDetails?.BancsFuelType
     );
     setDriverName(claim?.driverDetails?.DriverName);
-    setDriverAddedDate(claim?.driverDetails?.AddedDate);
+    setDriverAddedDate(claim?.driverDetails?.AddedDate || null);
     setVerification(claim?.driverDetails?.TypeOfVerification === 0 ? "Verified By Online" : "Verified Manually");
     setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress);
     setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
@@ -375,7 +405,7 @@ const Index = ({}) => {
     setBancsSubtypeCode(claim?.vehicleDetails?.BancsSubtypeCode || "NA");
     setBancsVehicleClass(claim?.vehicleDetails?.BancsVehicleClass || "NA");
     setBancsVehicleSegment(claim?.vehicleDetails?.BancsVehicleSegment || "NA");
-    setFitUpto(claim?.vehicleDetails?.FitUpto || "NA");
+    setFitUpto(claim?.vehicleDetails?.FitUpto || null);
     setPasiaModelCode(claim?.vehicleDetails?.PasiaModelCode || "NA");
     setVehiclePermanentAddress(claim?.vehicleDetails?.PermanentAddress || "NA");
     setRcRtoCode(claim?.vehicleDetails?.RcRtoCode || "NA");
@@ -393,6 +423,7 @@ const Index = ({}) => {
     setVehicleRegistedAt(claim?.vehicleDetails?.RegistedAt || "NA");
     setPermanentAddress(claim?.vehicleDetails?.PermanentAddress || "NA");
     setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle || "NA");
+    // getNextYear();
   }, [claim]);
 
   console.log("datat ", VehicleInsuranceCompany);
@@ -411,6 +442,7 @@ const Index = ({}) => {
     console.log(result);
     return result;
   };
+
 
   const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState(
     claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : "NA"
@@ -444,7 +476,7 @@ const Index = ({}) => {
         ? policyStartDate
         : claim.claimDetails?.PolicyPeriodStart,
       PolicyPeriodEnd: policyEndDate
-        ? policyEndDate
+        ? getNextYear(policyStartDate)
         : claim.claimDetails?.PolicyPeriodEnd,
       InsuranceCompanyNameAddress: insuranceCompanyNameAddress
         ? insuranceCompanyNameAddress
@@ -543,35 +575,6 @@ const Index = ({}) => {
       token: userInfo[0].Token,
     };
 
-    if (
-      // !payload.InsuredName |
-      !payload.InsuredMailAddress
-      // !payload.InsuredMobileNo1 ||
-      // !payload.InsuredMobileNo2 ||
-      // !payload.ClaimNumber ||
-      // !payload.VehicleMakeVariantModelColor ||
-      // !payload.VehicleTypeOfBody ||
-      // !payload.VehicleRegisteredNumber ||
-      // !payload.VehicleDateOfRegistration ||
-      // !payload.VehiclePucNumber ||
-      // !payload.VehicleTransferDate ||
-      // !payload.VehicleEngineNumber ||
-      // !payload.VehicleAddedBy ||
-      // !payload.IssuingAuthority ||
-      // !payload.LicenseNumber ||
-      // !payload.LicenseType ||
-      // !payload.VehicleChassisNumber ||
-      // !payload.VehicleFuelType ||
-      // !payload.DriverAddedDate ||
-      // !payload.DriverName ||
-      // !payload.DriverTypeOfVerification ||
-      // !payload.GarageAddedBy ||
-      // !payload.GarageNameAndAddress ||
-      // !payload.GarageContactNo1 ||
-      // !payload.GarageContactNo2
-    ) {
-      alert("Please fill the mail address , it is a must required field!");
-    } else {
       axios
         .put("/api/updateClaimDetails", payload, {
           headers: {
@@ -591,7 +594,7 @@ const Index = ({}) => {
       } else {
         setEditCase((prop) => !prop);
       }
-    }
+    
 
     // setEditCase((prop) => !prop);
     window.location.reload();

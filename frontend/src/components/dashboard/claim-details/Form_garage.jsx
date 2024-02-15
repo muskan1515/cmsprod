@@ -99,7 +99,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(claim.garageDetails?.GarageAddedDate)}
+                      {claim.garageDetails?.AddedDate ? formatDate(claim.garageDetails?.AddedDate):""}
                     </label>
                   </div>
                 </td>
@@ -153,7 +153,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(claim.garageDetails?.GarageModifiedDate)}
+                      {claim.garageDetails?.ModifiedDate?formatDate(claim.garageDetails?.ModifiedDate):""}
                     </label>
                   </div>
                 </td>
@@ -179,7 +179,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(claim.claimStatus?.ClaimStatus)}
+                      {(claim.claimStatus?.ClaimStatus)}
                     </label>
                   </div>
                 </td>

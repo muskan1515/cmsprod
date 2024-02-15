@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Form_garage from "./Form_garage";
 import { useState } from "react";
+import MyDatePicker from "../../common/MyDatePicker";
 // import toast from "react-hot-toast";
 
 const Form = ({
@@ -202,13 +203,16 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                          <MyDatePicker
+                          
+
+                            disable={true}
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(
-                              claim.garageDetails?.GarageAddedDate
-                            )}
+                            selectedDate={claim.garageDetails?.AddedDate ? new Date(
+                              claim.garageDetails?.AddedDate
+                            ) : ""}
+                           
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -264,13 +268,14 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                          <MyDatePicker
+                            
+                            disable={true}
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(
-                              claim.garageDetails?.GarageModifiedDate
-                            )}
+                            selectedDate={ claim.garageDetails?.ModifiedDate ? new Date(
+                              claim.garageDetails?.ModifiedDate
+                            ) : ""}
                             // placeholder="Enter Registration No."
                           />
                         </div>

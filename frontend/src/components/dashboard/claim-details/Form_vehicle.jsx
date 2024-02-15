@@ -199,8 +199,8 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(
-                        DateRegistration)}
+                      {DateRegistration ? formatDate(
+                        DateRegistration) : ""}
                     </label>
                   </div>
                 </td>
@@ -252,9 +252,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(
+                      {TransferDate ? formatDate(
                         TransferDate
-                      )}
+                      ) : ""}
                     </label>
                   </div>
                 </td>
@@ -742,7 +742,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {FitUpto}
+                      {FitUpto ? formatDate(FitUpto) : ""}
                     </label>
                   </div>
                 </td>

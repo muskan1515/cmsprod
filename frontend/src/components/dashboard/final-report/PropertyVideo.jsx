@@ -339,6 +339,18 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [metalSalvageValue,setMetalSalvageValue]=useState(5);
 
  
+  const getNextYear=()=>{
+    if (PolicyPeriodStart && !isNaN(new Date(PolicyPeriodStart).getTime())) {
+      const oneYearLater = new Date(PolicyPeriodStart);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      return (formattedOneYearLater);
+    }
+    return '';
+  }
 
  useEffect(() => {
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress || "");
@@ -346,15 +358,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuredMobileNo2(claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 || "");
     setClaimNumber(claim?.claimDetails?.ClaimNumber || "");
     setEngineType(claim?.vehicleDetails?.ModeOfCheck || "");
-    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration || "");
-    setTransferDate(claim?.vehicleDetails?.TransferDate || "");
-    setAddedBy(claim?.vehicleDetails?.VehicleAddedBy || "");
-    setVerification(claim?.driverDetails?.DriverTypeOfVerification || "");
+    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration || null);
+    setTransferDate(claim?.vehicleDetails?.TransferDate || null);
+    setAddedBy(claim?.vehicleDetails?.AddedBy || "");
+    setVerification(claim?.driverDetails?.TypeOfVerification || "");
     setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress || "");
     setGarageContactNo1(claim?.garageDetails?.GarageContactNo1 || "");
     setGarageContactNo2(claim?.garageDetails?.GarageContactNo2 || "");
-    setGarageAddedBy(claim?.garageDetails?.GarageAddedBy || "");
-    setClaimAddedDateTime(claim?.claimDetails?.AddedDateTime || "");
+    setGarageAddedBy(claim?.garageDetails?.AddedBy || "");
+    setClaimAddedDateTime(claim?.claimDetails?.AddedDateTime || null);
     setClaimIsActive(claim?.claimDetails?.IsActive?.data[0] || "");
     // Policy Detail
     setReferenceNo(claim?.claimDetails?.ReferenceNo || "");
@@ -364,8 +376,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
 
-    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration || "");
-    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate || "");
+    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration || null);
+    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate || null);
     setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate || "");
     setClaimRegion(claim?.claimDetails?.ClaimRegion || "");
     setInsuredName(claim?.insuredDetails?.InsuredName || "");
@@ -376,10 +388,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
 
 
-    setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime||"");
+    setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime||null);
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
-    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
-    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||"");
+    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||null);
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||null);
     //Drivers Details
     setDriverName(claim?.driverDetails?.DriverName || "");
     setDriverAddedDate(claim?.driverDetails?.DriverAddedDate || "");
@@ -394,11 +406,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     );
       setVehicleEngineNumber(claim?.vehicleDetails?.EngineNumber||"");
       setAntiTheft(claim?.vehicleDetails?.AntiTheft || "");
-    setVehicleDateOfRegistration(claim?.claimDetails?.DateOfRegistration || "");
+    setVehicleDateOfRegistration(claim?.claimDetails?.DateOfRegistration || null);
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress || "United India Insurance Company Limited");
-      setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd || "");
-      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodEnd || "");
+      setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd || null);
+      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodEnd || null);
     setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[0]
  || "" );
  setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[1]||"");
@@ -423,8 +435,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setVehiclePreAccidentCondition(
       claim?.vehicleDetails?.PreAccidentCondition || ""
     );
-    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
-    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate || "");
+    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||null);
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate || null);
     setVehicleTaxParticulars(
       claim?.vehicleDetails?.TaxParticulars || ""
     );
@@ -450,18 +462,18 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setThirdPartyLoss(claim?.driverDetails?.ThirdPartyLoss || "");
     setAssessment(claim?.driverDetails?.Assessment||"");
 
-    setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv || "") ;
-    setValidUntilTv(claim?.driverDetails?.ValidUntilTv || "");
-    setValidFrom(claim?.driverDetails?.ValidFrom || "");
-    setDateOfIssue(claim?.driverDetails?.DateOfIssue || "");
+    setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv || null) ;
+    setValidUntilTv(claim?.driverDetails?.ValidUntilTv || null);
+    setValidFrom(claim?.driverDetails?.ValidFrom || null);
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue || null);
 
     //commercial
     setFitnessCertificate(claim?.commercialVehicleDetails?.FitnessCertificate || "");
-    setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom || "");
-    setFitnessTo(claim?.commercialVehicleDetails?.FitnessTo || "");
+    setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom || null);
+    setFitnessTo(claim?.commercialVehicleDetails?.FitnessTo || null);
     setPermitNo(claim?.commercialVehicleDetails?.PermitNo || "");
-    setPermitFrom(claim?.commercialVehicleDetails?.PermitFrom || "");
-    setPermitTo(claim?.commercialVehicleDetails?.PermitTo||"");
+    setPermitFrom(claim?.commercialVehicleDetails?.PermitFrom || null);
+    setPermitTo(claim?.commercialVehicleDetails?.PermitTo||null);
     setTypeOfPermit(claim?.commercialVehicleDetails?.TypeOfPermit || "");
     setAuthorization(claim?.commercialVehicleDetails?.Authorization || "");
     setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation || "");
@@ -499,23 +511,23 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       policyType,
       IDV : IDV ? IDV : claim?.claimDetails?.IDV ,
       PolicyPeriodStart : PolicyPeriodStart ? PolicyPeriodStart : claim?.claimDetails?.PolicyPeriodStart,
-      PolicyPeriodEnd : PolicyPeriodEnd ? PolicyPeriodEnd : claim?.claimDetails?.PolicyPeriodEnd,
+      PolicyPeriodEnd : PolicyPeriodStart ? getNextYear(PolicyPeriodStart) : claim?.claimDetails?.PolicyPeriodEnd,
       HPA : HPA ? HPA : claim.claimDetails?.HPA,
       ClaimServicingOffice,
       OwnerSRST,
       VehicleMakeVariantModelColor : VehicleMakeVariantModelColor + ","+VehicleColor,
-      DateOfIssue,
-      MailRecieveDate,
-      ValidFrom,
+      DateOfIssue : DateOfIssue ? DateOfIssue : null,
+      MailRecieveDate : MailRecieveDate? MailRecieveDate : null,
+      ValidFrom : ValidFrom ? ValidFrom : null,
       VehicleType,
-      ValidUntilNtv,
-      ValidUntilTv,
+      ValidUntilNtv:ValidUntilNtv?ValidUntilNtv:null,
+      ValidUntilTv : ValidUntilTv ? ValidUntilTv : null ,
       phoneNumber,
       AntiTheft,
       RegLadenWt,
       RemarkIfRLW,
       Pin,
-      DateOfRegistration,
+      DateOfRegistration: DateOfRegistration ? DateOfRegistration : null,
       PlaceOfSurvey,
       UnladenWT,
       RemarkIfULW,
@@ -529,20 +541,20 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       ClaimNumber,
       EngineType,
       TypeOfDate :TypeOfDate === "Registration" ? 1 : 0,
-      DateRegistration,
+      DateRegistration : DateRegistration ? DateRegistration :null,
       PUCNumber,
-      TransferDate,
+      TransferDate : TransferDate ? TransferDate :null,
       AddedBy,
       Verification,
       GarageAddedBy,
       GarageContactNo1,
       GarageContactNo2,
       GarageNameAndAddress,
-      ClaimAddedDateTime,
+      ClaimAddedDateTime : ClaimAddedDateTime ? ClaimAddedDateTime : null,
       PolicyIssuingOffice,
       PolicyNumber,
       DriverName,
-      DriverAddedDate,
+      DriverAddedDate : DriverAddedDate ? DriverAddedDate : null,
       IssuingAuthority,
       LicenseNumber,
       LicenseType,
@@ -561,18 +573,18 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       VehicleModel,
       VehicleTaxParticulars,
       VehicleSeatingCapacity,
-      AccidentAddedDateTime,
+      AccidentAddedDateTime : AccidentAddedDateTime ? AccidentAddedDateTime : null,
 
       PlaceOfLoss,
-      SurveyAllotmentDate,
-      SurveyConductedDate,
+      SurveyAllotmentDate : SurveyAllotmentDate ? SurveyAllotmentDate : null,
+      SurveyConductedDate : SurveyConductedDate ? SurveyConductedDate : null,
 
       FitnessCertificate,
-      FitnessFrom,
-      FitnessTo,
-      PermitTo,
+      FitnessFrom : FitnessFrom ? FitnessFrom : null,
+      FitnessTo : FitnessTo ? FitnessTo : null,
+      PermitTo : PermitTo ? PermitTo : null,
       PermitNo,
-      PermitFrom,
+      PermitFrom : PermitFrom ? PermitFrom :null,
       TypeOfPermit,
       Authorization,
       AreasOfoperation,
@@ -585,6 +597,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       Assessment,
       leadId
     };
+
 
     axios.put("/api/updateFinalReport",payload,{
       headers:{

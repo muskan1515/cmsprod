@@ -246,7 +246,6 @@ const updateFinalReport = (req,res)=>{
           WHERE LeadID = ${leadId};
     `;
   
-  
     // console.log(updateCommercialVehicleDetails,insertIntoCommercialVehicleDetails);
     // return ;
     db.query(updateClaimDetails, (err, result2) => {

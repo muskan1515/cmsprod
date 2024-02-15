@@ -76,9 +76,9 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(
-                     claim?.driverDetails?.DriverAddedDate
-                    )}
+                    {claim?.driverDetails?.AddedDate ? formatDate(
+                     claim?.driverDetails?.AddedDate
+                    ) :""}
                     </label>
                   </div>
                 </td>
@@ -138,7 +138,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {formatDate(claim?.driverDetails?.DriverModifiedDate)}
+                    {claim?.driverDetails?.ModifiedDate ? formatDate(claim?.driverDetails?.ModifiedDate):""}
                     </label>
                   </div>
                 </td>

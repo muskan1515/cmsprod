@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Form_driver from "./Form_driver";
 import { useState } from "react";
+import MyDatePicker from "../../common/MyDatePicker";
 // import toast from "react-hot-toast";
 
 const Form_01 = ({
@@ -150,14 +151,13 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                          <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverAddedDate(e.target.value)}
-                            value={formatDate(
+                            setSelectedDate={ setDriverAddedDate}
+                            selectedDate={DriverAddedDate ? new Date(
                               DriverAddedDate
-                            )}
+                            ) : ""}
 
                             // placeholder="Enter Registration No."
                           />
@@ -214,13 +214,13 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                          <MyDatePicker
+                            disable={true}
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(
-                              claim.driverDetails?.DriverModifiedDate
-                            )}
+                            selectedDate={claim.driverDetails?.ModifiedDate ? new Date(
+                              claim.driverDetails?.ModifiedDate
+                            ):""}
                             // placeholder="Enter Registration No."
                           />
                         </div>

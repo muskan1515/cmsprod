@@ -47,6 +47,9 @@ const CreateList = ({
     return formattedDate;
   };
 
+
+  console.log(policyStartDate);
+
   const statusOptions = [
     {
       id: 1,
@@ -97,6 +100,19 @@ const CreateList = ({
       value: "My Claims",
     },
   ];
+
+  const getNextYear=()=>{
+    if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+      const oneYearLater = new Date(policyStartDate);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      return (formattedOneYearLater);
+    }
+    return '';
+  }
 
   const checkStatus = (val) => {
     let status = "";
@@ -444,10 +460,10 @@ const CreateList = ({
               // onChange={(e)=>setPolicyStartDate(e.target.value)}
               // placeholder="Enter Registration No."
             />*/}
+
               <MyDatePicker
-                disable={!edit}
                 selectedDate={
-                  policyStartDate ? new Date(policyStartDate) : new Date()
+                  policyStartDate && !isNaN(new Date(policyStartDate)) ?  new Date(policyStartDate)  : ""
                 }
                 setSelectedDate={setPolicyStartDate}
               />
@@ -480,12 +496,14 @@ const CreateList = ({
             // onChange={(e)=>setPolicyEndDate(e.target.value)}
             // placeholder="Enter Registration No."
           />*/}
-              <MyDatePicker
-                disable={!edit}
-                selectedDate={
-                  policyEndDate ? new Date(policyEndDate) : new Date()
+              <input
+              type="text"
+                disable={true}
+                value={
+                  getNextYear()
                 }
-                setSelectedDate={setPolicyEndDate}
+                
+              
               />
             </div>
           </div>

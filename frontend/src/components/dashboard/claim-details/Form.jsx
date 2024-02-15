@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Form_vehicle from "./Form_vehicle";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MyDatePicker from "../../common/MyDatePicker";
 // import toast from "react-hot-toast";
 
 const Form = ({
@@ -126,6 +127,11 @@ const Form = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
+
+  function isISO8601Date(dateString) {
+    const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
+    return iso8601Regex.test(dateString);
+  }
 
   const [saveDetails,setSaveDetails]=useState(false)
 
@@ -407,13 +413,14 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="date"
+                          <MyDatePicker
+                            
                             className="form-control"
                             id="propertyTitle"
-                            value={DateRegistration}
-                            onChange={(e) =>
-                              setDateRegistration(e.target.value)
+                            selectedDate={ DateRegistration ? new Date(
+                              DateRegistration) : ""}
+                            setSelectedDate={
+                              setDateRegistration
                             }
 
                             // placeholder="Enter Registration No."
@@ -462,21 +469,20 @@ const Form = ({
                               // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
+                              // margin Top: "-13px",
                             }}
                           >
                             Transfer Date <span class="req-btn">*</span>
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                          <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            value={formatDate(
-                              TransferDate
-                            )}
-                            onChange={(e) => setTransferDate(e.target.value)}
+                            selectedDate={TransferDate ? new Date(
+                              TransferDate) : ""
+                            }
+                            setSelectedDate={ setTransferDate}
 
                             // placeholder="Enter Registration No."
                           />

@@ -62,8 +62,8 @@ const addClaim =  (req, res) => {
         '${ReferenceNo}',
         '${PolicyIssuingOffice}',
         '${PolicyNumber}',
-        '${PolicyPeriodStart}',
-        '${PolicyPeriodEnd}',
+        ${PolicyPeriodStart},
+        ${PolicyPeriodEnd},
         '${ClaimNumber}',
         '${ClaimServicingOffice}',
         '${parseInt(AddedBy)}',
@@ -171,7 +171,8 @@ const addClaim =  (req, res) => {
         '${parseInt(results[0].LeadId)}'
       );
     `;
-  
+
+   
           // Execute the SQL queries individually
   
           db.query(insertVehicleDetails, (error, results) => {
@@ -223,6 +224,7 @@ const addClaim =  (req, res) => {
                         });
                       }
   
+                      if(InsuredMailAddress !== ""){
                       axios
                         .post(
                           `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
@@ -242,59 +244,7 @@ const addClaim =  (req, res) => {
                           }
                         )
                         .then((ressss) => {
-                          if (GarageMailAddress !== "") {
-                            axios
-                              .post(
-                                `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
-                                {
-                                  vehicleNo: RegisteredNumber,
-                                  PolicyNo: ReferenceNo,
-                                  Insured: InsuredName,
-                                  toMail: GarageMailAddress,
-                                  Date: new Date(),
-                                },
-                                {
-                                  headers: {
-                                    Authorization: `Bearer ${token}`,
-                                    "Content-Type": "application/json",
-                                  },
-                                }
-                              )
-                              .then((ressss) => {
-                                if (BrokerMailAddress !== "") {
-                                  axios
-                                    .post(
-                                      `${process.env.BACKEND_DOMAIN}/email/sendEmail/3`,
-                                      {
-                                        toMail: BrokerMailAddress,
-                                        Date: new Date(),
-                                      },
-                                      {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                          "Content-Type": "application/json",
-                                        },
-                                      }
-                                    )
-                                    .then((ressss) => {
-                                      return res.status(200).json({
-                                        message: "Data inserted successfully.",
-                                      });
-                                    })
-                                    .catch((Er) => {
-                                      return res.status(500).json({
-                                        error:
-                                          "Error sending email into Broker Mail.",
-                                      });
-                                    });
-                                }
-                              })
-                              .catch((Er) => {
-                                return res.status(500).json({
-                                  error: "Error sending email into Garage Mail.",
-                                });
-                              });
-                          }
+                         
                         })
                         .catch((Er) => {
                           return res.status(500).json({
@@ -302,9 +252,64 @@ const addClaim =  (req, res) => {
                               "Error sending email into Acknowldegment Mail.",
                           });
                         });
+                      }
+                        if (GarageMailAddress !== "") {
+                          axios
+                            .post(
+                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
+                              {
+                                vehicleNo: RegisteredNumber,
+                                PolicyNo: ReferenceNo,
+                                Insured: InsuredName,
+                                toMail: GarageMailAddress,
+                                Date: new Date(),
+                              },
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                  "Content-Type": "application/json",
+                                },
+                              }
+                            )
+                            .then((ressss) => {
+                             
+                            })
+                            .catch((Er) => {
+                              return res.status(500).json({
+                                error: "Error sending email into Garage Mail.",
+                              });
+                            });
+                        }
+                        if (BrokerMailAddress !== "") {
+                          axios
+                            .post(
+                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/3`,
+                              {
+                                toMail: BrokerMailAddress,
+                                Date: new Date(),
+                              },
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                  "Content-Type": "application/json",
+                                },
+                              }
+                            )
+                            .then((ressss) => {
+                              
+                            })
+                            .catch((Er) => {
+                              return res.status(500).json({
+                                error:
+                                  "Error sending email into Broker Mail.",
+                              });
+                            });
+                        }
   
                       //garage
-  
+                      return res.status(200).json({
+                        message: "Data inserted successfully.",
+                      });
                       //broker
                     });
                   });
@@ -468,11 +473,12 @@ const getSpecificClaim = async (req, res) => {
     ClaimServicingOffice = '${ClaimServicingOffice}',
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = '${PolicyPeriodStart}',
-    PolicyPeriodEnd = '${PolicyPeriodEnd}',
+    PolicyPeriodStart = ${PolicyPeriodStart},
+    PolicyPeriodEnd = ${PolicyPeriodEnd},
     InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}'
       WHERE LeadId = ${LeadId};
     `;
+
   
     // Update ClaimDetails
     const updateDriverDetails = `
@@ -482,7 +488,7 @@ const getSpecificClaim = async (req, res) => {
       LicenseNumber = '${LicenseNumber}',
       LicenseType = '${LicenseType}',
       DriverName = '${DriverName}',
-      AddedDate = '${DriverAddedDate}',
+      AddedDate =${DriverAddedDate},
       TypeOfVerification = '${DriverTypeOfVerification}'
         WHERE LeadId = ${LeadId};
     `;
@@ -494,9 +500,9 @@ const getSpecificClaim = async (req, res) => {
         RegisteredNumber = '${VehicleRegisteredNumber}',
         MakeVariantModelColor='${VehicleMakeVariantModelColor}',
         TypeOfBody='${VehicleTypeOfBody}',
-        DateOfRegistration='${VehicleDateOfRegistration}',
+        DateOfRegistration=${VehicleDateOfRegistration},
         PucNumber='${VehiclePucNumber}',
-        TransferDate='${VehicleTransferDate}',
+        TransferDate=${VehicleTransferDate},
         EngineNumber='${VehicleEngineNumber}',
         AddedBy='${VehicleAddedBy}',
         ChassisNumber='${VehicleChassisNumber}',
@@ -504,7 +510,7 @@ const getSpecificClaim = async (req, res) => {
         MakerDesc='${MakerDesc}',
         MakerModel='${MakerModel}',
         CubicCapacity='${VehicleCubicCap}',
-        FitUpto='${FitUpto}',
+        FitUpto=${FitUpto},
         PasiaModelCode='${PasiaModelCode}',
         VehicleType='${RcVehicleType}',
         BancsModelCode='${BancsModelCode}',
