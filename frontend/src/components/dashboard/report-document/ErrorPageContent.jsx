@@ -829,6 +829,515 @@ const ErrorPageContent = () => {
           </tr>
         </table>
       </div>
+      <div>
+        <h4>GST Summary Tax Wise</h4>
+        <table>
+          <tr>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Sr.No.
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Tax Percentage
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Actual Allowed
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              C GST
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              S GST
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              I GST
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Total
+            </th>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              1
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              28.00
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              98867
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              765
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              876
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              0000
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              87689
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+                textAlign: "center",
+              }}
+            >
+              Grand Total
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              98867
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              765
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              876
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              0000
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              87689
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              Total Tax
+            </td>
+            <td
+              colSpan={3}
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+                textAlign: "center",
+              }}
+            >
+              87686
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+          </tr>
+        </table>
+      </div>
+      <div className="mt-2">
+        <table>
+          <tr>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Sr.No.
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Service Acc. Code
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              GST %
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Actual Allowed
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              C GST
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              S GST
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              I GST
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                paddingRight: "30px",
+                paddingLeft: "20px",
+              }}
+            >
+              Total
+            </th>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              1
+            </td>
+            <td
+              colSpan={2}
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              28.00
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              98867
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              765
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              876
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              0000
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              87689
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+            <td
+              colSpan={2}
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+                textAlign: "center",
+              }}
+            >
+              Grand Total
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              98867
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              765
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              876
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              0000
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              87689
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+            <td
+              colSpan={2}
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            >
+              Total Tax
+            </td>
+            <td
+              colSpan={3}
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+                textAlign: "center",
+              }}
+            >
+              87686
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                paddingRight: "5px",
+              }}
+            ></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <span>
+          Based on details provided above, the liability under the subject
+          policy of insurance works out to{" "}
+          <b>
+            F 5,658.00 <br /> (RUPEES FIVE THOUSAND SIX HUNDRED FIFTY-EIGHT
+            ONLY){" "}
+          </b>{" "}
+          The assessment of loss, as detailed above, is subject to the terms and
+          conditions of the policy of insurance.
+        </span>
+      </div>
+      <div>
+        <h4>Notes :</h4>
+        <ul>
+          <li>
+            <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
+          </li>
+          <li>
+            <h4>
+              2. Parts & Labour allowed as per local market but note more than
+              to authorize dealer.
+            </h4>
+          </li>
+          <li>
+            <h4>3 Bills of repairs/replacement checked by me & enclosed. </h4>
+          </li>
+          <li>
+            <h4>
+              4. The loss or damage or liability has arisen proximately caused
+              by Insured peril{" "}
+            </h4>
+          </li>
+          <li>
+            <h4>
+              5. None of the exclusions under Ins. policy has caused loss or
+              damage or liability.
+            </h4>
+          </li>
+        </ul>
+
+        <span>
+          Thanking you and assuring you of my best services at all times,
+        </span>
+        <br />
+        <br />
+        <span>
+          Enclosures : Bank Pass-Book, Repair Invoice, Estimate of repairs,
+          Claim form, Satisfaction Certificate, Motor Loss Voucher, Consent
+          Letter, DL, RC, Policy, Photographs, [12 Nos.],Survey fee bill.
+        </span>
+      </div>
       <hr style={{ border: "2px solid black" }} />
     </div>
   );
