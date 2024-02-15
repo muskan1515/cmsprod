@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import ErrorPageContent from "./ErrorPageContent";
 import axios from "axios";
 
-const index = () => {
+const Index = () => {
   const [allInfo, setAllInfo] = useState(null);
 
   useEffect(() => {
@@ -56,4 +56,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
