@@ -47,6 +47,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [taxAmount, setTaxAmount] = useState(0);
 
+  const [metalSalvageValue,setMetalSalvageValue]=useState(0);
+
   const [allDepreciations, setAllDepreciations] = useState([]);
 
   const [reload, setReload] = useState(false);
