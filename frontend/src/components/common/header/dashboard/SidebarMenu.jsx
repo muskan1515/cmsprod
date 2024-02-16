@@ -149,7 +149,10 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                         : ""
                     }`}
                   >
-                    <Link href="/bill-creation" title="Bill Creation">
+                    <Link
+                      href={`/bill-creation/${leadId}`}
+                      title="Bill Creation"
+                    >
                       <i className="flaticon-document"></i>
                       <span> </span>
                     </Link>
@@ -163,6 +166,18 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                   >
                     <Link href="/mis-sheet" title="MIS Sheet">
                       <i className="flaticon-document"></i>
+                      <span> </span>
+                    </Link>
+                  </li>
+                  <li
+                    className={`treeview ${
+                      isSinglePageActive("/bill-creation", route.pathname)
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <Link href="/print-document" title="Print Document">
+                      <i className="flaticon-pdf"></i>
                       <span> </span>
                     </Link>
                   </li>

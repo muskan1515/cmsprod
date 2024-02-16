@@ -39,7 +39,7 @@ const headCells = [
     id: "action",
     numeric: false,
     label: "Action",
-    width: 100,
+    width: 50,
   },
 ];
 
@@ -49,7 +49,7 @@ let data = [
     serial_num: "1",
     doc_name: "Driving licence",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -71,7 +71,7 @@ let data = [
     serial_num: "2",
     doc_name: "Certificate of registration",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -92,7 +92,7 @@ let data = [
     serial_num: "3",
     doc_name: "Repair Estimate",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -114,7 +114,7 @@ let data = [
     doc_name: "Claim form",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -135,7 +135,7 @@ let data = [
     doc_name: "Insurance policy",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -156,7 +156,7 @@ let data = [
     doc_name: "Damage vehicle photographs/video",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -177,7 +177,7 @@ let data = [
     doc_name: "Aadhar card",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -198,7 +198,7 @@ let data = [
     doc_name: "Pan card",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -219,7 +219,7 @@ let data = [
     doc_name: " Cancel cheque",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -240,7 +240,7 @@ let data = [
     doc_name: " Satisfaction voucher",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -261,7 +261,7 @@ let data = [
     doc_name: "Discharge voucher",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -282,7 +282,7 @@ let data = [
     doc_name: "Dismantle photographs",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -303,7 +303,7 @@ let data = [
     doc_name: "Reinspection photographs",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -324,7 +324,7 @@ let data = [
     doc_name: "Repair Invoice",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),
@@ -345,7 +345,7 @@ let data = [
     doc_name: "Payment/cash receipt",
     file: "",
     action: (
-      <button className="btn btn-color w-15">
+      <button className="btn btn-thm">
         <FaUpload />
       </button>
     ),

@@ -21736,7 +21736,22 @@ input:invalid {
   color: #e10d05;
 }
 
-.table-input{
+.table-input {
   width: 40px !important;
   /* background-color: red; */
+}
+
+.text-captcha {
+  color: #fff !important;
+  font-size: 22px !important;
+  font-weight: bold;
+}
+
+.bg-imgg {
+  /* background: url(https://www.optacom.com/components/com_breezingforms/images/captcha/backgrounds/bg6.png); */
+  /* opacity: 0.9; */
+  position: relative;
+  top: 43px;
+  /* left: 0.5rem; */
+  margin-top: -28px !important ;
 }

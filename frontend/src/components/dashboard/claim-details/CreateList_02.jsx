@@ -193,7 +193,7 @@ const CreateList_02 = ({
                         Reference#
                       </label>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -223,7 +223,7 @@ const CreateList_02 = ({
                         Policy#
                       </label>
                     </div>
-                    <div className="col-lg-9">
+                    <div className="col-lg-9 text-end">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -355,7 +355,9 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.claimDetails?.InspectionType ? claim?.claimDetails?.InspectionType : "Final"}
+                        {claim?.claimDetails?.InspectionType
+                          ? claim?.claimDetails?.InspectionType
+                          : "Final"}
                       </label>
                     </div>
                   </div>

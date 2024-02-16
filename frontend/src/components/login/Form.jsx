@@ -1,39 +1,45 @@
-
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import Captcha from "../common/Captcha";
 
 const Form = () => {
-  const [username,setUsername] = useState("");
-  const [password,setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [captchaVerfied, setCaptchaVerified] = useState(false);
+  const [change, setChange] = useState(false);
+
 
   const router = useRouter();
 
-  const submitHandler = (event)=>{
-
+  const submitHandler = (event) => {
     event.preventDefault();
-    
+
     const payload = {
-      username : username,
-      password : password
+      username: username,
+      password: password,
     };
 
     toast.loading("Logging!!!");
-    axios.post("/api/login",payload)
-    .then((res)=>{
-      toast.dismiss();
-      console.log(res.data.userData.result);
-     
-      localStorage.setItem("userInfo",JSON.stringify(res.data.userData.result));
-      alert("Successfully logged in!");
-      router.push("/my-dashboard");
-    })
-    .catch((err)=>{
-      toast.dismiss();
-      alert("Try Again!!");
-    })
-  }
+    axios
+      .post("/api/login", payload)
+      .then((res) => {
+        toast.dismiss();
+        console.log(res.data.userData.result);
+
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify(res.data.userData.result)
+        );
+        alert("Successfully logged in!");
+        router.push("/my-dashboard");
+      })
+      .catch((err) => {
+        toast.dismiss();
+        alert("Try Again!!");
+      });
+  };
 
   return (
     <form action="#">
@@ -54,7 +60,7 @@ const Form = () => {
           className="form-control"
           required
           placeholder="User Name Or Email"
-          onChange={(e)=>setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <div className="input-group-prepend">
           <div className="input-group-text">
@@ -70,7 +76,7 @@ const Form = () => {
           className="form-control"
           required
           placeholder="Password"
-          onChange={(e)=>setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <div className="input-group-prepend">
           <div className="input-group-text">
@@ -79,6 +85,10 @@ const Form = () => {
         </div>
       </div>
       {/* End .input-group */}
+
+      <div className="">
+        <Captcha change={change} setChange={setChange} />
+      </div>
 
       <div className="form-group form-check custom-checkbox mb-3">
         <input
@@ -100,7 +110,11 @@ const Form = () => {
       </div>
       {/* End .form-group */}
 
-      <button type="submit" className="btn btn-log w-100 btn-thm" onClick={(e)=>submitHandler(e)}>
+      <button
+        type="submit"
+        className="btn btn-log w-100 btn-thm"
+        onClick={(e) => submitHandler(e)}
+      >
         Log In
       </button>
       {/* login button */}

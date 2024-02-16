@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Form from "./Form";
 import Image from "next/image";
+import { Dropdown } from "react-bootstrap";
 
 const ErrorPageContent = () => {
   return (
@@ -8,6 +9,24 @@ const ErrorPageContent = () => {
       {/* Header Content */}
       <div>
         <h3>MUTNEJA Tech</h3>
+        <span>
+          {" "}
+          <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+            <Dropdown>
+              <Dropdown.Toggle variant="primary" id="dropdown-extract">
+                Extract
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => handleExtract("Word")}>
+                  Extract to Word
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleExtract("PDF")}>
+                  Extract to PDF
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </span>
         <p>Insurance Surveyors and Loss Assessors Pvt. Ltd.</p>
         <p>
           Mobile : 9910995122(DLH

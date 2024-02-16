@@ -185,7 +185,7 @@ function SmartTable(props) {
                       <div className="row">
                         <div className="col-lg-10"></div>
                         <div
-                          className="col-lg-1 btn-thm w-10 flaticon-plus"
+                          className="col-lg-1 btn-thm flaticon-plus"
                           title="Add Document"
                           style={{ marginLeft: "" }}
                           // onClick={props.downloadAllFiles}

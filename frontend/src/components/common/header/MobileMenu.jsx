@@ -1,5 +1,6 @@
 import Link from "next/link";
 import MobileMenuContent from "./MobileMenuContent";
+import SidebarMenu from "./dashboard/SidebarMenu";
 import Image from "next/image";
 
 const MobileMenu = () => {
@@ -13,7 +14,7 @@ const MobileMenu = () => {
               width={40}
               height={45}
               className="nav_logo_img contain mt20"
-              src="/assets/images/header-logo2.png"
+              src="/assets/images/Claim_Logo.jpg"
               alt="header-logo2.png"
             />
             <span className="mt-0">Claim Management</span>
@@ -49,7 +50,8 @@ const MobileMenu = () => {
         aria-labelledby="offcanvasMenuLabel"
         data-bs-scroll="true"
       >
-        <MobileMenuContent />
+        {/* <MobileMenuContent /> */}
+        <SidebarMenu />
       </div>
     </div>
   );

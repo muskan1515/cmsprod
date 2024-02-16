@@ -1064,31 +1064,43 @@ export default function Exemple_01({
               />
             ), // Add default values or leave empty as needed
             item_name: (
-              <select
-                // style={{ marginTop: "-5px" }}
-                className="selectpicker form-select p-1"
-                style={{ fontSize: "smaller" }}
-                data-live-search="true"
-                data-width="100%"
+              // <select
+              //   className="selectpicker form-select p-1"
+              //   style={{ fontSize: "smaller" }}
+              //   data-live-search="true"
+              //   data-width="100%"
+              //   value={row.description}
+              //   disabled={!edit}
+              //   onChange={(e) =>
+              //     handleChange(index, e.target.value, "description")
+              //   }
+              // >
+              //   <option data-tokens="Status1" value={"Regular"}>
+              //     Regular
+              //   </option>
+              //   <option data-tokens="Status2" value={"Add on Policy"}>
+              //     Add on Policy
+              //   </option>
+              //   <option
+              //     data-tokens="Status3"
+              //     value={"Add on Policy(Not Effective)"}
+              //   >
+              //     Add on Policy(Not Effective)
+              //   </option>
+              // </select>
+              <input
+                className="form-control form-control-table"
+                type="number"
                 value={row.description}
                 disabled={!edit}
                 onChange={(e) =>
                   handleChange(index, e.target.value, "description")
                 }
-              >
-                <option data-tokens="Status1" value={"Regular"}>
-                  Regular
-                </option>
-                <option data-tokens="Status2" value={"Add on Policy"}>
-                  Add on Policy
-                </option>
-                <option
-                  data-tokens="Status3"
-                  value={"Add on Policy(Not Effective)"}
-                >
-                  Add on Policy(Not Effective)
-                </option>
-              </select>
+                required
+                // disabled={!edit}
+                id="terms"
+                style={{ border: "1px solid black" }}
+              />
             ),
             description: (
               <select

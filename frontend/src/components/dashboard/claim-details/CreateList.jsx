@@ -47,7 +47,6 @@ const CreateList = ({
     return formattedDate;
   };
 
-
   console.log(policyStartDate);
 
   const statusOptions = [
@@ -101,7 +100,7 @@ const CreateList = ({
     },
   ];
 
-  const getNextYear=()=>{
+  const getNextYear = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
       const oneYearLater = new Date(policyStartDate);
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
@@ -109,10 +108,10 @@ const CreateList = ({
       oneYearLater.setDate(oneYearLater.getDate() - 1);
 
       const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-      return (formattedOneYearLater);
+      return formattedOneYearLater;
     }
-    return '';
-  }
+    return "";
+  };
 
   const checkStatus = (val) => {
     let status = "";
@@ -165,14 +164,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Name <span class="req-btn">*</span>
+                Name
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <input
                 type="text"
                 className="form-control"
@@ -211,11 +210,11 @@ const CreateList = ({
                   // paddingTop: "15px",
                   color: "#1560bd",
                   fontWeight: "",
-                  fontSize:"14px"
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Phone <span class="req-btn">*</span>
+                Phone
               </label>
             </div>
             <div className="col-lg-7">
@@ -251,14 +250,55 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontWeight: "",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Email <span class="req-btn">*</span>
+                Phone - 2
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={InsuredMobileNo1}
+                onChange={(e) => setInsuredMobileNo1(e.target.value)}
+                disabled={!edit}
+                // placeholder="Enter Registration No."
+              />
+
+              {/* <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={InsuredMobileNo2}
+                onChange={(e) => setInsuredMobileNo2(e.target.value)}
+                disabled={!edit}
+                // placeholder="Enter Registration No."
+              /> */}
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontSize: "14px",
+                  // marginTop: "-13px",
+                }}
+              >
+                Email
+              </label>
+            </div>
+            <div className="col-lg-7">
               <input
                 type="text"
                 className="form-control"
@@ -313,14 +353,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Policy Issuing Office <span class="req-btn">*</span>
+                Policy Issuing Office
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <input
                 type="text"
                 className="form-control"
@@ -342,7 +382,7 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
@@ -372,14 +412,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Claim Servicing Office <span class="req-btn">*</span>
+                Claim Servicing Office
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <input
                 type="text"
                 className="form-control"
@@ -401,15 +441,16 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Survey Type <span class="req-btn">*</span>
+                Survey Type
               </label>
             </div>
             <div className="col-lg-7">
               <select
+                className="form-control p-1"
                 disabled={!edit}
                 value={subType}
                 onChange={(e) => setSubType(e.target.value)}
@@ -421,7 +462,7 @@ const CreateList = ({
                       style={{
                         // paddingTop: "15px",
                         color: "#1560bd",
-                        fontSize:"14px",
+                        fontSize: "14px",
                         // marginTop: "-13px",
                       }}
                       value={sub.value}
@@ -444,14 +485,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Policy Start Date <span class="req-btn">*</span>
+                Policy Start Date
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               {/*<input
             // type="date"
               className="form-control"
@@ -463,7 +504,9 @@ const CreateList = ({
 
               <MyDatePicker
                 selectedDate={
-                  policyStartDate && !isNaN(new Date(policyStartDate)) ?  new Date(policyStartDate)  : ""
+                  policyStartDate && !isNaN(new Date(policyStartDate))
+                    ? new Date(policyStartDate)
+                    : ""
                 }
                 setSelectedDate={setPolicyStartDate}
               />
@@ -480,14 +523,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Policy End Date <span class="req-btn">*</span>
+                Policy End Date
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               {/*<input
           // type="date"
             className="form-control"
@@ -497,13 +540,10 @@ const CreateList = ({
             // placeholder="Enter Registration No."
           />*/}
               <input
-              type="text"
+                className="form-control"
+                type="text"
                 disable={true}
-                value={
-                  getNextYear()
-                }
-                
-              
+                value={getNextYear()}
               />
             </div>
           </div>
@@ -518,14 +558,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Insurance Company Name & Address <span class="req-btn">*</span>
+                Insurance Company Name & Address
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <input
                 className="form-control"
                 id="propertyTitle"
@@ -546,14 +586,14 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Insured Added By <span class="req-btn">*</span>
+                Insured Added By
               </label>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <input
                 className="form-control"
                 id="propertyTitle"
@@ -573,15 +613,16 @@ const CreateList = ({
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Inspection Type <span class="req-btn">*</span>
+                Inspection Type
               </label>
             </div>
             <div className="col-lg-7">
               <select
+                className="form-control p-1"
                 disabled={!edit}
                 value={!requestType ? "" : requestType}
                 onChange={(e) => setRequestType(e.target.value)}
@@ -593,7 +634,7 @@ const CreateList = ({
                       style={{
                         // paddingTop: "15px",
                         color: "#1560bd",
-                        fontSize:"14px",
+                        fontSize: "14px",
                         // marginTop: "-13px",
                       }}
                       value={sub.value}
@@ -609,27 +650,27 @@ const CreateList = ({
 
         <div className="col-lg-6">
           <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
+            <div className="col-lg-4 my_profile_setting_input form-group">
               <label
                 htmlFor=""
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
                   color: "#1560bd",
-                  fontSize:"14px",
+                  fontSize: "14px",
                   // marginTop: "-13px",
                 }}
               >
-                Endorsement Doc <span class="req-btn">*</span>
+                Endorsement Doc
               </label>
             </div>
             <div className="col-lg-7">
-              {/*<input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />*/}
+              <input
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
             </div>
           </div>
         </div>
@@ -649,7 +690,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Name <span class="req-btn">*</span>
+                  Name 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -677,7 +718,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Phone <span class="req-btn">*</span>
+                  Phone 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -704,7 +745,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Email <span class="req-btn">*</span>
+                  Email 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -732,7 +773,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Registration No. <span class="req-btn">*</span>
+                  Registration No. 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -786,7 +827,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Status <span class="req-btn">*</span>
+                  Status 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -813,7 +854,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Sub Status <span class="req-btn">*</span>
+                  Sub Status 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -840,7 +881,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Intimation Date <span class="req-btn">*</span>
+                  Intimation Date 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -862,7 +903,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Inspection Type <span class="req-btn">*</span>
+                  Inspection Type 
                 </label>
               </div>
               <div className="col-lg-7">
@@ -890,7 +931,7 @@ const CreateList = ({
                     // marginTop: "-13px",
                   }}
                 >
-                  Endorsement Doc <span class="req-btn">*</span>
+                  Endorsement Doc 
                 </label>
               </div>
               <div className="col-lg-7">
