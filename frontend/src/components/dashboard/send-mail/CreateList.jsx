@@ -60,50 +60,51 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   };
 
   const handleSubmit = () => {
-    if (!(policyNos && policyNo) || !date) {
-      alert("All Marked field should be filled!!");
-    } else if (!(email || emailAddress)) {
-      alert("Email is required field !!");
-    } else {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      // /console.log(selectedItems);
-      const payload = {
-        toMail: emailAddress ? emailAddress : email,
-        PolicyNo: policyNos ? policyNos : policyNo,
-        Date: date ? date : new Date(),
-        vehicleNo: vehicleNo,
-        Insured: Insured,
-        content: createStringFromSelectedItems(selectedItems),
-        content2: createStringFromSelectedItems2(selectedItems),
-        leadId: leadId,
-        subject: subject,
-        body: body,
-        fromEmail: fromEmail,
-      };
+    // if (!(policyNos && policyNo) || !date) {
+    //   alert("All Marked field should be filled!!");
+    // } else
+    // if (!(email || emailAddress)) {
+    //   alert("Email is required field !!");
+    // } else {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // /console.log(selectedItems);
+    const payload = {
+      toMail: emailAddress ? emailAddress : email,
+      PolicyNo: policyNos ? policyNos : policyNo,
+      Date: date ? date : new Date(),
+      vehicleNo: vehicleNo,
+      Insured: Insured,
+      content: createStringFromSelectedItems(selectedItems),
+      content2: createStringFromSelectedItems2(selectedItems),
+      leadId: leadId,
+      subject: subject,
+      body: body,
+      fromEmail: fromEmail,
+    };
 
-      if (!payload.toMail || String(payload.toMail) === "None") {
-        alert("Email is required field !!");
-      } else if (!payload.PolicyNo) {
-        alert("PolicyNo is required field !!");
-      } else if (!payload.content || !payload.content2) {
-        alert("Please select the documents to be passed over email!");
-      } else {
-        axios
-          .post("/api/sendCustomEmail", payload, {
-            headers: {
-              Authorization: `Bearer ${userInfo[0].Token}`,
-              "Content-Type": "application/json",
-            },
-          })
-          .then((res) => {
-            alert("Successfully sent!!");
-            router.push(`/claim-details?leadId=${leadId}`);
-          })
-          .catch((Err) => {
-            alert("Try again!");
-          });
-      }
+    if (!payload.toMail || String(payload.toMail) === "None") {
+      alert("Email is required field !!");
+    } else if (!payload.PolicyNo) {
+      alert("PolicyNo is required field !!");
+    } else if (!payload.content || !payload.content2) {
+      alert("Please select the documents to be passed over email!");
+    } else {
+      axios
+        .post("/api/sendCustomEmail", payload, {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          alert("Successfully sent!!");
+          router.push(`/claim-details?leadId=${leadId}`);
+        })
+        .catch((Err) => {
+          alert("Try again!");
+        });
     }
+    // }
   };
 
   const [selectedOption, setSelectedOption] = useState("showDocument");

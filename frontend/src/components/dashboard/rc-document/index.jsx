@@ -7,7 +7,7 @@ import RCData from "./CreatListing";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Index = () => {
+const Index = ({leadId}) => {
   //   const [allInfo, setAllInfo] = useState(null);
 
   //   useEffect(() => {
@@ -48,7 +48,7 @@ const Index = () => {
           <div className="row">
             <div className="col-lg-12">
               {/* <ErrorPageContent allInfo={allInfo} /> */}
-              <RCData />
+              <RCData leadId = {leadId} />
             </div>
           </div>
         </div>

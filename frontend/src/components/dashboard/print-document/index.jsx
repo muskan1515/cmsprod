@@ -7,7 +7,7 @@ import CreateList from "./CreateList";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -130,4 +130,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

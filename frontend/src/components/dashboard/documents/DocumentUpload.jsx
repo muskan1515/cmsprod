@@ -575,7 +575,7 @@ export default function DocumentUpload({
               if (file.docName === row.doc_name) {
                 const fileName = String(file.data[0].name); // Convert to string
                 return (
-                  <div
+                  <div  
                     style={{ display: "flex", flexDirection: "column" }}
                     key={idx}
                   >
@@ -584,7 +584,7 @@ export default function DocumentUpload({
                     {/* Check if it's an image or video based on file extension */}
                     {fileName.endsWith('.jpg') || fileName.endsWith('.png') ? (
                       <img
-                        src={fileName}  // Use the 'name' field for images
+                        src={`https://mydocsforcms.s3.ap-south-1.amazonaws.com/${fileName}`}  // Use the 'name' field for images
                         alt="Image"
                         width={90}
                         height={90}

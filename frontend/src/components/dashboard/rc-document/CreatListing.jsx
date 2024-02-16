@@ -1,47 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { saveAs } from "file-saver";
 import { Document, Packer, Paragraph } from "docx";
 import {
-  //   PDFDownloadLink,
-  //   BlobProvider,
-  //   PDFViewer,
+  PDFViewer,
   Page,
   Text,
   View,
   Document as PDFDocument,
+  StyleSheet,
 } from "@react-pdf/renderer";
 
-const RCData = () => {
-  const rcDetails = {
-    "Chassis No.": "MA3FHEB1S00C55208",
-    "Engine No.": "D13A2989355",
-    "Maker Name": "MARUTI SUZUKI INDIA LTD",
-    "Model Name": "MARUTI SWIFT VDI",
-    "Registration Date": "04-Apr-17",
-    "Tax Valid UpTo": "ΝΑ",
-    "Vehicle Class": "LMV",
-    "Vehicle Description": "Motor Car ( LMV )",
-    "Fuel Type": "DIESEL",
-    "Emission Norm": "BHARAT STAGE IV",
-    Color: "WHITE",
-    "Seat Capacity": "5",
-    "Standing Capacity": "0",
-    Financier: "INDIAN BANK",
-    "Insurance Company": "The New India Assurance Company Limited",
-    "Insurance Policy No.": "9.8E+19",
-    "Insurance Valid UpTo": "30-Mar-24",
-    "Fitness Valid UpTo": "03-Apr-32",
-    "PUCC No.": "HR05504260000707",
-    "PUCC Valid Upto": "26-Dec-23",
-    "Registering Authority": "SRI GANGANAGAR DTO, Rajasthan",
-  };
+import axios from "axios";
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: "row",
+    marginBottom: 5,
+  },
+  boldText: {
+    flex: 1,
+    fontWeight: "bold",
+  },
+  normalText: {
+    flex: 1,
+  },
+});
+
+const RCData = ({ leadId }) => {
+  const [vehicleDetails, setvehicleDetails] = useState({});
+  console.log("LeadId", leadId);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios
+      .get("/api/getSpecificClaim", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: leadId,
+        },
+      })
+      .then((res) => {
+        // console.log('D+++++',res.data.data.vehicleDetails);
+        setvehicleDetails(res.data.data.vehicleDetails);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, [leadId]);
+
+  // console.log("LPGGG", vehicleDetails);
+
+
+  // let rcDetails = {
+  //   "Chassis No.": "MA3FHEB1S00C55208",
+  //   "Engine No.": "D13A2989355",
+  //   "Maker Name": "MARUTI SUZUKI INDIA LTD",
+  //   "Model Name": "MARUTI SWIFT VDI",
+  //   "Registration Date": "04-Apr-17",
+  //   "Tax Valid UpTo": "ΝΑ",
+  //   "Vehicle Class": "LMV",
+  //   "Vehicle Description": "Motor Car ( LMV )",
+  //   "Fuel Type": "DIESEL",
+  //   "Emission Norm": "BHARAT STAGE IV",
+  //   Color: "WHITE",
+  //   "Seat Capacity": "5",
+  //   "Standing Capacity": "0",
+  //   Financier: "INDIAN BANK",
+  //   "Insurance Company": "The New India Assurance Company Limited",
+  //   "Insurance Policy No.": "9.8E+19",
+  //   "Insurance Valid UpTo": "30-Mar-24",
+  //   "Fitness Valid UpTo": "03-Apr-32",
+  //   "PUCC No.": "HR05504260000707",
+  //   "PUCC Valid Upto": "26-Dec-23",
+  //   "Registering Authority": "SRI GANGANAGAR DTO, Rajasthan",
+  // };
 
   const handleExtract = async (format) => {
     if (format === "Word") {
       // Generate Word document
       const doc = new Document();
-      Object.entries(rcDetails).forEach(([key, value]) => {
+      Object.entries(vehicleDetails).forEach(([key, value]) => {
         doc.addParagraph(new Paragraph(`${key}: ${value}`));
       });
       Packer.toBlob(doc).then((blob) => {
@@ -54,14 +99,11 @@ const RCData = () => {
         <PDFDocument>
           <Page size="A4">
             <View style={{ padding: 20 }}>
-              <Text style={{ fontSize: 16, marginBottom: 10 }}>RC Details</Text>
-              {Object.entries(rcDetails).map(([key, value]) => (
-                <View
-                  key={key}
-                  style={{ flexDirection: "row", marginBottom: 5 }}
-                >
-                  <Text style={{ flex: 1, fontWeight: "bold" }}>{key}:</Text>
-                  <Text style={{ flex: 1 }}>{value}</Text>
+              <Text style={styles.title}>RC Details</Text>
+              {Object.entries(vehicleDetails).map(([key, value]) => (
+                <View key={key} style={styles.row}>
+                  <Text style={styles.boldText}>{key}:</Text>
+                  <Text style={styles.normalText}>{value}</Text>
                 </View>
               ))}
             </View>
@@ -70,11 +112,15 @@ const RCData = () => {
       );
 
       // Convert PDF to Blob and download
-      const blob = await new Promise((resolve) => {
-        BlobProvider(pdfDoc, resolve);
-      });
+      const blob = await pdfToBlob(pdfDoc);
       saveAs(blob, "RC_Details.pdf");
     }
+  };
+
+  const pdfToBlob = (pdfDoc) => {
+    return new Promise((resolve) => {
+      const blob = PDFViewer.renderToBlob(pdfDoc).then(resolve);
+    });
   };
 
   return (
@@ -127,7 +173,7 @@ const RCData = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(rcDetails).map(([key, value]) => (
+            {vehicleDetails && Object.entries(vehicleDetails).map(([key, value]) => (
               <tr key={key} style={{ borderBottom: "1px solid #ddd" }}>
                 <td
                   style={{ color: "black", textAlign: "left", padding: "10px" }}
@@ -137,7 +183,7 @@ const RCData = () => {
                 <td
                   style={{ color: "blue", textAlign: "right", padding: "10px" }}
                 >
-                  {value}
+                  {value !== undefined && value !== null && value !== "" && value !== 'undefined' ? value : "NA"}
                 </td>
               </tr>
             ))}

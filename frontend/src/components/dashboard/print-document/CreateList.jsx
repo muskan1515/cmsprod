@@ -1,10 +1,29 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
-// import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 
 const CreateList = () => {
+  
+  const router = useRouter();
+  const { leadId } = router.query;
+
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    if (selectedValue === "rc") {
+      router.push(`/rc-document/${leadId}`);
+    }
+    if (selectedValue === "finalreport") {
+      router.push(`/report-document/${leadId}`);
+    }
+    if (selectedValue === "dl") {
+      router.push(`/dl-document/${leadId}`);
+    }
+
+
+  };
+
+
+
   return (
     <>
       <div className="row">
@@ -14,13 +33,16 @@ const CreateList = () => {
           </label>
         </div>
         <div className="col-lg-3">
-          <select id="documentType" className="form-select">
-            <option value="showDocument">
-              <Link href="">Final Report</Link>
-            </option>
-            <option value="showInput">RC</option>
-            <option value="showInput_01">DL</option>
-            <option value="showInput_02">Bill Creation</option>
+          <select
+            id="documentType"
+            className="form-select"
+            onChange={handleSelectChange}
+          >
+            <option value="-">Select Documents</option>
+            <option value="finalreport">Final Report</option>
+            <option value="rc">RC</option>
+            <option value="dl">DL</option>
+            <option value="billcreation">Bill Creation</option>
           </select>
         </div>
 

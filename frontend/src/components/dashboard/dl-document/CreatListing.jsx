@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { saveAs } from "file-saver";
 import { Document, Packer, Paragraph } from "docx";
@@ -11,8 +11,43 @@ import {
   View,
   Document as PDFDocument,
 } from "@react-pdf/renderer";
+import axios from "axios";
 
-const RCData = () => {
+const RCData = ({leadId}) => {
+  const [dlDetails, setdlDetails] = useState({});
+  console.log("LeadId", leadId);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios
+      .get("/api/getSpecificClaim", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: leadId,
+        },
+      })
+      .then((res) => {
+        console.log('D+++++',res.data.data);
+        setdlDetails(res.data.data.dlDetails);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, [leadId]);
+
+  console.log("LPGGG", dlDetails);
+
+
+
+
+
+
+
+
+
+
   const rcDetails = {
     "Chassis No.": "MA3FHEB1S00C55208",
     "Engine No.": "D13A2989355",

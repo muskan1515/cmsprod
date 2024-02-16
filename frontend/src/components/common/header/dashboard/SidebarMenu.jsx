@@ -171,12 +171,12 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive("/bill-creation", route.pathname)
+                      isSinglePageActive(`/print-document/${leadId}`, route.pathname)
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href="/print-document" title="Print Document">
+                    <Link href={`/print-document/${leadId}`}  title="Print Document">
                       <i className="flaticon-pdf"></i>
                       <span> </span>
                     </Link>
