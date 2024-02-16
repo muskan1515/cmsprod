@@ -23,13 +23,14 @@ const Form_01 = ({
   setLicenseNumber,
   setLicenseType,
   LicenseType,
-  IssuingAuthority,setIssuingAuthority,
+  IssuingAuthority,
+  setIssuingAuthority,
   onSaveHandler,
 }) => {
   const router = useRouter();
   const [editCase_02, setEditCase_02] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
-  const [details,setDetails]=useState([])
+  const [details, setDetails] = useState([]);
 
   const handleFetchData = async (req, res) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -38,39 +39,33 @@ const Form_01 = ({
     const dl_number = claim?.driverDetails?.LicenseNumber;
     if (!userInfo) {
       router.push("/login");
-    }
-    else if (details ){
-        alert("Already Fetched!!")
-    }
-    else{
-    try {
-      const response = axios
-        .get("/api/getOnlineDriverData", {
-          headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
-            "Content-Type": "application/json",
-          },
-          params:{
-            dl_number:dl_number
-          }
-        })
-        .then((res) => {
-         
+    } else if (details) {
+      alert("Already Fetched!!");
+    } else {
+      try {
+        const response = axios
+          .get("/api/getOnlineDriverData", {
+            headers: {
+              Authorization: `Bearer ${userInfo[0].Token}`,
+              "Content-Type": "application/json",
+            },
+            params: {
+              dl_number: dl_number,
+            },
+          })
+          .then((res) => {
+            setDetails(res.data);
+            // localStorage.setItem("details",JSON.stringify(res.data.data))
 
-          setDetails(res.data);
-          // localStorage.setItem("details",JSON.stringify(res.data.data))
-          
-          // console.log("datata", res.data.data);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-
-     
-    } catch (error) {
-      console.log("Error from Fetch Details-> ", error);
+            // console.log("datata", res.data.data);
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+      } catch (error) {
+        console.log("Error from Fetch Details-> ", error);
+      }
     }
-  }
   };
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
@@ -89,9 +84,7 @@ const Form_01 = ({
   //   setEdit(true);
   // };
 
-  useEffect(() => {
-    
-  }, [details]);
+  useEffect(() => {}, [details]);
 
   return (
     <>
@@ -143,9 +136,13 @@ const Form_01 = ({
                     )}
                   </div>
                   <div className="col-lg-2 text-start">
-                    <button className="btn-thm" style={{}} onClick={handleFetchData}>
+                    <button
+                      className="btn-thm"
+                      style={{}}
+                      onClick={handleFetchData}
+                    >
                       Fetch Details
-                    </button> 
+                    </button>
                   </div>
                 </div>
                 {editCase_02 ? (
@@ -229,9 +226,7 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              IssuingAuthority 
-                            }
+                            value={IssuingAuthority}
                             onChange={(e) =>
                               setIssuingAuthority(e.target.value)
                             }
@@ -263,9 +258,7 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              LicenseNumber
-                            }
+                            value={LicenseNumber}
                             onChange={(e) => setLicenseNumber(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -295,9 +288,7 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              LicenseType
-                            }
+                            value={LicenseType}
                             onChange={(e) => setLicenseType(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -683,13 +674,17 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={Verification ? Verification : claim?.driverDetails?.TypeOfVerification}
+                            value={
+                              Verification
+                                ? Verification
+                                : claim?.driverDetails?.TypeOfVerification
+                            }
                             onChange={(e) => setVerification(e.target.value)}
 
                             // placeholder="Enter Registration No.
                           >
-                          <option value={"Verified By Online"} >Verified By Online</option>
-                          <option value={"Verified Manually"} >Verified Manually</option>
+                            <option value={0}>Verified By Online</option>
+                            <option value={1}>Verified Manually</option>
                           </select>
                         </div>
                       </div>
