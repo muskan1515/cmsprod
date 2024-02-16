@@ -687,20 +687,17 @@ const PolicyDetails = ({
                         Insurance From
                       </label>
                     </div>
+                    
                     <div className="col-lg-5">
-                      {/* <input 
-                      type={isEditMode ? "date" : "text"} 
-                      readOnly={!isEditMode} 
-                      value={isEditMode ? PolicyPeriodStart : formatDate(PolicyPeriodStart)} 
-                      onChange={(e)=>setPolicyPeriodStart(e.target.value)}/>
-                      {/* <span className="flaticon-calendar text-dark"></span> */}
-                      {/* <input
-                        type="date"
-                        className="form-control"
-                        id="propertyTitle"
-                      /> */}
-
-                      
+                      {!isEditMode ? (
+                        <input
+                          readOnly={!isEditMode}
+                          type={"text"}
+                          value={PolicyPeriodStart ? new Date(PolicyPeriodStart) : ""}
+                          className="form-control"
+                          id="propertyTitle"
+                        />
+                      ) : (
                         <MyDatePicker
                           disable={!isEditMode}
                           selectedDate={
@@ -708,7 +705,7 @@ const PolicyDetails = ({
                           }
                           setSelectedDate={setPolicyPeriodStart}
                         />
-                      
+                      )}
                     </div>
                   </div>
                 </div>
@@ -730,7 +727,7 @@ const PolicyDetails = ({
                         To
                       </label>
                     </div>
-                    <div className="col-lg-10">
+                    {/* <div className="col-lg-10">
                       <MyDatePicker
                         className="form-control"
                         disable={!isEditMode}
@@ -744,7 +741,28 @@ const PolicyDetails = ({
                       type={"text"} 
                       readOnly={!isEditMode}
                       value={ formatDateNextyear(PolicyPeriodStart)} 
-                      />*/}
+                      />
+                    </div> */}
+                    <div className="col-lg-8">
+                      {!isEditMode ? (
+                        <input
+                          readOnly={!isEditMode}
+                          type={"text"}
+                          value={PolicyPeriodStart ? getNextYear()
+                            : ""}
+                          className="form-control"
+                          id="propertyTitle"
+                        />
+                      ) : (
+                        <MyDatePicker
+                          disable={!isEditMode}
+                          selectedDate={
+                            PolicyPeriodStart ? getNextYear()
+                            : ""
+                          }
+                          setSelectedDate={setPolicyPeriodEnd}
+                        />
+                      )}
                     </div>
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
@@ -1189,6 +1207,7 @@ const PolicyDetails = ({
                             // placeholder="Enter Registration No."
                           />*/}
                         </div>
+
                       </div>
                     </div>
                     <div className="col-lg-9">
