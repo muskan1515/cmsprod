@@ -96,8 +96,9 @@ const ErrorPageContent = () => {
             <th
               style={{
                 border: "1px solid black",
+                textAlign: "center",
                 // paddingRight: "10px",
-                paddingLeft: "20px",
+                // paddingLeft: "20px",
               }}
             >
               S No.
@@ -147,11 +148,11 @@ const ErrorPageContent = () => {
                 <span>Professional Fee : Estimate Amount F 144,473.00</span>
                 <br />
                 <span>
-                  Photos/CD Expenses : 20 Photographs , Charged for 20 @ Rs.
-                  10.00
+                  Photos/CD Expenses : <br /> 20 Photographs , Charged for 20 @
+                  Rs. 10.00
                 </span>
                 <br />
-                <span>Conveyance Expenses : Dushyant Kumar S/o Bhani Ram</span>
+                <span>Conveyance Expenses : </span>
               </div>
             </td>
             <td
@@ -182,6 +183,139 @@ const ErrorPageContent = () => {
               }}
             >
               876.00
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            ></td>
+            <td
+              colSpan={2}
+              style={{
+                border: "1px solid black",
+                textAlign: "end",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              {" "}
+              <span>Sub Total : F</span>
+              <br />
+              <span>C GST @ 9.00 %</span>
+              <br />
+              <span>S GST @ 9.00 % </span>
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              <span>3500.00</span> <br /> <hr />
+              <span>315.00</span>
+              <br />
+              <span>315.00</span>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            ></td>
+            <td
+              colSpan={2}
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              <div className="d-flex justify-content-between">
+                <span>ADVANCE RECEIPT</span>
+                <span>Grand Total : </span>
+              </div>
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              <span>4130.00</span>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            ></td>
+            <td
+              colSpan={2}
+              style={{
+                border: "1px solid black",
+                textAlign: "end",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              <span>Round off : F</span>
+            </td>
+            <td
+              style={{
+                border: "1px solid black",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              <span>4130.00</span>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={4}
+              style={{
+                border: "1px solid black",
+                textAlign: "center",
+                // paddingRight: "30px",
+                // paddingLeft: "20px",
+              }}
+            >
+              <span>In words : Rs. Four Thousand One Hundred Thirty Only</span>
+            </td>
+          </tr>
+          <tr style={{ border: "1px solid black" }}>
+            <td></td>
+            <td>
+              <span>GSTIN: 08AAJCM8228Q1ZM State : (08)</span>
+              <br />
+              <span>PAN. : AAJCM8228Q</span>
+              <br />
+              <span>Bank Name : INDIAN BANK</span>
+              <br />
+              <span>A/c No. : CA 6360774855</span>
+              <br />
+              <span>MICR No : 335019002</span>
+              <br />
+              <span>IFS Code : IDIB000G067</span>
+            </td>
+          </tr>
+          <tr style={{ border: "1px solid black" }}>
+            <td></td>
+            <td colSpan={2} style={{ textAlign: "end" }}>
+              <span style={{ textAlign: "center" }}>For Mutneja Tech </span>{" "}
+              <br /> Insurance Surveyors & Loss assessors Pvt. Ltd.
             </td>
           </tr>
         </table>
