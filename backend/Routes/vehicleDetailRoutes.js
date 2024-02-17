@@ -7,6 +7,4 @@ const authenticateUser = require('../Middleware/authenticateUser');
 
 router.get("/getOnlineVehicleData", authenticateUser,vehicleDetailController.getOnlineVehicleData);
 
-
-
 module.exports = router;

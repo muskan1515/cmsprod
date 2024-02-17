@@ -170,7 +170,8 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {VehicleRegisteredOwner}
+                        {claim?.vehicleDetails?.RegisteredOwner
+                        }
                       </label>
                     </div>
                   </div>

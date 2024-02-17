@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Form_driver from "./Form_driver";
 import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
+import axios from "axios";
 // import toast from "react-hot-toast";
 
 const Form_01 = ({
@@ -23,68 +24,100 @@ const Form_01 = ({
   setLicenseNumber,
   setLicenseType,
   LicenseType,
-  IssuingAuthority,
-  setIssuingAuthority,
+  IssuingAuthority,setIssuingAuthority,
+
   onSaveHandler,
+
+
+  FatherName,
+  setFatherName,
+  Gender,
+  setGender,
+  BloodGroup,
+  setBloodGroup,
+  setAddress,
+  Address,
+  setRtoName,
+  RtoName,
+  Mobile,
+  setMobile,
+  ValidUpto,
+  setValidUpto,
+  Vov,
+  setVov,
+  setPht,
+  Pht,
+  Photo,
+  setPhoto,
+  DateOfBirth,
+  setDateOfBirth,
+  setDateOfIssue,
+  DateOfIssue,
+  setIsDriverDetailsFetched
 }) => {
   const router = useRouter();
   const [editCase_02, setEditCase_02] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
-  const [details, setDetails] = useState([]);
+  const [details,setDetails]=useState([])
+  const [change,setChange]=useState(false);
 
-  const handleFetchData = async (req, res) => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-    const details = JSON.parse(localStorage.getItem("fetchVehicleDetails"));
-    const dl_number = claim?.driverDetails?.LicenseNumber;
-    if (!userInfo) {
-      router.push("/login");
-    } else if (details) {
-      alert("Already Fetched!!");
-    } else {
-      try {
-        const response = axios
-          .get("/api/getOnlineDriverData", {
-            headers: {
-              Authorization: `Bearer ${userInfo[0].Token}`,
-              "Content-Type": "application/json",
-            },
-            params: {
-              dl_number: dl_number,
-            },
-          })
-          .then((res) => {
-            setDetails(res.data);
-            // localStorage.setItem("details",JSON.stringify(res.data.data))
-
-            // console.log("datata", res.data.data);
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      } catch (error) {
-        console.log("Error from Fetch Details-> ", error);
-      }
+  const handleFetchData =  () => {
+    if(!claim?.driverDetails?.LicenseNumber || claim?.driverDetails?.LicenseNumber === "null"){
+      alert("Please fill License Number first!");
     }
-  };
-  //   const togglePasswordVisibility = () => {
-  //     setPasswordVisible(!passwordVisible);
-  //   };
 
-  //   const togglePasswordVisibility_01 = () => {
-  //     setPasswordVisible_01(!passwordVisible_01);
-  //   };
+    else if(claim?.driverOnlineDetails){
+      const details = claim?.driverOnlineDetails;
+      setFatherName(details?.FatherName );
+      setBloodGroup(details?.BloodGroup);
+      setAddress(details?.Address);
+      setRtoName(details?.RtoName);
+      setLicenseNumber(details?.LicenseNumber);
+      setGender(details?.Gender);
+      setMobile(details?.Mobile);
+      setDriverName(details?.DriverName);
+      setDateOfBirth(details?.DateOfBirth);
+      setDateOfIssue(details?.DateOfIssue);
+      setValidUpto(details?.VaildUpto);
+      setVov(details?.Vov);
+      setPht(details?.Pht);
+      setPhoto(details?.Photo);
+
+      alert("Successfully fetched!!");
+    }
+    else{
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+    const dl_number = claim?.driverDetails?.LicenseNumber;
+    
+      axios
+        .get("/api/getOnlineDriverData", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params:{
+            dl_number:dl_number,
+            leadId:claim?.claimDetails?.LeadID
+          }
+        })
+        .then(() => {
+          alert("Successfully fetched!!");
+         
+        })
+        .catch((err) => {
+          console.log("err", err);
+         
+        });
+
+      }
+  };
+
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-
-  // const editHandler = () => {
-  //   setEdit(true);
-  // };
-
-  useEffect(() => {}, [details]);
 
   return (
     <>
@@ -114,7 +147,8 @@ const Form_01 = ({
               <div class="accordion-body">
                 <div className="row">
                   <div className="col-lg-1 text-end">
-                    {editCase_02 ? (
+                    {editCase_02   ? 
+                      <>
                       <button
                         className="btn-thm"
                         style={{}}
@@ -122,29 +156,30 @@ const Form_01 = ({
                       >
                         Save
                       </button>
-                    ) : (
+                      <div className="col-lg-2 text-start">
+                      <button className="btn-thm" style={{}} onClick={handleFetchData}>
+                        Fetch Details
+                      </button> 
+                      </div>
+                      </>
+                      :
+                      <>
+                      
+                    
                       <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => setEditCase_02(true)}
-                      >
-                        <span
-                          className="flaticon-edit"
-                          style={{ fontSize: "14px" }}
-                        ></span>
-                      </button>
-                    )}
-                  </div>
-                  <div className="col-lg-2 text-start">
-                    <button
                       className="btn-thm"
                       style={{}}
-                      onClick={handleFetchData}
+                      onClick={() => setEditCase_02(true)}
                     >
-                      Fetch Details
+                      <span
+                        className="flaticon-edit"
+                        style={{ fontSize: "14px" }}
+                      ></span>
                     </button>
-                  </div>
-                </div>
+                    </> 
+                    }
+                    </div>
+                    </div>
                 {editCase_02 ? (
                   <div className="row">
                     <div className="col-lg-6">
@@ -197,8 +232,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setFatherName(e.target.value)}
+                            value={FatherName}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -318,8 +353,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => LicenseNumber(e.target.value)}
+                            value={setLicenseNumber}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -347,8 +382,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setGender(e.target.value)}
+                            value={Gender}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -376,8 +411,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setBloodGroup(e.target.value)}
+                            value={BloodGroup}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -405,8 +440,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setMobile(e.target.value)}
+                            value={Mobile}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -434,8 +469,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setAddress(e.target.value)}
+                            value={Address}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -462,9 +497,9 @@ const Form_01 = ({
                           <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            setSelectedDate={setDriverAddedDate}
+                            setSelectedDate={setDateOfBirth}
                             selectedDate={
-                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                              DateOfBirth ? new Date(DateOfBirth) : ""
                             }
 
                             // placeholder="Enter Registration No."
@@ -522,9 +557,9 @@ const Form_01 = ({
                           <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            setSelectedDate={setDriverAddedDate}
+                            setSelectedDate={setDateOfIssue}
                             selectedDate={
-                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                              DateOfIssue ? new Date(DateOfIssue) : ""
                             }
 
                             // placeholder="Enter Registration No."
@@ -553,9 +588,9 @@ const Form_01 = ({
                           <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            setSelectedDate={setDriverAddedDate}
+                            setSelectedDate={setValidUpto}
                             selectedDate={
-                              DriverAddedDate ? new Date(DriverAddedDate) : ""
+                              ValidUpto ? new Date(ValidUpto) : ""
                             }
 
                             // placeholder="Enter Registration No."
@@ -577,7 +612,7 @@ const Form_01 = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Cov
+                            Vov
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -585,8 +620,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setVov(e.target.value)}
+                            value={Vov}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -614,8 +649,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            onChange={(e) => setPhoto(e.target.value)}
+                            value={Photo}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -724,7 +759,30 @@ const Form_01 = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_driver claim={claim} />
+                    <Form_driver 
+                    claim={claim}
+                    FatherName={FatherName}
+                    setFatherName={setFatherName}
+                    Gender={Gender}
+                    setGender={setGender}
+                    BloodGroup={BloodGroup}
+                    setBloodGroup={setBloodGroup}
+                    setAddress={setAddress}
+                    Address={Address}
+                    setRtoName={setRtoName}
+                    RtoName={RtoName}
+                    Mobile={Mobile}
+                    setMobile={setMobile}
+                    ValidUpto={ValidUpto}
+                    setValidUpto={setValidUpto}
+                    Vov={Vov}
+                    setVov={setVov}
+                    setPht={setPht}
+                    Pht={Pht}
+                    Photo={Photo}
+                    setPhoto={setPhoto}
+                    setIsDriverDetailsFetched={setIsDriverDetailsFetched}
+                     />
                   </div>
                 )}
               </div>

@@ -4,6 +4,7 @@ const axios = require("axios");
  const getOnlineDriverDetails = (req, res) => {
 
   const dl_number=req.query.dl_number;
+  const leadId = req.query.leadId;
 
   axios.get("https://api.apiseva.co.in/api/verification_pv2/dl_verify_v2",{
       params:{
@@ -14,13 +15,90 @@ const axios = require("axios");
       }
     })
     .then((result)=>{
+    const details=result.data.data.data;
+
+    const insertDriverDetails = `
+    INSERT INTO DriverDetailsOnline (
+      LicenseNumber,
+      DriverName,
+      Pht,
+      Photo,
+      Vov,
+      VaildUpto,
+      RtoName,
+      Address,
+      Mobile,
+      BloodGroup,
+      Gender,
+      FatherName,
+      DateOfBirth,
+      DateOfIssue,
+      LeadID
+  )
+  VALUES (
+      '${details?.dlno}',
+      '${details?.name}',
+      '${details?.pht}',
+      '${details?.sign}',
+      '${details?.cov}',
+      CAST('${details?.vaildupto}' AS DATETIME),
+      '${details?.rtoname}',
+      '${details?.address}',
+      '${details?.mobile}',
+      '${details?.bloodgroup}',
+      '${details?.gender}',
+      '${details?.fname}',
+      CAST('${details?.dob}' AS DATETIME),
+      CAST('${details?.issuedate}' AS DATETIME),
+      ${leadId}
+  );
+    `;
+
+    const updateDriverQuery = `
+    UPDATE DriverDetails
+SET
+    LicenseNumber = '${details?.dlno}',
+    DriverName = '${details?.name}',
+    Pht = '${details?.pht}',
+    Photo = '${details?.sign}',
+    Vov = '${details?.cov}',
+    VaildUpto = CAST('${details?.vaildupto}' AS DATETIME),
+    RtoName = '${details?.rtoname}',
+    Address = '${details?.address}',
+    Mobile = '${details?.mobile}',
+    BloodGroup = '${details?.bloodgroup}',
+    Gender = '${details?.gender}',
+    FatherName = '${details?.fname}',
+    DateOfBirth = CAST('${details?.dob}' AS DATETIME),
+    DateOfIssue = CAST('${details?.issuedate}' AS DATETIME)
+WHERE
+    LeadID = ${leadId};`;
+
+
+  
+    db.query(insertDriverDetails, (error, results) => {
+      if (error) {
+        console.error("Error updating data in driver Details:", error);
+        return res
+          .status(500)
+          .json({ error: "Error updating data in driver Details." });
+      }
+      db.query(updateDriverQuery, (error, results) => {
+        if (error) {
+          console.error("Error updating data in driver Details:", error);
+          return res
+            .status(500)
+            .json({ error: "Error updating data in driver Details." });
+        }
+          res.status(200).json({ message: "Data updated successfully." });
+      });
      
-      return res.status(200).send(result.data.data);
+    });
     })
     .catch((Err)=>{
       return res.status(500).send("Internal Server Error");
     })
-    // const responseData = {
+    
     //   error_code: "SPC-200",
     //   message: "success",
     //   status: "Success",
@@ -155,5 +233,82 @@ const axios = require("axios");
     // res.json(integratedData);
   };
 
-  module.exports={getOnlineDriverDetails}
+  const updateDriverDetailsOnline = async(req, res) => {
+    const {
+      IssuingAuthority,
+      LicenseNumber,
+      LicenseType,
+      DriverName,
+      DriverAddedDate,
+      DriverTypeOfVerification,
+      
+      FatherName,
+      Gender,
+      BloodGroup,
+      Mobile,
+      Address,
+      RtoName,
+      ValidUpto,
+      Vov,
+      Photo,
+      Pht,
+      DateOfBirth,
+      DateOfIssue,
+
+      LeadId,
+    } = req.body;
+  
+  
+    // Update ClaimDetails
+    const insertDriverDetails = `
+    INSERT INTO DriverDetailsOnline (
+      LicenseNumber,
+      DriverName,
+      Pht,
+      Photo,
+      Vov,
+      VaildUpto,
+      RtoName,
+      Address,
+      Mobile,
+      BloodGroup,
+      Gender,
+      FatherName,
+      DateOfBirth,
+      DateOfIssue,
+      LeadID
+  )
+  VALUES (
+      '${details?.dlno}',
+      '${details?.name}',
+      '${details?.pht}',
+      '${details?.sign}',
+      '${details?.cov}',
+      CAST('${details?.vaildupto}' AS DATETIME),
+      '${details?.rtoname}',
+      '${details?.address}',
+      '${details?.mobile}',
+      '${details?.bloodgroup}',
+      '${details?.gender}',
+      '${details?.fname}',
+      CAST('${details?.dob}' AS DATETIME),
+      CAST('${details?.issuedate}' AS DATETIME),
+      ${LeadId}
+  );
+    `;
+  
+  
+    db.query(insertDriverDetails, (error, results) => {
+      if (error) {
+        console.error("Error updating data in driver Details:", error);
+        return res
+          .status(500)
+          .json({ error: "Error updating data in driver Details." });
+      }
+        res.status(200).json({ message: "Data updated successfully." });
+    });
+        
+  };
+
+  module.exports={getOnlineDriverDetails,updateDriverDetailsOnline}
   

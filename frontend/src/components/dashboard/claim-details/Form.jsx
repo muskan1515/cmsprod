@@ -136,15 +136,60 @@ const Form = ({
   const [saveDetails,setSaveDetails]=useState(false)
 
   const handleFetchData = async (req, res) => {
+    if(!claim?.vehicleDetails?.RegisteredNumber){
+      alert("Please fill Registered Number first!");
+    }
+    if(claim?.vehicleOnlineDetails){
+                  
+      const details = claim?.vehicleOnlineDetails;
+
+          setVehicleModel(details?.MakerModel),
+          setVehicleRegisteredOwner(details?.RegisteredOwner),
+          // setDateRegistration(details?.rc_regn_dt),
+          setVehicleChassisNumber(details?.ChassisNumber),
+          //New Fields
+          setVehicleChassisNumber(details?.ChassisNumber);
+          setDateRegistration(details?.DateOfRegistration);
+          setVehicleRegisteredNumber(details?.RegisteredNumber);
+          setEngineNumber(details?.EngineNumber);//is it same as ClassOfVehicle ?
+          setMakerDesc(details?.MakerDesc),
+          setMakerModel(details?.MakerModel);
+          setManufactureMonthYear(details?.ManufactureMonthYear);
+          setVehicleGvw(details?.rc_gvw);
+          setVehicleRegisteredOwner(details?.rc_owner_name);
+          setCubicCapacity(details?.CubicCapacity);
+          setVehicleSeatingCapacity(details?.SeatingCapacity);
+          setVehiclePermanentAddress(details?.PermanentAddress);
+          setFitUpto(details?.FitUpto);
+          setPasiaModelCode(details?.PasiaModelCode);
+          setRcInsuranceUpto(details?.VehicleInsuranceUpto);
+          setRcVehicleType(details?.VehicleType);
+          setBancsModelCode(details?.BancsModelCode);
+          setBancsMakeCode(details?.BancsMakeCode);
+          setBancsSubtypeCode(details?.BancsSubtypeCode);
+          setBancsBodyType(details?.BancsBodyType);
+          setBancsVehicleClass(details?.ClassOfVehicle);
+          setBancsVehicleSegment(details?.BancsVehicleSegment);
+          setRcRtoCode(details?.RcRtoCode);
+          setClassOfVehicle(details?.ClassOfVehicle);
+          // setBancsFuelType(details?.bancs_Fuel_Type);
+          setEngineNumber(details?.EngineNumber),
+          setVehicleRegisteredOwner(details?.RegisteredOwner);
+          // setLicenseNumber(details?.rc_regn_no),
+          setVehicleFuelType(details?.FuelType),
+          setVehicleRcStatus(details?.VehicleRcStatus);
+          setVehicleBlackListStatus(details?.VehicleBlackListStatus);
+          setVehicleRegistedAt(details?.VehicleRegistedAt);
+          setVehicleInsuranceCompany(details?.VehicleInsuranceCompany);
+
+          alert("Successfully fetched!!");
+    }
+    else{
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    const details = JSON.parse(localStorage.getItem("fetchVehicleDetails"));
     const vehicleNo = claim?.vehicleDetails?.RegisteredNumber;
     if (!userInfo) {
       router.push("/login");
-    }
-    else if (details ){
-        alert("Already Fetched!!")
     }
     else{
     try {
@@ -155,78 +200,27 @@ const Form = ({
             "Content-Type": "application/json",
           },
           params:{
-            vehicleNo:vehicleNo
+            vehicleNo:vehicleNo,
+            leadId:claim?.claimDetails?.LeadID
           }
         })
         .then((res) => {
          
 
-          setDetails(res.data.data.vehicleDetails?.Data.result);
-          // localStorage.setItem("details",JSON.stringify(res.data.data))
-          
-          // console.log("datata", res.data.data);
+         window.location.reload();
         })
         .catch((err) => {
           console.log("err", err);
         });
-
+      
      
     } catch (error) {
       console.log("Error from Fetch Details-> ", error);
     }
   }
+  }
   };
 
-
-  useEffect(() => {
-    // details = JSON.parse(localStorage.getItem("details"))
-    setVehicleModel(details?.rc_maker_model),
-      setVehicleRegisteredOwner(details?.rc_owner_name),
-      setDateRegistration(details?.rc_regn_dt),
-      setVehicleChassisNumber(details?.rc_chasi_no),
-      //New Fields
-      setVehicleChassisNumber(details?.rc_chasi_no);
-      setDateRegistration(details?.rc_regn_dt);
-      setVehicleRegisteredNumber(details?.rc_regn_no);
-    setEngineNumber(details?.rc_eng_no);
-      setVehicleRegisteredOwner(details?.rc_owner_name)
-      setVehicleClassDescription(details?.rc_vh_class_desc), //is it same as ClassOfVehicle ?
-      setMakerDesc(details?.rc_maker_desc),
-      setMakerModel(details?.rc_maker_model);
-    setManufactureMonthYear(details?.rc_manu_month_yr);
-    setVehicleGvw(details?.rc_gvw);
-    setVehicleRegisteredOwner(details?.rc_owner_name);
-    setCubicCapacity(details?.rc_cubic_cap);
-    setVehicleSeatingCapacity(details?.rc_seat_cap);
-    setVehiclePermanentAddress(details?.rc_permanent_address);
-    setFitUpto(details?.rc_fit_upto);
-    setPasiaModelCode(details?.rc_pasia_model_code);
-    setRcInsuranceComp(details?.rc_insurance_comp);
-    setRcInsuranceUpto(details?.rc_insurance_upto);
-    setRcVehicleType(details?.rc_vehicle_type);
-    setBancsModelCode(details?.bancs_model_code);
-    setBancsMakeCode(details?.bancs_make_code);
-    setBancsSubtypeCode(details?.bancs_Subtype_code);
-    setBancsBodyType(details?.bancs_Body_Type);
-    setBancsVehicleClass(details?.bancs_Vehicle_class);
-    setBancsVehicleSegment(details?.bancs_Vehicle_Segment);
-    setRcRtoCode(details?.rc_rto_code);
-    // setBancsFuelType(details?.bancs_Fuel_Type);
-    setEngineNumber(details?.rc_eng_no),
-      // setLicenseNumber(details?.rc_regn_no),
-      setVehicleFuelType(details?.bancs_Fuel_Type),
-      setVehicleRcStatus(details?.rc_status);
-    setVehicleBlackListStatus(details?.rc_blacklist_status);
-    setVehicleRegistedAt(details?.rc_registered_at);
-    setVehicleInsuranceCompany(details?.rc_insurance_comp);
-    
-  }, [details]);
-
-  useEffect(()=>{
-      const details = JSON.parse(localStorage.getItem("vehicleFetchedDetails"));
-
-      setvehicleFetchDetails(details);
-  },[]);
 
   //permanenet Address
   return (
@@ -288,7 +282,7 @@ const Form = ({
                       </button>
                     )}
                   </div>
-                  {editCase_01 && claim?.driverDetails?.LicenseNumber && (
+                  {editCase_01 && (
                     <div className="col-lg-2 text-start">
                       <button
                         className="btn-thm"

@@ -172,6 +172,16 @@ const addClaim =  (req, res) => {
       );
     `;
 
+    const insertCommercialDetails = `
+    INSERT INTO CommercialVehicleDetails (
+      LeadId
+    ) VALUES (
+      '${parseInt(results[0].LeadId)}'
+    );
+  `;
+
+    
+
    
           // Execute the SQL queries individually
   
@@ -201,6 +211,18 @@ const addClaim =  (req, res) => {
                     error: "Error inserting data into AccidentDetails.",
                   });
                 }
+
+                db.query(insertCommercialDetails, (error, results) => {
+                  if (error) {
+                    console.error(
+                      "Error inserting data into CommercialDetails:",
+                      error
+                    );
+                    return res.status(500).json({
+                      error: "Error inserting data into AccidentDetails.",
+                    });
+                  }
+                });
   
                 db.query(insertInsuredDetails, (error, results) => {
                   if (error) {
@@ -325,6 +347,7 @@ const addClaim =  (req, res) => {
 
 const getSpecificClaim = async (req, res) => {
     const leadId = req.query.LeadId;
+
   
     const executeQuery = (query, values) => {
       return new Promise((resolve, reject) => {
@@ -355,6 +378,14 @@ const getSpecificClaim = async (req, res) => {
         "SELECT * FROM DriverDetails WHERE LeadID=?",
         [leadId]
       );
+      const vehicleOnlineDetails = await executeQuery(
+        "SELECT * FROM VehicleDetailsOnline WHERE LeadId=?",
+        [leadId]
+      );
+      const driverOnlineDetails = await executeQuery(
+        "SELECT * FROM DriverDetailsOnline WHERE LeadID=?",
+        [leadId]
+      );
       const vehicleDetails = await executeQuery(
         "SELECT * FROM VehicleDetails WHERE LeadID=?",
         [leadId]
@@ -376,11 +407,13 @@ const getSpecificClaim = async (req, res) => {
       const combinedResult = {
         claimDetails,
         insuredDetails,
-        accidentDetails,
+        accidentDetails : accidentDetails,
         driverDetails,
         vehicleDetails,
-        garageDetails,
+        garageDetails:garageDetails,
         claimStatus,
+        vehicleOnlineDetails,
+        driverOnlineDetails,
         commercialVehicleDetails
       };
   
@@ -463,6 +496,22 @@ const getSpecificClaim = async (req, res) => {
       PermanentAddress,
       ClassOfVehicle,
       insuredAddedBy,
+      SeatingCapacity,
+      FatherName,
+      Gender,
+      BloodGroup,
+      Mobile,
+      Address,
+      RtoName,
+      ValidUpto,
+      Vov,
+      Photo,
+      Pht,
+      IsDriverDetailsFetched,
+      IsRcDetailsFetched,
+      DateOfBirth,
+      DateOfIssue,
+
       LeadId,
     } = req.body;
   
@@ -474,8 +523,10 @@ const getSpecificClaim = async (req, res) => {
     ClaimServicingOffice = '${ClaimServicingOffice}',
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = CAST('${PolicyPeriodStart}' AS DATETIME),
-    PolicyPeriodEnd = CAST('${PolicyPeriodEnd}' AS DATETIME),
+    PolicyPeriodStart = '${PolicyPeriodStart}',
+    PolicyPeriodEnd = '${PolicyPeriodEnd}',
+    IsDriverDetailsFetched=${IsDriverDetailsFetched},
+    IsRcDetailsFetched=${IsRcDetailsFetched},
     InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}'
       WHERE LeadId = ${LeadId};
     `;
@@ -489,9 +540,22 @@ const getSpecificClaim = async (req, res) => {
       LicenseNumber = '${LicenseNumber}',
       LicenseType = '${LicenseType}',
       DriverName = '${DriverName}',
-      AddedDate = CAST('${DriverAddedDate}' AS DATETIME),
+      AddedDate ='${DriverAddedDate}',
+      
+      Pht='${Pht}',
+      Photo='${Photo}',
+      Vov='${Vov}',
+      VaildUpto='${ValidUpto}',
+      RtoName='${RtoName}',
+      Address='${Address}',
+      Mobile='${Mobile}',
+      BloodGroup='${BloodGroup}',
+      Gender='${Gender}',
+      FatherName='${FatherName}',
+      DateOfBirth='${DateOfBirth}',
+      DateOfIssue='${DateOfIssue}',
       TypeOfVerification = '${DriverTypeOfVerification}'
-        WHERE LeadId = ${LeadId};
+        WHERE LeadID = ${LeadId};
     `;
   
     // Update VehicleDetails
@@ -501,9 +565,9 @@ const getSpecificClaim = async (req, res) => {
         RegisteredNumber = '${VehicleRegisteredNumber}',
         MakeVariantModelColor='${VehicleMakeVariantModelColor}',
         TypeOfBody='${VehicleTypeOfBody}',
-        DateOfRegistration=CAST('${VehicleDateOfRegistration}' AS DATETIME),
+        DateOfRegistration='${VehicleDateOfRegistration}',
         PucNumber='${VehiclePucNumber}',
-        TransferDate=CAST('${VehicleTransferDate}' AS DATETIME),
+        TransferDate='${VehicleTransferDate}',
         EngineNumber='${VehicleEngineNumber}',
         AddedBy='${VehicleAddedBy}',
         ChassisNumber='${VehicleChassisNumber}',
@@ -511,7 +575,7 @@ const getSpecificClaim = async (req, res) => {
         MakerDesc='${MakerDesc}',
         MakerModel='${MakerModel}',
         CubicCapacity='${VehicleCubicCap}',
-        FitUpto=CAST('${FitUpto}' AS DATETIME),
+        FitUpto=('${FitUpto}'),
         PasiaModelCode='${PasiaModelCode}',
         VehicleType='${RcVehicleType}',
         BancsModelCode='${BancsModelCode}',
@@ -529,7 +593,8 @@ const getSpecificClaim = async (req, res) => {
         PermanentAddress='${PermanentAddress}',
         ClassOfVehicle='${ClassOfVehicle}',
         RegisteredOwner='${VehicleRegisteredOwner}',
-        VehicleInsuranceUpto=CAST('${RcInsuranceUpto}' AS DATETIME)
+        SeatingCapacity='${SeatingCapacity}',
+        VehicleInsuranceUpto='${RcInsuranceUpto}'
       WHERE LeadId = ${LeadId};
     `;
     // Update GarageDetails

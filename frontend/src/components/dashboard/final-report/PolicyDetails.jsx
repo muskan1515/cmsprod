@@ -234,6 +234,17 @@ const PolicyDetails = ({
     return formattedDate;
   };
 
+  const formatDatenEXT = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
   const formatDateNextyear = (date) => {
     const dateObject = new Date(date);
 
@@ -744,25 +755,16 @@ const PolicyDetails = ({
                       />
                     </div> */}
                     <div className="col-lg-8">
-                      {!isEditMode ? (
+                       
                         <input
-                          readOnly={!isEditMode}
+                          readOnly={true}
                           type={"text"}
-                          value={PolicyPeriodStart ? getNextYear()
-                            : ""}
+                          value={isEditMode ? formatDatenEXT(getNextYear())
+                            : formatDate(getNextYear())}
                           className="form-control"
                           id="propertyTitle"
                         />
-                      ) : (
-                        <MyDatePicker
-                          disable={!isEditMode}
-                          selectedDate={
-                            PolicyPeriodStart ? getNextYear()
-                            : ""
-                          }
-                          setSelectedDate={setPolicyPeriodEnd}
-                        />
-                      )}
+                      
                     </div>
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
@@ -2145,10 +2147,7 @@ const PolicyDetails = ({
                 </div>
                 <div className="col-lg-8">
                   <MyDatePicker
-                   disable={!isEditMode}
-                   selectedDate={""}
-                    className="form-control"
-                    id="propertyTitle"
+                  
                     // value={LicenseNumber}
                     // readOnly={!isEditMode}
                     // onChange={(e) => setLicenseNumber(e.target.value)}

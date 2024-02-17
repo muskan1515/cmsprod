@@ -291,7 +291,7 @@ const Servey = ({
                       id="propertyTitle"
                     />
                   ) : (
-                    <MyDatePickerTime
+                    <MyDatePicker
                       disable={!isEditMode}
                       selectedDate={
                         AccidentAddedDateTime
@@ -299,7 +299,7 @@ const Servey = ({
                           : ""
                       }
                       setSelectedDate={setAccidentAddedDateTime}
-                      isTime={true}
+                     
                     />
                   )}
                   {/*<input

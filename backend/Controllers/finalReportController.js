@@ -93,114 +93,123 @@ const updateFinalReport = (req,res)=>{
       Assessment,
       leadId
     } = req.body;
-  
+
+    
   
     const updateDriverDetails = `
-      UPDATE DriverDetails
-      SET
-      AddedDate = '${DriverAddedDate}',
-      DriverName = '${DriverName}',
-      LicenseNumber='${LicenseNumber}',
-      LicenseType='${LicenseType}',
-      IssuingAuthority = '${IssuingAuthority}',
-      DateOfIssue = '${DateOfIssue}',
-      ValidFrom='${ValidFrom}',
-      ValidUntilNtv = '${ValidUntilNtv}',
-      ValidUntilTv = '${ValidUntilTv}',
-      BadgeNumber='${BadgeNumber}',
-      Remark='${driverRemark}'
-      WHERE LeadID = ${leadId};
-    `;
-  
-    const updateClaimDetails = `
+    UPDATE DriverDetails
+    SET
+    AddedDate = '${DriverAddedDate}' ,
+    DriverName = '${DriverName}',
+    LicenseNumber='${LicenseNumber}',
+    LicenseType='${LicenseType}',
+    IssuingAuthority = '${IssuingAuthority}',
+    DateOfIssue = '${DateOfIssue}',
+    ValidFrom='${ValidFrom}',
+    ValidUntilNtv = '${ValidUntilNtv}',
+    ValidUntilTv = '${ValidUntilTv}',
+    BadgeNumber='${BadgeNumber}',
+    Remark='${driverRemark}'
+    WHERE LeadID = ${leadId};
+  `;
+
+  // Update ClaimDetails query with CASE statement
+  const updateClaimDetails = `
     UPDATE ClaimDetails
-          SET
-          InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}',
-          SurveyType = '${""}',
-          PolicyIssuingOffice='${PolicyIssuingOffice}',
-          PolicyNumber = '${PolicyNumber}',
-          PolicyPeriodStart='${PolicyPeriodStart}',
-          PolicyPeriodEnd = '${PolicyPeriodEnd}',
-          ClaimNumber = '${ClaimNumber}',
-          ClaimServicingOffice='${ClaimServicingOffice}',
-          InspectionType = '${""}',
-          PolicyType='${policyType}',
-          IDV='${IDV}',
-          MailRecieveDate='${MailRecieveDate}',
-          HPA='${HPA}'
-          WHERE LeadID = ${leadId};
-    `;
-  
-    const updateVehicleDetails = `
+    SET
+    InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}',
+    SurveyType = '${""}',
+    PolicyIssuingOffice='${PolicyIssuingOffice}',
+    PolicyNumber = '${PolicyNumber}',
+    PolicyPeriodStart='${PolicyPeriodStart}',
+    PolicyPeriodEnd='${ PolicyPeriodEnd}' ,
+    ClaimNumber = '${ClaimNumber}',
+    ClaimServicingOffice='${ClaimServicingOffice}',
+    InspectionType = '${""}',
+    PolicyType='${policyType}',
+    IDV='${IDV}',
+    MailRecieveDate='${MailRecieveDate}',
+    HPA='${HPA}'
+    WHERE LeadID = ${leadId};
+  `;
+
+ 
+
+  // Update VehicleDetails query with CASE statement
+   
+  const updateVehicleDetails = `
     UPDATE VehicleDetails
-          SET
-          TypeOfVerification = '${Verification}',
-          RegisteredNumber = '${VehicleRegisteredNumber}',
-          RegisteredOwner='${RegisteredOwner}',
-          TransferDate = '${TransferDate}',
-          DateOfRegistration = '${DateRegistration}',
-          MakeVariantModelColor = '${VehicleMakeVariantModelColor}',
-          EngineNumber='${EngineNumber}',
-          ChassisNumber = '${VehicleChassisNumber}',
-          TypeOfBody = '${VehicleTypeOfBody}',
-          ClassOfVehicle = '${VehicleClassOfVehicle}',
-          PreAccidentCondition='${VehiclePreAccidentCondition}',
-          SeatingCapacity = '${VehicleSeatingCapacity}',
-          CubicCapacity = '${VehicleCubicCapacity}',
-          FuelType = '${VehicleFuelType}',
-          TaxParticulars='${VehicleTaxParticulars}',
-          OdometerReading = '${VehicleOdometerReading}',
-          PucNumber='${PUCNumber}',
-          OwnerSrDate='${OwnerSRST}',
-          RegLadenWt='${parseInt(RegLadenWt)}',
-          RemarkIfRLW='${RemarkIfRLW}',
-          UnladenWT='${parseInt(UnladenWT)}',
-          RemarkIfULW='${RemarkIfULW}',
-          Remark='${VehicleRemark}',
-          VehicleType='${VehicleType}',
-          AntiTheft='${AntiTheft}',
-          TypeOfDate='${TypeOfDate}'
-          WHERE LeadID = ${leadId};
-    `;
-  
-    const updateGarageDetails = `
+    SET
+    TypeOfVerification = '${Verification}',
+    RegisteredNumber = '${VehicleRegisteredNumber}',
+    RegisteredOwner='${RegisteredOwner}',
+    TransferDate = '${TransferDate}',
+    DateOfRegistration = '${DateRegistration}',
+    MakeVariantModelColor = '${VehicleMakeVariantModelColor}',
+    EngineNumber='${EngineNumber}',
+    ChassisNumber = '${VehicleChassisNumber}',
+    TypeOfBody = '${VehicleTypeOfBody}',
+    ClassOfVehicle = '${VehicleClassOfVehicle}',
+    PreAccidentCondition='${VehiclePreAccidentCondition}',
+    SeatingCapacity = '${VehicleSeatingCapacity}',
+    CubicCapacity = '${VehicleCubicCapacity}',
+    FuelType = '${VehicleFuelType}',
+    TaxParticulars='${VehicleTaxParticulars}',
+    OdometerReading = '${VehicleOdometerReading}',
+    PucNumber='${PUCNumber}',
+    OwnerSrDate='${OwnerSRST}',
+    RegLadenWt=${parseInt(RegLadenWt)},
+    RemarkIfRLW='${RemarkIfRLW}',
+    UnladenWT=${parseInt(UnladenWT)},
+    RemarkIfULW='${RemarkIfULW}',
+    Remark='${VehicleRemark}',
+    VehicleType='${VehicleType}',
+    AntiTheft='${AntiTheft}',
+    TypeOfDate=${TypeOfDate},
+    WHERE LeadID = ${leadId};
+  `;
+
+  // Update GarageDetails query with CASE statement
+  const updateGarageDetails = `
     UPDATE GarageDetails
-          SET
-          GarageNameAndAddress = '${GarageNameAndAddress}',
-          GarageContactNo1 = '${GarageContactNo1}',
-          GarageContactNo2='${GarageContactNo2}',
-          AddedBy='${GarageAddedBy}'
-          WHERE LeadID = ${leadId};
-    `;
-  
-    const updateInsuredDetails = `
+    SET
+    GarageNameAndAddress = '${GarageNameAndAddress}',
+    GarageContactNo1 = '${GarageContactNo1}',
+    GarageContactNo2='${GarageContactNo2}',
+    AddedBy='${GarageAddedBy}'
+    WHERE LeadID = ${leadId};
+  `;
+
+  // Update InsuredDetails query with CASE statement
+  const updateInsuredDetails = `
     UPDATE InsuredDetails
-          SET
-          InsuredName = '${InsuredName}',
-          InsuredMobileNo1 = '${InsuredMobileNo1}',
-          InsuredMobileNo2='${InsuredMobileNo2}',
-          InsuredMailAddress = '${InsuredMailAddress}',
-          InsuredAddress = '${InsuredAddress}'
-          WHERE LeadID = ${leadId};
-    `;
-  
-    const updateAccidentDetails = `
+    SET
+    InsuredName = '${InsuredName}',
+    InsuredMobileNo1 = '${InsuredMobileNo1}',
+    InsuredMobileNo2='${InsuredMobileNo2}',
+    InsuredMailAddress = '${InsuredMailAddress}',
+    InsuredAddress = '${InsuredAddress}'
+    WHERE LeadID = ${leadId};
+  `;
+
+  // Update AccidentDetails query with CASE statement
+  const updateAccidentDetails = `
     UPDATE AccidentDetails
-          SET
-          PlaceOfLoss = '${PlaceOfLoss}',
-          SurveyAllotmentDate = '${SurveyAllotmentDate}',
-          SurveyConductedDate='${SurveyConductedDate}',
-          Pin='${Pin}',
-          PlaceOfSurvey='${PlaceOfSurvey}',
-          DetailsOfLoads='${DetailsOfLoads}',
-          CauseOfAccident='${CauseOfAccident}',
-          PoliceAction='${PoliceAction}',
-          ThirdPartyLoss='${ThirdPartyLoss}',
-          Assessment='${Assessment}',
-          AddedDateTime='${AccidentAddedDateTime}'
-          WHERE LeadID = ${leadId};
-    `;
-  
+    SET
+    PlaceOfLoss = '${PlaceOfLoss}',
+    SurveyAllotmentDate = '${SurveyAllotmentDate}',
+    SurveyConductedDate ='${SurveyConductedDate}',
+    Pin='${Pin}',
+    PlaceOfSurvey='${PlaceOfSurvey}',
+    DetailsOfLoads='${DetailsOfLoads}',
+    CauseOfAccident='${CauseOfAccident}',
+    PoliceAction='${PoliceAction}',
+    ThirdPartyLoss='${ThirdPartyLoss}',
+    Assessment='${Assessment}',
+    DateOfAccident='${AccidentAddedDateTime}'
+    WHERE LeadID = ${leadId};
+  `;
+
     const insertIntoCommercialVehicleDetails = `
     INSERT INTO CommercialVehicleDetails (
       FitnessCertificate,
@@ -216,11 +225,11 @@ const updateFinalReport = (req,res)=>{
       LeadID 
     ) VALUES (
       '${FitnessCertificate}',
-      '${FitnessFrom}',
-      '${FitnessTo}',
-      '${PermitTo}',
+     '${FitnessFrom}',
+     '${FitnessTo }', 
+     '${PermitTo}',
       '${PermitNo}',
-      '${PermitFrom}',
+     '${PermitFrom}',
       '${TypeOfPermit}',
       '${Authorization}',
       '${AreasOfoperation}',
@@ -229,12 +238,11 @@ const updateFinalReport = (req,res)=>{
     );
     `;
   
-  
     const updateCommercialVehicleDetails = `
     UPDATE CommercialVehicleDetails
           SET
           FitnessCertificate = '${FitnessCertificate}',
-          FitnessFrom = '${FitnessFrom}',
+          FitnessFrom ='${FitnessFrom}' ,
           FitnessTo='${FitnessTo}',
           PermitTo='${PermitTo}',
           PermitNo='${PermitNo}',
@@ -246,22 +254,15 @@ const updateFinalReport = (req,res)=>{
           WHERE LeadID = ${leadId};
     `;
   
-    // console.log(updateCommercialVehicleDetails,insertIntoCommercialVehicleDetails);
-    // return ;
+   
     db.query(updateClaimDetails, (err, result2) => {
+      if (err) { db.query(updateAccidentDetails, (err, result2) => {
       if (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
       }
-    });
-    db.query(updateAccidentDetails, (err, result2) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-      console.log(result2);
+     
     });
     db.query(updateDriverDetails, (err, result2) => {
       if (err) {
@@ -269,7 +270,7 @@ const updateFinalReport = (req,res)=>{
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log(result2);
+     
     });
     db.query(updateGarageDetails, (err, result2) => {
       if (err) {
@@ -277,7 +278,7 @@ const updateFinalReport = (req,res)=>{
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log(result2);
+     
     });
   
     db.query(updateInsuredDetails, (err, result2) => {
@@ -286,7 +287,7 @@ const updateFinalReport = (req,res)=>{
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log(result2);
+     
     });
     db.query(updateVehicleDetails, (err, result2) => {
       if (err) {
@@ -294,7 +295,7 @@ const updateFinalReport = (req,res)=>{
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log(result2);
+     
     });
   
     db.query("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",[leadId], (err, result2) => {
@@ -303,8 +304,9 @@ const updateFinalReport = (req,res)=>{
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log(result2?.length);
+     
         const query = result2?.length ? updateCommercialVehicleDetails : insertIntoCommercialVehicleDetails;
+        
         console.log("commercial vehicle",query);
       db.query(query, (err, result2) => {
         if (err) {
@@ -312,14 +314,17 @@ const updateFinalReport = (req,res)=>{
           res.status(500).send("Internal Server Error");
           return;
         }
-        console.log(result2);
+        
       });
     
     });
   
-  
-    
-  
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+    });
+   
   
     res.status(200).send("Successfully Updated!!");
   };

@@ -7,6 +7,8 @@ async function handler(request, response) {
 
     const vehicleNo =  request.query.vehicleNo;
 
+    const leadId = request.query.leadId;
+
 
     const vehicle_data = await axios.get(`${domain}/vehicleDetails/getOnlineVehicleData`, {
       headers: {
@@ -14,7 +16,8 @@ async function handler(request, response) {
         "Content-Type": "application/json",
       },
       params:{
-        vehicleNo:vehicleNo
+        vehicleNo:vehicleNo,
+        leadId:leadId
       }
     });
     const vehicle = vehicle_data.data;
