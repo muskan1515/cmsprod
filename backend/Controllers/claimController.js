@@ -58,7 +58,7 @@ const addClaim =  (req, res) => {
         Token,
         IsActive
       ) VALUES (
-        '${SurveyType}',
+        ${SurveyType},
         '${ReferenceNo}',
         '${PolicyNumber}',
         ${PolicyPeriodStart},
@@ -67,7 +67,7 @@ const addClaim =  (req, res) => {
         ${ClaimServicingOffice},
         '${(AddedBy)}',
         '${Region}',
-        '${InspectionType}',
+        ${InspectionType},
         ${parseInt(IsClaimCompleted)},
         '${BrokerMailAddress}',
         '${generatedToken}',
@@ -243,7 +243,7 @@ const addClaim =  (req, res) => {
                         });
                       }
   
-                      if(InsuredMailAddress !== ""){
+                      if(InsuredMailAddress !== "null" || !InsuredMailAddress){
                       axios
                         .post(
                           `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
@@ -272,7 +272,7 @@ const addClaim =  (req, res) => {
                           });
                         });
                       }
-                        if (GarageMailAddress !== "") {
+                        if (GarageMailAddress !== "null" || !GarageMailAddress) {
                           axios
                             .post(
                               `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
@@ -299,7 +299,7 @@ const addClaim =  (req, res) => {
                               });
                             });
                         }
-                        if (BrokerMailAddress !== "") {
+                        if (BrokerMailAddress !== "null" || !BrokerMailAddress) {
                           axios
                             .post(
                               `${process.env.BACKEND_DOMAIN}/email/sendEmail/3`,
