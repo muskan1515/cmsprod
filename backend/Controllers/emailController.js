@@ -29,7 +29,7 @@ const generateUniqueToken = require("../Config/generateToken");
         res.status(500).send("Internal Server Error");
         return;
       }
-      const content = emailHandler(result[0].Status);
+      const content = emailHandler(result[0]?.Status);
   
       const generatedToken = generateUniqueToken();
       const insertClaimDetails = `
@@ -78,12 +78,25 @@ const generateUniqueToken = require("../Config/generateToken");
             console.error(error);
             res.status(500).send("Internal Server Error");
           } else {
-            console.log("Email sent: " + info.response);
-            res.status(200).send("Email sent successfully");
+           
+            const insertClaimDetails = `
+            UPDATE ClaimDetails
+            SET
+            IsMailSent = 1
+            WHERE LeadId = ${leadId};
+          `;
+          db.query(insertClaimDetails, (err, result2) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+              res.status(200).send("Email sent successfully");
+            });
           }
+          });
         });
       });
-    });
   };
   
   const sendCustomEmail = (req, res) => {

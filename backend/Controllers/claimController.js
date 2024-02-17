@@ -35,6 +35,7 @@ const addClaim =  (req, res) => {
       EstimatedLoss,
     } = req.body;
   
+   
     const authorizationHeader = req.headers.authorization;
   
     const token = authorizationHeader.substring("Bearer ".length);
@@ -44,7 +45,6 @@ const addClaim =  (req, res) => {
       INSERT INTO ClaimDetails (
         SurveyType,
         ReferenceNo,
-        PolicyIssuingOffice,
         PolicyNumber,
         PolicyPeriodStart,
         PolicyPeriodEnd,
@@ -58,21 +58,20 @@ const addClaim =  (req, res) => {
         Token,
         IsActive
       ) VALUES (
-        '${SurveyType}',
+        ${SurveyType},
         '${ReferenceNo}',
-        '${PolicyIssuingOffice}',
         '${PolicyNumber}',
         ${PolicyPeriodStart},
         ${PolicyPeriodEnd},
-        '${ClaimNumber}',
-        '${ClaimServicingOffice}',
-        '${parseInt(AddedBy)}',
+        ${ClaimNumber},
+        ${ClaimServicingOffice},
+        '${(AddedBy)}',
         '${Region}',
-        '${InspectionType}',
-        '${parseInt(IsClaimCompleted)}',
+        ${InspectionType},
+        ${parseInt(IsClaimCompleted)},
         '${BrokerMailAddress}',
         '${generatedToken}',
-        '${parseInt(IsActive)}'
+        ${parseInt(IsActive)}
       );
     `;
   
@@ -101,8 +100,8 @@ const addClaim =  (req, res) => {
         RegisteredNumber,
         LeadId 
       ) VALUES (
-        '${RegisteredNumber}',
-        '${parseInt(results[0].LeadId)}'
+        ${RegisteredNumber},
+        ${parseInt(results[0].LeadId)}
       );
     `;
   
@@ -112,9 +111,9 @@ const addClaim =  (req, res) => {
         SubStatus,
         LeadId 
       ) VALUES (
-        '${1}',
-        '${2}',
-        '${parseInt(results[0].LeadId)}'
+        ${1},
+        ${2},
+        ${parseInt(results[0].LeadId)}
       );
     `;
   
@@ -126,11 +125,11 @@ const addClaim =  (req, res) => {
         GarageMailAddress,
         LeadId 
       ) VALUES (
-        '${GarageNameAndAddress}',
-        '${GarageContactNo1}',
-        '${GarageContactNo2}',
+        ${GarageNameAndAddress},
+        ${GarageContactNo1},
+        ${GarageContactNo2},
         '${GarageMailAddress}',
-        '${parseInt(results[0].LeadId)}'
+        ${parseInt(results[0].LeadId)}
       );
     `;
   
@@ -141,10 +140,10 @@ const addClaim =  (req, res) => {
         EstimatedLoss,
         LeadId
       ) VALUES (
-        '${PlaceOfLoss}',
-        '${NatureOfLoss}',
-        '${EstimatedLoss}',
-        '${parseInt(results[0].LeadId)}'
+        ${PlaceOfLoss},
+        ${NatureOfLoss},
+        ${(EstimatedLoss)},
+        ${parseInt(results[0].LeadId)}
       );
     `;
   
@@ -152,7 +151,7 @@ const addClaim =  (req, res) => {
       INSERT INTO DriverDetails (
         LeadId
       ) VALUES (
-        '${parseInt(results[0].LeadId)}'
+        ${parseInt(results[0].LeadId)}
       );
     `;
   
@@ -164,11 +163,11 @@ const addClaim =  (req, res) => {
         InsuredMailAddress,
         LeadId
       ) VALUES (
-        '${InsuredName}',
-        '${InsuredMobileNo1}',
-        '${InsuredMobileNo2}',
+        ${InsuredName},
+        ${InsuredMobileNo1},
+        ${InsuredMobileNo2},
         '${InsuredMailAddress}',
-        '${parseInt(results[0].LeadId)}'
+        ${parseInt(results[0].LeadId)}
       );
     `;
 
@@ -176,11 +175,9 @@ const addClaim =  (req, res) => {
     INSERT INTO CommercialVehicleDetails (
       LeadId
     ) VALUES (
-      '${parseInt(results[0].LeadId)}'
+      ${parseInt(results[0].LeadId)}
     );
   `;
-
-    
 
    
           // Execute the SQL queries individually
@@ -514,112 +511,109 @@ const getSpecificClaim = async (req, res) => {
 
       LeadId,
     } = req.body;
-  
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
-    PolicyIssuingOffice = '${PolicyIssuingOffice}',
+    PolicyIssuingOffice = ${PolicyIssuingOffice ? `'${PolicyIssuingOffice}'` : null},
     Region = '${ClaimRegion}',
-    ClaimServicingOffice = '${ClaimServicingOffice}',
+    ClaimServicingOffice = ${ClaimServicingOffice ? `'${ClaimServicingOffice}'` : null},
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = '${PolicyPeriodStart}',
-    PolicyPeriodEnd = '${PolicyPeriodEnd}',
-    IsDriverDetailsFetched=${IsDriverDetailsFetched},
-    IsRcDetailsFetched=${IsRcDetailsFetched},
-    InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress}'
-      WHERE LeadId = ${LeadId};
-    `;
-
+    PolicyPeriodStart = ${PolicyPeriodStart ? `'${PolicyPeriodStart}'` : null},
+    PolicyPeriodEnd = ${PolicyPeriodEnd ? `'${PolicyPeriodEnd}'` : null},
+    IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : null},
+    IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : null},
+    InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `'${InsuranceCompanyNameAddress}'` : null}
+    WHERE LeadId = ${LeadId};
+  `;
   
-    // Update ClaimDetails
-    const updateDriverDetails = `
-      UPDATE DriverDetails
-      SET
-      IssuingAuthority = '${IssuingAuthority}',
-      LicenseNumber = '${LicenseNumber}',
-      LicenseType = '${LicenseType}',
-      DriverName = '${DriverName}',
-      AddedDate ='${DriverAddedDate}',
-      
-      Pht='${Pht}',
-      Photo='${Photo}',
-      Vov='${Vov}',
-      VaildUpto='${ValidUpto}',
-      RtoName='${RtoName}',
-      Address='${Address}',
-      Mobile='${Mobile}',
-      BloodGroup='${BloodGroup}',
-      Gender='${Gender}',
-      FatherName='${FatherName}',
-      DateOfBirth='${DateOfBirth}',
-      DateOfIssue='${DateOfIssue}',
-      TypeOfVerification = '${DriverTypeOfVerification}'
-        WHERE LeadID = ${LeadId};
-    `;
+  // Update DriverDetails
+  const updateDriverDetails = `
+    UPDATE DriverDetails
+    SET
+    IssuingAuthority = ${IssuingAuthority ? `'${IssuingAuthority}'` : null},
+    LicenseNumber = '${LicenseNumber}',
+    LicenseType = '${LicenseType}',
+    DriverName = '${DriverName}',
+    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : null},
+    Pht = ${Pht ? Pht : null},
+    Photo = ${Photo ? Photo : null},
+    Vov = ${Vov ? Vov : null},
+    VaildUpto = ${ValidUpto ? `'${ValidUpto}'` : null},
+    RtoName = ${RtoName ? `'${RtoName}'` : null},
+    Address = ${Address ? `'${Address}'` : null},
+    Mobile = ${Mobile ? `'${Mobile}'` : null},
+    BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : null},
+    Gender = ${Gender ? `'${Gender}'` : null},
+    FatherName = ${FatherName ? `'${FatherName}'` : null},
+    DateOfBirth = ${DateOfBirth ? `'${DateOfBirth}'` : null},
+    DateOfIssue = ${DateOfIssue ? `'${DateOfIssue}'` : null},
+    TypeOfVerification = '${DriverTypeOfVerification}'
+    WHERE LeadID = ${LeadId};
+  `;
   
-    // Update VehicleDetails
-    const updateVehicleDetails = `
-      UPDATE VehicleDetails
-      SET 
-        RegisteredNumber = '${VehicleRegisteredNumber}',
-        MakeVariantModelColor='${VehicleMakeVariantModelColor}',
-        TypeOfBody='${VehicleTypeOfBody}',
-        DateOfRegistration='${VehicleDateOfRegistration}',
-        PucNumber='${VehiclePucNumber}',
-        TransferDate='${VehicleTransferDate}',
-        EngineNumber='${VehicleEngineNumber}',
-        AddedBy='${VehicleAddedBy}',
-        ChassisNumber='${VehicleChassisNumber}',
-        FuelType='${VehicleFuelType}',
-        MakerDesc='${MakerDesc}',
-        MakerModel='${MakerModel}',
-        CubicCapacity='${VehicleCubicCap}',
-        FitUpto=('${FitUpto}'),
-        PasiaModelCode='${PasiaModelCode}',
-        VehicleType='${RcVehicleType}',
-        BancsModelCode='${BancsModelCode}',
-        BancsMakeCode='${BancsMakeCode}',
-        BancsSubtypeCode='${BancsSubtypeCode}',
-        BancsBodyType='${BancsBodyType}',
-        BancsVehicleClass='${BancsVehicleClass}',
-        BancsVehicleSegment='${BancsVehicleSegment}',
-        RcRtoCode='${RcRtoCode}',
-        VehicleRcStatus='${VehicleRcStatus}',
-        VehicleBlackListStatus='${VehicleBlackListStatus}',
-        VehicleRegistedAt='${VehicleRegistedAt}',
-        VehicleInsuranceCompany='${VehicleInsuranceCompany}',
-        ManufactureMonthYear='${ManufactureMonthYear}',
-        PermanentAddress='${PermanentAddress}',
-        ClassOfVehicle='${ClassOfVehicle}',
-        RegisteredOwner='${VehicleRegisteredOwner}',
-        SeatingCapacity='${SeatingCapacity}',
-        VehicleInsuranceUpto='${RcInsuranceUpto}'
-      WHERE LeadId = ${LeadId};
-    `;
-    // Update GarageDetails
-    const updateGarageDetails = `
-      UPDATE GarageDetails
-      SET
-        GarageNameAndAddress = '${GarageNameAndAddress}',
-        GarageContactNo1 = '${GarageContactNo1}',
-        GarageContactNo2 = '${GarageContactNo2 || ""}',
-        AddedBy = '${GarageAddedBy}'
-        WHERE LeadId = ${LeadId};
-    `;
+  // Update VehicleDetails
+  const updateVehicleDetails = `
+  UPDATE VehicleDetails
+  SET 
+    RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : null},
+    MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : null},
+    TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : null},
+    DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : null},
+    PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : null},
+    TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : null},
+    EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : null},
+    AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : null},
+    ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : null},
+    FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : null},
+    MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : null},
+    MakerModel = ${MakerModel ? `'${MakerModel}'` : null},
+    CubicCapacity = ${VehicleCubicCap ? `'${VehicleCubicCap}'` : null},
+    FitUpto = ${FitUpto ? `'${FitUpto}'` : null},
+    PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : null},
+    VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : null},
+    BancsModelCode = ${BancsModelCode ? `'${BancsModelCode}'` : null},
+    BancsMakeCode = ${BancsMakeCode ? `'${BancsMakeCode}'` : null},
+    BancsSubtypeCode = ${BancsSubtypeCode ? `'${BancsSubtypeCode}'` : null},
+    BancsBodyType = ${BancsBodyType ? `'${BancsBodyType}'` : null},
+    BancsVehicleClass = ${BancsVehicleClass ? `'${BancsVehicleClass}'` : null},
+    BancsVehicleSegment = ${BancsVehicleSegment ? `'${BancsVehicleSegment}'` : null},
+    RcRtoCode = ${RcRtoCode ? `'${RcRtoCode}'` : null},
+    VehicleRcStatus = ${VehicleRcStatus ? `'${VehicleRcStatus}'` : null},
+    VehicleBlackListStatus = ${VehicleBlackListStatus ? `'${VehicleBlackListStatus}'` : null},
+    VehicleRegistedAt = ${VehicleRegistedAt ? `'${VehicleRegistedAt}'` : null},
+    VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `'${VehicleInsuranceCompany}'` : null},
+    ManufactureMonthYear = ${ManufactureMonthYear ? `'${ManufactureMonthYear}'` : null},
+    PermanentAddress = ${PermanentAddress ? `'${PermanentAddress}'` : null},
+    ClassOfVehicle = ${ClassOfVehicle ? `'${ClassOfVehicle}'` : null},
+    RegisteredOwner = ${VehicleRegisteredOwner ? `'${VehicleRegisteredOwner}'` : null},
+    SeatingCapacity = ${SeatingCapacity ? `'${SeatingCapacity}'` : null},
+    VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : null}
+  WHERE LeadId = ${LeadId};
+`;
   
-    // Update InsuredDetails
-    const updateInsuredDetails = `
-      UPDATE InsuredDetails
-      SET
-        InsuredName = '${InsuredName}',
-        InsuredMobileNo1 = '${InsuredMobileNo1}',
-        InsuredMobileNo2 = '${InsuredMobileNo2}',
-        InsuredMailAddress = '${InsuredMailAddress}',
-        AddedBy='${insuredAddedBy}'
-      WHERE LeadId = ${LeadId};
-    `;
-
+  // Update GarageDetails
+  const updateGarageDetails = `
+    UPDATE GarageDetails
+    SET
+    GarageNameAndAddress = ${GarageNameAndAddress ? `'${GarageNameAndAddress}'` : null},
+    GarageContactNo1 = ${GarageContactNo1 ? `'${GarageContactNo1}'` : null},
+    GarageContactNo2 = ${GarageContactNo2 ? `'${GarageContactNo2}'` : "''"},
+    AddedBy = ${GarageAddedBy ? `'${GarageAddedBy}'` : null}
+    WHERE LeadId = ${LeadId};
+  `;
+  
+  // Update InsuredDetails
+  const updateInsuredDetails = `
+    UPDATE InsuredDetails
+    SET
+    InsuredName = ${InsuredName ? `'${InsuredName}'` : null},
+    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : null},
+    InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : null},
+    InsuredMailAddress = '${InsuredMailAddress}',
+    AddedBy = ${insuredAddedBy ? `'${insuredAddedBy}'` : null}
+    WHERE LeadId = ${LeadId};
+  `;
   
     db.query(updateClaimDetails, (error, results) => {
       if (error) {

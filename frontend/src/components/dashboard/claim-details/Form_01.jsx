@@ -106,7 +106,7 @@ const Form_01 = ({
          
         })
         .catch((err) => {
-          console.log("err", err);
+          alert("err", err);
          
         });
 

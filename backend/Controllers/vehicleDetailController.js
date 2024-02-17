@@ -147,6 +147,7 @@ const axios = require("axios");
         });
         })
         .catch((Err)=>{
+          console.log(Err);
           return res.status(500).send("Internal Server Error");
         })
   };

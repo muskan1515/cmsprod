@@ -5,10 +5,10 @@ import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 
 const CreateList = () => {
-  const [applicantNumber, setApplicantNumber] = useState();
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [phoneNumber_01, setPhoneNumber_01] = useState("");
-  // const [garageMailAddress,setGarageMailAddress]=useState("");
+  const [applicantNumber, setApplicantNumber] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [phoneNumber_01, setPhoneNumber_01] = useState(null);
+  // const [garageMailAddress,setGarageMailAddress]=useState();
   const router = useRouter();
   //Date
   const todayDate = new Date();
@@ -17,28 +17,28 @@ const CreateList = () => {
 
   const [region, setRegion] = useState(regionType);
   const [date, setDate] = useState(formattedTodayDate);
-  const [surveyType, setSurveyType] = useState("");
-  const [inspectionType, setInspectionType] = useState("");
-  const [policyNumber, setPolicyNumber] = useState("");
-  const [policyIssuingOffice, setPolicyIssuingOffice] = useState("");
+  const [surveyType, setSurveyType] = useState(null);
+  const [inspectionType, setInspectionType] = useState(null);
+  const [policyNumber, setPolicyNumber] = useState(null);
+  const [policyIssuingOffice, setPolicyIssuingOffice] = useState(null);
   const [policyStartDate, setPolicyStartDate] = useState(null);
   const [policyStartEnd, setPolicyStartEnd] = useState(null);
-  const [claimSurvicingOffice, setClaimSurvicingOffice] = useState("");
-  const [insuredName, setInsuredName] = useState("");
-  const [insuredMobileNo1, setInsuredMobileNo1] = useState("");
-  const [insuredMobileNo2, setInsuredMobileNo2] = useState("");
-  const [insuredMailAddress, setInsuredMailAddress] = useState("");
-  const [vehicleParticular, setVehicleParticular] = useState("");
-  const [placeOfLoss, setPlaceOfLoss] = useState("");
-  const [natureOfLoss, setNatureOfLoss] = useState("");
-  const [estimatedLoss, setEstimatedLoss] = useState("");
-  const [garageName, setGarageName] = useState("");
-  const [garageNumber, setGarageNumber] = useState("");
-  const [garageMailId, setGarageMailId] = useState("");
-  const [claimNumber, setClaimNumber] = useState("");
+  const [claimSurvicingOffice, setClaimSurvicingOffice] = useState(null);
+  const [insuredName, setInsuredName] = useState(null);
+  const [insuredMobileNo1, setInsuredMobileNo1] = useState(null);
+  const [insuredMobileNo2, setInsuredMobileNo2] = useState(null);
+  const [insuredMailAddress, setInsuredMailAddress] = useState(null);
+  const [vehicleParticular, setVehicleParticular] = useState(null);
+  const [placeOfLoss, setPlaceOfLoss] = useState(null);
+  const [natureOfLoss, setNatureOfLoss] = useState(null);
+  const [estimatedLoss, setEstimatedLoss] = useState(null);
+  const [garageName, setGarageName] = useState(null);
+  const [garageNumber, setGarageNumber] = useState(null);
+  const [garageMailId, setGarageMailId] = useState(null);
+  const [claimNumber, setClaimNumber] = useState(null);
   const [brokerMailId, setBrokerMailId] = useState("intimationmt@gmail.com");
 
-  const [BrokerMailAddress, setBrokerMailAddress] = useState("");
+  const [BrokerMailAddress, setBrokerMailAddress] = useState(null);
 
   useEffect(() => {
     // Update policyStartEnd when policyStartDate changes
@@ -181,7 +181,7 @@ const CreateList = () => {
           <div className="row mt-1 mb-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   color: "#2e008b",
@@ -218,7 +218,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -261,7 +261,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -289,7 +289,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -329,7 +329,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -360,7 +360,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -389,7 +389,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -418,7 +418,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -448,7 +448,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -482,7 +482,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -511,7 +511,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -540,7 +540,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -569,7 +569,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -602,7 +602,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -632,7 +632,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -661,7 +661,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -690,7 +690,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -719,7 +719,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -748,7 +748,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -777,7 +777,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -805,7 +805,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -834,7 +834,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -873,7 +873,7 @@ const CreateList = () => {
           <div className="row mt-1 mb-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   color: "#2e008b",
@@ -902,7 +902,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   color: "#2e008b",
@@ -931,7 +931,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -962,7 +962,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -985,7 +985,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1012,7 +1012,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1039,7 +1039,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1062,7 +1062,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1085,7 +1085,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1112,7 +1112,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1139,7 +1139,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1166,7 +1166,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1198,7 +1198,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1225,7 +1225,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1252,7 +1252,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1279,7 +1279,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1306,7 +1306,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1333,7 +1333,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1360,7 +1360,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -1387,7 +1387,7 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                htmlFor=""
+                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",

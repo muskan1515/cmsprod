@@ -228,8 +228,7 @@ const Index = ({}) => {
       oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
 
-      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-      return (formattedOneYearLater);
+      return (oneYearLater);
     
   }
  
@@ -381,11 +380,12 @@ const Index = ({}) => {
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
+    setSubType(claim?.claimDetails?.SurveyType );
     setLicenseNumber(claim?.driverDetails?.LicenseNumber );
     setIssuingAuthority(claim?.driverDetails?.IssuingAuthority );
     setInsuredAddedBy(claim?.insuredDetails?.AddedBy);
     setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber || '')
-    setInsuredName(claim?. zinsuredDetails?.InsuredName);
+    setInsuredName(claim?.insuredDetails?.InsuredName);
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
     setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2);

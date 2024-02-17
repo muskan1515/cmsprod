@@ -300,6 +300,7 @@ WHERE
   
     db.query(insertDriverDetails, (error, results) => {
       if (error) {
+        console.log(error);
         console.error("Error updating data in driver Details:", error);
         return res
           .status(500)

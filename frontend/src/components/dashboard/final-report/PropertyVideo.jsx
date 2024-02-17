@@ -637,7 +637,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     })
     .then((res)=>{
       alert("Successfully updated!");
-      // window.location.reload();
+      window.location.reload();
     })
     .catch((Err)=>{
       alert(Err);

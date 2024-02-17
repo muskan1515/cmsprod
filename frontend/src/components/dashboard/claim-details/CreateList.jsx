@@ -129,7 +129,7 @@ const CreateList = ({
       PolicyNo: PolicyNo,
       Insured: Insured,
       toMail: mailAddress,
-      leadId: claim?.claimDetails?.LeadId,
+      leadId: claim?.claimDetails?.LeadID,
       date: formatDate(new Date()),
     };
 
@@ -143,6 +143,7 @@ const CreateList = ({
       .then((res) => {
         toast.dismiss();
         alert("Successfully sent the mail!");
+        window.location.reload();
       })
       .catch((err) => {
         toast.dismiss();
@@ -308,9 +309,7 @@ const CreateList = ({
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
-              {claim.claimStatus?.ClaimStatus <= 1 &&
-                claim.claimDetails?.ClaimNumber &&
-                InsuredMailAddress !== "None" && (
+              {!claim.claimDetails?.IsMailSent  && claim?.insuredDetails?.InsuredMailAddress && (
                   <button
                     onClick={() =>
                       sendMailHandler(

@@ -210,7 +210,7 @@ const Form = ({
          window.location.reload();
         })
         .catch((err) => {
-          console.log("err", err);
+          alert("err", err);
         });
       
      
@@ -411,7 +411,7 @@ const Form = ({
                             
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={ DateRegistration ? new Date(
+                            selectedDate={ DateRegistration !== null && !DateRegistration  ? new Date(
                               DateRegistration) : ""}
                             setSelectedDate={
                               setDateRegistration
@@ -473,7 +473,7 @@ const Form = ({
                           <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={TransferDate ? new Date(
+                            selectedDate={TransferDate !== "null" && !TransferDate ? new Date(
                               TransferDate) : ""
                             }
                             setSelectedDate={ setTransferDate}
