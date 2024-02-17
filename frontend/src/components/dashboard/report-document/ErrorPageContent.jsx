@@ -11,29 +11,87 @@ const ErrorPageContent = ({ allInfo }) => {
 
   const downloadPDF = () => {
     const input = pdfRef.current;
+    const pdf = new jsPDF("p", "mm", "a4", true);
 
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4", true);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 30;
+    const generatePage = (pageNumber) => {
+      return new Promise((resolve) => {
+        html2canvas(input, {
+          useCORS: true,
+          scale: 2,
+          logging: true,
+          allowTaint: true,
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = canvas.width;
+          const imgHeight = canvas.height;
+          const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+          const imgX = (pdfWidth - imgWidth * ratio) / 2;
+          const imgY = 30;
 
-      pdf.addImage(
-        imgData,
-        "PNG",
-        imgX,
-        imgY,
-        imgWidth * ratio,
-        imgHeight * ratio
-      );
-      pdf.save("invoice.pdf");
-    });
+          pdf.addImage(
+            imgData,
+            "PNG",
+            imgX,
+            imgY,
+            imgWidth * ratio,
+            imgHeight * ratio
+          );
+
+          if (pageNumber < totalPages) {
+            pdf.addPage(); // Add a new page for the next iteration
+            resolve();
+          } else {
+            resolve(); // Resolve when all pages are generated
+          }
+        });
+      });
+    };
+
+    const totalPages = 3;
+
+    let currentPage = 1;
+
+    const generateAllPages = () => {
+      if (currentPage <= totalPages) {
+        generatePage(currentPage).then(() => {
+          currentPage++;
+          generateAllPages(); // Recursively generate the next page
+        });
+      } else {
+        pdf.save("invoice.pdf");
+      }
+    };
+
+    generateAllPages();
   };
+
+  // const downloadPDF = () => {
+  //   const input = pdfRef.current;
+
+  //   html2canvas(input).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF("p", "mm", "a4", true);
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = pdf.internal.pageSize.getHeight();
+  //     const imgWidth = canvas.width;
+  //     const imgHeight = canvas.height;
+  //     const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+  //     const imgX = (pdfWidth - imgWidth * ratio) / 2;
+  //     const imgY = 30;
+
+  //     pdf.addImage(
+  //       imgData,
+  //       "PNG",
+  //       imgX,
+  //       imgY,
+  //       imgWidth * ratio,
+  //       imgHeight * ratio
+  //     );
+  //     pdf.save("invoice.pdf");
+  //   });
+  // };
 
   const formatDate = (dateString) => {
     const options = {
@@ -96,7 +154,7 @@ const ErrorPageContent = ({ allInfo }) => {
   };
 
   return (
-    <div className="" ref={pdfRef}>
+    <div className="" style={{ width: "" }} ref={pdfRef}>
       {/* Header Content */}
       <div>
         <h3>MUTNEJA Tech</h3>{" "}

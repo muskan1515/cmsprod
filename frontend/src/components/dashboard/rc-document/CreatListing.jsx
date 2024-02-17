@@ -123,7 +123,7 @@ const RCData = ({ leadId }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
-    const input = pdfRef.current;
+    const input = pdfRef.current; 
 
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");

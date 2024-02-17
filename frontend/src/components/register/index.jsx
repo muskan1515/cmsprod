@@ -4,6 +4,7 @@ import Header from "../common/header/DefaultHeader";
 import MobileMenu from "../common/header/MobileMenu";
 import PopupSignInUp from "../common/PopupSignInUp";
 import BreadCrumbBanner from "./BreadCrumbBanner";
+import Image from "next/image";
 import Form from "./Form";
 
 const index = () => {
@@ -19,13 +20,24 @@ const index = () => {
       <PopupSignInUp />
 
       {/* <!-- Inner Page Breadcrumb --> */}
-      <BreadCrumbBanner />
+      {/* <BreadCrumbBanner /> */}
 
       {/* <!-- Our LogIn Register --> */}
-      <section className="our-log bgc-fa">
+      <section className="our-log bgc-fa mt50 mb100">
         <div className="container">
-          <div className="row  ">
-            <div className="col-sm-12 col-lg-6 offset-lg-3">
+          <div className="row p-3" style={{ backgroundColor: "light" }}>
+            {/* <div className="col-sm-12 col-lg-4">
+              <div className="login_form  inner_page">
+                <Image
+                  width={364}
+                  height={278}
+                  className="img-circle-rounded w100"
+                  src="/assets/images/home/11.avif"
+                  alt="fp1.jpg"
+                />
+              </div>
+            </div> */}
+            <div className="col-sm-12 col-lg-12">
               <div className="login_form  inner_page">
                 <Form />
               </div>
@@ -35,13 +47,13 @@ const index = () => {
       </section>
 
       {/* <!-- Our Footer --> */}
-      <section className="footer_one">
+      {/* <section className="footer_one">
         <div className="container">
           <div className="row">
             <Footer />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* <!-- Our Footer Bottom Area --> */}
       <section className="footer_middle_area pt40 pb40">

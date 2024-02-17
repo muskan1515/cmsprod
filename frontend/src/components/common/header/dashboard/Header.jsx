@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import HeaderMenuContent from "./HeaderMenuContent";
 import Image from "next/image";
 
-const Header = ({setIsRegionChange, isDashboard, setRegionSearchValue}) => {
+const Header = ({ setIsRegionChange, isDashboard, setRegionSearchValue }) => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -31,22 +31,28 @@ const Header = ({setIsRegionChange, isDashboard, setRegionSearchValue}) => {
             width={40}
             height={45}
             className="logo1 img-fluid"
-            src="/assets/images/header-logo2.png"
-            alt="header-logo2.png"
+            src="/assets/images/Claim_Logo.jpg"
+            alt="Claim_Logo.jpg"
           />
           <Image
             width={40}
             height={45}
             className="logo2 img-fluid"
-            src="/assets/images/header-logo2.png"
-            alt="header-logo2.png"
+            src="/assets/images/Claim_Logo.jpg"
+            alt="Claim_Logo.jpg"
           />
-          <span className="mb-1" style={{fontSize:"25px"}}>Claim Management</span>
+          <span className="mb-1" style={{ fontSize: "25px" }}>
+            Claim Management
+          </span>
         </Link>
         {/* site logo brand */}
 
         <nav>
-        <HeaderMenuContent setIsRegionChange={setIsRegionChange} isDashboard={isDashboard} setRegionSearchValue ={setRegionSearchValue}/>
+          <HeaderMenuContent
+            setIsRegionChange={setIsRegionChange}
+            isDashboard={isDashboard}
+            setRegionSearchValue={setRegionSearchValue}
+          />
         </nav>
         {/* End .navbar */}
       </div>

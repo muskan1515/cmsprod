@@ -27,20 +27,20 @@ const Header = () => {
       <div className="container-fluid p0">
         {/* <!-- Menu Toggle btn--> */}
         <Link href="/" className="navbar_brand float-start dn-smd">
-          {/* <Image
+          <Image
             width={40}
             height={45}
             className="logo1 img-fluid"
-            src="/assets/images/header-logo2.png"
+            src="/assets/images/Claim_Logo.jpgg"
             alt="header-logo2.png"
           />
           <Image
             width={40}
             height={45}
             className="logo2 img-fluid"
-            src="/assets/images/header-logo2.png"
+            src="/assets/images/Claim_Logo.jpg"
             alt="header-logo2.png"
-          /> */}
+          />
           <span>Claim Management</span>
         </Link>
         {/* site logo brand */}
