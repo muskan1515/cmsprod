@@ -1,6 +1,40 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
 
+const getSpecificVehicleDetails = async (req, res) => {
+  const leadId = req.query.LeadId;
+
+
+  const executeQuery = (query, values) => {
+    return new Promise((resolve, reject) => {
+      db.query(query, values, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result[0]);
+        }
+      });
+    });
+  };
+
+  try {
+    const vehicleDetails = await executeQuery(
+      "SELECT * FROM VehicleDetails WHERE LeadId=?",
+      [leadId]
+    );
+    
+    const combinedResult = {
+      vehicleDetails
+    };
+
+
+    res.json(combinedResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 
 
  const getOnlineVehicleData = (req, res) => {
@@ -156,5 +190,5 @@ const axios = require("axios");
 
 
 
-  module.exports={getOnlineVehicleData}
+  module.exports={getOnlineVehicleData,getSpecificVehicleDetails}
   

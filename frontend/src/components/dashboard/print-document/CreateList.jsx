@@ -18,6 +18,9 @@ const CreateList = () => {
     if (selectedValue === "dl") {
       router.push(`/dl-document/${leadId}`);
     }
+    if (selectedValue === "billcreation") {
+      router.push(`/bill-creation/${leadId}`);
+    }
 
 
   };

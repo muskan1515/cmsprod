@@ -118,6 +118,9 @@ const ErrorPageContent = ({ allInfo }) => {
     return formattedDate;
   };
 
+
+  //*******************functions******************************//
+
   const calculateGlassDept = (part) => {
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
     const Depreciation =
@@ -129,6 +132,7 @@ const ErrorPageContent = ({ allInfo }) => {
   };
 
   const calculateMetalDept = (part) => {
+
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
     const Depreciation =
       (assessed * Number(part.NewPartsDepreciationPct)) / 100;
@@ -152,6 +156,60 @@ const ErrorPageContent = ({ allInfo }) => {
     }
     return 0;
   };
+
+  const getTotalGlassAssessed=()=>{
+    let total = 0;
+    allInfo?.newPartsDetails.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+    const Depreciation =
+      (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+    if (String(part.NewPartsTypeOfMaterial === "Glass")) {
+      total = total +  Depreciation;
+    }
+     
+    });
+    return total;
+  }
+
+  const getTotalMetalAssessed=()=>{
+    let total = 0;
+    allInfo?.newPartsDetails.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (String(part.NewPartsTypeOfMaterial === "Glass")) {
+        total = total + Depreciation;
+      }
+     
+    });
+    return total;
+  }
+
+  const getTotalOtherMetalAssesses=()=>{
+    let total = 0;
+    allInfo?.newPartsDetails.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(
+          part.NewPartsTypeOfMaterial !== "Glass" ||
+            String(part.NewPartsTypeOfMaterial === "Metal")
+        )
+      ) {
+        total = total + Depreciation;
+      }
+      
+    });
+    return total;
+  }
+
+  const getTotalNewPartsEstimate = ()=>{
+
+  }
+
+
+  //***************** */
 
   return (
     <div className="" style={{ width: "" }} ref={pdfRef}>
@@ -201,7 +259,7 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
       <div className="text-center mt-5">
         <h4>
-          {allInfo?.otherInfo[0].SurveyType} FINAL{" "}
+          {allInfo?.otherInfo[0]?.SurveyType} FINAL{" "}
           {allInfo?.otherInfo[0]?.InspectionType} REPORT (
           {allInfo?.otherInfo[0]?.SettlementType})- (
           {allInfo?.otherInfo[0]?.PolicyType})
@@ -238,7 +296,7 @@ const ErrorPageContent = ({ allInfo }) => {
           </div>
           <div>
             <label htmlFor="">Claim No. : -</label>
-            <span> {allInfo?.otherInfo[0].ClaimNumber} </span>
+            <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">

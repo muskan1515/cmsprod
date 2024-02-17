@@ -16,55 +16,61 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
 
-const RCData = ({ leadId }) => {
-  const [dlDetails, setdlDetails] = useState({});
-  console.log("LeadId", leadId);
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    axios
-      .get("/api/getSpecificClaim", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          LeadId: leadId,
-        },
-      })
-      .then((res) => {
-        console.log("D+++++", res.data.data);
-        setdlDetails(res.data.data.dlDetails);
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }, [leadId]);
-
-  console.log("LPGGG", dlDetails);
+const RCData = ({ DriverDetails }) => {
 
   const rcDetails = {
-    "Chassis No.": "MA3FHEB1S00C55208",
-    "Engine No.": "D13A2989355",
-    "Maker Name": "MARUTI SUZUKI INDIA LTD",
-    "Model Name": "MARUTI SWIFT VDI",
-    "Registration Date": "04-Apr-17",
-    "Tax Valid UpTo": "ΝΑ",
-    "Vehicle Class": "LMV",
-    "Vehicle Description": "Motor Car ( LMV )",
-    "Fuel Type": "DIESEL",
-    "Emission Norm": "BHARAT STAGE IV",
-    Color: "WHITE",
-    "Seat Capacity": "5",
-    "Standing Capacity": "0",
-    Financier: "INDIAN BANK",
-    "Insurance Company": "The New India Assurance Company Limited",
-    "Insurance Policy No.": "9.8E+19",
-    "Insurance Valid UpTo": "30-Mar-24",
-    "Fitness Valid UpTo": "03-Apr-32",
-    "PUCC No.": "HR05504260000707",
-    "PUCC Valid Upto": "26-Dec-23",
-    "Registering Authority": "SRI GANGANAGAR DTO, Rajasthan",
+    "Driver Name":"N.A.",
+    "Father Name":"N.A",
+    "Age":"N.A.",
+    "Address":"N.A.",
+    "Mobile":"N.A.",
+    "Date Of Birth": "N.A.",
+    "Blood Group":"N.A.",
+    "Gender": "N.A.",
+    "Issuing Authority":"N.A.",
+    "License Number": "N.A.",
+    "License Type": "N.A.",
+    "Badge Number":"N.A.",
+    "Rto Name":"N.A.",
+    "Cov":"N.A.",
+    "Vaild Upto":"N.A.",
+    "Valid From":"N.A.",
+    "Valid Until Ntv":"N.A.",
+    "Valid Until Tv":"N.A.",
   };
+
+  const [rcDetailData,setRcDetailData]=useState(rcDetails)
+
+  useEffect(()=>{
+
+    const addDefaultValue = (value) => (value !== undefined ? value : "N.A.");
+
+const rcDetailsUpdated = {
+  "Driver Name": addDefaultValue(DriverDetails?.DriverName),
+  "Father Name": addDefaultValue(DriverDetails?.FatherName),
+  "Age": addDefaultValue(DriverDetails?.Age),
+  "Address": addDefaultValue(DriverDetails?.Address),
+  "Mobile": addDefaultValue(DriverDetails?.Mobile),
+  "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
+  "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
+  "Gender": addDefaultValue(DriverDetails?.Gender),
+  "Issuing Authority": addDefaultValue(DriverDetails?.IssuingAuthority),
+  "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
+  "License Type": addDefaultValue(DriverDetails?.LicenseType),
+  "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
+  "Rto Name": addDefaultValue(DriverDetails?.RtoName),
+  "Cov": addDefaultValue(DriverDetails?.Vov),
+  "Vaild Upto": addDefaultValue(DriverDetails?.VaildUpto),
+  "Valid From": addDefaultValue(DriverDetails?.ValidFrom),
+  "Valid Until Ntv": addDefaultValue(DriverDetails?.ValidUntilNtv),
+  "Valid Until Tv": addDefaultValue(DriverDetails?.ValidUntilTv),
+    };
+
+    setRcDetailData(rcDetailsUpdated);
+
+    rcDetails
+
+  },[DriverDetails]);
 
   const handleExtract = async (format) => {
     if (format === "Word") {
@@ -192,7 +198,7 @@ const RCData = ({ leadId }) => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(rcDetails).map(([key, value]) => (
+            {Object.entries(rcDetailData).map(([key, value]) => (
               <tr key={key} style={{ borderBottom: "1px solid #ddd" }}>
                 <td
                   style={{ color: "black", textAlign: "left", padding: "10px" }}

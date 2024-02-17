@@ -8,30 +8,31 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Index = ({leadId}) => {
-  //   const [allInfo, setAllInfo] = useState(null);
+  const [vehicleDetails,setDriverDetails]=useState({});
+ 
+  useEffect(() => {
 
-  //   useEffect(() => {
-  //     const userData = JSON.parse(localStorage.getItem("userInfo"));
-  //     const url = window.location.pathname;
-  //     const leadId = url.split("/report-document/")[1];
-
-  //     console.log(leadId);
-  //     axios
-  //       .get("/api/getReportInfo", {
-  //         headers: {
-  //           Authorization: `Bearer ${userData[0].Token}`,
-  //         },
-  //         params: {
-  //           LeadId: leadId,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setAllInfo(res.data.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+    const url = window.location.pathname;
+    const leadId = url.split("/rc-document/")[1];
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    axios
+      .get("/api/getSpecificVehicleDetails", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: leadId,
+        },
+      })
+      .then((res) => {
+       
+        setDriverDetails(res.data.data.vehicleDetails);
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+    },[]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -48,7 +49,7 @@ const Index = ({leadId}) => {
           <div className="row">
             <div className="col-lg-12">
               {/* <ErrorPageContent allInfo={allInfo} /> */}
-              <RCData leadId = {leadId} />
+              <RCData vehicleDetails = {vehicleDetails} />
             </div>
           </div>
         </div>

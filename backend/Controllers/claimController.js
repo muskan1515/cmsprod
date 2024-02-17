@@ -243,7 +243,7 @@ const addClaim =  (req, res) => {
                         });
                       }
   
-                      if(InsuredMailAddress !== "null" || !InsuredMailAddress){
+                      if(InsuredMailAddress !== null ){
                       axios
                         .post(
                           `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
@@ -263,7 +263,7 @@ const addClaim =  (req, res) => {
                           }
                         )
                         .then((ressss) => {
-                         
+                          console.log(ressss);
                         })
                         .catch((Er) => {
                           return res.status(500).json({
@@ -272,7 +272,7 @@ const addClaim =  (req, res) => {
                           });
                         });
                       }
-                        if (GarageMailAddress !== "null" || !GarageMailAddress) {
+                        if (GarageMailAddress !== null) {
                           axios
                             .post(
                               `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
@@ -291,7 +291,7 @@ const addClaim =  (req, res) => {
                               }
                             )
                             .then((ressss) => {
-                             
+                             console.log(ressss);
                             })
                             .catch((Er) => {
                               return res.status(500).json({
@@ -299,7 +299,7 @@ const addClaim =  (req, res) => {
                               });
                             });
                         }
-                        if (BrokerMailAddress !== "null" || !BrokerMailAddress) {
+                        if (BrokerMailAddress !== null) {
                           axios
                             .post(
                               `${process.env.BACKEND_DOMAIN}/email/sendEmail/3`,
@@ -315,7 +315,7 @@ const addClaim =  (req, res) => {
                               }
                             )
                             .then((ressss) => {
-                              
+                              console.log(ressss);
                             })
                             .catch((Er) => {
                               return res.status(500).json({

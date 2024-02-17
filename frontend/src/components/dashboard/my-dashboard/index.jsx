@@ -6,6 +6,7 @@ import AllStatistics from "./AllStatistics";
 import StatisticsChart from "./StatisticsChart";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
+import {toast} from 'react-hot-toast'
 import { useEffect, useState } from "react";
 import axios, { all } from "axios";
 import Pagination from "./Pagination";
@@ -119,6 +120,7 @@ const Index = () => {
       router.push("/login");
     }
     // console.log(userInfo[0].Token)
+    toast.loading("Fetching all the claims!!");
     axios
       .get("/api/getAllClaims", {
         headers: {
@@ -127,11 +129,11 @@ const Index = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data[0]);
+        toast.success("Successfully fetched!");
         setAllClaims(res.data.data[0]);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("error while fetching all claims!");
       });
 
     axios

@@ -1,6 +1,43 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
 
+const getSpecificDriverDetails = async (req, res) => {
+  const leadId = req.query.LeadId;
+
+
+  const executeQuery = (query, values) => {
+    return new Promise((resolve, reject) => {
+      db.query(query, values, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result[0]);
+        }
+      });
+    });
+  };
+
+  try {
+    const driverDetails = await executeQuery(
+      "SELECT * FROM DriverDetails WHERE LeadId=?",
+      [leadId]
+    );
+    
+    const combinedResult = {
+      
+      driverDetails,
+    };
+
+    console.log(combinedResult)
+
+    res.json(combinedResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
  const getOnlineDriverDetails = (req, res) => {
 
   const dl_number=req.query.dl_number;
@@ -311,5 +348,5 @@ WHERE
         
   };
 
-  module.exports={getOnlineDriverDetails,updateDriverDetailsOnline}
+  module.exports={getOnlineDriverDetails,updateDriverDetailsOnline,getSpecificDriverDetails}
   
