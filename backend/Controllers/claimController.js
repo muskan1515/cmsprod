@@ -58,7 +58,7 @@ const addClaim =  (req, res) => {
         Token,
         IsActive
       ) VALUES (
-        ${SurveyType},
+        '${SurveyType}',
         '${ReferenceNo}',
         '${PolicyNumber}',
         ${PolicyPeriodStart},
@@ -67,7 +67,7 @@ const addClaim =  (req, res) => {
         ${ClaimServicingOffice},
         '${(AddedBy)}',
         '${Region}',
-        ${InspectionType},
+        '${InspectionType}',
         ${parseInt(IsClaimCompleted)},
         '${BrokerMailAddress}',
         '${generatedToken}',
