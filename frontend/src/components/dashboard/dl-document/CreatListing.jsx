@@ -12,8 +12,11 @@ import {
   Document as PDFDocument,
 } from "@react-pdf/renderer";
 import axios from "axios";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { useRef } from "react";
 
-const RCData = ({leadId}) => {
+const RCData = ({ leadId }) => {
   const [dlDetails, setdlDetails] = useState({});
   console.log("LeadId", leadId);
   useEffect(() => {
@@ -29,7 +32,7 @@ const RCData = ({leadId}) => {
         },
       })
       .then((res) => {
-        console.log('D+++++',res.data.data);
+        console.log("D+++++", res.data.data);
         setdlDetails(res.data.data.dlDetails);
       })
       .catch((err) => {
@@ -38,15 +41,6 @@ const RCData = ({leadId}) => {
   }, [leadId]);
 
   console.log("LPGGG", dlDetails);
-
-
-
-
-
-
-
-
-
 
   const rcDetails = {
     "Chassis No.": "MA3FHEB1S00C55208",
@@ -112,12 +106,46 @@ const RCData = ({leadId}) => {
     }
   };
 
+  const pdfRef = useRef();
+
+  const downloadPDF = () => {
+    const input = pdfRef.current;
+
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4", true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      );
+      pdf.save("invoice.pdf");
+    });
+  };
+
   return (
-    <div style={{ paddingTop: "10px", textAlign: "center" }}>
+    <div style={{ paddingTop: "10px", textAlign: "center" }} ref={pdfRef}>
       <h2 style={{ color: "black", width: "95%", textAlign: "center" }}>
         DL Details
       </h2>
       <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+        {/* <div className="row text-center mt-5">
+          <button className="btn btn-primary" onClick={downloadPDF}>
+            Download PDF
+          </button>
+        </div> */}
+
         <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-extract">
             Extract
@@ -126,8 +154,10 @@ const RCData = ({leadId}) => {
             <Dropdown.Item onClick={() => handleExtract("Word")}>
               Extract to Word
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleExtract("PDF")}>
-              Extract to PDF
+            <Dropdown.Item>
+              <button className="btn" onClick={downloadPDF}>
+                Extract PDF
+              </button>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
