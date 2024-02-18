@@ -86,7 +86,7 @@ const getDocuments = (req, res) => {
 
  const uploadDocument = (req, res) => {
     const { data, leadId } = req.body;
-  
+  console.log('data',data);
     const array = data;
   
     const currentLeadId = data[0].leadId;
@@ -271,20 +271,23 @@ const getDocuments = (req, res) => {
   try {
     const { file: filesData, name } = req.body; // Use a different name for the file data
     const results = [];
-    console.log('LOGG',req.body);
   
 
     for (let i = 0; i < filesData.length; i++) {
       const fileData = filesData[i]; // Use a different name for the loop iteration
       const fileName = name[i];
-  
 
       // Check if the file data starts with "data:image/"
       if (fileData.startsWith("data:image/")) {
         const data = await uploadToAWS(fileData, fileName);
         results.push(data);
       } else if (fileData.startsWith("data:video/")) {
-        const data = await uploadToAWSVideo(fileData, fileName);
+        const prefixToRemove = "data:video/webm;base64,";
+        const dataWithoutPrefix = fileData.substring(prefixToRemove.length);
+      
+        const data = await uploadToAWSVideo(dataWithoutPrefix, fileName);
+        // const data = await uploadToAWSVideo(fileData, fileName);
+        // console.log('BLOBB',fileData);
         results.push(data);
       } else {
         console.log(`Unsupported file format for ${fileName}`);

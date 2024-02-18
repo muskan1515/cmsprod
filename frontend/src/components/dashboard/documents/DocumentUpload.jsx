@@ -344,9 +344,9 @@ export default function DocumentUpload({
     axios
       .post("/api/uploadFile", payload)
       .then((res) => {
-        console.log(res.data.userData.Location);
+        console.log('res.data',res.data);
 
-        const uploaded_Url = res.data.userData.Location;
+        const uploaded_Url = res.data.userData.data;
 
         const newUploadData = {
           docName: currentLabel,
@@ -365,6 +365,7 @@ export default function DocumentUpload({
         let oldData = uploadedData;
         oldData.push(newUploadData);
         setUpdatedData(oldData);
+        console.log("Old  Data ---->", oldData);
         console.log(oldData);
         // setUploadedUrl("");
         setChange(true);
@@ -478,7 +479,7 @@ export default function DocumentUpload({
           const videoUrl = URL.createObjectURL(blob);
           const name = generateRandomFileName("mp4");
           if(videoUrl){
-            setUploadedUrl((prevVideos) => [...prevVideos, videoUrl]);
+            // setUploadedUrl((prevVideos) => [...prevVideos, videoUrl]);
             setUploadedFileName((prevName) => [...prevName, name]);
           }
 
@@ -555,7 +556,7 @@ export default function DocumentUpload({
   }, []);
 
   useEffect(() => {
-    console.log(uploadedData);
+    console.log('uploadedData',uploadedData);
     const getData = () => {
       const tempData = [];
       data.map((row, index) => {
@@ -573,13 +574,14 @@ export default function DocumentUpload({
             doc_name: row.doc_name,
             files: uploadedData.map((file, idx) => {
               if (file.docName === row.doc_name) {
-                const fileName = String(file.data[0].name); // Convert to string
+                const fileName = String(file.data[0].thumbnail_url
+                  ); // Convert to string
                 return (
                   <div  
                     style={{ display: "flex", flexDirection: "column" }}
                     key={idx}
                   >
-                    {console.log("UPLOAD", file)}
+                    {console.log("UPLOAD>>>>>>", file)}
         
                     {/* Check if it's an image or video based on file extension */}
                     {fileName.endsWith('.jpg') || fileName.endsWith('.png') ? (
@@ -594,6 +596,9 @@ export default function DocumentUpload({
                         width={90}
                         height={90}
                         controls
+                        loop
+                        autoPlay
+
                       >
                         <source src={fileName} type="video/mp4" />  {/* Use the 'name' field for videos */}
                       </video>
