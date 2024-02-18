@@ -213,13 +213,25 @@ const ErrorPageContent = ({ allInfo }) => {
 
   return (
     <div className="" style={{ width: "" }} ref={pdfRef}>
+      {/* common header for all page */}
+      {/* <div className="col-lg-12 d-flex justify-content-between">
+        <div>
+          <h5>Mutneja Tech</h5>
+        </div>
+        <div>
+          <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+        </div>
+      </div>
+      <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
+      {/* common header for all page */}
+
       {/* Header Content */}
       <div>
         <h3>MUTNEJA Tech</h3>{" "}
         <span>
           {" "}
           <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle variant="primary" id="dropdown-extract">
                 Extract
               </Dropdown.Toggle>
@@ -233,7 +245,7 @@ const ErrorPageContent = ({ allInfo }) => {
                   </button>
                 </Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </span>
         <p>Insurance Surveyors and Loss Assessors Pvt. Ltd.</p>
@@ -357,6 +369,18 @@ const ErrorPageContent = ({ allInfo }) => {
             <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </div>
         </div>
+
+        {/* common header for all page */}
+        <div className="col-lg-12 d-flex justify-content-between mt-5">
+          <div>
+            <h5>Mutneja Tech</h5>
+          </div>
+          <div>
+            <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+          </div>
+        </div>
+        <div style={{ border: "1px solid black" }} className="mb-2"></div>
+        {/* common header for all page */}
 
         <div className=" text-start d-flex gap-5">
           <div>
@@ -531,6 +555,19 @@ const ErrorPageContent = ({ allInfo }) => {
             </span>
           </div>
         </div>
+
+        {/* common header for all page */}
+        <div className="col-lg-12 d-flex justify-content-between">
+          <div>
+            <h5>Mutneja Tech</h5>
+          </div>
+          <div>
+            <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+          </div>
+        </div>
+        <div style={{ border: "1px solid black" }} className="mb-2"></div>
+        {/* common header for all page */}
+
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(e) Date & Time of Survey :</label>
@@ -549,21 +586,6 @@ const ErrorPageContent = ({ allInfo }) => {
           </div>
         </div>
       </div>
-
-      {/* footer content */}
-      <hr style={{ border: "2px solid black" }} />
-      <div>
-        <h5 className="text-center">
-          H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
-          Ganganagar(Raj.)-335001
-        </h5>
-        <h5 className="text-center">
-          Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
-          Mountville,Sector-79,Gurugram(Hr)
-        </h5>
-      </div>
-      {/* footer content */}
-
       <hr style={{ border: "2px solid black" }} />
       <div>
         <h5>CAUSE & NATURE OF ACCIDENT :</h5>
@@ -620,7 +642,7 @@ const ErrorPageContent = ({ allInfo }) => {
           </span>
         </span>
       </div>
-      <br />
+      <hr />
       <div className="">
         <span>
           <b>Observation : </b> Subject with good condition overall. No other
@@ -629,6 +651,19 @@ const ErrorPageContent = ({ allInfo }) => {
         </span>
       </div>
       <br />
+
+      {/* common header for all page */}
+      <div className="col-lg-12 d-flex justify-content-between">
+        <div>
+          <h5>Mutneja Tech</h5>
+        </div>
+        <div>
+          <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+        </div>
+      </div>
+      <div style={{ border: "1px solid black" }} className="mb-2"></div>
+      {/* common header for all page */}
+
       <div>
         <h4>New Parts :</h4>
         <table border={1}>
@@ -939,7 +974,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <br />
       <div>
         <h4>LABOUR & REPAIRS :</h4>
-        <table border={1}>
+        <table>
           <tr>
             <th style={{ border: "1px solid black", padding: "10px" }}>S.No</th>
             <th style={{ border: "1px solid black", padding: "10px" }}>SAC</th>
@@ -971,6 +1006,21 @@ const ErrorPageContent = ({ allInfo }) => {
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr style={{ border: "none" }}>
+            <td colSpan={6}>
+              {/* common header for all page */}
+              <div className="col-lg-12 d-flex justify-content-between mt-1">
+                <div>
+                  <h5>Mutneja Tech</h5>
+                </div>
+                <div>
+                  <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+                </div>
+              </div>
+              <div style={{ border: "1px solid black" }} className="mb-2"></div>
+              {/* common header for all page */}
+            </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
@@ -1044,9 +1094,9 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
         </table>
       </div>
-      <div>
+      <div className="mt-4">
         <h4>SUMMARY OF ASSESSMENT</h4>
-        <table border={1}>
+        <table border={1} style={{ width: "100%" }}>
           <tr>
             <th
               style={{
@@ -1125,9 +1175,9 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
         </table>
       </div>
-      <div>
+      <div className="mt-4">
         <h4>GST Summary Tax Wise</h4>
-        <table>
+        <table style={{ width: "100%" }}>
           <tr>
             <th
               style={{
@@ -1349,7 +1399,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </table>
       </div>
       <div className="mt-2">
-        <table>
+        <table style={{ width: "100%" }}>
           <tr>
             <th
               style={{
@@ -1634,7 +1684,20 @@ const ErrorPageContent = ({ allInfo }) => {
           Letter, DL, RC, Policy, Photographs, [12 Nos.],Survey fee bill.
         </span>
       </div>
+
+      {/* common footer content */}
       <hr style={{ border: "2px solid black" }} />
+      <div>
+        <h5 className="text-center">
+          H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
+          Ganganagar(Raj.)-335001
+        </h5>
+        <h5 className="text-center">
+          Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
+          Mountville,Sector-79,Gurugram(Hr)
+        </h5>
+      </div>
+      {/* common footer content */}
     </div>
   );
 };
