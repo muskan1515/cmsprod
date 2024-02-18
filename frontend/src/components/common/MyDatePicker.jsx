@@ -7,6 +7,7 @@ const MyDatePicker = ({ selectedDate, setSelectedDate,disable }) => {
   const [currentDate, setCurrentDate] = useState(
     selectedDate 
   );
+  console.log("selectedDate",selectedDate);
 
   const formatDate = (date) => {
     const formattedDate = date.toLocaleDateString("en-US");
@@ -14,12 +15,12 @@ const MyDatePicker = ({ selectedDate, setSelectedDate,disable }) => {
     setSelectedDate(formattedDate);
    
   };
-
   return (
     <DatePicker
     readOnly={disable}
       className="form-control"
       selected={currentDate ? new Date(currentDate) : null}
+      
       onChange={(date) => formatDate(date)}
       showYearDropdown
       dateFormat="MM/dd/yyyy"

@@ -8,6 +8,8 @@ import Form_driver from "./Form_driver";
 import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // import toast from "react-hot-toast";
 
 const Form_01 = ({
@@ -585,7 +587,7 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
+                          {/* <MyDatePicker
                             className="form-control"
                             id="propertyTitle"
                             setSelectedDate={setValidUpto}
@@ -594,6 +596,17 @@ const Form_01 = ({
                             }
 
                             // placeholder="Enter Registration No."
+                          /> */}
+                          {console.log('ValidUpto+++++++++',ValidUpto)}
+                           <DatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            selected={
+                              ValidUpto !== null && !isNaN(new Date(ValidUpto))
+                                ? new Date(ValidUpto)
+                                : null
+                            }
+                            onChange={(date) => setValidUpto(date)}
                           />
                         </div>
                       </div>

@@ -1,7 +1,9 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import MyDatePicker from "../../common/MyDatePicker";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useEffect } from "react";
 const CreateList = ({
   claim,
   InsuredName,
@@ -48,7 +50,7 @@ const CreateList = ({
   };
   
 
-  console.log(policyStartDate);
+  console.log("policyStartDate", policyStartDate);
 
   const statusOptions = [
     {
@@ -100,6 +102,28 @@ const CreateList = ({
       value: "My Claims",
     },
   ];
+
+  console.log("policyEndDate", policyEndDate);
+  useEffect(() => {
+    // Update policyStartEnd when policyStartDate changes
+    if (
+      policyEndDate == "null" ||
+      policyEndDate == null ||
+      policyEndDate == ""
+    ) {
+      if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+        const oneYearLater = new Date(policyStartDate);
+        oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+        oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+        const formattedOneYearLater = oneYearLater.toLocaleDateString("en-US");
+        console.log("policyStartDate", policyStartDate);
+        console.log("formattedOneYearLater", formattedOneYearLater);
+
+        setPolicyEndDate(formattedOneYearLater);
+      }
+    }
+  }, [policyStartDate]);
 
   const getNextYear = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
@@ -502,14 +526,24 @@ const CreateList = ({
               // placeholder="Enter Registration No."
             />*/}
 
-              <MyDatePicker
+              <DatePicker
+                className="form-control"
+                id="propertyTitle"
+                selected={
+                  policyStartDate !== null && !isNaN(new Date(policyStartDate))
+                    ? new Date(policyStartDate)
+                    : null
+                }
+                onChange={(date) => setPolicyStartDate(date)}
+              />
+              {/* <MyDatePicker
                 selectedDate={
                   policyStartDate && !isNaN(new Date(policyStartDate))
                     ? new Date(policyStartDate)
                     : ""
                 }
                 setSelectedDate={setPolicyStartDate}
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -539,11 +573,21 @@ const CreateList = ({
             // onChange={(e)=>setPolicyEndDate(e.target.value)}
             // placeholder="Enter Registration No."
           />*/}
-              <input
+              {/* <input
                 className="form-control"
                 type="text"
                 disable={true}
                 value={getNextYear()}
+              /> */}
+              <DatePicker
+                className="form-control"
+                id="form"
+                selected={
+                  policyEndDate !== null && !isNaN(new Date(policyEndDate))
+                    ? new Date(policyEndDate)
+                    : null
+                }
+                onChange={(date) => setPolicyEndDate(date)}
               />
             </div>
           </div>

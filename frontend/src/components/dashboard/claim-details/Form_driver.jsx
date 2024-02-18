@@ -160,9 +160,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {
-                      claim?.driverDetails?.TypeOfVerification
-                    }
+                      {claim?.driverDetails?.TypeOfVerification}
                     </label>
                   </div>
                 </td>
@@ -213,7 +211,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.FatherName}</label>
+                    >
+                      {claim?.driverDetails?.FatherName}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -237,92 +237,94 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.Gender}</label>
+                    >
+                      {claim?.driverDetails?.Gender}
+                    </label>
                   </div>
                 </td>
               </tr>
               <tr>
-              <td style={{ border: "1px solid grey", padding: "3px" }}>
-              <div className="row">
-                <label
-                  htmlFor=""
-                  className="col-lg-6 text-color"
-                  style={{
-                    color: "black",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Issuing Authority
-                </label>
-                <label
-                  htmlFor=""
-                  className="col-lg-6 text-color text-end"
-                  style={{
-                    color: "#1560bd",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {claim?.driverDetails?.IssuingAuthority}
-                </label>
-              </div>
-            </td>
-          
-            <td style={{ border: "1px solid grey", padding: "3px" }}>
-              <div className="row">
-                <label
-                  htmlFor=""
-                  className="col-lg-6 text-color"
-                  style={{
-                    color: "black",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  License Number
-                </label>
-                <label
-                  htmlFor=""
-                  className="col-lg-6 text-color text-end"
-                  style={{
-                    color: "#1560bd",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {claim?.driverDetails?.LicenseNumber}
-                </label>
-              </div>
-            </td>
-            <td style={{ border: "1px solid grey", padding: "3px" }}>
-              <div className="row">
-                <label
-                  htmlFor=""
-                  className="col-lg-6 text-color"
-                  style={{
-                    color: "black",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  License Type
-                </label>
-                <label
-                  htmlFor=""
-                  className="col-lg-6 text-color text-end"
-                  style={{
-                    color: "#1560bd",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {claim?.driverDetails?.LicenseType}
-                </label>
-              </div>
-            </td>
-            </tr>
-          <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Issuing Authority
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.driverDetails?.IssuingAuthority}
+                    </label>
+                  </div>
+                </td>
+
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      License Number
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.driverDetails?.LicenseNumber}
+                    </label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      License Type
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.driverDetails?.LicenseType}
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -344,7 +346,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.BloodGroup}</label>
+                    >
+                      {claim?.driverDetails?.BloodGroup}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -368,7 +372,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.Mobile}</label>
+                    >
+                      {claim?.driverDetails?.Mobile}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -392,7 +398,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.Address}</label>
+                    >
+                      {claim?.driverDetails?.Address}
+                    </label>
                   </div>
                 </td>
               </tr>
@@ -418,7 +426,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.DateOfBirth}</label>
+                    >
+                      {claim?.driverDetails?.DateOfBirth}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -442,7 +452,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.RtoName}</label>
+                    >
+                      {claim?.driverDetails?.RtoName}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -466,7 +478,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.DateOfIssue}</label>
+                    >
+                      {claim?.driverDetails?.DateOfIssue}
+                    </label>
                   </div>
                 </td>
               </tr>
@@ -492,7 +506,13 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{formatDate(claim?.driverDetails?.VaildUpto)}</label>
+                    >
+                      {claim &&
+                      claim.driverDetails &&
+                      claim.driverDetails.VaildUpto
+                        ? formatDate(claim?.driverDetails?.VaildUpto)
+                        : ""}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -516,7 +536,9 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{claim?.driverDetails?.Vov}</label>
+                    >
+                      {claim?.driverDetails?.Vov}
+                    </label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>

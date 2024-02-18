@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { use, useEffect, useReducer } from "react";
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
@@ -45,10 +46,12 @@ const CreateList = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
       const oneYearLater = new Date(policyStartDate);
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-      oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
 
-      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      const formattedOneYearLater = oneYearLater.toLocaleDateString("en-US");
+      console.log("policyStartDate", policyStartDate);
+      console.log("formattedOneYearLater", formattedOneYearLater);
+
       setPolicyStartEnd(formattedOneYearLater);
     }
   }, [policyStartDate]);
@@ -77,14 +80,12 @@ const CreateList = () => {
     const options = {
       year: "numeric",
       month: "short",
-      day: "numeric"
+      day: "numeric",
     };
 
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   };
-
- 
 
   const submitHandler = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -119,29 +120,26 @@ const CreateList = () => {
       EstimatedLoss: estimatedLoss,
     };
 
-    if(!payload.PolicyNumber){
+    if (!payload.PolicyNumber) {
       alert("Policy Number should be filled!!");
     }
-    if(!region){
+    if (!region) {
       alert("Region should be filled!!");
-    }
-    else{
-
-    
-    axios
-      .post("/api/addClaim", payload, {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        alert("Successfully added");
-        router.push("/my-dashboard");
-      })
-      .catch((err) => {
-        alert("Error");
-      });
+    } else {
+      axios
+        .post("/api/addClaim", payload, {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          alert("Successfully added");
+          router.push("/my-dashboard");
+        })
+        .catch((err) => {
+          alert("Error");
+        });
     }
   };
 
@@ -181,7 +179,6 @@ const CreateList = () => {
           <div className="row mt-1 mb-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   color: "#2e008b",
@@ -261,7 +258,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -289,7 +285,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -327,7 +322,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -358,7 +352,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -387,7 +380,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -416,7 +408,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -446,7 +437,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -459,14 +449,30 @@ const CreateList = () => {
               </label>
             </div>
             <div className="col-lg-7">
-              <input
-                type="text"
+              {console.log("policyStartEnd", policyStartEnd)}
+              {/* <MyDatePicker
+                type="date"
                 className="form-control"
                 id="propertyTitle"
-                value={policyStartDate ? formatDate(policyStartEnd) : ""}
-                disable={true}
-                // onChange={(e) => setPolicyStartEnd(e.target.value)}
+                // selectedDate={policyStartEnd || ''}
+                setSelectedDate={setPolicyStartEnd}
+                selectedDate={
+                  policyStartEnd !== null && !policyStartEnd
+                    ? new Date(policyStartEnd)
+                    : ""
+                }
                 // placeholder="Enter Registration No."
+              /> */}
+              <DatePicker
+                className="form-control"
+                id="propertyTitle"
+                selected={
+                  policyStartEnd !== null &&
+                  !isNaN(new Date(policyStartEnd))
+                    ? new Date(policyStartEnd)
+                    : null
+                }
+                onChange={(date) => setPolicyStartEnd(date)}
               />
               {/* <MyDatePicker
                 value={policyStartEnd}
@@ -480,7 +486,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -509,7 +514,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -538,7 +542,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -567,7 +570,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -600,7 +602,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -630,7 +631,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -659,7 +659,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -688,7 +687,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -717,7 +715,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -746,7 +743,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -775,7 +771,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -803,7 +798,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",
@@ -832,7 +826,6 @@ const CreateList = () => {
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
               <label
-                
                 className="text-color"
                 style={{
                   // paddingTop: "15px",

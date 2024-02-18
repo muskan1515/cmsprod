@@ -8,13 +8,15 @@ import Form_vehicle from "./Form_vehicle";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MyDatePicker from "../../common/MyDatePicker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // import toast from "react-hot-toast";
 
 const Form = ({
   claim,
   edit,
   editHandler,
-  
+
   VehicleModel,
   setVehicleModel,
   VehicleRegisteredNumber,
@@ -112,7 +114,7 @@ const Form = ({
   const [editCase_01, setEditCase_01] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
   const [details, setDetails] = useState();
-  const [vehicleFetchDetails,setvehicleFetchDetails]=useState({});
+  const [vehicleFetchDetails, setvehicleFetchDetails] = useState({});
   //   const togglePasswordVisibility = () => {
   //     setPasswordVisible(!passwordVisible);
   //   };
@@ -120,7 +122,7 @@ const Form = ({
   //   const togglePasswordVisibility_01 = () => {
   //     setPasswordVisible_01(!passwordVisible_01);
   //   };
-  console.log("CONTANT", MakerModel);
+  console.log("MakerModel", MakerModel);
 
   const formatDate = (val) => {
     const date = new Date(val);
@@ -138,91 +140,82 @@ const Form = ({
   const [saveDetails,setSaveDetails]=useState(false)
 
   const handleFetchData = async (req, res) => {
-    if(!claim?.vehicleDetails?.RegisteredNumber){
+    if (!claim?.vehicleDetails?.RegisteredNumber) {
       alert("Please fill Registered Number first!");
     }
-    if(claim?.vehicleOnlineDetails){
-                  
+    if (claim?.vehicleOnlineDetails) {
       const details = claim?.vehicleOnlineDetails;
 
-          setVehicleModel(details?.MakerModel),
-          setVehicleRegisteredOwner(details?.RegisteredOwner),
-          // setDateRegistration(details?.rc_regn_dt),
-          setVehicleChassisNumber(details?.ChassisNumber),
-          //New Fields
-          setVehicleChassisNumber(details?.ChassisNumber);
-          setDateRegistration(details?.DateOfRegistration);
-          setVehicleRegisteredNumber(details?.RegisteredNumber);
-          setEngineNumber(details?.EngineNumber);//is it same as ClassOfVehicle ?
-          setMakerDesc(details?.MakerDesc),
-          setMakerModel(details?.MakerModel);
-          setManufactureMonthYear(details?.ManufactureMonthYear);
-          setVehicleGvw(details?.rc_gvw);
-          setVehicleRegisteredOwner(details?.rc_owner_name);
-          setCubicCapacity(details?.CubicCapacity);
-          setVehicleSeatingCapacity(details?.SeatingCapacity);
-          setVehiclePermanentAddress(details?.PermanentAddress);
-          setFitUpto(details?.FitUpto);
-          setPasiaModelCode(details?.PasiaModelCode);
-          setRcInsuranceUpto(details?.VehicleInsuranceUpto);
-          setRcVehicleType(details?.VehicleType);
-          setBancsModelCode(details?.BancsModelCode);
-          setBancsMakeCode(details?.BancsMakeCode);
-          setBancsSubtypeCode(details?.BancsSubtypeCode);
-          setBancsBodyType(details?.BancsBodyType);
-          setBancsVehicleClass(details?.ClassOfVehicle);
-          setBancsVehicleSegment(details?.BancsVehicleSegment);
-          setRcRtoCode(details?.RcRtoCode);
-          setClassOfVehicle(details?.ClassOfVehicle);
-          // setBancsFuelType(details?.bancs_Fuel_Type);
-          setEngineNumber(details?.EngineNumber),
-          setVehicleRegisteredOwner(details?.RegisteredOwner);
-          // setLicenseNumber(details?.rc_regn_no),
-          setVehicleFuelType(details?.FuelType),
-          setVehicleRcStatus(details?.VehicleRcStatus);
-          setVehicleBlackListStatus(details?.VehicleBlackListStatus);
-          setVehicleRegistedAt(details?.VehicleRegistedAt);
-          setVehicleInsuranceCompany(details?.VehicleInsuranceCompany);
+      setVehicleModel(details?.MakerModel),
+        setVehicleRegisteredOwner(details?.RegisteredOwner),
+        // setDateRegistration(details?.rc_regn_dt),
+        setVehicleChassisNumber(details?.ChassisNumber),
+        //New Fields
+        setVehicleChassisNumber(details?.ChassisNumber);
+      setDateRegistration(details?.DateOfRegistration);
+      setVehicleRegisteredNumber(details?.RegisteredNumber);
+      setEngineNumber(details?.EngineNumber); //is it same as ClassOfVehicle ?
+      setMakerDesc(details?.MakerDesc), setMakerModel(details?.MakerModel);
+      setManufactureMonthYear(details?.ManufactureMonthYear);
+      setVehicleGvw(details?.rc_gvw);
+      setVehicleRegisteredOwner(details?.rc_owner_name);
+      setCubicCapacity(details?.CubicCapacity);
+      setVehicleSeatingCapacity(details?.SeatingCapacity);
+      setVehiclePermanentAddress(details?.PermanentAddress);
+      setFitUpto(details?.FitUpto);
+      setPasiaModelCode(details?.PasiaModelCode);
+      setRcInsuranceUpto(details?.VehicleInsuranceUpto);
+      setRcVehicleType(details?.VehicleType);
+      setBancsModelCode(details?.BancsModelCode);
+      setBancsMakeCode(details?.BancsMakeCode);
+      setBancsSubtypeCode(details?.BancsSubtypeCode);
+      setBancsBodyType(details?.BancsBodyType);
+      setBancsVehicleClass(details?.ClassOfVehicle);
+      setBancsVehicleSegment(details?.BancsVehicleSegment);
+      setRcRtoCode(details?.RcRtoCode);
+      setClassOfVehicle(details?.ClassOfVehicle);
+      // setBancsFuelType(details?.bancs_Fuel_Type);
+      setEngineNumber(details?.EngineNumber),
+        setVehicleRegisteredOwner(details?.RegisteredOwner);
+      // setLicenseNumber(details?.rc_regn_no),
+      setVehicleFuelType(details?.FuelType),
+        setVehicleRcStatus(details?.VehicleRcStatus);
+      setVehicleBlackListStatus(details?.VehicleBlackListStatus);
+      setVehicleRegistedAt(details?.VehicleRegistedAt);
+      setVehicleInsuranceCompany(details?.VehicleInsuranceCompany);
 
-          alert("Successfully fetched!!");
-    }
-    else{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      alert("Successfully fetched!!");
+    } else {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    const vehicleNo = claim?.vehicleDetails?.RegisteredNumber;
-    if (!userInfo) {
-      router.push("/login");
+      const vehicleNo = claim?.vehicleDetails?.RegisteredNumber;
+      if (!userInfo) {
+        router.push("/login");
+      } else {
+        try {
+          const response = axios
+            .get("/api/getOnlineVehicleData", {
+              headers: {
+                Authorization: `Bearer ${userInfo[0].Token}`,
+                "Content-Type": "application/json",
+              },
+              params: {
+                vehicleNo: vehicleNo,
+                leadId: claim?.claimDetails?.LeadID,
+              },
+            })
+            .then((res) => {
+              window.location.reload();
+            })
+            .catch((err) => {
+              alert("err", err);
+            });
+        } catch (error) {
+          console.log("Error from Fetch Details-> ", error);
+        }
+      }
     }
-    else{
-    try {
-      const response = axios
-        .get("/api/getOnlineVehicleData", {
-          headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
-            "Content-Type": "application/json",
-          },
-          params:{
-            vehicleNo:vehicleNo,
-            leadId:claim?.claimDetails?.LeadID
-          }
-        })
-        .then((res) => {
-         
-
-         window.location.reload();
-        })
-        .catch((err) => {
-          alert("err", err);
-        });
-      
-     
-    } catch (error) {
-      console.log("Error from Fetch Details-> ", error);
-    }
-  }
-  }
   };
-
 
   //permanenet Address
   return (
@@ -316,6 +309,7 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
+                          {console.log("MakerModel", MakerModel)}
                           <input
                             type="text"
                             className="form-control"
@@ -379,9 +373,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleRegisteredOwner
-                            }
+                            value={VehicleRegisteredOwner}
                             onChange={(e) =>
                               setVehicleRegisteredOwner(e.target.value)
                             }
@@ -409,18 +401,29 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
-                            
+                          <DatePicker
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={ DateRegistration !== null && !DateRegistration  ? new Date(
-                              DateRegistration) : ""}
-                            setSelectedDate={
-                              setDateRegistration
+                            selected={
+                              DateRegistration !== null && !isNaN(new Date(DateRegistration))
+                                ? new Date(DateRegistration)
+                                : null
                             }
+                            onChange={(date) => setDateRegistration(date)}
+                          />
+
+                          {/* <MyDatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            selectedDate={
+                              DateRegistration !== null && !DateRegistration
+                                ? new Date(DateRegistration)
+                                : ""
+                            }
+                            setSelectedDate={setDateRegistration}
 
                             // placeholder="Enter Registration No."
-                          />
+                          /> */}
                         </div>
                       </div>
                     </div>
@@ -446,9 +449,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              PUCNumber
-                            }
+                            value={PUCNumber}
                             onChange={(e) => setPUCNumber(e.target.value)}
                           />
                         </div>
@@ -472,16 +473,17 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
+                        <DatePicker
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={TransferDate !== "null" && !TransferDate ? new Date(
-                              TransferDate) : ""
+                            selected={
+                              TransferDate !== null && !isNaN(new Date(TransferDate))
+                                ? new Date(TransferDate)
+                                : null
                             }
-                            setSelectedDate={ setTransferDate}
-
-                            // placeholder="Enter Registration No."
+                            onChange={(date) => setTransferDate(date)}
                           />
+                        
                         </div>
                       </div>
                     </div>
@@ -507,9 +509,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              EngineNumber
-                            }
+                            value={EngineNumber}
                             onChange={(e) => setEngineNumber(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -539,9 +539,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              AddedBy
-                            }
+                            value={AddedBy}
                             onChange={(e) => setAddedBy(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -549,8 +547,6 @@ const Form = ({
                         </div>
                       </div>
                     </div>
-
-                    
 
                     <div className="col-lg-6">
                       <div className="row mt-1">
@@ -573,9 +569,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleChassisNumber
-                            }
+                            value={VehicleChassisNumber}
                             onChange={(e) =>
                               setVehicleChassisNumber(e.target.value)
                             }
@@ -607,9 +601,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleFuelType
-                            }
+                            value={VehicleFuelType}
                             onChange={(e) => setVehicleFuelType(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -639,9 +631,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleRegisteredNumber
-                            }
+                            value={VehicleRegisteredNumber}
                             onChange={(e) =>
                               setVehicleRegisteredNumber(e.target.value)
                             }
@@ -673,9 +663,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              RcRtoCode
-                            }
+                            value={RcRtoCode}
                             onChange={(e) => setRcRtoCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -705,9 +693,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              BancsVehicleSegment
-                            }
+                            value={BancsVehicleSegment}
                             onChange={(e) =>
                               setBancsVehicleSegment(e.target.value)
                             }
@@ -739,9 +725,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              BancsVehicleClass
-                            }
+                            value={BancsVehicleClass}
                             onChange={(e) =>
                               setBancsVehicleClass(e.target.value)
                             }
@@ -773,9 +757,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              BancsBodyType
-                            }
+                            value={BancsBodyType}
                             onChange={(e) => setBancsBodyType(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -805,9 +787,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleFuelType
-                            }
+                            value={VehicleFuelType}
                             onChange={(e) => setVehicleFuelType(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -837,9 +817,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              BancsSubtypeCode
-                            }
+                            value={BancsSubtypeCode}
                             onChange={(e) =>
                               setBancsSubtypeCode(e.target.value)
                             }
@@ -871,9 +849,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              BancsMakeCode
-                            }
+                            value={BancsMakeCode}
                             onChange={(e) => setBancsMakeCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -903,9 +879,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              BancsModelCode
-                            }
+                            value={BancsModelCode}
                             onChange={(e) => setBancsModelCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -935,9 +909,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              RcVehicleType
-                            }
+                            value={RcVehicleType}
                             onChange={(e) => setRcVehicleType(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -967,9 +939,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleRcStatus
-                            }
+                            value={VehicleRcStatus}
                             onChange={(e) => setVehicleRcStatus(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -1001,9 +971,7 @@ const Form = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleBlackListStatus
-                            }
+                            value={VehicleBlackListStatus}
                             onChange={(e) =>
                               setVehicleBlackListStatus(e.target.value)
                             }
@@ -1032,18 +1000,15 @@ const Form = ({
                         </div>
 
                         <div className="col-lg-7">
-                          <input
-                            type="text"
+                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
-                            value={
-                              VehicleRegistedAt
+                            selected={
+                              VehicleRegistedAt !== null && !isNaN(new Date(VehicleRegistedAt))
+                                ? new Date(VehicleRegistedAt)
+                                : null
                             }
-                            onChange={(e) =>
-                              setVehicleRegistedAt(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
+                            onChange={(date) => setVehicleRegistedAt(date)}
                           />
                         </div>
                       </div>
@@ -1068,20 +1033,18 @@ const Form = ({
                         </div>
 
                         <div className="col-lg-7">
-                          
-                            <MyDatePicker
-                            
+
+                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
-                            selectedDate={ VehicleInsuranceUpto ? new Date(
-                              VehicleInsuranceUpto) : ""}
-                            setSelectedDate={
-                              setVehicleInsuranceUpto
+                            selected={
+                              RcInsuranceUpto !== null && !isNaN(new Date(RcInsuranceUpto))
+                                ? new Date(RcInsuranceUpto)
+                                : null
                             }
-
-
-                            // placeholder="Enter Registration No."
+                            onChange={(date) => setRcInsuranceUpto(date)}
                           />
+                          
                         </div>
                       </div>
                     </div>

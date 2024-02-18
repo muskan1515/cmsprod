@@ -8,6 +8,8 @@ import Form_garage from "./Form_garage";
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 // import toast from "react-hot-toast";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Form = ({
   claim,
@@ -199,6 +201,16 @@ const Form = ({
 
                             // placeholder="Enter Registration No."
                           />
+                          {/* <DatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            selected={
+                              DateRegistration !== null && !isNaN(new Date(DateRegistration))
+                                ? new Date(DateRegistration)
+                                : null
+                            }
+                            onChange={(date) => setDateRegistration(date)}
+                          /> */}
                         </div>
                       </div>
                     </div>
