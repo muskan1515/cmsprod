@@ -34,6 +34,8 @@ const Index = ({}) => {
 
   const [videosList, setVideosList] = useState([]);
 
+  const [reload,setReload]=useState(false);
+
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState(
     claim?.claimDetails?.PolicyIssuingOffice
       ? claim?.claimDetails?.PolicyIssuingOffice

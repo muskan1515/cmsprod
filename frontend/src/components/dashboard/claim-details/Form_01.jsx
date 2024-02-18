@@ -353,8 +353,8 @@ const Form_01 = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => LicenseNumber(e.target.value)}
-                            value={setLicenseNumber}
+                            onChange={(e) => setLicenseNumber(e.target.value)}
+                            value={LicenseNumber}
                             // placeholder="Enter Registration No."
                           />
                         </div>

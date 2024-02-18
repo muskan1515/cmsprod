@@ -35,8 +35,7 @@ const addClaim =  (req, res) => {
       EstimatedLoss,
     } = req.body;
 
-  //  console.log(req.body);
-  //  return
+   
     const authorizationHeader = req.headers.authorization;
   
     const token = authorizationHeader.substring("Bearer ".length);
@@ -512,6 +511,7 @@ const getSpecificClaim = async (req, res) => {
 
       LeadId,
     } = req.body;
+
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET

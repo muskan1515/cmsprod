@@ -12,6 +12,8 @@ import MyDatePicker from "../../common/MyDatePicker";
 const Form = ({
   claim,
   edit,
+  setReload,
+   reload,
   GarageNameAndAddress,
   setGarageNameAndAddress,
   GarageContactNo1,
@@ -30,18 +32,6 @@ const Form = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-
-  // const editHandler = () => {
-  //   setEdit(true);
-  // };
-  //   const togglePasswordVisibility = () => {
-  //     setPasswordVisible(!passwordVisible);
-  //   };
-
-  //   const togglePasswordVisibility_01 = () => {
-  //     setPasswordVisible_01(!passwordVisible_01);
-  //   };
-
   return (
     <>
       <div className="row mt-2">

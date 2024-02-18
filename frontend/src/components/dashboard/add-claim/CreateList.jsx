@@ -17,8 +17,8 @@ const CreateList = () => {
 
   const [region, setRegion] = useState(regionType);
   const [date, setDate] = useState(formattedTodayDate);
-  const [surveyType, setSurveyType] = useState(null);
-  const [inspectionType, setInspectionType] = useState(null);
+  const [surveyType, setSurveyType] = useState("Motor");
+  const [inspectionType, setInspectionType] = useState("Final");
   const [policyNumber, setPolicyNumber] = useState(null);
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState(null);
   const [policyStartDate, setPolicyStartDate] = useState(null);
@@ -90,17 +90,17 @@ const CreateList = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     const payload = {
-      SurveyType: surveyType,
+      SurveyType: surveyType ? surveyType : "Motor",
       ReferenceNo: generateRegion(region),
       PolicyIssuingOffice: policyIssuingOffice,
-      PolicyNumber: policyNumber,
+      PolicyNumber: policyNumber ,
       PolicyPeriodStart: policyStartDate,
       PolicyPeriodEnd: policyStartEnd,
       ClaimServicingOffice: claimSurvicingOffice,
       ClaimNumber: claimNumber,
       AddedBy: userInfo[0].Username,
       Region: region,
-      InspectionType: inspectionType,
+      InspectionType: inspectionType ? inspectionType : "Final",
       IsClaimCompleted: 0,
       IsActive: 1,
       InsuredName: insuredName,
@@ -309,15 +309,13 @@ const CreateList = () => {
                 value={inspectionType}
                 onChange={(e) => setInspectionType(e.target.value)}
               >
-                <option data-tokens="Status1" value={""}>
-                  Select Type
-                </option>
+              <option data-tokens="Status2" value={"Final"}>
+                Final
+              </option>
                 <option data-tokens="Status1" value={"spot"}>
                   Spot
                 </option>
-                <option data-tokens="Status2" value={"final"}>
-                  Final
-                </option>
+               
                 <option data-tokens="Status3" value={"re-inspection"}>
                   Pre-inspection
                 </option>

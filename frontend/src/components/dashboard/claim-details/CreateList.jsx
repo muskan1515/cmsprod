@@ -46,6 +46,7 @@ const CreateList = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
+  
 
   console.log(policyStartDate);
 
@@ -309,7 +310,7 @@ const CreateList = ({
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
-              {!claim.claimDetails?.IsMailSent  && claim?.insuredDetails?.InsuredMailAddress && (
+              {!claim.claimDetails?.IsMailSent  && claim?.insuredDetails?.InsuredMailAddress !== "null" && (
                   <button
                     onClick={() =>
                       sendMailHandler(
