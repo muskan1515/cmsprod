@@ -34,8 +34,9 @@ const addClaim =  (req, res) => {
       NatureOfLoss,
       EstimatedLoss,
     } = req.body;
-  
-   
+
+  //  console.log(req.body);
+  //  return
     const authorizationHeader = req.headers.authorization;
   
     const token = authorizationHeader.substring("Bearer ".length);
@@ -58,16 +59,16 @@ const addClaim =  (req, res) => {
         Token,
         IsActive
       ) VALUES (
-        ${SurveyType},
+        '${SurveyType}',
         '${ReferenceNo}',
         '${PolicyNumber}',
         ${PolicyPeriodStart},
         ${PolicyPeriodEnd},
         ${ClaimNumber},
-        ${ClaimServicingOffice},
+        '${ClaimServicingOffice}',
         '${(AddedBy)}',
         '${Region}',
-        ${InspectionType},
+        '${InspectionType}',
         ${parseInt(IsClaimCompleted)},
         '${BrokerMailAddress}',
         '${generatedToken}',
@@ -100,7 +101,7 @@ const addClaim =  (req, res) => {
         RegisteredNumber,
         LeadId 
       ) VALUES (
-        ${RegisteredNumber},
+        '${RegisteredNumber}',
         ${parseInt(results[0].LeadId)}
       );
     `;
@@ -125,7 +126,7 @@ const addClaim =  (req, res) => {
         GarageMailAddress,
         LeadId 
       ) VALUES (
-        ${GarageNameAndAddress},
+        '${GarageNameAndAddress}',
         ${GarageContactNo1},
         ${GarageContactNo2},
         '${GarageMailAddress}',
@@ -140,8 +141,8 @@ const addClaim =  (req, res) => {
         EstimatedLoss,
         LeadId
       ) VALUES (
-        ${PlaceOfLoss},
-        ${NatureOfLoss},
+        '${PlaceOfLoss}',
+        '${NatureOfLoss}',
         ${(EstimatedLoss)},
         ${parseInt(results[0].LeadId)}
       );
@@ -163,7 +164,7 @@ const addClaim =  (req, res) => {
         InsuredMailAddress,
         LeadId
       ) VALUES (
-        ${InsuredName},
+        '${InsuredName}',
         ${InsuredMobileNo1},
         ${InsuredMobileNo2},
         '${InsuredMailAddress}',
