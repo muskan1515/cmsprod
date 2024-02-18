@@ -128,7 +128,6 @@ const Index = ({ leadId, token, content }) => {
 
   const onSubmitHandler = () => {
     let data = [];
-    console.log("data",data);
     for (let i = 0; i < 15; i = i + 1) {
       const temp = types[i].name;
       const tempArray = [];

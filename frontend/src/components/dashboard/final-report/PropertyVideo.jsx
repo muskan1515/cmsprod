@@ -15,6 +15,7 @@ import {
   getMonthsDifference,
 } from "./functions";
 
+
 const materials = [
   { qty: "12", desc: "12", price: "12" },
   { qty: "", desc: "", price: "" },
@@ -362,7 +363,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     return '';
   }
 
-  console.log(PolicyPeriodStart);
   useEffect(() => {
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress );
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 );
@@ -423,7 +423,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress || "United India Insurance Company Limited");
       setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd );
-      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodEnd );
+      setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart );
     setVehicleMakeVariantModelColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[0]
   );
  setVehicleColor(claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[1]||"");
@@ -475,9 +475,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
     setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv ) ;
     setValidUntilTv(claim?.driverDetails?.ValidUntilTv );
-    setValidFrom(claim?.driverDetails?.ValidFrom );
+    setValidFrom(claim?.driverDetails?.VaildUpto);
     setDateOfIssue(claim?.driverDetails?.DateOfIssue );
-
     //commercial
     setFitnessCertificate(claim?.commercialVehicleDetails?.FitnessCertificate );
     setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom );
@@ -493,6 +492,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark );
   }, [claim]);
 
+  // console.log("PolicyPeriodStart-----------",PolicyPeriodStart,claim?.claimDetails?.PolicyPeriodStart);
   const calculateVehicleAge = () => {
     if (
       !claim.vehicleDetails?.DateOfRegistration ||

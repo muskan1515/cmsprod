@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const RcDetails = ({
   RCOwner,
   setRCOwner,
@@ -716,11 +718,22 @@ const RcDetails = ({
                 className="form-control" 
               id="propertyTitle" />
               :
-                  <MyDatePicker
-                  disable={!isEditMode}
-                    selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : ""}
-                    setSelectedDate={setInsuranceValidUpto}
-                  /> }
+              <DatePicker
+                      className="form-control"
+                      id="propertyTitle"
+                      selected={
+                        InsuranceValidUpto !== null && !isNaN(new Date(InsuranceValidUpto))
+                          ? new Date(InsuranceValidUpto)
+                          : null
+                      }
+                      onChange={(date) => setInsuranceValidUpto(date)}
+                    />
+                  // <MyDatePicker
+                  // disable={!isEditMode}
+                  //   selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : ""}
+                  //   setSelectedDate={setInsuranceValidUpto}
+                  // /> 
+                }
                   
                 </div>
               </div>
