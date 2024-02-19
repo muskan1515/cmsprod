@@ -18,7 +18,7 @@ const Index = () => {
     setLeadID(leadId);
 
     console.log(leadId)
-    axios.get("/api/getReportInfo",{
+    axios.get("/api/getBillInfo",{
       headers:{
         Authorization:`Bearer ${userData[0].Token}`
       },

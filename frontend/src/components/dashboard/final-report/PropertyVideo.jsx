@@ -40,7 +40,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [lessImposed,setLessImposed]=useState(0);
   const [other,setOther]=useState(0);
 
-  const [metalSalvageValue,setMetalSalvageValue]=useState(0);
+  const [metalSalvageValue,setMetalSalvageValue]=useState(5);
   const [lessExcess,setLessExcess]=useState(0);
   const [currentGst, setCurrentGst] = useState(18);
 
@@ -51,6 +51,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [totalEstimate, setTotalEstimate] = useState(0);
 
   const [taxAmount, setTaxAmount] = useState(0);
+  
 
 
   const [allDepreciations, setAllDepreciations] = useState([]);
@@ -118,6 +119,19 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       });
   }, []);
 
+  const returnTotal = () => {
+    const a =
+      Number(totalLabrorAssessed) +
+      Number(totalPartsAssessed) +
+      (Number(LessExcess) - Number(LessImposed) + Number(Other));
+    const b =
+      (Number(totalLabrorAssessed + totalPartsAssessed) *
+        Number(metalSalvageValue)) /
+      100;
+
+    return a - b > 1 ? a - b : 0;
+  };
+
   const calculateGSTValue = (original, gstValue, gst) => {
     if (gst % 2 !== 0) {
       return (Number(original) * Number(gstValue)) / 100;
@@ -147,6 +161,41 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     }
     return 0;
   };
+
+  
+  // summary states
+  const [TotalLabor,setTotalLabor]=useState("");
+  const [TotalEstimate,setTotalEstimateSum]=useState("");
+  const [LessExcess,setLessExcessSum]=useState(0);
+  const [ExpectedSalvage,setExpectedSalvage]=useState("");
+  const [MetalPercent,setMetalPercent]=useState(5);
+  const [RemarkOnSalvage,setRemarkOnSalvage]=useState("");
+  const [TotalCostOfParts,setTotalCostOfParts]=useState("");
+  const [Other,setOtherSum]=useState(0);
+  const[OtherRemark,setOtherRemark]=useState("");
+  const [GrandTotal,setGrandTotal]=useState(0);
+  const [DepreciationOnParts,setDepreciationOnParts]=useState("");
+  const [NetAssessedAmount,setNetAssessedAmount]=useState("");
+  const [SavageDepreciationDetails,setSavageDepreciationDetails]=useState("");
+  const [CashLess,setCashLess]=useState("");
+  const [NoteOfSelf,setNoteOfSelf]=useState("");
+  const[RepairAutoDate,setRepairAutoDate]=useState("");
+  const [RepairCompletionDate,setRepairCompletionDate]=useState("");
+  const [PartyAgreed,setPartyAgreed]=useState("");
+  const [ReasonThereofDelay,setReasonThereofDelay]=useState("");
+  const [AnyFurtherConversation,setAnyFurtherConversation]=useState("");
+  const [RepairingPhotoDate,setRepairingPhotoDate]=useState("");
+  const [ReinspectionDate,setReinspectionDate]=useState("");
+  const [SalveDestroy,setSalveDestroy]=useState("");
+  const [BillNo,setBillNo]=useState(""); 
+  const [BillDate,setBillDate]=useState("");
+  const [LessImposed,setLessImposedSum]=useState(0);
+  const [Endurance,setEndurance]=useState("");
+
+  const[BillAmount,setBillAmount]=useState("");
+
+  const [FinalReportNotes,setFinalReportNotes]=useState("");
+
 
   useEffect(() => {
     let total_estimate = 0,
@@ -203,18 +252,21 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setTotalLabrorEstimate(total_estimate);
     setTotalTaxbleAmount(total_taxable_amount);
     setTotalEstimate(total_estimate);
+    setGrandTotal(Number(total_assessed) + -
+    (Number(LessExcess) + Number(LessImposed) + Number(Other)))
 
     console.log("total_aassessed_wihtout_tax", total_aassessed_wihtout_tax);
     settotalRemainingAssessed(total_aassessed_wihtout_tax);
     setTaxAmount((total_taxable_amount * Number(currentGst)) / 100);
     setLaborWOPaint(total_paint);
     setReload(false);
-  }, [toggleEstimate, currentGst, reload, allRows, toggleEstimate]);
+  }, [toggleEstimate, currentGst, reload, allRows, toggleEstimate,LessExcess,LessImposed,Other]);
 
   useEffect(() => {
     calculateVehicleAge();
     calculateDepreciationOnMetal();
   }, [claim]);
+
 
   const [subType, setSubType] = useState("Motor");
 
@@ -363,7 +415,47 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     return '';
   }
 
+  useEffect(()=>{
+
+    setGrandTotal(totalLabrorAssessed+totalPartsAssessed-lessExcess-lessImposed-Other)
+  },[totalLabrorAssessed,totalPartsAssessed,lessExcess,lessImposed,Other]);
+
+  console.log(PolicyPeriodStart);
   useEffect(() => {
+
+    //summary states
+
+    setFinalReportNotes(claim?.summaryDetails?.FinalReportNotes ? claim?.summaryDetails?.FinalReportNotes : "");
+    setTotalLabor(claim?.summaryDetails?.TotalLabor ? claim?.summaryDetails?.TotalLabor : 0 );
+    setTotalEstimateSum( claim?.summaryDetails?.TotalEstimate ? claim?.summaryDetails?.TotalEstimate : 0);
+    setLessExcess(claim?.summaryDetails?.LessExcess ? claim?.summaryDetails?.LessExcess : 0);
+    setExpectedSalvage( claim?.summaryDetails?.ExpectedSalvage ? claim?.summaryDetails?.ExpectedSalvage : 0);
+    setMetalPercent(claim?.summaryDetails?.MetalPercent?claim?.summaryDetails?.MetalPercent:0);
+    setRemarkOnSalvage(claim?.summaryDetails?.RemarkOnSalvage?claim?.summaryDetails?.RemarkOnSalvage:"");
+    setTotalCostOfParts(claim?.summaryDetails?.TotalCostOfParts?claim?.summaryDetails?.TotalCostOfParts:0);
+    setOtherSum(claim?.summaryDetails?.Other?claim?.summaryDetails?.Other:0);
+    setGrandTotal(claim?.summaryDetails?.GrandTotal?claim?.summaryDetails?.GrandTotal:0)
+    setDepreciationOnParts(claim?.summaryDetails?.DepreciationOnParts?claim?.summaryDetails?.DepreciationOnParts:"");
+    setNetAssessedAmount(claim?.summaryDetails?.NetAssessedAmount?claim?.summaryDetails?.NetAssessedAmount:"");
+    setSavageDepreciationDetails(claim?.summaryDetails?.SavageDepreciationDetails?claim?.summaryDetails?.SavageDepreciationDetails:"");
+    setCashLess(claim?.summaryDetails?.CashLess?claim?.summaryDetails?.CashLess:0);
+    setNoteOfSelf(claim?.summaryDetails?.NoteOfSelf?claim?.summaryDetails?.NoteOfSelf:"");
+    setRepairAutoDate(claim?.summaryDetails?.RepairAutoDate?claim?.summaryDetails?.RepairAutoDate:"");
+    setRepairCompletionDate(claim?.summaryDetails?.RepairCompletionDate?claim?.summaryDetails?.RepairCompletionDate:"");
+    setPartyAgreed(claim?.summaryDetails?.PartyAgreed?claim?.summaryDetails?.PartyAgreed:"");
+    setReasonThereofDelay(claim?.summaryDetails?.ReasonThereofDelay?claim?.summaryDetails?.ReasonThereofDelay:"");
+    setAnyFurtherConversation(claim?.summaryDetails?.AnyFurtherConversation?claim?.summaryDetails?.AnyFurtherConversation:"");
+    setRepairingPhotoDate(claim?.summaryDetails?.AnyFurtherConversation?claim?.summaryDetails?.AnyFurtherConversation:"");
+    setReinspectionDate(claim?.summaryDetails?.ReinspectionDate?claim?.summaryDetails?.ReinspectionDate:"");
+    setSalveDestroy(claim?.summaryDetails?.SalveDestroy?claim?.summaryDetails?.SalveDestroy:"");
+    setBillNo(claim?.summaryDetails?.BillNo?claim?.summaryDetails?.BillNo:"");
+    setBillDate(claim?.summaryDetails?.BillDate?claim?.summaryDetails?.BillDate:"");
+    setBillAmount(claim?.summaryDetails?.BillAmount?claim?.summaryDetails?.BillAmount:"");
+    setLessImposedSum(claim?.summaryDetails?.LessImposed?claim?.summaryDetails?.LessImposed:0);
+    setEndurance(claim?.summaryDetails?.Endurance?claim?.summaryDetails?.Endurance:"");
+    //
+    setOtherRemark(claim?.summaryDetails?.OtherRemark?claim?.summaryDetails?.OtherRemark:"");
+    
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress );
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 );
     setInsuredMobileNo2(
@@ -388,6 +480,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
+
+    setLessImposed(claim?.summaryDetails?.LessImposed)
 
     setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration );
     setMailRecieveDate(claim?.claimDetails?.MailRecieveDate );
@@ -615,16 +709,52 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       Authorization,
       AreasOfoperation,
       commercialRemark,
-
+      FinalReportNotes,
       DetailsOfLoads,
       CauseOfAccident,
       PoliceAction,
       ThirdPartyLoss,
       Assessment,
+
+      TotalLabor:totalLabrorAssessed,
+      TotalEstimate : totalPartsEstimate + totalLabrorEstimate,
+      LessExcess,
+      LessImposed,
+      ExpectedSalvage : (Number(totalLabrorAssessed + totalPartsAssessed) *
+      Number(metalSalvageValue)) /
+    100,
+      MetalPercent ,
+      RemarkOnSalvage,
+      TotalCostOfParts:totalPartsAssessed,
+      Other,
+      OtherRemark,
+      GrandTotal : Number(totalLabrorAssessed) +
+      Number(totalPartsAssessed) -
+      (Number(LessExcess) + Number(LessImposed) + Number(Other)),
+      DepreciationOnParts:(Number(totalLabrorAssessed + totalPartsAssessed) *
+      Number(metalSalvageValue)) /
+      100,
+      NetAssessedAmount :returnTotal(),
+      SavageDepreciationDetails,
+      CashLess,
+      NoteOfSelf,
+      RepairAutoDate,
+      RepairCompletionDate,
+      PartyAgreed,
+      ReasonThereofDelay,
+      AnyFurtherConversation,
+      RepairingPhotoDate,
+      ReinspectionDate,
+      SalveDestroy,
+      OtherRemark,
+      BillNo,
+      BillDate,
+      BillAmount,
+      Endurance,
+
+
       leadId,
     };
-
-  
 
     axios.put("/api/updateFinalReport",payload,{
       headers:{
@@ -1298,7 +1428,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           <div className="property_video">
             <div className="thumb">
               <Summary
+              FinalReportNotes={FinalReportNotes}
+              setFinalReportNotes={setFinalReportNotes}
                 metaldepPct={metaldepPct}
+                saveHandler={saveHandler}
                 ageOfVehicleTotal={ageOfVehicleTotal}
                 totalPartsEstimate={totalPartsEstimate}
                 totalLabrorEstimate={totalLabrorEstimate}
@@ -1310,9 +1443,69 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setLessImposed={setLessImposed}
                 other={other}
                 setOther={setOther}
+                setOtherRemark={setOtherRemark}
+                OtherRemark={OtherRemark}
                 metalSalvageValue={metalSalvageValue}
+                setMetalSalvageValue={setMetalSalvageValue}
                 calculateDepreciationOnMetal={calculateDepreciationOnMetal}
                 calculateVehicleAge={calculateVehicleAge}
+
+
+                setLessImposedSum={setLessImposedSum}
+                LessImposed={LessImposed}
+
+                TotalLabor={TotalLabor}
+                setTotalLabor={setTotalLabor}
+                TotalEstimate={setTotalEstimateSum}
+                setTotalEstimate={setTotalEstimate}
+                LessExcess={LessExcess}
+                setLessExcessSum={setLessExcessSum}
+                ExpectedSalvage={ExpectedSalvage}
+                setExpectedSalvage={setExpectedSalvage}
+                MetalPercent={MetalPercent}
+                setMetalPercent={setMetalPercent}
+                RemarkOnSalvage={RemarkOnSalvage}
+                setRemarkOnSalvage={setRemarkOnSalvage}
+                TotalCostOfParts={TotalCostOfParts}
+                setTotalCostOfParts={setTotalCostOfParts}
+                Other={Other}
+                setOtherSum={setOtherSum}
+                GrandTotal={GrandTotal}
+                setGrandTotal={setGrandTotal}
+                DepreciationOnParts={DepreciationOnParts}
+                setDepreciationOnParts={setDepreciationOnParts}
+                NetAssessedAmount={NetAssessedAmount}
+                setNetAssessedAmount={setNetAssessedAmount}
+                SavageDepreciationDetails={SavageDepreciationDetails}
+                setSavageDepreciationDetails={setSavageDepreciationDetails}
+                CashLess={CashLess}
+                setCashLess={setCashLess}
+                NoteOfSelf={NoteOfSelf}
+                setNoteOfSelf={setNoteOfSelf}
+                RepairAutoDate={RepairAutoDate}
+                setRepairAutoDate={setRepairAutoDate}
+                RepairCompletionDate={RepairCompletionDate}
+                setRepairCompletionDate={setRepairCompletionDate}
+                PartyAgreed={PartyAgreed}
+                setPartyAgreed={setPartyAgreed}
+                ReasonThereofDelay={ReasonThereofDelay}
+                setReasonThereofDelay={setReasonThereofDelay}
+                AnyFurtherConversation={AnyFurtherConversation}
+                setAnyFurtherConversation={setAnyFurtherConversation}
+                RepairingPhotoDate={RepairingPhotoDate}
+                setRepairingPhotoDate={setRepairingPhotoDate}
+                ReinspectionDate={ReinspectionDate}
+                setReinspectionDate={setReinspectionDate}
+                SalveDestroy={SalveDestroy}
+                setSalveDestroy={setSalveDestroy}
+                BillNo={BillNo}
+                setBillNo={setBillNo}
+                BillDate={BillDate}
+                setBillDate={setBillDate}
+                BillAmount={BillAmount}
+                setBillAmount={setBillAmount}
+                Endurance={Endurance}
+                setEndurance={setEndurance}
               />
             </div>
           </div>

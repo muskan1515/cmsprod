@@ -179,6 +179,15 @@ const addClaim =  (req, res) => {
     );
   `;
 
+
+//   const insertSummaryDetails = `
+//   INSERT INTO CommercialVehicleDetails (
+//     LeadId
+//   ) VALUES (
+//     ${parseInt(results[0].LeadId)}
+//   );
+// `;
+
    
           // Execute the SQL queries individually
   
@@ -231,6 +240,7 @@ const addClaim =  (req, res) => {
                       error: "Error inserting data into InsuredDetails.",
                     });
                   }
+
                   db.query(statusDetails, (error, results) => {
                     db.query(insertDriverDetails, (error, results) => {
                       if (error) {
@@ -242,7 +252,19 @@ const addClaim =  (req, res) => {
                           error: "Error inserting data into InsuredDetails.",
                         });
                       }
-  
+
+                      // db.query(insertSummaryDetails, (error, results) => {
+                      //   if (error) {
+                      //     console.error(
+                      //       "Error inserting data into DriverDetails:",
+                      //       error
+                      //     );
+                      //     return res.status(500).json({
+                      //       error: "Error inserting data into InsuredDetails.",
+                      //     });
+                      //   }
+                      // });
+    
                       if(InsuredMailAddress !== null ){
                       axios
                         .post(
@@ -323,6 +345,8 @@ const addClaim =  (req, res) => {
                                   "Error sending email into Broker Mail.",
                               });
                             });
+
+                          
                         }
   
                       //garage
@@ -391,6 +415,10 @@ const getSpecificClaim = async (req, res) => {
         "SELECT * FROM GarageDetails WHERE LeadID=?",
         [leadId]
       );
+      const summaryDetails = await executeQuery(
+        "SELECT * FROM SummaryReport WHERE LeadId=?",
+        [leadId]
+      );
       const claimStatus = await executeQuery(
         "SELECT * FROM ClaimStatus WHERE LeadID=?",
         [leadId]
@@ -411,10 +439,11 @@ const getSpecificClaim = async (req, res) => {
         claimStatus,
         vehicleOnlineDetails,
         driverOnlineDetails,
-        commercialVehicleDetails
+        commercialVehicleDetails,
+        summaryDetails
       };
   
-      console.log(combinedResult)
+      // console.log(combinedResult)
   
       res.json(combinedResult);
     } catch (error) {

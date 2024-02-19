@@ -113,6 +113,17 @@ const CreateList = ({ allInfo, leadID }) => {
     setEstimate(total_estimate);
   };
 
+  const calculateProfessionalFees=()=>{
+    if(!allInfo?.VehicleOnlineDetails){
+      return 0;
+    }
+    if(allInfo?.VehicleOnlineDetails[0]?.SurveyType === "Motor-2W")
+     return 500;
+     if(allInfo?.VehicleOnlineDetails[0]?.SurveyType === "Motor-4W")
+     return 500;
+    return 0;
+  }
+
   const generateRegion = (region) => {
     const firstThreeLetters = Branch?.slice(0, 3);
 
@@ -798,8 +809,8 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={FinalProfFees}
-                  onChange={(e) => setFinalProfFees(e.target.value)}
+                  value={calculateProfessionalFees()}
+                  
                 />
               </div>
             </div>
@@ -999,8 +1010,8 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={ReInsprectionProfFees}
-                  onChange={(e) => setReInsprectionProfFees(e.target.value)}
+                 
+                  value={calculateProfessionalFees()}
                 />
               </div>
             </div>
@@ -1200,8 +1211,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={SpotProfFees}
-                  onChange={(e) => setSpotProfFees(e.target.value)}
+                  value={calculateProfessionalFees()}
                 />
               </div>
             </div>

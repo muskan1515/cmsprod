@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -9,29 +9,91 @@ const Summary = ({
   isEditMode,
   metaldepPct,
   ageOfVehicleTotal,
+  FinalReportNotes,
+  setFinalReportNotes,
   totalPartsEstimate,
   totalLabrorEstimate,
   totalPartsAssessed,
   totalLabrorAssessed,
   setLessImposed,
+  setEndurance,
+  Endurance,
   lessImposed,
   setLessExcess,
+  OtherRemark,
+  setOtherRemark,
   lessExcess,
   other,
+  saveHandler,
   setOther,
   metalSalvageValue,
+  setLessImposedSum,
+  LessImposed,
 
   calculateDepreciationOnMetal,
   calculateVehicleAge,
+
+
+  TotalLabor,
+  setTotalLabor,TotalEstimate,
+  setTotalEstimate,
+  LessExcess
+  ,setLessExcessSum,
+  ExpectedSalvage,
+  setExpectedSalvage,
+  MetalPercent,
+  setMetalPercent,
+  RemarkOnSalvage,
+  setRemarkOnSalvage,
+  TotalCostOfParts,
+  setTotalCostOfParts,
+  Other,
+  setOtherSum,
+  GrandTotal,
+  setGrandTotal,
+  DepreciationOnParts,
+  setDepreciationOnParts,
+  NetAssessedAmoun,
+  setNetAssessedAmount,
+  SavageDepreciationDetails,
+  setSavageDepreciationDetails,
+  CashLess,
+  setCashLess,
+  NoteOfSelf,
+  setNoteOfSelf,
+  RepairAutoDate,
+  setRepairAutoDate,
+  RepairCompletionDate,
+  setRepairCompletionDate,
+  PartyAgreed,
+  setPartyAgreed,
+  ReasonThereofDelay,
+  setReasonThereofDelay,
+  AnyFurtherConversation,
+  setAnyFurtherConversation,
+  RepairingPhotoDate,
+  setRepairingPhotoDate,
+  ReinspectionDate,
+  setReinspectionDate,
+  SalveDestroy,
+   setSalveDestroy,
+   BillNo,
+   setBillNo,
+   BillDate,
+   setBillDate,
+   BillAmount,
+   setBillAmount
 }) => {
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [isEdit,setIsEdit]=useState(false);
 
   const returnTotal = () => {
     const a =
       Number(totalLabrorAssessed) +
       Number(totalPartsAssessed) +
-      (Number(lessExcess) - Number(lessImposed) + Number(other));
+      (Number(LessExcess) - Number(LessImposed) + Number(Other));
     const b =
       (Number(totalLabrorAssessed + totalPartsAssessed) *
         Number(metalSalvageValue)) /
@@ -96,6 +158,30 @@ const Summary = ({
   };
 
   const [text, setText] = useState("");
+  
+
+  useEffect(()=>{
+    setTotalEstimate(totalPartsEstimate + totalLabrorEstimate);
+    setTotalLabor(totalLabrorAssessed);
+    setTotalCostOfParts(totalPartsAssessed);
+    setGrandTotal( Number(totalLabrorAssessed) +
+    Number(totalPartsAssessed) -
+    (Number(LessExcess) + Number(LessImposed) + Number(Other)));
+    setMetalPercent(metalSalvageValue);
+  setExpectedSalvage( (Number(totalLabrorAssessed + totalPartsAssessed) *
+      Number(metalSalvageValue)) /
+    100);
+    setDepreciationOnParts( (Number(totalLabrorAssessed + totalPartsAssessed) *
+    Number(metalSalvageValue)) /
+    100);
+    setNetAssessedAmount(returnTotal());
+
+  console.log(LessExcess,LessImposed,Other)
+  },[]);
+  
+
+
+
 
   return (
     <>
@@ -309,8 +395,8 @@ const Summary = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                      value={lessExcess}
-                      onChange={(e) => setLessExcess(e.target.value)}
+                      value={LessExcess}
+                      onChange={(e) => setLessExcessSum(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -335,8 +421,8 @@ const Summary = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                      value={lessImposed}
-                      onChange={(e) => setLessImposed(e.target.value)}
+                      value={LessImposed}
+                      onChange={(e) => setLessImposedSum(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -364,8 +450,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-
-                    // placeholder="Enter Registration No."
+                    value={OtherRemark}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setOtherRemark(e.target.value)}
                   />
                 </div>
               </div>
@@ -389,8 +476,8 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={other}
-                    onChange={(e) => setOther(e.target.value)}
+                    value={Other}
+                    onChange={(e) => setOtherSum(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -420,8 +507,9 @@ const Summary = ({
                     id="propertyTitle"
                     value={
                       Number(totalLabrorAssessed) +
-                      Number(totalPartsAssessed) -
-                      (Number(lessExcess) + Number(lessImposed) + Number(other))
+                      Number(totalPartsAssessed) -(
+                        Number(LessExcess)+Number(LessImposed)+Number(Other))
+                      
                     }
                     // placeholder="Enter Registration No."
                   />
@@ -511,6 +599,8 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     // placeholder="Enter Registration No."
+                    value={RemarkOnSalvage}
+                    onChange={(e)=>setRemarkOnSalvage(e.target.value)}
                     placeholder="This is a metal salvage depreciation %"
                   />
                 </div>
@@ -593,12 +683,12 @@ const Summary = ({
               {/* <hr /> */}
             </div>
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
-              <button className="btn btn-color m-1">Cancel</button>
-              {isEditMode ? (
-                <button className="btn btn-color m-1">Update</button>
-              ) : (
-                <button className="btn btn-color m-1">Update</button>
-              )}
+              
+            {!isEdit ? <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
+            :<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
+                <button className="btn btn-color m-1" onClick={saveHandler}>Update</button>
+                </>}
+             
               {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
             Modify
@@ -609,7 +699,9 @@ const Summary = ({
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
                   <div className="">
-                    <Editor style={{ height: "100px" }} />
+                    <Editor style={{ height: "100px" }}
+                     value={FinalReportNotes}
+                     onChange={setFinalReportNotes} />
                   </div>
                 </div>
               </div>
@@ -623,12 +715,14 @@ const Summary = ({
             <div className="row">
               <span className="col-lg-7">Endurance :</span>
               <div className="col-lg-4">
-                <label htmlFor="" className="m-1">
+                <label htmlFor="" className="m-1" >
                   Cash Less
                 </label>
                 <input
                   className="form-check-input mt-2"
                   type="checkbox"
+                  readOnly={!isEdit}
+                  onChange={(e)=>setCashLess(e.target.value)}
                   // value={row.gst}
                   // onChange={(e) => handleChange(index, row.gst + 1, "gst")}
                   id="remeberMe"
@@ -639,7 +733,10 @@ const Summary = ({
               <div className="row mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <textarea name="" id="" cols="50" rows="3"></textarea>
+                  <textarea name="" id="" cols="50" rows="3" 
+                  value={Endurance}
+                  readOnly={!isEdit}
+                  onChange={(e)=>setEndurance(e.target.value)}></textarea>
                   {/* <div className="card">
                     <Editor />
                   </div> */}
@@ -656,7 +753,10 @@ const Summary = ({
               <div className="row mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <textarea name="" id="" cols="50" rows="3"></textarea>
+                  <textarea name="" id="" cols="50" rows="3" 
+                  readOnly={!isEdit}
+                  value={NoteOfSelf} 
+                  onChange={(e)=>setNoteOfSelf(e.target.value)}></textarea>
                   {/* <div className="card">
                     <Editor />
                   </div> */}
@@ -681,9 +781,12 @@ const Summary = ({
                 </div>
                 <div className="col-lg-12">
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     id="propertyTitle"
+                    value={RepairAutoDate}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setRepairAutoDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -705,9 +808,12 @@ const Summary = ({
                 </div>
                 <div className="col-lg-12">
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     id="propertyTitle"
+                    value={RepairCompletionDate}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setRepairCompletionDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -732,6 +838,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={PartyAgreed}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setPartyAgreed(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -756,6 +865,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={ReasonThereofDelay}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setReasonThereofDelay(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -780,6 +892,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={AnyFurtherConversation}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setAnyFurtherConversation(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -801,9 +916,12 @@ const Summary = ({
                 </div>
                 <div className="col-lg-12">
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     id="propertyTitle"
+                    value={RepairingPhotoDate}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setRepairingPhotoDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -825,9 +943,12 @@ const Summary = ({
                 </div>
                 <div className="col-lg-12">
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     id="propertyTitle"
+                    value={ReinspectionDate}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setReinspectionDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -852,6 +973,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={SalveDestroy}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setSalveDestroy(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -876,6 +1000,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={BillNo}
+                    readOnly={!isEdit}
+                    onChange={(e)=>setBillNo(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -897,9 +1024,12 @@ const Summary = ({
                 </div>
                 <div className="col-lg-12">
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     id="propertyTitle"
+                    value={BillDate}
+                    readOnly={!isEdit}
+                    onChange={(E)=>setBillDate(E.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -924,6 +1054,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    value={BillAmount}
+                    readOnly={!isEdit}
+                    onChange={(E)=>setBillAmount(E.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>

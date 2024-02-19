@@ -23,6 +23,10 @@ const getAllInfo = async(req,res)=>{
         "CALL GetNewPartsReport(?)",
         [leadId]
       );
+      const summaryReport = await executeQuery(
+        "CALL GetSummaryReport(?)",
+        [leadId]
+      );
       const otherInfo = await executeQuery(
         "CALL GetOtherTables(?)",
         [leadId]
@@ -32,10 +36,11 @@ const getAllInfo = async(req,res)=>{
       const combinedResult = {
         labourDetails,
         newPartsDetails,
-        otherInfo
+        otherInfo,
+        summaryReport
       };
   
-      console.log(combinedResult)
+   
   
       res.json(combinedResult);
     } catch (error) {
@@ -44,4 +49,55 @@ const getAllInfo = async(req,res)=>{
     }
 }
 
-module.exports={getAllInfo};
+const getBillInfo = async(req,res)=>{
+  const leadId = req.query.LeadId;
+
+  const executeQuery = (query, values) => {
+    return new Promise((resolve, reject) => {
+      db.query(query, values, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result[0]);
+        }
+      });
+    });
+  };
+
+  try {
+    const VehicleOnlineDetails = await executeQuery(
+      "SELECT * FROM VehicleDetailsOnline WHERE LeadId=?",
+      [leadId]
+    );
+    const labourDetails = await executeQuery(
+      "CALL GetLabourReport(?)",
+      [leadId]
+    );
+    const newPartsDetails = await executeQuery(
+      "CALL GetNewPartsReport(?)",
+      [leadId]
+    );
+   
+    const otherInfo = await executeQuery(
+      "CALL GetOtherTables(?)",
+      [leadId]
+    );
+  
+   
+
+    const combinedResult = {
+      labourDetails,
+      newPartsDetails,
+      otherInfo,
+      VehicleOnlineDetails
+    };
+
+ 
+
+    res.json(combinedResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+module.exports={getAllInfo,getBillInfo};

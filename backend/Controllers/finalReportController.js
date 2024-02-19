@@ -85,17 +85,45 @@ const updateFinalReport = (req,res)=>{
       Authorization,
       AreasOfoperation,
       commercialRemark,
+      FinalReportNotes,
   
       DetailsOfLoads,
       CauseOfAccident,
       PoliceAction,
       ThirdPartyLoss,
       Assessment,
-      leadId
+      leadId,
+
+      TotalLabor,
+      TotalEstimate,
+      LessExcess,
+      ExpectedSalvage,
+      MetalPercent,
+      RemarkOnSalvage,
+      TotalCostOfParts,
+      Other,
+      GrandTotal,
+      DepreciationOnParts,
+      NetAssessedAmount,
+      SavageDepreciationDetails,
+      CashLess,
+      NoteOfSelf,
+      RepairAutoDate,
+      RepairCompletionDate,
+      PartyAgreed,
+      ReasonThereofDelay,
+      AnyFurtherConversation,
+      RepairingPhotoDate,
+      ReinspectionDate,
+      SalveDestroy,
+      BillNo,
+      BillDate,
+      BillAmount,
+      Endurance,
+      OtherRemark
+
     } = req.body;
 
-    
-  
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
@@ -158,14 +186,14 @@ const updateFinalReport = (req,res)=>{
     OdometerReading = '${VehicleOdometerReading}',
     PucNumber='${PUCNumber}',
     OwnerSrDate='${OwnerSRST}',
-    RegLadenWt=${parseInt(RegLadenWt)},
+    RegLadenWt=${(RegLadenWt)},
     RemarkIfRLW='${RemarkIfRLW}',
-    UnladenWT=${parseInt(UnladenWT)},
+    UnladenWT=${(UnladenWT)},
     RemarkIfULW='${RemarkIfULW}',
     Remark='${VehicleRemark}',
     VehicleType='${VehicleType}',
     AntiTheft='${AntiTheft}',
-    TypeOfDate=${TypeOfDate},
+    TypeOfDate=${TypeOfDate}
     WHERE LeadID = ${leadId};
   `;
 
@@ -234,7 +262,7 @@ const updateFinalReport = (req,res)=>{
       '${Authorization}',
       '${AreasOfoperation}',
       '${commercialRemark}',
-      '${parseInt(leadId)}'
+      '${(leadId)}'
     );
     `;
   
@@ -253,17 +281,73 @@ const updateFinalReport = (req,res)=>{
           Remark='${commercialRemark}'
           WHERE LeadID = ${leadId};
     `;
+
+    const updateSummaryDetails = `
+    UPDATE SummaryReport
+          SET
+          TotalLabour = '${TotalLabor}',
+          TotalEstimate ='${TotalEstimate}' ,
+          TotalCostOfParts='${TotalCostOfParts}',
+          LessExcess='${LessExcess}',
+          ExpectedSalvage='${ExpectedSalvage}',
+          MetalPercent='${MetalPercent}',
+          RemarkOnSalvage='${RemarkOnSalvage}',
+          Other='${Other}',
+          GrandTotal='${GrandTotal}',
+          
+          DepreciationOnParts='${DepreciationOnParts}',
+          NetAssessedAmount='${NetAssessedAmount}',
+          SavageDepreciationDetails='${SavageDepreciationDetails}',
+          CashLess='${CashLess}',
+          NoteOfSelf='${NoteOfSelf}',
+          RepairAutoDate='${RepairAutoDate}',
+          RepairCompletionDate='${RepairCompletionDate}',
+          PartyAgreed='${PartyAgreed}', 
+          ReasonThereofDelay='${ReasonThereofDelay}',
+          AnyFurtherConversation='${AnyFurtherConversation}',
+          RepairingPhotoDate='${RepairingPhotoDate}',
+          ReinspectionDate='${ReinspectionDate}',
+          SalveDestroy='${SalveDestroy}',
+          BillNo='${BillNo}',
+          BillDate='${BillDate}',
+          BillAmount='${BillAmount}',
+          Endurance='${Endurance}',
+          OtherRemark='${OtherRemark}',
+          FinalReportNotes='${FinalReportNotes}'
+          WHERE LeadId = ${leadId};
+    `;
   
-   
+    const insertSummaryDetails = `
+      INSERT INTO SummaryReport (
+        LeadId, TotalLabour, TotalEstimate, TotalCostOfParts, LessExcess, ExpectedSalvage, MetalPercent, RemarkOnSalvage,
+       Other, GrandTotal, DepreciationOnParts, NetAssessedAmount, SavageDepreciationDetails, CashLess,
+        NoteOfSelf, RepairAutoDate, RepairCompletionDate, PartyAgreed, ReasonThereofDelay, AnyFurtherConversation,
+        RepairingPhotoDate, ReinspectionDate, SalveDestroy, BillNo, BillDate, BillAmount, Endurance,OtherRemark,FinalReportNotes
+      ) VALUES (
+        ${leadId}, ${TotalLabor}, ${TotalEstimate}, ${TotalCostOfParts}, ${LessExcess}, ${ExpectedSalvage}, ${MetalPercent},
+        '${RemarkOnSalvage}', '${Other}', ${GrandTotal}, ${DepreciationOnParts}, ${NetAssessedAmount},
+        '${SavageDepreciationDetails}', '${CashLess}', '${NoteOfSelf}', '${RepairAutoDate}', '${RepairCompletionDate}',
+        '${PartyAgreed}', '${ReasonThereofDelay}', '${AnyFurtherConversation}', '${RepairingPhotoDate}', '${ReinspectionDate}',
+        '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}',${FinalReportNotes}'
+      );
+    `;
+      
     db.query(updateClaimDetails, (err, result2) => {
-      if (err) { db.query(updateAccidentDetails, (err, result2) => {
       if (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
       }
-     
-    });
+  });
+
+  db.query(updateAccidentDetails, (err, result2) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+   
+  });
     db.query(updateDriverDetails, (err, result2) => {
       if (err) {
         console.error(err);
@@ -297,7 +381,31 @@ const updateFinalReport = (req,res)=>{
       }
      
     });
+
+   
   
+    db.query("SELECT * FROM SummaryReport WHERE LeadId=?",[leadId], (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+     
+        const query = result2?.length ? updateSummaryDetails : insertSummaryDetails;
+        
+        
+      db.query(query, (err, result2) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        
+      });
+    
+    });
+
+
     db.query("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",[leadId], (err, result2) => {
       if (err) {
         console.error(err);
@@ -307,7 +415,6 @@ const updateFinalReport = (req,res)=>{
      
         const query = result2?.length ? updateCommercialVehicleDetails : insertIntoCommercialVehicleDetails;
         
-        console.log("commercial vehicle",query);
       db.query(query, (err, result2) => {
         if (err) {
           console.error(err);
@@ -319,14 +426,13 @@ const updateFinalReport = (req,res)=>{
     
     });
   
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-    });
-   
+
+  
+
+
   
     res.status(200).send("Successfully Updated!!");
+
   };
 
   module.exports={updateFinalReport}

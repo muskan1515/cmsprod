@@ -294,7 +294,7 @@ const Servey = ({
                     <MyDatePicker
                       disable={!isEditMode}
                       selectedDate={
-                        AccidentAddedDateTime
+                        AccidentAddedDateTime && AccidentAddedDateTime!=="null"
                           ? new Date(AccidentAddedDateTime)
                           : ""
                       }
@@ -336,7 +336,7 @@ const Servey = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    readonly={!isEditMode}
+                    readOnly={!isEditMode}
                     value={
                       AccidentAddedDateTime
                         ? formatTime(AccidentAddedDateTime)
@@ -401,7 +401,7 @@ const Servey = ({
                     className="form-control"
                     id="propertyTitle"
                     value={Pin}
-                    readonly={!isEditMode}
+                    readOnly={!isEditMode}
                     onChange={(e) => setPin(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -434,7 +434,7 @@ const Servey = ({
                     className="form-control"
                     id="propertyTitle"
                     value={PlaceOfSurvey}
-                    readonly={!isEditMode}
+                    readOnly={!isEditMode}
                     onChange={(e) => setPlaceOfSurvey(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -497,7 +497,7 @@ const Servey = ({
                     <MyDatePicker
                       disable={!isEditMode}
                       selectedDate={
-                        SurveyAllotmentDate ? new Date(SurveyAllotmentDate) : ""
+                        SurveyAllotmentDate && SurveyAllotmentDate!=="null" ? new Date(SurveyAllotmentDate) : ""
                       }
                       setSelectedDate={setSurveyAllotmentDate}
                     />
@@ -574,7 +574,7 @@ const Servey = ({
                   <MyDatePicker
                     disable={!isEditMode}
                     selectedDate={
-                      SurveyConductedDate ? new Date(SurveyConductedDate) : ""
+                      SurveyConductedDate&& SurveyConductedDate!=="null" ? new Date(SurveyConductedDate) : ""
                     }
                     setSelectedDate={setSurveyConductedDate}
                   />
@@ -597,7 +597,7 @@ const Servey = ({
                   placeholder={AccidentContent(
                     claim?.insuredDetails?.InsuredName
                   )}
-                  readonly={!isEditMode}
+                  readOnly={!isEditMode}
                   value={CauseOfAccident}
                   onChange={setCauseOfAccident}
                   style={{ height: "150px" }}
@@ -679,7 +679,7 @@ const Servey = ({
           <div className="row">
             <div className="">
               <Editor
-                readonly={!isEditMode}
+                readOnly={!isEditMode}
                 value={DetailsOfLoads}
                 onChange={setDetailsOfLoads}
                 style={{ height: "100px" }}
@@ -692,7 +692,7 @@ const Servey = ({
             <hr />
             <div className="">
               <Editor
-                readonly={!isEditMode}
+                readOnly={!isEditMode}
                 value={ThirdPartyLoss}
                 onChange={setThirdPartyLoss}
                 style={{ height: "100px" }}
@@ -710,7 +710,7 @@ const Servey = ({
                   formatDate(claim?.claimDetails?.AddedDateTime),
                   formatDate("")
                 )}
-                readonly={!isEditMode}
+                readOnly={!isEditMode}
                 value={Assessment}
                 onChange={setAssessment}
                 style={{ height: "300px" }}
