@@ -9,7 +9,7 @@ import Exemple from "./Exemple_01";
 import PaymentDetails_01 from "./PaymentsDetails_01";
 import { useState } from "react";
 
-const PaymentDetails = (edit) => {
+const PaymentDetails = ({ edit, onSaveHandler }) => {
   const router = useRouter();
 
   const [editCase_11, setEditCase_11] = useState(false);
@@ -54,15 +54,21 @@ const PaymentDetails = (edit) => {
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-1 text-end">
+                  <div className="col-lg-1">
                     {editCase_11 ? (
-                      <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => onSaveHandler(setEditCase_11)}
-                      >
-                        Save
-                      </button>
+                      <>
+                        <button
+                          className="btn-thm m-1"
+                          style={{}}
+                          onClick={() => onSaveHandler(setEditCase_11)}
+                        >
+                          Save
+                        </button>{" "}
+                        <button
+                          className="btn-thm flaticon-close"
+                          style={{ fontSize: "14px" }}
+                        ></button>
+                      </>
                     ) : (
                       <button
                         className="btn-thm"

@@ -7,7 +7,6 @@ import ChatboxContent from "./ChatboxContent";
 import Form from "./Form";
 import Form_01 from "./Form_01";
 import Form_02 from "./Form_02";
-import toast from "react-hot-toast";
 import axios from "axios";
 import StatusLog from "./StatusLog";
 import Exemple from "./Exemple";
@@ -20,6 +19,7 @@ import Video from "./Video";
 import EstimateList from "./EstimateList";
 import CreateList_02 from "./CreateList_02";
 import CreateList_03 from "./CreateList_03";
+import { toast } from "react-hot-toast";
 import CreateList_04 from "./CreateList_04";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
@@ -34,7 +34,7 @@ const Index = ({}) => {
 
   const [videosList, setVideosList] = useState([]);
 
-  const [reload,setReload]=useState(false);
+  const [reload, setReload] = useState(false);
 
   const [policyIssuingOffice, setPolicyIssuingOffice] = useState(
     claim?.claimDetails?.PolicyIssuingOffice
@@ -270,7 +270,7 @@ const Index = ({}) => {
   const [VehicleRegistedAt, setVehicleRegistedAt] = useState("");
   const [PermanentAddress, setPermanentAddress] = useState("");
   const [ClassOfVehicle, setClassOfVehicle] = useState("");
-  VehicleInsuranceUpto
+  VehicleInsuranceUpto;
 
   //driver fetch details
   const [FatherName, setFatherName] = useState("");
@@ -281,7 +281,7 @@ const Index = ({}) => {
   const [RtoName, setRtoName] = useState("");
   const [ValidUpto, setValidUpto] = useState("");
 
-  console.log('ValidUptoFROMINDEX',claim.driverDetails?.VaildUpto );
+  console.log("ValidUptoFROMINDEX", claim.driverDetails?.VaildUpto);
   const [DateOfBirth, setDateOfBirth] = useState("");
   const [DateOfIssue, setDateOfIssue] = useState("");
   const [Vov, setVov] = useState("");
@@ -459,7 +459,7 @@ const Index = ({}) => {
     setPht(claim?.driverDetails?.Pht);
     setPhoto(claim?.driverDetails?.Photo);
     setValidUpto(claim.driverDetails?.VaildUpto);
-    
+
     setDateOfBirth(claim?.driverDetails?.DateOfBirth || "");
     setDateOfIssue(claim?.driverDetails?.DateOfIssue || "");
 
@@ -631,6 +631,7 @@ const Index = ({}) => {
         },
       })
       .then((res) => {
+        toast.success("Successfully fetched!");
         alert("Successfully Updated the Information !!");
       })
       .catch((err) => {
@@ -879,9 +880,12 @@ const Index = ({}) => {
                         <div className="my_dashboard_review mb-2">
                           <div className="col-lg-12">
                             <div className="row">
-                              <h4 className="">
-                                CASE DETAILS
-                                {editCase ? (
+                              <div className="col-lg-2">
+                                <h4 className="mt-2">CASE DETAILS</h4>
+                              </div>
+                              {editCase ? (
+                                <div className="col-lg-2">
+                                  {" "}
                                   <button
                                     className="btn-thm m-1"
                                     style={{}}
@@ -889,19 +893,23 @@ const Index = ({}) => {
                                   >
                                     Save
                                   </button>
-                                ) : (
                                   <button
-                                    className="btn-thm m-1"
-                                    style={{}}
-                                    onClick={() => editHandler(1)}
-                                  >
-                                    <span
-                                      className="flaticon-edit"
-                                      style={{ fontSize: "14px" }}
-                                    ></span>
-                                  </button>
-                                )}
-                              </h4>
+                                    className="btn-thm flaticon-close"
+                                    style={{ fontSize: "14px" }}
+                                  ></button>
+                                </div>
+                              ) : (
+                                <button
+                                  className="col-lg-1 btn-thm m-1"
+                                  style={{}}
+                                  onClick={() => editHandler(1)}
+                                >
+                                  <span
+                                    className="flaticon-edit"
+                                    style={{ fontSize: "14px" }}
+                                  ></span>
+                                </button>
+                              )}
                             </div>
                           </div>
                           <div

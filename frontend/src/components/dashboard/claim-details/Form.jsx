@@ -135,9 +135,7 @@ const Form = ({
     return iso8601Regex.test(dateString);
   }
 
-  
-
-  const [saveDetails,setSaveDetails]=useState(false)
+  const [saveDetails, setSaveDetails] = useState(false);
 
   const handleFetchData = async (req, res) => {
     if (!claim?.vehicleDetails?.RegisteredNumber) {
@@ -206,6 +204,7 @@ const Form = ({
             })
             .then((res) => {
               window.location.reload();
+              toast.success("Successfully fetched!");
             })
             .catch((err) => {
               alert("err", err);
@@ -255,15 +254,21 @@ const Form = ({
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-1 text-end">
+                  <div className="col-lg-2">
                     {editCase_01 ? (
-                      <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => onSaveHandler(setEditCase_01)}
-                      >
-                        Save
-                      </button>
+                      <div>
+                        <button
+                          className="btn-thm m-1"
+                          style={{}}
+                          onClick={() => onSaveHandler(setEditCase_01)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="btn-thm flaticon-close"
+                          style={{ fontSize: "14px" }}
+                        ></button>
+                      </div>
                     ) : (
                       <button
                         className="btn-thm"
@@ -278,11 +283,11 @@ const Form = ({
                     )}
                   </div>
                   {editCase_01 && (
-                    <div className="col-lg-2 text-start">
+                    <div className="col-lg-2" style={{ marginLeft: "-70px" }}>
                       <button
-                        className="btn-thm"
+                        className="btn-thm m-1"
                         onClick={handleFetchData}
-                        style={{}}
+                        style={{ marginLeft: "-120px" }}
                       >
                         Fetch Details
                       </button>
@@ -405,7 +410,8 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             selected={
-                              DateRegistration !== null && !isNaN(new Date(DateRegistration))
+                              DateRegistration !== null &&
+                              !isNaN(new Date(DateRegistration))
                                 ? new Date(DateRegistration)
                                 : null
                             }
@@ -473,17 +479,17 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                        <DatePicker
+                          <DatePicker
                             className="form-control"
                             id="propertyTitle"
                             selected={
-                              TransferDate !== null && !isNaN(new Date(TransferDate))
+                              TransferDate !== null &&
+                              !isNaN(new Date(TransferDate))
                                 ? new Date(TransferDate)
                                 : null
                             }
                             onChange={(date) => setTransferDate(date)}
                           />
-                        
                         </div>
                       </div>
                     </div>
@@ -1000,11 +1006,12 @@ const Form = ({
                         </div>
 
                         <div className="col-lg-7">
-                           <DatePicker
+                          <DatePicker
                             className="form-control"
                             id="propertyTitle"
                             selected={
-                              VehicleRegistedAt !== null && !isNaN(new Date(VehicleRegistedAt))
+                              VehicleRegistedAt !== null &&
+                              !isNaN(new Date(VehicleRegistedAt))
                                 ? new Date(VehicleRegistedAt)
                                 : null
                             }
@@ -1033,18 +1040,17 @@ const Form = ({
                         </div>
 
                         <div className="col-lg-7">
-
-                           <DatePicker
+                          <DatePicker
                             className="form-control"
                             id="propertyTitle"
                             selected={
-                              RcInsuranceUpto !== null && !isNaN(new Date(RcInsuranceUpto))
+                              RcInsuranceUpto !== null &&
+                              !isNaN(new Date(RcInsuranceUpto))
                                 ? new Date(RcInsuranceUpto)
                                 : null
                             }
                             onChange={(date) => setRcInsuranceUpto(date)}
                           />
-                          
                         </div>
                       </div>
                     </div>

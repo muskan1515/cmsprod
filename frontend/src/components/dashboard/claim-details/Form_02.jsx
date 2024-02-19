@@ -15,7 +15,7 @@ const Form = ({
   claim,
   edit,
   setReload,
-   reload,
+  reload,
   GarageNameAndAddress,
   setGarageNameAndAddress,
   GarageContactNo1,
@@ -62,15 +62,21 @@ const Form = ({
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-1 text-end">
+                  <div className="col-lg-2">
                     {editCase_03 ? (
-                      <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => onSaveHandler(setEditCase_03)}
-                      >
-                        Save
-                      </button>
+                      <>
+                        <button
+                          className="btn-thm m-1"
+                          style={{}}
+                          onClick={() => onSaveHandler(setEditCase_03)}
+                        >
+                          Save
+                        </button>{" "}
+                        <button
+                          className="btn-thm flaticon-close"
+                          style={{ fontSize: "14px" }}
+                        ></button>
+                      </>
                     ) : (
                       <button
                         className="btn-thm"

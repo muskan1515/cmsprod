@@ -26,10 +26,10 @@ const Form_01 = ({
   setLicenseNumber,
   setLicenseType,
   LicenseType,
-  IssuingAuthority,setIssuingAuthority,
+  IssuingAuthority,
+  setIssuingAuthority,
 
   onSaveHandler,
-
 
   FatherName,
   setFatherName,
@@ -55,22 +55,23 @@ const Form_01 = ({
   setDateOfBirth,
   setDateOfIssue,
   DateOfIssue,
-  setIsDriverDetailsFetched
+  setIsDriverDetailsFetched,
 }) => {
   const router = useRouter();
   const [editCase_02, setEditCase_02] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
-  const [details,setDetails]=useState([])
-  const [change,setChange]=useState(false);
+  const [details, setDetails] = useState([]);
+  const [change, setChange] = useState(false);
 
-  const handleFetchData =  () => {
-    if(!claim?.driverDetails?.LicenseNumber || claim?.driverDetails?.LicenseNumber === "null"){
+  const handleFetchData = () => {
+    if (
+      !claim?.driverDetails?.LicenseNumber ||
+      claim?.driverDetails?.LicenseNumber === "null"
+    ) {
       alert("Please fill License Number first!");
-    }
-
-    else if(claim?.driverOnlineDetails){
+    } else if (claim?.driverOnlineDetails) {
       const details = claim?.driverOnlineDetails;
-      setFatherName(details?.FatherName );
+      setFatherName(details?.FatherName);
       setBloodGroup(details?.BloodGroup);
       setAddress(details?.Address);
       setRtoName(details?.RtoName);
@@ -86,33 +87,29 @@ const Form_01 = ({
       setPhoto(details?.Photo);
 
       alert("Successfully fetched!!");
-    }
-    else{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    
-    const dl_number = claim?.driverDetails?.LicenseNumber;
-    
+    } else {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+      const dl_number = claim?.driverDetails?.LicenseNumber;
+
       axios
         .get("/api/getOnlineDriverData", {
           headers: {
             Authorization: `Bearer ${userInfo[0].Token}`,
             "Content-Type": "application/json",
           },
-          params:{
-            dl_number:dl_number,
-            leadId:claim?.claimDetails?.LeadID
-          }
+          params: {
+            dl_number: dl_number,
+            leadId: claim?.claimDetails?.LeadID,
+          },
         })
         .then(() => {
           alert("Successfully fetched!!");
-         
         })
         .catch((err) => {
           alert("err", err);
-         
         });
-
-      }
+    }
   };
 
   const formatDate = (val) => {
@@ -148,40 +145,46 @@ const Form_01 = ({
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-1 text-end">
-                    {editCase_02   ? 
+                  <div className="col-lg-2">
+                    {editCase_02 ? (
                       <>
-                      <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => onSaveHandler(setEditCase_02)}
-                      >
-                        Save
-                      </button>
-                      <div className="col-lg-2 text-start">
-                      <button className="btn-thm" style={{}} onClick={handleFetchData}>
-                        Fetch Details
-                      </button> 
-                      </div>
+                        <button
+                          className="btn-thm m-1"
+                          style={{}}
+                          onClick={() => onSaveHandler(setEditCase_02)}
+                        >
+                          Save
+                        </button>{" "}
+                        <button
+                          className="btn-thm flaticon-close"
+                          style={{ fontSize: "14px" }}
+                        ></button>
+                        {/* <div className="col-lg-2">
+                          <button
+                            className="btn-thm"
+                            style={{}}
+                            onClick={handleFetchData}
+                          >
+                            Fetch Details
+                          </button>
+                        </div> */}
                       </>
-                      :
+                    ) : (
                       <>
-                      
-                    
-                      <button
-                      className="btn-thm"
-                      style={{}}
-                      onClick={() => setEditCase_02(true)}
-                    >
-                      <span
-                        className="flaticon-edit"
-                        style={{ fontSize: "14px" }}
-                      ></span>
-                    </button>
-                    </> 
-                    }
-                    </div>
-                    </div>
+                        <button
+                          className="btn-thm"
+                          style={{}}
+                          onClick={() => setEditCase_02(true)}
+                        >
+                          <span
+                            className="flaticon-edit"
+                            style={{ fontSize: "14px" }}
+                          ></span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
                 {editCase_02 ? (
                   <div className="row">
                     <div className="col-lg-6">
@@ -597,8 +600,8 @@ const Form_01 = ({
 
                             // placeholder="Enter Registration No."
                           /> */}
-                          {console.log('ValidUpto+++++++++',ValidUpto)}
-                           <DatePicker
+                          {console.log("ValidUpto+++++++++", ValidUpto)}
+                          <DatePicker
                             className="form-control"
                             id="propertyTitle"
                             selected={
@@ -772,30 +775,30 @@ const Form_01 = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_driver 
-                    claim={claim}
-                    FatherName={FatherName}
-                    setFatherName={setFatherName}
-                    Gender={Gender}
-                    setGender={setGender}
-                    BloodGroup={BloodGroup}
-                    setBloodGroup={setBloodGroup}
-                    setAddress={setAddress}
-                    Address={Address}
-                    setRtoName={setRtoName}
-                    RtoName={RtoName}
-                    Mobile={Mobile}
-                    setMobile={setMobile}
-                    ValidUpto={ValidUpto}
-                    setValidUpto={setValidUpto}
-                    Vov={Vov}
-                    setVov={setVov}
-                    setPht={setPht}
-                    Pht={Pht}
-                    Photo={Photo}
-                    setPhoto={setPhoto}
-                    setIsDriverDetailsFetched={setIsDriverDetailsFetched}
-                     />
+                    <Form_driver
+                      claim={claim}
+                      FatherName={FatherName}
+                      setFatherName={setFatherName}
+                      Gender={Gender}
+                      setGender={setGender}
+                      BloodGroup={BloodGroup}
+                      setBloodGroup={setBloodGroup}
+                      setAddress={setAddress}
+                      Address={Address}
+                      setRtoName={setRtoName}
+                      RtoName={RtoName}
+                      Mobile={Mobile}
+                      setMobile={setMobile}
+                      ValidUpto={ValidUpto}
+                      setValidUpto={setValidUpto}
+                      Vov={Vov}
+                      setVov={setVov}
+                      setPht={setPht}
+                      Pht={Pht}
+                      Photo={Photo}
+                      setPhoto={setPhoto}
+                      setIsDriverDetailsFetched={setIsDriverDetailsFetched}
+                    />
                   </div>
                 )}
               </div>

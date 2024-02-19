@@ -54,15 +54,21 @@ const EstimateList = ({ edit, onSaveHandler }) => {
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-1 text-end">
+                  <div className="col-lg-2  ">
                     {editCase_10 ? (
-                      <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => onSaveHandler(setEditCase_10)}
-                      >
-                        Save
-                      </button>
+                      <>
+                        <button
+                          className="btn-thm m-1"
+                          style={{}}
+                          onClick={() => onSaveHandler(setEditCase_10)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="btn-thm flaticon-close"
+                          style={{ fontSize: "14px" }}
+                        ></button>
+                      </>
                     ) : (
                       <button
                         className="btn-thm"
