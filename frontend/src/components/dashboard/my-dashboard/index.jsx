@@ -116,20 +116,23 @@ const Index = () => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    if (!userInfo) {
+    console.log(userInfo);
+    if (userInfo==="") {
       router.push("/login");
     }
+    else{
     // console.log(userInfo[0].Token)
     toast.loading("Fetching all the claims!!");
     axios
       .get("/api/getAllClaims", {
         headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
+          Authorization: `Bearer ${userInfo[0]?.Token}`,
           "Content-Type": "application/json",
         },
       })
       .then((res) => {
         toast.success("Successfully fetched!");
+        toast.dismiss();
         setAllClaims(res.data.data[0]);
       })
       .catch((err) => {
@@ -154,6 +157,7 @@ const Index = () => {
       .catch((err) => {
         console.log(err);
       });
+    }
   }, []);
   useEffect(() => {
     let temp = [];

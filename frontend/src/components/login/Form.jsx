@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import {Toaster, toast} from "react-hot-toast";
 import Captcha from "../common/Captcha";
 
 const Form = () => {
@@ -10,11 +10,24 @@ const Form = () => {
   const [captchaVerfied, setCaptchaVerified] = useState(false);
   const [change, setChange] = useState(false);
 
+  const [isCaptchaVerified,setIsCaptchaVerified]=useState(false);
+
 
   const router = useRouter();
 
   const submitHandler = (event) => {
+
     event.preventDefault();
+    if(!isCaptchaVerified){
+      toast.error("Please verify the captcha !!");
+      setChange(true);
+    }
+
+    else if(!username || !password){
+      toast.error("Please fill the credentials!");
+    }
+    else{
+    
 
     const payload = {
       username: username,
@@ -32,16 +45,19 @@ const Form = () => {
           "userInfo",
           JSON.stringify(res.data.userData.result)
         );
-        alert("Successfully logged in!");
+        toast.success("Successfully logged in!");
         router.push("/my-dashboard");
       })
       .catch((err) => {
         toast.dismiss();
-        alert("Try Again!!");
+        toast.error("Try Again!!");
       });
+    }
   };
 
   return (
+    <>
+    <Toaster/>
     <form action="#">
       <div className="heading text-center">
         <h3>Login to your account</h3>
@@ -87,7 +103,7 @@ const Form = () => {
       {/* End .input-group */}
 
       <div className="">
-        <Captcha change={change} setChange={setChange} />
+        <Captcha  change={change} setChange={setChange} setIsCaptchaVerified={setIsCaptchaVerified} />
       </div>
 
       <div className="form-group form-check custom-checkbox mb-3">
@@ -146,6 +162,7 @@ const Form = () => {
       </div> */}
       {/* more signin options */}
     </form>
+    </>
   );
 };
 

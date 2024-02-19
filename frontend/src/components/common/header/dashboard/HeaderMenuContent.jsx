@@ -26,7 +26,7 @@ const HeaderMenuContent = ({ float = "" ,setIsRegionChange,isDashboard,setRegion
     }
 
     const tempName = JSON.parse(localStorage.getItem("userInfo"));
-    setName(tempName[0]?.Username);
+    setName("");
     console.log(name);
   },[]);
 

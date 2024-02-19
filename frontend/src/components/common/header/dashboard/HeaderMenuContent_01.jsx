@@ -25,9 +25,9 @@ const HeaderMenuContent = ({region}) => {
       setRegionValue(region);
     }
 
-    const tempName = JSON.parse(localStorage.getItem("userInfo"));
-    setName(tempName[0]?.Username);
-    console.log(name);
+    // const tempName = JSON.parse(localStorage.getItem("userInfo"));
+    // setName(tempName[0]?.Username);
+    // console.log(name);
   },[]);
 
   const home = [

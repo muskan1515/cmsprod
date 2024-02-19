@@ -28,6 +28,12 @@ const Form = ({
 }) => {
   const router = useRouter();
   const [editCase_03, setEditCase_03] = useState(false);
+  const [isUpdateVehicleLoading,setisUpdateVehicleLoading]=useState(false);
+  
+  const closeFunction = ()=>{
+    setEditCase_03(false)
+    setisUpdateVehicleLoading(false)
+  }
 
   const formatDate = (val) => {
     const date = new Date(val);
@@ -68,7 +74,9 @@ const Form = ({
                         <button
                           className="btn-thm m-1"
                           style={{}}
-                          onClick={() => onSaveHandler(setEditCase_03)}
+                          onClick={() =>{ 
+                            setisUpdateVehicleLoading(true);
+                            onSaveHandler(4,closeFunction,closeFunction)}}
                         >
                           Save
                         </button>{" "}
@@ -79,7 +87,7 @@ const Form = ({
                         ></button>
                       </>
                     ) : (
-                      <button
+                      claim?.claimDetails?.PolicyNumber && <button
                         className="btn-thm"
                         style={{}}
                         onClick={() => setEditCase_03(true)}
@@ -97,7 +105,10 @@ const Form = ({
                     </button> */}
                   </div>
                 </div>
-                {editCase_03 ? (
+                {  isUpdateVehicleLoading ?
+                  <Loader/>
+                  :
+                  editCase_03 ? (
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="row mt-1">

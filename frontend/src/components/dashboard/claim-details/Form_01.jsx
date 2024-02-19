@@ -10,6 +10,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../../common/Loader";
 // import toast from "react-hot-toast";
 
 const Form_01 = ({
@@ -111,7 +112,13 @@ const Form_01 = ({
         });
     }
   };
+  const [isUpdateVehicleLoading,setisUpdateVehicleLoading]=useState(false);
 
+
+  const closeFunction = ()=>{
+    setEditCase_02(false)
+    setisUpdateVehicleLoading(false)
+  }
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
@@ -151,11 +158,13 @@ const Form_01 = ({
                         <button
                           className="btn-thm m-1"
                           style={{}}
-                          onClick={() => onSaveHandler(setEditCase_02)}
+                          onClick={() => 
+                            {setisUpdateVehicleLoading(true)
+                            onSaveHandler(3,closeFunction,closeFunction)}}
                         >
                           Save
                         </button>{" "}
-                        <button
+                        claim?.claimDetails?.PolicyNumber && <button
                           className="btn-thm flaticon-close"
                           style={{ fontSize: "14px" }}
                           onClick={()=>setEditCase_02(false)}
@@ -186,7 +195,9 @@ const Form_01 = ({
                     )}
                   </div>
                 </div>
-                {editCase_02 ? (
+                {isUpdateVehicleLoading ?
+                  <Loader/>
+                  :editCase_02 ? (
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="row mt-1">

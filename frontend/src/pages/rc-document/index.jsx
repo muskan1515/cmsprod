@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import Seo from "../../components/common/seo";
 import RcDocument from "../../components/dashboard/rc-document";
 
-//* hello*//
 
 const index = () => {
   return (

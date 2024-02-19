@@ -10,6 +10,7 @@ import axios from "axios";
 import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../../common/Loader";
 // import toast from "react-hot-toast";
 
 const Form = ({
@@ -124,6 +125,11 @@ const Form = ({
   //   };
   console.log("MakerModel", MakerModel);
 
+  const closeFunction = ()=>{
+    setEditCase_01(false)
+    setisUpdateVehicleLoading(false)
+  }
+
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
@@ -216,6 +222,7 @@ const Form = ({
     }
   };
 
+  const [isUpdateVehicleLoading,setisUpdateVehicleLoading]=useState(false);
   //permanenet Address
   return (
     <>
@@ -260,7 +267,9 @@ const Form = ({
                         <button
                           className="btn-thm m-1"
                           style={{}}
-                          onClick={() => onSaveHandler(setEditCase_01)}
+                          onClick={() => 
+                            {setisUpdateVehicleLoading(true)
+                            onSaveHandler(2,closeFunction,closeFunction)}}
                         >
                           Save
                         </button>
@@ -281,7 +290,7 @@ const Form = ({
                       </div>
 
                     ) : (
-                      <button
+                      claim?.claimDetails?.PolicyNumber && <button
                         className="btn-thm"
                         style={{}}
                         onClick={() => setEditCase_01(true)}
@@ -296,7 +305,11 @@ const Form = ({
                  
                 </div>
 
-                {editCase_01 ? (
+                {
+                  isUpdateVehicleLoading ?
+                  <Loader/>
+                  :
+                  editCase_01 ? (
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="row mt-1">

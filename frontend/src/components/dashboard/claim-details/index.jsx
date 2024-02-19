@@ -21,6 +21,8 @@ import CreateList_02 from "./CreateList_02";
 import CreateList_03 from "./CreateList_03";
 import { toast } from "react-hot-toast";
 import CreateList_04 from "./CreateList_04";
+import Loader from "../../common/Loader";
+import { useRouter } from "next/router";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -366,6 +368,7 @@ const Index = ({}) => {
     // setPolicyEndDate(formattedOneYearLater);
   }, [policyStartDate]);
 
+
   useEffect(() => {
     setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice);
     setClaimRegion(claim?.claimDetails?.Region);
@@ -480,7 +483,6 @@ const Index = ({}) => {
     const ss = String(now.getSeconds()).padStart(2, "0");
     const result = `${firstThreeLetters}/${mm}/${dd}${hh}${min}${ss}`;
 
-    console.log(result);
     return result;
   };
   console.log("policyStartDate", policyStartDate);
@@ -489,7 +491,22 @@ const Index = ({}) => {
     claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
   );
 
-  const onSaveHandler = (func) => {
+  const calculateTheUpdateType=(type)=>{
+    if(String(type) === "1")
+     return "updateClaimDetails";
+    else if(String(type) === "2")
+     return "updateVehicleDetails";
+     else if(String(type) === "3")
+     return "updateDriverDetails";
+    return "updategarageDetails";
+  }
+
+  const [isClaimLoading,setIsClaimLoading]=useState(false)
+
+  const onSaveHandler = (APItype,func,func2) => {
+
+    const type = calculateTheUpdateType(APItype);
+
     console.log(insuranceCompanyNameAddress);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const vehicleParts = VehicleModel?.split(",");
@@ -629,6 +646,9 @@ const Index = ({}) => {
           Authorization: `Bearer ${userInfo[0].Token}`,
           "Content-Type": "application/json",
         },
+        params:{
+          type:type
+        }
       })
       .then((res) => {
         toast.success("Successfully fetched!");
@@ -644,8 +664,29 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     }
 
+    axios
+      .get("/api/getSpecificClaim", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: leadId,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setClaim(res.data.data);
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+
+    func(false);
+    func2(false)
+
     // setEditCase((prop) => !prop);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const editHandler = (value) => {
@@ -673,7 +714,11 @@ const Index = ({}) => {
 
   const [isStatusModal, setIsStatusModal] = useState(false);
 
+  const [isLoading,setIsLoading]=useState(true);
+
   const handleStatusUpdateHandler = () => {};
+
+  const router = useRouter();
 
   const closeStatusUpdateHandler = () => {
     setIsStatusModal(false);
@@ -681,6 +726,11 @@ const Index = ({}) => {
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if(!userInfo){
+      router.push("/login")
+    }
+    else{
     axios
       .get("/api/getSpecificClaim", {
         headers: {
@@ -799,7 +849,13 @@ const Index = ({}) => {
       .catch((err) => {
         console.log(err);
       });
+    }
+     
   }, [leadId]);
+
+  useEffect(()=>{
+    setIsLoading(false);
+  },[claim]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -861,7 +917,9 @@ const Index = ({}) => {
                 </div> */}
                 {/* End .col */}
 
-                {claim.claimDetails?.InsuredName ? (
+                { isLoading ?
+                  <Loader/>
+                  :claim.claimDetails?.InsuredName ? (
                   <div className="row">
                     <div
                       className="smartTable-noDataFound col-12"
@@ -889,7 +947,10 @@ const Index = ({}) => {
                                   <button
                                     className="btn-thm m-1"
                                     style={{}}
-                                    onClick={() => onSaveHandler()}
+                                    onClick={() =>{
+                                      setIsClaimLoading(true)
+                                      onSaveHandler(1,setEditCase,setIsClaimLoading)
+                                    }}
                                   >
                                     Save
                                   </button>
@@ -900,7 +961,7 @@ const Index = ({}) => {
                                   ></button>
                                 </div>
                               ) : (
-                                <button
+                                 claim?.claimDetails?.PolicyNumber && <button
                                   className="col-lg-1 btn-thm m-1"
                                   style={{}}
                                   onClick={() => editHandler(1)}
@@ -923,7 +984,10 @@ const Index = ({}) => {
                               marginBottom: "5px",
                             }}
                           ></div>
-                          {!editCase ? (
+                          {isClaimLoading ? 
+                            <Loader/>
+                            
+                            :(!editCase ? (
                             <div className="col-lg-12">
                               <CreateList_02
                                 claim={claim}
@@ -983,7 +1047,7 @@ const Index = ({}) => {
                               setVehicleRegisteredNumber={
                                 setVehicleRegisteredNumber
                               }
-                            />
+                            />)
                           )}
                         </div>
                         <div
@@ -1030,7 +1094,7 @@ const Index = ({}) => {
                             color: "blue",
                             border: "1px solid",
                             marginBottom: "5px",
-                          }}
+                          }}9
                         ></div>
                         {!editCase_01 ? (
                           <div className="col-lg-12">

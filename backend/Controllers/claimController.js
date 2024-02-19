@@ -454,92 +454,91 @@ const getSpecificClaim = async (req, res) => {
 
 
  const updateClaim = async(req, res) => {
-    const leadId = req.params.leadId;
   
-    const {
-      InsuredName,
-      InsuredMailAddress,
-      InsuredMobileNo1,
-      InsuredMobileNo2,
-      ClaimNumber,
-      PolicyIssuingOffice,
-      ClaimRegion,
-      ClaimServicingOffice,
-      InspectionType,
-      SurveyType,
-      PolicyPeriodStart,
-      PolicyPeriodEnd,
-      InsuranceCompanyNameAddress,
-      InsuredAddedBy,
-      VehicleMakeVariantModelColor,
-      VehicleTypeOfBody,
-      VehicleRegisteredNumber,
-      VehicleDateOfRegistration,
-      VehiclePucNumber,
-      VehicleRegisteredOwner,
-      VehicleTransferDate,
-      VehicleEngineNumber,
-      VehicleAddedBy,
-      IssuingAuthority,
-      LicenseNumber,
-      LicenseType,
-      VehicleChassisNumber,
-      VehicleFuelType,
-      DriverName,
-      DriverAddedDate,
-      DriverTypeOfVerification,
-      GarageNameAndAddress,
-      GarageAddedBy,
-      GarageContactNo1,
-      GarageContactNo2,
-      VehicleClassDescription,
-      MakerDesc,
-      MakerModel,
-      ManufactureMonth,
-      VehicleGvw,
-      VehicleCubicCap,
-      VehicleSeatingCapacity,
-      VehiclePermanentAddress,
-      FitUpto,
-      PasiaModelCode,
-      RcInsuranceComp,
-      RcInsuranceUpto,
-      RcRegisteredAt,
-      RcBlacklistStatus,
-      RcVehicleType,
-      BancsModelCode,
-      BancsMakeCode,
-      BancsSubtypeCode,
-      BancsBodyType,
-      BancsVehicleClass,
-      BancsVehicleSegment,
-      RcRtoCode,
-      VehicleRcStatus,
-      VehicleBlackListStatus,
-      VehicleRegistedAt,
-      VehicleInsuranceCompany,
-      ManufactureMonthYear,
-      PermanentAddress,
-      ClassOfVehicle,
-      insuredAddedBy,
-      SeatingCapacity,
-      FatherName,
-      Gender,
-      BloodGroup,
-      Mobile,
-      Address,
-      RtoName,
-      ValidUpto,
-      Vov,
-      Photo,
-      Pht,
-      IsDriverDetailsFetched,
-      IsRcDetailsFetched,
-      DateOfBirth,
-      DateOfIssue,
+  const {
+    InsuredName,
+    InsuredMailAddress,
+    InsuredMobileNo1,
+    InsuredMobileNo2,
+    ClaimNumber,
+    PolicyIssuingOffice,
+    ClaimRegion,
+    ClaimServicingOffice,
+    InspectionType,
+    SurveyType,
+    PolicyPeriodStart,
+    PolicyPeriodEnd,
+    InsuranceCompanyNameAddress,
+    InsuredAddedBy,
+    VehicleMakeVariantModelColor,
+    VehicleTypeOfBody,
+    VehicleRegisteredNumber,
+    VehicleDateOfRegistration,
+    VehiclePucNumber,
+    VehicleRegisteredOwner,
+    VehicleTransferDate,
+    VehicleEngineNumber,
+    VehicleAddedBy,
+    IssuingAuthority,
+    LicenseNumber,
+    LicenseType,
+    VehicleChassisNumber,
+    VehicleFuelType,
+    DriverName,
+    DriverAddedDate,
+    DriverTypeOfVerification,
+    GarageNameAndAddress,
+    GarageAddedBy,
+    GarageContactNo1,
+    GarageContactNo2,
+    VehicleClassDescription,
+    MakerDesc,
+    MakerModel,
+    ManufactureMonth,
+    VehicleGvw,
+    VehicleCubicCap,
+    VehicleSeatingCapacity,
+    VehiclePermanentAddress,
+    FitUpto,
+    PasiaModelCode,
+    RcInsuranceComp,
+    RcInsuranceUpto,
+    RcRegisteredAt,
+    RcBlacklistStatus,
+    RcVehicleType,
+    BancsModelCode,
+    BancsMakeCode,
+    BancsSubtypeCode,
+    BancsBodyType,
+    BancsVehicleClass,
+    BancsVehicleSegment,
+    RcRtoCode,
+    VehicleRcStatus,
+    VehicleBlackListStatus,
+    VehicleRegistedAt,
+    VehicleInsuranceCompany,
+    ManufactureMonthYear,
+    PermanentAddress,
+    ClassOfVehicle,
+    insuredAddedBy,
+    SeatingCapacity,
+    FatherName,
+    Gender,
+    BloodGroup,
+    Mobile,
+    Address,
+    RtoName,
+    ValidUpto,
+    Vov,
+    Photo,
+    Pht,
+    IsDriverDetailsFetched,
+    IsRcDetailsFetched,
+    DateOfBirth,
+    DateOfIssue,
 
-      LeadId,
-    } = req.body;
+    LeadId,
+  } = req.body;
 
     const updateClaimDetails = `
     UPDATE ClaimDetails
@@ -725,80 +724,264 @@ const getSpecificClaim = async (req, res) => {
     });
   };
 
+  const updateDriverDetails=(req,res)=>{
 
-//   app.get("/claim-details/:claimNo", authenticateUser, (req, res) => {
-    //   const sql = "SELECT * FROM claim_details WHERE claim_no = ?";
-    //   db.query(sql, [req.params.claimNo], (err, result) => {
-    //     if (err) {
-    //       console.error(err);
-    //       res.status(500).send("Internal Server Error");
-    //       return;
-    //     }
-    //     res.send(result);
-    //   });
-    // });
+    const {
+      IssuingAuthority,
+      LicenseNumber,
+      LicenseType,
+      DriverName,
+      DriverAddedDate,
+      DriverTypeOfVerification,
+      FatherName,
+      Gender,
+      BloodGroup,
+      Mobile,
+      Address,
+      RtoName,
+      ValidUpto,
+      Vov,
+      Photo,
+      Pht,
+      DateOfBirth,
+      DateOfIssue,
+  
+      LeadId,
+    } = req.body;
+    const updateDriverDetails = `
+    UPDATE DriverDetails
+    SET
+    IssuingAuthority = ${IssuingAuthority ? `'${IssuingAuthority}'` : null},
+    LicenseNumber = '${LicenseNumber}',
+    LicenseType = '${LicenseType}',
+    DriverName = '${DriverName}',
+    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : null},
+    Pht = ${Pht ? Pht : null},
+    Photo = ${Photo ? Photo : null},
+    Vov = ${Vov ? Vov : null},
+    VaildUpto = ${ValidUpto ? `'${ValidUpto}'` : null},
+    RtoName = ${RtoName ? `'${RtoName}'` : null},
+    Address = ${Address ? `'${Address}'` : null},
+    Mobile = ${Mobile ? `'${Mobile}'` : null},
+    BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : null},
+    Gender = ${Gender ? `'${Gender}'` : null},
+    FatherName = ${FatherName ? `'${FatherName}'` : null},
+    DateOfBirth = ${DateOfBirth ? `'${DateOfBirth}'` : null},
+    DateOfIssue = ${DateOfIssue ? `'${DateOfIssue}'` : null},
+    TypeOfVerification = '${DriverTypeOfVerification}'
+    WHERE LeadID = ${LeadId};
+  `;
+
+  db.query(updateDriverDetails, (error, results) => {
+    if (error) {
+      console.error("Error updating data in ClaimDetails:", error);
+      return res
+        .status(500)
+        .json({ error: "Error updating data in ClaimDetails." });
+    }
+    res.status(200).json({ message: "Data updated successfully." });
+  });
+  
+  }
+
+  const updateClaimDetails = (req,res)=>{
+    const {
+      InsuredName,
+      InsuredMailAddress,
+      InsuredMobileNo1,
+      InsuredMobileNo2,
+      PolicyIssuingOffice,
+      ClaimRegion,
+      ClaimServicingOffice,
+      InspectionType,
+      SurveyType,
+      PolicyPeriodStart,
+      PolicyPeriodEnd,
+      InsuranceCompanyNameAddress,
+      insuredAddedBy,
+      IsDriverDetailsFetched,
+      IsRcDetailsFetched,
+  
+      LeadId,
+    } = req.body;
+
+    const updateClaimDetails = `
+    UPDATE ClaimDetails
+    SET
+    PolicyIssuingOffice = ${PolicyIssuingOffice ? `'${PolicyIssuingOffice}'` : null},
+    Region = '${ClaimRegion}',
+    ClaimServicingOffice = ${ClaimServicingOffice ? `'${ClaimServicingOffice}'` : null},
+    InspectionType = '${InspectionType}',
+    SurveyType = '${SurveyType}',
+    PolicyPeriodStart = ${PolicyPeriodStart ? `'${PolicyPeriodStart}'` : null},
+    PolicyPeriodEnd = ${PolicyPeriodEnd ? `'${PolicyPeriodEnd}'` : null},
+    IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : null},
+    IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : null},
+    InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `'${InsuranceCompanyNameAddress}'` : null}
+    WHERE LeadId = ${LeadId};
+  `;
 
 
-    // app.get("/vehicle-details/:claimNo", authenticateUser, (req, res) => {
-    //     const sql = "SELECT * FROM vehicle_details WHERE claim_no = ?";
-    //     db.query(sql, [req.params.claimNo], (err, result) => {
-    //       if (err) {
-    //         console.error(err);
-    //         res.status(500).send("Internal Server Error");
-    //         return;
-    //       }
-    //       res.send(result);
-    //     });
-    //   });
-      
-    //   app.get("/driver-details/:claimNo", authenticateUser, (req, res) => {
-    //     const sql = "SELECT * FROM driver_details WHERE claim_no = ?";
-    //     db.query(sql, [req.params.claimNo], (err, result) => {
-    //       if (err) {
-    //         console.error(err);
-    //         res.status(500).send("Internal Server Error");
-    //         return;
-    //       }
-    //       res.send(result);
-    //     });
-    //   });
-      
-      // Update
-    //   app.put("/claim-details/:claimNo", authenticateUser, (req, res) => {
-    //     const sql = "UPDATE claim_details SET ? WHERE claim_no = ?";
-    //     db.query(sql, [req.body, req.params.claimNo], (err) => {
-    //       if (err) {
-    //         console.error(err);
-    //         res.status(500).send("Internal Server Error");
-    //         return;
-    //       }
-    //       res.send("Claim Details updated");
-    //     });
-    //   });
-      
-    //   app.put("/vehicle-details/:claimNo", authenticateUser, (req, res) => {
-    //     const sql = "UPDATE vehicle_details SET ? WHERE claim_no = ?";
-    //     db.query(sql, [req.body, req.params.claimNo], (err) => {
-    //       if (err) {
-    //         console.error(err);
-    //         res.status(500).send("Internal Server Error");
-    //         return;
-    //       }
-    //       res.send("Vehicle Details updated");
-    //     });
-    //   });
-      
-    //   app.put("/driver-details/:claimNo", authenticateUser, (req, res) => {
-    //     const sql = "UPDATE driver_details SET ? WHERE claim_no = ?";
-    //     db.query(sql, [req.body, req.params.claimNo], (err) => {
-    //       if (err) {
-    //         console.error(err);
-    //         res.status(500).send("Internal Server Error");
-    //         return;
-    //       }
-    //       res.send("Driver Details updated");
-    //     });
-    //   });
+  const updateInsuredDetails = `
+    UPDATE InsuredDetails
+    SET
+    InsuredName = ${InsuredName ? `'${InsuredName}'` : null},
+    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : null},
+    InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : null},
+    InsuredMailAddress = '${InsuredMailAddress}',
+    AddedBy = ${insuredAddedBy ? `'${insuredAddedBy}'` : null}
+    WHERE LeadId = ${LeadId};
+  `;
+
+   db.query(updateClaimDetails, (error, results) => {
+    if (error) {
+      console.error("Error updating data in ClaimDetails:", error);
+      return res
+        .status(500)
+        .json({ error: "Error updating data in ClaimDetails." });
+    }
+    db.query(updateInsuredDetails, (error, results) => {
+      if (error) {
+        console.error("Error updating data in ClaimDetails:", error);
+        return res
+          .status(500)
+          .json({ error: "Error updating data in ClaimDetails." });
+      }
+      res.status(200).json({ message: "Data updated successfully." });
+    });
+  });
+
+  }
+
+  const updateVehicleDetails=(req,res)=>{
+    const {
+      VehicleMakeVariantModelColor,
+      VehicleTypeOfBody,
+      VehicleRegisteredNumber,
+      VehicleDateOfRegistration,
+      VehiclePucNumber,
+      VehicleRegisteredOwner,
+      VehicleTransferDate,
+      VehicleEngineNumber,
+      VehicleAddedBy,
+      VehicleChassisNumber,
+      VehicleFuelType,
+      MakerDesc,
+      MakerModel,
+      VehicleCubicCap,
+      FitUpto,
+      PasiaModelCode,
+      RcInsuranceUpto,
+      RcVehicleType,
+      BancsModelCode,
+      BancsMakeCode,
+      BancsSubtypeCode,
+      BancsBodyType,
+      BancsVehicleClass,
+      BancsVehicleSegment,
+      RcRtoCode,
+      VehicleRcStatus,
+      VehicleBlackListStatus,
+      VehicleRegistedAt,
+      VehicleInsuranceCompany,
+      ManufactureMonthYear,
+      PermanentAddress,
+      ClassOfVehicle,
+      SeatingCapacity,
+      LeadId,
+    } = req.body;
+
+   // Update VehicleDetails
+   const updateVehicleDetails = `
+   UPDATE VehicleDetails
+   SET 
+     RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : null},
+     MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : null},
+     TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : null},
+     DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : null},
+     PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : null},
+     TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : null},
+     EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : null},
+     AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : null},
+     ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : null},
+     FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : null},
+     MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : null},
+     MakerModel = ${MakerModel ? `'${MakerModel}'` : null},
+     CubicCapacity = ${VehicleCubicCap ? `'${VehicleCubicCap}'` : null},
+     FitUpto = ${FitUpto ? `'${FitUpto}'` : null},
+     PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : null},
+     VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : null},
+     BancsModelCode = ${BancsModelCode ? `'${BancsModelCode}'` : null},
+     BancsMakeCode = ${BancsMakeCode ? `'${BancsMakeCode}'` : null},
+     BancsSubtypeCode = ${BancsSubtypeCode ? `'${BancsSubtypeCode}'` : null},
+     BancsBodyType = ${BancsBodyType ? `'${BancsBodyType}'` : null},
+     BancsVehicleClass = ${BancsVehicleClass ? `'${BancsVehicleClass}'` : null},
+     BancsVehicleSegment = ${BancsVehicleSegment ? `'${BancsVehicleSegment}'` : null},
+     RcRtoCode = ${RcRtoCode ? `'${RcRtoCode}'` : null},
+     VehicleRcStatus = ${VehicleRcStatus ? `'${VehicleRcStatus}'` : null},
+     VehicleBlackListStatus = ${VehicleBlackListStatus ? `'${VehicleBlackListStatus}'` : null},
+     VehicleRegistedAt = ${VehicleRegistedAt ? `'${VehicleRegistedAt}'` : null},
+     VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `'${VehicleInsuranceCompany}'` : null},
+     ManufactureMonthYear = ${ManufactureMonthYear ? `'${ManufactureMonthYear}'` : null},
+     PermanentAddress = ${PermanentAddress ? `'${PermanentAddress}'` : null},
+     ClassOfVehicle = ${ClassOfVehicle ? `'${ClassOfVehicle}'` : null},
+     RegisteredOwner = ${VehicleRegisteredOwner ? `'${VehicleRegisteredOwner}'` : null},
+     SeatingCapacity = ${SeatingCapacity ? `'${SeatingCapacity}'` : null},
+     VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : null}
+   WHERE LeadId = ${LeadId};
+ `;
+
+  db.query(updateVehicleDetails, (error, results) => {
+    if (error) {
+      console.error("Error updating data in ClaimDetails:", error);
+      return res
+        .status(500)
+        .json({ error: "Error updating data in ClaimDetails." });
+    }
+    res.status(200).json({ message: "Data updated successfully." });
+  });
+  
+  }
+
+  const garageDetails = (req,res)=>{
+
+    const {
+      GarageNameAndAddress,
+      GarageAddedBy,
+      GarageContactNo1,
+      GarageContactNo2,
+      LeadId,
+    } = req.body;
+
+    const updateGarageDetails = `
+    UPDATE GarageDetails
+    SET
+    GarageNameAndAddress = ${GarageNameAndAddress ? `'${GarageNameAndAddress}'` : null},
+    GarageContactNo1 = ${GarageContactNo1 ? `'${GarageContactNo1}'` : null},
+    GarageContactNo2 = ${GarageContactNo2 ? `'${GarageContactNo2}'` : "''"},
+    AddedBy = ${GarageAddedBy ? `'${GarageAddedBy}'` : null}
+    WHERE LeadId = ${LeadId};
+  `;
+
+    db.query(updateGarageDetails, (error, results) => {
+      if (error) {
+        console.error("Error updating data in ClaimDetails:", error);
+        return res
+          .status(500)
+          .json({ error: "Error updating data in ClaimDetails." });
+      }
+      res.status(200).json({ message: "Data updated successfully." });
+    });
+  }
 
 
-module.exports={addClaim,getSpecificClaim,updateClaim,getAllClaims,getClaimDetails}
+module.exports={addClaim,
+                getSpecificClaim,
+                updateClaim,
+                getAllClaims,
+                getClaimDetails,
+              updateClaimDetails,
+              updateDriverDetails,
+              updateVehicleDetails,
+              garageDetails
+            }

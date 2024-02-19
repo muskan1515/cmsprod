@@ -6,12 +6,10 @@ async function handler(request, response) {
     const token = request.headers.authorization;
     const domain = process.env.BACKEND_DOMAIN;
     const payload = request.body;
-   
-   
+    const type =  request.query.type;
     
-    console.log(payload);
-    
-    const userResponse = await axios.put(`${domain}/claim/updateClaim/${payload.LeadId}`, payload,{
+    console.log(type)
+    const userResponse = await axios.put(`${domain}/claim/${type}`, payload,{
         headers:{
             Authorization:token,
             "Content-Type":"application/json"
