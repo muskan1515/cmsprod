@@ -10,6 +10,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 // import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../../common/Loader";
 
 const Form = ({
   claim,
