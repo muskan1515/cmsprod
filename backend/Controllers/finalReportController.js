@@ -328,10 +328,14 @@ const updateFinalReport = (req,res)=>{
         '${RemarkOnSalvage}', '${Other}', ${GrandTotal}, ${DepreciationOnParts}, ${NetAssessedAmount},
         '${SavageDepreciationDetails}', '${CashLess}', '${NoteOfSelf}', '${RepairAutoDate}', '${RepairCompletionDate}',
         '${PartyAgreed}', '${ReasonThereofDelay}', '${AnyFurtherConversation}', '${RepairingPhotoDate}', '${ReinspectionDate}',
-        '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}',${FinalReportNotes}'
+        '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}','${FinalReportNotes}'
       );
     `;
+
+    console.log(updateSummaryDetails);
+    return 
       
+    
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {
         console.error(err);

@@ -1,6 +1,5 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect } from "react";
@@ -103,7 +102,24 @@ const CreateList = ({
     },
   ];
 
-  console.log("policyEndDate", policyEndDate);
+  const getNextYear = () => {
+    // if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
+      const oneYearLater = new Date(policyStartDate);
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
+      oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      return formattedOneYearLater;
+    // }
+    return "";
+  };
+
+  useEffect(()=>{
+
+    setPolicyEndDate(getNextYear());
+  },[policyStartDate]);
+
   useEffect(() => {
     // Update policyStartEnd when policyStartDate changes
     if (
@@ -125,18 +141,7 @@ const CreateList = ({
     }
   }, [policyStartDate]);
 
-  const getNextYear = () => {
-    if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
-      const oneYearLater = new Date(policyStartDate);
-      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-      oneYearLater.setMonth(oneYearLater.getMonth());
-      oneYearLater.setDate(oneYearLater.getDate() - 1);
 
-      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-      return formattedOneYearLater;
-    }
-    return "";
-  };
 
   const checkStatus = (val) => {
     let status = "";
@@ -145,6 +150,7 @@ const CreateList = ({
     });
     return status;
   };
+
 
   const sendMailHandler = (vehicleNo, PolicyNo, Insured, mailAddress) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -585,7 +591,7 @@ const CreateList = ({
                 selected={
                   policyEndDate !== null && !isNaN(new Date(policyEndDate))
                     ? new Date(policyEndDate)
-                    : null
+                    : getNextYear()
                 }
                 onChange={(date) => setPolicyEndDate(date)}
               />

@@ -102,6 +102,10 @@ const Summary = ({
     return a - b > 1 ? a - b : 0;
   };
 
+
+  useEffect(()=>{
+    console.log(FinalReportNotes)
+  },[FinalReportNotes]);
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -701,7 +705,10 @@ const Summary = ({
                   <div className="">
                     <Editor style={{ height: "100px" }}
                      value={FinalReportNotes}
-                     onChange={setFinalReportNotes} />
+                     onChange={(e)=>{
+                      setFinalReportNotes(e.target.value)}}
+                       />
+
                   </div>
                 </div>
               </div>

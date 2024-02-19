@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
 import RcDetails from "./RcDetails";
 import { BsTypeH3 } from "react-icons/bs";
 import DateComponent from "./dateComponent";
+import MyDatePicker from "../../common/MyDatePicker";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PolicyDetails = ({
   setIsStatusModal,
@@ -228,7 +232,6 @@ const PolicyDetails = ({
       day: "2-digit",
       year: "numeric",
     };
-
   
     const formattedDate = new Date(dateString).toLocaleDateString("en-US", options);
     return formattedDate;
@@ -398,25 +401,28 @@ const PolicyDetails = ({
                 <input
                   readOnly={!isEditMode}
                   type={"text"}
-                  value={MailRecieveDate ? formatDate(MailRecieveDate) : ""}
+                  value={ClaimAddedDateTime ? formatDate(ClaimAddedDateTime) : ""}
                   className="form-control"
                   id="propertyTitle"
                 />
               ) : (
-                // <Input type="date"
+                // <MyDatePicker
                 //   disable={!isEditMode}
-                //   value={
+                //   selectedDate={
                 //     MailRecieveDate ? new Date(MailRecieveDate) : ""
                 //   }
                 //   setSelectedDate={setMailRecieveDate}
                 // />
-               
-                <input type="date"
-                  disable={!isEditMode}
-                  value={
-                    MailRecieveDate && MailRecieveDate!=="null"  &&  MailRecieveDate!=="undefined" ? new Date(MailRecieveDate) : ""
+                <DatePicker
+                  className="form-control"
+                  id="propertyTitle"
+                  selected={
+                    ClaimAddedDateTime !== null &&
+                    !isNaN(new Date(ClaimAddedDateTime))
+                      ? new Date(ClaimAddedDateTime)
+                      : ' '
                   }
-                  onChange={(date) => setMailRecieveDate(date)}
+                  onChange={(date) => setClaimAddedDateTime(date)}
                 />
               )}
               {/*<input 
@@ -712,7 +718,7 @@ const PolicyDetails = ({
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodStart && MailRecieveDate!=="null" 
+                            PolicyPeriodStart
                               ? formatDate(PolicyPeriodStart)
                               : ""
                           }
@@ -720,18 +726,18 @@ const PolicyDetails = ({
                           id="propertyTitle"
                         />
                       ) : (
-                        // <Input type="date"
+                        // <MyDatePicker
                         //   disable={!isEditMode}
-                        //   value={
+                        //   selectedDate={
                         //     PolicyPeriodStart ? new Date(PolicyPeriodStart) : ""
                         //   }
                         //   setSelectedDate={setPolicyPeriodStart}
                         // />
-                        <input type="date"
+                        <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          value={
-                            PolicyPeriodStart !== null&& PolicyPeriodStart!=="null"  &&  PolicyPeriodStart!=="undefined" &&
+                          selected={
+                            PolicyPeriodStart !== null &&
                             !isNaN(new Date(PolicyPeriodStart))
                               ? new Date(PolicyPeriodStart)
                               : null
@@ -786,18 +792,18 @@ const PolicyDetails = ({
                           id="propertyTitle"
                         />
                       ) : (
-                        // <Input type="date"
+                        // <MyDatePicker
                         //   disable={!isEditMode}
-                        //   value={
+                        //   selectedDate={
                         //     PolicyPeriodStart ? new Date(PolicyPeriodStart) : ""
                         //   }
                         //   setSelectedDate={setPolicyPeriodStart}
                         // />
-                        <input type="date"
+                        <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          value={
-                            PolicyPeriodEnd !== null  && PolicyPeriodEnd!=="null"  &&  PolicyPeriodEnd!=="undefined" &&
+                          selected={
+                            PolicyPeriodEnd !== null &&
                             !isNaN(new Date(PolicyPeriodEnd))
                               ? new Date(PolicyPeriodEnd)
                               : null
@@ -1161,18 +1167,18 @@ const PolicyDetails = ({
                               id="propertyTitle"
                             />
                           ) : (
-                            // <Input type="date"
+                            // <MyDatePicker
                             //   disable={!isEditMode}
-                            //   value={
+                            //   selectedDate={
                             //     OwnerSRST ? new Date(OwnerSRST) : ""
                             //   }
                             //   setSelectedDate={setOwnerSRST}
                             // />
 
-                            <input type="date"
+                            <DatePicker
                               className="form-control"
                               id="propertyTitle"
-                              value={
+                              selected={
                                 OwnerSRST !== null &&
                                 !isNaN(new Date(OwnerSRST))
                                   ? new Date(OwnerSRST)
@@ -1235,20 +1241,20 @@ const PolicyDetails = ({
                               id="propertyTitle"
                             />
                           ) : (
-                            // <Input type="date"
+                            // <MyDatePicker
                             //   disable={!isEditMode}
-                            //   value={
+                            //   selectedDate={
                             //     DateRegistration
                             //       ? new Date(DateRegistration)
                             //       : ""
                             //   }
                             //   setSelectedDate={setDateRegistration}
                             // />
-                            <input type="date"
+                            <DatePicker
                               className="form-control"
                               id="propertyTitle"
-                              value={
-                                DateRegistration  && DateRegistration!=="null"  &&  DateRegistration!=="undefined"  &&
+                              selected={
+                                DateRegistration !== null &&
                                 !isNaN(new Date(DateRegistration))
                                   ? new Date(DateRegistration)
                                   : null
@@ -2209,8 +2215,8 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-8">
-                  <input type="date"
-                    readOnly={true}
+                  <MyDatePicker
+
                   // value={LicenseNumber}
                   // readOnly={!isEditMode}
                   // onChange={(e) => setLicenseNumber(e.target.value)}
@@ -2252,11 +2258,11 @@ const PolicyDetails = ({
                       id="propertyTitle"
                     />
                   ) : (
-                    <input type="date"
+                    <DatePicker
                       className="form-control"
                       id="propertyTitle"
-                      value={
-                        DateOfIssue !== null && DateOfIssue!=="null"  &&  DateOfIssue!=="undefined" && !isNaN(new Date(DateOfIssue))
+                      selected={
+                        DateOfIssue !== null && !isNaN(new Date(DateOfIssue))
                           ? new Date(DateOfIssue)
                           : null
                       }
@@ -2307,13 +2313,13 @@ const PolicyDetails = ({
                     // // disable={!isEdi
                     />
                   ) : (
-                    // <MyInput  type="date"tMode}
-                    // // value={
+                    // <MyDatePickertMode}
+                    // // selectedDate={
                     // //   ValidUntilNtv ? new Date(ValidUntilNtv) : ""
                     // // }
                     // // setSelectedDate={setValidUntilNtv}
                     // />
-                    // <Input  type="date"
+                    // <DatePicker
                     //   className="form-control"
                     //   id="propertyTitle"
                     //   selected={
@@ -2324,18 +2330,18 @@ const PolicyDetails = ({
                     //   }
                     //   onChange={(date) => setValidUntilNtv(date)}
                     // />
-                    <input type="date"
+                    <DatePicker
                     className="form-control"
                     id="propertyTitle"
-                    value={
-                      ValidFrom !== null && ValidFrom!=="null"  &&  ValidFrom!=="undefined" && !isNaN(new Date(ValidFrom))
+                    selected={
+                      ValidFrom !== null && !isNaN(new Date(ValidFrom))
                         ? new Date(ValidFrom)
                         : null
                     }
                     onChange={(date) => setValidFrom(date)}
                   />
                   )}
-                
+                  {console.log('ValidFrom>>>>>>>>>????',ValidFrom)}
                   {/* <input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode}
@@ -2559,18 +2565,18 @@ const PolicyDetails = ({
                           id="propertyTitle"
                         />
                       ) : (
-                        // <Input type="date"
+                        // <MyDatePicker
                         // disable={!isEditMode}
-                        // value={
+                        // selectedDate={
                         //   FitnessFrom ? new Date(FitnessFrom) : ""
                         // }
                         // setSelectedDate={setFitnessFrom}
                         // />
-                        <input type="date"
+                        <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          value={
-                            FitnessFrom !== null  && FitnessFrom!=="null"  &&  FitnessFrom!=="undefined" &&
+                          selected={
+                            FitnessFrom !== null &&
                             !isNaN(new Date(FitnessFrom))
                               ? new Date(FitnessFrom)
                               : null
@@ -2621,16 +2627,16 @@ const PolicyDetails = ({
                           id="propertyTitle"
                         />
                       ) : (
-                        // <Input type="date"
+                        // <MyDatePicker
                         // disable={!isEditMode}
-                        // value={FitnessTo ? new Date(FitnessTo) : ""}
+                        // selectedDate={FitnessTo ? new Date(FitnessTo) : ""}
                         // setSelectedDate={setFitnessTo}
                         // />
-                        <input type="date"
+                        <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          value={
-                            FitnessTo !== null && FitnessTo!=="null"  &&  FitnessTo!=="undefined" && !isNaN(new Date(FitnessTo))
+                          selected={
+                            FitnessTo !== null && !isNaN(new Date(FitnessTo))
                               ? new Date(FitnessTo)
                               : null
                           }
@@ -2701,16 +2707,16 @@ const PolicyDetails = ({
                           value={PermitFrom ? formatDate(PermitFrom) : ""}
                         />
                       ) : (
-                        // <Input type="date"
+                        // <MyDatePicker
                         // disable={!isEditMode}
-                        // value={PermitFrom ? new Date(PermitFrom) : ""}
+                        // selectedDate={PermitFrom ? new Date(PermitFrom) : ""}
                         // setSelectedDate={setFitnessFrom}
                         // />
-                        <input type="date"
+                        <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          value={
-                            PermitFrom !== null&& PermitFrom!=="null"  &&  PermitFrom!=="undefined"  && !isNaN(new Date(PermitFrom))
+                          selected={
+                            PermitFrom !== null && !isNaN(new Date(PermitFrom))
                               ? new Date(PermitFrom)
                               : null
                           }
@@ -2754,16 +2760,16 @@ const PolicyDetails = ({
                           id="propertyTitle"
                         />
                       ) : (
-                        // <Input type="date"
+                        // <MyDatePicker
                         // disable={!isEditMode}
-                        // value={PermitTo ? new Date(PermitTo) : ""}
+                        // selectedDate={PermitTo ? new Date(PermitTo) : ""}
                         // setSelectedDate={setPermitTo}
                         // />
-                        <input type="date"
+                        <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          value={
-                            PermitTo !== null && PermitTo!=="null" &&  PermitTo!=="undefined"  && !isNaN(new Date(PermitTo))
+                          selected={
+                            PermitTo !== null && !isNaN(new Date(PermitTo))
                               ? new Date(PermitTo)
                               : null
                           }

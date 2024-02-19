@@ -495,7 +495,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
 
 
-    setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime||"");
+    setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime ||"");
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
     setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
     setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||"");
@@ -551,8 +551,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || 0);
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice );
 
-    setIDV(claim?.claimDetails?.IDV );
-    setHPA(claim?.claimDetails?.HPA );
+    setIDV(claim?.claimDetails?.IDV);
+    setHPA(claim?.claimDetails?.HPA);
     setVehicleRemark(claim?.vehicleDetails?.Remark );
     setRegLadenWt(claim?.vehicleDetails?.RegLadenWt );
     setRemarkIfRLW(claim?.vehicleDetails?.RemarkIfRLW );
@@ -640,13 +640,13 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       ValidFrom : ValidFrom ? ValidFrom : "",
       VehicleType,
       ValidUntilNtv:(ValidUntilNtv),
-      ValidUntilTv : (ValidUntilTv)  ,
+      ValidUntilTv : (ValidUntilTv),
       phoneNumber,
       AntiTheft,
       RegLadenWt,
       RemarkIfRLW,
       Pin,
-      DateOfRegistration: (DateOfRegistration),
+      DateOfRegistration:(DateOfRegistration),
       PlaceOfSurvey,
       UnladenWT,
       RemarkIfULW,
@@ -693,12 +693,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       VehicleModel,
       VehicleTaxParticulars,
       VehicleSeatingCapacity,
-      AccidentAddedDateTime : (AccidentAddedDateTime),
-
+      AccidentAddedDateTime :(AccidentAddedDateTime),
       PlaceOfLoss,
       SurveyAllotmentDate : (SurveyAllotmentDate),
-      SurveyConductedDate : (SurveyConductedDate) ,
-
+      SurveyConductedDate : (SurveyConductedDate),
       FitnessCertificate,
       FitnessFrom : (FitnessFrom),
       FitnessTo : (FitnessTo),
@@ -751,8 +749,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       BillDate,
       BillAmount,
       Endurance,
-
-
       leadId,
     };
 

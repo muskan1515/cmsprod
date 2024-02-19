@@ -894,6 +894,7 @@ const Index = ({}) => {
                                     Save
                                   </button>
                                   <button
+                                    onClick={()=>setEditCase(false)}
                                     className="btn-thm flaticon-close"
                                     style={{ fontSize: "14px" }}
                                   ></button>

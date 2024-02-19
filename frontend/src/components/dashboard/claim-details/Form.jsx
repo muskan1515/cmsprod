@@ -265,10 +265,21 @@ const Form = ({
                           Save
                         </button>
                         <button
+                          onClick={()=>setEditCase_01(false)}
                           className="btn-thm flaticon-close"
                           style={{ fontSize: "14px" }}
                         ></button>
+                        <div className="col-lg-2" style={{ marginLeft: "-70px" }}>
+                      <button
+                        className="btn-thm m-1"
+                        onClick={handleFetchData}
+                        style={{ marginLeft: "-120px" }}
+                      >
+                        Fetch Details
+                      </button>
+                    </div>
                       </div>
+
                     ) : (
                       <button
                         className="btn-thm"
@@ -282,17 +293,7 @@ const Form = ({
                       </button>
                     )}
                   </div>
-                  {editCase_01 && (
-                    <div className="col-lg-2" style={{ marginLeft: "-70px" }}>
-                      <button
-                        className="btn-thm m-1"
-                        onClick={handleFetchData}
-                        style={{ marginLeft: "-120px" }}
-                      >
-                        Fetch Details
-                      </button>
-                    </div>
-                  )}
+                 
                 </div>
 
                 {editCase_01 ? (

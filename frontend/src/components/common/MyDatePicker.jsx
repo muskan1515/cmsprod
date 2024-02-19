@@ -12,6 +12,7 @@ const MyDatePicker = ({ selectedDate, setSelectedDate,disable }) => {
   const formatDate = (date) => {
     const formattedDate = date.toLocaleDateString("en-US");
     setCurrentDate(formattedDate);
+    setSelectedDate(formattedDate);
     // setSelectedDate(formattedDate);
    
   };

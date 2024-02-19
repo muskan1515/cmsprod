@@ -158,6 +158,7 @@ const Form_01 = ({
                         <button
                           className="btn-thm flaticon-close"
                           style={{ fontSize: "14px" }}
+                          onClick={()=>setEditCase_02(false)}
                         ></button>
                         {/* <div className="col-lg-2">
                           <button

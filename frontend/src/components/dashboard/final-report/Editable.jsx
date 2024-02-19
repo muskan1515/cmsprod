@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 const EditableTable = ({data,setData}) => {
-  
-
   const [hsh,setHsh] = useState("");
   const [estimate,setEstimate]=useState(0);
   const [assessed,setAssessed] = useState(0);

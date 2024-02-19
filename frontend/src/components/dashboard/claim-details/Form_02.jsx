@@ -73,6 +73,7 @@ const Form = ({
                           Save
                         </button>{" "}
                         <button
+                          onClick={()=>setEditCase_03(false)}
                           className="btn-thm flaticon-close"
                           style={{ fontSize: "14px" }}
                         ></button>
