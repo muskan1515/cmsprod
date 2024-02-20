@@ -142,7 +142,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                       {/* <span> Message</span> */}
                     </Link>
                   </li>
-                 {/* <li
+                 <li
                     className={`treeview ${
                       isSinglePageActive("/bill-creation", route.pathname)
                         ? "active"
@@ -157,7 +157,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                       <span> </span>
                     </Link>
                   </li>
-                  <li
+                   {/* <li
                     className={`treeview ${
                       isSinglePageActive("/mis-sheet", route.pathname)
                         ? "active"

@@ -8,9 +8,19 @@ const CreateList_02 = ({
   RegisteredNumber,
   subType,
   InsuredMobileNo1,
-  ClaimNumber,
   InsuredMailAddress,
   requestType,
+  inspectionType,
+  InsuredMobileNo2,
+  ClaimNumber,
+  policyIssuingOffice,
+  claimRegion,
+  claimServicingOffice,
+  policyStartDate,
+  policyEndDate,
+  insuranceCompanyNameAddress,
+  insuredAddedBy,
+  VehicleRegisteredNumber
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -109,7 +119,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.insuredDetails?.InsuredName}
+                        {InsuredName}
                       </label>
                     </div>
                   </div>
@@ -139,7 +149,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.insuredDetails?.InsuredMobileNo1}
+                        {InsuredMobileNo1}
                       </label>
                     </div>
                   </div>
@@ -169,9 +179,8 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.insuredDetails?.InsuredMailAddress
-                          ? claim.insuredDetails?.InsuredMailAddress
-                          : "N.A."}
+                        {InsuredMailAddress
+                          }
                       </label>
                     </div>
                   </div>
@@ -203,7 +212,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.claimDetails?.ReferenceNo}
+                        {ClaimNumber}
                       </label>
                     </div>
                   </div>
@@ -325,7 +334,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.claimDetails?.PolicyIssuingOffice}
+                        {policyIssuingOffice}
                       </label>
                     </div>
                   </div>
@@ -355,9 +364,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.claimDetails?.InspectionType
-                          ? claim?.claimDetails?.InspectionType
-                          : "Final"}
+                        {inspectionType}
                       </label>
                     </div>
                   </div>
@@ -417,7 +424,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.claimDetails?.Region}
+                        {claimRegion}
                       </label>
                     </div>
                   </div>
@@ -447,7 +454,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim.claimDetails?.ClaimServicingOffice}
+                        {claimServicingOffice}
                       </label>
                     </div>
                   </div>

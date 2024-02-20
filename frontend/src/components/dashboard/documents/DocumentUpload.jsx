@@ -264,9 +264,7 @@ export default function DocumentUpload({
   const [uploadedVideos, setuploadedVideos] = useState([]);
   const [uploadedFileName, setUploadedFileName] = useState([]);
 
-  console.log("Video00",uploadedVideos);
 
-  console.log("ImgURL", uploadedUrl);
   const [imageFileName, setImageFileName] = useState("");
   const cancelCapture = () => {
     // Remove the last captured image from the array
@@ -384,18 +382,6 @@ export default function DocumentUpload({
     setUploadedFileName([]);
   };
 
-  // const handleUploadImage = async () => {
-  //   try {
-  //     const imageSrc = webcamRef.current.getScreenshot();
-  //     const name = generateRandomFileName("jpg");
-
-  //     setUploadedUrl(imageSrc);
-  //     setUploadedFileName(name);
-  //     setIsImage(true);
-  //   } catch (error) {
-  //     console.error("Error handling upload:", error);
-  //   }
-  // };
   const handleUploadImage = async () => {
     try {
       const imageSrc = webcamRef.current.getScreenshot();

@@ -4,13 +4,14 @@ import Link from "next/link";
 
 const Form_garage = ({
   claim,
-  InsuredName,
-  RegisteredNumber,
-  subType,
-  InsuredMobileNo1,
-  ClaimNumber,
-  InsuredMailAddress,
-  requestType,
+  GarageNameAndAddress,
+  setGarageNameAndAddress,
+  GarageContactNo1,
+  setGarageContactNo1,
+  GarageContactNo2,
+  setGarageContactNo2,
+  GarageAddedBy,
+  setGarageAddedBy,
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -104,7 +105,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.garageDetails?.GarageNameAndAddress}
+                      {GarageNameAndAddress}
                     </label>
                   </div>
                 </td>
@@ -130,7 +131,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.garageDetails?.GarageContactNo1}
+                      {GarageContactNo1}
                     </label>
                   </div>
                 </td>
@@ -184,7 +185,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.garageDetails?.AddedBy}
+                      {GarageAddedBy}
                     </label>
                   </div>
                 </td>

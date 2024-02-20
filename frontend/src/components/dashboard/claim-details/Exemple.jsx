@@ -365,6 +365,10 @@ let data = [
 export default function Exemple({ documents }) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
+  const onUploadHandler=(label,index,)=>{
+
+  }
+
   const checkValue = (label) => {
     let requiredInfo = [];
     documents.map((doc, index) => {
@@ -412,13 +416,7 @@ export default function Exemple({ documents }) {
     try {
       const zip = new JSZip();
 
-      // updatedCode.forEach((doc, index) => {
-      //   doc.file.forEach((file, fileIndex) => {
-      //     // Creating a unique file name for each file
-      //     const fileName = `${doc.doc_name}_${fileIndex + 1}_${file.key}`;
-      //     zip.file(fileName, file.props.children[0].props.href, { binary: true });
-      //   });
-      // });
+     
 
       documents.map((data, index) => {
         if (data.Attribute1 !== "") {
@@ -464,11 +462,11 @@ export default function Exemple({ documents }) {
     }
   };
 
+
   let tempCode = [];
   useEffect(() => {
     data.map((docs, index) => {
       const allInfo = checkValue(docs.doc_name);
-      // console.log(allInfo);
       const alllinks = (
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
@@ -484,7 +482,10 @@ export default function Exemple({ documents }) {
         serial_num: docs.serial_num,
         doc_name: docs.doc_name,
         file: alllinks,
-        action: docs.action,
+        action:  
+        <button className="btn btn-thm" onClick={()=>onUploadHandler()}>
+          <FaUpload />
+        </button>,
         verify: docs.verify,
       };
 
@@ -494,7 +495,6 @@ export default function Exemple({ documents }) {
     setUpdatedCode(tempCode);
   }, [documents]);
 
-  console.log(documents);
   return (
     <SmartTable
       title="Customer Documents"

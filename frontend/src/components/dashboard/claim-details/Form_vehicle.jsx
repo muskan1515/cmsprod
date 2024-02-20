@@ -170,8 +170,8 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.vehicleDetails?.RegisteredOwner
-                        }
+                        {VehicleRegisteredOwner}
+                    
                       </label>
                     </div>
                   </div>
@@ -826,7 +826,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.VehicleRcStatus}
+                      {VehicleRcStatus}
                     </label>
                   </div>
                 </td>
@@ -852,7 +852,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.VehicleType}
+                      {VehicleType}
                     </label>
                   </div>
                 </td>
@@ -1041,7 +1041,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.RcRtoCode}
+                      {RcRtoCode}
                     </label>
                   </div>
                 </td>

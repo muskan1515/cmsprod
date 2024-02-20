@@ -298,7 +298,11 @@ const Form = ({
                   </div>
                 ) : (
                   <div className="row">
-                    <Form_garage claim={claim} />
+                    <Form_garage claim={claim}
+                    GarageNameAndAddress={GarageNameAndAddress}
+                    GarageContactNo1={GarageContactNo1}
+                    GarageAddedBy={GarageAddedBy}
+                    />
                   </div>
                 )}
               </div>

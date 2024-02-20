@@ -272,8 +272,7 @@ const Index = ({}) => {
   const [VehicleRegistedAt, setVehicleRegistedAt] = useState("");
   const [PermanentAddress, setPermanentAddress] = useState("");
   const [ClassOfVehicle, setClassOfVehicle] = useState("");
-  VehicleInsuranceUpto;
-
+ 
   //driver fetch details
   const [FatherName, setFatherName] = useState("");
   const [Gender, setGender] = useState("");
@@ -282,8 +281,6 @@ const Index = ({}) => {
   const [Address, setAddress] = useState("");
   const [RtoName, setRtoName] = useState("");
   const [ValidUpto, setValidUpto] = useState("");
-
-  console.log("ValidUptoFROMINDEX", claim.driverDetails?.VaildUpto);
   const [DateOfBirth, setDateOfBirth] = useState("");
   const [DateOfIssue, setDateOfIssue] = useState("");
   const [Vov, setVov] = useState("");
@@ -990,14 +987,48 @@ const Index = ({}) => {
                               <CreateList_02
                                 claim={claim}
                                 InsuredName={InsuredName}
-                                VehicleRegisteredNumber={
-                                  VehicleRegisteredNumber
-                                }
-                                subType={subType}
-                                InsuredMobileNo1={InsuredMobileNo1}
-                                ClaimNumber={ClaimNumber}
-                                InsuredMailAddress={InsuredMailAddress}
-                                requestType={inspectionType}
+                               
+                                inspectionType={inspectionType}
+                              setInspectionType={setInspectionType}
+                              setInsuredName={setInsuredName}
+                              InsuredMailAddress={InsuredMailAddress}
+                              setInsuredMailAddress={setInsuredMailAddress}
+                              InsuredMobileNo1={InsuredMobileNo1}
+                              setInsuredMobileNo1={setInsuredMobileNo1}
+                              InsuredMobileNo2={InsuredMobileNo2}
+                              setInsuredMobileNo2={setInsuredMobileNo2}
+                              requestTypeTypes={requestTypeTypes}
+                              subTypeTypes={subTypeTypes}
+                              setRequestType={setInspectionType}
+                              requestType={inspectionType}
+                              setSubType={setSubType}
+                              subType={subType}
+                              ClaimNumber={ClaimNumber}
+                              setClaimNumber={setClaimNumber}
+                              edit={editCase}
+                              setIsStatusModal={setIsStatusModal}
+                              policyIssuingOffice={policyIssuingOffice}
+                              setPolicyIssuingOffice={setPolicyIssuingOffice}
+                              claimRegion={claimRegion}
+                              setClaimRegion={setClaimRegion}
+                              claimServicingOffice={claimServicingOffice}
+                              setClaimServicingOffice={setClaimServicingOffice}
+                              policyStartDate={policyStartDate}
+                              setPolicyStartDate={setPolicyStartDate}
+                              policyEndDate={policyEndDate}
+                              setPolicyEndDate={setPolicyEndDate}
+                              insuranceCompanyNameAddress={
+                                insuranceCompanyNameAddress
+                              }
+                              setInsuranceCompanyNameAddress={
+                                setInsuranceCompanyNameAddress
+                              }
+                              insuredAddedBy={insuredAddedBy}
+                              setInsuredAddedBy={setInsuredAddedBy}
+                              VehicleRegisteredNumber={VehicleRegisteredNumber}
+                              setVehicleRegisteredNumber={
+                                setVehicleRegisteredNumber
+                              }
                               />
                             </div>
                           ) : (
