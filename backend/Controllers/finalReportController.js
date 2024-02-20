@@ -332,9 +332,7 @@ const updateFinalReport = (req,res)=>{
       );
     `;
 
-    console.log(updateSummaryDetails);
-    return 
-      
+
     
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {

@@ -304,6 +304,7 @@ const addClaim =  (req, res) => {
                                 Insured: InsuredName,
                                 toMail: GarageMailAddress,
                                 Date: new Date(),
+                                leadId:addLeadId
                               },
                               {
                                 headers: {

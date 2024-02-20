@@ -531,9 +531,7 @@ const Index = ({}) => {
         ? claimServicingOffice
         : claim.claimDetails?.ClaimServicingOffice,
       PolicyPeriodStart: policyStartDate,
-      PolicyPeriodEnd: policyEndDate
-        ? policyEndDate
-        : claim?.claimDetails?.PolicyPeriodEnd,
+      PolicyPeriodEnd: policyEndDate,
       InsuranceCompanyNameAddress: insuranceCompanyNameAddress
         ? insuranceCompanyNameAddress
         : claim.claimDetails?.InsuranceCompanyNameAddress,

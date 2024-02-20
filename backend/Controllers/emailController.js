@@ -28,7 +28,7 @@ const generateUniqueToken = require("../Config/generateToken");
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
-      }
+      }32
       const content = emailHandler(result[0]?.Status);
   
       const generatedToken = generateUniqueToken();
@@ -211,7 +211,9 @@ const generateUniqueToken = require("../Config/generateToken");
   
  const sendEmail2= (req, res) => {
     //garage email
-    const { vehicleNo, PolicyNo, Insured, toMail, Date } = req.body;
+    const { vehicleNo, PolicyNo, Insured, toMail, Date,leadId } = req.body;
+
+    const generatedToken = generateUniqueToken();
   
     const emailContent = `
       Dear Sir/Madam,
@@ -231,7 +233,8 @@ const generateUniqueToken = require("../Config/generateToken");
        3) LH Fender- Denting-250, Painting-2200
        
            Further approval will be provided after dismentaling of the vehicle.
-       
+           <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+  
        Note:- Pleasae consider that the the claim is payable  subject to policy terms & conditions & Cashless facility will be allowed 
               Subject to all the documents get verified from online. It is for your information please.
     `;

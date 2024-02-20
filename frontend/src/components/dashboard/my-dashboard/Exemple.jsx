@@ -141,6 +141,25 @@ export default function Exemple({
     return val;
   };
 
+  function convertToIST(dateTimeString) {
+    // Assuming dateTimeString is in UTC format or any other format that JavaScript can parse
+  
+    // Create a Date object from the provided date-time string
+    const dateTime = new Date(dateTimeString);
+  
+    // Get the time zone offset in minutes and convert it to milliseconds
+    const timeZoneOffsetMs = dateTime.getTimezoneOffset() * 60 * 1000;
+  
+    // Calculate the IST time by adding the IST offset (330 minutes) and subtracting the current offset
+    const istTime = new Date(dateTime.getTime() + 330 * 60 * 1000 - timeZoneOffsetMs);
+  
+    // Format the IST time as a string
+    const istTimeString = istTime.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  
+    return istTimeString;
+  }
+  
+
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -185,7 +204,7 @@ export default function Exemple({
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,
-        added_date: formatDate(claim.AddedDate),
+        added_date: convertToIST(claim.AddedDate),
         city: tempGarage ? tempGarage[1] : "N.Aa",
         state: tempGarage ? tempGarage[2] : "N.A.",
         assigned_garage: tempGarage ? tempGarage[0] : "N.A.",

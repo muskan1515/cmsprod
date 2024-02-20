@@ -164,12 +164,13 @@ const Form_01 = ({
                         >
                           Save
                         </button>{" "}
-                        claim?.claimDetails?.PolicyNumber && <button
+                        { <button
                           className="btn-thm flaticon-close"
                           style={{ fontSize: "14px" }}
                           onClick={()=>setEditCase_02(false)}
                         ></button>
-                        {/* <div className="col-lg-2">
+                       }
+                        <div className="col-lg-2">
                           <button
                             className="btn-thm"
                             style={{}}
@@ -177,7 +178,7 @@ const Form_01 = ({
                           >
                             Fetch Details
                           </button>
-                        </div> */}
+                        </div> 
                       </>
                     ) : (
                       <>

@@ -142,7 +142,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                       {/* <span> Message</span> */}
                     </Link>
                   </li>
-                  <li
+                 {/* <li
                     className={`treeview ${
                       isSinglePageActive("/bill-creation", route.pathname)
                         ? "active"
@@ -168,7 +168,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                       <i className="flaticon-document"></i>
                       <span> </span>
                     </Link>
-                  </li>
+                  </li>*/}
                   <li
                     className={`treeview ${
                       isSinglePageActive(`/print-document/${leadId}`, route.pathname)

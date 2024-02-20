@@ -109,10 +109,9 @@ const CreateList = ({
       oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
 
-      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-      return formattedOneYearLater;
+      return oneYearLater;
     // }
-    return "";
+   
   };
 
   useEffect(()=>{
@@ -295,8 +294,8 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredMobileNo1}
-                onChange={(e) => setInsuredMobileNo1(e.target.value)}
+                value={InsuredMobileNo2}
+                onChange={(e) => setInsuredMobileNo2(e.target.value)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
@@ -532,16 +531,17 @@ const CreateList = ({
               // placeholder="Enter Registration No."
             />*/}
 
-              <DatePicker
-                className="form-control"
-                id="propertyTitle"
-                selected={
-                  policyStartDate !== null && !isNaN(new Date(policyStartDate))
-                    ? new Date(policyStartDate)
-                    : null
-                }
-                onChange={(date) => setPolicyStartDate(date)}
-              />
+            <DatePicker
+            className="form-control"
+            id="propertyTitle"
+            selected={
+              policyStartDate !== null &&
+              !isNaN(new Date(policyStartDate))
+                ? new Date(policyStartDate)
+                : null
+            }
+            onChange={(date) => setPolicyStartDate(date)}
+          />
               {/* <MyDatePicker
                 selectedDate={
                   policyStartDate && !isNaN(new Date(policyStartDate))
@@ -586,15 +586,16 @@ const CreateList = ({
                 value={getNextYear()}
               /> */}
               <DatePicker
-                className="form-control"
-                id="form"
-                selected={
-                  policyEndDate !== null && !isNaN(new Date(policyEndDate))
-                    ? new Date(policyEndDate)
-                    : getNextYear()
-                }
-                onChange={(date) => setPolicyEndDate(date)}
-              />
+              className="form-control"
+              id="propertyTitle"
+              selected={
+                policyEndDate !== null &&
+                !isNaN(new Date(policyEndDate))
+                  ? new Date(policyEndDate)
+                  : null
+              }
+              onChange={(date) => setPolicyEndDate(date)}
+            />
             </div>
           </div>
         </div>

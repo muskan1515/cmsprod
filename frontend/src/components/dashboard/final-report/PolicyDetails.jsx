@@ -222,6 +222,10 @@ const PolicyDetails = ({
     setPhoneNumber(truncatedValue);
   };
 
+  function isvaliddate(date) {
+    return date !== null && date !== undefined && date!=="null" && date!== "undefined";
+  }
+
   const openStatusUpdateHandler = () => {
     setIsStatusModal(true);
   };
@@ -262,9 +266,7 @@ const PolicyDetails = ({
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
       oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
-
-      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-      return formattedOneYearLater;
+      return oneYearLater;
     }
     return "";
   };
@@ -417,10 +419,10 @@ const PolicyDetails = ({
                   className="form-control"
                   id="propertyTitle"
                   selected={
-                    ClaimAddedDateTime !== null &&
-                    !isNaN(new Date(ClaimAddedDateTime))
-                      ? new Date(ClaimAddedDateTime)
-                      : ' '
+                    MailRecieveDate !== null &&
+                   isvaliddate(MailRecieveDate) // Example: YYYY-MM-DD format
+                      ? new Date(MailRecieveDate)
+                      : null
                   }
                   onChange={(date) => setClaimAddedDateTime(date)}
                 />
@@ -718,9 +720,10 @@ const PolicyDetails = ({
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodStart
-                              ? formatDate(PolicyPeriodStart)
-                              : ""
+                            PolicyPeriodStart !== null &&
+                   isvaliddate(PolicyPeriodStart) // Example: YYYY-MM-DD format
+                      ? new Date(PolicyPeriodStart)
+                      : null
                           }
                           className="form-control"
                           id="propertyTitle"
@@ -738,7 +741,7 @@ const PolicyDetails = ({
                           id="propertyTitle"
                           selected={
                             PolicyPeriodStart !== null &&
-                            !isNaN(new Date(PolicyPeriodStart))
+                           isvaliddate(PolicyPeriodStart) // Example: YYYY-MM-DD format
                               ? new Date(PolicyPeriodStart)
                               : null
                           }
@@ -786,7 +789,7 @@ const PolicyDetails = ({
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodEnd ? formatDate(PolicyPeriodEnd) : ""
+                            PolicyPeriodEnd ? new Date(PolicyPeriodEnd) : ""
                           }
                           className="form-control"
                           id="propertyTitle"
@@ -804,9 +807,9 @@ const PolicyDetails = ({
                           id="propertyTitle"
                           selected={
                             PolicyPeriodEnd !== null &&
-                            !isNaN(new Date(PolicyPeriodEnd))
-                              ? new Date(PolicyPeriodEnd)
-                              : null
+                         isvaliddate(PolicyPeriodEnd) // Example: YYYY-MM-DD format
+                          ? new Date(PolicyPeriodEnd)
+                          : null
                           }
                           onChange={(date) => setPolicyPeriodEnd(date)}
                         />
@@ -1180,7 +1183,7 @@ const PolicyDetails = ({
                               id="propertyTitle"
                               selected={
                                 OwnerSRST !== null &&
-                                !isNaN(new Date(OwnerSRST))
+                               isvaliddate(OwnerSRST) // Example: YYYY-MM-DD format
                                   ? new Date(OwnerSRST)
                                   : null
                               }
@@ -1255,7 +1258,7 @@ const PolicyDetails = ({
                               id="propertyTitle"
                               selected={
                                 DateRegistration !== null &&
-                                !isNaN(new Date(DateRegistration))
+                               isvaliddate(DateRegistration) // Example: YYYY-MM-DD format
                                   ? new Date(DateRegistration)
                                   : null
                               }
@@ -2262,9 +2265,10 @@ const PolicyDetails = ({
                       className="form-control"
                       id="propertyTitle"
                       selected={
-                        DateOfIssue !== null && !isNaN(new Date(DateOfIssue))
-                          ? new Date(DateOfIssue)
-                          : null
+                        DateOfIssue !== null &&
+                   isvaliddate(DateOfIssue) // Example: YYYY-MM-DD format
+                      ? new Date(DateOfIssue)
+                      : null
                       }
                       onChange={(date) => setDateOfIssue(date)}
                     />
@@ -2334,7 +2338,8 @@ const PolicyDetails = ({
                     className="form-control"
                     id="propertyTitle"
                     selected={
-                      ValidFrom !== null && !isNaN(new Date(ValidFrom))
+                      ValidFrom !== null &&
+                     isvaliddate(ValidFrom) // Example: YYYY-MM-DD format
                         ? new Date(ValidFrom)
                         : null
                     }
@@ -2577,7 +2582,7 @@ const PolicyDetails = ({
                           id="propertyTitle"
                           selected={
                             FitnessFrom !== null &&
-                            !isNaN(new Date(FitnessFrom))
+                           isvaliddate(FitnessFrom) // Example: YYYY-MM-DD format
                               ? new Date(FitnessFrom)
                               : null
                           }
@@ -2636,7 +2641,8 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           selected={
-                            FitnessTo !== null && !isNaN(new Date(FitnessTo))
+                            FitnessTo !== null &&
+                           isvaliddate(FitnessTo) // Example: YYYY-MM-DD format
                               ? new Date(FitnessTo)
                               : null
                           }
@@ -2716,11 +2722,12 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           selected={
-                            PermitFrom !== null && !isNaN(new Date(PermitFrom))
+                            PermitFrom !== null &&
+                           isvaliddate(PermitFrom) // Example: YYYY-MM-DD format
                               ? new Date(PermitFrom)
                               : null
                           }
-                          onChange={(date) => setFitnessFrom(date)}
+                          onChange={(date) => setPermitFrom(date)}
                         />
                       )}
                       {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2769,7 +2776,8 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           selected={
-                            PermitTo !== null && !isNaN(new Date(PermitTo))
+                            PermitTo !== null &&
+                           isvaliddate(PermitTo) // Example: YYYY-MM-DD format
                               ? new Date(PermitTo)
                               : null
                           }
