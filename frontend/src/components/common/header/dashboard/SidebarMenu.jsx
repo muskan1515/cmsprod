@@ -74,7 +74,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                   <Image
                     width={40}
                     height={45}
-                    src="/assets/images/header-logo2.png"
+                    src="/assets/images/Claim_Logo.jpg"
                     alt="header-logo2.png"
                   />
                   <span style={{ fontSize: "21px" }}>Claim Management</span>
@@ -171,12 +171,18 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured }) => {
                   </li>*/}
                   <li
                     className={`treeview ${
-                      isSinglePageActive(`/print-document/${leadId}`, route.pathname)
+                      isSinglePageActive(
+                        `/print-document/${leadId}`,
+                        route.pathname
+                      )
                         ? "active"
                         : ""
                     }`}
                   >
-                    <Link href={`/print-document/${leadId}`}  title="Print Document">
+                    <Link
+                      href={`/print-document/${leadId}`}
+                      title="Print Document"
+                    >
                       <i className="flaticon-pdf"></i>
                       <span> </span>
                     </Link>

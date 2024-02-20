@@ -71,9 +71,9 @@ const SidebarMenu = () => {
               <li className="sidebar_header header">
                 <Link href="/">
                   <Image
-                    width={40}
-                    height={45}
-                    src="/assets/images/header-logo2.png"
+                    width={50}
+                    height={50}
+                    src="/assets/images/Claim_Logo.jpg"
                     alt="header-logo2.png"
                   />
                   <span>FindHouse</span>
@@ -108,7 +108,6 @@ const SidebarMenu = () => {
                       {/* <span> Create Listing</span> */}
                     </Link>
                   </li>
-                 
                 </ul>
               </li>
               {/* End Main */}

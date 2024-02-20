@@ -4,7 +4,6 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 const Video = ({ videos }) => {
-
   const [open, setOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -50,32 +49,29 @@ const Video = ({ videos }) => {
   };
 
   const handleGeneratePDF = () => {
-    if(!capturedImages ){
-      alert(
-        "First please click the snapshots!!"
-      )
+    if (!capturedImages) {
+      alert("First please click the snapshots!!");
+    } else {
+      const pdf = new jsPDF();
+
+      // Loop through captured images and add to PDF
+      capturedImages.forEach((image, index) => {
+        if (index > 0) {
+          pdf.addPage();
+        }
+        pdf.addImage(image, "PNG", 10, 10, 180, 100);
+      });
+
+      // Save PDF
+      pdf.save(`${videos[selectedVideo].name}_snapshots.pdf`);
+
+      // Show custom popup
+      setPopupContent("PDF downloaded successfully!");
+      setShowPopup(true);
+
+      setCapturedImages([]);
+      setOpen(false);
     }
-    else{
-    const pdf = new jsPDF();
-
-    // Loop through captured images and add to PDF
-    capturedImages.forEach((image, index) => {
-      if (index > 0) {
-        pdf.addPage();
-      }
-      pdf.addImage(image, "PNG", 10, 10, 180, 100);
-    });
-
-    // Save PDF
-    pdf.save(`${videos[selectedVideo].name}_snapshots.pdf`);
-
-    // Show custom popup
-    setPopupContent("PDF downloaded successfully!");
-    setShowPopup(true);
-
-    setCapturedImages([]);
-    setOpen(false);
-  }
   };
 
   const handlePopupClose = () => {
@@ -125,7 +121,44 @@ const Video = ({ videos }) => {
               <div className="accordion-body">
                 <div className="row">
                   <div className="col-lg-4 text-start mb-2">
-                    {/* Your information table */}
+                    <table>
+                      <tr>
+                        <th
+                          style={{ border: "1px solid black", padding: "10px" }}
+                        >
+                          Created By
+                        </th>
+                        <th
+                          style={{ border: "1px solid black", padding: "10px" }}
+                        >
+                          Video Date
+                        </th>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{ border: "1px solid black", padding: "10px" }}
+                        >
+                          abcde
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "10px" }}
+                        >
+                          09/11/2022
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{ border: "1px solid black", padding: "10px" }}
+                        >
+                          abcde
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "10px" }}
+                        >
+                          09/11/2022
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                   <div className="col-lg-7">
                     <div className="row">
@@ -133,9 +166,7 @@ const Video = ({ videos }) => {
                         <div className="property_video">
                           {/* Video container */}
                           <div
-                            className={`thumb ${
-                              open ? "video-container" : ""
-                            }`}
+                            className={`thumb ${open ? "video-container" : ""}`}
                           >
                             {open ? (
                               <>
@@ -156,7 +187,10 @@ const Video = ({ videos }) => {
                                   />
                                   Your browser does not support the video tag.
                                 </video>
-                                <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+                                <canvas
+                                  ref={canvasRef}
+                                  style={{ display: "none" }}
+                                ></canvas>
                               </>
                             ) : (
                               <Image
@@ -178,6 +212,28 @@ const Video = ({ videos }) => {
                                 </div>
                               </div>
                             )}
+                          </div>
+                          <div className="row">
+                            <div className="col-lg-12 text-center">
+                              <button
+                                className="btn btn-thm m-1"
+                                onClick={handleCaptureSnapshot}
+                              >
+                                Capture
+                              </button>
+                              <button
+                                className="btn btn-thm m-1"
+                                onClick={handleCaptureSnapshot}
+                              >
+                                Enable Screenshot
+                              </button>
+                              <button
+                                className="btn btn-thm m-1"
+                                onClick={handleGeneratePDF}
+                              >
+                                Generate Pdf
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>

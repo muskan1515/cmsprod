@@ -112,13 +112,12 @@ const Form_01 = ({
         });
     }
   };
-  const [isUpdateVehicleLoading,setisUpdateVehicleLoading]=useState(false);
+  const [isUpdateVehicleLoading, setisUpdateVehicleLoading] = useState(false);
 
-
-  const closeFunction = ()=>{
-    setEditCase_02(false)
-    setisUpdateVehicleLoading(false)
-  }
+  const closeFunction = () => {
+    setEditCase_02(false);
+    setisUpdateVehicleLoading(false);
+  };
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
@@ -152,33 +151,40 @@ const Form_01 = ({
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-2">
+                  <div className="col-lg-9">
                     {editCase_02 ? (
                       <>
-                        <button
-                          className="btn-thm m-1"
-                          style={{}}
-                          onClick={() => 
-                            {setisUpdateVehicleLoading(true)
-                            onSaveHandler(3,closeFunction,closeFunction)}}
-                        >
-                          Save
-                        </button>{" "}
-                        { <button
-                          className="btn-thm flaticon-close"
-                          style={{ fontSize: "14px" }}
-                          onClick={()=>setEditCase_02(false)}
-                        ></button>
-                       }
-                        <div className="col-lg-2">
-                          <button
-                            className="btn-thm"
-                            style={{}}
-                            onClick={handleFetchData}
+                        <div className="row">
+                          <div className="col-lg-2">
+                            <button
+                              className="btn-thm m-1"
+                              style={{}}
+                              onClick={() => {
+                                setisUpdateVehicleLoading(true);
+                                onSaveHandler(3, closeFunction, closeFunction);
+                              }}
+                            >
+                              Save
+                            </button>{" "}
+                            {
+                              <button
+                                className="btn-thm flaticon-close"
+                                style={{ fontSize: "14px" }}
+                                onClick={() => setEditCase_02(false)}
+                              ></button>
+                            }
+                          </div>
+                          <div
+                            className="col-lg-1"
+                            style={{ marginLeft: "-20px" }}
                           >
-                            Fetch Details
-                          </button>
-                        </div> 
+                            <button
+                              className="btn-thm m-1 flaticon-transfer"
+                              style={{}}
+                              onClick={handleFetchData}
+                            ></button>
+                          </div>
+                        </div>
                       </>
                     ) : (
                       <>
@@ -196,9 +202,9 @@ const Form_01 = ({
                     )}
                   </div>
                 </div>
-                {isUpdateVehicleLoading ?
-                  <Loader/>
-                  :editCase_02 ? (
+                {isUpdateVehicleLoading ? (
+                  <Loader />
+                ) : editCase_02 ? (
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="row mt-1">

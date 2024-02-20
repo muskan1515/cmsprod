@@ -125,10 +125,10 @@ const Form = ({
   //   };
   console.log("MakerModel", MakerModel);
 
-  const closeFunction = ()=>{
-    setEditCase_01(false)
-    setisUpdateVehicleLoading(false)
-  }
+  const closeFunction = () => {
+    setEditCase_01(false);
+    setisUpdateVehicleLoading(false);
+  };
 
   const formatDate = (val) => {
     const date = new Date(val);
@@ -222,7 +222,7 @@ const Form = ({
     }
   };
 
-  const [isUpdateVehicleLoading,setisUpdateVehicleLoading]=useState(false);
+  const [isUpdateVehicleLoading, setisUpdateVehicleLoading] = useState(false);
   //permanenet Address
   return (
     <>
@@ -261,55 +261,58 @@ const Form = ({
             >
               <div class="accordion-body">
                 <div className="row">
-                  <div className="col-lg-2">
+                  <div className="">
                     {editCase_01 ? (
-                      <div>
-                        <button
-                          className="btn-thm m-1"
-                          style={{}}
-                          onClick={() => 
-                            {setisUpdateVehicleLoading(true)
-                            onSaveHandler(2,closeFunction,closeFunction)}}
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={()=>setEditCase_01(false)}
-                          className="btn-thm flaticon-close"
-                          style={{ fontSize: "14px" }}
-                        ></button>
-                        <div className="col-lg-2" style={{ marginLeft: "-70px" }}>
-                      <button
-                        className="btn-thm m-1"
-                        onClick={handleFetchData}
-                        style={{ marginLeft: "-120px" }}
-                      >
-                        Fetch Details
-                      </button>
-                    </div>
-                      </div>
-
+                      <>
+                        <div className="row">
+                          <div className="col-lg-2">
+                            <button
+                              className="btn-thm m-1"
+                              style={{}}
+                              onClick={() => {
+                                setisUpdateVehicleLoading(true);
+                                onSaveHandler(2, closeFunction, closeFunction);
+                              }}
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={() => setEditCase_01(false)}
+                              className="btn-thm flaticon-close"
+                              style={{ fontSize: "14px" }}
+                            ></button>
+                          </div>{" "}
+                          <div
+                            className="col-lg-1"
+                            style={{ marginLeft: "-70px" }}
+                          >
+                            <button
+                              className="btn-thm m-1 flaticon-transfer"
+                              onClick={handleFetchData}
+                            ></button>
+                          </div>
+                        </div>
+                      </>
                     ) : (
-                      claim?.claimDetails?.PolicyNumber && <button
-                        className="btn-thm"
-                        style={{}}
-                        onClick={() => setEditCase_01(true)}
-                      >
-                        <span
-                          className="flaticon-edit"
-                          style={{ fontSize: "14px" }}
-                        ></span>
-                      </button>
+                      claim?.claimDetails?.PolicyNumber && (
+                        <button
+                          className="btn-thm"
+                          style={{}}
+                          onClick={() => setEditCase_01(true)}
+                        >
+                          <span
+                            className="flaticon-edit"
+                            style={{ fontSize: "14px" }}
+                          ></span>
+                        </button>
+                      )
                     )}
                   </div>
-                 
                 </div>
 
-                {
-                  isUpdateVehicleLoading ?
-                  <Loader/>
-                  :
-                  editCase_01 ? (
+                {isUpdateVehicleLoading ? (
+                  <Loader />
+                ) : editCase_01 ? (
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="row mt-1">
