@@ -90,13 +90,8 @@ function removeBase64Prefix(encodedImage) {
   VALUES (
       '${details?.dlno}',
       '${details?.name}',
-<<<<<<< Updated upstream
-      '${image}',
-      '${details?.sign}',
-=======
       '${'photo'}',
       '${'photo'}',
->>>>>>> Stashed changes
       '${details?.cov}',
       CAST('${details?.vaildupto}' AS DATETIME),
       '${details?.rtoname}',
@@ -119,13 +114,8 @@ function removeBase64Prefix(encodedImage) {
 SET
     LicenseNumber = '${details?.dlno}',
     DriverName = '${details?.name}',
-<<<<<<< Updated upstream
-    Pht = '${image}',
-    Photo = '${details?.sign}',
-=======
     Pht = '${''}',
     Photo = '${''}',
->>>>>>> Stashed changes
     Vov = '${details?.cov}',
     VaildUpto = CAST('${details?.vaildupto}' AS DATETIME),
     RtoName = '${details?.rtoname}',
