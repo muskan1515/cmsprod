@@ -252,6 +252,8 @@ export default function Exemple({
     }
   }, []);
 
+
+
   const handleUpload = (result, label, idx) => {
     location();
     try {
@@ -319,8 +321,10 @@ export default function Exemple({
     return url.includes(".mp4");
   }
 
+  console.log(uploadedData);
+
   useEffect(() => {
-    console.log(uploadedData);
+   
     const getData = () => {
       const tempData = [];
       data.map((row, index) => {
@@ -343,8 +347,10 @@ export default function Exemple({
                     style={{ display: "flex", flexDirection: "column" }}
                     key={idx}
                   >
-                   {! isVideo(file.data[0].url) ?  <Image
-                      src={file.data[0].thumbnail_url}
+                   {! isVideo(file.data[0].url) ?  
+
+                    <Image
+                      src={file.data[0].name}
                       width={90}
                       height={90}
                     /> 
@@ -354,7 +360,7 @@ export default function Exemple({
                     Your browser does not support the video tag.
                   </video>
                     }
-                    <a>{file.data[0].name}</a>
+                    <a>{file.data[0].name[0]}</a>
                     <div className="row">
                       <div className="col-lg-12">
                         <a
@@ -366,13 +372,7 @@ export default function Exemple({
                         >
                           <span className="flaticon-view"></span>
                         </a>
-                        <button
-                          className="btn btn-color w-25"
-                          title="Remove"
-                          style={{ marginLeft: "5px" }}
-                        >
-                          <span className="flaticon-garbage fs-6"></span>
-                        </button>
+                       
                       </div>
                     </div>
                   </div>

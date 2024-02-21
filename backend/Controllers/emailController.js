@@ -220,7 +220,7 @@ const generateUniqueToken = require("../Config/generateToken");
   
       Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
   
-        We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} and the approval
+        We are Appointed for the survey of vehicle no.-${vehicleNo}, Insured:-${Insured} & Policy No.-${PolicyNo} on ${Date} and the approval
         is as follows;-
        Parts
        1) Fr Bumper- New Allowed
@@ -260,27 +260,29 @@ const generateUniqueToken = require("../Config/generateToken");
   
   const sendEmail3 = (req, res) => {
     //
-    const { date, toMail } = req.body;
-  
-    const currentDate = new Date();
+    const { vehicleNo, PolicyNo, Insured, toMail, Date,leadId } = req.body;
+
+    const generatedToken = generateUniqueToken();
   
     const emailContent = `
-    Dear Sir/Madam,
+      Dear Sir/Madam,
   
-    Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
-    
-     We have conducted the online survey on ${currentDate} & also mailed you regarding the documents on ${date} and now again we rquest you
-    to please provide the follwong documents to procedd further in your case:-
-    
-    1) What is the Status of the said vheicle
-    2) How much time it will take to repair the vehicle
-    3) Please provide UR & RI Snaps
-    4) Invoice Bill duly signed & stamped of dealer
-    5) Payment receipt duly signed & stamped of dealer
-    6) Previous Year Policy
-    7) Pan Card
-    8) Please destorey the items properly in the RI, Otherwise we will treat the part is repaired
-       
+      Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+  
+      We are Appointed for the survey of vehicle no.-${vehicleNo}, Insured:-${Insured} & Policy No.-${PolicyNo} on ${Date} and the approval
+      is as follows;-
+        1) What is the Status of the said vheicle
+        2) How much time it will take to repair the vehicle
+        3) Please provide UR & RI Snaps
+        4) Invoice Bill duly signed & stamped of dealer
+        5) Payment receipt duly signed & stamped of dealer
+        6) Previous Year Policy
+        7) Pan Card
+        8) Please destorey the items properly in the RI, Otherwise we will treat the part is repaired
+
+        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+  
+          
         Please provide the clear copy of all the documents so that the claim processing can be fast
     
     Note:- If We Cannot get the response with in 01 day we will inform the insurer that the insured is not interseted in the

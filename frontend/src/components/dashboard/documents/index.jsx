@@ -126,7 +126,19 @@ const Index = ({ leadId, token, content }) => {
     setCheck(false);
   }, [check]);
 
+
+  const calculateDocuments=()=>{
+    const url = window.location.pathname;
+    const inputString = url?.split("&content=")[1];
+    const numberOfCommas = (inputString?.split(",").length - 1);
+    if(numberOfCommas < 1)
+     return 10;
+    return numberOfCommas;
+  }
+
   const onSubmitHandler = () => {
+
+
     let data = [];
     for (let i = 0; i < 15; i = i + 1) {
       const temp = types[i].name;
@@ -148,14 +160,14 @@ const Index = ({ leadId, token, content }) => {
 
     // console.log(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length)))
     if (
-      !(
-        (String(status?.Status) === "1" &&
-          Number(data.length) + Number(document.length) == 10) ||
-        (content && content.length !== data.length)
+      (
+        (
+          calculateDocuments() !== Number(document.length) ) 
       )
     ) {
       alert("Please upload all the required data !!!");
     } else {
+
       const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
       
       

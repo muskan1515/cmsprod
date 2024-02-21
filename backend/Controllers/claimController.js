@@ -271,7 +271,7 @@ const addClaim =  (req, res) => {
                           `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
                           {
                             vehicleNo: RegisteredNumber,
-                            PolicyNo: ReferenceNo,
+                            PolicyNo: PolicyNumber,
                             Insured: InsuredName,
                             toMail: InsuredMailAddress,
                             Date: new Date(),
@@ -297,10 +297,10 @@ const addClaim =  (req, res) => {
                         if (GarageMailAddress !== null) {
                           axios
                             .post(
-                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
+                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
                               {
                                 vehicleNo: RegisteredNumber,
-                                PolicyNo: ReferenceNo,
+                                PolicyNo: PolicyNumber,
                                 Insured: InsuredName,
                                 toMail: GarageMailAddress,
                                 Date: new Date(),
@@ -325,10 +325,14 @@ const addClaim =  (req, res) => {
                         if (BrokerMailAddress !== null) {
                           axios
                             .post(
-                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/3`,
+                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
                               {
-                                toMail: BrokerMailAddress,
+                                vehicleNo: RegisteredNumber,
+                                PolicyNo: PolicyNumber,
+                                Insured: InsuredName,
+                                toMail: GarageMailAddress,
                                 Date: new Date(),
+                                leadId:addLeadId
                               },
                               {
                                 headers: {
