@@ -52,7 +52,8 @@ const getSpecificDriverDetails = async (req, res) => {
       }
     })
     .then((result)=>{
-    const details=result.data.data.data;
+      console.log(result);
+      const details=result.data.data.data;
 
     const insertDriverDetails = `
     INSERT INTO DriverDetailsOnline (
