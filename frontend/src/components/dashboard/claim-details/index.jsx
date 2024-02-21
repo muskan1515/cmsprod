@@ -865,7 +865,7 @@ const Index = ({}) => {
           <SidebarMenu
             leadId={leadId}
             email={claim.insuredDetails?.InsuredMailAddress}
-            policyNo={claim.claimDetails?.ClaimNumber}
+            policyNo={claim.claimDetails?.PolicyNumber}
             vehicleNo={claim.vehicleDetails?.VehicleEngineNumber}
             Insured={claim.insuredDetails?.InsuredName}
           />
