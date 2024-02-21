@@ -126,8 +126,8 @@ const addClaim =  (req, res) => {
         LeadId 
       ) VALUES (
         '${GarageNameAndAddress}',
-        ${GarageContactNo1},
-        ${GarageContactNo2},
+       '${GarageContactNo1}',
+        '${GarageContactNo2}',
         '${GarageMailAddress}',
         ${parseInt(results[0].LeadId)}
       );
@@ -142,7 +142,7 @@ const addClaim =  (req, res) => {
       ) VALUES (
         '${PlaceOfLoss}',
         '${NatureOfLoss}',
-        ${(EstimatedLoss)},
+        '${(EstimatedLoss)}',
         ${parseInt(results[0].LeadId)}
       );
     `;
@@ -164,8 +164,8 @@ const addClaim =  (req, res) => {
         LeadId
       ) VALUES (
         '${InsuredName}',
-        ${InsuredMobileNo1},
-        ${InsuredMobileNo2},
+        '${InsuredMobileNo1}',
+        '${InsuredMobileNo2}',
         '${InsuredMailAddress}',
         ${parseInt(results[0].LeadId)}
       );
