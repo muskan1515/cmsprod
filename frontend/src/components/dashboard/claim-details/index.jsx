@@ -396,8 +396,6 @@ const Index = ({}) => {
     setTransferDate(claim?.vehicleDetails?.TransferDate);
     setEngineNumber(claim?.vehicleDetails?.EngineNumber);
     setAddedBy(claim?.vehicleDetails?.AddedBy);
-    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority);
-    setLicenseNumber(claim?.driverDetails?.LicenseNumber);
     setLicenseType(claim?.driverDetails?.LicenseType);
     setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber);
     setVehicleFuelType(
@@ -423,7 +421,7 @@ const Index = ({}) => {
     setMakerModel(claim?.vehicleDetails?.MakerModel);
     setManufactureMonthYear(claim?.vehicleDetails?.ManufactureMonthYear);
     setVehicleGvw(claim?.vehicleDetails?.VehicleGvw);
-    setCubicCapacity(claim?.vehicleDetails?.VehicleCubicCapacity);
+    setCubicCapacity(claim?.vehicleDetails?.CubicCapacity);
     setBancsBodyType(claim?.vehicleDetails?.BancsBodyType);
     setBancsMakeCode(claim?.vehicleDetails?.BancsMakeCode);
     setBancsModelCode(claim?.vehicleDetails?.BancsModelCode);
@@ -1234,6 +1232,7 @@ const Index = ({}) => {
                               setMakerModel={setMakerModel}
                               setVehicleGvw={setVehicleGvw}
                               setCubicCapacity={setCubicCapacity}
+                              
                               setVehicleSeatingCapacity={
                                 setVehicleSeatingCapacity
                               }

@@ -397,19 +397,116 @@ const getSpecificClaim = async (req, res) => {
         [leadId]
       );
       const driverDetails = await executeQuery(
-        "SELECT * FROM DriverDetails WHERE LeadID=?",
+        `SELECT 
+        LicenseNumber,
+        DriverName,
+        Vov,
+        VaildUpto,
+        RtoName,
+        Address,
+        Mobile,
+        BloodGroup,
+        Gender,
+        FatherName,
+        DateOfBirth,
+        DateOfIssue,
+        LeadID
+        FROM DriverDetails WHERE LeadID=?`,
         [leadId]
       );
       const vehicleOnlineDetails = await executeQuery(
-        "SELECT * FROM VehicleDetailsOnline WHERE LeadId=?",
+        `SELECT RegisteredNumber,
+        TypeOfBody,
+        DateOfRegistration,
+        EngineNumber,
+        ChassisNumber,
+        FuelType,
+        MakerDesc,
+        MakerModel,
+        CubicCapacity,
+        SeatingCapacity,
+        FitUpto,
+        PasiaModelCode,
+        VehicleType,
+        BancsModelCode,
+        BancsMakeCode,
+        BancsSubtypeCode,
+        BancsBodyType,
+        BancsVehicleClass,
+        BancsVehicleSegment,
+        RcRtoCode,
+        VehicleRcStatus,
+        VehicleBlackListStatus,
+        VehicleRegistedAt,
+        ManufactureMonthYear,
+        PermanentAddress,
+        ClassOfVehicle,
+        RegisteredOwner,
+        VehicleInsuranceUpto,
+        PucValidUntil,
+        PucNumber,
+        VehicleInsuranceCompany,
+        MakeVariantModelColor,
+        TaxParticulars,
+        LeadId
+         FROM VehicleDetailsOnline WHERE LeadId=?`,
         [leadId]
       );
       const driverOnlineDetails = await executeQuery(
-        "SELECT * FROM DriverDetailsOnline WHERE LeadID=?",
+        `SELECT 
+        LicenseNumber,
+        DriverName,
+        Vov,
+        VaildUpto,
+        RtoName,
+        Address,
+        Mobile,
+        BloodGroup,
+        Gender,
+        FatherName,
+        DateOfBirth,
+        DateOfIssue,
+        LeadID
+        FROM DriverDetailsOnline WHERE LeadID=?`,
         [leadId]
       );
       const vehicleDetails = await executeQuery(
-        "SELECT * FROM VehicleDetails WHERE LeadID=?",
+        `SELECT  
+        RegisteredNumber,
+        TypeOfBody,
+        DateOfRegistration,
+        EngineNumber,
+        ChassisNumber,
+        FuelType,
+        MakerDesc,
+        MakerModel,
+        CubicCapacity,
+        SeatingCapacity,
+        FitUpto,
+        PasiaModelCode,
+        VehicleType,
+        BancsModelCode,
+        BancsMakeCode,
+        BancsSubtypeCode,
+        BancsBodyType,
+        BancsVehicleClass,
+        BancsVehicleSegment,
+        RcRtoCode,
+        VehicleRcStatus,
+        VehicleBlackListStatus,
+        VehicleRegistedAt,
+        ManufactureMonthYear,
+        PermanentAddress,
+        ClassOfVehicle,
+        RegisteredOwner,
+        VehicleInsuranceUpto,
+        PucValidUntil,
+        PucNumber,
+        VehicleInsuranceCompany,
+        MakeVariantModelColor,
+        TaxParticulars,
+        LeadID
+        FROM VehicleDetails WHERE LeadID=?`,
         [leadId]
       );
       const garageDetails = await executeQuery(
@@ -469,6 +566,7 @@ const getSpecificClaim = async (req, res) => {
     SurveyType,
     PolicyPeriodStart,
     PolicyPeriodEnd,
+    CubicCapacity,
     InsuranceCompanyNameAddress,
     InsuredAddedBy,
     VehicleMakeVariantModelColor,
@@ -541,6 +639,7 @@ const getSpecificClaim = async (req, res) => {
     LeadId,
   } = req.body;
 
+
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -598,7 +697,7 @@ const getSpecificClaim = async (req, res) => {
     FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : null},
     MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : null},
     MakerModel = ${MakerModel ? `'${MakerModel}'` : null},
-    CubicCapacity = ${VehicleCubicCap ? `'${VehicleCubicCap}'` : null},
+    CubicCapacity = ${CubicCapacity ? `'${CubicCapacity}'` : null},
     FitUpto = ${FitUpto ? `'${FitUpto}'` : null},
     PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : null},
     VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : null},
@@ -752,29 +851,37 @@ const getSpecificClaim = async (req, res) => {
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
-    IssuingAuthority = ${IssuingAuthority ? `'${IssuingAuthority}'` : null},
+    IssuingAuthority = ${IssuingAuthority ? `'${(IssuingAuthority)}'` : null},
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
     AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : null},
+<<<<<<< Updated upstream
     Pht = ${Pht ? '' : null},
     Photo = ${Photo ? '' : null},
     Vov = ${Vov ? `'${Vov}'` : null},
     VaildUpto = ${ValidUpto ? `'${ValidUpto}'` : null},
+=======
+    Vov = ${Vov ? `'${Vov}'` : null},
+    VaildUpto = ${ValidUpto ? `'${(ValidUpto)}'` : null},
+>>>>>>> Stashed changes
     RtoName = ${RtoName ? `'${RtoName}'` : null},
     Address = ${Address ? `'${Address}'` : null},
-    Mobile = ${Mobile ? `'${Mobile}'` : null},
+    Mobile = ${Mobile ?`'${(Mobile)}'` : null},
     BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : null},
     Gender = ${Gender ? `'${Gender}'` : null},
     FatherName = ${FatherName ? `'${FatherName}'` : null},
-    DateOfBirth = ${DateOfBirth ? `'${DateOfBirth}'` : null},
-    DateOfIssue = ${DateOfIssue ? `'${DateOfIssue}'` : null},
+    DateOfBirth = ${DateOfBirth ? `'${(DateOfBirth)}'` : null},
+    DateOfIssue = ${DateOfIssue ? `'${(DateOfIssue)}'` : null},
     TypeOfVerification = '${DriverTypeOfVerification}'
     WHERE LeadID = ${LeadId};
   `;
 
+  console.log(updateDriverDetails)
+
   db.query(updateDriverDetails, (error, results) => {
     if (error) {
+      console.log(error)
       console.error("Error updating data in ClaimDetails:", error);
       return res
         .status(500)
@@ -859,6 +966,7 @@ const getSpecificClaim = async (req, res) => {
       VehicleMakeVariantModelColor,
       VehicleTypeOfBody,
       VehicleRegisteredNumber,
+      CubicCapacity,
       VehicleDateOfRegistration,
       VehiclePucNumber,
       VehicleRegisteredOwner,
@@ -908,7 +1016,7 @@ const getSpecificClaim = async (req, res) => {
      FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : null},
      MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : null},
      MakerModel = ${MakerModel ? `'${MakerModel}'` : null},
-     CubicCapacity = ${VehicleCubicCap ? `'${VehicleCubicCap}'` : null},
+     CubicCapacity = ${CubicCapacity ? `${parseInt(CubicCapacity)}` : null},
      FitUpto = ${FitUpto ? `'${FitUpto}'` : null},
      PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : null},
      VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : null},
@@ -931,6 +1039,8 @@ const getSpecificClaim = async (req, res) => {
      VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : null}
    WHERE LeadId = ${LeadId};
  `;
+
+ console.log(updateVehicleDetails);
 
   db.query(updateVehicleDetails, (error, results) => {
     if (error) {

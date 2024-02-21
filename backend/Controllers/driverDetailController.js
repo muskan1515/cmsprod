@@ -64,8 +64,8 @@ function removeBase64Prefix(encodedImage) {
       }
     })
     .then((result)=>{
-      console.log(result);
-      const details=result.data.data.data;
+    const details=result.data.data.data;
+    console.log(details);
 
       const image = removeBase64Prefix(details?.pht);
     const insertDriverDetails = `
@@ -84,13 +84,19 @@ function removeBase64Prefix(encodedImage) {
       FatherName,
       DateOfBirth,
       DateOfIssue,
+      ApiResponse,
       LeadID
   )
   VALUES (
       '${details?.dlno}',
       '${details?.name}',
+<<<<<<< Updated upstream
       '${image}',
       '${details?.sign}',
+=======
+      '${'photo'}',
+      '${'photo'}',
+>>>>>>> Stashed changes
       '${details?.cov}',
       CAST('${details?.vaildupto}' AS DATETIME),
       '${details?.rtoname}',
@@ -101,17 +107,25 @@ function removeBase64Prefix(encodedImage) {
       '${details?.fname}',
       CAST('${details?.dob}' AS DATETIME),
       CAST('${details?.issuedate}' AS DATETIME),
+      '${details}',
       ${leadId}
   );
     `;
+
+    
 
     const updateDriverQuery = `
     UPDATE DriverDetails
 SET
     LicenseNumber = '${details?.dlno}',
     DriverName = '${details?.name}',
+<<<<<<< Updated upstream
     Pht = '${image}',
     Photo = '${details?.sign}',
+=======
+    Pht = '${''}',
+    Photo = '${''}',
+>>>>>>> Stashed changes
     Vov = '${details?.cov}',
     VaildUpto = CAST('${details?.vaildupto}' AS DATETIME),
     RtoName = '${details?.rtoname}',
@@ -125,7 +139,7 @@ SET
 WHERE
     LeadID = ${leadId};`;
 
-
+    console.log(insertDriverDetails,updateDriverQuery);
   
     db.query(insertDriverDetails, (error, results) => {
       if (error) {

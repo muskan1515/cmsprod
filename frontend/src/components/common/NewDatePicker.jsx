@@ -12,7 +12,7 @@ const NewDatePicker = ({ Date, setDate }) => {
       id="propertyTitle"
       selected={
         isValidDate(Date)
-          ? new Date(currentDate)
+          ? new Date(Date)
           : null
       }
       onChange={(date) => setDate(date)}

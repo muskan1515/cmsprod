@@ -56,6 +56,7 @@ const getSpecificVehicleDetails = async (req, res) => {
       // console.log(result.data.vehicleDetails?.Data.result);
      
       const details = result.data.vehicleDetails?.Data.result;
+      const additionalInfo = result?.data?.additionalInfo;
       const insertVehicleDetails = `
       INSERT INTO VehicleDetailsOnline (
         RegisteredNumber,
@@ -81,18 +82,24 @@ const getSpecificVehicleDetails = async (req, res) => {
         VehicleRcStatus,
         VehicleBlackListStatus,
         VehicleRegistedAt,
-        VehicleInsuranceCompany,
         ManufactureMonthYear,
         PermanentAddress,
         ClassOfVehicle,
         RegisteredOwner,
         VehicleInsuranceUpto,
+        ApiResponse,
+        PucValidUntil,
+        PucNumber,
+        VehicleInsuranceCompany,
+        MakeVariantModelColor,
+        TaxParticulars,
+
         LeadId
     )
     VALUES (
-        '${details?.rc_regn_no}',
-        '${details?.bancs_Body_Type}',
-        CAST('${details?.rc_regn_dt}' AS DATETIME),
+      '${additionalInfo?.rc_regn_no}',
+        '${additionalInfo?.bodyType}',
+        '${details?.rc_regn_dt}',
         '${details?.rc_eng_no}',
         '${details?.rc_chasi_no}',
         '${details?.bancs_Fuel_Type}',
@@ -100,25 +107,32 @@ const getSpecificVehicleDetails = async (req, res) => {
         '${details?.rc_maker_model}',
         '${details?.rc_cubic_cap}',
         '${details?.rc_seat_cap}',
-        CAST('${details?.rc_fit_upto}' AS DATETIME),
+        '${details?.rc_fit_upto}',
         '${details?.rc_pasia_model_code}',
         '${details?.rc_vehicle_type}',
         '${details?.bancs_model_code}',
         '${details?.bancs_make_code}',
         '${details?.bancs_Subtype_code}',
         '${details?.bancs_Body_Type}',
-        '${details?.rc_vh_class_desc}',
+        '${details?.bancs_Vehicle_class}',
         '${details?.bancs_Vehicle_Segment}',
         '${details?.rc_rto_code}',
         '${details?.rc_status}',
         '${details?.rc_blacklist_status}',
         '${details?.rc_registered_at}',
-        '${details?.rc_insurance_comp}',
-        CAST('${details?.rc_manu_month_yr}' AS DATETIME),
+        '${details?.rc_manu_month_yr}',
         '${details?.rc_permanent_address}',
         '${details?.bancs_Vehicle_class}',
         '${details?.rc_owner_name}',
-        CAST('${details?.rc_insurance_upto}' AS DATETIME),
+        '${details?.rc_insurance_upto}',
+        '${details}',
+        '${additionalInfo?.puccUpto}',
+        '${additionalInfo?.puccNumber}',
+        '${additionalInfo?.rcFinancer}',
+        '${additionalInfo?.vehicleColour}',
+        '${additionalInfo?.vehicleTaxUpto}',
+
+
         ${leadId}
     );
     `;

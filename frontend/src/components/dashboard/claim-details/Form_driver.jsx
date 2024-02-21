@@ -325,7 +325,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {LicenseNumber}
+                      {claim?.driverDetails?.LicenseNumber}
                     </label>
                   </div>
                 </td>

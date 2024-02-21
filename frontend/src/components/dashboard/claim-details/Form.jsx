@@ -1085,6 +1085,68 @@ const Form = ({
                               // marginTop: "-13px",
                             }}
                           >
+                            Seating Capacity <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          {console.log("MakerModel", MakerModel)}
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={VehicleSeatingCapacity}
+                            onChange={(e) => setVehicleSeatingCapacity(e.target.value)}
+                            disabled={false}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Cubic  Capacity <span class="req-btn">*</span>
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          {console.log("MakerModel", MakerModel)}
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={CubicCapacity}
+                            onChange={(e) => setCubicCapacity(e.target.value)}
+                            disabled={false}
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
                             Vehicle Insurance Company{" "}
                             <span class="req-btn">*</span>
                           </label>
