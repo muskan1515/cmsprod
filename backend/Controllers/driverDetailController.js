@@ -37,6 +37,18 @@ const getSpecificDriverDetails = async (req, res) => {
   }
 };
 
+function removeBase64Prefix(encodedImage) {
+  // Check if the provided string starts with ":image/png;base64,"
+  const prefix = ":image/png;base64,";
+  if (encodedImage.startsWith(prefix)) {
+    // If yes, remove the prefix and return the remaining base64-encoded content
+    return encodedImage.slice(prefix.length);
+  } else {
+    // If no prefix found, return the original string
+    return encodedImage;
+  }
+}
+
 
  const getOnlineDriverDetails = (req, res) => {
 
@@ -55,6 +67,7 @@ const getSpecificDriverDetails = async (req, res) => {
       console.log(result);
       const details=result.data.data.data;
 
+      const image = removeBase64Prefix(details?.pht);
     const insertDriverDetails = `
     INSERT INTO DriverDetailsOnline (
       LicenseNumber,
@@ -76,7 +89,7 @@ const getSpecificDriverDetails = async (req, res) => {
   VALUES (
       '${details?.dlno}',
       '${details?.name}',
-      '${details?.pht}',
+      '${image}',
       '${details?.sign}',
       '${details?.cov}',
       CAST('${details?.vaildupto}' AS DATETIME),
@@ -97,7 +110,7 @@ const getSpecificDriverDetails = async (req, res) => {
 SET
     LicenseNumber = '${details?.dlno}',
     DriverName = '${details?.name}',
-    Pht = '${details?.pht}',
+    Pht = '${image}',
     Photo = '${details?.sign}',
     Vov = '${details?.cov}',
     VaildUpto = CAST('${details?.vaildupto}' AS DATETIME),
