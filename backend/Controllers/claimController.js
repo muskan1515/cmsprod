@@ -856,15 +856,8 @@ const getSpecificClaim = async (req, res) => {
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
     AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : null},
-<<<<<<< Updated upstream
-    Pht = ${Pht ? '' : null},
-    Photo = ${Photo ? '' : null},
-    Vov = ${Vov ? `'${Vov}'` : null},
-    VaildUpto = ${ValidUpto ? `'${ValidUpto}'` : null},
-=======
     Vov = ${Vov ? `'${Vov}'` : null},
     VaildUpto = ${ValidUpto ? `'${(ValidUpto)}'` : null},
->>>>>>> Stashed changes
     RtoName = ${RtoName ? `'${RtoName}'` : null},
     Address = ${Address ? `'${Address}'` : null},
     Mobile = ${Mobile ?`'${(Mobile)}'` : null},
