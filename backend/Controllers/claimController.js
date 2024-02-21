@@ -35,6 +35,7 @@ const addClaim =  (req, res) => {
       EstimatedLoss,
     } = req.body;
 
+    console.log(req.body);
    
     const authorizationHeader = req.headers.authorization;
   
