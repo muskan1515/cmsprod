@@ -304,52 +304,21 @@ const RcDetails = ({
                     Registration Date
                   </label>
                 </div>
-                {console.log(
-                  "DateRegistration>>>????????",
-                  formatDate(DateRegistration)
-                )}
                 <div className="col-lg-8">
-                  {!isEditMode ? (
-                    <input
-                      readOnly={!isEditMode}
-                      type={"text"}
-                      value={
-                        DateRegistration !== "null" && DateRegistration !== null
-                          ? formatDate(new Date(DateRegistration))
-                          : ""
-                      }
-                      className="form-control"
-                      id="propertyTitle"
-                    />
-                  ) : (
-                    // <MyDatePicker
-                    //   disable={!isEditMode}
-                    //   selectedDate={
-                    //     DateRegistration ? new Date(DateRegistration) : ""
-                    //   }
-                    //   setSelectedDate={setDateRegistration}
-                    // />
-                    //   <DatePicker
-                    //   className="form-control"
-                    //   id="propertyTitle"
-                    //   selected={
-                    //     DateRegistration !== null && !isNaN(new Date(DateRegistration))
-                    //       ? new Date(DateRegistration)
-                    //       : null
-                    //   }
-                    //   onChange={(date) => setDateRegistration(date)}
-                    // />
-                    <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={
-                        DateRegistration && DateRegistration !== "null"
-                          ? DateRegistration.substring(0, 10)
-                          : ""
-                      }
-                      onChange={(e) => setDateRegistration(e.target.value)}
-                    />
-                  )}
+                { !isEditMode ? 
+                  <input 
+              readOnly={!isEditMode}
+              type={ "text"}
+              value={DateRegistration ? formatDate(DateRegistration) : ""}
+             
+              className="form-control" 
+            id="propertyTitle" />
+            :
+                <MyDatePicker
+                disable={!isEditMode}
+                selectedDate={DateRegistration ? new Date(DateRegistration) : ""}
+                setSelectedDate={setDateRegistration}
+                />}
                   {/*<input
                     type={isEditMode ? "date" : "text"}
                     className="form-control"
@@ -391,51 +360,20 @@ const RcDetails = ({
 
                     // placeholder="Enter Registration No."
                   />*/}
-                  {!isEditMode ? (
-                    <input
-                      readOnly={!isEditMode}
-                      type={"text"}
-                      value={
-                        RCTaxValidUpto !== "null" &&
-                        RCTaxValidUpto !== 'null' && 
-                        RCTaxValidUpto !== '' && 
-
-                        RCTaxValidUpto !== null
-                          ? formatDate(new Date(RCTaxValidUpto))
-                          : ""
-                      }
-                      className="form-control"
-                      id="propertyTitle"
-                    />
-                  ) : (
-                    // <MyDatePicker
-                    //   disable={!isEditMode}
-                    //   selectedDate={
-                    //     RCTaxValidUpto ? new Date(RCTaxValidUpto) : ""
-                    //   }
-                    //   setSelectedDate={setRCTaxValidUpto}
-                    // />
-                    //   <DatePicker
-                    //   className="form-control"
-                    //   id="propertyTitle"
-                    //   selected={
-                    //     RCTaxValidUpto !== null && !isNaN(new Date(RCTaxValidUpto))
-                    //       ? new Date(RCTaxValidUpto)
-                    //       : ''
-                    //   }
-                    //   onChange={(date) => setRCTaxValidUpto(date)}
-                    // />
-                    <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={
-                        RCTaxValidUpto && RCTaxValidUpto !== "null"
-                          ? RCTaxValidUpto.substring(0, 10)
-                          : ""
-                      }
-                      onChange={(e) => setRCTaxValidUpto(e.target.value)}
-                    />
-                  )}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={RCTaxValidUpto ? formatDate(RCTaxValidUpto) : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
+                  <MyDatePicker
+                    disable={!isEditMode}
+                    selectedDate={RCTaxValidUpto ? new Date(RCTaxValidUpto) : ""}
+                    setSelectedDate={setRCTaxValidUpto}
+                    />}
                 </div>
               </div>
             </div>
@@ -771,38 +709,32 @@ const RcDetails = ({
                     readOnly={!isEditMode}
                     onChange={(e) => setInsuranceValidUpto(e.target.value)}
                   />*/}
-                  {
-                    !isEditMode ? (
-                      <input
-                        readOnly={!isEditMode}
-                        type={"text"}
-                        value={
-                          InsuranceValidUpto
-                            ? formatDate(InsuranceValidUpto)
-                            : ""
-                        }
-                        className="form-control"
-                        id="propertyTitle"
-                      />
-                    ) : (
-                      <DatePicker
-                        className="form-control"
-                        id="propertyTitle"
-                        selected={
-                          InsuranceValidUpto !== null &&
-                          !isNaN(new Date(InsuranceValidUpto))
-                            ? new Date(InsuranceValidUpto)
-                            : ""
-                        }
-                        onChange={(date) => setInsuranceValidUpto(date)}
-                      />
-                    )
-                    // <MyDatePicker
-                    // disable={!isEditMode}
-                    //   selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : ""}
-                    //   setSelectedDate={setInsuranceValidUpto}
-                    // />
-                  }
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={InsuranceValidUpto ? formatDate(InsuranceValidUpto) : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
+              <DatePicker
+                      className="form-control"
+                      id="propertyTitle"
+                      selected={
+                        InsuranceValidUpto !== null && !isNaN(new Date(InsuranceValidUpto))
+                          ? new Date(InsuranceValidUpto)
+                          : null
+                      }
+                      onChange={(date) => setInsuranceValidUpto(date)}
+                    />
+                  // <MyDatePicker
+                  // disable={!isEditMode}
+                  //   selectedDate={InsuranceValidUpto ? new Date(InsuranceValidUpto) : ""}
+                  //   setSelectedDate={setInsuranceValidUpto}
+                  // /> 
+                }
+                  
                 </div>
               </div>
             </div>
@@ -836,31 +768,20 @@ const RcDetails = ({
 
                     // placeholder="Enter Registration No."
                   />*/}
-                  {!isEditMode ? (
-                    <input
-                      readOnly={!isEditMode}
-                      type={"text"}
-                      value={FitnessTo ? formatDate(FitnessTo) : ""}
-                      className="form-control"
-                      id="propertyTitle"
-                    />
-                  ) : (
-                    // <MyDatePicker
-                    //   disable={!isEditMode}
-                    //   selectedDate={FitnessTo ? new Date(FitnessTo) : ""}
-                    //   setSelectedDate={setFitnessTo}
-                    // />
-                    <DatePicker
-                      className="form-control"
-                      id="propertyTitle"
-                      selected={
-                        FitnessTo !== null && !isNaN(new Date(FitnessTo))
-                          ? new Date(FitnessTo)
-                          : ""
-                      }
-                      onChange={(date) => setFitnessTo(date)}
-                    />
-                  )}
+                  { !isEditMode ? 
+                    <input 
+                readOnly={!isEditMode}
+                type={ "text"}
+                value={FitnessTo ? formatDate(FitnessTo)  : ""}
+               
+                className="form-control" 
+              id="propertyTitle" />
+              :
+                  <MyDatePicker
+                  disable={!isEditMode}
+                    selectedDate={FitnessTo ? new Date(FitnessTo) : ""}
+                    setSelectedDate={setFitnessTo}
+                  /> }
                 </div>
               </div>
             </div>

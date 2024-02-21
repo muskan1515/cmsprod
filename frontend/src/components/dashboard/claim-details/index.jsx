@@ -677,11 +677,9 @@ const Index = ({}) => {
         toast.error(err);
       });
 
+      setClaim([]);
     func(false);
-    func2(false)
-
-    // setEditCase((prop) => !prop);
-    // window.location.reload();
+    func2(false);
   };
 
   const editHandler = (value) => {

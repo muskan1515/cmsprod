@@ -251,7 +251,7 @@ const Servey = ({
   const editHandler = () => {
     setIsEditMode(true);
   };
-console.log('AccidentAddedDateTime',AccidentAddedDateTime);
+
   return (
     <>
       <div className="row">
@@ -291,16 +291,15 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                       id="propertyTitle"
                     />
                   ) : (
-                    <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={
-                        AccidentAddedDateTime &&
-                        AccidentAddedDateTime !== "null"
-                          ?  AccidentAddedDateTime.substring(0, 10)
+                    <MyDatePicker
+                      disable={!isEditMode}
+                      selectedDate={
+                        AccidentAddedDateTime && AccidentAddedDateTime!=="null"
+                          ? new Date(AccidentAddedDateTime)
                           : ""
                       }
-                      onChange={(e) => setAccidentAddedDateTime(e.target.value)}
+                      setSelectedDate={setAccidentAddedDateTime}
+                      
                     />
                   )}
                   {/*<input
@@ -498,9 +497,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                     <MyDatePicker
                       disable={!isEditMode}
                       selectedDate={
-                        SurveyAllotmentDate && SurveyAllotmentDate !== "null"
-                          ? new Date(SurveyAllotmentDate)
-                          : ""
+                        SurveyAllotmentDate && SurveyAllotmentDate!=="null" ? new Date(SurveyAllotmentDate) : ""
                       }
                       setSelectedDate={setSurveyAllotmentDate}
                     />
@@ -577,9 +574,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                   <MyDatePicker
                     disable={!isEditMode}
                     selectedDate={
-                      SurveyConductedDate && SurveyConductedDate !== "null"
-                        ? new Date(SurveyConductedDate)
-                        : ""
+                      SurveyConductedDate&& SurveyConductedDate!=="null" ? new Date(SurveyConductedDate) : ""
                     }
                     setSelectedDate={setSurveyConductedDate}
                   />

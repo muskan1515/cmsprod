@@ -5,10 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import RcDetails from "./RcDetails";
 import { BsTypeH3 } from "react-icons/bs";
 import DateComponent from "./dateComponent";
-// import MyDatePicker from "../../common/MyDatePicker";
+import MyDatePicker from "../../common/MyDatePicker";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import NewDatePicker from "../../common/NewDatePicker";
 
 const PolicyDetails = ({
   setIsStatusModal,
@@ -206,8 +207,6 @@ const PolicyDetails = ({
   setPUCCValidUpto,
   RegisteringAuthority,
   setRegisteringAuthority,
-  setValidUpto,
-  ValidUpto
 }) => {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -224,29 +223,18 @@ const PolicyDetails = ({
     setPhoneNumber(truncatedValue);
   };
 
-  function isvaliddate(date) {
-    return (
-      date !== null &&
-      date !== undefined &&
-      date !== "null" &&
-      date !== "undefined"
-    );
-  }
-
   const openStatusUpdateHandler = () => {
     setIsStatusModal(true);
   };
 
   const formatDate = (dateString) => {
-    if (!isvaliddate(dateString)) {
-      console.error("Invalid date:", dateString);
-      return null;
-    }
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      undefined,
-      options
-    );
+    const options = {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    };
+  
+    const formattedDate = new Date(dateString).toLocaleDateString("en-US", options);
     return formattedDate;
   };
 
@@ -275,7 +263,9 @@ const PolicyDetails = ({
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
       oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
-      return oneYearLater;
+
+      const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
+      return formattedOneYearLater;
     }
     return "";
   };
@@ -412,9 +402,7 @@ const PolicyDetails = ({
                 <input
                   readOnly={!isEditMode}
                   type={"text"}
-                  value={
-                    ClaimAddedDateTime ? formatDate(ClaimAddedDateTime) : ""
-                  }
+                  value={ClaimAddedDateTime ? formatDate(ClaimAddedDateTime) : ""}
                   className="form-control"
                   id="propertyTitle"
                 />
@@ -426,32 +414,18 @@ const PolicyDetails = ({
                 //   }
                 //   setSelectedDate={setMailRecieveDate}
                 // />
-                // <DatePicker
-                //   className="form-control"
-                //   id="propertyTitle"
-                //   selected={
-                //     MailRecieveDate !== null && MailRecieveDate // Example: YYYY-MM-DD format
-                //       ? new Date(MailRecieveDate)
-                //       : ""
-                //   }
-                //   onChange={(date) => setClaimAddedDateTime(date)}
-                // />
-                <input
-                  type="date"
-                  disabled={!isEditMode}
-                  value={
-                    ClaimAddedDateTime && ClaimAddedDateTime !== "null"
-                      ? ClaimAddedDateTime.substring(0, 10)
-                      : ""
+                <NewDatePicker
+                  className="form-control"
+                  id="propertyTitle"
+                  Date={ClaimAddedDateTime
                   }
-                  onChange={(e) => setClaimAddedDateTime(e.target.value)}
+                  setDate={setClaimAddedDateTime}
                 />
               )}
-
               {/*<input 
               readOnly={!isEditMode}
               type={isEditMode ? "date" : "text"}
-              value={formatDate(ClaimAddedDateTime)}
+              value={formatDate(MailRecieveDate)}
               onChange={(e)=>setMailRecieveDate(e.target.value)}
               className="form-control" 
             id="propertyTitle" />*/}
@@ -736,15 +710,13 @@ const PolicyDetails = ({
                     </div>
 
                     <div className="col-lg-5">
-                      {console.log("Insurance From------>", PolicyPeriodStart)}
                       {!isEditMode ? (
                         <input
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodStart !== "null" &&
-                            PolicyPeriodStart !== "null"
-                              ? formatDate(new Date(PolicyPeriodStart))
+                            PolicyPeriodStart
+                              ? formatDate(PolicyPeriodStart)
                               : ""
                           }
                           className="form-control"
@@ -758,26 +730,12 @@ const PolicyDetails = ({
                         //   }
                         //   setSelectedDate={setPolicyPeriodStart}
                         // />
-                        // <DatePicker
-                        //   className="form-control"
-                        //   id="propertyTitle"
-                        //   selected={
-                        //     PolicyPeriodStart !== null &&
-                        //    (PolicyPeriodStart) // Example: YYYY-MM-DD format
-                        //       ? new Date(PolicyPeriodStart)
-                        //       : ''
-                        //   }
-                        //   onChange={(date) => setPolicyPeriodStart(date)}
-                        // />
-                        <input
-                          type="date"
-                          disabled={!isEditMode}
-                          value={
-                            PolicyPeriodStart && PolicyPeriodStart !== "null"
-                              ? PolicyPeriodStart.substring(0, 10)
-                              : ""
+                        <NewDatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          Date={(PolicyPeriodStart)
                           }
-                          onChange={(e) => setPolicyPeriodStart(e.target.value)}
+                          setDate={ setPolicyPeriodStart}
                         />
                       )}
                     </div>
@@ -821,10 +779,7 @@ const PolicyDetails = ({
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodEnd !== "null" &&
-                            PolicyPeriodEnd !== "null"
-                              ? formatDate(new Date(PolicyPeriodEnd))
-                              : ""
+                            PolicyPeriodEnd ? formatDate(PolicyPeriodEnd) : ""
                           }
                           className="form-control"
                           id="propertyTitle"
@@ -837,26 +792,12 @@ const PolicyDetails = ({
                         //   }
                         //   setSelectedDate={setPolicyPeriodStart}
                         // />
-                        // <DatePicker
-                        //   className="form-control"
-                        //   id="propertyTitle"
-                        //   selected={
-                        //     PolicyPeriodEnd !== null &&
-                        //  (PolicyPeriodEnd) // Example: YYYY-MM-DD format
-                        //   ? new Date(PolicyPeriodEnd)
-                        //   : ''
-                        //   }
-                        //   onChange={(date) => setPolicyPeriodEnd(date)}
-                        // />
-                        <input
-                          type="date"
-                          disabled={!isEditMode}
-                          value={
-                            PolicyPeriodEnd && PolicyPeriodEnd !== "null"
-                              ? PolicyPeriodEnd.substring(0, 10)
-                              : ""
+                        <NewDatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          Date={(PolicyPeriodEnd)
                           }
-                          onChange={(e) => setPolicyPeriodEnd(e.target.value)}
+                          setDate={setPolicyPeriodEnd}
                         />
                       )}
                     </div>
@@ -1223,26 +1164,12 @@ const PolicyDetails = ({
                             //   setSelectedDate={setOwnerSRST}
                             // />
 
-                            // <DatePicker
-                            //   className="form-control"
-                            //   id="propertyTitle"
-                            //   selected={
-                            //     OwnerSRST !== null &&
-                            //    (OwnerSRST) // Example: YYYY-MM-DD format
-                            //       ? new Date(OwnerSRST)
-                            //       : ''
-                            //   }
-                            //   onChange={(date) => setOwnerSRST(date)}
-                            // />
-                            <input
-                              type="date"
-                              disabled={!isEditMode}
-                              value={
-                                OwnerSRST && OwnerSRST !== "null"
-                                  ? OwnerSRST.substring(0, 10)
-                                  : ""
+                            <NewDatePicker
+                              className="form-control"
+                              id="propertyTitle"
+                              Date={(OwnerSRST)
                               }
-                              onChange={(e) => setOwnerSRST(e.target.value)}
+                              setDate={ setOwnerSRST}
                             />
                           )}
                         </div>
@@ -1291,9 +1218,8 @@ const PolicyDetails = ({
                               readOnly={!isEditMode}
                               type={"text"}
                               value={
-                                DateRegistration !== "null" &&
-                                DateRegistration !== "null"
-                                  ? formatDate(new Date(DateRegistration))
+                                DateRegistration
+                                  ? formatDate(DateRegistration)
                                   : ""
                               }
                               className="form-control"
@@ -1309,28 +1235,12 @@ const PolicyDetails = ({
                             //   }
                             //   setSelectedDate={setDateRegistration}
                             // />
-                            // <DatePicker
-                            //   className="form-control"
-                            //   id="propertyTitle"
-                            //   selected={
-                            //     DateRegistration !== null &&
-                            //    (DateRegistration) // Example: YYYY-MM-DD format
-                            //       ? new Date(DateRegistration)
-                            //       : ''
-                            //   }
-                            //   onChange={(date) => setDateRegistration(date)}
-                            // />
-                            <input
-                              type="date"
-                              disabled={!isEditMode}
-                              value={
-                                DateRegistration && DateRegistration !== "null"
-                                  ? DateRegistration.substring(0, 10)
-                                  : ""
+                            <NewDatePicker
+                              className="form-control"
+                              id="propertyTitle"
+                              Date={(DateRegistration)
                               }
-                              onChange={(e) =>
-                                setDateRegistration(e.target.value)
-                              }
+                              setDate={setDateRegistration}
                             />
                           )}
 
@@ -2285,7 +2195,7 @@ const PolicyDetails = ({
                     Date of Birth
                   </label>
                 </div>
-                {/* <div className="col-lg-8">
+                <div className="col-lg-8">
                   <MyDatePicker
 
                   // value={LicenseNumber}
@@ -2294,7 +2204,7 @@ const PolicyDetails = ({
 
                   // placeholder="Enter Registration No."
                   />
-                </div> */}
+                </div>
               </div>
             </div>
             <div className="col-lg-8">
@@ -2324,38 +2234,20 @@ const PolicyDetails = ({
                     <input
                       readOnly={!isEditMode}
                       type={"text"}
-                      value={
-                        DateOfIssue !== "null" &&
-                        DateOfIssue !== "null" &&
-                        DateOfIssue !== "" && 
-                        DateOfIssue !== null
-                          ? formatDate(new Date(DateOfIssue))
-                          : ""
-                      }
+                      value={DateOfIssue ? formatDate(DateOfIssue) : ""}
                       className="form-control"
                       id="propertyTitle"
                     />
                   ) : (
-                    //   <DatePicker
-                    //     className="form-control"
-                    //     id="propertyTitle"
-                    //     selected={
-                    //       DateOfIssue !== null &&
-                    //  (DateOfIssue) // Example: YYYY-MM-DD format
-                    //     ? new Date(DateOfIssue)
-                    //     : ''
-                    //     }
-                    //     onChange={(date) => setDateOfIssue(date)}
-                    //   />
-                    <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={
-                        DateOfIssue && DateOfIssue !== "null"
-                          ? DateOfIssue.substring(0, 10)
-                          : ""
+                    <DatePicker
+                      className="form-control"
+                      id="propertyTitle"
+                      selected={
+                        DateOfIssue !== null && !isNaN(new Date(DateOfIssue))
+                          ? new Date(DateOfIssue)
+                          : null
                       }
-                      onChange={(e) => setDateOfIssue(e.target.value)}
+                      onChange={(date) => setDateOfIssue(date)}
                     />
                   )}
                   {/* <input 
@@ -2396,17 +2288,10 @@ const PolicyDetails = ({
                     <input
                       readOnly={!isEditMode}
                       type={"text"}
-                      value={
-                        ValidUpto !== "null" &&
-                        ValidUpto !== "null" &&
-                        ValidUpto !== "" &&
-                        ValidUpto!== null
-                          ? formatDate(new Date(ValidUpto))
-                          : ""
-                      }
+                      value={ValidFrom ? formatDate(ValidFrom) : ""}
                       className="form-control"
                       id="propertyTitle"
-                      // // disable={!isEdi
+                    // // disable={!isEdi
                     />
                   ) : (
                     // <MyDatePickertMode}
@@ -2426,28 +2311,16 @@ const PolicyDetails = ({
                     //   }
                     //   onChange={(date) => setValidUntilNtv(date)}
                     // />
-                    //   <DatePicker
-                    //   className="form-control"
-                    //   id="propertyTitle"
-                    //   selected={
-                    //     ValidFrom !== null &&
-                    //    (ValidFrom) // Example: YYYY-MM-DD format
-                    //       ? new Date(ValidFrom)
-                    //       : ''
-                    //   }
-                    //   onChange={(date) => setValidFrom(date)}
-                    // />
-                    <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={
-                        ValidFrom && ValidFrom !== "null"
-                          ? ValidFrom.substring(0, 10)
-                          : ""
-                      }
-                      onChange={(e) => setValidFrom(e.target.value)}
-                    />
+                    <NewDatePicker
+                    className="form-control"
+                    id="propertyTitle"
+                    Date={
+                      ValidFrom 
+                    }
+                    setDate={ setValidFrom}
+                  />
                   )}
+                  {console.log('ValidFrom>>>>>>>>>????',ValidFrom)}
                   {/* <input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode}
@@ -2678,26 +2551,13 @@ const PolicyDetails = ({
                         // }
                         // setSelectedDate={setFitnessFrom}
                         // />
-                        // <DatePicker
-                        //   className="form-control"
-                        //   id="propertyTitle"
-                        //   selected={
-                        //     FitnessFrom !== null &&
-                        //    (FitnessFrom) // Example: YYYY-MM-DD format
-                        //       ? new Date(FitnessFrom)
-                        //       : ''
-                        //   }
-                        //   onChange={(date) => setFitnessFrom(date)}
-                        // />
-                        <input
-                          type="date"
-                          disabled={!isEditMode}
-                          value={
-                            FitnessFrom && FitnessFrom !== "null"
-                              ? FitnessFrom.substring(0, 10)
-                              : ""
+                        <NewDatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          Date={
+                            FitnessFrom
                           }
-                          onChange={(e) => setFitnessFrom(e.target.value)}
+                          setDate={setFitnessFrom}
                         />
                       )}
                       {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2748,26 +2608,13 @@ const PolicyDetails = ({
                         // selectedDate={FitnessTo ? new Date(FitnessTo) : ""}
                         // setSelectedDate={setFitnessTo}
                         // />
-                        // <DatePicker
-                        //   className="form-control"
-                        //   id="propertyTitle"
-                        //   selected={
-                        //     FitnessTo !== null &&
-                        //    (FitnessTo) // Example: YYYY-MM-DD format
-                        //       ? new Date(FitnessTo)
-                        //       : ''
-                        //   }
-                        //   onChange={(date) => setFitnessTo(date)}
-                        // />
-                        <input
-                          type="date"
-                          disabled={!isEditMode}
-                          value={
-                            FitnessTo && FitnessTo !== "null"
-                              ? FitnessTo.substring(0, 10)
-                              : ""
+                        <NewDatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          Date={
+                            FitnessTo
                           }
-                          onChange={(e) => setFitnessTo(e.target.value)}
+                          setDate={ setFitnessTo}
                         />
                       )}
                     </div>
@@ -2839,26 +2686,13 @@ const PolicyDetails = ({
                         // selectedDate={PermitFrom ? new Date(PermitFrom) : ""}
                         // setSelectedDate={setFitnessFrom}
                         // />
-                        // <DatePicker
-                        //   className="form-control"
-                        //   id="propertyTitle"
-                        //   selected={
-                        //     PermitFrom !== null &&
-                        //    (PermitFrom) // Example: YYYY-MM-DD format
-                        //       ? new Date(PermitFrom)
-                        //       : ''
-                        //   }
-                        //   onChange={(date) => setPermitFrom(date)}
-                        // />
-                        <input
-                          type="date"
-                          disabled={!isEditMode}
-                          value={
-                            PermitFrom && PermitFrom !== "null"
-                              ? PermitFrom.substring(0, 10)
-                              : ""
+                        <NewDatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          Date={
+                            PermitFrom 
                           }
-                          onChange={(e) => setPermitFrom(e.target.value)}
+                          setDate={ setFitnessFrom}
                         />
                       )}
                       {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2903,26 +2737,13 @@ const PolicyDetails = ({
                         // selectedDate={PermitTo ? new Date(PermitTo) : ""}
                         // setSelectedDate={setPermitTo}
                         // />
-                        // <DatePicker
-                        //   className="form-control"
-                        //   id="propertyTitle"
-                        //   selected={
-                        //     PermitTo !== null &&
-                        //    (PermitTo) // Example: YYYY-MM-DD format
-                        //       ? new Date(PermitTo)
-                        //       : ''
-                        //   }
-                        //   onChange={(date) => setPermitTo(date)}
-                        // />
-                        <input
-                          type="date"
-                          disabled={!isEditMode}
-                          value={
-                            PermitTo && PermitTo !== "null"
-                              ? PermitTo.substring(0, 10)
-                              : ""
+                        <NewDatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          Date={
+                            PermitTo 
                           }
-                          onChange={(e) => setPermitTo(e.target.value)}
+                          setDate={ setPermitTo}
                         />
                       )}
                       {/* <input 

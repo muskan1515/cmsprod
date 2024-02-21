@@ -345,8 +345,8 @@ let data = [
     doc_name: "Payment/cash receipt",
     file: "",
     action: (
-      <button className="btn btn-thm">
-        <FaUpload />
+      <button className="btn btn-thm" >
+        <FaUpload/>
       </button>
     ),
     verify: (
@@ -412,6 +412,51 @@ export default function Exemple({ documents }) {
     return requiredInfo;
   };
 
+  const [selectedFile, setSelectedFile] = useState([]);
+  const handleFileInputChange = (e,idx) => {
+    // Handle file input change logic
+    console.log(idx);
+    const selectedFileCurrent = e.target.files[0];
+    let oldFiles = selectedFile;
+    console.log(oldFiles);
+
+    let currentIndex = {};
+    oldFiles?.map((file,index)=>{
+      if((file?.index)===idx){
+        currentIndex=file;
+      }
+    });
+    let newFile = {
+      file:selectedFileCurrent,
+      index:currentIndex?.index ? currentIndex?.index : idx
+    };
+
+    console.log(currentIndex)
+    if(currentIndex){
+      oldFiles[idx]=newFile
+    }
+    else{
+      oldFiles.push(newFile);
+    }
+    console.log(selectedFile)
+   setSelectedFile(oldFiles);
+  };
+
+  const getFileName = (idx)=>{
+    let currentIndex = "";
+    selectedFile.map((file,index)=>{
+      if((file?.index)===idx){
+        currentIndex=file?.file;
+      }
+    });
+    return currentIndex
+  }
+
+  const handleButtonClick = () => {
+    // Trigger file input click when button is clicked
+    document.getElementById('fileInput').click();
+  };
+
   const downloadAllFiles = async () => {
     try {
       const zip = new JSZip();
@@ -441,6 +486,7 @@ export default function Exemple({ documents }) {
         }
       });
 
+
       // console.log(zip);
 
       const content = await zip.generateAsync({ type: "blob" });
@@ -467,6 +513,7 @@ export default function Exemple({ documents }) {
   useEffect(() => {
     data.map((docs, index) => {
       const allInfo = checkValue(docs.doc_name);
+      const fileName = getFileName(index);
       const alllinks = (
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
@@ -482,10 +529,15 @@ export default function Exemple({ documents }) {
         serial_num: docs.serial_num,
         doc_name: docs.doc_name,
         file: alllinks,
-        action:  
-        <button className="btn btn-thm" onClick={()=>onUploadHandler()}>
-          <FaUpload />
-        </button>,
+        action: <>
+        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index)} ></input>
+        <button className="btn btn-thm" onClick={handleButtonClick}
+        >
+        <FaUpload /></button>
+        <p>{ fileName? `Selected File: ${fileName?.name}` : "Choose File"}</p>
+
+        
+        </>,
         verify: docs.verify,
       };
 
