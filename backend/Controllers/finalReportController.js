@@ -3,8 +3,9 @@ const db = require("../Config/dbConfig");
 
 const updateFinalReport = (req,res)=>{
 
+  console.log("Updating final report", req.body);
     const {
-      policyType ,
+      PolicyType ,
       TypeOfDate,
       IDV  ,
       PolicyPeriodStart,
@@ -119,9 +120,11 @@ const updateFinalReport = (req,res)=>{
       BillNo,
       BillDate,
       BillAmount,
+      AddedDateTime,
       Endurance,
-      OtherRemark
-
+      OtherRemark,
+      TotalLoss,
+      phyCheck
     } = req.body;
 
     const updateDriverDetails = `
@@ -154,10 +157,13 @@ const updateFinalReport = (req,res)=>{
     ClaimNumber = '${ClaimNumber}',
     ClaimServicingOffice='${ClaimServicingOffice}',
     InspectionType = '${""}',
-    PolicyType='${policyType}',
+    PolicyType='${PolicyType}',
     IDV='${IDV}',
     MailRecieveDate='${MailRecieveDate}',
-    HPA='${HPA}'
+    HPA='${HPA}',
+    AddedDateTime = '${AddedDateTime}',
+    TotalLoss= '${TotalLoss}',
+    phyCheck= '${phyCheck}',
     WHERE LeadID = ${leadId};
   `;
 
@@ -186,14 +192,14 @@ const updateFinalReport = (req,res)=>{
     OdometerReading = '${VehicleOdometerReading}',
     PucNumber='${PUCNumber}',
     OwnerSrDate='${OwnerSRST}',
-    RegLadenWt=${(RegLadenWt)},
+    RegLadenWt='${(RegLadenWt)}',
     RemarkIfRLW='${RemarkIfRLW}',
-    UnladenWT=${(UnladenWT)},
+    UnladenWT='${(UnladenWT)}',
     RemarkIfULW='${RemarkIfULW}',
     Remark='${VehicleRemark}',
     VehicleType='${VehicleType}',
     AntiTheft='${AntiTheft}',
-    TypeOfDate=${TypeOfDate}
+    TypeOfDate='${TypeOfDate}'
     WHERE LeadID = ${leadId};
   `;
 
@@ -294,7 +300,6 @@ const updateFinalReport = (req,res)=>{
           RemarkOnSalvage='${RemarkOnSalvage}',
           Other='${Other}',
           GrandTotal='${GrandTotal}',
-          
           DepreciationOnParts='${DepreciationOnParts}',
           NetAssessedAmount='${NetAssessedAmount}',
           SavageDepreciationDetails='${SavageDepreciationDetails}',

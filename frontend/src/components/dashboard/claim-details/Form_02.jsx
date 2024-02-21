@@ -230,6 +230,16 @@ const Form = ({
                             }
                             onChange={(date) => setDateRegistration(date)}
                           /> */}
+                          {/* <DatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            selected={
+                              DateRegistration !== null && !isNaN(new Date(DateRegistration))
+                                ? new Date(DateRegistration)
+                                : null
+                            }
+                            onChange={(date) => setDateRegistration(date)}
+                          /> */}
                         </div>
                       </div>
                     </div>

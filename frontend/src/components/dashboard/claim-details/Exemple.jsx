@@ -369,6 +369,7 @@ export default function Exemple({ documents }) {
 
   }
 
+
   const checkValue = (label) => {
     let requiredInfo = [];
     documents.map((doc, index) => {
@@ -462,6 +463,7 @@ export default function Exemple({ documents }) {
       const zip = new JSZip();
 
      
+     
 
       documents.map((data, index) => {
         if (data.Attribute1 !== "") {
@@ -507,6 +509,7 @@ export default function Exemple({ documents }) {
       alert("Error during download. Please try again.");
     }
   };
+
 
 
   let tempCode = [];

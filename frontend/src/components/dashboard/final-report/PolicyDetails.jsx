@@ -207,7 +207,13 @@ const PolicyDetails = ({
   RegisteringAuthority,
   setRegisteringAuthority,
   setValidUpto,
-  ValidUpto
+  ValidUpto,
+  TotalLoss,
+  setTotalLoss,
+  IMT,
+  setIMT,
+  phyCheck,
+  setphyCheck
 }) => {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -660,6 +666,7 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
+                      {console.log('policyType>>><<<',policyType)}
                       <select
                         style={{ padding: "2px" }}
                         className="selectpicker form-select"
@@ -848,6 +855,7 @@ const PolicyDetails = ({
                         //   }
                         //   onChange={(date) => setPolicyPeriodEnd(date)}
                         // />
+                        
                         <input
                           type="date"
                           disabled={!isEditMode}
@@ -860,6 +868,7 @@ const PolicyDetails = ({
                         />
                       )}
                     </div>
+                    {console.log("PolicyPeriodEnd",PolicyPeriodEnd)}
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
                       style={{ marginLeft: "-30px" }}
@@ -885,6 +894,7 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-7">
+                      {console.log('HPA',HPA)}
                       <input
                         type="number"
                         className="form-control"
@@ -1040,9 +1050,10 @@ const PolicyDetails = ({
                     <input
                       className="m-2"
                       type="checkbox"
-                      value=""
+                      value={TotalLoss}
                       id="terms"
                       style={{ border: "1px solid black" }}
+                      onChange={(e) => setTotalLoss(e.target.value)}
                     />
                   </div>
                 </div>
@@ -1062,9 +1073,10 @@ const PolicyDetails = ({
                     <input
                       className="m-2"
                       type="checkbox"
-                      value=""
+                      value={IMT}
                       id="terms"
                       style={{ border: "1px solid black" }}
+                      onChange={(e) => setIMT(e.target.value)}
                     />
                   </div>
                 </div>
@@ -1404,9 +1416,10 @@ const PolicyDetails = ({
                         <input
                           className="form-check-input m-1"
                           type="checkbox"
-                          value=""
+                          value={phyCheck}
                           id="terms"
                           style={{ border: "1px solid black" }}
+                          onChange={(e)=>setphyCheck(e.target.value)}
                         />
                       </div>
                     </div>

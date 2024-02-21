@@ -550,6 +550,7 @@ const CreateList = ({
                 }
                 setSelectedDate={setPolicyStartDate}
               /> */}
+            
             </div>
           </div>
         </div>
@@ -579,6 +580,7 @@ const CreateList = ({
             // onChange={(e)=>setPolicyEndDate(e.target.value)}
             // placeholder="Enter Registration No."
           />*/}
+              {/* <input
               {/* <input
                 className="form-control"
                 type="text"

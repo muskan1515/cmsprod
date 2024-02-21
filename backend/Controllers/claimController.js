@@ -64,6 +64,8 @@ const addClaim =  (req, res) => {
         '${PolicyNumber}',
         '${PolicyPeriodStart}',
         '${PolicyPeriodEnd}',
+        '${PolicyPeriodStart}',
+        '${PolicyPeriodEnd}',
         ${ClaimNumber},
         '${ClaimServicingOffice}',
         '${(AddedBy)}',
@@ -242,6 +244,7 @@ const addClaim =  (req, res) => {
                     });
                   }
 
+
                   db.query(statusDetails, (error, results) => {
                     db.query(insertDriverDetails, (error, results) => {
                       if (error) {
@@ -253,6 +256,19 @@ const addClaim =  (req, res) => {
                           error: "Error inserting data into InsuredDetails.",
                         });
                       }
+
+                      // db.query(insertSummaryDetails, (error, results) => {
+                      //   if (error) {
+                      //     console.error(
+                      //       "Error inserting data into DriverDetails:",
+                      //       error
+                      //     );
+                      //     return res.status(500).json({
+                      //       error: "Error inserting data into InsuredDetails.",
+                      //     });
+                      //   }
+                      // });
+    
 
                       // db.query(insertSummaryDetails, (error, results) => {
                       //   if (error) {
@@ -351,6 +367,8 @@ const addClaim =  (req, res) => {
                                   "Error sending email into Broker Mail.",
                               });
                             });
+
+                          
 
                           
                         }
@@ -546,6 +564,7 @@ const getSpecificClaim = async (req, res) => {
         summaryDetails
       };
   
+      // console.log(combinedResult)
       // console.log(combinedResult)
   
       res.json(combinedResult);
@@ -1084,6 +1103,16 @@ const getSpecificClaim = async (req, res) => {
   }
 
 
+module.exports={addClaim,
+                getSpecificClaim,
+                updateClaim,
+                getAllClaims,
+                getClaimDetails,
+              updateClaimDetails,
+              updateDriverDetails,
+              updateVehicleDetails,
+              garageDetails
+            }
 module.exports={addClaim,
                 getSpecificClaim,
                 updateClaim,
