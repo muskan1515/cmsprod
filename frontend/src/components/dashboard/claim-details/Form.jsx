@@ -1320,11 +1320,9 @@ const Form = ({
               </div>
             </div>
           </div>
-          {/* End .row */}
         </>
       );
-    }
-  };
+   
 };
 
 export default Form;
