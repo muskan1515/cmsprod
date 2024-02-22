@@ -19,7 +19,7 @@ import Video from "./Video";
 import EstimateList from "./EstimateList";
 import CreateList_02 from "./CreateList_02";
 import CreateList_03 from "./CreateList_03";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import CreateList_04 from "./CreateList_04";
 import Loader from "../../common/Loader";
 import { useRouter } from "next/router";
@@ -103,7 +103,7 @@ const Index = ({}) => {
   );
 
   const [documents, setDocuments] = useState([]);
-
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [ClaimNumber, setClaimNumber] = useState(
     claim?.claimDetails?.ClaimNumber ? claim?.ClaimNumber?.ClaimNumber : ""
   );
@@ -272,7 +272,7 @@ const Index = ({}) => {
   const [VehicleRegistedAt, setVehicleRegistedAt] = useState("");
   const [PermanentAddress, setPermanentAddress] = useState("");
   const [ClassOfVehicle, setClassOfVehicle] = useState("");
- 
+
   //driver fetch details
   const [FatherName, setFatherName] = useState("");
   const [Gender, setGender] = useState("");
@@ -364,7 +364,6 @@ const Index = ({}) => {
     // const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
     // setPolicyEndDate(formattedOneYearLater);
   }, [policyStartDate]);
-
 
   useEffect(() => {
     setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice);
@@ -486,20 +485,16 @@ const Index = ({}) => {
     claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
   );
 
-  const calculateTheUpdateType=(type)=>{
-    if(String(type) === "1")
-     return "updateClaimDetails";
-    else if(String(type) === "2")
-     return "updateVehicleDetails";
-     else if(String(type) === "3")
-     return "updateDriverDetails";
+  const calculateTheUpdateType = (type) => {
+    if (String(type) === "1") return "updateClaimDetails";
+    else if (String(type) === "2") return "updateVehicleDetails";
+    else if (String(type) === "3") return "updateDriverDetails";
     return "updategarageDetails";
-  }
+  };
 
-  const [isClaimLoading,setIsClaimLoading]=useState(false)
+  const [isClaimLoading, setIsClaimLoading] = useState(false);
 
-  const onSaveHandler = (APItype,func,func2) => {
-
+  const onSaveHandler = (APItype, func, func2) => {
     const type = calculateTheUpdateType(APItype);
 
     console.log(insuranceCompanyNameAddress);
@@ -639,17 +634,19 @@ const Index = ({}) => {
           Authorization: `Bearer ${userInfo[0].Token}`,
           "Content-Type": "application/json",
         },
-        params:{
-          type:type
-        }
+        params: {
+          type: type,
+        },
       })
       .then((res) => {
-        toast.success("Successfully fetched!");
-        alert("Successfully Updated the Information !!");
+        // toast.loading();
+        toast.success("Successfully Updated the Information !!");
+        // alert("Successfully Updated the Information !!");
       })
       .catch((err) => {
         console.log(err);
-        alert("Caught into Error ! Try Again.");
+        toast.error("Caught into Error ! Try Again.");
+        // alert("Caught into Error ! Try Again.");
       });
     if (func) {
       func(false);
@@ -670,12 +667,13 @@ const Index = ({}) => {
       .then((res) => {
         console.log(res.data.data);
         setClaim(res.data.data);
+        // toast.success("Successfully Fetched !!")
       })
       .catch((err) => {
         toast.error(err);
       });
 
-      setClaim([]);
+    setClaim([]);
     func(false);
     func2(false);
   };
@@ -705,7 +703,7 @@ const Index = ({}) => {
 
   const [isStatusModal, setIsStatusModal] = useState(false);
 
-  const [isLoading,setIsLoading]=useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleStatusUpdateHandler = () => {};
 
@@ -718,137 +716,137 @@ const Index = ({}) => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    if(!userInfo){
-      router.push("/login")
-    }
-    else{
-    axios
-      .get("/api/getSpecificClaim", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          LeadId: leadId,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        setClaim(res.data.data);
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
-
-    axios
-      .get("/api/getDocumentList", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          leadId: leadId,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        const tempList = res.data.data;
-        let requiredVideos = [];
-        tempList.map((list, index) => {
-          if (
-            list.Attribute1.toLowerCase().includes(".mp4") ||
-            list.Attribute1.toLowerCase().includes(".mp3")
-          ) {
-            requiredVideos.push({
-              name: list.Attribute1,
-              url: list.Photo1,
-            });
-          }
-          if (
-            list.Attribute2.toLowerCase().includes(".mp4") ||
-            list.Attribute2.toLowerCase().includes(".mp3")
-          ) {
-            requiredVideos.push({
-              name: list.Attribute2,
-              url: list.Photo2,
-            });
-          }
-          if (
-            list.Attribute3.toLowerCase().includes(".mp4") ||
-            list.Attribute3.toLowerCase().includes(".mp3")
-          ) {
-            requiredVideos.push({
-              name: list.Attribute3,
-              url: list.Photo3,
-            });
-          }
-          if (
-            list.Attribute4.toLowerCase().includes(".mp4") ||
-            list.Attribute4.toLowerCase().includes(".mp3")
-          ) {
-            requiredVideos.push({
-              name: list.Attribute4,
-              url: list.Photo4,
-            });
-          }
-          if (
-            list.Attribute5.toLowerCase().includes(".mp4") ||
-            list.Attribute5.toLowerCase().includes(".mp3")
-          ) {
-            requiredVideos.push({
-              name: list.Attribute5,
-              url: list.Photo5,
-            });
-          }
-          if (
-            list.Attribute6.toLowerCase().includes(".mp4") ||
-            list.Attribute6.toLowerCase().includes(".mp3")
-          ) {
-            requiredVideos.push({
-              name: list.Attribute6,
-              url: list.Photo6,
-            });
-          }
+    if (!userInfo) {
+      router.push("/login");
+    } else {
+      axios
+        .get("/api/getSpecificClaim", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            LeadId: leadId,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.data);
+          setClaim(res.data.data);
+        })
+        .catch((err) => {
+          toast.error(err);
         });
-        setVideosList(requiredVideos);
-        setDocuments(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
-    axios
-      .get("/api/getStatus", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          leadId: leadId,
-        },
-      })
-      .then((res) => {
-        const temp = res.data.data;
-        let selectiveStat = [];
-        temp.map((stat, index) => {
-          if (String(stat.LeadId) === String(leadId)) {
-            selectiveStat.push(stat);
-          }
+      axios
+        .get("/api/getDocumentList", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            leadId: leadId,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.data);
+          const tempList = res.data.data;
+          let requiredVideos = [];
+          tempList.map((list, index) => {
+            if (
+              list.Attribute1.toLowerCase().includes(".mp4") ||
+              list.Attribute1.toLowerCase().includes(".mp3")
+            ) {
+              requiredVideos.push({
+                name: list.Attribute1,
+                url: list.Photo1,
+              });
+            }
+            if (
+              list.Attribute2.toLowerCase().includes(".mp4") ||
+              list.Attribute2.toLowerCase().includes(".mp3")
+            ) {
+              requiredVideos.push({
+                name: list.Attribute2,
+                url: list.Photo2,
+              });
+            }
+            if (
+              list.Attribute3.toLowerCase().includes(".mp4") ||
+              list.Attribute3.toLowerCase().includes(".mp3")
+            ) {
+              requiredVideos.push({
+                name: list.Attribute3,
+                url: list.Photo3,
+              });
+            }
+            if (
+              list.Attribute4.toLowerCase().includes(".mp4") ||
+              list.Attribute4.toLowerCase().includes(".mp3")
+            ) {
+              requiredVideos.push({
+                name: list.Attribute4,
+                url: list.Photo4,
+              });
+            }
+            if (
+              list.Attribute5.toLowerCase().includes(".mp4") ||
+              list.Attribute5.toLowerCase().includes(".mp3")
+            ) {
+              requiredVideos.push({
+                name: list.Attribute5,
+                url: list.Photo5,
+              });
+            }
+            if (
+              list.Attribute6.toLowerCase().includes(".mp4") ||
+              list.Attribute6.toLowerCase().includes(".mp3")
+            ) {
+              requiredVideos.push({
+                name: list.Attribute6,
+                url: list.Photo6,
+              });
+            }
+          });
+          setVideosList(requiredVideos);
+          setDocuments(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setStatus(selectiveStat);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+      axios
+        .get("/api/getStatus", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            leadId: leadId,
+          },
+        })
+        .then((res) => {
+          const temp = res.data.data;
+          let selectiveStat = [];
+          temp.map((stat, index) => {
+            if (String(stat.LeadId) === String(leadId)) {
+              selectiveStat.push(stat);
+            }
+          });
+          setStatus(selectiveStat);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-     
   }, [leadId]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsLoading(false);
-  },[claim]);
+  }, [claim]);
+
   return (
     <>
+      <Toaster />
       {/* <!-- Main Header Nav --> */}
       <Header region={claim ? claim?.claimDetails?.ClaimRegion : "N.A."} />
 
@@ -908,9 +906,9 @@ const Index = ({}) => {
                 </div> */}
                 {/* End .col */}
 
-                { isLoading ?
-                  <Loader/>
-                  :claim.claimDetails?.InsuredName ? (
+                {isLoading ? (
+                  <Loader />
+                ) : claim.claimDetails?.InsuredName ? (
                   <div className="row">
                     <div
                       className="smartTable-noDataFound col-12"
@@ -938,30 +936,36 @@ const Index = ({}) => {
                                   <button
                                     className="btn-thm m-1"
                                     style={{}}
-                                    onClick={() =>{
-                                      setIsClaimLoading(true)
-                                      onSaveHandler(1,setEditCase,setIsClaimLoading)
+                                    onClick={() => {
+                                      setIsClaimLoading(true);
+                                      onSaveHandler(
+                                        1,
+                                        setEditCase,
+                                        setIsClaimLoading
+                                      );
                                     }}
                                   >
                                     Save
                                   </button>
                                   <button
-                                    onClick={()=>setEditCase(false)}
+                                    onClick={() => setEditCase(false)}
                                     className="btn-thm flaticon-close"
                                     style={{ fontSize: "14px" }}
                                   ></button>
                                 </div>
                               ) : (
-                                 claim?.claimDetails?.PolicyNumber && <button
-                                  className="col-lg-1 btn-thm m-1"
-                                  style={{}}
-                                  onClick={() => editHandler(1)}
-                                >
-                                  <span
-                                    className="flaticon-edit"
-                                    style={{ fontSize: "14px" }}
-                                  ></span>
-                                </button>
+                                claim?.claimDetails?.PolicyNumber && (
+                                  <button
+                                    className="col-lg-1 btn-thm m-1"
+                                    style={{}}
+                                    onClick={() => editHandler(1)}
+                                  >
+                                    <span
+                                      className="flaticon-edit"
+                                      style={{ fontSize: "14px" }}
+                                    ></span>
+                                  </button>
+                                )
                               )}
                             </div>
                           </div>
@@ -975,56 +979,58 @@ const Index = ({}) => {
                               marginBottom: "5px",
                             }}
                           ></div>
-                          {isClaimLoading ? 
-                            <Loader/>
-                            
-                            :(!editCase ? (
+                          {isClaimLoading ? (
+                            <Loader />
+                          ) : !editCase ? (
                             <div className="col-lg-12">
                               <CreateList_02
                                 claim={claim}
                                 InsuredName={InsuredName}
-                               
                                 inspectionType={inspectionType}
-                              setInspectionType={setInspectionType}
-                              setInsuredName={setInsuredName}
-                              InsuredMailAddress={InsuredMailAddress}
-                              setInsuredMailAddress={setInsuredMailAddress}
-                              InsuredMobileNo1={InsuredMobileNo1}
-                              setInsuredMobileNo1={setInsuredMobileNo1}
-                              InsuredMobileNo2={InsuredMobileNo2}
-                              setInsuredMobileNo2={setInsuredMobileNo2}
-                              requestTypeTypes={requestTypeTypes}
-                              subTypeTypes={subTypeTypes}
-                              setRequestType={setInspectionType}
-                              requestType={inspectionType}
-                              setSubType={setSubType}
-                              subType={subType}
-                              ClaimNumber={ClaimNumber}
-                              setClaimNumber={setClaimNumber}
-                              edit={editCase}
-                              setIsStatusModal={setIsStatusModal}
-                              policyIssuingOffice={policyIssuingOffice}
-                              setPolicyIssuingOffice={setPolicyIssuingOffice}
-                              claimRegion={claimRegion}
-                              setClaimRegion={setClaimRegion}
-                              claimServicingOffice={claimServicingOffice}
-                              setClaimServicingOffice={setClaimServicingOffice}
-                              policyStartDate={policyStartDate}
-                              setPolicyStartDate={setPolicyStartDate}
-                              policyEndDate={policyEndDate}
-                              setPolicyEndDate={setPolicyEndDate}
-                              insuranceCompanyNameAddress={
-                                insuranceCompanyNameAddress
-                              }
-                              setInsuranceCompanyNameAddress={
-                                setInsuranceCompanyNameAddress
-                              }
-                              insuredAddedBy={insuredAddedBy}
-                              setInsuredAddedBy={setInsuredAddedBy}
-                              VehicleRegisteredNumber={VehicleRegisteredNumber}
-                              setVehicleRegisteredNumber={
-                                setVehicleRegisteredNumber
-                              }
+                                setInspectionType={setInspectionType}
+                                setInsuredName={setInsuredName}
+                                InsuredMailAddress={InsuredMailAddress}
+                                setInsuredMailAddress={setInsuredMailAddress}
+                                InsuredMobileNo1={InsuredMobileNo1}
+                                setInsuredMobileNo1={setInsuredMobileNo1}
+                                InsuredMobileNo2={InsuredMobileNo2}
+                                setInsuredMobileNo2={setInsuredMobileNo2}
+                                requestTypeTypes={requestTypeTypes}
+                                subTypeTypes={subTypeTypes}
+                                setRequestType={setInspectionType}
+                                requestType={inspectionType}
+                                setSubType={setSubType}
+                                subType={subType}
+                                ClaimNumber={ClaimNumber}
+                                setClaimNumber={setClaimNumber}
+                                edit={editCase}
+                                setIsStatusModal={setIsStatusModal}
+                                policyIssuingOffice={policyIssuingOffice}
+                                setPolicyIssuingOffice={setPolicyIssuingOffice}
+                                claimRegion={claimRegion}
+                                setClaimRegion={setClaimRegion}
+                                claimServicingOffice={claimServicingOffice}
+                                setClaimServicingOffice={
+                                  setClaimServicingOffice
+                                }
+                                policyStartDate={policyStartDate}
+                                setPolicyStartDate={setPolicyStartDate}
+                                policyEndDate={policyEndDate}
+                                setPolicyEndDate={setPolicyEndDate}
+                                insuranceCompanyNameAddress={
+                                  insuranceCompanyNameAddress
+                                }
+                                setInsuranceCompanyNameAddress={
+                                  setInsuranceCompanyNameAddress
+                                }
+                                insuredAddedBy={insuredAddedBy}
+                                setInsuredAddedBy={setInsuredAddedBy}
+                                VehicleRegisteredNumber={
+                                  VehicleRegisteredNumber
+                                }
+                                setVehicleRegisteredNumber={
+                                  setVehicleRegisteredNumber
+                                }
                               />
                             </div>
                           ) : (
@@ -1072,7 +1078,7 @@ const Index = ({}) => {
                               setVehicleRegisteredNumber={
                                 setVehicleRegisteredNumber
                               }
-                            />)
+                            />
                           )}
                         </div>
                         <div

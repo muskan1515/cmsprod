@@ -1,8 +1,9 @@
 import axios from "axios";
-import toast from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect } from "react";
+import { useState } from "react";
 const CreateList = ({
   claim,
   InsuredName,
@@ -47,7 +48,6 @@ const CreateList = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-  
 
   console.log("policyStartDate", policyStartDate);
 
@@ -104,20 +104,21 @@ const CreateList = ({
 
   const getNextYear = () => {
     // if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
-      const oneYearLater = new Date(policyStartDate);
-      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-      oneYearLater.setMonth(oneYearLater.getMonth());
-      oneYearLater.setDate(oneYearLater.getDate() - 1);
+    const oneYearLater = new Date(policyStartDate);
+    oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+    oneYearLater.setMonth(oneYearLater.getMonth());
+    oneYearLater.setDate(oneYearLater.getDate() - 1);
 
-      return oneYearLater;
+    return oneYearLater;
     // }
-   
   };
 
-  useEffect(()=>{
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [phoneNumber_01, setPhoneNumber_01] = useState(null);
 
+  useEffect(() => {
     setPolicyEndDate(getNextYear());
-  },[policyStartDate]);
+  }, [policyStartDate]);
 
   useEffect(() => {
     // Update policyStartEnd when policyStartDate changes
@@ -140,8 +141,6 @@ const CreateList = ({
     }
   }, [policyStartDate]);
 
-
-
   const checkStatus = (val) => {
     let status = "";
     statusOptions.map((stat, index) => {
@@ -149,7 +148,6 @@ const CreateList = ({
     });
     return status;
   };
-
 
   const sendMailHandler = (vehicleNo, PolicyNo, Insured, mailAddress) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -183,8 +181,39 @@ const CreateList = ({
   const openStatusUpdateHandler = () => {
     setIsStatusModal(true);
   };
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+
+    // Allow only numeric input
+    const numericValue = inputValue.replace(/\D/g, "");
+
+    // Restrict to 10 digits
+    const truncatedValue = numericValue.slice(0, 10);
+    if (truncatedValue.length === 10) {
+      setInsuredMobileNo1(truncatedValue);
+    }
+
+    setPhoneNumber(truncatedValue);
+  };
+
+  const handleInputChange_01 = (e) => {
+    const inputValue = e.target.value;
+
+    // Allow only numeric input
+    const numericValue = inputValue.replace(/\D/g, "");
+
+    // Restrict to 10 digits
+    const truncatedValue = numericValue.slice(0, 10);
+    if (truncatedValue.length === 10) {
+      setInsuredMobileNo2(truncatedValue);
+    }
+
+    setPhoneNumber_01(truncatedValue);
+  };
   return (
     <>
+      <Toaster />
       <div className="row">
         <div className="col-lg-6">
           <div className="row mt-1">
@@ -253,8 +282,8 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredMobileNo1}
-                onChange={(e) => setInsuredMobileNo1(e.target.value)}
+                value={phoneNumber}
+                onChange={handleInputChange}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
@@ -294,8 +323,8 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={InsuredMobileNo2}
-                onChange={(e) => setInsuredMobileNo2(e.target.value)}
+                value={phoneNumber_01}
+                onChange={handleInputChange_01}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
@@ -339,7 +368,8 @@ const CreateList = ({
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
-              {!claim.claimDetails?.IsMailSent  && claim?.insuredDetails?.InsuredMailAddress !== "null" && (
+              {!claim.claimDetails?.IsMailSent &&
+                claim?.insuredDetails?.InsuredMailAddress !== "null" && (
                   <button
                     onClick={() =>
                       sendMailHandler(
@@ -531,17 +561,16 @@ const CreateList = ({
               // placeholder="Enter Registration No."
             />*/}
 
-            <DatePicker
-            className="form-control"
-            id="propertyTitle"
-            selected={
-              policyStartDate !== null &&
-              !isNaN(new Date(policyStartDate))
-                ? new Date(policyStartDate)
-                : null
-            }
-            onChange={(date) => setPolicyStartDate(date)}
-          />
+              <DatePicker
+                className="form-control"
+                id="propertyTitle"
+                selected={
+                  policyStartDate !== null && !isNaN(new Date(policyStartDate))
+                    ? new Date(policyStartDate)
+                    : null
+                }
+                onChange={(date) => setPolicyStartDate(date)}
+              />
               {/* <MyDatePicker
                 selectedDate={
                   policyStartDate && !isNaN(new Date(policyStartDate))
@@ -588,16 +617,15 @@ const CreateList = ({
                 value={getNextYear()}
               /> */}
               <DatePicker
-              className="form-control"
-              id="propertyTitle"
-              selected={
-                policyEndDate !== null &&
-                !isNaN(new Date(policyEndDate))
-                  ? new Date(policyEndDate)
-                  : null
-              }
-              onChange={(date) => setPolicyEndDate(date)}
-            />
+                className="form-control"
+                id="propertyTitle"
+                selected={
+                  policyEndDate !== null && !isNaN(new Date(policyEndDate))
+                    ? new Date(policyEndDate)
+                    : null
+                }
+                onChange={(date) => setPolicyEndDate(date)}
+              />
             </div>
           </div>
         </div>

@@ -8,9 +8,23 @@ import BreadCrumbBanner from "./BreadCrumbBanner";
 import Form from "./Form";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const Index = () => {
+  const [modalIsOpenError, setModalIsOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const router = useRouter();
+
+  const closeErrorModal = () => {
+    setModalIsOpenError(false);
+    location.reload(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    router.push("/");
+  };
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userInfo"));
@@ -51,12 +65,74 @@ const Index = () => {
             </div>
             <div className="col-sm-12 col-lg-6">
               <div className="login_form  inner_page">
-                <Form />
+                <Form
+                  setModalIsOpen={setModalIsOpen}
+                  setModalIsOpenError={setModalIsOpenError}
+                  setErrorMessage={setErrorMessage}
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {modalIsOpen && (
+        <div className="modal">
+          <div
+            className="modal-content"
+            style={{ borderColor: "green", width: "20%" }}
+          >
+            <h3 className="text-center" style={{ color: "green" }}>
+              Success
+            </h3>
+            <div style={{ borderWidth: "2px", borderColor: "green" }}>
+              <br />
+            </div>
+            <h5 className="text-center">Successfully logged in</h5>
+            <div
+              className="text-center"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <button
+                className="btn w-35 btn-white"
+                onClick={() => closeModal()}
+                style={{ borderColor: "green", color: "green" }}
+              >
+                Ok
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {modalIsOpenError && (
+        <div className="modal">
+          <div
+            className="modal-content"
+            style={{ borderColor: "#2e008b", width: "20%" }}
+          >
+            <h4 className="text-center mb-1" style={{ color: "red" }}>
+              Error
+            </h4>
+            <div style={{ borderWidth: "2px", borderColor: "red" }}>
+              <br />
+            </div>
+            <h5 className="text-center mb-3">{errorMessage}</h5>
+            <div
+              className="text-center"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <button
+                className="btn w-35 btn-color"
+                onClick={() => closeErrorModal()}
+                style={{}}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* <!-- Our Footer --> */}
       {/* <section className="footer_one">

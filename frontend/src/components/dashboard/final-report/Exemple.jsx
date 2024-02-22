@@ -1090,7 +1090,7 @@ export default function Exemple_01({
               // </select>
               <input
                 className="form-control form-control-table"
-                type="number"
+                type="text"
                 value={row.description}
                 disabled={!edit}
                 onChange={(e) =>
@@ -1131,7 +1131,7 @@ export default function Exemple_01({
             hsh_code: (
               <input
                 className="form-control form-control-table"
-                type="number"
+                type="text"
                 value={row.sac}
                 onChange={(e) => handleChange(index, e.target.value, "sac")}
                 required

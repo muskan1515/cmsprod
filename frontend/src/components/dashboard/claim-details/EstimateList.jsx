@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Exemple from "./Exemple_01";
 import Image from "next/image";
+import EstimateList_01 from "./EstimateList_01";
 // import toast from "react-hot-toast";
 
 const EstimateList = ({ edit, onSaveHandler }) => {
@@ -96,7 +97,80 @@ const EstimateList = ({ edit, onSaveHandler }) => {
                 </div>
 
                 {editCase_10 ? (
-                  <div className="row"></div>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Garage ID
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Amount
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="row mt-1 mb-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              color: "#1560bd",
+                              fontWeight: "",
+                            }}
+                          >
+                            Garage
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <div className="row">
                     <div className="col-lg-4 text-start mb-2">

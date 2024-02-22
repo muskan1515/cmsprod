@@ -11,8 +11,7 @@ const headCells = [
     label: "File Name",
     width: 100,
   },
-  
-  
+
   {
     id: "file",
     numeric: false,
@@ -93,7 +92,7 @@ const data = [
     serial_num: "1",
     doc_name: "Driving licence",
     date: "2021-09-17 19:10:50",
-    status:"verified",
+    status: "verified",
     verify: (
       <input
         className="form-check-input"
@@ -331,99 +330,102 @@ const data = [
   },
 ];
 
-export default function Exemple({leadId}) {
+export default function Exemple({ leadId }) {
+  const [allDocs, setAllDocs] = useState([]);
 
-  const [allDocs,setAllDocs]=useState([]);
+  const [change, setChange] = useState(false);
 
-  const [change,setChange]=useState(false);
+  const [uploadedData, setUploadedData] = useState([]);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  const [uploadedData,setUploadedData]=useState([]);
-  useEffect(()=>{
+    axios
+      .get("/api/getAllUploadByLeadId", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          leadId: leadId,
+        },
+      })
+      .then((res) => {
+        setAllDocs(res.data.data.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-
-    axios.get("/api/getAllUploadByLeadId",{
-      headers:{
-        Authorization:`Bearer ${userInfo[0].Token}`,
-        "Content-Type":"application/json"
-      },
-      params:{
-        leadId:leadId
-      }
-    })
-    .then((res)=>{
-      setAllDocs(res.data.data.results);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
-  },[]);
-
-  const verifyReport = (reportId)=>{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+  const verifyReport = (reportId) => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     const payload = {
-      reportId:reportId,
-      userName:userInfo[0].Username
+      reportId: reportId,
+      userName: userInfo[0].Username,
     };
-    axios.post("/api/verifyReportUpload",payload,
-    {
-      headers:{
-      Authorization:`Bearer ${userInfo[0].Token}`,
-      "Content-Type":"application/json"
-      }
-    }).then((res)=>{
-      alert("Successfully updated!");
-      setChange(true);
-    })
-    .catch((err)=>{
-      alert("Try Again!");
-    })
-  }
-
-  
+    axios
+      .post("/api/verifyReportUpload", payload, {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        alert("Successfully updated!");
+        setChange(true);
+      })
+      .catch((err) => {
+        alert("Try Again!");
+      });
+  };
 
   useEffect(() => {
     const getData = () => {
       const tempData = [];
       allDocs.map((row, index) => {
-
         console.log(row);
-          const updatedRow = {
-            doc_name: row.ReportType ? row.ReportType : "Driving Licence",
-            file: 
-                  <a 
-                          href={row?.FilePath}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title="View"
-                        >
-                        {row.FileName !=="" ? row.FileName : "Driving Licence"}
-                        </a>
-                      ,
-            UploadedBy: <h4>{row?.AddedDateTime}</h4>,
-            verified_by:(
-              !row?.IsVerified ? <span style={{color:"red"}}>Not Verified</span>: <span style={{color:"green"}}>{row?.VerifiedBy}</span>
-            ),
-            subject: (
-              row?.IsVerified ? "-": <button onClick={()=>verifyReport(row.ReportId)}>Verify</button>
-            ),
-          };
-          tempData.push(updatedRow);
-        
+        const updatedRow = {
+          doc_name: row.ReportType ? row.ReportType : "Driving Licence",
+          file: (
+            <a
+              href={row?.FilePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View"
+            >
+              {row.FileName !== "" ? row.FileName : "Driving Licence"}
+            </a>
+          ),
+          UploadedBy: <h4>{row?.AddedDateTime}</h4>,
+          verified_by: !row?.IsVerified ? (
+            <span style={{ color: "red" }}>Not Verified</span>
+          ) : (
+            <span style={{ color: "green" }}>{row?.VerifiedBy}</span>
+          ),
+          subject: row?.IsVerified ? (
+            "-"
+          ) : (
+            <button onClick={() => verifyReport(row.ReportId)}>Verify</button>
+          ),
+        };
+        tempData.push(updatedRow);
       });
       return tempData;
     };
 
     setChange(false);
-    const temp =getData();
+    const temp = getData();
     setUploadedData(temp);
-  }, [allDocs,change]);
-
+  }, [allDocs, change]);
 
   console.log(uploadedData);
 
   return (
-    <SmartTable title="Survey Upload Report" data={uploadedData} headCells={headCells} />
+    <SmartTable
+      title="Survey Upload Report"
+      data={uploadedData}
+      headCells={headCells}
+    />
   );
 }

@@ -5,10 +5,12 @@ import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import toast, { Toaster } from "react-hot-toast";
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [phoneNumber_01, setPhoneNumber_01] = useState(null);
+  const [phoneNumber_02, setPhoneNumber_02] = useState(null);
   // const [garageMailAddress,setGarageMailAddress]=useState();
   const router = useRouter();
   //Date
@@ -94,7 +96,7 @@ const CreateList = () => {
       SurveyType: surveyType ? surveyType : "Motor",
       ReferenceNo: generateRegion(region),
       PolicyIssuingOffice: policyIssuingOffice,
-      PolicyNumber: policyNumber ,
+      PolicyNumber: policyNumber,
       PolicyPeriodStart: policyStartDate,
       PolicyPeriodEnd: policyStartEnd,
       ClaimServicingOffice: claimSurvicingOffice,
@@ -134,7 +136,8 @@ const CreateList = () => {
           },
         })
         .then((res) => {
-          alert("Successfully added");
+          toast.success("Successfully added");
+          // alert("Successfully added");
           router.push("/my-dashboard");
         })
         .catch((err) => {
@@ -172,8 +175,24 @@ const CreateList = () => {
 
     setPhoneNumber(truncatedValue);
   };
+
+  const handleInputChange_02 = (e) => {
+    const inputValue = e.target.value;
+
+    // Allow only numeric input
+    const numericValue = inputValue.replace(/\D/g, "");
+
+    // Restrict to 10 digits
+    const truncatedValue = numericValue.slice(0, 10);
+    if (truncatedValue.length === 10) {
+      setGarageNumber(truncatedValue);
+    }
+
+    setPhoneNumber_02(truncatedValue);
+  };
   return (
     <>
+      <Toaster />
       <div className="row">
         <div className="col-lg-4">
           <div className="row mt-1 mb-1">
@@ -211,49 +230,6 @@ const CreateList = () => {
           </div>
         </div>
 
-        {/* <div className="col-lg-4">
-          <div className="row mt-1">
-            <div className="col-lg-5 my_profile_setting_input form-group">
-              <label
-                
-                className="text-color"
-                style={{
-                  // paddingTop: "15px",
-                  color: "#2e008b",
-                  fontWeight: "",
-                  // marginTop: "-13px",
-                }}
-              >
-                Survey Type 
-              </label>
-            </div>
-            <div className="col-lg-7">
-              <select
-                className="selectpicker form-select"
-                data-live-search="true"
-                data-width="100%"
-                value={surveyType}
-                onChange={(e) => setSurveyType(e.target.value)}
-              >
-                <option data-tokens="Status1" value={""}>
-                  Select Type
-                </option>
-                <option data-tokens="Status1" value={"Motor"}>
-                  Motor
-                </option>
-                <option data-tokens="Status2" value={"Non-Motor"}>
-                  Non-Motor
-                </option>
-                <option data-tokens="Status3" value={"Motor-2W"}>
-                  Motor-2W
-                </option>
-                <option data-tokens="Status3" value={"Motor-4W"}>
-                  Motor-4W
-                </option>
-              </select>
-            </div>
-          </div>
-        </div> */}
         <div className="col-lg-4">
           <div className="row mt-1">
             <div className="col-lg-5 my_profile_setting_input form-group">
@@ -271,7 +247,7 @@ const CreateList = () => {
             </div>
             <div className="col-lg-7">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="broker_mail_id"
                 value={brokerMailId}
@@ -304,13 +280,13 @@ const CreateList = () => {
                 value={inspectionType}
                 onChange={(e) => setInspectionType(e.target.value)}
               >
-              <option data-tokens="Status2" value={"Final"}>
-                Final
-              </option>
+                <option data-tokens="Status2" value={"Final"}>
+                  Final
+                </option>
                 <option data-tokens="Status1" value={"spot"}>
                   Spot
                 </option>
-               
+
                 <option data-tokens="Status3" value={"re-inspection"}>
                   Pre-inspection
                 </option>
@@ -467,8 +443,7 @@ const CreateList = () => {
                 className="form-control"
                 id="propertyTitle"
                 selected={
-                  policyStartEnd !== null &&
-                  !isNaN(new Date(policyStartEnd))
+                  policyStartEnd !== null && !isNaN(new Date(policyStartEnd))
                     ? new Date(policyStartEnd)
                     : null
                 }
@@ -784,7 +759,7 @@ const CreateList = () => {
             </div>
             <div className="col-lg-7">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="garageMailId"
                 value={garageMailId}

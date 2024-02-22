@@ -20,7 +20,7 @@ const CreateList_02 = ({
   policyEndDate,
   insuranceCompanyNameAddress,
   insuredAddedBy,
-  VehicleRegisteredNumber
+  VehicleRegisteredNumber,
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -181,10 +181,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {InsuredMailAddress
-                          }
-                        {InsuredMailAddress
-                          }
+                        {InsuredMailAddress}
                       </label>
                     </div>
                   </div>
@@ -463,6 +460,38 @@ const CreateList_02 = ({
                       >
                         {claimServicingOffice}
                         {claimServicingOffice}
+                      </label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Phone -2
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {InsuredMobileNo2}
                       </label>
                     </div>
                   </div>
