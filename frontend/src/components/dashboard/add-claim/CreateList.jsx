@@ -43,19 +43,22 @@ const CreateList = () => {
 
   const [BrokerMailAddress, setBrokerMailAddress] = useState(null);
 
-  useEffect(() => {
-    // Update policyStartEnd when policyStartDate changes
+  const getNextYear = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
       const oneYearLater = new Date(policyStartDate);
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
+      console.log(oneYearLater);
+      return oneYearLater;
 
-      const formattedOneYearLater = oneYearLater.toLocaleDateString("en-US");
-      console.log("policyStartDate", policyStartDate);
-      console.log("formattedOneYearLater", formattedOneYearLater);
-
-      setPolicyStartEnd(formattedOneYearLater);
     }
+    return "";
+  };
+
+  useEffect(() => {
+    
+    setPolicyStartEnd(getNextYear(policyStartDate));
   }, [policyStartDate]);
 
   const generateRegion = (region) => {
@@ -123,11 +126,12 @@ const CreateList = () => {
     };
 
     if (!payload.PolicyNumber) {
-      alert("Policy Number should be filled!!");
+      toast.error("Policy Number should be filled!!");
     }
     if (!region) {
-      alert("Region should be filled!!");
+      toast.error("Region should be filled!!");
     } else {
+      toast.loading("Adding claim!!");
       axios
         .post("/api/addClaim", payload, {
           headers: {
@@ -136,12 +140,14 @@ const CreateList = () => {
           },
         })
         .then((res) => {
+          toast.dismiss();
           toast.success("Successfully added");
           // alert("Successfully added");
           router.push("/my-dashboard");
         })
         .catch((err) => {
-          alert("Error");
+          toast.dismiss();
+          toast.error("Got error while adding claim!");
         });
     }
   };
@@ -397,14 +403,17 @@ const CreateList = () => {
             </div>
             <div className="col-lg-7">
               {/* <MyDatePicker /> */}
-              <MyDatePicker
-                type="date"
-                className="form-control"
-                id="propertyTitle"
-                selectedDate={policyStartDate}
-                setSelectedDate={setPolicyStartDate}
-                // placeholder="Enter Registration No."
-              />
+              <input
+                      type="date"
+                      value={
+                        policyStartDate && policyStartDate !== "null"
+                          ? policyStartDate.substring(0, 10)
+                          : ""
+                      }
+                      onChange={(e) => setPolicyStartDate(e.target.value)}
+                    />
+             
+              
             </div>
           </div>
         </div>
@@ -425,7 +434,6 @@ const CreateList = () => {
               </label>
             </div>
             <div className="col-lg-7">
-              {console.log("policyStartEnd", policyStartEnd)}
               {/* <MyDatePicker
                 type="date"
                 className="form-control"
@@ -439,16 +447,16 @@ const CreateList = () => {
                 }
                 // placeholder="Enter Registration No."
               /> */}
-              <DatePicker
-                className="form-control"
-                id="propertyTitle"
-                selected={
-                  policyStartEnd !== null && !isNaN(new Date(policyStartEnd))
-                    ? new Date(policyStartEnd)
-                    : null
-                }
-                onChange={(date) => setPolicyStartEnd(date)}
-              />
+              <MyDatePicker
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+              // selectedDate={policyStartEnd || ''}
+              setSelectedDate={setPolicyStartEnd}
+              selectedDate={policyStartEnd
+              }
+              // placeholder="Enter Registration No."
+            />
               {/* <MyDatePicker
                 value={policyStartEnd}
                 onChange={(e) => setPolicyStartEnd(e.target.value)}

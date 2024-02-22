@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
@@ -13,6 +13,7 @@ import {
 import MyDatePicker from "../../common/MyDatePicker";
 import getTime from "date-fns/getTime";
 import MyDatePickerTime from "../../common/MyDatePickerTime";
+import TimePicker from "../../common/TimePicker";
 
 const Servey = ({
   phoneNumber,
@@ -20,6 +21,8 @@ const Servey = ({
   applicantNumber,
   setApplicantNumber,
   DetailsOfLoads,
+  AccidentTime,
+  setAccidentTime,
   setDetailsOfLoads,
   CauseOfAccident,
   setCauseOfAccident,
@@ -247,6 +250,32 @@ const Servey = ({
   const handleCancelHandler = () => {
     setIsEditMode(false);
   };
+  function convertTimeFormat(inputTime) {
+    // Parse the input time string
+    const parsedTime = new Date("2000-01-01 " + inputTime);
+  
+    // Check if the parsed time is valid
+    if (isNaN(parsedTime)) {
+      console.error("Invalid time format");
+      return null;
+    }
+  
+    // Format the time in the desired format
+    const formattedTime = parsedTime.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+  
+    return formattedTime;
+  }
+  
+
+  useEffect(()=>{
+    console.log("Time",convertTimeFormat(formatTime(AccidentAddedDateTime)));
+    setAccidentTime(convertTimeFormat(formatTime(AccidentAddedDateTime)));
+
+  },[]);
 
   const editHandler = () => {
     setIsEditMode(true);
@@ -333,17 +362,17 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    readOnly={!isEditMode}
-                    value={
-                      AccidentAddedDateTime
-                        ? formatTime(AccidentAddedDateTime)
-                        : ""
-                    }
+                {!isEditMode ? 
+                  <input type="text"
+                  value={AccidentTime}
+                  readOnly={true}
                   />
+                :  
+                <TimePicker
+                  selectedTime={AccidentTime ? convertTimeFormat(AccidentTime) : ""}
+                  setSelectedTime={setAccidentTime}
+                  />
+                }
                 </div>
               </div>
             </div>
@@ -368,8 +397,8 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    readonly={!isEditMode}
-                    value={PlaceOfLoss}
+                    readOnly={!isEditMode}
+                    value={PlaceOfLoss ? PlaceOfLoss : ""}
                     onChange={(e) => setPlaceOfLoss(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -401,7 +430,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={Pin}
+                    value={Pin ? Pin : ""}
                     readOnly={!isEditMode}
                     onChange={(e) => setPin(e.target.value)}
                     // placeholder="Enter Registration No."
@@ -434,7 +463,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={PlaceOfSurvey}
+                    value={PlaceOfSurvey?PlaceOfSurvey:""}
                     readOnly={!isEditMode}
                     onChange={(e) => setPlaceOfSurvey(e.target.value)}
                     // placeholder="Enter Registration No."
@@ -495,14 +524,15 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                       id="propertyTitle"
                     />
                   ) : (
-                    <MyDatePicker
+                    <input
+                    type="date"
                       disable={!isEditMode}
-                      selectedDate={
+                      value={
                         SurveyAllotmentDate && SurveyAllotmentDate !== "null"
-                          ? new Date(SurveyAllotmentDate)
+                          ? (SurveyAllotmentDate).substring(0,10)
                           : ""
                       }
-                      setSelectedDate={setSurveyAllotmentDate}
+                      onChange={(e)=>setSurveyAllotmentDate(e.target.value)}
                     />
                   )}
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
@@ -563,27 +593,29 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
                 />*/}
-                {!isEditMode ? (
-                  <input
-                    readOnly={!isEditMode}
-                    type={"text"}
-                    value={
-                      SurveyConductedDate ? formatDate(SurveyConductedDate) : ""
-                    }
-                    className="form-control"
-                    id="propertyTitle"
-                  />
-                ) : (
-                  <MyDatePicker
-                    disable={!isEditMode}
-                    selectedDate={
-                      SurveyConductedDate && SurveyConductedDate !== "null"
-                        ? new Date(SurveyConductedDate)
-                        : ""
-                    }
-                    setSelectedDate={setSurveyConductedDate}
-                  />
-                )}
+                {!isEditMode ? (<input
+                      readOnly={!isEditMode}
+                      type={"text"}
+                      value={
+                        SurveyConductedDate
+                          ? formatDate(SurveyConductedDate)
+                          : ""
+                      }
+                      className="form-control"
+                      id="propertyTitle"
+                    />
+                  ) : (
+                    <input
+                    type="date"
+                      disable={!isEditMode}
+                      value={
+                        SurveyConductedDate && SurveyConductedDate !== "null"
+                          ? (SurveyConductedDate).substring(0,10)
+                          : ""
+                      }
+                      onChange={(e)=>setSurveyConductedDate(e.target.value)}
+                    />
+                  )}
               </div>
             </div>
             {/* <div className="my_profile_setting_input form-group">

@@ -190,11 +190,9 @@ const CreateList = ({
 
     // Restrict to 10 digits
     const truncatedValue = numericValue.slice(0, 10);
-    if (truncatedValue.length === 10) {
+    
       setInsuredMobileNo1(truncatedValue);
-    }
-
-    setPhoneNumber(truncatedValue);
+    
   };
 
   const handleInputChange_01 = (e) => {
@@ -205,11 +203,8 @@ const CreateList = ({
 
     // Restrict to 10 digits
     const truncatedValue = numericValue.slice(0, 10);
-    if (truncatedValue.length === 10) {
       setInsuredMobileNo2(truncatedValue);
-    }
-
-    setPhoneNumber_01(truncatedValue);
+   
   };
   return (
     <>
@@ -282,7 +277,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={phoneNumber}
+                value={InsuredMobileNo1}
                 onChange={handleInputChange}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
@@ -323,7 +318,7 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
-                value={phoneNumber_01}
+                value={InsuredMobileNo2}
                 onChange={handleInputChange_01}
                 disabled={!edit}
                 // placeholder="Enter Registration No."

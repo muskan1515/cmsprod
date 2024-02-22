@@ -173,7 +173,7 @@ const RCData = ({ vehicleDetails }) => {
           </button>
         </div> */}
 
-        <Dropdown>
+        {/*<Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-extract">
             Extract
           </Dropdown.Toggle>
@@ -187,7 +187,7 @@ const RCData = ({ vehicleDetails }) => {
               </button>
             </Dropdown.Item>
           </Dropdown.Menu>
-        </Dropdown>
+      </Dropdown>*/}
       </div>
       <div style={{ width: "30%", margin: "0 auto" }}>
         <table

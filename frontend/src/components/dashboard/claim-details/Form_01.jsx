@@ -11,6 +11,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";
+import toast from "react-hot-toast";
 // import toast from "react-hot-toast";
 
 const Form_01 = ({
@@ -93,6 +94,7 @@ const Form_01 = ({
 
       const dl_number = claim?.driverDetails?.LicenseNumber;
 
+      toast.loading("Fetching the driver details!!");
       axios
         .get("/api/getOnlineDriverData", {
           headers: {
@@ -105,10 +107,12 @@ const Form_01 = ({
           },
         })
         .then(() => {
-          alert("Successfully fetched!!");
+          toast.success("Successfully fetched!!");
+          toast.dismiss();
         })
         .catch((err) => {
-          alert("err", err);
+          toast.dismiss();
+          toast.error("Record Not found or Server Issue!!");
         });
     }
   };

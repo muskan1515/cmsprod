@@ -11,6 +11,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";
+import toast from "react-hot-toast";
 // import toast from "react-hot-toast";
 
 const Form = ({
@@ -235,6 +236,7 @@ const Form = ({
         router.push("/login");
       } else {
         try {
+          toast.loading("Fetching Vehicle Details!!");
           const response = axios
             .get("/api/getOnlineVehicleData", {
               headers: {
@@ -247,14 +249,16 @@ const Form = ({
               },
             })
             .then((res) => {
-              window.location.reload();
+              
               toast.success("Successfully fetched!");
+              toast.dismiss();
             })
             .catch((err) => {
-              alert("err", err);
+              toast.error("Record Not found or Server Error");
+              toast.dismiss();
             });
         } catch (error) {
-          console.log("Error from Fetch Details-> ", error);
+          toast.error("Record Not found or Server Error");
         }
       }
     }
@@ -1081,14 +1085,12 @@ const Form = ({
                             </div>
 
                         <div className="col-lg-7">
-                          <DatePicker
+                          <input 
+                          type="text"
                             className="form-control"
                             id="propertyTitle"
-                            selected={
-                              VehicleRegistedAt !== null &&
-                              !isNaN(new Date(VehicleRegistedAt))
-                                ? new Date(VehicleRegistedAt)
-                                : null
+                            value={
+                              VehicleRegistedAt ? VehicleRegistedAt : ""
                             }
                             onChange={(date) => setVehicleRegistedAt(date)}
                           />

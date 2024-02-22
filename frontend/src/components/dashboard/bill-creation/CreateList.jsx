@@ -27,7 +27,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const [currentSelectedInsprectiontype, setcurrentSelectedInsprectiontype] =
     useState(1);
 
-  const [FinalProfFees, setFinalProfFees] = useState("");
+  const [FinalProfFees, setFinalProfFees] = useState(0);
   const [FinalTotalKM, setFinalTotalKM] = useState("");
   const [FinalVisit, setFinalVisit] = useState("");
   const [FinalConveyance, setFinalConveyance] = useState("");
@@ -114,15 +114,23 @@ const CreateList = ({ allInfo, leadID }) => {
   };
 
   const calculateProfessionalFees=()=>{
+    let prof = 0;
     if(!allInfo?.VehicleOnlineDetails){
       return 0;
     }
-    if(allInfo?.VehicleOnlineDetails[0]?.SurveyType === "Motor-2W")
-     return 500;
-     if(allInfo?.VehicleOnlineDetails[0]?.SurveyType === "Motor-4W")
-     return 500;
-    return 0;
+    if(String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "2W")
+    setFinalProfFees(500)
+     if(String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "4W")
+     setFinalProfFees(700)
+
+     console.log(allInfo?.VehicleOnlineDetails?.VehicleType , FinalProfFees)
+   
   }
+
+  useEffect(()=>{
+    const fees = String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W" ? 700 : 500;
+    setFinalProfFees(fees)
+  },[allInfo])
 
   const generateRegion = (region) => {
     const firstThreeLetters = Branch?.slice(0, 3);
@@ -204,6 +212,10 @@ const CreateList = ({ allInfo, leadID }) => {
     setNetPay(total + calculate_cgst + calculate_igst + calculate_sgst);
     return total + calculate_cgst + calculate_igst + calculate_sgst;
   };
+
+  useEffect(()=>{
+    getTotalValue();
+  },[CGST,IGST,SGST]);
 
   const onSubmitHnadler = () => {
     const payload = {
@@ -809,7 +821,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={calculateProfessionalFees()}
+                  value={FinalProfFees}
                   
                 />
               </div>
@@ -1011,7 +1023,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   className="form-control"
                   id="broker_mail_id"
                  
-                  value={calculateProfessionalFees()}
+                  value={FinalProfFees}
                 />
               </div>
             </div>
@@ -1211,7 +1223,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={calculateProfessionalFees()}
+                  value={FinalProfFees}
                 />
               </div>
             </div>

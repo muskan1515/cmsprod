@@ -384,7 +384,7 @@ const Index = ({}) => {
     setInsuredName(claim?.insuredDetails?.InsuredName);
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
-    setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2);
+    setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo1);
     setSubType(claim?.claimDetails?.SurveyType);
     setInspectionType(claim?.claimDetails?.InspectionType);
     setVehicleModel(claim.vehicleDetails?.TypeOfBody);
@@ -628,6 +628,7 @@ const Index = ({}) => {
       token: userInfo[0].Token,
     };
 
+    toast.loading("Updating the information!");
     axios
       .put("/api/updateClaimDetails", payload, {
         headers: {
@@ -640,11 +641,12 @@ const Index = ({}) => {
       })
       .then((res) => {
         // toast.loading();
+        toast.dismiss();
         toast.success("Successfully Updated the Information !!");
         // alert("Successfully Updated the Information !!");
       })
       .catch((err) => {
-        console.log(err);
+        toast.dismiss();
         toast.error("Caught into Error ! Try Again.");
         // alert("Caught into Error ! Try Again.");
       });
@@ -653,6 +655,8 @@ const Index = ({}) => {
     } else {
       setEditCase((prop) => !prop);
     }
+    
+    setClaim([]);
 
     axios
       .get("/api/getSpecificClaim", {
@@ -673,7 +677,6 @@ const Index = ({}) => {
         toast.error(err);
       });
 
-    setClaim([]);
     func(false);
     func2(false);
   };

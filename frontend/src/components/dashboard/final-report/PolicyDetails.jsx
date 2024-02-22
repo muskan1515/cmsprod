@@ -14,6 +14,8 @@ const PolicyDetails = ({
   setIsStatusModal,
   setPolicyType,
   policyType,
+  VehicleUpto,
+  setVehicleUpto,
   TypeOfDate,
   setTypeOfDate,
   isEditMode,
@@ -284,7 +286,9 @@ const PolicyDetails = ({
       oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
       oneYearLater.setMonth(oneYearLater.getMonth());
       oneYearLater.setDate(oneYearLater.getDate() - 1);
-      return oneYearLater;
+      const formattedDate = oneYearLater.toISOString().split('T')[0];
+    console.log(formattedDate);
+      return formattedDate;
     }
     return "";
   };
@@ -759,7 +763,6 @@ const PolicyDetails = ({
                     </div>
 
                     <div className="col-lg-5">
-                      {console.log("Insurance From------>", PolicyPeriodStart)}
                       {!isEditMode ? (
                         <input
                           readOnly={!isEditMode}
@@ -877,8 +880,8 @@ const PolicyDetails = ({
                           disabled={!isEditMode}
                           value={
                             PolicyPeriodEnd && PolicyPeriodEnd !== "null"
-                            ? new Date(PolicyPeriodEnd)
-                            : ""
+                              ? (PolicyPeriodEnd).substring(0, 10)
+                              : ""
                           }
                           onChange={(e) => setPolicyPeriodEnd(e.target.value)}
                         />
@@ -1164,7 +1167,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleRegisteredNumber}
+                            value={VehicleRegisteredNumber?VehicleRegisteredNumber:""}
                             readOnly={!isEditMode}
                             onChange={(e) =>
                               setVehicleRegisteredNumber(e.target.value)
@@ -1198,7 +1201,7 @@ const PolicyDetails = ({
                             className="form-control"
                             id="propertyTitle"
                             readOnly={!isEditMode}
-                            value={RegisteredOwner}
+                            value={RegisteredOwner?RegisteredOwner:""}
                             onChange={(e) => setRegisteredOwner(e.target.value)}
 
                             // placeholder="Enter Registration No."
@@ -1301,7 +1304,7 @@ const PolicyDetails = ({
                             data-width="100%"
                             type={isEditMode ? "date" : "text"}
                             readOnly={!isEditMode}
-                            value={TypeOfDate}
+                            value={TypeOfDate?TypeOfDate:""}
                             onChange={(e) => setTypeOfDate(e.target.value)}
                           >
                             <option data-tokens="Status1">choose..</option>
@@ -1405,7 +1408,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleChassisNumber}
+                            value={VehicleChassisNumber?VehicleChassisNumber:""}
                             readOnly={!isEditMode}
                             onChange={(e) =>
                               setVehicleChassisNumber(e.target.value)
@@ -1465,7 +1468,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={EngineNumber}
+                            value={EngineNumber?EngineNumber:""}
                             readOnly={!isEditMode}
                             onChange={(e) => setEngineNumber(e.target.value)}
 
@@ -1519,7 +1522,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleMakeVariantModelColor}
+                            value={VehicleMakeVariantModelColor?VehicleMakeVariantModelColor:""}
                             readOnly={!isEditMode}
                             onChange={(e) =>
                               setVehicleMakeVariantModelColor(e.target.value)
@@ -1556,7 +1559,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleTypeOfBody}
+                            value={VehicleTypeOfBody?VehicleTypeOfBody:""}
                             readOnly={!isEditMode}
                             onChange={(e) =>
                               setVehicleTypeOfBody(e.target.value)
@@ -1589,7 +1592,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="color"
-                            value={VehicleColor}
+                            value={VehicleColor?VehicleColor:""}
                             readOnly={!isEditMode}
                             onChange={(e) => setVehicleColor(e.target.value)}
 
@@ -1623,7 +1626,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleCubicCapacity}
+                            value={VehicleCubicCapacity?VehicleCubicCapacity:""}
                             readOnly={!isEditMode}
                             onChange={(e) =>
                               setVehicleCubicCapacity(e.target.value)
@@ -1657,7 +1660,7 @@ const PolicyDetails = ({
                             className="form-control"
                             id="color"
                             // value={VehicleModel}
-                            value={AntiTheft}
+                            value={AntiTheft?AntiTheft:""}
                             onChange={(e) => setAntiTheft(e.target.value)}
                             readOnly={!isEditMode}
                             // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
@@ -1692,7 +1695,7 @@ const PolicyDetails = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={VehicleTypeOfBody}
+                            value={VehicleTypeOfBody?VehicleTypeOfBody:""}
                             readOnly={!isEditMode}
                             onChange={(e) =>
                               setVehicleTypeOfBody(e.target.value)
@@ -1722,12 +1725,12 @@ const PolicyDetails = ({
                         </div>
                         <div className="col-lg-9">
                           <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             id="color"
-                            // value={VehicleModel}
+                            value={VehicleUpto?VehicleUpto:""}
                             readOnly={!isEditMode}
-                            // onChange={(e) => setVehicleTypeOfBody(e.target.value)}
+                            onChange={(e) => setVehicleUpto(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -1851,7 +1854,7 @@ const PolicyDetails = ({
                           type="number"
                           className="form-control"
                           id="propertyTitle"
-                          value={RegLadenWt}
+                          value={RegLadenWt?RegLadenWt:""}
                           onChange={(e) => setRegLadenWt(e.target.value)}
                           // placeholder="Enter Registration No."
                         />
@@ -1883,7 +1886,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
-                          value={RemarkIfRLW}
+                          value={RemarkIfRLW?RemarkIfRLW:""}
                           onChange={(e) => setRemarkIfRLW(e.target.value)}
 
                           // placeholder="Enter Registration No."
@@ -1915,7 +1918,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
-                          value={UnladenWT}
+                          value={UnladenWT?UnladenWT:""}
                           onChange={(e) => setUnladenWT(e.target.value)}
 
                           // placeholder="Enter Registration No."
@@ -1948,7 +1951,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
-                          value={RemarkIfULW}
+                          value={RemarkIfULW?RemarkIfULW:""}
                           onChange={(e) => setRemarkIfULW(e.target.value)}
 
                           // placeholder="Enter Registration No."
@@ -1979,7 +1982,7 @@ const PolicyDetails = ({
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={VehicleSeatingCapacity}
+                          value={VehicleSeatingCapacity?VehicleSeatingCapacity:""}
                           readOnly={!isEditMode}
                           onChange={(e) =>
                             setVehicleSeatingCapacity(e.target.value)
@@ -2039,7 +2042,7 @@ const PolicyDetails = ({
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={VehicleClassOfVehicle}
+                          value={VehicleClassOfVehicle?VehicleClassOfVehicle:""}
                           readOnly={!isEditMode}
                           onChange={(e) =>
                             setVehicleClassOfVehicle(e.target.value)
@@ -2073,7 +2076,7 @@ const PolicyDetails = ({
                           type="text"
                           className="form-control"
                           id="propertyTitle"
-                          value={VehicleFuelType}
+                          value={VehicleFuelType?VehicleFuelType:""}
                           readOnly={!isEditMode}
                           onChange={(e) => setVehicleFuelType(e.target.value)}
 
@@ -2106,7 +2109,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
-                          value={VehicleOdometerReading}
+                          value={VehicleOdometerReading?VehicleOdometerReading:""}
                           onChange={(e) =>
                             setVehicleOdometerReading(e.target.value)
                           }
@@ -2140,7 +2143,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
-                          value={VehiclePreAccidentCondition}
+                          value={VehiclePreAccidentCondition?VehiclePreAccidentCondition:""}
                           onChange={(e) =>
                             setVehiclePreAccidentCondition(e.target.value)
                           }
@@ -2174,7 +2177,7 @@ const PolicyDetails = ({
                           className="form-control"
                           id="propertyTitle"
                           readOnly={!isEditMode}
-                          value={VehicleTaxParticulars}
+                          value={VehicleTaxParticulars?VehicleTaxParticulars:""}
                           onChange={(e) =>
                             setVehicleTaxParticulars(e.target.value)
                           }
@@ -2208,7 +2211,7 @@ const PolicyDetails = ({
                           className="selectpicker form-select"
                           data-live-search="true"
                           data-width="100%"
-                          value={VehicleRemark}
+                          value={VehicleRemark?VehicleRemark:""}
                           onChange={(e) => setVehicleRemark(e.target.value)}
                         >
                           <option data-tokens="Status1">
@@ -2688,7 +2691,7 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={FitnessCertificate}
+                        value={FitnessCertificate?FitnessCertificate:""}
                         onChange={(e) => setFitnessCertificate(e.target.value)}
 
                         // placeholder="Enter Registration No."
@@ -2859,11 +2862,11 @@ const PolicyDetails = ({
                     <div className="col-lg-7">
                       <input
                         style={{ marginLeft: "-10px" }}
-                        type="text"
+                        type="number"
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={PermitNo}
+                        value={PermitNo?PermitNo:""}
                         onChange={(e) => setPermitNo(e.target.value)}
 
                         // placeholder="Enter Registration No."
@@ -3023,7 +3026,7 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={TypeOfPermit}
+                        value={TypeOfPermit?TypeOfPermit:""}
                         onChange={(e) => setTypeOfPermit(e.target.value)}
                       />
                     </div>
@@ -3054,7 +3057,7 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={Authorization}
+                        value={Authorization?Authorization:""}
                         onChange={(e) => setAuthorization(e.target.value)}
                       />
                     </div>
@@ -3085,7 +3088,7 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={AreasOfoperation}
+                        value={AreasOfoperation?AreasOfoperation:""}
                         onChange={(e) => setAreasOfoperation(e.target.value)}
                       />
                     </div>
@@ -3115,7 +3118,7 @@ const PolicyDetails = ({
                         data-live-search="true"
                         data-width="100%"
                         readonly={!isEditMode}
-                        value={commercialRemark}
+                        value={commercialRemark?commercialRemark:""}
                         onChange={(e) => setcommercialRemark(e.target.value)}
                       >
                         <option data-tokens="Status1">

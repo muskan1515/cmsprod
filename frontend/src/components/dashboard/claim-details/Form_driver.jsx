@@ -140,7 +140,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DriverName}
+                      {claim?.driverDetails?.DriverName}
                     </label>
                   </div>
                 </td>
@@ -155,7 +155,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Added Date
+                      Status
                     </label>
                     <label
                       htmlFor=""
@@ -166,7 +166,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DriverAddedDate}
+                    {checkStatus(claim?.claimStatus?.Status)}
                     </label>
                   </div>
                 </td>
@@ -192,7 +192,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {Verification}
+                      {claim?.driverDetails?.TypeOfVerification}
                     </label>
                   </div>
                 </td>
@@ -219,7 +219,7 @@ const Form_driver = ({
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
-                    >{LicenseNumber}</label>
+                    >{claim?.driverDetails?.LicenseNumber}</label>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -244,7 +244,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {FatherName}
+                      {claim?.driverDetails?.FatherName}
                     </label>
                   </div>
                 </td>
@@ -270,7 +270,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {Gender}
+                      {claim?.driverDetails?.Gender}
                     </label>
                   </div>
                 </td>
@@ -298,37 +298,11 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {IssuingAuthority}
+                      {claim?.driverDetails?.IssuingAuthority}
                     </label>
                   </div>
                 </td>
 
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      License Number
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {LicenseNumber}
-                    </label>
-                  </div>
-                </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -351,7 +325,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {LicenseType}
+                      {claim?.driverDetails?.LicenseType}
                     </label>
                   </div>
                 </td>
@@ -379,7 +353,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {BloodGroup}
+                      {claim?.driverDetails?.BloodGroup ? claim?.driverDetails?.BloodGroup : ""}
                     </label>
                   </div>
                 </td>
@@ -405,7 +379,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {Mobile}
+                      {claim?.driverDetails?.Mobile}
                     </label>
                   </div>
                 </td>
@@ -431,7 +405,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {Address}
+                      {claim?.driverDetails?.Address}
                     </label>
                   </div>
                 </td>
@@ -459,7 +433,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DateOfBirth}
+                      {claim?.driverDetails?.DateOfBirth}
                     </label>
                   </div>
                 </td>
@@ -485,7 +459,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RtoName}
+                      {claim?.driverDetails?.RtoName}
                     </label>
                   </div>
                 </td>
@@ -511,7 +485,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DateOfIssue}
+                      {claim?.driverDetails?.DateOfIssue}
                     </label>
                   </div>
                 </td>
@@ -539,7 +513,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {ValidUpto}
+                      {claim?.driverDetails?.ValidUpto}
                     </label>
                   </div>
                 </td>
@@ -565,64 +539,11 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {Vov}
+                      {claim?.driverDetails?.Vov}
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-7 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Photo
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >{Photo}</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Modified Date
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.ModifiedDate
-                        ? formatDate(claim?.driverDetails?.ModifiedDate)
-                        : ""}
-                    </label>
-                  </div>
-                </td>
+                
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -649,32 +570,7 @@ const Form_driver = ({
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Status
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {checkStatus(claim?.claimStatus?.Status)}
-                    </label>
-                  </div>
-                </td>
+               
               </tr>
             </table>
           </div>

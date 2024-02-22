@@ -64,10 +64,13 @@ function removeBase64Prefix(encodedImage) {
       }
     })
     .then((result)=>{
-    const details=result.data.data.data;
-    console.log(details);
+    const details=result?.data?.data?.data;
+    console.log(result);
 
-      const image = removeBase64Prefix(details?.pht);
+    if(!details){
+      return res.status(500).send("Internal Server Error");
+    }
+
     const insertDriverDetails = `
     INSERT INTO DriverDetailsOnline (
       LicenseNumber,
@@ -133,14 +136,14 @@ WHERE
   
     db.query(insertDriverDetails, (error, results) => {
       if (error) {
-        console.error("Error updating data in driver Details:", error);
+        console.log( error);
         return res
           .status(500)
           .json({ error: "Error updating data in driver Details." });
       }
       db.query(updateDriverQuery, (error, results) => {
         if (error) {
-          console.error("Error updating data in driver Details:", error);
+          console.log( error);
           return res
             .status(500)
             .json({ error: "Error updating data in driver Details." });
@@ -151,7 +154,8 @@ WHERE
     });
     })
     .catch((Err)=>{
-      return res.status(500).send("Internal Server Error");
+      console.log(Err)
+      return res.status(500).send("Record Not Found!");
     })
     
     //   error_code: "SPC-200",

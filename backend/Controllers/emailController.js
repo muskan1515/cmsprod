@@ -17,27 +17,40 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
 const generateUniqueToken = require("../Config/generateToken");
+const createToken = require("../Config/generateJWTToken");
 
  const sendEmail1 = (req, res) => {
-    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail } = req.body;
-  
+    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type } = req.body;
+
+
     const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
     db.query(sql, [leadId], (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
-      }32
+      }
       const content = emailHandler(result[0]?.Status);
   
       const generatedToken = generateUniqueToken();
+      const jwtToken = createToken(leadId,type);
+      const InsuredToken = type === 1 ? jwtToken : "";
+      const BrokerToken = type === 3 ? jwtToken : "";
+      const GarageToken = type === 2 ? jwtToken : "";
+      
       const insertClaimDetails = `
           UPDATE ClaimDetails
           SET
-          Token = '${generatedToken}'
+          InsuredToken = '${InsuredToken}',
+          BrokerToken='${BrokerToken}',
+          GarageToken='${GarageToken}'
           WHERE LeadId = ${leadId};
         `;
+        console.log("insertClaimDetails",insertClaimDetails);
+
+        const sendingToken = type === 1 ? InsuredToken : type == 2  ? GarageToken : BrokerToken;
       db.query(insertClaimDetails, (err, result2) => {
         if (err) {
           console.error(err);
@@ -58,7 +71,7 @@ const generateUniqueToken = require("../Config/generateToken");
       ${content}
   
           Please provide the clear copy of all the documents so that the claim processing can be fast or
-        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+        <p><a href=https://claims-backend-apis.onrender.com/documents/${leadId}?token=${sendingToken}&type=${type}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
   
       Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
               claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
@@ -77,7 +90,8 @@ const generateUniqueToken = require("../Config/generateToken");
           if (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
-          } else {
+          } else if(String(type) === "1") {
+            console.log(type,String(type) === "1")
            
             const insertClaimDetails = `
             UPDATE ClaimDetails

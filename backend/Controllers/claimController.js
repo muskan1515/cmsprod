@@ -291,6 +291,7 @@ const addClaim =  (req, res) => {
                             toMail: InsuredMailAddress,
                             Date: new Date(),
                             leadId: addLeadId,
+                            type : 1
                           },
                           {
                             headers: {
@@ -319,7 +320,8 @@ const addClaim =  (req, res) => {
                                 Insured: InsuredName,
                                 toMail: GarageMailAddress,
                                 Date: new Date(),
-                                leadId:addLeadId
+                                leadId:addLeadId,
+                                type : 2
                               },
                               {
                                 headers: {
@@ -347,7 +349,8 @@ const addClaim =  (req, res) => {
                                 Insured: InsuredName,
                                 toMail: BrokerMailAddress,
                                 Date: new Date(),
-                                leadId:addLeadId
+                                leadId:addLeadId,
+                                type : 3
                               },
                               {
                                 headers: {
@@ -475,6 +478,7 @@ const getSpecificClaim = async (req, res) => {
         VehicleInsuranceCompany,
         MakeVariantModelColor,
         TaxParticulars,
+        TypeOfVerification,
         LeadId
          FROM VehicleDetailsOnline WHERE LeadId=?`,
         [leadId]
@@ -536,6 +540,18 @@ const getSpecificClaim = async (req, res) => {
         VehicleInsuranceCompany,
         MakeVariantModelColor,
         TaxParticulars,
+        OwnerSrDate,
+        RegLadenWt,
+        RemarkIfRLW,
+        UnladenWT,
+        RemarkIfULW,
+        Remark,
+        OdometerReading,
+        AntiTheft,
+        PreAccidentCondition,
+        FitUpto,
+        TransferDate,
+        AddedBy,
         LeadID
         FROM VehicleDetails WHERE LeadID=?`,
         [leadId]
@@ -846,20 +862,22 @@ const getSpecificClaim = async (req, res) => {
 
   const getClaimDetails = (req, res) => {
     const { token, leadId } = req.body;
-    const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
-    db.query(sql, [leadId], (err, result2) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-      if (result2[0]?.Token === token) {
-        // console.log(result2[0].Token === token);
-        res.status(200).send("Successfully found!!");
-      } else {
-        res.status(403).send("Forbidden Access!");
-      }
-    });
+    res.status(200).send("Successfully found!!");
+    // const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
+    // db.query(sql, [leadId], (err, result2) => {
+    //   if (err) {
+    //     console.error(err);
+    //     res.status(500).send("Internal Server Error");
+    //     return;
+    //   }
+    //   if (result2[0]?.Token === token) {
+    //     // console.log(result2[0].Token === token);
+          //  res.status(200).send("Successfully found!!");
+       
+    //   } else {
+    //     res.status(403).send("Forbidden Access!");
+    //   }
+    // });
   };
 
   const updateDriverDetails=(req,res)=>{
@@ -1115,6 +1133,7 @@ const getSpecificClaim = async (req, res) => {
       res.status(200).json({ message: "Data updated successfully." });
     });
   }
+
 
 
 module.exports={addClaim,

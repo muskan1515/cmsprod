@@ -105,7 +105,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {GarageNameAndAddress}
+                      {claim?.garageDetails?.GarageNameAndAddress}
                     </label>
                   </div>
                 </td>
@@ -131,7 +131,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {GarageContactNo1}
+                      {claim?.garageDetails?.GarageContactNo1}
                     </label>
                   </div>
                 </td>
@@ -185,7 +185,7 @@ const Form_garage = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {GarageAddedBy}
+                      {claim?.garageDetails?.AddedBy}
                     </label>
                   </div>
                 </td>

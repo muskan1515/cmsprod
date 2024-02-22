@@ -728,8 +728,9 @@ const Summary = ({
                 <input
                   className="form-check-input mt-2"
                   type="checkbox"
+                  value={CashLess}
                   readOnly={!isEdit}
-                  onChange={(e)=>setCashLess(e.target.value)}
+                  onChange={(e)=>setCashLess(!CashLess)}
                   // value={row.gst}
                   // onChange={(e) => handleChange(index, row.gst + 1, "gst")}
                   id="remeberMe"

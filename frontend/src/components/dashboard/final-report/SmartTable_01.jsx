@@ -296,65 +296,6 @@ function SmartTable(props) {
                     </tbody>
                   </table>
                 </div>
-                <div className="col-lg-12 offset-3">
-                  <div className="row">
-                    <div className="col-lg-3">
-                      <div className="row mt-3">
-                        <div className="col-lg-4 my_profile_setting_input form-group text-end">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Paint
-                          </label>
-                        </div>
-                        <div className="col-lg-8">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={props.estimate}
-                            // readOnly={!isEditMode}
-                            // onChange={(e) => setLicenseType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3">
-                      <div className="row">
-                        <div className="col-lg-8 mt-3">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={props.estimate}
-                            // readOnly={!isEditMode}
-                            // onChange={(e) => setLicenseType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                        <div className="col-lg-4 mt-1">
-                          <button
-                            className="btn btn-color w-15"
-                            onClick={() => props.updateHandler()}
-                          >
-                            Update
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 {/* <div className="col-lg-12"></div> */}
               </div>
             </div>

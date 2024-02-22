@@ -53,9 +53,14 @@ const getSpecificVehicleDetails = async (req, res) => {
     })
     .then((result)=>{
      
-      // console.log(result.data.vehicleDetails?.Data.result);
+      console.log(result.data.vehicleDetails?.Data.result);
+
+      
      
       const details = result.data.vehicleDetails?.Data.result;
+      if(!details){
+        return res.status(500).send("Internal Server Error");
+      }
       const additionalInfo = result?.data?.additionalInfo;
       const insertVehicleDetails = `
       INSERT INTO VehicleDetailsOnline (

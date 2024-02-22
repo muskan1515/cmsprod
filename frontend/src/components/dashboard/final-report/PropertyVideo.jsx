@@ -39,6 +39,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [lessImposed, setLessImposed] = useState(0);
   const [other, setOther] = useState(0);
 
+  const [VehicleUpto,setVehicleUpto]=useState("");
+
   const [metalSalvageValue,setMetalSalvageValue]=useState(5);
   const [lessExcess,setLessExcess]=useState(0);
   const [currentGst, setCurrentGst] = useState(18);
@@ -185,7 +187,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [DepreciationOnParts,setDepreciationOnParts]=useState("");
   const [NetAssessedAmount,setNetAssessedAmount]=useState("");
   const [SavageDepreciationDetails,setSavageDepreciationDetails]=useState("");
-  const [CashLess,setCashLess]=useState("");
+  const [CashLess,setCashLess]=useState(0);
   const [NoteOfSelf,setNoteOfSelf]=useState("");
   const[RepairAutoDate,setRepairAutoDate]=useState("");
   const [RepairCompletionDate,setRepairCompletionDate]=useState("");
@@ -341,7 +343,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [VehicleFuelType, setVehicleFuelType] = useState("");
   const [VehicleOdometerReading, setVehicleOdometerReading] = useState("");
   const [VehiclePreAccidentCondition, setVehiclePreAccidentCondition] =
-    useState("");
+    useState("Average");
+const [AccidentTime,setAccidentTime]=useState("");
   const [VehicleModel, setVehicleModel] = useState("");
   const [VehicleTaxParticulars, setVehicleTaxParticulars] = useState("");
   const [VehicleSeatingCapacity, setVehicleSeatingCapacity] = useState();
@@ -476,6 +479,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuredMobileNo2(
       claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 
     );
+    setVehicleUpto(claim?.vehicleDetails?.Upto);
     setClaimNumber(claim?.claimDetails?.ClaimNumber );
     setEngineType(claim?.vehicleDetails?.ModeOfCheck );
     setDateRegistration(claim?.vehicleDetails?.DateOfRegistration );
@@ -680,6 +684,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       InsuredMobileNo1,
       InsuredMobileNo2,
       InsuredName,
+      AccidentTime,
       requestType,
       ClaimNumber,
       EngineType,
@@ -696,6 +701,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       AddedDateTime: ClaimAddedDateTime,
       PolicyIssuingOffice,
       PolicyNumber,
+      VehicleUpto,
       DriverName,
       DriverAddedDate: DriverAddedDate,
       IssuingAuthority,
@@ -882,6 +888,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           <div className="property_video">
             <div className="thumb">
               <PolicyDetails
+              VehicleUpto={VehicleUpto}
+              setVehicleUpto={setVehicleUpto}
               DateOfBirth={DateOfBirth}
               setDateOfBirth={setDateOfBirth}
                 TypeOfDate={TypeOfDate}
@@ -1109,6 +1117,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
               <Servey
                 SomeComponent={SomeComponent}
                 isEditMode={isEditMode}
+                AccidentTime={AccidentTime}
+                setAccidentTime={setAccidentTime}
                 setIsEditMode={setIsEditMode}
                 allDepreciations={allDepreciations}
                 phoneNumber={phoneNumber}

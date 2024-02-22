@@ -120,6 +120,7 @@ const updateFinalReport = (req,res)=>{
       BillNo,
       BillDate,
       BillAmount,
+      setVehicleUpto,
       AddedDateTime,
       Endurance,
       OtherRemark,
