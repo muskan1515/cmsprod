@@ -64,8 +64,6 @@ const addClaim =  (req, res) => {
         '${PolicyNumber}',
         '${PolicyPeriodStart}',
         '${PolicyPeriodEnd}',
-        '${PolicyPeriodStart}',
-        '${PolicyPeriodEnd}',
         ${ClaimNumber},
         '${ClaimServicingOffice}',
         '${(AddedBy)}',
