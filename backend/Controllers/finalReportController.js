@@ -161,9 +161,7 @@ const updateFinalReport = (req,res)=>{
     IDV='${IDV}',
     MailRecieveDate='${MailRecieveDate}',
     HPA='${HPA}',
-    AddedDateTime = '${AddedDateTime}',
-    TotalLoss= '${TotalLoss}',
-    phyCheck= '${phyCheck}',
+    AddedDateTime = '${AddedDateTime}'
     WHERE LeadID = ${leadId};
   `;
 
@@ -198,8 +196,7 @@ const updateFinalReport = (req,res)=>{
     RemarkIfULW='${RemarkIfULW}',
     Remark='${VehicleRemark}',
     VehicleType='${VehicleType}',
-    AntiTheft='${AntiTheft}',
-    TypeOfDate='${TypeOfDate}'
+    AntiTheft='${AntiTheft}'
     WHERE LeadID = ${leadId};
   `;
 
