@@ -146,11 +146,9 @@ const Form = ({
 
   const handleFetchData = async (req, res) => {
     if (!claim?.vehicleDetails?.RegisteredNumber) {
-      if (!claim?.vehicleDetails?.RegisteredNumber) {
         alert("Please fill Registered Number first!");
       }
       if (claim?.vehicleOnlineDetails) {
-        if (claim?.vehicleOnlineDetails) {
           const details = claim?.vehicleOnlineDetails;
 
           setVehicleModel(details?.MakerModel),
