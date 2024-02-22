@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secretKey = process.env.JWT_SECRET_KEY; // Change this to a secure secret key
+const secretKey = 'KJDFIRU95068085YP6OKI096YI6995609GKRKLEFKL'; // Change this to a secure secret key
 
 // Function to create a token from leadId and type
 const createToken = (leadId, type) => {
