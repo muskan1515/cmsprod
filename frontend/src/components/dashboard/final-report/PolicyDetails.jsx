@@ -46,7 +46,10 @@ const PolicyDetails = ({
   setValidFrom,
   ValidUntilTv,
   setValidUntilTv,
+  DateOfBirth,
+  setDateOfBirth,
 
+  claim,
   ReferenceNo,
   setReferenceNo,
   InsuredMailAddress,
@@ -286,6 +289,10 @@ const PolicyDetails = ({
     return "";
   };
 
+
+  useEffect(()=>{
+    setPolicyPeriodEnd(getNextYear(PolicyPeriodStart));
+  },[PolicyPeriodStart]);
   //Update Document
   const handleEditClick = () => {
     setIsEditMode(true);
@@ -487,6 +494,15 @@ const PolicyDetails = ({
               </label>
             </div>
             <div className="col-lg-7">
+           {!isEditMode ? <input
+            type="text"
+            className="form-control"
+            id="propertyTitle"
+            readOnly={true}
+            value={VehicleType?VehicleType:""}
+            // placeholder="Enter Registration No."
+          />
+          :
               <select
                 // style={{ marginTop: "5px" }}
                 style={{ padding: "2px", marginTop: "3px" }}
@@ -502,6 +518,7 @@ const PolicyDetails = ({
                 <option data-tokens="Status3">Honda</option>
                 <option data-tokens="Status4">Maruti Sukuzi</option>
               </select>
+           }
             </div>
           </div>
           {/* <div className="my_profile_setting_input form-group">
@@ -574,7 +591,7 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={PolicyNumber}
+                        value={PolicyNumber?PolicyNumber : ""}
                         readOnly={!isEditMode}
                         onChange={(e) => setPolicyNumber(e.target.value)}
 
@@ -611,7 +628,7 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={InsuredName}
+                        value={InsuredName?InsuredName:""}
                         onChange={(e) => setInsuredName(e.target.value)}
                         // placeholder="Enter Registration No."
                       />
@@ -640,7 +657,7 @@ const PolicyDetails = ({
                         type="number"
                         className="form-control"
                         id="propertyTitle"
-                        value={IDV}
+                        value={IDV?IDV:""}
                         onChange={(e) => setIDV(e.target.value)}
                         readOnly={!isEditMode}
                         // placeholder="Enter Registration No."
@@ -666,7 +683,6 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-10">
-                      {console.log('policyType>>><<<',policyType)}
                       <select
                         style={{ padding: "2px" }}
                         className="selectpicker form-select"
@@ -714,7 +730,7 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="InsuredAddress"
-                        value={InsuredAddress}
+                        value={InsuredAddress?InsuredAddress:""}
                         onChange={(e) => setInsuredAddress(e.target.value)}
                         readOnly={!isEditMode}
 
@@ -749,7 +765,7 @@ const PolicyDetails = ({
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodStart !== "null" &&
+                            PolicyPeriodStart  &&
                             PolicyPeriodStart !== "null"
                               ? formatDate(new Date(PolicyPeriodStart))
                               : ""
@@ -828,7 +844,7 @@ const PolicyDetails = ({
                           readOnly={!isEditMode}
                           type={"text"}
                           value={
-                            PolicyPeriodEnd !== "null" &&
+                            PolicyPeriodEnd  &&
                             PolicyPeriodEnd !== "null"
                               ? formatDate(new Date(PolicyPeriodEnd))
                               : ""
@@ -861,14 +877,13 @@ const PolicyDetails = ({
                           disabled={!isEditMode}
                           value={
                             PolicyPeriodEnd && PolicyPeriodEnd !== "null"
-                              ? PolicyPeriodEnd.substring(0, 10)
-                              : ""
+                            ? new Date(PolicyPeriodEnd)
+                            : ""
                           }
                           onChange={(e) => setPolicyPeriodEnd(e.target.value)}
                         />
                       )}
                     </div>
-                    {console.log("PolicyPeriodEnd",PolicyPeriodEnd)}
                     {/* <span
                       className="col-lg-1 flaticon-calendar text-dark fs-4"
                       style={{ marginLeft: "-30px" }}
@@ -894,12 +909,11 @@ const PolicyDetails = ({
                       </label>
                     </div>
                     <div className="col-lg-7">
-                      {console.log('HPA',HPA)}
                       <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         id="mobile"
-                        value={HPA}
+                        value={HPA ? HPA : ""}
                         readOnly={!isEditMode}
                         onChange={(e) => setHPA(e.target.value)}
                         // placeholder="Enter Registration No."
@@ -961,7 +975,7 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={InsuranceCompanyNameAddress}
+                        value={InsuranceCompanyNameAddress ? InsuranceCompanyNameAddress :""}
                         readOnly={!isEditMode}
                         onChange={(e) =>
                           setInsuranceCompanyNameAddress(e.target.value)
@@ -994,9 +1008,9 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={ClaimNumber}
+                        value={claim?.claimDetails?.ReferenceNo}
                         readOnly={!isEditMode}
-                        onChange={(e) => setClaimNumber(e.target.value)}
+                      
 
                         // placeholder="Enter Registration No."
                       />
@@ -1026,7 +1040,7 @@ const PolicyDetails = ({
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
-                        value={PolicyIssuingOffice}
+                        value={PolicyIssuingOffice ?PolicyIssuingOffice:""}
                         onChange={(e) => setPolicyIssuingOffice(e.target.value)}
 
                         // placeholder="Enter Registration No."
@@ -1050,10 +1064,11 @@ const PolicyDetails = ({
                     <input
                       className="m-2"
                       type="checkbox"
-                      value={TotalLoss}
                       id="terms"
+                      disabled={!isEditMode}
+                      checked={TotalLoss }
                       style={{ border: "1px solid black" }}
-                      onChange={(e) => setTotalLoss(e.target.value)}
+                      onChange={(e) => setTotalLoss(!TotalLoss)}
                     />
                   </div>
                 </div>
@@ -1073,10 +1088,11 @@ const PolicyDetails = ({
                     <input
                       className="m-2"
                       type="checkbox"
-                      value={IMT}
+                      checked={IMT }
                       id="terms"
+                      disabled={!isEditMode}
                       style={{ border: "1px solid black" }}
-                      onChange={(e) => setIMT(e.target.value)}
+                      onChange={(e) => setIMT(!IMT)}
                     />
                   </div>
                 </div>
@@ -1102,7 +1118,7 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={ClaimServicingOffice}
+                        value={ClaimServicingOffice ? ClaimServicingOffice : ""}
                         onChange={(e) =>
                           setClaimServicingOffice(e.target.value)
                         }
@@ -2242,7 +2258,7 @@ const PolicyDetails = ({
                     className="form-control"
                     id="propertyTitle"
                     readOnly={!isEditMode}
-                    value={DriverName}
+                    value={DriverName && DriverName !=="null" ? DriverName : ""}
                     onChange={(e) => setDriverName(e.target.value)}
 
                     // placeholder="Enter Registration No."
@@ -2272,7 +2288,7 @@ const PolicyDetails = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={LicenseNumber}
+                    value={LicenseNumber && LicenseNumber !=="null" ? LicenseNumber : ""}
                     readOnly={!isEditMode}
                     onChange={(e) => setLicenseNumber(e.target.value)}
 
@@ -2298,6 +2314,41 @@ const PolicyDetails = ({
                     Date of Birth
                   </label>
                 </div>
+                {!isEditMode ? (
+                  <input
+                    readOnly={!isEditMode}
+                    type={"text"}
+                    value={
+                      DateOfBirth  && DateOfBirth !== "null"
+                        ? formatDate(new Date(DateOfBirth))
+                        : ""
+                    }
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                ) : (
+                  //   <DatePicker
+                  //     className="form-control"
+                  //     id="propertyTitle"
+                  //     selected={
+                  //       DateOfIssue !== null &&
+                  //  (DateOfIssue) // Example: YYYY-MM-DD format
+                  //     ? new Date(DateOfIssue)
+                  //     : ''
+                  //     }
+                  //     onChange={(date) => setDateOfIssue(date)}
+                  //   />
+                  <input
+                    type="date"
+                    disabled={!isEditMode}
+                    value={
+                      DateOfBirth && DateOfBirth !== "null"
+                          ? DateOfBirth.substring(0, 10)
+                          : ""
+                    }
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                  />
+                )}
                 {/* <div className="col-lg-8">
                   <MyDatePicker
 
@@ -2411,7 +2462,7 @@ const PolicyDetails = ({
                       type={"text"}
                       value={
                         ValidUpto !== "null" &&
-                        ValidUpto !== "null" &&
+                        ValidUpto  &&
                         ValidUpto !== "" &&
                         ValidUpto!== null
                           ? formatDate(new Date(ValidUpto))
@@ -3084,7 +3135,7 @@ const PolicyDetails = ({
             </div>
           </div>
         </div>
-        <div className="row">
+        {/*<div className="row">
           <RcDetails
             RCOwner={RCOwner}
             setRCOwner={setRCOwner}
@@ -3138,8 +3189,8 @@ const PolicyDetails = ({
             setVehicleSeatingCapacity={setVehicleSeatingCapacity}
             InsuranceCompanyNameAddress={InsuranceCompanyNameAddress}
             setInsuranceCompanyNameAddress={setInsuranceCompanyNameAddress}
-          />
-        </div>
+                      />
+        </div>*/}
       </div>
 
       {/* <hr style={{ color: "#2e008b", height: "1px" }} /> */}

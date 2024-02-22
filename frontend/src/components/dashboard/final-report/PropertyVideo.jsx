@@ -52,6 +52,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [taxAmount, setTaxAmount] = useState(0);
   
 
+  const [DateOfBirth,setDateOfBirth]=useState("");
 
   const [allDepreciations, setAllDepreciations] = useState([]);
 
@@ -73,8 +74,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [PolicyPeriodStart, setPolicyPeriodStart] = useState("");
 
   const [HPA, setHPA] = useState();
-  const [TotalLoss, setTotalLoss] = useState();
-  const [IMT, setIMT] = useState();
+  const [TotalLoss, setTotalLoss] = useState(0);
+  const [IMT, setIMT] = useState(0);
   const [phyCheck, setphyCheck] = useState();
 
   
@@ -257,6 +258,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setTotalAssessed(total_assessed);
     setTotalLabrorAssessed(total_assessed);
     setTotalLabrorEstimate(total_estimate);
+    console.log("setTotalTaxbleAmount",total_taxable_amount)
     setTotalTaxbleAmount(total_taxable_amount);
     setTotalEstimate(total_estimate);
     setGrandTotal(Number(total_assessed) + -
@@ -267,7 +269,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setTaxAmount((total_taxable_amount * Number(currentGst)) / 100);
     setLaborWOPaint(total_paint);
     setReload(false);
-  }, [toggleEstimate, currentGst, reload, allRows, toggleEstimate,LessExcess,LessImposed,Other]);
+  }, [claim,toggleEstimate, currentGst, reload, allRows, toggleEstimate,LessExcess,LessImposed,Other]);
 
   useEffect(() => {
     calculateVehicleAge();
@@ -431,7 +433,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   useEffect(() => {
 
   
+    //
+    setTotalLoss(claim?.claimDetails?.TotalLoss ? claim?.claimDetails?.TotalLoss : 0); 
+    setIMT(claim?.claimDetails?.IMT ? claim?.claimDetails?.IMT : 0); 
 
+    setDateOfBirth(claim?.driverDetails?.DateOfBirth || "");
     //summary states
 
     setFinalReportNotes(claim?.summaryDetails?.FinalReportNotes ? claim?.summaryDetails?.FinalReportNotes : "");
@@ -500,10 +506,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setInsuredAddress(claim?.insuredDetails?.InsuredAddress );
     setPolicyType(claim?.insuredDetails?.PolicyType );
     setVehicleType(claim?.vehicleDetails?.VehicleType);
-    console.log("reference no", VehicleSeatingCapacity);
 
 
 
+    setDriverRemark(claim?.driverDetails?.Remark || "");
     setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime ||"");
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
     setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
@@ -530,6 +536,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setVehicleMakeVariantModelColor(
       claim?.vehicleDetails?.MakeVariantModelColor
     );
+    
     setVehicleColor(
       claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[1] || ""
     );
@@ -644,7 +651,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       PolicyType: policyType,
       IDV: IDV ? IDV : claim?.claimDetails?.IDV,
       PolicyPeriodStart: PolicyPeriodStart,
-      PolicyPeriodEnd: PolicyPeriodStart,
+      PolicyPeriodEnd: PolicyPeriodEnd,
       HPA: HPA ? HPA : claim.claimDetails?.HPA,
       ClaimServicingOffice,
       OwnerSRST,
@@ -758,7 +765,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       PartyAgreed,
       ReasonThereofDelay,
       AnyFurtherConversation,
-      RepairingPhotoDate,
       ReinspectionDate,
       SalveDestroy,
       OtherRemark,
@@ -766,8 +772,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       BillDate,
       BillAmount,
       Endurance,
-
-      TotalLoss,
+      DateOfBirth,
+      ValidFrom,
+      TotalLoss : TotalLoss,
+      IMT : IMT,
       phyCheck,
       leadId,
     };
@@ -874,6 +882,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           <div className="property_video">
             <div className="thumb">
               <PolicyDetails
+              DateOfBirth={DateOfBirth}
+              setDateOfBirth={setDateOfBirth}
                 TypeOfDate={TypeOfDate}
                 setTypeOfDate={setTypeOfDate}
                 setPolicyType={setPolicyType}
@@ -1071,6 +1081,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setIMT= {setIMT}
                 phyCheck = {phyCheck}
                 setphyCheck = {setphyCheck}
+                claim={claim}
               />
               
               {/* <Image

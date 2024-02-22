@@ -120,7 +120,6 @@ const CreateList_02 = ({
                         }}
                       >
                         {InsuredName}
-                        {InsuredName}
                       </label>
                     </div>
                   </div>
@@ -150,7 +149,6 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {InsuredMobileNo1}
                         {InsuredMobileNo1}
                       </label>
                     </div>
@@ -336,7 +334,6 @@ const CreateList_02 = ({
                         }}
                       >
                         {policyIssuingOffice}
-                        {policyIssuingOffice}
                       </label>
                     </div>
                   </div>
@@ -366,7 +363,6 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {inspectionType}
                         {inspectionType}
                       </label>
                     </div>
@@ -428,7 +424,6 @@ const CreateList_02 = ({
                         }}
                       >
                         {claimRegion}
-                        {claimRegion}
                       </label>
                     </div>
                   </div>
@@ -458,7 +453,6 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claimServicingOffice}
                         {claimServicingOffice}
                       </label>
                     </div>

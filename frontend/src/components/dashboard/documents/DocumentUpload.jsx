@@ -782,6 +782,7 @@ export default function DocumentUpload({
         </div>
         <div className="row">
         <div className="col-lg-4">
+        
           {uploadedUrl.map((media, index) => (
             <div key={`media_${index}`} className="mb-3">
               {media.startsWith("data:image") ? (

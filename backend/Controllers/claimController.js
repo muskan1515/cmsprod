@@ -431,6 +431,12 @@ const getSpecificClaim = async (req, res) => {
         FatherName,
         DateOfBirth,
         DateOfIssue,
+        IssuingAuthority,
+        BadgeNumber,
+        Remark,
+        LicenseType,
+        DateOfBirth,
+        VaildUpto,
         LeadID
         FROM DriverDetails WHERE LeadID=?`,
         [leadId]
@@ -487,6 +493,10 @@ const getSpecificClaim = async (req, res) => {
         FatherName,
         DateOfBirth,
         DateOfIssue,
+        IssuingAuthority,
+        BadgeNumber,
+        Remark,
+        LicenseType,
         LeadID
         FROM DriverDetailsOnline WHERE LeadID=?`,
         [leadId]
@@ -650,18 +660,22 @@ const getSpecificClaim = async (req, res) => {
     Address,
     RtoName,
     ValidUpto,
+    ValidFrom,
+    driverRemark,
+    DateOfBirth,
     Vov,
     Photo,
     Pht,
+    BadgeNumber,
     IsDriverDetailsFetched,
     IsRcDetailsFetched,
-    DateOfBirth,
     DateOfIssue,
 
     LeadId,
   } = req.body;
 
 
+  console.log(ValidFrom);
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -690,16 +704,18 @@ const getSpecificClaim = async (req, res) => {
     Pht = ${Pht ? `'${Pht}'` : null},
     Photo = ${Photo ? `'${Photo}'` : null},
     Vov = ${Vov ? `'${Vov}'` : null},
-    VaildUpto = ${ValidUpto ? `'${ValidUpto}'` : null},
+    VaildUpto = ${ValidFrom ? `'${ValidFrom}'` : null},
     RtoName = ${RtoName ? `'${RtoName}'` : null},
     Address = ${Address ? `'${Address}'` : null},
     Mobile = ${Mobile ? `'${Mobile}'` : null},
     BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : null},
     Gender = ${Gender ? `'${Gender}'` : null},
     FatherName = ${FatherName ? `'${FatherName}'` : null},
+    BadgeNumber='${BadgeNumber}',
     DateOfBirth = ${DateOfBirth ? `'${DateOfBirth}'` : null},
     DateOfIssue = ${DateOfIssue ? `'${DateOfIssue}'` : null},
-    TypeOfVerification = '${DriverTypeOfVerification}'
+    TypeOfVerification = '${DriverTypeOfVerification}',
+    DateOfBirth='${DateOfBirth}'
     WHERE LeadID = ${LeadId};
   `;
   

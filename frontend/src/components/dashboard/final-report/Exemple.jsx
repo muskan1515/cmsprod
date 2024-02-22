@@ -1102,32 +1102,32 @@ export default function Exemple_01({
                 style={{ border: "1px solid black" }}
               />
             ),
-            description: (
-              <select
-                style={{ marginTop: "-5px" }}
-                className="selectpicker form-select"
-                data-live-search="true"
-                data-width="100%"
-                value={row.description}
-                disabled={!edit}
-                onChange={(e) =>
-                  handleChange(index, e.target.value, "description")
-                }
-              >
-                <option data-tokens="Status1" value={"Regular"}>
-                  Regular
-                </option>
-                <option data-tokens="Status2" value={"Add on Policy"}>
-                  Add on Policy
-                </option>
-                <option
-                  data-tokens="Status3"
-                  value={"Add on Policy(Not Effective)"}
-                >
-                  Add on Policy(Not Effective)
-                </option>
-              </select>
-            ),
+            // description: (
+            //   <select
+            //     style={{ marginTop: "-5px" }}
+            //     className="selectpicker form-select"
+            //     data-live-search="true"
+            //     data-width="100%"
+            //     value={row.description}
+            //     disabled={!edit}
+            //     onChange={(e) =>
+            //       handleChange(index, e.target.value, "description")
+            //     }
+            //   >
+            //     <option data-tokens="Status1" value={"Regular"}>
+            //       Regular
+            //     </option>
+            //     <option data-tokens="Status2" value={"Add on Policy"}>
+            //       Add on Policy
+            //     </option>
+            //     <option
+            //       data-tokens="Status3"
+            //       value={"Add on Policy(Not Effective)"}
+            //     >
+            //       Add on Policy(Not Effective)
+            //     </option>
+            //   </select>
+            // ),
             hsh_code: (
               <input
                 className="form-control form-control-table"

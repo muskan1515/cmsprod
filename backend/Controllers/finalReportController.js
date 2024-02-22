@@ -124,6 +124,8 @@ const updateFinalReport = (req,res)=>{
       Endurance,
       OtherRemark,
       TotalLoss,
+      DateOfBirth,
+      IMT,
       phyCheck
     } = req.body;
 
@@ -140,7 +142,9 @@ const updateFinalReport = (req,res)=>{
     ValidUntilNtv = '${ValidUntilNtv}',
     ValidUntilTv = '${ValidUntilTv}',
     BadgeNumber='${BadgeNumber}',
-    Remark='${driverRemark}'
+    Remark='${driverRemark}',
+    DateOfBirth='${DateOfBirth}',
+    VaildUpto='${ValidFrom}'
     WHERE LeadID = ${leadId};
   `;
 
@@ -161,7 +165,9 @@ const updateFinalReport = (req,res)=>{
     IDV='${IDV}',
     MailRecieveDate='${MailRecieveDate}',
     HPA='${HPA}',
-    AddedDateTime = '${AddedDateTime}'
+    AddedDateTime = '${AddedDateTime}',
+    TotalLoss = ${(TotalLoss) ? 1 : 0},
+    IMT = ${(IMT) ? 1 : 0}
     WHERE LeadID = ${leadId};
   `;
 

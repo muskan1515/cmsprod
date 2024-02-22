@@ -118,7 +118,7 @@ export default function Exemple_01({
   const [change, setChange] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
   const [openSave, setOpenSave] = useState(false);
-  const [description, setDescription] = useState("Regular");
+  const [description, setDescription] = useState("");
   const [sac, setSac] = useState(0);
   const [estimate, setEstimate] = useState(0);
   const [assessed, setAssessed] = useState(0);
@@ -180,7 +180,7 @@ export default function Exemple_01({
               estimate: part.Estimate,
               assessed: part.Assessed,
               bill_sr: part.BillSr,
-              gst: part.gst ? part.gst : 0,
+              gst: part.IsGSTIncluded ? part.IsGSTIncluded : 0,
               type: part.JobType,
               sno: part.ReportID,
               isActive: Number(part.IsActive),
@@ -203,7 +203,7 @@ export default function Exemple_01({
     const newRow = {
       _id: allRows.length,
       sno: lastIndex + 1, // You may use a more robust ID ge
-      description: "Regular",
+      description: "",
       sac: "",
       estimate: "",
       assessed: "",
@@ -408,32 +408,20 @@ export default function Exemple_01({
                 ></button>
               ),
               sno: count,
-              dep: row.dep, // Add default values or leave empty as needed
+              dep: row.dep, 
               description: (
-                <select
-                  style={{ marginTop: "-5px" }}
-                  className="selectpicker form-select"
-                  data-live-search="true"
-                  data-width="100%"
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="job description"
                   value={row.description}
+                  onChange={(e) => handleChange(index, e.target.value, "description")}
+                  required
                   disabled={!edit}
-                  onChange={(e) =>
-                    handleChange(index, e.target.value, "description")
-                  }
-                >
-                  <option data-tokens="Status1" value={"Regular"}>
-                    Regular
-                  </option>
-                  <option data-tokens="Status2" value={"Add on Policy"}>
-                    Add on Policy
-                  </option>
-                  <option
-                    data-tokens="Status3"
-                    value={"Add on Policy(Not Effective)"}
-                  >
-                    Add on Policy(Not Effective)
-                  </option>
-                </select>
+                  id="terms"
+                  style={{ border: "1px solid black" }}
+                />
+                
               ),
               job_type: (
                 <select
@@ -499,6 +487,7 @@ export default function Exemple_01({
                     className="form-check-input"
                     type="checkbox"
                     value={row.gst}
+                    checked={row.gst %2 !==0}
                     onChange={(e) => handleChange(index, row.gst + 1, "gst")}
                     id="remeberMe"
                   />
