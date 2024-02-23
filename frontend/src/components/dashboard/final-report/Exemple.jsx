@@ -1153,16 +1153,41 @@ export default function Exemple_01({
               />
             ),
             remark: (
-              <input
-                className="form-control form-control-table"
-                type="text"
+              // <input
+              //   className="form-control form-control-table"
+              //   type="text"
+              //   value={row.remark}
+              //   onChange={(e) => handleChange(index, e.target.value, "remark")}
+              //   required
+              //   disabled={!edit}
+              //   id="terms"
+              //   style={{ border: "1px solid black" }}
+              // />
+              <select
+                style={{ marginTop: "-5px" }}
+                className="selectpicker form-select"
+                data-live-search="true"
+                data-width="100%"
                 value={row.remark}
                 onChange={(e) => handleChange(index, e.target.value, "remark")}
-                required
                 disabled={!edit}
-                id="terms"
-                style={{ border: "1px solid black" }}
-              />
+              >
+                <option data-tokens="Status1" value={"Regular"}>
+                  Choose.....
+                </option>
+                <option data-tokens="Status1" value={"Regular"}>
+                  Regular
+                </option>
+                <option data-tokens="Status2" value={"Add on Policy"}>
+                  Add on Policy
+                </option>
+                <option
+                  data-tokens="Status3"
+                  value={"Add on Policy(Not Effective)"}
+                >
+                  Add on Policy(Not Effective)
+                </option>
+              </select>
             ),
             assessed: (
               <input

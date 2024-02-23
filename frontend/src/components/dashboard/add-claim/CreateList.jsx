@@ -51,13 +51,11 @@ const CreateList = () => {
       oneYearLater.setDate(oneYearLater.getDate() - 1);
       console.log(oneYearLater);
       return oneYearLater;
-
     }
     return "";
   };
 
   useEffect(() => {
-    
     setPolicyStartEnd(getNextYear(policyStartDate));
   }, [policyStartDate]);
 
@@ -404,16 +402,14 @@ const CreateList = () => {
             <div className="col-lg-7">
               {/* <MyDatePicker /> */}
               <input
-                      type="date"
-                      value={
-                        policyStartDate && policyStartDate !== "null"
-                          ? policyStartDate.substring(0, 10)
-                          : ""
-                      }
-                      onChange={(e) => setPolicyStartDate(e.target.value)}
-                    />
-             
-              
+                type="date"
+                value={
+                  policyStartDate && policyStartDate !== "null"
+                    ? policyStartDate.substring(0, 10)
+                    : ""
+                }
+                onChange={(e) => setPolicyStartDate(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -439,24 +435,29 @@ const CreateList = () => {
                 className="form-control"
                 id="propertyTitle"
                 // selectedDate={policyStartEnd || ''}
-                setSelectedDate={setPolicyStartEnd}
-                selectedDate={
-                  policyStartEnd !== null && !policyStartEnd
+                // setSelectedDate={setPolicyStartEnd}
+                // selectedDate={
+                //   policyStartEnd !== null && !policyStartEnd
+                //     ? new Date(policyStartEnd)
+                //     : ""
+                // }
+                selected={
+                  policyStartEnd !== null && !isNaN(new Date(policyStartEnd))
                     ? new Date(policyStartEnd)
-                    : ""
+                    : null
                 }
+                onChange={(date) => setPolicyStartEnd(date)}
                 // placeholder="Enter Registration No."
               /> */}
               <MyDatePicker
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-              // selectedDate={policyStartEnd || ''}
-              setSelectedDate={setPolicyStartEnd}
-              selectedDate={policyStartEnd
-              }
-              // placeholder="Enter Registration No."
-            />
+                type="date"
+                className="form-control"
+                id="propertyTitle"
+                // selectedDate={policyStartEnd || ''}
+                setSelectedDate={setPolicyStartEnd}
+                selectedDate={policyStartEnd}
+                // placeholder="Enter Registration No."
+              />
               {/* <MyDatePicker
                 value={policyStartEnd}
                 onChange={(e) => setPolicyStartEnd(e.target.value)}

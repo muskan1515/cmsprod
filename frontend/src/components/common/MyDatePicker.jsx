@@ -23,7 +23,7 @@ const MyDatePicker = ({ selectedDate, setSelectedDate, disable }) => {
       // Uncomment the following lines if you want to handle onChange
       // onChange={(date) => formatDate(date)}
       // showYearDropdown
-      // dateFormat="MM/dd/yyyy"
+      dateFormat="dd/MM/yyyy"
       // popperPlacement="bottom-end"
       // popperModifiers={{
       //   flip: {
