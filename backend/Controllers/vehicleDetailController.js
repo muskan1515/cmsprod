@@ -102,7 +102,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         LeadId
     )
     VALUES (
-      '${additionalInfo?.rc_regn_no}',
+      '${details?.rc_regn_no}',
         '${additionalInfo?.bodyType}',
         '${details?.rc_regn_dt}',
         '${details?.rc_eng_no}',
