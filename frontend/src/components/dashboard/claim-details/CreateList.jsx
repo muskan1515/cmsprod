@@ -190,9 +190,8 @@ const CreateList = ({
 
     // Restrict to 10 digits
     const truncatedValue = numericValue.slice(0, 10);
-    
-      setInsuredMobileNo1(truncatedValue);
-    
+
+    setInsuredMobileNo1(truncatedValue);
   };
 
   const handleInputChange_01 = (e) => {
@@ -203,8 +202,7 @@ const CreateList = ({
 
     // Restrict to 10 digits
     const truncatedValue = numericValue.slice(0, 10);
-      setInsuredMobileNo2(truncatedValue);
-   
+    setInsuredMobileNo2(truncatedValue);
   };
   return (
     <>
@@ -366,6 +364,7 @@ const CreateList = ({
               {!claim.claimDetails?.IsMailSent &&
                 claim?.insuredDetails?.InsuredMailAddress !== "null" && (
                   <button
+                    className=" w-50 flaticon-envelope"
                     onClick={() =>
                       sendMailHandler(
                         claim?.vehichleDetails?.VehicleEngineNumber,
@@ -375,7 +374,7 @@ const CreateList = ({
                       )
                     }
                   >
-                    sendEmail
+                    Send Email
                   </button>
                 )}
             </div>
@@ -559,6 +558,7 @@ const CreateList = ({
               <DatePicker
                 className="form-control"
                 id="propertyTitle"
+                dateFormat="dd/MM/yyyy"
                 selected={
                   policyStartDate !== null && !isNaN(new Date(policyStartDate))
                     ? new Date(policyStartDate)
@@ -574,7 +574,6 @@ const CreateList = ({
                 }
                 setSelectedDate={setPolicyStartDate}
               /> */}
-            
             </div>
           </div>
         </div>
@@ -614,6 +613,7 @@ const CreateList = ({
               <DatePicker
                 className="form-control"
                 id="propertyTitle"
+                dateFormat="dd/MM/yyyy"
                 selected={
                   policyEndDate !== null && !isNaN(new Date(policyEndDate))
                     ? new Date(policyEndDate)

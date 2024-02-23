@@ -493,6 +493,7 @@ const Form_01 = ({
                         </div>
                         <div className="col-lg-7">
                           <MyDatePicker
+                            dateFormat="dd/MM/yyyy"
                             className="form-control"
                             id="propertyTitle"
                             setSelectedDate={setDateOfBirth}
@@ -553,6 +554,7 @@ const Form_01 = ({
                         </div>
                         <div className="col-lg-7">
                           <MyDatePicker
+                            dateFormat="dd/MM/yyyy"
                             className="form-control"
                             id="propertyTitle"
                             setSelectedDate={setDateOfIssue}
@@ -597,6 +599,7 @@ const Form_01 = ({
                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
+                            dateFormat="dd/MM/yyyy"
                             selected={
                               ValidUpto !== null && !isNaN(new Date(ValidUpto))
                                 ? new Date(ValidUpto)
@@ -666,7 +669,7 @@ const Form_01 = ({
                       </div>
                           </div>*/}
 
-                   {/* <div className="col-lg-6">
+                    {/* <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
