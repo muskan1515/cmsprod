@@ -171,6 +171,32 @@ const Form_driver = ({
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
+                <div className="row">
+                  <label
+                    htmlFor=""
+                    className="col-lg-6 text-color"
+                    style={{
+                      color: "black",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Valid Upto
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="col-lg-6 text-color text-end"
+                    style={{
+                      color: "#1560bd",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {claim?.driverDetails?.ValidUpto}
+                  </label>
+                </div>
+              </td>
+                {/*<td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
@@ -195,7 +221,7 @@ const Form_driver = ({
                       {claim?.driverDetails?.TypeOfVerification}
                     </label>
                   </div>
-                </td>
+                    </td>*/}
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -326,6 +352,32 @@ const Form_driver = ({
                       }}
                     >
                       {claim?.driverDetails?.LicenseType}
+                    </label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Cov
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.driverDetails?.Vov}
                     </label>
                   </div>
                 </td>
@@ -490,88 +542,7 @@ const Form_driver = ({
                   </div>
                 </td>
               </tr>
-              <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Valid Upto
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.ValidUpto}
-                    </label>
-                  </div>
-                </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Cov
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.Vov}
-                    </label>
-                  </div>
-                </td>
-                
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Insurer ClaimID
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.claimDetails?.ClaimNumber}
-                    </label>
-                  </div>
-                </td>
-               
-              </tr>
+            
             </table>
           </div>
         </div>

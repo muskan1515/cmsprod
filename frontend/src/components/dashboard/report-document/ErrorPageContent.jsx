@@ -369,8 +369,8 @@ const ErrorPageContent = ({ allInfo }) => {
 
   //*************SUMMARY**************** *//
 
-  const lessExcess = Number(allInfo?.summaryReport[0].LessExcess);
-  const lessSalvage = Number(allInfo?.summaryReport[0].ExpectedSalvage);
+  const lessExcess = Number(allInfo?.summaryReport[0]?.LessExcess) || 0;
+  const lessSalvage = Number(allInfo?.summaryReport[0]?.ExpectedSalvage) || 0;
 
   const getSummaryTotalWithLessExcess = ()=>{
     return getTotalLabourAssessed()+

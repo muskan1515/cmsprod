@@ -139,30 +139,30 @@ const Form_garage = ({
                   <div className="row">
                     <label
                       htmlFor=""
-                      className="col-lg-6 text-color"
+                      className="col-lg-4 text-color"
                       style={{
                         color: "black",
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                      Added Date
+                      Status
                     </label>
                     <label
                       htmlFor=""
-                      className="col-lg-4 text-color text-end"
+                      className="col-lg-6 text-color text-end"
                       style={{
                         color: "#1560bd",
                         fontSize: "13px",
                         fontWeight: "bold",
                       }}
                     >
-                      {claim.garageDetails?.AddedDate ? formatDate(claim.garageDetails?.AddedDate):""}
+                      {checkStatus(claim.claimStatus?.Status)}
                     </label>
                   </div>
                 </td>
               </tr>
-              <tr>
+              {/*<tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -214,7 +214,7 @@ const Form_garage = ({
                       {claim.garageDetails?.ModifiedDate?formatDate(claim.garageDetails?.ModifiedDate):""}
                     </label>
                   </div>
-                </td>
+                    </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -241,7 +241,7 @@ const Form_garage = ({
                     </label>
                   </div>
                 </td>
-              </tr>
+                    </tr>*/}
             </table>
           </div>
         </div>

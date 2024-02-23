@@ -293,7 +293,7 @@ const CreateList_01 = ({
                         fontWeight:"bold",
                       }}
                     >
-                      {subType}
+                      {claim?.claimDetails?.SurveyType}
                     </label>
                   </div>
                 </td>
@@ -347,7 +347,7 @@ const CreateList_01 = ({
                         fontWeight:"bold",
                       }}
                     >
-                      SPOT
+                      {claim?.claimDetails?.InspectionType}
                     </label>
                   </div>
                 </td>

@@ -535,8 +535,8 @@ const Index = ({}) => {
       VehicleTypeOfBody: VehicleModel
         ? VehicleModel
         : claim.claimDetails?.VehicleModel,
-      SurveyType: subType ? subType : "Final",
-      InspectionType: inspectionType ? inspectionType : "Motor",
+      SurveyType: subType ? subType : "Motor",
+      InspectionType: inspectionType ? inspectionType : "Final",
       VehicleDateOfRegistration: DateRegistration,
       VehiclePucNumber: PUCNumber
         ? PUCNumber

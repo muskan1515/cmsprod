@@ -191,7 +191,7 @@ const Form = ({
                       </div>
                     </div>
 
-                    <div className="col-lg-6">
+                   {/*} <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -229,8 +229,8 @@ const Form = ({
                                 : null
                             }
                             onChange={(date) => setDateRegistration(date)}
-                          /> */}
-                          {/* <DatePicker
+                          /> 
+                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
                             selected={
@@ -239,12 +239,12 @@ const Form = ({
                                 : null
                             }
                             onChange={(date) => setDateRegistration(date)}
-                          /> */}
+                          /> 
                         </div>
                       </div>
-                    </div>
+                        </div>*/}
 
-                    <div className="col-lg-6">
+                   {/* <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -272,9 +272,9 @@ const Form = ({
                           />
                         </div>
                       </div>
-                    </div>
+                          </div>*/}
 
-                    <div className="col-lg-6">
+                   {/* <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -304,7 +304,7 @@ const Form = ({
                           />
                         </div>
                       </div>
-                    </div>
+                          </div>*/}
                   </div>
                 ) : (
                   <div className="row">

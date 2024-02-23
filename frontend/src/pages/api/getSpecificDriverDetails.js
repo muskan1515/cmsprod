@@ -18,7 +18,8 @@ import axios from "axios";
         },
         params:{
             LeadId : leadId
-        }
+        },
+        timeout:30000,
         
       });
     const users = userResponse.data;

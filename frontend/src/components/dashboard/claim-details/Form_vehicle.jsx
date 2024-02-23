@@ -258,6 +258,32 @@ const Form_vehicle = ({
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
+                <div className="row">
+                  <label
+                    htmlFor=""
+                    className="col-lg-6 text-color"
+                    style={{
+                      color: "black",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Bancs Vehicle Class
+                  </label>
+                  <label
+                    htmlFor=""
+                    className="col-lg-6 text-color text-end"
+                    style={{
+                      color: "#1560bd",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {BancsVehicleClass}
+                  </label>
+                </div>
+              </td>
+               {/*} <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
@@ -284,7 +310,7 @@ const Form_vehicle = ({
                       ) : ""}
                     </label>
                   </div>
-                </td>
+                      </td>*/}
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -883,32 +909,7 @@ const Form_vehicle = ({
               </tr>
 
               <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Bancs Vehicle Class
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {BancsVehicleClass}
-                    </label>
-                  </div>
-                </td>
+               
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -935,7 +936,7 @@ const Form_vehicle = ({
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
+               {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
@@ -960,7 +961,7 @@ const Form_vehicle = ({
                       {RcRtoCode}
                     </label>
                   </div>
-                </td>
+                    </td>*/}
               </tr>
             </table>
           </div>

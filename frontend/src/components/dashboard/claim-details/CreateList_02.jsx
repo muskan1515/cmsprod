@@ -246,9 +246,10 @@ const CreateList_02 = ({
                     </div>
                   </div>
                 </td>
+                
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                       <label
                         htmlFor=""
                         className="text-color"
@@ -258,20 +259,20 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        Status
+                        Phone -2
                       </label>
                     </div>
-                    <div className="col-lg-8 text-end">
+                    <div className="col-lg-6 text-end">
                       <label
                         htmlFor=""
                         className="text-color"
                         style={{
                           color: "#1560bd",
-                          fontSize: "14px",
+                          fontSize: "13px",
                           fontWeight: "bold",
                         }}
                       >
-                        {checkStatus(claim?.claimStatus?.Status)}
+                        {InsuredMobileNo2}
                       </label>
                     </div>
                   </div>
@@ -303,7 +304,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {subType}
+                        {claim?.claimDetails?.SurveyType}
                       </label>
                     </div>
                   </div>
@@ -350,7 +351,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        Request Type
+                        Inspection Type
                       </label>
                     </div>
                     <div className="col-lg-6  text-end">
@@ -363,7 +364,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {inspectionType}
+                        {claim?.claimDetails?.InspectionType}
                       </label>
                     </div>
                   </div>
@@ -459,38 +460,7 @@ const CreateList_02 = ({
                   </div>
                 </td>
               </tr>
-              <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          color: "black",
-                          fontSize: "13px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Phone -2
-                      </label>
-                    </div>
-                    <div className="col-lg-6 text-end">
-                      <label
-                        htmlFor=""
-                        className="text-color"
-                        style={{
-                          color: "#1560bd",
-                          fontSize: "13px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {InsuredMobileNo2}
-                      </label>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+             
             </table>
           </div>
         </div>
