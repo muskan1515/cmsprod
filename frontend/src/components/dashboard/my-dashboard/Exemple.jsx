@@ -143,11 +143,12 @@ export default function Exemple({
 
   function convertToIST(dateTimeString) {
     const dateTime = new Date(dateTimeString);
-    const istTimeString = dateTime.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-   
+    const istTimeString = dateTime.toLocaleString("en-US", {
+      timeZone: "Asia/Kolkata",
+    });
+
     return istTimeString;
-}
-  
+  }
 
   const formatDate = (dateString) => {
     const options = {
@@ -194,6 +195,9 @@ export default function Exemple({
         registration_no: claim.RegistrationNo,
         region: claim.Region,
         added_date: convertToIST(claim.AddedDate),
+        // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
+        //   timeZone: "Asia/Kolkata",
+        // }),
         city: tempGarage ? tempGarage[1] : "N.Aa",
         state: tempGarage ? tempGarage[2] : "N.A.",
         assigned_garage: tempGarage ? tempGarage[0] : "N.A.",

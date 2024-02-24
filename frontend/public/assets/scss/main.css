@@ -21756,7 +21756,6 @@ input:invalid {
   margin-top: -28px !important ;
 }
 
-
 /* Loader.css */
 
 .loader-container {
@@ -21776,6 +21775,18 @@ input:invalid {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.toast-loading-message {
+  background: #2e008b !important;
+  color: white !important;
+  font-size: 20px;
+  /* width: 34vw; */
+  padding: 30px 20px;
 }
