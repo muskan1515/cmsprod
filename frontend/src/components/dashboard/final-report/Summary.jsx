@@ -20,6 +20,8 @@ const Summary = ({
   Endurance,
   lessImposed,
   setLessExcess,
+  totalMetalRows,
+  settotalMetalRows,
   OtherRemark,
   setOtherRemark,
   lessExcess,
@@ -27,6 +29,7 @@ const Summary = ({
   saveHandler,
   setOther,
   metalSalvageValue,
+  setMetalSalvageValue,
   setLessImposedSum,
   LessImposed,
 
@@ -102,6 +105,7 @@ const Summary = ({
     return a - b > 1 ? a - b : 0;
   };
 
+  console.log(totalMetalRows,"total",metalSalvageValue)
 
   useEffect(()=>{
     console.log(FinalReportNotes)
@@ -120,6 +124,12 @@ const Summary = ({
 
     setPhoneNumber(truncatedValue);
   };
+
+
+  const handleOtherValue=(val)=>{
+    const finalVal = val===""?0 :val
+    setOtherSum(finalVal)
+  }
 
   // const Editor = SomeComponent.Editor;
   const [editorContent, setEditorContent] = useState("");
@@ -511,8 +521,8 @@ const Summary = ({
                     id="propertyTitle"
                     value={
                       Number(totalLabrorAssessed) +
-                      Number(totalPartsAssessed) -(
-                        Number(LessExcess)+Number(LessImposed)+Number(Other))
+                      Number(totalPartsAssessed) 
+                        -Number(LessExcess)-Number(LessImposed)+Number(Other)
                       
                     }
                     // placeholder="Enter Registration No."
@@ -547,6 +557,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={metalSalvageValue}
+                    onChange={(e)=>setMetalSalvageValue(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -573,7 +584,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={
-                      (Number(totalLabrorAssessed + totalPartsAssessed) *
+                      (Number(totalMetalRows) *
                         Number(metalSalvageValue)) /
                       100
                     }
@@ -639,7 +650,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={
-                      (Number(totalLabrorAssessed + totalPartsAssessed) *
+                      (Number(totalMetalRows) *
                         Number(metalSalvageValue)) /
                       100
                     }

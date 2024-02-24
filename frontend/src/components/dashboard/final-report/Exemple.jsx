@@ -110,6 +110,7 @@ const headCells = [
 export default function Exemple_01({
   policyType,
   claim,
+  settotalMetalRows,
   DateOfRegistration,
   setOverallMetailDep,
   setTotalAgeOfVehicle,
@@ -204,9 +205,10 @@ export default function Exemple_01({
           total_estimate = 0,
           total_metal = 0;
         let type = "Both";
+        let metalParts=0;
         newPart.map((part, index) => {
           if (String(part.LeadID) === String(LeadID)) {
-            console.log(part);
+            
             const overall = Number(part.Assessed) * Number(part.QA);
             const overall_e = Number(part.Estimate) * Number(part.QE);
             const GSTT_e = (overall_e * Number(part.GSTPct)) / 100;
@@ -235,9 +237,12 @@ export default function Exemple_01({
                 : String(part.WithTax) === "2"
                 ? "Estimate"
                 : "Assessed";
+              
             if (part.IsActive === 1) {
               total_assessed = total_assessed + (overall + GSTT);
 
+              metalParts  += (part.TypeOfMaterial === "Metal")?(overall+GSTT):0;
+              console.log("metalParts",metalParts,overall+GSTT,index)
               total_metal =
                 total_metal +
                 (part.TypeOfMaterial === "Metal"
@@ -254,6 +259,7 @@ export default function Exemple_01({
         console.log(temp_row);
         setAllRows(temp_row);
         setCurrentType(type);
+        settotalMetalRows(metalParts)
         setMetalSalvageValue(total_metal);
         setTotaAssessed(total_assessed);
         setTotalPartsAssessed(total_estimate);
@@ -388,15 +394,18 @@ export default function Exemple_01({
 
   const calculateVehicleAge = () => {
     if (
-      !claim.vehicleDetails?.DateOfRegistration ||
+      !claim.vehicleDetails?.DateOfRegistration  ||
+      claim?.vehicleDetails?.DateOfRegistration === "undefined" ||
       !claim.claimDetails?.AddedDateTime
     ) {
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
-    const b = getMonthsDifference(claim.claimDetails?.AddedDateTime);
-    setTotalAgeOfVehicle(a + b);
-    return `${a}`;
+
+    const b = getMonthsDifference(claim.accidentDetails?.AccidentAddedDateTime);
+    // setAgeOfVehicle(a+b);
+    console.log("age", b-a);
+    return `${b-a}`;
   };
 
   const calculatePolicyAge = () => {
@@ -892,20 +901,40 @@ export default function Exemple_01({
   // };
 
   const handleTypeChange = (index, val, field) => {
+
     setChange2(true);
+
+
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
-    const dep = calculateDepreciationsPercenatge(
+    const dep = claim?.vehicleDetails?.DateOfRegistration || claim?.vehicleDetails?.DateOfRegistration !=="undeifned" ? calculateDepreciationsPercenatge(
       allDepreciations,
       val,
       DateOfRegistration
-    );
+    ) : 0;
 
     setMetalDep(dep);
 
-    console.log(dep, val, DateOfRegistration);
+    //calculate totlRows
+    let totalMetalRows = 0;
+    allRows.map((row,idx)=>{
+      if((row.type === "Metal" && idx!==index) || (val === "Metal" && idx===index)){
+        const value = Number(row.assessed)*Number(row.qa);
+        const gst = (Number(value)*Number(row.gst))/100;
+
+        const totalRowMetalValue = value+gst;
+        totalMetalRows =  totalMetalRows + totalRowMetalValue;
+      }
+ 
+    });
+
+    settotalMetalRows(totalMetalRows);
+
+    //***** *//
+
+
     const type =
       String(field) === "type"
         ? String(currentField.type) === val
@@ -1140,18 +1169,7 @@ export default function Exemple_01({
                 style={{ border: "1px solid black" }}
               />
             ),
-            sac: (
-              <input
-                className="form-control form-control-table"
-                type="number"
-                value={row.sac}
-                onChange={(e) => handleChange(index, e.target.value, "sac")}
-                required
-                disabled={!edit}
-                id="terms"
-                style={{ border: "1px solid black" }}
-              />
-            ),
+           
             remark: (
               // <input
               //   className="form-control form-control-table"
@@ -1175,36 +1193,36 @@ export default function Exemple_01({
                 <option data-tokens="Status1" value={"Regular"}>
                   Not allowed
                 </option>
-                <option data-tokens="Status1" value={"Regular"}>
+                <option data-tokens="Status1" value={"Intact"}>
                   Intact
                 </option>
-                <option data-tokens="Status2" value={"Add on Policy"}>
+                <option data-tokens="Status2" value={"Repair allowed"}>
                   Repair allowed
                 </option>
-                <option data-tokens="Status1" value={"Regular"}>
+                <option data-tokens="Status1" value={"IMT23"}>
                   IMT23
                 </option>
-                <option data-tokens="Status1" value={"Regular"}>
+                <option data-tokens="Status1" value={"Not correlate"}>
                   Not correlate
                 </option>
-                <option data-tokens="Status2" value={"Add on Policy"}>
+                <option data-tokens="Status2" value={"Not relevant"}>
                   Not relevant
                 </option>
-                <option data-tokens="Status2" value={"Add on Policy"}>
+                <option data-tokens="Status2" value={"Damaged"}>
                   Damaged
                 </option>
-                <option data-tokens="Status1" value={"Regular"}>
+                <option data-tokens="Status1" value={"Broken"}>
                   Broken
                 </option>
-                <option data-tokens="Status1" value={"Regular"}>
+                <option data-tokens="Status1" value={" As per PI"}>
                   As per PI
                 </option>
-                <option data-tokens="Status2" value={"Add on Policy"}>
+                <option data-tokens="Status2" value={"Burnt"}>
                   Burnt
                 </option>
                 <option
                   data-tokens="Status3"
-                  value={"Add on Policy(Not Effective)"}
+                  value={"Not payable"}
                 >
                   Not payable
                 </option>

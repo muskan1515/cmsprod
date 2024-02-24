@@ -192,7 +192,7 @@ const Form_driver = ({
                       fontWeight: "bold",
                     }}
                   >
-                    {claim?.driverDetails?.ValidUpto}
+                    {formatDate(claim?.driverDetails?.VaildUpto)}
                   </label>
                 </div>
               </td>
@@ -326,7 +326,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.driverDetails?.Vov}
+                      {claim?.driverDetails?.LicenseType}
                     </label>
                   </div>
                 </td>
@@ -435,7 +435,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.driverDetails?.DateOfBirth}
+                      {formatDate(claim?.driverDetails?.DateOfBirth)}
                     </label>
                   </div>
                 </td>
@@ -487,7 +487,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.driverDetails?.DateOfIssue}
+                      {formatDate(claim?.driverDetails?.DateOfIssue)}
                     </label>
                   </div>
                 </td>

@@ -50,6 +50,21 @@ const Index = ({}) => {
     useState("");
   const [insuredAddedBy, setInsuredAddedBy] = useState("");
 
+  
+  const formatDate = (dateString) => {
+    const options = {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    };
+
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "en-US",
+      options
+    );
+    return formattedDate;
+  };
+  
   const [InsuredName, setInsuredName] = useState("");
   const [InsuredMailAddress, setInsuredMailAddress] = useState("");
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
@@ -572,18 +587,18 @@ const Index = ({}) => {
     setPhoto(claim?.driverDetails?.Photo ? claim?.driverDetails?.Photo : Photo);
     setValidUpto(
       claim.driverDetails?.VaildUpto
-        ? claim.driverDetails?.VaildUpto
+        ? formatDate(claim.driverDetails?.VaildUpto)
         : ValidUpto
     );
 
     setDateOfBirth(
       claim?.driverDetails?.DateOfBirth
-        ? claim?.driverDetails?.DateOfBirth
+        ? formatDate(claim?.driverDetails?.DateOfBirth)
         : DateOfBirth
     );
     setDateOfIssue(
       claim?.driverDetails?.DateOfIssue
-        ? claim?.driverDetails?.DateOfIssue
+        ? formatDate(claim?.driverDetails?.DateOfIssue)
         : DateOfIssue
     );
 

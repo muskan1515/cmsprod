@@ -1,7 +1,21 @@
-export const AssessmentContent = (insurers, date, current_Date) => {
-  return `In accordance with the instructions received from <span style={{fontWeight:"bold"}}>${insurers}</span>
-    dated ${date} I visited <span style={{fontWeight:"bold"}}>Inspected/Examined Online Video Uploaded By The Undersigned</span>
-    and inspected the ubject vehicle, reported to have met with an accident on ${current_Date} Noida Ext.
+const formatDate = (dateString) => {
+  const options = {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  };
+
+  const formattedDate = new Date(dateString).toLocaleDateString(
+    "en-US",
+    options
+  );
+  return formattedDate;
+};
+
+export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAccident,PlaceOfAccident) => {
+  return `In accordance with the instructions received from ${claimServicingOffice ? claimServicingOffice :"-"}
+    dated ${AllotmentDate ? formatDate(AllotmentDate) :"-"} I visited Inspected/Examined Online Video Uploaded By The Undersigned
+    and inspected the ubject vehicle, reported to have met with an accident on ${DateOfAccident?formatDate(DateOfAccident):"-"}  ${PlaceOfAccident?PlaceOfAccident:"-"}.
     Loss was discussed with the repairer and finally settled as under subject to poky terms, conditions and approval of the Insurers keeping in view
     the cause & nature of accident.
 

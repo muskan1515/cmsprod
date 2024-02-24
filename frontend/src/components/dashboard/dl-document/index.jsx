@@ -30,7 +30,7 @@ const Index = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data.driverDetails);
+       
         setDriverDetails(res.data.data.driverDetails);
       })
       .catch((err) => {
@@ -38,6 +38,7 @@ const Index = () => {
       });
       setIsLoading(false)
     },[]);
+    console.log(driverDetails)
   return (
     <>
       <section className="" style={{ paddingTop: "10px" }}>
@@ -45,7 +46,7 @@ const Index = () => {
           <div className="row">
             <div className="col-lg-12">
               {/* <ErrorPageContent allInfo={allInfo} /> */}
-              {isLoading ? "":<DLData driverDetails={driverDetails} />}
+              <DLData DriverDetails={driverDetails} />
             </div>
           </div>
         </div>

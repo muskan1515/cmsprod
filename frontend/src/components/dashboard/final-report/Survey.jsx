@@ -14,6 +14,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 import getTime from "date-fns/getTime";
 import MyDatePickerTime from "../../common/MyDatePickerTime";
 import TimePicker from "../../common/TimePicker";
+import ReactEditor from "../../common/TextEditor";
 
 const Servey = ({
   phoneNumber,
@@ -33,6 +34,8 @@ const Servey = ({
   setAssessment,
   setPin,
   Pin,
+  InspectionDate,
+  setInspectionDate,
   setPlaceOfSurvey,
   PlaceOfSurvey,
 
@@ -143,14 +146,19 @@ const Servey = ({
 }) => {
   const formatDate = (dateString) => {
     const options = {
+      month: "2-digit",
+      day: "2-digit",
       year: "numeric",
-      month: "short",
-      day: "numeric",
     };
 
-    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "en-US",
+      options
+    );
     return formattedDate;
   };
+
+
 
   const formatTime = (dateString) => {
     const options = {
@@ -165,17 +173,18 @@ const Servey = ({
 
   const calculateVehicleAge = () => {
     if (
-      !claim.vehicleDetails?.DateOfRegistration ||
+      !claim.vehicleDetails?.DateOfRegistration  ||
+      claim?.vehicleDetails?.DateOfRegistration === "undefined" ||
       !claim.claimDetails?.AddedDateTime
     ) {
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
 
-    const b = getMonthsDifference(claim.claimDetails?.AddedDateTime);
+    const b = getMonthsDifference(claim.accidentDetails?.AccidentAddedDateTime);
     // setAgeOfVehicle(a+b);
-    console.log("age", a);
-    return `${a}`;
+    console.log("age", b-a);
+    return `${b-a}`;
   };
 
   const calculateDepreciationOnMetal = () => {
@@ -326,7 +335,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                       value={
                         AccidentAddedDateTime &&
                         AccidentAddedDateTime !== "null"
-                          ?  AccidentAddedDateTime.substring(0, 10)
+                          ?  AccidentAddedDateTime
                           : ""
                       }
                       onChange={(e) => setAccidentAddedDateTime(e.target.value)}
@@ -369,10 +378,11 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                   />
                 :  
                 <TimePicker
-                  selectedTime={AccidentTime ? convertTimeFormat(AccidentTime) : ""}
+                  selectedTime={AccidentTime ? (AccidentTime) : ""}
                   setSelectedTime={setAccidentTime}
                   />
                 }
+                {console.log(AccidentTime)}
                 </div>
               </div>
             </div>
@@ -511,8 +521,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
 
                    value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
           onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
-                  {!isEditMode ? (
-                    <input
+                  <input
                       readOnly={!isEditMode}
                       type={"text"}
                       value={
@@ -523,18 +532,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                       className="form-control"
                       id="propertyTitle"
                     />
-                  ) : (
-                    <input
-                    type="date"
-                      disable={!isEditMode}
-                      value={
-                        SurveyAllotmentDate && SurveyAllotmentDate !== "null"
-                          ? (SurveyAllotmentDate).substring(0,10)
-                          : ""
-                      }
-                      onChange={(e)=>setSurveyAllotmentDate(e.target.value)}
-                    />
-                  )}
+                  
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -552,17 +550,18 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                       // marginTop: "-13px",
                     }}
                   >
-                    Inspection :
+                    Inspection Date:
                   </label>
                 </div>
                 <div className="col-lg-7">
-                  <input
-                    type="text"
-                    value={claim?.claimDetails?.InspectionType}
-                    className="form-control"
-                    id="propertyTitle"
-                  />
-
+                <input
+                disabled={!isEditMode}
+                type="date"
+                  disable={!isEditMode}
+                  value={(InspectionDate && InspectionDate !== "null" ? InspectionDate : "")
+                  }
+                  onChange={(e)=>setInspectionDate(e.target.value)}
+                />
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -593,29 +592,16 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
                 />*/}
-                {!isEditMode ? (<input
-                      readOnly={!isEditMode}
-                      type={"text"}
-                      value={
-                        SurveyConductedDate
-                          ? formatDate(SurveyConductedDate)
-                          : ""
-                      }
-                      className="form-control"
-                      id="propertyTitle"
-                    />
-                  ) : (
+                
                     <input
-                    type="date"
+                    disabled={!isEditMode}
+                    type="text"
                       disable={!isEditMode}
-                      value={
-                        SurveyConductedDate && SurveyConductedDate !== "null"
-                          ? (SurveyConductedDate).substring(0,10)
-                          : ""
+                      value={(SurveyConductedDate && SurveyConductedDate !== "null" ? SurveyConductedDate : "")
                       }
                       onChange={(e)=>setSurveyConductedDate(e.target.value)}
                     />
-                  )}
+                  
               </div>
             </div>
             {/* <div className="my_profile_setting_input form-group">
@@ -627,20 +613,16 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
             <h4>Cause & Nature of Accident :</h4>
             <hr />
           </div>
+          {console.log(CauseOfAccident)}
           <div className="col-lg-12">
             <div>
               <div className="">
-                <Editor
-                  placeholder={AccidentContent(
-                    claim?.insuredDetails?.InsuredName
-                  )}
-                  readOnly={!isEditMode}
-                  value={CauseOfAccident}
-                  onChange={(e)=>setCauseOfAccident(e.target.value)}
-                  
-                onTextChange={(e) => setCauseOfAccident(e.htmlValue)}
-                  style={{ height: "150px" }}
-                />
+              <ReactEditor
+              readOnly={!isEditMode}
+              editorContent={CauseOfAccident}
+              setEditorContent={setCauseOfAccident}
+              />
+             
               </div>
               {/*  <Editor/>*/}
               {/* <textarea
@@ -677,7 +659,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
           <div className="col-lg-12 mb-2">
             <div className="">
               <Editor
-                readonly={!isEditMode}
+                readOnly={!isEditMode}
                 value={PoliceAction}
                 onChange={(e)=>setPoliceAction(e.target.value)}
                 onTextChange={(e) => setPoliceAction(e.htmlValue)}
@@ -718,13 +700,14 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
           </div>
           <div className="row">
             <div className="">
+             
               <Editor
-                readOnly={!isEditMode}
-                value={DetailsOfLoads}
-                onChange={(e)=>setDetailsOfLoads(e.target.value)}
-                onTextChange={(e) => setDetailsOfLoads(e.htmlValue)}
-                style={{ height: "100px" }}
-              />
+              readOnly={!isEditMode}
+              value={DetailsOfLoads}
+              onChange={(e)=>setDetailsOfLoads(e.target.value)}
+              onTextChange={(e) => setDetailsOfLoads(e.htmlValue)}
+              style={{ height: "80px" }}
+            />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -732,13 +715,14 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
             <div className="">
+            
               <Editor
-                readOnly={!isEditMode}
-                value={ThirdPartyLoss}
-                onChange={(e)=>setThirdPartyLoss(e.target.value)}
-                onTextChange={(e) => setThirdPartyLoss(e.htmlValue)}
-                style={{ height: "100px" }}
-              />
+              readOnly={!isEditMode}
+              value={ThirdPartyLoss}
+              onChange={(e)=>setThirdPartyLoss(e.target.value)}
+              onTextChange={(e) => setThirdPartyLoss(e.htmlValue)}
+              style={{ height: "80px" }}
+            />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -746,18 +730,15 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
             <h4>Assesment :</h4>
             <hr />
             <div className="">
+              
               <Editor
-                placeholder={AssessmentContent(
-                  claim?.claimDetails?.InsuranceCompanyNameAddress,
-                  formatDate(claim?.claimDetails?.AddedDateTime),
-                  formatDate("")
-                )}
-                readOnly={!isEditMode}
-                value={Assessment}
-                onChange={(e)=>setAssessment(e.target.value)}
-                onTextChange={(e) => setAssessment(e.htmlValue)}
-                style={{ height: "300px" }}
-              />
+
+              readOnly={!isEditMode}
+              value={Assessment}
+              onChange={(e)=>setAssessment(e.target.value)}
+              onTextChange={(e) => setAssessment(e.htmlValue)}
+              style={{ height: "80px" }}
+            />
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>

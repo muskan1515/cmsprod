@@ -48,6 +48,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [overallMetalDep, setOverallMetailDep] = useState(0);
   const [totalAgeOfvehicle, setTotalAgeOfVehicle] = useState(0);
 
+  const [InspectionDate,setInspectionDate]=useState("");
   const [totalAssessed, setTotalAssessed] = useState(0);
   const [totalEstimate, setTotalEstimate] = useState(0);
 
@@ -129,18 +130,20 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   }, []);
 
 
+  const [totalMetalRows,settotalMetalRows]=useState(0);
   const returnTotal = () => {
     const a =
       Number(totalLabrorAssessed) +
       Number(totalPartsAssessed) +
       (Number(LessExcess) - Number(LessImposed) + Number(Other));
     const b =
-      (Number(totalLabrorAssessed + totalPartsAssessed) *
+      (Number(totalMetalRows) *
         Number(metalSalvageValue)) /
       100;
 
     return a - b > 1 ? a - b : 0;
   };
+
 
   const calculateGSTValue = (original, gstValue, gst) => {
     if (gst % 2 !== 0) {
@@ -152,7 +155,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const calculateGSTWithPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
     if (String(type) === "1" && gst % 2 !== 0) {
-      return (Number(original) * 12.5) / 100;
+      return claim?.claimDetails?.PolicyType === "Regular" ? (Number(original) * 12.5) / 100 : 0;
     }
     return 0;
   };
@@ -227,11 +230,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         const current_row_assessed =
           Number(row?.assessed) -
           calculateGSTWithPaintValue(row?.assessed, row.type, row.gst);
-        console.log(
-          "sum",
-          Number(row?.assessed) -
-            calculateGSTWithPaintValue(row?.assessed, row.type, row.gst)
-        );
+      
         total_taxable_amount =
           total_taxable_amount +
           (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
@@ -443,6 +442,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setDateOfBirth(claim?.driverDetails?.DateOfBirth || "");
     //summary states
 
+    setAccidentTime(claim?.accidentDetails?.TimeOfAccident ? claim?.accidentDetails?.TimeOfAccident : "");
     setFinalReportNotes(claim?.summaryDetails?.FinalReportNotes ? claim?.summaryDetails?.FinalReportNotes : "");
     setTotalLabor(claim?.summaryDetails?.TotalLabor ? claim?.summaryDetails?.TotalLabor : 0 );
     setTotalEstimateSum( claim?.summaryDetails?.TotalEstimate ? claim?.summaryDetails?.TotalEstimate : 0);
@@ -474,11 +474,13 @@ const [AccidentTime,setAccidentTime]=useState("");
     //
     setOtherRemark(claim?.summaryDetails?.OtherRemark?claim?.summaryDetails?.OtherRemark:"");
     
+    setInspectionDate(claim?.accidentDetails?.InspectionDate || "");
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress );
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 );
     setInsuredMobileNo2(
       claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 
     );
+    setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident? claim?.accidentDetails?.CauseOfAccident:"")
     setVehicleUpto(claim?.vehicleDetails?.Upto);
     setClaimNumber(claim?.claimDetails?.ClaimNumber );
     setEngineType(claim?.vehicleDetails?.ModeOfCheck );
@@ -500,6 +502,8 @@ const [AccidentTime,setAccidentTime]=useState("");
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
 
+    setPoliceAction(claim?.accidentDetails?.PoliceAction)
+
     setLessImposed(claim?.summaryDetails?.LessImposed)
 
     setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration );
@@ -514,17 +518,17 @@ const [AccidentTime,setAccidentTime]=useState("");
 
 
     setDriverRemark(claim?.driverDetails?.Remark || "");
-    setAccidentAddedDateTime(claim?.accidentDetails?.AddedDateTime ||"");
+    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident ||"");
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
-    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate||"");
+    setSurveyAllotmentDate((claim?.claimDetails?.AddedDateTime)||"");
     setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||"");
     //Drivers Details
     setDriverName(claim?.driverDetails?.DriverName);
     setDriverAddedDate(claim?.driverDetails?.DriverAddedDate);
-    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority);
+    setIssuingAuthority(claim?.driverDetails?.RtoName);
     setLicenseNumber(claim?.driverDetails?.LicenseNumber);
     setLicenseType(claim?.driverDetails?.LicenseType);
-    setBadgeNumber(claim?.driverDetails?.BadgeNumber);
+    setBadgeNumber(claim?.driverDetails?.BadgeNumber ? claim?.driverDetails?.BadgeNumber : "--");
 
     //Vehicle Detais
     setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber);
@@ -564,7 +568,6 @@ const [AccidentTime,setAccidentTime]=useState("");
     setVehicleOdometerReading(claim?.vehicleDetails?.OdometerReading);
     setDateOfIssue(claim?.driverDetails?.DateOfIssue);
     setVehiclePreAccidentCondition(claim?.vehicleDetails?.PreAccidentCondition);
-    setSurveyAllotmentDate(claim?.accidentDetails?.SurveyAllotmentDate || "");
     setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate);
     setVehicleTaxParticulars(claim?.vehicleDetails?.TaxParticulars);
     setPUCNumber(claim?.vehicleDetails?.PucNumber);
@@ -612,16 +615,18 @@ const [AccidentTime,setAccidentTime]=useState("");
   // console.log("PolicyPeriodStart-----------",PolicyPeriodStart,claim?.claimDetails?.PolicyPeriodStart);
   const calculateVehicleAge = () => {
     if (
-      !claim.vehicleDetails?.DateOfRegistration ||
+      !claim.vehicleDetails?.DateOfRegistration  ||
+      claim?.vehicleDetails?.DateOfRegistration === "undefined" ||
       !claim.claimDetails?.AddedDateTime
     ) {
       return "0";
     }
     const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
-    const b = getMonthsDifference(claim.claimDetails?.AddedDateTime);
 
-    //  setAgeOfvehicleTotal(a);
-    return `${a}`;
+    const b = getMonthsDifference(claim.accidentDetails?.AccidentAddedDateTime);
+    // setAgeOfVehicle(a+b);
+    console.log("age", b-a);
+    return `${b-a}`;
   };
 
   const calculateDepreciationOnMetal = () => {
@@ -744,7 +749,8 @@ const [AccidentTime,setAccidentTime]=useState("");
       PoliceAction,
       ThirdPartyLoss,
       Assessment,
-
+      AccidentTime,
+      InspectionDate,
       TotalLabor:totalLabrorAssessed,
       TotalEstimate : totalPartsEstimate + totalLabrorEstimate,
       LessExcess,
@@ -1116,6 +1122,8 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <Servey
+              InspectionDate={InspectionDate}
+              setInspectionDate={setInspectionDate}
                 SomeComponent={SomeComponent}
                 isEditMode={isEditMode}
                 AccidentTime={AccidentTime}
@@ -1253,6 +1261,7 @@ const [AccidentTime,setAccidentTime]=useState("");
                 <Exemple
                   LeadId={leadId}
                   claim={claim}
+                  settotalMetalRows={settotalMetalRows}
                   DateOfRegistration={DateRegistration}
                   policyType={policyType}
                   includeDepreciation={includeDepreciation}
@@ -1475,6 +1484,8 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <Summary
+              totalMetalRows={totalMetalRows}
+              settotalMetalRows={settotalMetalRows}
               FinalReportNotes={FinalReportNotes}
               setFinalReportNotes={setFinalReportNotes}
                 metaldepPct={metaldepPct}

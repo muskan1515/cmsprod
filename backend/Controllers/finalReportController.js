@@ -44,6 +44,7 @@ const updateFinalReport = (req,res)=>{
       AddedBy,
       Verification,
       GarageAddedBy,
+      InspectionDate,
       GarageContactNo1,
       GarageContactNo2,
       GarageNameAndAddress,
@@ -71,7 +72,7 @@ const updateFinalReport = (req,res)=>{
       VehicleTaxParticulars,
       VehicleSeatingCapacity,
       AccidentAddedDateTime,
-  
+      AccidentTime,
       PlaceOfLoss,
       SurveyAllotmentDate,
       SurveyConductedDate,
@@ -166,7 +167,7 @@ const updateFinalReport = (req,res)=>{
     IDV='${IDV}',
     MailRecieveDate='${MailRecieveDate}',
     HPA='${HPA}',
-    AddedDateTime = '${AddedDateTime}',
+    AddedDateTime = '${SurveyAllotmentDate}',
     TotalLoss = ${(TotalLoss) ? 1 : 0},
     IMT = ${(IMT) ? 1 : 0}
     WHERE LeadID = ${leadId};
@@ -235,7 +236,6 @@ const updateFinalReport = (req,res)=>{
     UPDATE AccidentDetails
     SET
     PlaceOfLoss = '${PlaceOfLoss}',
-    SurveyAllotmentDate = '${SurveyAllotmentDate}',
     SurveyConductedDate ='${SurveyConductedDate}',
     Pin='${Pin}',
     PlaceOfSurvey='${PlaceOfSurvey}',
@@ -244,7 +244,8 @@ const updateFinalReport = (req,res)=>{
     PoliceAction='${PoliceAction}',
     ThirdPartyLoss='${ThirdPartyLoss}',
     Assessment='${Assessment}',
-    DateOfAccident='${AccidentAddedDateTime}'
+    DateOfAccident='${AccidentAddedDateTime}',
+    TimeOfAccident='${AccidentTime}'
     WHERE LeadID = ${leadId};
   `;
 

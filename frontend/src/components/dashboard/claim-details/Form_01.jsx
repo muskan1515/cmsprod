@@ -468,17 +468,17 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
-                            dateFormat="dd/MM/yyyy"
-                            className="form-control"
-                            id="propertyTitle"
-                            setSelectedDate={setDateOfBirth}
-                            selectedDate={
-                              DateOfBirth ? new Date(DateOfBirth) : ""
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
+                        <DatePicker
+                        className="form-control"
+                        id="propertyTitle"
+                        dateFormat="dd/MM/yyyy"
+                        selected={
+                          DateOfBirth !== null && !isNaN(new Date(DateOfBirth))
+                            ? new Date(DateOfBirth)
+                            : null
+                        }
+                        onChange={(date) => setDateOfBirth(date)}
+                      />
                         </div>
                       </div>
                     </div>
@@ -529,17 +529,17 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
-                            dateFormat="dd/MM/yyyy"
-                            className="form-control"
-                            id="propertyTitle"
-                            setSelectedDate={setDateOfIssue}
-                            selectedDate={
-                              DateOfIssue ? new Date(DateOfIssue) : ""
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
+                        <DatePicker
+                        className="form-control"
+                        id="propertyTitle"
+                        dateFormat="dd/MM/yyyy"
+                        selected={
+                          DateOfIssue !== null && !isNaN(new Date(DateOfIssue))
+                            ? new Date(DateOfIssue)
+                            : null
+                        }
+                        onChange={(date) => setDateOfIssue(date)}
+                      />
                         </div>
                       </div>
                     </div>
@@ -566,23 +566,23 @@ const Form_01 = ({
                             id="propertyTitle"
                             setSelectedDate={setValidUpto}
                             selectedDate={
-                              ValidUpto ? new Date(ValidUpto) : ""
+                              ValidUpto || ValidUpto!== "undefined" ? new Date(ValidUpto) : ""
                             }
 
                             // placeholder="Enter Registration No."
                           /> */}
                           {console.log("ValidUpto+++++++++", ValidUpto)}
                           <DatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            dateFormat="dd/MM/yyyy"
-                            selected={
-                              ValidUpto !== null && !isNaN(new Date(ValidUpto))
-                                ? new Date(ValidUpto)
-                                : null
-                            }
-                            onChange={(date) => setValidUpto(date)}
-                          />
+                className="form-control"
+                id="propertyTitle"
+                dateFormat="dd/MM/yyyy"
+                selected={
+                  ValidUpto !== null && !isNaN(new Date(ValidUpto))
+                    ? new Date(ValidUpto)
+                    : null
+                }
+                onChange={(date) => setValidUpto(date)}
+              />
                         </div>
                       </div>
                     </div>
@@ -614,7 +614,7 @@ const Form_01 = ({
                           />
                         </div>
                       </div>
-                    </div>
+                    </div>*/
 
                     {/*<div className="col-lg-6">
                       <div className="row mt-1">

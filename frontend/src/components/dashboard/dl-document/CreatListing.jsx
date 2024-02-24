@@ -19,6 +19,7 @@ import { useRef } from "react";
 const RCData = ({ DriverDetails }) => {
   console.log(DriverDetails);
 
+
   const rcDetails = {
     "Driver Name":"N.A.",
     "Father Name":"N.A",
@@ -34,10 +35,7 @@ const RCData = ({ DriverDetails }) => {
     "Badge Number":"N.A.",
     "Rto Name":"N.A.",
     "Cov":"N.A.",
-    "Vaild Upto":"N.A.",
-    "Valid From":"N.A.",
-    "Valid Until Ntv":"N.A.",
-    "Valid Until Tv":"N.A.",
+    "Vaild Upto":"N.A."
   };
 
   const [rcDetailData,setRcDetailData]=useState({})
@@ -49,7 +47,6 @@ const RCData = ({ DriverDetails }) => {
 const rcDetailsUpdated = {
   "Driver Name": addDefaultValue(DriverDetails?.DriverName),
   "Father Name": addDefaultValue(DriverDetails?.FatherName),
-  "Age": addDefaultValue(DriverDetails?.Age),
   "Address": addDefaultValue(DriverDetails?.Address),
   "Mobile": addDefaultValue(DriverDetails?.Mobile),
   "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
@@ -57,14 +54,9 @@ const rcDetailsUpdated = {
   "Gender": addDefaultValue(DriverDetails?.Gender),
   "Issuing Authority": addDefaultValue(DriverDetails?.IssuingAuthority),
   "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
-  "License Type": addDefaultValue(DriverDetails?.LicenseType),
+  "License Type": addDefaultValue(DriverDetails?.Vov),
   "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
-  "Rto Name": addDefaultValue(DriverDetails?.RtoName),
-  "Cov": addDefaultValue(DriverDetails?.Vov),
-  "Vaild Upto": addDefaultValue(DriverDetails?.VaildUpto),
-  "Valid From": addDefaultValue(DriverDetails?.ValidFrom),
-  "Valid Until Ntv": addDefaultValue(DriverDetails?.ValidUntilNtv),
-  "Valid Until Tv": addDefaultValue(DriverDetails?.ValidUntilTv),
+  "Vaild Upto": addDefaultValue(DriverDetails?.VaildUpto)
     };
 
     setRcDetailData(rcDetailsUpdated);
