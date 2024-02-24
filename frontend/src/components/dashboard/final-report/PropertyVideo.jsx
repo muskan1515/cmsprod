@@ -538,7 +538,8 @@ const [AccidentTime,setAccidentTime]=useState("");
     setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd);
     setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart);
     setVehicleMakeVariantModelColor(
-      claim?.vehicleDetails?.MakerDesc,"",claim?.vehicleDetails?.MakerModel
+      claim?.vehicleDetails?.MakerDesc?
+      claim?.vehicleDetails?.MakerDesc+","+claim?.vehicleDetails?.MakerModel : VehicleMakeVariantModelColor
     );
     
     setVehicleColor(

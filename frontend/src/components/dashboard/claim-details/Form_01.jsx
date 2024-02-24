@@ -66,6 +66,11 @@ const Form_01 = ({
   const [details, setDetails] = useState([]);
   const [change, setChange] = useState(false);
 
+  function removeMultipleSpaces(inputString) {
+    // Use regular expression to replace multiple spaces with a single space
+    const cleanedString = inputString.replace(/\s+/g, ' ').trim();
+    return cleanedString;
+}
   const handleFetchData = () => {
     if (
       !claim?.driverDetails?.LicenseNumber ||
@@ -234,7 +239,7 @@ const Form_01 = ({
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setDriverName(e.target.value)}
-                            value={DriverName}
+                            value={removeMultipleSpaces(DriverName)}
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -263,44 +268,13 @@ const Form_01 = ({
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setFatherName(e.target.value)}
-                            value={FatherName}
+                            value={removeMultipleSpaces(FatherName)}
                             // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Issuing Authority <span class="req-btn">*</span>
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={IssuingAuthority}
-                            onChange={(e) =>
-                              setIssuingAuthority(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
 
                     <div className="col-lg-6">
                       <div className="row mt-1">

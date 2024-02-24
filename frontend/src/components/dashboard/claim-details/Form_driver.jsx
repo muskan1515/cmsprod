@@ -302,32 +302,7 @@ const Form_driver = ({
                 </td>
               </tr>
               <tr>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Issuing Authority
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.IssuingAuthority}
-                    </label>
-                  </div>
-                </td>
+              
 
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
@@ -351,36 +326,11 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.driverDetails?.LicenseType}
-                    </label>
-                  </div>
-                </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Cov
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
                       {claim?.driverDetails?.Vov}
                     </label>
                   </div>
                 </td>
+               
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>

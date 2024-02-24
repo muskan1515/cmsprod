@@ -211,7 +211,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.claimDetails?.ReferenceNumber}
+                        {claim?.claimDetails?.ReferenceNo}
                       </label>
                     </div>
                   </div>
