@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 const Index = () => {
   const router = useRouter();
   const [driverDetails,setDriverDetails]=useState({});
+  const [isLoading,setIsLoading]=useState(true)
  
   useEffect(() => {
 
@@ -35,6 +36,7 @@ const Index = () => {
       .catch((err) => {
         toast.error(err);
       });
+      setIsLoading(false)
     },[]);
   return (
     <>
@@ -43,7 +45,7 @@ const Index = () => {
           <div className="row">
             <div className="col-lg-12">
               {/* <ErrorPageContent allInfo={allInfo} /> */}
-              <DLData driverDetails={driverDetails} />
+              {isLoading ? "":<DLData driverDetails={driverDetails} />}
             </div>
           </div>
         </div>

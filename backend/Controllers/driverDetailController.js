@@ -81,7 +81,7 @@ function removeBase64Prefix(encodedImage) {
       DriverName,
       Pht,
       Photo,
-      Vov,
+      LicenseType,
       VaildUpto,
       RtoName,
       Address,
@@ -100,17 +100,17 @@ function removeBase64Prefix(encodedImage) {
       '${'photo'}',
       '${'photo'}',
       '${details?.cov}',
-      CAST('${details?.vaildupto}' AS DATETIME),
+      '${details?.vaildupto}',
       '${details?.rtoname}',
       '${details?.address}',
       '${details?.mobile}',
       '${details?.bloodgroup}',
       '${details?.gender}',
       '${details?.fname}',
-      CAST('${details?.dob}' AS DATETIME),
-      CAST('${details?.issuedate}' AS DATETIME),
+      '${details?.dob}',
+     '${details?.issuedate}',
       '${details}',
-      ${leadId}
+      '${leadId}'
   );
     `;
 
@@ -123,16 +123,17 @@ SET
     DriverName = '${details?.name}',
     Pht = '${''}',
     Photo = '${''}',
-    Vov = '${details?.cov}',
-    VaildUpto = CAST('${details?.vaildupto}' AS DATETIME),
+    LicenseType = '${details?.cov}',
+    VaildUpto = '${details?.validupto}',
     RtoName = '${details?.rtoname}',
     Address = '${details?.address}',
     Mobile = '${details?.mobile}',
     BloodGroup = '${details?.bloodgroup}',
     Gender = '${details?.gender}',
     FatherName = '${details?.fname}',
-    DateOfBirth = CAST('${details?.dob}' AS DATETIME),
-    DateOfIssue = CAST('${details?.issuedate}' AS DATETIME)
+    DateOfBirth = '${details?.dob}',
+    DateOfIssue = '${details?.issuedate}',
+    Remark='${'Verified from Online'}'
 WHERE
     LeadID = ${leadId};`;
 

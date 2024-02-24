@@ -182,6 +182,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         TaxParticulars='${additionalInfo?.vehicleTaxUpto}',
         RegLadenWt='${details?.rc_gvw}',
         VehicleClassDescription='${details?.rc_vh_class_desc}',
+        Remark='${'Verified from Online'}',
         StateCode='${details?.state_cd}'
         WHERE
             LeadId = ${leadId};

@@ -17,6 +17,7 @@ import jsPDF from "jspdf";
 import { useRef } from "react";
 
 const RCData = ({ DriverDetails }) => {
+  console.log(DriverDetails);
 
   const rcDetails = {
     "Driver Name":"N.A.",
@@ -39,7 +40,7 @@ const RCData = ({ DriverDetails }) => {
     "Valid Until Tv":"N.A.",
   };
 
-  const [rcDetailData,setRcDetailData]=useState(rcDetails)
+  const [rcDetailData,setRcDetailData]=useState({})
 
   useEffect(()=>{
 
@@ -67,12 +68,9 @@ const rcDetailsUpdated = {
     };
 
     setRcDetailData(rcDetailsUpdated);
-
-    rcDetails
-
+  
   },[DriverDetails]);
-
-  const handleExtract = async (format) => {
+  {/*const handleExtract = async (format) => {
     if (format === "Word") {
       // Generate Word document
       const doc = new Document();
@@ -110,7 +108,7 @@ const rcDetailsUpdated = {
       });
       saveAs(blob, "RC_Details.pdf");
     }
-  };
+  };*/}
 
   const pdfRef = useRef();
 
@@ -152,7 +150,7 @@ const rcDetailsUpdated = {
           </button>
         </div> */}
 
-        <Dropdown>
+       {/*} <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-extract">
             Extract
           </Dropdown.Toggle>
@@ -166,7 +164,7 @@ const rcDetailsUpdated = {
               </button>
             </Dropdown.Item>
           </Dropdown.Menu>
-        </Dropdown>
+      </Dropdown>*/}
       </div>
       <div style={{ width: "30%", margin: "0 auto" }}>
         <table
@@ -198,7 +196,7 @@ const rcDetailsUpdated = {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(rcDetailData).map(([key, value]) => (
+            { rcDetailData ? Object.entries(rcDetailData)?.map(([key, value]) => (
               <tr key={key} style={{ borderBottom: "1px solid #ddd" }}>
                 <td
                   style={{ color: "black", textAlign: "left", padding: "10px" }}
@@ -211,7 +209,7 @@ const rcDetailsUpdated = {
                   {value}
                 </td>
               </tr>
-            ))}
+            )):""}
           </tbody>
         </table>
       </div>

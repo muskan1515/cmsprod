@@ -194,7 +194,7 @@ export default function Exemple({
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,
-        added_date: convertToIST(claim.AddedDate),
+        added_date: (claim.AddedDate),
         // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
         //   timeZone: "Asia/Kolkata",
         // }),

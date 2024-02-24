@@ -6,7 +6,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast, { Toaster } from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const CreateList = () => {
   const [applicantNumber, setApplicantNumber] = useState("");
@@ -129,11 +129,9 @@ const CreateList = () => {
       toast.error("Policy Number should be filled !!");
     }
     if (!region) {
-      toast.error("Region should be filled!!", {
-        // className: "toast-message",
-      });
+      toast.error("Region should be filled!!");
     } else {
-      toast.loading("Adding claim!!", { className: "toast-loading-message" });
+      toast.loading("Adding claim!!");
       axios
         .post("/api/addClaim", payload, {
           headers: {
@@ -144,9 +142,7 @@ const CreateList = () => {
         .then((res) => {
           toast.dismiss();
           // toast.success("Successfully added");
-          toast.success("Success Notification !", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+          toast.success("Success Notification !");
           // alert("Successfully added");
           router.push("/my-dashboard");
         })
