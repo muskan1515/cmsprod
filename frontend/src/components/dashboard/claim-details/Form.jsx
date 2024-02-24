@@ -25,7 +25,6 @@ const Form = ({
   setVehicleRegisteredNumber,
   setEngineType,
   EngineType,
-  updateHandlerAfterFetching,
   VehicleRegisteredOwner,
   setVehicleRegisteredOwner,
   DateRegistration,
@@ -251,7 +250,7 @@ const Form = ({
             .then((res) => {
               toast.success("Successfully fetched!");
               toast.dismiss();
-              updateHandlerAfterFetching();
+              window.location.reload();
             })
             .catch((err) => {
               toast.error("Record Not found or Server Error");

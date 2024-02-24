@@ -110,7 +110,7 @@ const Form_01 = ({
         .then(() => {
           toast.success("Successfully fetched!!");
           toast.dismiss();
-          updateHandlerAfterFetching();
+          window.location.reload();
         })
         .catch((err) => {
           toast.dismiss();

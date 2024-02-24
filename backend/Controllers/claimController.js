@@ -278,7 +278,7 @@ const addClaim =  (req, res) => {
                       //   }
                       // });
     
-                      if(InsuredMailAddress !== null ){
+                      if(InsuredMailAddress !== "" ){
                       axios
                         .post(
                           `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
@@ -308,7 +308,7 @@ const addClaim =  (req, res) => {
                           });
                         });
                       }
-                        if (GarageMailAddress !== null) {
+                        if (GarageMailAddress !== "") {
                           axios
                             .post(
                               `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
@@ -337,7 +337,7 @@ const addClaim =  (req, res) => {
                               });
                             });
                         }
-                        if (BrokerMailAddress !== null) {
+                        if (BrokerMailAddress !== "") {
                           axios
                             .post(
                               `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
@@ -477,6 +477,7 @@ const getSpecificClaim = async (req, res) => {
         MakeVariantModelColor,
         TaxParticulars,
         TypeOfVerification,
+        VehicleClassDescription,
         LeadId
          FROM VehicleDetailsOnline WHERE LeadId=?`,
         [leadId]
@@ -550,6 +551,7 @@ const getSpecificClaim = async (req, res) => {
         FitUpto,
         TransferDate,
         AddedBy,
+        VehicleClassDescription,
         LeadID
         FROM VehicleDetails WHERE LeadID=?`,
         [leadId]

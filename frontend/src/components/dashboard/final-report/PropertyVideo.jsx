@@ -538,7 +538,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd);
     setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart);
     setVehicleMakeVariantModelColor(
-      claim?.vehicleDetails?.MakeVariantModelColor
+      claim?.vehicleDetails?.MakerDesc,"",claim?.vehicleDetails?.MakerModel
     );
     
     setVehicleColor(
@@ -558,7 +558,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setTypeOfDate(temp);
     setVehicleTypeOfBody(claim?.vehicleDetails?.TypeOfBody);
     setVehicleCubicCapacity(claim?.vehicleDetails?.CubicCapacity);
-    setVehicleClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle);
+    setVehicleClassOfVehicle(claim?.vehicleDetails?.VehicleClassDescription);
     setVehicleFuelType(claim?.vehicleDetails?.FuelType);
     setVehicleOdometerReading(claim?.vehicleDetails?.OdometerReading);
     setDateOfIssue(claim?.driverDetails?.DateOfIssue);

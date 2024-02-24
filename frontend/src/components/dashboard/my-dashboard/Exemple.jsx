@@ -142,14 +142,9 @@ export default function Exemple({
   };
 
   function convertToIST(dateTimeString) {
-    // Assuming dateTimeString is in UTC format or any other format that JavaScript can parse
-  
-    // Create a Date object from the provided date-time string
     const dateTime = new Date(dateTimeString);
-  
-    // Format the IST time as a string
     const istTimeString = dateTime.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-  
+   
     return istTimeString;
 }
   

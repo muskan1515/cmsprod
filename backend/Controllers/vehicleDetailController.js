@@ -56,7 +56,6 @@ const getSpecificVehicleDetails = async (req, res) => {
       console.log(result.data.vehicleDetails?.Data.result);
       const details = result.data.vehicleDetails?.Data.result;
       const stringformat = convertObjectToString(details);
-      console.log("stringFormat",stringformat);
       
       if(!details){
         return res.status(500).send("Internal Server Error");
@@ -95,10 +94,12 @@ const getSpecificVehicleDetails = async (req, res) => {
         ApiResponse,
         PucValidUntil,
         PucNumber,
-        VehicleInsuranceCompany,
         MakeVariantModelColor,
         TaxParticulars,
-
+        RegLadenWt,
+        VehicleClassDescription,
+        StateCode,
+        VehicleInsuranceCompany,
         LeadId
     )
     VALUES (
@@ -133,9 +134,12 @@ const getSpecificVehicleDetails = async (req, res) => {
         '${stringformat}',
         '${additionalInfo?.puccUpto}',
         '${additionalInfo?.puccNumber}',
-        '${additionalInfo?.rcFinancer}',
         '${additionalInfo?.vehicleColour}',
         '${additionalInfo?.vehicleTaxUpto}',
+        '${details?.rc_gvw}',
+        '${details?.rc_vh_class_desc}',
+        '${details?.state_cd}',
+        '${details?.rc_insurance_comp}',
         ${leadId}
     );
     `;
@@ -145,7 +149,7 @@ const getSpecificVehicleDetails = async (req, res) => {
           SET
         RegisteredNumber = '${details?.rc_regn_no}',
         TypeOfBody = '${details?.bancs_Body_Type}',
-        DateOfRegistration = CAST('${details?.rc_regn_dt}' AS DATETIME),
+        DateOfRegistration = '${details?.rc_regn_dt}',
         EngineNumber = '${details?.rc_eng_no}',
         ChassisNumber = '${details?.rc_chasi_no}',
         FuelType = '${details?.bancs_Fuel_Type}',
@@ -153,31 +157,39 @@ const getSpecificVehicleDetails = async (req, res) => {
         MakerModel = '${details?.rc_maker_model}',
         CubicCapacity = '${details?.rc_cubic_cap}',
         SeatingCapacity = '${details?.rc_seat_cap}',
-        FitUpto = CAST('${details?.rc_fit_upto}' AS DATETIME),
+        FitUpto = '${details?.rc_fit_upto}',
         PasiaModelCode = '${details?.rc_pasia_model_code}',
         VehicleType = '${details?.rc_vehicle_type}',
         BancsModelCode = '${details?.bancs_model_code}',
         BancsMakeCode = '${details?.bancs_make_code}',
         BancsSubtypeCode = '${details?.bancs_Subtype_code}',
         BancsBodyType = '${details?.bancs_Body_Type}',
+        BancsVehicleClass='${details?.bancs_Vehicle_class}',
         BancsVehicleSegment = '${details?.bancs_Vehicle_Segment}',
         RcRtoCode = '${details?.rc_rto_code}',
         VehicleRcStatus = '${details?.rc_status}',
         VehicleBlackListStatus = '${details?.rc_blacklist_status}',
         VehicleRegistedAt = '${details?.rc_registered_at}',
         VehicleInsuranceCompany = '${details?.rc_insurance_comp}',
-        ManufactureMonthYear = CAST('${details?.rc_manu_month_yr}' AS DATETIME),
+        ManufactureMonthYear = '${details?.rc_manu_month_yr}',
         PermanentAddress = '${details?.rc_permanent_address}',
         ClassOfVehicle = '${details?.bancs_Vehicle_class}',
         RegisteredOwner = '${details?.rc_owner_name}',
-        VehicleInsuranceUpto = CAST('${details?.rc_insurance_upto}' AS DATETIME)
+        VehicleInsuranceUpto ='${details?.rc_insurance_upto}',
+        PucValidUntil='${additionalInfo?.puccUpto}',
+        PucNumber='${additionalInfo?.puccNumber}',
+        MakeVariantModelColor='${additionalInfo?.vehicleColour}',
+        TaxParticulars='${additionalInfo?.vehicleTaxUpto}',
+        RegLadenWt='${details?.rc_gvw}',
+        VehicleClassDescription='${details?.rc_vh_class_desc}',
+        StateCode='${details?.state_cd}'
         WHERE
             LeadId = ${leadId};
 
         `;
 
     
-      console.log(updateVehicleDetails);
+      console.log(insertVehicleDetails,updateVehicleDetails);
     
         db.query(insertVehicleDetails, (error, results) => {
           if (error) {
