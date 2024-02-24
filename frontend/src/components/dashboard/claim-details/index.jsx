@@ -266,7 +266,6 @@ const Index = ({}) => {
     );
 
     setInsuranceCompanyNameAddress(
-<<<<<<< Updated upstream
       claim?.claimDetails?.InsuranceCompanyNameAddress
         ? claim?.claimDetails?.InsuranceCompanyNameAddress
         : insuranceCompanyNameAddress
@@ -374,31 +373,6 @@ const Index = ({}) => {
         ? claim?.vehicleDetails?.ChassisNumber
         : VehicleChassisNumber
     );
-=======
-      claim?.claimDetails?.InsuranceCompanyNameAddress ?  claim?.claimDetails?.InsuranceCompanyNameAddress : insuranceCompanyNameAddress
-    );
-    setSubType(claim?.claimDetails?.SurveyType ? claim?.claimDetails?.SurveyType : subType);
-    setLicenseNumber(claim?.driverDetails?.LicenseNumber ? claim?.driverDetails?.LicenseNumber : LicenseNumber);
-    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority ? claim?.driverDetails?.IssuingAuthority : IssuingAuthority);
-    setInsuredAddedBy(claim?.insuredDetails?.AddedBy?claim?.insuredDetails?.AddedBy : insuredAddedBy);
-    setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber ? claim?.vehicleDetails?.RegisteredNumber : VehicleRegisteredNumber);
-    setInsuredName(claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : InsuredName);
-    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress ? claim?.insuredDetails?.InsuredMailAddress : InsuredMailAddress);
-    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 ? claim?.insuredDetails?.InsuredMobileNo1 : InsuredMobileNo1);
-    setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2 ? claim?.insuredDetails?.InsuredMobileNo1 : InsuredMobileNo2);
-    setSubType(claim?.claimDetails?.SurveyType ? claim?.claimDetails?.SurveyType : subType);
-    setInspectionType(claim?.claimDetails?.InspectionType ? claim?.claimDetails?.InspectionType : inspectionType);
-    setVehicleModel(claim.vehicleDetails?.TypeOfBody ? claim.vehicleDetails?.TypeOfBody : VehicleModel);
-    setEngineType(claim?.vehicleDetails?.ModeOfCheck ? claim?.vehicleDetails?.ModeOfCheck : EngineType);
-    setVehicleRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner ? claim?.vehicleDetails?.RegisteredOwner : VehicleRegisteredOwner);
-    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration ? claim?.vehicleDetails?.DateOfRegistration : DateRegistration);
-    setPUCNumber(claim?.vehicleDetails?.PucNumber ? claim?.vehicleDetails?.PucNumber : PUCNumber );
-    setTransferDate(claim?.vehicleDetails?.TransferDate ? claim?.vehicleDetails?.TransferDate : TransferDate);
-    setEngineNumber(claim?.vehicleDetails?.EngineNumber ? claim?.vehicleDetails?.EngineNumber : EngineNumber);
-    setAddedBy(claim?.vehicleDetails?.AddedBy ? claim?.vehicleDetails?.AddedBy : AddedBy);
-    setLicenseType(claim?.driverDetails?.VOV?claim?.driverDetails?.Vov:Vov);
-    setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber ? claim?.vehicleDetails?.ChassisNumber : VehicleChassisNumber);
->>>>>>> Stashed changes
     setVehicleFuelType(
       claim?.vehicleDetails?.FuelType
         ? claim?.vehicleDetails?.FuelType
