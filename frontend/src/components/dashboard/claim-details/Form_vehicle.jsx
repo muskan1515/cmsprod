@@ -116,32 +116,32 @@ const Form_vehicle = ({
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
-                <div className="row">
-                  <label
-                    htmlFor=""
-                    className="col-lg-6 text-color"
-                    style={{
-                      color: "black",
-                      fontSize: "13px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Registerd No.
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="col-lg-6 text-color text-end"
-                    style={{
-                      color: "#1560bd",
-                      fontSize: "13px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {VehicleRegisteredNumber}
-                  </label>
-                </div>
-              </td>
-               {/*} <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Registerd No.
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {VehicleRegisteredNumber}
+                    </label>
+                  </div>
+                </td>
+                {/*} <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <div className="col-lg-6">
                       <label
@@ -197,7 +197,6 @@ const Form_vehicle = ({
                         }}
                       >
                         {VehicleRegisteredOwner}
-                    
                       </label>
                     </div>
                   </div>
@@ -226,14 +225,12 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DateRegistration ? formatDate(
-                        DateRegistration) : ""}
+                      {DateRegistration ? formatDate(DateRegistration) : ""}
                     </label>
                   </div>
                 </td>
-              
-               
-               {/*} <td style={{ border: "1px solid grey", padding: "3px" }}>
+
+                {/*} <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
@@ -261,8 +258,7 @@ const Form_vehicle = ({
                     </label>
                   </div>
                       </td>*/}
-              </tr>
-              <tr>
+
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -289,8 +285,7 @@ const Form_vehicle = ({
                     </label>
                   </div>
                 </td>
-              
-               
+
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -508,33 +503,33 @@ const Form_vehicle = ({
                     </label>
                   </div>
                     </td>*/}
-                    <td style={{ border: "1px solid grey", padding: "3px" }}>
-                    <div className="row">
-                      <label
-                        htmlFor=""
-                        className="col-lg-6 text-color"
-                        style={{
-                          color: "black",
-                          fontSize: "13px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Class Of Vehicle
-                      </label>
-                      <label
-                        htmlFor=""
-                        className="col-lg-6 text-color text-end"
-                        style={{
-                          color: "#1560bd",
-                          fontSize: "13px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {claim?.vehicleDetails?.VehicleClassDescription}
-                      </label>
-                    </div>
-                  </td>
-  
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Class Of Vehicle
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.vehicleDetails?.VehicleClassDescription}
+                    </label>
+                  </div>
+                </td>
+
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -834,7 +829,6 @@ const Form_vehicle = ({
               </tr>
 
               <tr>
-               
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -855,13 +849,13 @@ const Form_vehicle = ({
                         color: "#1560bd",
                         fontSize: "13px",
                         fontWeight: "bold",
-                      }} 
+                      }}
                     >
                       {BancsVehicleSegment}
                     </label>
                   </div>
                 </td>
-               {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
+                {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""

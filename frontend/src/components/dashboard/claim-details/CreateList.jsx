@@ -150,41 +150,42 @@ const CreateList = ({
   };
 
   const sendMailHandler = (vehicleNo, PolicyNo, Insured, mailAddress) => {
-
-    if(!mailAddress || mailAddress === "null"  || mailAddress === 
-    "None" || mailAddress === "undeifned" ){
+    if (
+      !mailAddress ||
+      mailAddress === "null" ||
+      mailAddress === "None" ||
+      mailAddress === "undeifned"
+    ) {
       toast.error("Please fill the email !!!");
+    } else {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    }
-    else{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const payload = {
+        vehicleNo: vehicleNo,
+        PolicyNo: PolicyNo,
+        Insured: Insured,
+        toMail: mailAddress,
+        leadId: claim?.claimDetails?.LeadID,
+        type: 4,
+        date: formatDate(new Date()),
+      };
 
-    const payload = {
-      vehicleNo: vehicleNo,
-      PolicyNo: PolicyNo,
-      Insured: Insured,
-      toMail: mailAddress,
-      leadId: claim?.claimDetails?.LeadID,
-      type:4,
-      date: formatDate(new Date()),
-    };
-
-    toast.loading("Sending Acknowledgment Mail!!");
-    axios
-      .post("/api/sendEmail1", payload, {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-        },
-      })
-      .then((res) => {
-        toast.dismiss();
-        toast.success("Successfully sent the mail!");
-        window.location.reload();
-      })
-      .catch((err) => {
-        toast.dismiss();
-        toast.error(err);
-      });
+      toast.loading("Sending Acknowledgment Mail!!");
+      axios
+        .post("/api/sendEmail1", payload, {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+          },
+        })
+        .then((res) => {
+          toast.dismiss();
+          toast.success("Successfully sent the mail!");
+          window.location.reload();
+        })
+        .catch((err) => {
+          toast.dismiss();
+          toast.error(err);
+        });
     }
   };
   const openStatusUpdateHandler = () => {
@@ -370,10 +371,14 @@ const CreateList = ({
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
+            </div>
+            <div className="col-lg-1" style={{ marginLeft: "-20px" }}>
               {!claim.claimDetails?.IsMailSent &&
                 claim?.insuredDetails?.InsuredMailAddress !== "null" && (
                   <button
-                    className=" w-50 flaticon-envelope"
+                    className="btn btn-color-icon p-0 flaticon-envelope"
+                    title="Send Mail"
+                    style={{ width: "100%" }}
                     onClick={() =>
                       sendMailHandler(
                         claim?.vehichleDetails?.VehicleEngineNumber,
@@ -383,7 +388,7 @@ const CreateList = ({
                       )
                     }
                   >
-                    Send Email
+                    {/* Send Email */}
                   </button>
                 )}
             </div>
