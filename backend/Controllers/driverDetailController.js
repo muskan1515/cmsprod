@@ -1,5 +1,6 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
+const convertObjectToString = require("../Config/getObjectToString");
 
 const getSpecificDriverDetails = async (req, res) => {
   const leadId = req.query.LeadId;
@@ -66,6 +67,9 @@ function removeBase64Prefix(encodedImage) {
     .then((result)=>{
     const details=result?.data?.data?.data;
     console.log(result);
+    const stringformat = convertObjectToString(details);
+    console.log("stringFormat",stringformat);
+    
 
     if(!details){
       return res.status(500).send("Internal Server Error");

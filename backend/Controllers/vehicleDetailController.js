@@ -1,5 +1,6 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
+const convertObjectToString = require("../Config/getObjectToString");
 
 const getSpecificVehicleDetails = async (req, res) => {
   const leadId = req.query.LeadId;
@@ -52,12 +53,11 @@ const getSpecificVehicleDetails = async (req, res) => {
       }
     })
     .then((result)=>{
-     
       console.log(result.data.vehicleDetails?.Data.result);
-
-      
-     
       const details = result.data.vehicleDetails?.Data.result;
+      const stringformat = convertObjectToString(details);
+      console.log("stringFormat",stringformat);
+      
       if(!details){
         return res.status(500).send("Internal Server Error");
       }
@@ -130,14 +130,12 @@ const getSpecificVehicleDetails = async (req, res) => {
         '${details?.bancs_Vehicle_class}',
         '${details?.rc_owner_name}',
         '${details?.rc_insurance_upto}',
-        '${details}',
+        '${stringformat}',
         '${additionalInfo?.puccUpto}',
         '${additionalInfo?.puccNumber}',
         '${additionalInfo?.rcFinancer}',
         '${additionalInfo?.vehicleColour}',
         '${additionalInfo?.vehicleTaxUpto}',
-
-
         ${leadId}
     );
     `;
@@ -179,6 +177,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         `;
 
     
+      console.log(updateVehicleDetails);
     
         db.query(insertVehicleDetails, (error, results) => {
           if (error) {

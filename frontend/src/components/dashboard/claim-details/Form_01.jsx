@@ -24,6 +24,7 @@ const Form_01 = ({
   setDriverAddedDate,
   Verification,
   setVerification,
+  updateHandlerAfterFetching,
   LicenseNumber,
   setLicenseNumber,
   setLicenseType,
@@ -109,6 +110,7 @@ const Form_01 = ({
         .then(() => {
           toast.success("Successfully fetched!!");
           toast.dismiss();
+          updateHandlerAfterFetching();
         })
         .catch((err) => {
           toast.dismiss();

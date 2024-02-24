@@ -2,6 +2,7 @@ import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
+import {Toaster} from 'react-hot-toast';
 // import DetailedInfo from "./DetailedInfo";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
@@ -11,6 +12,7 @@ const index = ({leadId,email,policyNo,Insured,vehicleNo}) => {
  
   return (
     <>
+    <Toaster/>
       {/* <!-- Main Header Nav --> */}
       <Header />
 

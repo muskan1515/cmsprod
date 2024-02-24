@@ -150,6 +150,13 @@ const CreateList = ({
   };
 
   const sendMailHandler = (vehicleNo, PolicyNo, Insured, mailAddress) => {
+
+    if(!mailAddress || mailAddress === "null"  || mailAddress === 
+    "None" || mailAddress === "undeifned" ){
+      toast.error("Please fill the email !!!");
+
+    }
+    else{
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     const payload = {
@@ -158,6 +165,7 @@ const CreateList = ({
       Insured: Insured,
       toMail: mailAddress,
       leadId: claim?.claimDetails?.LeadID,
+      type:4,
       date: formatDate(new Date()),
     };
 
@@ -170,13 +178,14 @@ const CreateList = ({
       })
       .then((res) => {
         toast.dismiss();
-        alert("Successfully sent the mail!");
+        toast.success("Successfully sent the mail!");
         window.location.reload();
       })
       .catch((err) => {
         toast.dismiss();
-        alert(err);
+        toast.error(err);
       });
+    }
   };
   const openStatusUpdateHandler = () => {
     setIsStatusModal(true);

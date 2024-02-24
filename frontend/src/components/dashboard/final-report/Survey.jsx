@@ -636,7 +636,9 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                   )}
                   readOnly={!isEditMode}
                   value={CauseOfAccident}
-                  onChange={setCauseOfAccident}
+                  onChange={(e)=>setCauseOfAccident(e.target.value)}
+                  
+                onTextChange={(e) => setCauseOfAccident(e.htmlValue)}
                   style={{ height: "150px" }}
                 />
               </div>
@@ -677,7 +679,8 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
               <Editor
                 readonly={!isEditMode}
                 value={PoliceAction}
-                onChange={setPoliceAction}
+                onChange={(e)=>setPoliceAction(e.target.value)}
+                onTextChange={(e) => setPoliceAction(e.htmlValue)}
                 style={{ height: "80px" }}
               />
             </div>
@@ -718,7 +721,8 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
               <Editor
                 readOnly={!isEditMode}
                 value={DetailsOfLoads}
-                onChange={setDetailsOfLoads}
+                onChange={(e)=>setDetailsOfLoads(e.target.value)}
+                onTextChange={(e) => setDetailsOfLoads(e.htmlValue)}
                 style={{ height: "100px" }}
               />
             </div>
@@ -731,7 +735,8 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
               <Editor
                 readOnly={!isEditMode}
                 value={ThirdPartyLoss}
-                onChange={setThirdPartyLoss}
+                onChange={(e)=>setThirdPartyLoss(e.target.value)}
+                onTextChange={(e) => setThirdPartyLoss(e.htmlValue)}
                 style={{ height: "100px" }}
               />
             </div>
@@ -749,7 +754,8 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                 )}
                 readOnly={!isEditMode}
                 value={Assessment}
-                onChange={setAssessment}
+                onChange={(e)=>setAssessment(e.target.value)}
+                onTextChange={(e) => setAssessment(e.htmlValue)}
                 style={{ height: "300px" }}
               />
             </div>
@@ -806,7 +812,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                     fontSize: "14px",
                   }}
                 >
-                  Age of Policy
+                  Age of Vehicle
                 </label>
               </div>
               <div className="col-lg-5">

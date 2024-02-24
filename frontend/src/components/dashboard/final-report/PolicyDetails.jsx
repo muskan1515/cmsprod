@@ -1293,29 +1293,10 @@ const PolicyDetails = ({
                               fontSize: "14px",
                             }}
                           >
-                            Date of :
+                            Date of Registration :
                           </label>
                         </div>
-                        <div className="col-lg-4">
-                          <select
-                            style={{ padding: "2px" }}
-                            className="selectpicker form-select"
-                            data-live-search="true"
-                            data-width="100%"
-                            type={isEditMode ? "date" : "text"}
-                            readOnly={!isEditMode}
-                            value={TypeOfDate?TypeOfDate:""}
-                            onChange={(e) => setTypeOfDate(e.target.value)}
-                          >
-                            <option data-tokens="Status1">choose..</option>
-                            <option data-tokens="Status2" value="Purchase">
-                              Purchase
-                            </option>
-                            <option data-tokens="Status3" value="Registration">
-                              Registration
-                            </option>
-                          </select>
-                        </div>
+                       
                         <div className="col-lg-4">
                           {!isEditMode ? (
                             <input

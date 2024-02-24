@@ -7,10 +7,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast, { Toaster } from "react-hot-toast";
 const CreateList = () => {
-  const [applicantNumber, setApplicantNumber] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [phoneNumber_01, setPhoneNumber_01] = useState(null);
-  const [phoneNumber_02, setPhoneNumber_02] = useState(null);
+  const [applicantNumber, setApplicantNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber_01, setPhoneNumber_01] = useState("");
+  const [phoneNumber_02, setPhoneNumber_02] = useState("");
   // const [garageMailAddress,setGarageMailAddress]=useState();
   const router = useRouter();
   //Date
@@ -22,26 +22,26 @@ const CreateList = () => {
   const [date, setDate] = useState(formattedTodayDate);
   const [surveyType, setSurveyType] = useState("Motor");
   const [inspectionType, setInspectionType] = useState("Final");
-  const [policyNumber, setPolicyNumber] = useState(null);
-  const [policyIssuingOffice, setPolicyIssuingOffice] = useState(null);
-  const [policyStartDate, setPolicyStartDate] = useState(null);
-  const [policyStartEnd, setPolicyStartEnd] = useState(null);
-  const [claimSurvicingOffice, setClaimSurvicingOffice] = useState(null);
-  const [insuredName, setInsuredName] = useState(null);
-  const [insuredMobileNo1, setInsuredMobileNo1] = useState(null);
-  const [insuredMobileNo2, setInsuredMobileNo2] = useState(null);
-  const [insuredMailAddress, setInsuredMailAddress] = useState(null);
-  const [vehicleParticular, setVehicleParticular] = useState(null);
-  const [placeOfLoss, setPlaceOfLoss] = useState(null);
-  const [natureOfLoss, setNatureOfLoss] = useState(null);
-  const [estimatedLoss, setEstimatedLoss] = useState(null);
-  const [garageName, setGarageName] = useState(null);
-  const [garageNumber, setGarageNumber] = useState(null);
-  const [garageMailId, setGarageMailId] = useState(null);
-  const [claimNumber, setClaimNumber] = useState(null);
+  const [policyNumber, setPolicyNumber] = useState("");
+  const [policyIssuingOffice, setPolicyIssuingOffice] = useState("");
+  const [policyStartDate, setPolicyStartDate] = useState("");
+  const [policyStartEnd, setPolicyStartEnd] = useState("");
+  const [claimSurvicingOffice, setClaimSurvicingOffice] = useState("");
+  const [insuredName, setInsuredName] = useState("");
+  const [insuredMobileNo1, setInsuredMobileNo1] = useState("");
+  const [insuredMobileNo2, setInsuredMobileNo2] = useState("");
+  const [insuredMailAddress, setInsuredMailAddress] = useState("");
+  const [vehicleParticular, setVehicleParticular] = useState("");
+  const [placeOfLoss, setPlaceOfLoss] = useState("");
+  const [natureOfLoss, setNatureOfLoss] = useState("");
+  const [estimatedLoss, setEstimatedLoss] = useState("");
+  const [garageName, setGarageName] = useState("");
+  const [garageNumber, setGarageNumber] = useState("");
+  const [garageMailId, setGarageMailId] = useState("");
+  const [claimNumber, setClaimNumber] = useState("");
   const [brokerMailId, setBrokerMailId] = useState("intimationmt@gmail.com");
 
-  const [BrokerMailAddress, setBrokerMailAddress] = useState(null);
+  const [BrokerMailAddress, setBrokerMailAddress] = useState("");
 
   const getNextYear = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
@@ -435,14 +435,9 @@ const CreateList = () => {
                 className="form-control"
                 id="propertyTitle"
                 // selectedDate={policyStartEnd || ''}
-                // setSelectedDate={setPolicyStartEnd}
-                // selectedDate={
-                //   policyStartEnd !== null && !policyStartEnd
-                //     ? new Date(policyStartEnd)
-                //     : ""
-                // }
-                selected={
-                  policyStartEnd !== null && !isNaN(new Date(policyStartEnd))
+                setSelectedDate={setPolicyStartEnd}
+                selectedDate={
+                  policyStartEnd !== "" && !policyStartEnd
                     ? new Date(policyStartEnd)
                     : null
                 }

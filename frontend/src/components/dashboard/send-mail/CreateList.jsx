@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { data } from "./data";
 import axios from "axios";
 import { useRouter } from "next/router";
-// import { content } from "html2canvas/dist/types/css/property-descriptors/content";
-
+import { toast} from 'react-hot-toast'
 const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [emailAddress, setEmailAddress] = useState(email ? email : "");
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
   const [date, setDate] = useState(new Date());
+
+  
 
   const [fromEmail, setFromEmail] = useState("infosticstech@gmail.com");
   const [subject, setSubject] = useState("Survey Request for Vehicle Claim");
@@ -60,12 +61,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   };
 
   const handleSubmit = () => {
-    // if (!(policyNos && policyNo) || !date) {
-    //   alert("All Marked field should be filled!!");
-    // } else
-    // if (!(email || emailAddress)) {
-    //   alert("Email is required field !!");
-    // } else {
+   
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // /console.log(selectedItems);
     const payload = {
@@ -83,12 +79,14 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
     };
 
     if (!payload.toMail || String(payload.toMail) === "None") {
-      alert("Email is required field !!");
+      toast.error("Email is required field !!");
     } else if (!payload.PolicyNo) {
-      alert("PolicyNo is required field !!");
+      toast.error("PolicyNo is required field !!");
     } else if (!payload.content || !payload.content2) {
-      alert("Please select the documents to be passed over email!");
+      toast.error("Please select the documents to be passed over email!");
     } else {
+
+      toast.loading("Sending the customized email!!");
       axios
         .post("/api/sendCustomEmail", payload, {
           headers: {
@@ -97,11 +95,13 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
           },
         })
         .then((res) => {
-          alert("Successfully sent!!");
+          toast.dismiss();
+          toast.success("Successfully sent!!");
           router.push(`/claim-details?leadId=${leadId}`);
         })
         .catch((Err) => {
-          alert("Try again!");
+          toast.dismiss();
+          toast.error("Try again!");
         });
     }
     // }
@@ -206,7 +206,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                         fontWeight: "",
                       }}
                     >
-                      Email Address :
+                      From :
                     </label>
                   </div>
                   <div className="col-lg-7">
@@ -217,8 +217,8 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                       id="otherInput"
                       name="otherInput"
                       placeholder={email}
-                      value={emailAddress}
-                      onChange={(e) => setEmailAddress(e.target.value)}
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
                     />
                   </div>
                 </div>
@@ -272,6 +272,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                       className="form-control"
                       id="otherInput"
                       name="otherInput"
+                      value={date}
                       onChange={(e) => setDate(e.target.value)}
                     />
                   </div>
@@ -282,10 +283,10 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                   <h4 className="col-12 text-center mt-1">Mail Box</h4>
                   <hr />
                   <div className="row">
-                    <h5 className="">To :</h5>
+                    <h5 className="">To:</h5>
                     <input
-                      value={fromEmail}
-                      onChange={(e) => setFromEmail(e.target.value)}
+                    value={emailAddress}
+                    onChange={(e) => setEmailAddress(e.target.value)}
                     />
                   </div>
                   <hr />
@@ -562,7 +563,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                         fontWeight: "",
                       }}
                     >
-                      Email Address :
+                      From :
                     </label>
                   </div>
                   <div className="col-lg-7">
@@ -573,8 +574,9 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                       id="otherInput"
                       name="otherInput"
                       placeholder={email}
-                      value={emailAddress}
-                      onChange={(e) => setEmailAddress(e.target.value)}
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
+                     
                     />
                   </div>
                 </div>
@@ -640,8 +642,8 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                   <div className="row">
                     <h5 className="">To :</h5>
                     <input
-                      value={fromEmail}
-                      onChange={(e) => setFromEmail(e.target.value)}
+                    value={emailAddress}
+                    onChange={(e) => setEmailAddress(e.target.value)}
                     />
                   </div>
                   <hr />

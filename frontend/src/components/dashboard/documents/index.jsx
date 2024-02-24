@@ -8,7 +8,7 @@ import DocumentUpload from "./DocumentUpload"
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Index = ({ leadId, token, content }) => {
+const Index = ({ leadId, token, content ,type}) => {
   const [check, setCheck] = useState(false);
   const [leadToken, setLeadToken] = useState(token ? token : "");
 
@@ -103,12 +103,15 @@ const Index = ({ leadId, token, content }) => {
   useEffect(() => {
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+
     const payload = {
       token: token,
       leadId: leadId,
+      type:type
     };
 
     console.log(payload);
+    return ;
     axios
       .post("/api/getClaimDetails", payload, {
         headers: {

@@ -34,11 +34,10 @@ const createToken = require("../Config/generateJWTToken");
       }
       const content = emailHandler(result[0]?.Status);
   
-      const generatedToken = generateUniqueToken();
-      const jwtToken = createToken(leadId,type);
-      const InsuredToken = type === 1 ? jwtToken : "";
-      const BrokerToken = type === 3 ? jwtToken : "";
-      const GarageToken = type === 2 ? jwtToken : "";
+      const value = type;
+      const InsuredToken = type === 4 || type === 1 ? generateUniqueToken() : "";
+      const BrokerToken =  type === 4 || type === 3 ? generateUniqueToken() : "";
+      const GarageToken =  type === 4 || type === 2 ? generateUniqueToken() : "";
       
       const insertClaimDetails = `
           UPDATE ClaimDetails
@@ -48,8 +47,7 @@ const createToken = require("../Config/generateJWTToken");
           GarageToken='${GarageToken}'
           WHERE LeadId = ${leadId};
         `;
-        console.log("insertClaimDetails",insertClaimDetails);
-
+       
         const sendingToken = type === 1 ? InsuredToken : type == 2  ? GarageToken : BrokerToken;
       db.query(insertClaimDetails, (err, result2) => {
         if (err) {
@@ -90,7 +88,7 @@ const createToken = require("../Config/generateJWTToken");
           if (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
-          } else if(String(type) === "1") {
+          } else if(String(type) === "1" ) {
             console.log(type,String(type) === "1")
            
             const insertClaimDetails = `
@@ -127,7 +125,7 @@ const createToken = require("../Config/generateJWTToken");
       subject,
       body,
     } = req.body;
-  
+
     const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
     db.query(sql, [leadId], (err, result2) => {
       if (err) {

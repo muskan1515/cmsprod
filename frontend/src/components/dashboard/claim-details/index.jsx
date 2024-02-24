@@ -38,184 +38,98 @@ const Index = ({}) => {
 
   const [reload, setReload] = useState(false);
 
-  const [policyIssuingOffice, setPolicyIssuingOffice] = useState(
-    claim?.claimDetails?.PolicyIssuingOffice
-      ? claim?.claimDetails?.PolicyIssuingOffice
-      : ""
+  const [policyIssuingOffice, setPolicyIssuingOffice] = useState(""
   );
 
-  const [claimRegion, setClaimRegion] = useState(
-    claim?.claimDetails?.ClaimRegion ? claim?.claimDetails?.ClaimRegion : ""
+  const [claimRegion, setClaimRegion] = useState(""
   );
 
-  const [claimServicingOffice, setClaimServicingOffice] = useState(
-    claim?.claimDetails?.ClaimServicingOffice
-      ? claim?.claimDetails?.ClaimServicingOffice
-      : ""
+  const [claimServicingOffice, setClaimServicingOffice] = useState(""
   );
 
-  const [policyStartDate, setPolicyStartDate] = useState(
-    claim?.claimDetails?.PolicyPeriodStart
-      ? claim?.claimDetails?.PolicyPeriodStart
-      : ""
+  const [policyStartDate, setPolicyStartDate] = useState(""
   );
-  const [policyEndDate, setPolicyEndDate] = useState(
-    claim?.claimDetails?.PolicyPeriodEnd
-      ? claim?.claimDetails?.PolicyPeriodEnd
-      : ""
+  const [policyEndDate, setPolicyEndDate] = useState(""
   );
   const [insuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
-    useState(
-      claim?.claimDetails?.InsuranceCompanyNameAddress
-        ? claim?.claimDetails?.InsuranceCompanyNameAddress
-        : ""
+    useState(""
     );
-  const [insuredAddedBy, setInsuredAddedBy] = useState(
-    claim?.insuredDetails?.InsuredAddedBy
-      ? claim?.insuredDetails?.InsuredAddedBy
-      : ""
+  const [insuredAddedBy, setInsuredAddedBy] = useState(""
   );
 
-  const [InsuredName, setInsuredName] = useState(
-    claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : ""
+  const [InsuredName, setInsuredName] = useState(""
   );
-  const [InsuredMailAddress, setInsuredMailAddress] = useState(
-    claim?.insuredDetails?.InsuredMailAddress
-      ? claim?.insuredDetails?.InsuredMailAddress
-      : ""
+  const [InsuredMailAddress, setInsuredMailAddress] = useState(""
   );
-  const [InsuredMobileNo1, setInsuredMobileNo1] = useState(
-    claim?.insuredDetails?.InsuredMobileNo1
-      ? claim?.insuredDetails?.InsuredMobileNo1
-      : ""
+  const [InsuredMobileNo1, setInsuredMobileNo1] = useState(""
   );
-  const [InsuredMobileNo2, setInsuredMobileNo2] = useState(
-    claim?.insuredDetails?.InsuredMobileNo2
-      ? claim?.insuredDetails?.InsuredMobileNo2
-      : ""
+  const [InsuredMobileNo2, setInsuredMobileNo2] = useState( ""
   );
 
   const [subType, setSubType] = useState("Motor");
-  const [inspectionType, setInspectionType] = useState(
-    claim?.claimDetails?.InspectionType
-      ? claim?.claimDetails?.InspectionType
-      : "Final"
+  const [inspectionType, setInspectionType] = useState("Final"
   );
 
   const [documents, setDocuments] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState(null);
-  const [ClaimNumber, setClaimNumber] = useState(
-    claim?.claimDetails?.ClaimNumber ? claim?.ClaimNumber?.ClaimNumber : ""
+  const [ClaimNumber, setClaimNumber] = useState(""
   );
 
-  const [VehicleModel, setVehicleModel] = useState(
-    claim.vehicleDetails?.VehicleTypeOfBody
-      ? claim.vehicleDetails?.VehicleTypeOfBody
-      : ""
+  const [VehicleModel, setVehicleModel] = useState(""
   );
 
-  const [EngineType, setEngineType] = useState(
-    claim?.vehicleDetails?.VehicleModeOfCheck
-      ? claim?.vehicleDetails?.VehicleModeOfCheck
-      : ""
+  const [EngineType, setEngineType] = useState( ""
   );
-  const [VehicleRegisteredOwner, setVehicleRegisteredOwner] = useState(
-    claim?.vehicleDetails?.VehicleRegisteredOwner
-      ? claim?.vehicleDetails?.VehicleRegisteredOwner
-      : ""
+  const [VehicleRegisteredOwner, setVehicleRegisteredOwner] = useState(""
   );
-  const [DateRegistration, setDateRegistration] = useState(
-    claim?.claimDetails?.ReferenceNo ? claim?.claimDetails?.ReferenceNo : ""
+  const [DateRegistration, setDateRegistration] = useState(""
   );
-  const [PUCNumber, setPUCNumber] = useState(
-    claim?.vehicleDetails?.VehiclePucNumber
-      ? claim?.vehicleDetails?.VehiclePucNumber
-      : ""
+  const [PUCNumber, setPUCNumber] = useState( ""
   );
-  const [TransferDate, setTransferDate] = useState(
-    claim?.vehicleDetails?.VehicleTransferDate
-      ? claim?.vehicleDetails?.VehicleTransferDate
-      : ""
+  const [TransferDate, setTransferDate] = useState( ""
   );
 
-  const [VehicleInsuranceUpto, setVehicleInsuranceUpto] = useState(
-    claim?.vehicleDetails?.VehicleInsuranceUpto
-      ? claim?.vehicleDetails?.VehicleInsuranceUpto
-      : ""
+  const [VehicleInsuranceUpto, setVehicleInsuranceUpto] = useState(""
   );
 
-  const [EngineNumber, setEngineNumber] = useState(
-    claim?.vehicleDetails?.VehicleEngineNumber
-      ? claim?.vehicleDetails?.VehicleEngineNumber
-      : ""
+  const [EngineNumber, setEngineNumber] = useState( ""
   );
-  const [AddedBy, setAddedBy] = useState(
-    claim?.vehicleDetails?.VehicleAddedBy
-      ? claim?.vehicleDetails?.VehicleAddedBy
-      : ""
+  const [AddedBy, setAddedBy] = useState( ""
   );
-  const [IssuingAuthority, setIssuingAuthority] = useState(
-    claim?.driverDetails?.IssuingAuthority
-      ? claim?.vehicleDetails?.IssuingAuthority
-      : ""
+  const [IssuingAuthority, setIssuingAuthority] = useState(""
   );
 
-  const [LicenseNumber, setLicenseNumber] = useState(
-    claim?.driverDetails?.LicenseNumber
-      ? claim?.vehicleDetails?.LicenseNumber
-      : ""
+  const [LicenseNumber, setLicenseNumber] = useState( ""
   );
-  const [LicenseType, setLicenseType] = useState(
-    claim?.driverDetails?.LicenseType ? claim?.vehicleDetails?.LicenseType : ""
+  const [LicenseType, setLicenseType] = useState( ""
   );
-  const [VehicleChassisNumber, setVehicleChassisNumber] = useState(
-    claim?.vehicleDetails?.VehicleChassisNumber
-      ? claim?.vehicleDetails?.VehicleChassisNumber
-      : ""
+  const [VehicleChassisNumber, setVehicleChassisNumber] = useState(""
   );
-  const [VehicleFuelType, setVehicleFuelType] = useState(
-    claim?.vehicleDetails?.VehicleFuelType
-      ? claim?.vehicleDetails?.VehicleFuelType
-      : ""
+  const [VehicleFuelType, setVehicleFuelType] = useState( ""
   );
 
-  const [DriverName, setDriverName] = useState(
-    claim?.driverDetails?.DriverName ? claim?.driverDetails?.DriverName : ""
+  const [DriverName, setDriverName] = useState( ""
   );
-  const [DriverAddedDate, setDriverAddedDate] = useState(
-    claim?.driverDetails?.DriverAddedDate
-      ? claim?.driverDetails?.DriverAddedDate
-      : ""
+  const [DriverAddedDate, setDriverAddedDate] = useState(""
   );
-  const [Verification, setVerification] = useState(
-    claim?.driverDetails?.DriverTypeOfVerification
-      ? claim?.driverDetails?.DriverTypeOfVerification
-      : "verified By Online"
+  const [Verification, setVerification] = useState( "verified By Online"
   );
 
-  const [status, setStatus] = useState(
-    claim?.claimStatus?.ClaimStatus ? claim?.claimStatus?.ClaimStatus : ""
+  const [status, setStatus] = useState(""
   );
 
   const [GarageNameAndAddress, setGarageNameAndAddress] = useState(
-    claim?.garageDetails?.GarageNameAndAddress
-      ? claim?.garageDetails?.GarageNameAndAddress
-      : ""
+    
+    ""
   );
   const [GarageContactNo1, setGarageContactNo1] = useState(
-    claim?.garageDetails?.GarageContactNo1
-      ? claim?.garageDetails?.GarageContactNo1
-      : ""
+     ""
   );
   const [GarageContactNo2, setGarageContactNo2] = useState(
-    claim?.garageDetails?.GarageContactNo2
-      ? claim?.garageDetails?.GarageContactNo2
-      : ""
+     ""
   );
   const [GarageAddedBy, setGarageAddedBy] = useState(
-    claim?.garageDetails?.GarageAddedBy
-      ? claim?.garageDetails?.GarageAddedBy
-      : ""
+     ""
   );
 
   const [editCase, setEditCase] = useState(false);
@@ -366,102 +280,101 @@ const Index = ({}) => {
   }, [policyStartDate]);
 
   useEffect(() => {
-    setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice);
-    setClaimRegion(claim?.claimDetails?.Region);
-    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice);
+    setPolicyIssuingOffice(claim?.claimDetails?.PolicyIssuingOffice ? claim?.claimDetails?.PolicyIssuingOffice : policyIssuingOffice);
+    setClaimRegion(claim?.claimDetails?.Region ? claim?.claimDetails?.Region : claimRegion);
+    setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice ? claim?.claimDetails?.ClaimServicingOffice : claimServicingOffice);
 
-    setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart);
-    setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
+    setPolicyStartDate(claim?.claimDetails?.PolicyPeriodStart ? claim?.claimDetails?.PolicyPeriodStart : policyStartDate);
+    setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd ? claim?.claimDetails?.PolicyPeriodEnd : policyEndDate);
 
     setInsuranceCompanyNameAddress(
-      claim?.claimDetails?.InsuranceCompanyNameAddress
+      claim?.claimDetails?.InsuranceCompanyNameAddress ?  claim?.claimDetails?.InsuranceCompanyNameAddress : insuranceCompanyNameAddress
     );
-    setSubType(claim?.claimDetails?.SurveyType);
-    setLicenseNumber(claim?.driverDetails?.LicenseNumber);
-    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority);
-    setInsuredAddedBy(claim?.insuredDetails?.AddedBy);
-    setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber || "");
-    setInsuredName(claim?.insuredDetails?.InsuredName);
-    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
-    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
-    setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo1);
-    setSubType(claim?.claimDetails?.SurveyType);
-    setInspectionType(claim?.claimDetails?.InspectionType);
-    setVehicleModel(claim.vehicleDetails?.TypeOfBody);
-    setEngineType(claim?.vehicleDetails?.ModeOfCheck);
-    setVehicleRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner);
-    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration);
-    setPUCNumber(claim?.vehicleDetails?.PucNumber);
-    setTransferDate(claim?.vehicleDetails?.TransferDate);
-    setEngineNumber(claim?.vehicleDetails?.EngineNumber);
-    setAddedBy(claim?.vehicleDetails?.AddedBy);
-    setLicenseType(claim?.driverDetails?.LicenseType);
-    setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber);
+    setSubType(claim?.claimDetails?.SurveyType ? claim?.claimDetails?.SurveyType : subType);
+    setLicenseNumber(claim?.driverDetails?.LicenseNumber ? claim?.driverDetails?.LicenseNumber : LicenseNumber);
+    setIssuingAuthority(claim?.driverDetails?.IssuingAuthority ? claim?.driverDetails?.IssuingAuthority : IssuingAuthority);
+    setInsuredAddedBy(claim?.insuredDetails?.AddedBy?claim?.insuredDetails?.AddedBy : insuredAddedBy);
+    setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber ? claim?.vehicleDetails?.RegisteredNumber : VehicleRegisteredNumber);
+    setInsuredName(claim?.insuredDetails?.InsuredName ? claim?.insuredDetails?.InsuredName : InsuredName);
+    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress ? claim?.insuredDetails?.InsuredMailAddress : InsuredMailAddress);
+    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 ? claim?.insuredDetails?.InsuredMobileNo1 : InsuredMobileNo1);
+    setInsuredMobileNo2(claim?.insuredDetails?.InsuredMobileNo2 ? claim?.insuredDetails?.InsuredMobileNo1 : InsuredMobileNo2);
+    setSubType(claim?.claimDetails?.SurveyType ? claim?.claimDetails?.SurveyType : subType);
+    setInspectionType(claim?.claimDetails?.InspectionType ? claim?.claimDetails?.InspectionType : inspectionType);
+    setVehicleModel(claim.vehicleDetails?.TypeOfBody ? claim.vehicleDetails?.TypeOfBody : VehicleModel);
+    setEngineType(claim?.vehicleDetails?.ModeOfCheck ? claim?.vehicleDetails?.ModeOfCheck : EngineType);
+    setVehicleRegisteredOwner(claim?.vehicleDetails?.RegisteredOwner ? claim?.vehicleDetails?.RegisteredOwner : VehicleRegisteredOwner);
+    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration ? claim?.vehicleDetails?.DateOfRegistration : DateRegistration);
+    setPUCNumber(claim?.vehicleDetails?.PucNumber ? claim?.vehicleDetails?.PucNumber : PUCNumber );
+    setTransferDate(claim?.vehicleDetails?.TransferDate ? claim?.vehicleDetails?.TransferDate : TransferDate);
+    setEngineNumber(claim?.vehicleDetails?.EngineNumber ? claim?.vehicleDetails?.EngineNumber : EngineNumber);
+    setAddedBy(claim?.vehicleDetails?.AddedBy ? claim?.vehicleDetails?.AddedBy : AddedBy);
+    setLicenseType(claim?.driverDetails?.LicenseType?claim?.driverDetails?.LicenseType:LicenseType);
+    setVehicleChassisNumber(claim?.vehicleDetails?.ChassisNumber ? claim?.vehicleDetails?.ChassisNumber : VehicleChassisNumber);
     setVehicleFuelType(
-      claim?.vehicleDetails?.FuelType || claim?.vehicleDetails?.BancsFuelType
+      claim?.vehicleDetails?.FuelType ? claim?.vehicleDetails?.FuelType : claim?.vehicleDetails?.BancsFuelType ? claim?.vehicleDetails?.BancsFuelType : VehicleFuelType
     );
 
-    setVehicleRegisteredOwner(claim.vehicleDetails?.RegisteredOwner);
-    setDriverName(claim?.driverDetails?.DriverName);
-    setDriverAddedDate(claim?.driverDetails?.AddedDate);
+    setDriverName(claim?.driverDetails?.DriverName ? claim?.driverDetails?.DriverName : DriverName);
+    setDriverAddedDate(claim?.driverDetails?.AddedDate ? claim?.driverDetails?.AddedDate : DriverAddedDate);
     setVerification(
       claim?.driverDetails?.TypeOfVerification === 0
         ? "Verified By Online"
         : "Verified Manually"
     );
-    setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress);
-    setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
-    setGarageContactNo2(claim?.garageDetails?.GarageContactNo2);
-    setGarageAddedBy(claim?.garageDetails?.AddedBy);
+    setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress ? claim?.garageDetails?.GarageNameAndAddress : GarageNameAndAddress);
+    setGarageContactNo1(claim?.garageDetails?.GarageContactNo1 ? claim?.garageDetails?.GarageContactNo1 : GarageContactNo1);
+    setGarageContactNo2(claim?.garageDetails?.GarageContactNo2 ? claim?.garageDetails?.GarageContactNo2 : GarageContactNo2);
+    setGarageAddedBy(claim?.garageDetails?.AddedBy ? claim?.garageDetails?.AddedBy : GarageAddedBy);
 
     // New Fields
-    setVehicleClassDescription(claim?.vehicleDetails?.ClassDescription);
-    setMakerDesc(claim?.vehicleDetails?.MakerDesc);
-    setMakerModel(claim?.vehicleDetails?.MakerModel);
-    setManufactureMonthYear(claim?.vehicleDetails?.ManufactureMonthYear);
-    setVehicleGvw(claim?.vehicleDetails?.VehicleGvw);
-    setCubicCapacity(claim?.vehicleDetails?.CubicCapacity);
-    setBancsBodyType(claim?.vehicleDetails?.BancsBodyType);
-    setBancsMakeCode(claim?.vehicleDetails?.BancsMakeCode);
-    setBancsModelCode(claim?.vehicleDetails?.BancsModelCode);
-    setBancsSubtypeCode(claim?.vehicleDetails?.BancsSubtypeCode);
-    setBancsVehicleClass(claim?.vehicleDetails?.BancsVehicleClass);
-    setBancsVehicleSegment(claim?.vehicleDetails?.BancsVehicleSegment);
-    setFitUpto(claim?.vehicleDetails?.FitUpto);
-    setPasiaModelCode(claim?.vehicleDetails?.PasiaModelCode);
-    setVehiclePermanentAddress(claim?.vehicleDetails?.PermanentAddress);
-    setRcRtoCode(claim?.vehicleDetails?.RcRtoCode);
+    setVehicleClassDescription(claim?.vehicleDetails?.ClassDescription?claim?.vehicleDetails?.ClassDescription:VehicleClassDescription);
+    setMakerDesc(claim?.vehicleDetails?.MakerDesc ? claim?.vehicleDetails?.MakerDesc : MakerDesc);
+    setMakerModel(claim?.vehicleDetails?.MakerModel?claim?.vehicleDetails?.MakerModel:MakerModel);
+    setManufactureMonthYear(claim?.vehicleDetails?.ManufactureMonthYear ? claim?.vehicleDetails?.ManufactureMonthYear : ManufactureMonthYear);
+    setVehicleGvw(claim?.vehicleDetails?.VehicleGvw ? claim?.vehicleDetails?.VehicleGvw : VehicleGvw);
+    setCubicCapacity(claim?.vehicleDetails?.CubicCapacity ? claim?.vehicleDetails?.CubicCapacity : CubicCapacity);
+    setBancsBodyType(claim?.vehicleDetails?.BancsBodyType? claim?.vehicleDetails?.BancsBodyType : BancsBodyType);
+    setBancsMakeCode(claim?.vehicleDetails?.BancsMakeCode ? claim?.vehicleDetails?.BancsMakeCode : BancsMakeCode);
+    setBancsModelCode(claim?.vehicleDetails?.BancsModelCode ? claim?.vehicleDetails?.BancsModelCode : BancsModelCode);
+    setBancsSubtypeCode(claim?.vehicleDetails?.BancsSubtypeCode ? claim?.vehicleDetails?.BancsSubtypeCode : BancsSubtypeCode);
+    setBancsVehicleClass(claim?.vehicleDetails?.BancsVehicleClass ? claim?.vehicleDetails?.BancsVehicleClass : BancsVehicleClass);
+    setBancsVehicleSegment(claim?.vehicleDetails?.BancsVehicleSegment ? claim?.vehicleDetails?.BancsVehicleSegment : BancsVehicleSegment);
+    setFitUpto(claim?.vehicleDetails?.FitUpto ? claim?.vehicleDetails?.FitUpto : FitUpto);
+    setPasiaModelCode(claim?.vehicleDetails?.PasiaModelCode ? claim?.vehicleDetails?.PasiaModelCode : PasiaModelCode);
+    setVehiclePermanentAddress(claim?.vehicleDetails?.PermanentAddress ? claim?.vehicleDetails?.PermanentAddress : PermanentAddress);
+    setRcRtoCode(claim?.vehicleDetails?.RcRtoCode ? claim?.vehicleDetails?.RcRtoCode : RcRtoCode);
     setVehicleInsuranceCompany(claim?.vehicleDetails?.VehicleInsuranceCompany);
     setVerification(
       claim?.driverDetails?.TypeOfVerification || "Verified By Online"
     );
-    setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity);
-    setRcInsuranceComp(claim?.vehicleDetails?.VehicleInsuranceCompany);
-    setRcInsuranceUpto(claim?.vehicleDetails?.VehicleInsuranceUpto);
-    setRcVehicleType(claim?.vehicleDetails?.VehicleType);
-    setVehicleRcStatus(claim?.vehicleDetails?.VehicleRcStatus);
-    setVehicleBlackListStatus(claim?.vehicleDetails?.VehicleBlackListStatus);
-    setVehicleRegistedAt(claim?.vehicleDetails?.VehicleRegistedAt);
-    setPermanentAddress(claim?.vehicleDetails?.PermanentAddress);
-    setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle);
+    setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity ? claim?.vehicleDetails?.SeatingCapacity : VehicleSeatingCapacity);
+    setRcInsuranceComp(claim?.vehicleDetails?.VehicleInsuranceCompany ? claim?.vehicleDetails?.VehicleInsuranceCompany : VehicleInsuranceCompany);
+    setRcInsuranceUpto(claim?.vehicleDetails?.VehicleInsuranceUpto ? claim?.vehicleDetails?.VehicleInsuranceUpto : VehicleInsuranceUpto);
+    setRcVehicleType(claim?.vehicleDetails?.VehicleType ? claim?.vehicleDetails?.VehicleType : RcVehicleType);
+    setVehicleRcStatus(claim?.vehicleDetails?.VehicleRcStatus ? claim?.vehicleDetails?.VehicleRcStatus : VehicleRcStatus);
+    setVehicleBlackListStatus( claim?.vehicleDetails?.VehicleRcStatus ? claim?.vehicleDetails?.VehicleRcStatus : VehicleBlackListStatus);
+    setVehicleRegistedAt(claim?.vehicleDetails?.VehicleRegistedAt ? claim?.vehicleDetails?.VehicleRegistedAt : VehicleRegistedAt);
+    setPermanentAddress(claim?.vehicleDetails?.PermanentAddress ? claim?.vehicleDetails?.PermanentAddress : PermanentAddress);
+    setClassOfVehicle(claim?.vehicleDetails?.ClassOfVehicle ? claim?.vehicleDetails?.ClassOfVehicle : ClassOfVehicle);
     // getNextYear();
 
     //driver details fetched
-    setFatherName(claim?.driverDetails?.FatherName);
-    setGender(claim?.driverDetails?.Gender || "");
-    setBloodGroup(claim?.driverDetails?.BloodGroup);
-    setAddress(claim?.driverDetails?.Address);
-    setRtoName(claim?.driverDetails?.RtoName);
-    setVov(claim?.driverDetails?.Vov);
-    setPht(claim?.driverDetails?.Pht);
-    setPhoto(claim?.driverDetails?.Photo);
-    setValidUpto(claim.driverDetails?.VaildUpto);
+    setFatherName(claim?.driverDetails?.FatherName ? claim?.driverDetails?.FatherName : FatherName);
+    setGender(claim?.driverDetails?.Gender ? claim?.driverDetails?.Gender  : Gender);
+    setBloodGroup(claim?.driverDetails?.BloodGroup ? claim?.driverDetails?.BloodGroup : BloodGroup);
+    setAddress( claim?.driverDetails?.Address ? claim?.driverDetails?.Address : Address);
+    setRtoName(claim?.driverDetails?.RtoName ? claim?.driverDetails?.RtoName : RtoName);
+    setVov(claim?.driverDetails?.Vov ? claim?.driverDetails?.Vov : Vov);
+    setPht(claim?.driverDetails?.Pht ? claim?.driverDetails?.Pht : Pht);
+    setPhoto(claim?.driverDetails?.Photo ? claim?.driverDetails?.Photo : Photo);
+    setValidUpto(claim.driverDetails?.VaildUpto ? claim.driverDetails?.VaildUpto : ValidUpto);
 
-    setDateOfBirth(claim?.driverDetails?.DateOfBirth || "");
-    setDateOfIssue(claim?.driverDetails?.DateOfIssue || "");
+    setDateOfBirth(claim?.driverDetails?.DateOfBirth ? claim?.driverDetails?.DateOfBirth : DateOfBirth);
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue ? claim?.driverDetails?.DateOfIssue : DateOfIssue );
 
-    setIsDriverDetailsFetched(claim?.claimDetails?.IsDriverDetailsFetched);
-    setIsRcDetailsFetched(claim?.claimDetails?.IsRcDetailsFetched);
+    setIsDriverDetailsFetched(claim?.claimDetails?.IsDriverDetailsFetched ? claim?.claimDetails?.IsDriverDetailsFetched : IsDriverDetailsFetched);
+    setIsRcDetailsFetched(claim?.claimDetails?.IsRcDetailsFetched ? claim?.claimDetails?.IsRcDetailsFetched : IsRcDetailsFetched);
   }, [claim]);
 
   // console.log("datat ", VehicleInsuranceCompany);
@@ -481,8 +394,7 @@ const Index = ({}) => {
   };
   console.log("policyStartDate", policyStartDate);
 
-  const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState(
-    claim?.VehicleRegisteredNumber ? claim?.VehicleRegisteredNumber : ""
+  const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState( ""
   );
 
   const calculateTheUpdateType = (type) => {
@@ -680,6 +592,31 @@ const Index = ({}) => {
     func(false);
     func2(false);
   };
+
+
+  const updateHandlerAfterFetching =()=>{
+    setClaim([]);
+
+    axios
+      .get("/api/getSpecificClaim", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: leadId,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setClaim(res.data.data);
+        // toast.success("Successfully Fetched !!")
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+
+  }
 
   const editHandler = (value) => {
     if (value === 1) {
@@ -1234,6 +1171,7 @@ const Index = ({}) => {
                               VehicleFuelType={VehicleFuelType}
                               setVehicleFuelType={setVehicleFuelType}
                               // New Fields
+                              updateHandlerAfterFetching={updateHandlerAfterFetching}
                               setVehicleClassDescription={
                                 setVehicleClassDescription
                               }
@@ -1355,6 +1293,7 @@ const Index = ({}) => {
                               setPht={setPht}
                               Pht={Pht}
                               Photo={Photo}
+                              updateHandlerAfterFetching={updateHandlerAfterFetching}
                               setPhoto={setPhoto}
                               DateOfBirth={DateOfBirth}
                               setDateOfBirth={setDateOfBirth}
