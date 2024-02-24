@@ -1173,19 +1173,40 @@ export default function Exemple_01({
                 disabled={!edit}
               >
                 <option data-tokens="Status1" value={"Regular"}>
-                  Choose.....
+                  Not allowed
                 </option>
                 <option data-tokens="Status1" value={"Regular"}>
-                  Regular
+                  Intact
                 </option>
                 <option data-tokens="Status2" value={"Add on Policy"}>
-                  Add on Policy
+                  Repair allowed
+                </option>
+                <option data-tokens="Status1" value={"Regular"}>
+                  IMT23
+                </option>
+                <option data-tokens="Status1" value={"Regular"}>
+                  Not correlate
+                </option>
+                <option data-tokens="Status2" value={"Add on Policy"}>
+                  Not relevant
+                </option>
+                <option data-tokens="Status2" value={"Add on Policy"}>
+                  Damaged
+                </option>
+                <option data-tokens="Status1" value={"Regular"}>
+                  Broken
+                </option>
+                <option data-tokens="Status1" value={"Regular"}>
+                  As per PI
+                </option>
+                <option data-tokens="Status2" value={"Add on Policy"}>
+                  Burnt
                 </option>
                 <option
                   data-tokens="Status3"
                   value={"Add on Policy(Not Effective)"}
                 >
-                  Add on Policy(Not Effective)
+                  Not payable
                 </option>
               </select>
             ),
