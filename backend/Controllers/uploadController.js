@@ -269,6 +269,7 @@ const getDocuments = (req, res) => {
 
  const uploadMedia = async(req, res) => {
   try {
+    console.log("Dataaaaaaaaaaaa", req.body);
     const { file: filesData, name } = req.body; // Use a different name for the file data
     const results = [];
   

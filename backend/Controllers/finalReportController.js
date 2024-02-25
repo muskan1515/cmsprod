@@ -128,6 +128,7 @@ const updateFinalReport = (req,res)=>{
       TotalLoss,
       DateOfBirth,
       IMT,
+      ValidUpto,
       phyCheck
     } = req.body;
 
@@ -146,7 +147,7 @@ const updateFinalReport = (req,res)=>{
     BadgeNumber='${BadgeNumber}',
     Remark='${driverRemark}',
     DateOfBirth='${DateOfBirth}',
-    VaildUpto='${ValidFrom}'
+    ValidUpto='${ValidUpto}'
     WHERE LeadID = ${leadId};
   `;
 

@@ -525,7 +525,7 @@ const [AccidentTime,setAccidentTime]=useState("");
 
     setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration ? convertStringTime(claim?.vehicleDetails?.DateOfRegistration ):"");
     setMailRecieveDate(claim?.claimDetails?.MailRecieveDate );
-    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate ?convertStringTime(claim?.vehicleDetails?.OwnerSrDate):"");
+    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate );
     setClaimRegion(claim?.claimDetails?.ClaimRegion );
     setInsuredName(claim?.insuredDetails?.InsuredName );
     setInsuredAddress(claim?.insuredDetails?.InsuredAddress );
@@ -610,7 +610,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv);
     setValidUntilTv(claim?.driverDetails?.ValidUntilTv);
     setValidFrom(claim?.driverDetails?.VaildUpto);
-    setDateOfIssue(claim?.driverDetails?.DateOfIssue ? convertStringTime(claim?.driverDetails?.DateOfIssue) : "");
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue);
     //commercial
     setFitnessCertificate(claim?.commercialVehicleDetails?.FitnessCertificate);
     setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom);
@@ -622,7 +622,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setAuthorization(claim?.commercialVehicleDetails?.Authorization);
     setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation);
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark);
-    setValidUpto(claim?.driverDetails?.ValidUpto ? convertStringTime(claim?.driverDetails?.ValidUpto) : "");
+    setValidUpto(claim?.driverDetails?.ValidUpto);
     setPolicyType(claim?.claimDetails?.PolicyType)
     setTotalLoss(claim?.claimDetails?.TotalLoss)
     setIMT(claim?.claimDetails?.IMT)
@@ -815,6 +815,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       TotalLoss : TotalLoss,
       IMT : IMT,
       phyCheck,
+      ValidUpto,
       leadId,
     };
 

@@ -220,9 +220,7 @@ const PolicyDetails = ({
   phyCheck,
   setphyCheck,
 }) => {
-
-
-  console.log(DateOfBirth,DateOfIssue,DateRegistration,ValidUpto,OwnerSRST)
+  console.log(DateOfBirth, DateOfIssue, DateRegistration, ValidUpto, OwnerSRST);
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -1345,7 +1343,7 @@ const PolicyDetails = ({
                               disabled={!isEditMode}
                               value={
                                 DateRegistration && DateRegistration !== "null"
-                                  ? new Date((DateRegistration))
+                                  ? DateRegistration.substring(0, 10)
                                   : ""
                               }
                               onChange={(e) =>
@@ -1353,7 +1351,10 @@ const PolicyDetails = ({
                               }
                             />
                           )}
-
+                          {console.log(
+                            "DateRegistration---------",
+                            DateRegistration
+                          )}
                           {/* <input
                             type={isEditMode ? "date" : "text"}
                             readonly={!isEditMode}
@@ -2361,9 +2362,7 @@ const PolicyDetails = ({
                       type="date"
                       disabled={!isEditMode}
                       value={
-                        DateOfBirth && DateOfBirth !== "null"
-                          ? DateOfBirth
-                          : ""
+                        DateOfBirth && DateOfBirth !== "null" ? DateOfBirth : ""
                       }
                       onChange={(e) => setDateOfBirth(e.target.value)}
                     />
@@ -2525,11 +2524,11 @@ const PolicyDetails = ({
                       type="date"
                       disabled={!isEditMode}
                       value={
-                        ValidFrom && ValidFrom !== "null"
-                          ? ValidFrom.substring(0, 10)
+                        ValidUpto && ValidUpto !== "null"
+                          ? ValidUpto.substring(0, 10)
                           : ""
                       }
-                      onChange={(e) => setValidFrom(e.target.value)}
+                      onChange={(e) => setValidUpto(e.target.value)}
                     />
                   )}
                   {/* <input 
