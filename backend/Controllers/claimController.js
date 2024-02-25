@@ -55,7 +55,8 @@ const addClaim =  (req, res) => {
         InspectionType,
         IsClaimCompleted,
         BrokerMailAddress,
-        Token,
+        InsuredToken,
+        PolicyIssuingOffice,
         IsActive
       ) VALUES (
         '${SurveyType}',
@@ -70,6 +71,7 @@ const addClaim =  (req, res) => {
         ${parseInt(IsClaimCompleted)},
         '${BrokerMailAddress}',
         '${generatedToken}',
+        '${PolicyIssuingOffice}',
         ${parseInt(IsActive)}
       );
     `;
@@ -695,16 +697,16 @@ const getSpecificClaim = async (req, res) => {
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
-    PolicyIssuingOffice = ${PolicyIssuingOffice ? `'${PolicyIssuingOffice}'` : null},
+    PolicyIssuingOffice = ${PolicyIssuingOffice ? `'${PolicyIssuingOffice}'` : ''},
     Region = '${ClaimRegion}',
-    ClaimServicingOffice = ${ClaimServicingOffice ? `'${ClaimServicingOffice}'` : null},
+    ClaimServicingOffice = ${ClaimServicingOffice ? `'${ClaimServicingOffice}'` : ''},
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = ${PolicyPeriodStart ? `'${PolicyPeriodStart}'` : null},
-    PolicyPeriodEnd = ${PolicyPeriodEnd ? `'${PolicyPeriodEnd}'` : null},
-    IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : null},
-    IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : null},
-    InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `'${InsuranceCompanyNameAddress}'` : null}
+    PolicyPeriodStart = ${PolicyPeriodStart ? `'${PolicyPeriodStart}'` : ''},
+    PolicyPeriodEnd = ${PolicyPeriodEnd ? `'${PolicyPeriodEnd}'` : ''},
+    IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
+    IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : ''},
+    InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `'${InsuranceCompanyNameAddress}'` : ''}
     WHERE LeadId = ${LeadId};
   `;
   
@@ -712,24 +714,24 @@ const getSpecificClaim = async (req, res) => {
   const updateDriverDetails = `
     UPDATE DriverDetails
     SET
-    IssuingAuthority = ${IssuingAuthority ? `'${IssuingAuthority}'` : null},
+    IssuingAuthority = ${IssuingAuthority ? `'${IssuingAuthority}'` : ''},
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : null},
-    Pht = ${Pht ? `'${Pht}'` : null},
-    Photo = ${Photo ? `'${Photo}'` : null},
-    Vov = ${Vov ? `'${Vov}'` : null},
-    ValidUpto = ${ValidFrom ? `'${ValidFrom}'` : null},
-    RtoName = ${RtoName ? `'${RtoName}'` : null},
-    Address = ${Address ? `'${Address}'` : null},
-    Mobile = ${Mobile ? `'${Mobile}'` : null},
-    BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : null},
-    Gender = ${Gender ? `'${Gender}'` : null},
-    FatherName = ${FatherName ? `'${FatherName}'` : null},
+    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : ''},
+    Pht = ${Pht ? `'${Pht}'` : ''},
+    Photo = ${Photo ? `'${Photo}'` : ''},
+    Vov = ${Vov ? `'${Vov}'` : ''},
+    ValidUpto = ${ValidFrom ? `'${ValidFrom}'` : ''},
+    RtoName = ${RtoName ? `'${RtoName}'` : ''},
+    Address = ${Address ? `'${Address}'` : ''},
+    Mobile = ${Mobile ? `'${Mobile}'` : ''},
+    BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : ''},
+    Gender = ${Gender ? `'${Gender}'` : ''},
+    FatherName = ${FatherName ? `'${FatherName}'` : ''},
     BadgeNumber='${BadgeNumber}',
-    DateOfBirth = ${DateOfBirth ? `'${DateOfBirth}'` : null},
-    DateOfIssue = ${DateOfIssue ? `'${DateOfIssue}'` : null},
+    DateOfBirth = ${DateOfBirth ? `'${DateOfBirth}'` : ''},
+    DateOfIssue = ${DateOfIssue ? `'${DateOfIssue}'` : ''},
     TypeOfVerification = '${DriverTypeOfVerification}',
     DateOfBirth='${DateOfBirth}'
     WHERE LeadID = ${LeadId};
@@ -739,39 +741,39 @@ const getSpecificClaim = async (req, res) => {
   const updateVehicleDetails = `
   UPDATE VehicleDetails
   SET 
-    RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : null},
-    MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : null},
-    TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : null},
-    DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : null},
-    PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : null},
-    TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : null},
-    EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : null},
-    AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : null},
-    ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : null},
-    FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : null},
-    MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : null},
-    MakerModel = ${MakerModel ? `'${MakerModel}'` : null},
-    CubicCapacity = ${CubicCapacity ? `'${CubicCapacity}'` : null},
-    FitUpto = ${FitUpto ? `'${FitUpto}'` : null},
-    PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : null},
-    VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : null},
-    BancsModelCode = ${BancsModelCode ? `'${BancsModelCode}'` : null},
-    BancsMakeCode = ${BancsMakeCode ? `'${BancsMakeCode}'` : null},
-    BancsSubtypeCode = ${BancsSubtypeCode ? `'${BancsSubtypeCode}'` : null},
-    BancsBodyType = ${BancsBodyType ? `'${BancsBodyType}'` : null},
-    BancsVehicleClass = ${BancsVehicleClass ? `'${BancsVehicleClass}'` : null},
-    BancsVehicleSegment = ${BancsVehicleSegment ? `'${BancsVehicleSegment}'` : null},
-    RcRtoCode = ${RcRtoCode ? `'${RcRtoCode}'` : null},
-    VehicleRcStatus = ${VehicleRcStatus ? `'${VehicleRcStatus}'` : null},
-    VehicleBlackListStatus = ${VehicleBlackListStatus ? `'${VehicleBlackListStatus}'` : null},
-    VehicleRegistedAt = ${VehicleRegistedAt ? `'${VehicleRegistedAt}'` : null},
-    VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `'${VehicleInsuranceCompany}'` : null},
-    ManufactureMonthYear = ${ManufactureMonthYear ? `'${ManufactureMonthYear}'` : null},
-    PermanentAddress = ${PermanentAddress ? `'${PermanentAddress}'` : null},
-    ClassOfVehicle = ${ClassOfVehicle ? `'${ClassOfVehicle}'` : null},
-    RegisteredOwner = ${VehicleRegisteredOwner ? `'${VehicleRegisteredOwner}'` : null},
-    SeatingCapacity = ${SeatingCapacity ? `'${SeatingCapacity}'` : null},
-    VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : null}
+    RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : ''},
+    MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : ''},
+    TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : ''},
+    DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : ''},
+    PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : ''},
+    TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : ''},
+    EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : ''},
+    AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : ''},
+    ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : ''},
+    FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : ''},
+    MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : ''},
+    MakerModel = ${MakerModel ? `'${MakerModel}'` : ''},
+    CubicCapacity = ${CubicCapacity ? `'${CubicCapacity}'` : ''},
+    FitUpto = ${FitUpto ? `'${FitUpto}'` : ''},
+    PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : ''},
+    VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : ''},
+    BancsModelCode = ${BancsModelCode ? `'${BancsModelCode}'` : ''},
+    BancsMakeCode = ${BancsMakeCode ? `'${BancsMakeCode}'` : ''},
+    BancsSubtypeCode = ${BancsSubtypeCode ? `'${BancsSubtypeCode}'` : ''},
+    BancsBodyType = ${BancsBodyType ? `'${BancsBodyType}'` : ''},
+    BancsVehicleClass = ${BancsVehicleClass ? `'${BancsVehicleClass}'` : ''},
+    BancsVehicleSegment = ${BancsVehicleSegment ? `'${BancsVehicleSegment}'` : ''},
+    RcRtoCode = ${RcRtoCode ? `'${RcRtoCode}'` : ''},
+    VehicleRcStatus = ${VehicleRcStatus ? `'${VehicleRcStatus}'` : ''},
+    VehicleBlackListStatus = ${VehicleBlackListStatus ? `'${VehicleBlackListStatus}'` : ''},
+    VehicleRegistedAt = ${VehicleRegistedAt ? `'${VehicleRegistedAt}'` : ''},
+    VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `'${VehicleInsuranceCompany}'` : ''},
+    ManufactureMonthYear = ${ManufactureMonthYear ? `'${ManufactureMonthYear}'` : ''},
+    PermanentAddress = ${PermanentAddress ? `'${PermanentAddress}'` : ''},
+    ClassOfVehicle = ${ClassOfVehicle ? `'${ClassOfVehicle}'` : ''},
+    RegisteredOwner = ${VehicleRegisteredOwner ? `'${VehicleRegisteredOwner}'` : ''},
+    SeatingCapacity = ${SeatingCapacity ? `'${SeatingCapacity}'` : ''},
+    VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : ''}
   WHERE LeadId = ${LeadId};
 `;
   
@@ -779,10 +781,10 @@ const getSpecificClaim = async (req, res) => {
   const updateGarageDetails = `
     UPDATE GarageDetails
     SET
-    GarageNameAndAddress = ${GarageNameAndAddress ? `'${GarageNameAndAddress}'` : null},
-    GarageContactNo1 = ${GarageContactNo1 ? `'${GarageContactNo1}'` : null},
+    GarageNameAndAddress = ${GarageNameAndAddress ? `'${GarageNameAndAddress}'` : ''},
+    GarageContactNo1 = ${GarageContactNo1 ? `'${GarageContactNo1}'` : ''},
     GarageContactNo2 = ${GarageContactNo2 ? `'${GarageContactNo2}'` : "''"},
-    AddedBy = ${GarageAddedBy ? `'${GarageAddedBy}'` : null}
+    AddedBy = ${GarageAddedBy ? `'${GarageAddedBy}'` : ''}
     WHERE LeadId = ${LeadId};
   `;
   
@@ -790,11 +792,10 @@ const getSpecificClaim = async (req, res) => {
   const updateInsuredDetails = `
     UPDATE InsuredDetails
     SET
-    InsuredName = ${InsuredName ? `'${InsuredName}'` : null},
-    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : null},
-    InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : null},
-    InsuredMailAddress = '${InsuredMailAddress}',
-    AddedBy = ${insuredAddedBy ? `'${insuredAddedBy}'` : null}
+    InsuredName = ${InsuredName ? `'${InsuredName}'` : ''},
+    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : ''},
+    InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : ''},
+    InsuredMailAddress = '${InsuredMailAddress}'
     WHERE LeadId = ${LeadId};
   `;
   
@@ -907,21 +908,21 @@ const getSpecificClaim = async (req, res) => {
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
-    IssuingAuthority = ${IssuingAuthority ? `'${(IssuingAuthority)}'` : null},
+    IssuingAuthority = ${IssuingAuthority ? `'${(IssuingAuthority)}'` : ''},
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : null},
-    Vov = ${Vov ? `'${Vov}'` : null},
-    ValidUpto = ${ValidUpto ? `'${(ValidUpto)}'` : null},
-    RtoName = ${RtoName ? `'${RtoName}'` : null},
-    Address = ${Address ? `'${Address}'` : null},
-    Mobile = ${Mobile ?`'${(Mobile)}'` : null},
-    BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : null},
-    Gender = ${Gender ? `'${Gender}'` : null},
-    FatherName = ${FatherName ? `'${FatherName}'` : null},
-    DateOfBirth = ${DateOfBirth ? `'${(DateOfBirth)}'` : null},
-    DateOfIssue = ${DateOfIssue ? `'${(DateOfIssue)}'` : null},
+    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : ''},
+    Vov = ${Vov ? `'${Vov}'` : ''},
+    ValidUpto = ${ValidUpto ? `'${(ValidUpto)}'` : ''},
+    RtoName = ${RtoName ? `'${RtoName}'` : ''},
+    Address = ${Address ? `'${Address}'` : ''},
+    Mobile = ${Mobile ?`'${(Mobile)}'` : ''},
+    BloodGroup = ${BloodGroup ? `'${BloodGroup}'` : ''},
+    Gender = ${Gender ? `'${Gender}'` : ''},
+    FatherName = ${FatherName ? `'${FatherName}'` : ''},
+    DateOfBirth = ${DateOfBirth ? `'${(DateOfBirth)}'` : ''},
+    DateOfIssue = ${DateOfIssue ? `'${(DateOfIssue)}'` : ''},
     TypeOfVerification = '${DriverTypeOfVerification}'
     WHERE LeadID = ${LeadId};
   `;
@@ -965,16 +966,16 @@ const getSpecificClaim = async (req, res) => {
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
-    PolicyIssuingOffice = ${PolicyIssuingOffice ? `'${PolicyIssuingOffice}'` : null},
+    PolicyIssuingOffice = ${PolicyIssuingOffice ? `'${PolicyIssuingOffice}'` : ''},
     Region = '${ClaimRegion}',
-    ClaimServicingOffice = ${ClaimServicingOffice ? `'${ClaimServicingOffice}'` : null},
+    ClaimServicingOffice = ${ClaimServicingOffice ? `'${ClaimServicingOffice}'` : ''},
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = ${PolicyPeriodStart ? `'${PolicyPeriodStart}'` : null},
-    PolicyPeriodEnd = ${PolicyPeriodEnd ? `'${PolicyPeriodEnd}'` : null},
-    IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : null},
-    IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : null},
-    InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `'${InsuranceCompanyNameAddress}'` : null}
+    PolicyPeriodStart = ${PolicyPeriodStart ? `'${PolicyPeriodStart}'` : ''},
+    PolicyPeriodEnd = ${PolicyPeriodEnd ? `'${PolicyPeriodEnd}'` : ''},
+    IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
+    IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : ''},
+    InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `'${InsuranceCompanyNameAddress}'` : ''}
     WHERE LeadId = ${LeadId};
   `;
 
@@ -982,11 +983,10 @@ const getSpecificClaim = async (req, res) => {
   const updateInsuredDetails = `
     UPDATE InsuredDetails
     SET
-    InsuredName = ${InsuredName ? `'${InsuredName}'` : null},
-    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : null},
-    InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : null},
-    InsuredMailAddress = '${InsuredMailAddress}',
-    AddedBy = ${insuredAddedBy ? `'${insuredAddedBy}'` : null}
+    InsuredName = ${InsuredName ? `'${InsuredName}'` : ''},
+    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : ''},
+    InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : ''},
+    InsuredMailAddress = '${InsuredMailAddress}'
     WHERE LeadId = ${LeadId};
   `;
 
@@ -1053,39 +1053,39 @@ const getSpecificClaim = async (req, res) => {
    const updateVehicleDetails = `
    UPDATE VehicleDetails
    SET 
-     RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : null},
-     MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : null},
-     TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : null},
-     DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : null},
-     PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : null},
-     TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : null},
-     EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : null},
-     AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : null},
-     ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : null},
-     FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : null},
-     MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : null},
-     MakerModel = ${MakerModel ? `'${MakerModel}'` : null},
-     CubicCapacity = ${CubicCapacity ? `${parseInt(CubicCapacity)}` : null},
-     FitUpto = ${FitUpto ? `'${FitUpto}'` : null},
-     PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : null},
-     VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : null},
-     BancsModelCode = ${BancsModelCode ? `'${BancsModelCode}'` : null},
-     BancsMakeCode = ${BancsMakeCode ? `'${BancsMakeCode}'` : null},
-     BancsSubtypeCode = ${BancsSubtypeCode ? `'${BancsSubtypeCode}'` : null},
-     BancsBodyType = ${BancsBodyType ? `'${BancsBodyType}'` : null},
-     BancsVehicleClass = ${BancsVehicleClass ? `'${BancsVehicleClass}'` : null},
-     BancsVehicleSegment = ${BancsVehicleSegment ? `'${BancsVehicleSegment}'` : null},
-     RcRtoCode = ${RcRtoCode ? `'${RcRtoCode}'` : null},
-     VehicleRcStatus = ${VehicleRcStatus ? `'${VehicleRcStatus}'` : null},
-     VehicleBlackListStatus = ${VehicleBlackListStatus ? `'${VehicleBlackListStatus}'` : null},
-     VehicleRegistedAt = ${VehicleRegistedAt ? `'${VehicleRegistedAt}'` : null},
-     VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `'${VehicleInsuranceCompany}'` : null},
-     ManufactureMonthYear = ${ManufactureMonthYear ? `'${ManufactureMonthYear}'` : null},
-     PermanentAddress = ${PermanentAddress ? `'${PermanentAddress}'` : null},
-     ClassOfVehicle = ${ClassOfVehicle ? `'${ClassOfVehicle}'` : null},
-     RegisteredOwner = ${VehicleRegisteredOwner ? `'${VehicleRegisteredOwner}'` : null},
-     SeatingCapacity = ${SeatingCapacity ? `'${SeatingCapacity}'` : null},
-     VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : null}
+     RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : ''},
+     MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : ''},
+     TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : ''},
+     DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : ''},
+     PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : ''},
+     TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : ''},
+     EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : ''},
+     AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : ''},
+     ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : ''},
+     FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : ''},
+     MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : ''},
+     MakerModel = ${MakerModel ? `'${MakerModel}'` : ''},
+     CubicCapacity = ${CubicCapacity ? `${parseInt(CubicCapacity)}` : ''},
+     FitUpto = ${FitUpto ? `'${FitUpto}'` : ''},
+     PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : ''},
+     VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : ''},
+     BancsModelCode = ${BancsModelCode ? `'${BancsModelCode}'` : ''},
+     BancsMakeCode = ${BancsMakeCode ? `'${BancsMakeCode}'` : ''},
+     BancsSubtypeCode = ${BancsSubtypeCode ? `'${BancsSubtypeCode}'` : ''},
+     BancsBodyType = ${BancsBodyType ? `'${BancsBodyType}'` : ''},
+     BancsVehicleClass = ${BancsVehicleClass ? `'${BancsVehicleClass}'` : ''},
+     BancsVehicleSegment = ${BancsVehicleSegment ? `'${BancsVehicleSegment}'` : ''},
+     RcRtoCode = ${RcRtoCode ? `'${RcRtoCode}'` : ''},
+     VehicleRcStatus = ${VehicleRcStatus ? `'${VehicleRcStatus}'` : ''},
+     VehicleBlackListStatus = ${VehicleBlackListStatus ? `'${VehicleBlackListStatus}'` : ''},
+     VehicleRegistedAt = ${VehicleRegistedAt ? `'${VehicleRegistedAt}'` : ''},
+     VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `'${VehicleInsuranceCompany}'` : ''},
+     ManufactureMonthYear = ${ManufactureMonthYear ? `'${ManufactureMonthYear}'` : ''},
+     PermanentAddress = ${PermanentAddress ? `'${PermanentAddress}'` : ''},
+     ClassOfVehicle = ${ClassOfVehicle ? `'${ClassOfVehicle}'` : ''},
+     RegisteredOwner = ${VehicleRegisteredOwner ? `'${VehicleRegisteredOwner}'` : ''},
+     SeatingCapacity = ${SeatingCapacity ? `'${SeatingCapacity}'` : ''},
+     VehicleInsuranceUpto = ${RcInsuranceUpto ? `'${RcInsuranceUpto}'` : ''}
    WHERE LeadId = ${LeadId};
  `;
 
@@ -1116,10 +1116,10 @@ const getSpecificClaim = async (req, res) => {
     const updateGarageDetails = `
     UPDATE GarageDetails
     SET
-    GarageNameAndAddress = ${GarageNameAndAddress ? `'${GarageNameAndAddress}'` : null},
-    GarageContactNo1 = ${GarageContactNo1 ? `'${GarageContactNo1}'` : null},
+    GarageNameAndAddress = ${GarageNameAndAddress ? `'${GarageNameAndAddress}'` : ''},
+    GarageContactNo1 = ${GarageContactNo1 ? `'${GarageContactNo1}'` : ''},
     GarageContactNo2 = ${GarageContactNo2 ? `'${GarageContactNo2}'` : "''"},
-    AddedBy = ${GarageAddedBy ? `'${GarageAddedBy}'` : null}
+    AddedBy = ${GarageAddedBy ? `'${GarageAddedBy}'` : ''}
     WHERE LeadId = ${LeadId};
   `;
 

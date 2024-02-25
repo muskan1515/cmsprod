@@ -131,6 +131,12 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
 
   const [totalMetalRows,settotalMetalRows]=useState(0);
+  const [DepreciationValue,setDepreciationValue]=useState(0);
+
+  const calculateDepreciation = ()=>{
+
+  }
+
   const returnTotal = () => {
     const a =
       Number(totalLabrorAssessed) +
@@ -154,7 +160,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const calculateGSTWithPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
-    if (String(type) === "1" && gst % 2 !== 0) {
+    if (String(type) === "1" ) {
       return claim?.claimDetails?.PolicyType === "Regular" ? (Number(original) * 12.5) / 100 : 0;
     }
     return 0;
@@ -215,7 +221,7 @@ const [allNewParts,setallNewParts]=useState([]);
 
 useEffect(()=>{
 
-  console.log("allNewParts",allNewParts);
+  let dep = 0;
 
     let total =0;
   allNewParts.map((row,index)=>{
@@ -225,8 +231,15 @@ useEffect(()=>{
       const add = row.isActive ? assessed+gst:0;
       total = total +  add;
     }
+    
+    else{
+      const assessed = Number(row.assessed)*Number(row.qa);
+      const gst = Number(assessed * Number(12.5))/100;
+      const add = row.isActive ? assessed+gst:0;
+      dep = dep +  add;
+    }
   })
-  console.log(total);
+  setDepreciationValue(claim?.claimDetails?.PolicyType === "Regular" ? dep : 0);
 },[allNewParts]);
 
 
@@ -251,9 +264,11 @@ useEffect(()=>{
           Number(row?.assessed) -
           calculateGSTWithPaintValue(row?.assessed, row.type, row.gst);
       
+        const dep = String(policyType) === "Regular"?
+        (Number(row.assessed)*Number(12.5))/100:0;
         total_taxable_amount =
           total_taxable_amount +
-          (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
+          (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0)-dep;
 
         const current_row_assessed_tax = calculateTaxValue(
           row?.assessed,
@@ -512,7 +527,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setOtherRemark(claim?.summaryDetails?.OtherRemark?claim?.summaryDetails?.OtherRemark:"");
     
     setInspectionDate(claim?.accidentDetails?.InspectionDate || "");
-    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress );
+    setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
     setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 );
     setInsuredMobileNo2(
       claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 
@@ -620,7 +635,8 @@ const [AccidentTime,setAccidentTime]=useState("");
     setRemarkIfULW(claim?.vehicleDetails?.RemarkIfULW );
 
     setPin(claim?.accidentDetails?.Pin);
-    setPlaceOfSurvey(claim?.accidentDetails?.PlaceOfSurvey);
+    setPlaceOfSurvey(claim?.garageDetails?.GarageNameAndAddress ? 
+      claim?.garageDetails?.GarageNameAndAddress : "");
     setDetailsOfLoads(claim?.driverDetails?.DetailsOfLoads);
     setCauseOfAccident(claim?.driverDetails?.CauseOfAccident);
     setPoliceAction(claim?.driverDetails?.PoliceAction);
@@ -800,7 +816,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       TotalEstimate : totalPartsEstimate + totalLabrorEstimate,
       LessExcess,
       LessImposed,
-      ExpectedSalvage : (Number(totalLabrorAssessed + totalPartsAssessed) *
+      ExpectedSalvage : (Number(totalMetalRows) *
       Number(metalSalvageValue)) /
     100,
       MetalPercent ,
@@ -1537,6 +1553,8 @@ const [AccidentTime,setAccidentTime]=useState("");
             <div className="thumb">
               <Summary
               totalMetalRows={totalMetalRows}
+              claim={claim}
+              DepreciationValue={DepreciationValue}
               settotalMetalRows={settotalMetalRows}
               FinalReportNotes={FinalReportNotes}
               setFinalReportNotes={setFinalReportNotes}

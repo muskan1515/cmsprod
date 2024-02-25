@@ -9,6 +9,8 @@ const Summary = ({
   isEditMode,
   metaldepPct,
   ageOfVehicleTotal,
+  claim,
+  DepreciationValue,
   FinalReportNotes,
   setFinalReportNotes,
   totalPartsEstimate,
@@ -100,12 +102,16 @@ const Summary = ({
       Number(totalPartsAssessed) +
       (Number(LessExcess) - Number(LessImposed) + Number(Other));
     const b =
-      (Number(totalLabrorAssessed + totalPartsAssessed) *
-        Number(metalSalvageValue)) /
-      100;
+    ((totalMetalRows*MetalPercent)/100) 
 
     return a - b > 1 ? a - b : 0;
   };
+  
+  const roundOff = (value)=>{
+    const roundedValue = parseFloat(value).toFixed(2);
+    return roundedValue
+  }
+
 
   console.log(totalMetalRows,"total",metalSalvageValue)
 
@@ -229,7 +235,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalLabrorEstimate}
+                    value={roundOff(totalLabrorEstimate)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -254,7 +260,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalPartsEstimate}
+                    value={roundOff(totalPartsEstimate)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -279,7 +285,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalPartsEstimate + totalLabrorEstimate}
+                    value={roundOff(totalPartsEstimate + totalLabrorEstimate)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -337,7 +343,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalLabrorAssessed}
+                    value={roundOff(totalLabrorAssessed)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -362,7 +368,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalPartsAssessed}
+                    value={roundOff(totalPartsAssessed)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -388,7 +394,7 @@ const Summary = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                      value={totalLabrorAssessed + totalPartsAssessed}
+                      value={roundOff(totalLabrorAssessed + totalPartsAssessed)}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -524,9 +530,9 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={
-                      Number(totalLabrorAssessed) +
+                      roundOff(Number(totalLabrorAssessed) +
                       Number(totalPartsAssessed) 
-                        -Number(LessExcess)-Number(LessImposed)+Number(Other)
+                        -Number(LessExcess)-Number(LessImposed)+Number(Other))
                       
                     }
                     // placeholder="Enter Registration No."
@@ -560,8 +566,8 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={metalSalvageValue}
-                    onChange={(e)=>setMetalSalvageValue(e.target.value)}
+                    value={MetalPercent}
+                    onChange={(e)=>setMetalPercent(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -588,7 +594,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={
-                      (totalMetalRows) 
+                      roundOff((totalMetalRows*MetalPercent)/100) 
                       
                     }
                     // placeholder="Enter Registration No."
@@ -653,9 +659,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={
-                      (Number(totalMetalRows) *
-                        Number(metalSalvageValue)) /
-                      100
+                      roundOff(DepreciationValue)
                     }
                     // placeholder="Enter Registration No."
                   />
@@ -686,7 +690,11 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={returnTotal()}
+                    value={ roundOff(Number(totalLabrorAssessed) +
+                      Number(totalPartsAssessed) 
+                        -Number(LessExcess)-Number(LessImposed)+Number(Other)
+                        -((totalMetalRows*MetalPercent)/100) - DepreciationValue)
+                      }
                     // placeholder="Enter Registration No."
                   />
                 </div>

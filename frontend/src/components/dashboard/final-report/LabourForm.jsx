@@ -58,6 +58,11 @@ const LabourForm = ({
     const b = totalAssessed + a;
   };
 
+  const roundOff = (value)=>{
+    const roundedValue = parseFloat(value).toFixed(2);
+    return roundedValue
+  }
+
   const calculateDepreciationOnMetal = () => {
     const a = calculateDepreciationsPercenatge(
       allDepreciations,
@@ -227,7 +232,7 @@ const LabourForm = ({
                   type="text"
                   className="form-control"
                   id="propertyTitle"
-                  value={totalTaxableAMount}
+                  value={roundOff(totalTaxableAMount)}
                 />
               </div>
             </div>
@@ -252,7 +257,7 @@ const LabourForm = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={currentGst}
+                    value={currentGst ? currentGst : 18}
                     onChange={(e) => {
                       setCurrentGST(e.target.value);
                     }}
@@ -277,7 +282,7 @@ const LabourForm = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={taxAmount}
+                    value={roundOff(taxAmount)}
                   />
                 </div>
               </div>
@@ -325,7 +330,7 @@ const LabourForm = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={totalTaxableAMount + taxAmount}
+                    value={roundOff(totalTaxableAMount + taxAmount)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -352,7 +357,7 @@ const LabourForm = ({
                   className="form-control form-control-table"
                   id="propertyTitle"
                   value={
-                    totalTaxableAMount + taxAmount + totalRemainingAssessed
+                    roundOff(totalTaxableAMount + taxAmount + totalRemainingAssessed)
                   }
                   // placeholder="Enter Registration No."
                 />

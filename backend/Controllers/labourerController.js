@@ -18,7 +18,7 @@ const updateLabrorer = async (req, res) => {
     try {
       const leadId = req.params.leadId;
       const data = JSON.parse(req.body.allRows);
-  
+   
       const gstPct = (req.body.gstPct);
       const promises = data.map((row) => {
         return new Promise((resolve, reject) => {
@@ -56,11 +56,14 @@ const updateLabrorer = async (req, res) => {
               BillSr = '${row.Bill_sr}',
               IsGSTIncluded='${row.gst}',
               GSTPercentage='${gstPct}',
-              IsActive='${row.isActive}'
+              IsActive='${row.isActive}',
+              JobType=${row.type}
             WHERE ReportID = '${row.sno}' AND
             LeadID = '${leadId}';
           `;
          
+
+          console.log(updateQuery);
           db.query("SELECT * FROM LabourReport WHERE ReportID = ? AND LeadID=? ", [row.sno,leadId], (err, result2) => {
             if (err) {
               console.error(err);

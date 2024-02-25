@@ -5,6 +5,9 @@ export const getMonthsDifference = (givenDate) => {
   // Get the current date
   const currentDate = new Date();
 
+  if(givenDateTime.getFullYear() < 2000){
+    return 0;
+  }
   // Calculate the difference in months
   const monthsDifference =
     (currentDate.getFullYear() - givenDateTime.getFullYear()) * 12 +
@@ -29,3 +32,5 @@ export const calculateDepreciationsPercenatge = (depreciations, type, time) => {
 
   return smaller ? smaller.DepreciationPercentage : 0;
 };
+
+

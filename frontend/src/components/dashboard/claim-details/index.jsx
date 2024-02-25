@@ -315,6 +315,12 @@ const Index = ({}) => {
         ? claim?.insuredDetails?.InsuredName
         : InsuredName
     );
+    setPolicyIssuingOffice(
+      claim?.claimDetails?.PolicyIssuingOffice ?
+      claim?.claimDetails?.PolicyIssuingOffice 
+      : policyIssuingOffice
+    );
+
     setInsuredMailAddress(
       claim?.insuredDetails?.InsuredMailAddress
         ? claim?.insuredDetails?.InsuredMailAddress
@@ -327,7 +333,7 @@ const Index = ({}) => {
     );
     setInsuredMobileNo2(
       claim?.insuredDetails?.InsuredMobileNo2
-        ? claim?.insuredDetails?.InsuredMobileNo1
+        ? claim?.insuredDetails?.InsuredMobileNo2
         : InsuredMobileNo2
     );
     setSubType(

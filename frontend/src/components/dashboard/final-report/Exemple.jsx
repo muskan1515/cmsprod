@@ -277,6 +277,10 @@ export default function Exemple_01({
       });
   }, []);
 
+  const roundOff = (value)=>{
+    const roundedValue = parseFloat(value).toFixed(2);
+    return roundedValue
+  }
   useEffect(()=>{
   
       setallNewParts(allRows);
@@ -427,6 +431,14 @@ export default function Exemple_01({
     } else return start;
   };
 
+  const sortNewParts=()=>{
+    let sortedArray =allRows;
+     sortedArray.sort((a, b) => a.sno - b.sno);
+    console.log("so:rted arrays fo54giptojj;otengt",sortedArray)
+    return sortedArray;
+
+  }
+
   const calculateDepreciationOnMetal = () => {
     const a = calculateDepreciationsPercenatge(
       allDepreciations,
@@ -435,12 +447,11 @@ export default function Exemple_01({
     );
     setOverallMetailDep(a);
     console.log(a);
-    return a;
+    return a;                            
   };
 
   const handleRemoveRow = (index) => {
-    // console.log(allRows);
-
+  
     let updatedRowsss = [];
     allRows.filter((row, i) => {
       const active = String(row.sno) === String(index) ? 0 : row.isActive;
@@ -464,7 +475,6 @@ export default function Exemple_01({
       updatedRowsss.push(newRow);
     });
 
-    console.log(updatedRowsss, index);
     setAllRows(updatedRowsss);
     setChange(true);
   };
@@ -843,7 +853,7 @@ export default function Exemple_01({
     const total_without = overall - subtract;
     const total =
       Number(currentField.assessed) * Number(qa) +
-      (currentType === "Assessed"
+      (currentType === "Assessed" | String(currentType) === "Both"
         ? (total_without * Number(currentField.gst)) / 100
         : 0);
 
@@ -957,7 +967,7 @@ export default function Exemple_01({
     const total_without = overall - subtract;
     const total =
       Number(currentField.assessed) * Number(currentField.qa) +
-      (currentType === "Assessed" ? (total_without * Number(gst)) / 100 : 0);
+      (currentType === "Assessed"| String(currentType) === "Both" ? (total_without * Number(gst)) / 100 : 0);
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -1023,7 +1033,7 @@ export default function Exemple_01({
         : currentField.gst;
 
     const isIncludeGSTInAssessed =
-      String(currentType) === "Assessed" ? true : false;
+      String(currentType) === "Assessed" || String(currentType) === "Both" ? true : false;
 
     //total assessed calculate
     const overall_assessed =
@@ -1080,7 +1090,9 @@ export default function Exemple_01({
     let count = 1;
 
     const getData = () => {
-      allRows.map((row, index) => {
+      const sortedOne = sortNewParts();
+      console.log(sortedOne)
+      sortedOne.map((row, index) => {
         // console.log(row);
         if (Number(row.isActive) === 1) {
           const newRow = {
@@ -1319,7 +1331,7 @@ export default function Exemple_01({
               <input
                 className="form-control form-control-table"
                 type="number"
-                value={row.total}
+                value={roundOff(row.total)}
                 // onChange={(e)=>handleChange(index,e.target.value,"gst")}
                 required
                 disabled={!edit}

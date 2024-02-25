@@ -110,6 +110,12 @@ function SmartTable(props) {
   const [rowsPerPageOptions] = useState(
     props.rowsPerPageOptions ?? [5, 10, 25, 50]
   );
+
+  const roundOff = (value)=>{
+    const roundedValue = parseFloat(value).toFixed(2);
+    return roundedValue
+  }
+
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(props.total ?? 0);
 
@@ -367,7 +373,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.assessed}
+                            value={roundOff(props.assessed)}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -398,7 +404,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.estimate}
+                            value={roundOff(props.estimate)}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
@@ -429,7 +435,7 @@ function SmartTable(props) {
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={props.difference}
+                            value={roundOff(props.difference)}
                             // readOnly={!isEditMode}
                             // onChange={(e) => setLicenseType(e.target.value)}
 
