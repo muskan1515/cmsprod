@@ -6,7 +6,7 @@ import AllStatistics from "./AllStatistics";
 import StatisticsChart from "./StatisticsChart";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
-import {toast} from 'react-hot-toast'
+import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import axios, { all } from "axios";
 import Pagination from "./Pagination";
@@ -47,8 +47,8 @@ const Index = () => {
     }
     setFilterClaims(filterClaim);
   }, [searchInput]);
-  console.log("regionSearchValue",regionSearchValue);
-  
+  console.log("regionSearchValue", regionSearchValue);
+
   const [filterAccordingClaim, setFilterAccordingClaim] = useState([]);
   const [showRegionClaim, setShowRegionClaim] = useState(false);
   useEffect(() => {
@@ -117,46 +117,45 @@ const Index = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     console.log(userInfo);
-    if (userInfo==="") {
+    if (userInfo === "") {
       router.push("/login");
-    }
-    else{
-    // console.log(userInfo[0].Token)
-    toast.loading("Fetching all the claims!!");
-    axios
-      .get("/api/getAllClaims", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0]?.Token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        toast.success("Successfully fetched!");
-        toast.dismiss();
-        setAllClaims(res.data.data[0]);
-      })
-      .catch((err) => {
-        toast.error("error while fetching all claims!");
-      });
+    } else {
+      // console.log(userInfo[0].Token)
+      toast.loading("Fetching all the claims!!");
+      axios
+        .get("/api/getAllClaims", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0]?.Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          toast.success("Successfully fetched!");
+          toast.dismiss();
+          setAllClaims(res.data.data[0]);
+        })
+        .catch((err) => {
+          toast.error("error while fetching all claims!");
+        });
 
-    axios
-      .get("/api/getStatus", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          leadId: "",
-        },
-      })
-      .then((res) => {
-        const temp = res.data.data;
+      axios
+        .get("/api/getStatus", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            leadId: "",
+          },
+        })
+        .then((res) => {
+          const temp = res.data.data;
 
-        setStatus(temp);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          setStatus(temp);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
   useEffect(() => {
@@ -241,7 +240,6 @@ const Index = () => {
                   allClaims={
                     searchInput || majorSearch || isRegionChange
                       ? filterClaims
-                      
                       : allClaims
                   }
                   setSelectedCard={setSelectedCard}
@@ -325,7 +323,11 @@ const Index = () => {
               <div className="row mt50">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    {/* <p>© 2020 Find House. Made with love.</p> */}
+                    <p>
+                      {" "}
+                      &copy; {new Date().getFullYear()} Infostics. Made with
+                      love.
+                    </p>
                   </div>
                 </div>
               </div>

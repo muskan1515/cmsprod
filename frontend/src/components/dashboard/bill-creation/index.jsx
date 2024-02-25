@@ -5,34 +5,33 @@ import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
 import axios from "axios";
 
-
 const Index = () => {
+  const [allInfo, setAllInfo] = useState(null);
+  const [leadID, setLeadID] = useState(0);
 
-  const [allInfo,setAllInfo]=useState(null);
-  const [leadID,setLeadID]=useState(0);
-
-  useEffect(()=>{
+  useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userInfo"));
     const url = window.location.pathname;
     const leadId = url.split("/bill-creation/")[1];
     setLeadID(leadId);
 
-    console.log(leadId)
-    axios.get("/api/getBillInfo",{
-      headers:{
-        Authorization:`Bearer ${userData[0].Token}`
-      },
-      params:{
-        LeadId : leadId
-      }
-    })
-    .then((res)=>{
-      setAllInfo(res.data.data);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
-  },[]);
+    console.log(leadId);
+    axios
+      .get("/api/getBillInfo", {
+        headers: {
+          Authorization: `Bearer ${userData[0].Token}`,
+        },
+        params: {
+          LeadId: leadId,
+        },
+      })
+      .then((res) => {
+        setAllInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -101,8 +100,7 @@ const Index = () => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <CreateList allInfo={allInfo}
-                        leadID={leadID}/>
+                        <CreateList allInfo={allInfo} leadID={leadID} />
                       </div>
                     </div>
                     {/* <div className="my_dashboard_review mt30">
@@ -143,7 +141,11 @@ const Index = () => {
               <div className="row mt200">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    {/* <p>© 2020 Find House. Made with love.</p> */}
+                    <p>
+                      {" "}
+                      &copy; {new Date().getFullYear()} Infostics. Made with
+                      love.
+                    </p>
                   </div>
                 </div>
               </div>

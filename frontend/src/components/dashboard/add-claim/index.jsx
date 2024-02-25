@@ -116,7 +116,11 @@ const index = () => {
               <div className="row mt200">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    {/* <p>© 2020 Find House. Made with love.</p> */}
+                    <p>
+                      {" "}
+                      &copy; {new Date().getFullYear()} Infostics. Made with
+                      love.
+                    </p>
                   </div>
                 </div>
               </div>

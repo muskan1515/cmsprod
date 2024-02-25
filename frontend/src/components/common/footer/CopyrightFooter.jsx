@@ -27,17 +27,7 @@ const CopyrightFooter = () => {
 
       <div className="col-lg-12 col-xl-12">
         <div className="copyright-widget text-center">
-          <p>
-            &copy; {new Date().getFullYear()}
-            {/* <a
-              href="https://themeforest.net/user/ib-themes"
-              target="_blank"
-              rel="noreferrer"
-            >
-              ib-themes
-            </a> */}
-            . All rights reserved.
-          </p>
+          <p> &copy; {new Date().getFullYear()} Infostics. Made with love.</p>
         </div>
       </div>
       {/* End .col */}

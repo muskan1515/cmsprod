@@ -2,17 +2,16 @@ import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
-import {Toaster} from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 // import DetailedInfo from "./DetailedInfo";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = ({leadId,email,policyNo,Insured,vehicleNo}) => {
- 
+const index = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
   return (
     <>
-    <Toaster/>
+      <Toaster />
       {/* <!-- Main Header Nav --> */}
       <Header />
 
@@ -78,8 +77,13 @@ const index = ({leadId,email,policyNo,Insured,vehicleNo}) => {
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <CreateList leadId={leadId} email={email} policyNo={policyNo}
-                        vehicleNo={vehicleNo} Insured={Insured}/ >
+                        <CreateList
+                          leadId={leadId}
+                          email={email}
+                          policyNo={policyNo}
+                          vehicleNo={vehicleNo}
+                          Insured={Insured}
+                        />
                       </div>
                     </div>
                     {/* <div className="my_dashboard_review mt30">
@@ -120,7 +124,11 @@ const index = ({leadId,email,policyNo,Insured,vehicleNo}) => {
               <div className="row mt200">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    {/* <p>© 2020 Find House. Made with love.</p> */}
+                    <p>
+                      {" "}
+                      &copy; {new Date().getFullYear()} Infostics. Made with
+                      love.
+                    </p>
                   </div>
                 </div>
               </div>

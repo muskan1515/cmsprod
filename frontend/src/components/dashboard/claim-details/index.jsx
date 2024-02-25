@@ -50,7 +50,6 @@ const Index = ({}) => {
     useState("");
   const [insuredAddedBy, setInsuredAddedBy] = useState("");
 
-  
   const formatDate = (dateString) => {
     const options = {
       month: "2-digit",
@@ -64,7 +63,7 @@ const Index = ({}) => {
     );
     return formattedDate;
   };
-  
+
   const [InsuredName, setInsuredName] = useState("");
   const [InsuredMailAddress, setInsuredMailAddress] = useState("");
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
@@ -316,9 +315,9 @@ const Index = ({}) => {
         : InsuredName
     );
     setPolicyIssuingOffice(
-      claim?.claimDetails?.PolicyIssuingOffice ?
-      claim?.claimDetails?.PolicyIssuingOffice 
-      : policyIssuingOffice
+      claim?.claimDetails?.PolicyIssuingOffice
+        ? claim?.claimDetails?.PolicyIssuingOffice
+        : policyIssuingOffice
     );
 
     setInsuredMailAddress(
@@ -1750,7 +1749,11 @@ const Index = ({}) => {
               <div className="row mt200">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    {/* <p>© 2020 Find House. Made with love.</p> */}
+                    <p>
+                      {" "}
+                      &copy; {new Date().getFullYear()} Infostics. Made with
+                      love.
+                    </p>
                   </div>
                 </div>
               </div>
