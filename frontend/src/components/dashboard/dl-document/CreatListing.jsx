@@ -19,6 +19,7 @@ import { useRef } from "react";
 const RCData = ({ DriverDetails }) => {
   console.log(DriverDetails);
 
+
   const rcDetails = {
     "Driver Name": "N.A.",
     "Father Name": "N.A",
@@ -31,36 +32,38 @@ const RCData = ({ DriverDetails }) => {
     "Issuing Authority": "N.A.",
     "License Number": "N.A.",
     "License Type": "N.A.",
-    "Badge Number": "N.A.",
-    "Rto Name": "N.A.",
-    Cov: "N.A.",
-    "Vaild Upto": "N.A.",
+    "Badge Number":"N.A.",
+    "Rto Name":"N.A.",
+    "Cov":"N.A.",
+    "Vaild Upto":"N.A."
   };
 
-  const [rcDetailData, setRcDetailData] = useState({});
+  const [rcDetailData,setRcDetailData]=useState({})
+
+  useEffect(()=>{
 
   useEffect(() => {
     const addDefaultValue = (value) => (value !== undefined ? value : "N.A.");
 
-    const rcDetailsUpdated = {
-      "Driver Name": addDefaultValue(DriverDetails?.DriverName),
-      "Father Name": addDefaultValue(DriverDetails?.FatherName),
-      Address: addDefaultValue(DriverDetails?.Address),
-      Mobile: addDefaultValue(DriverDetails?.Mobile),
-      "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
-      "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
-      Gender: addDefaultValue(DriverDetails?.Gender),
-      "Issuing Authority": addDefaultValue(DriverDetails?.RtoName),
-      "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
-      "License Type": addDefaultValue(DriverDetails?.LicenseType),
-      "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
-      "Vaild Upto": addDefaultValue(DriverDetails?.ValidUpto),
+const rcDetailsUpdated = {
+  "Driver Name": addDefaultValue(DriverDetails?.DriverName),
+  "Father Name": addDefaultValue(DriverDetails?.FatherName),
+  "Address": addDefaultValue(DriverDetails?.Address),
+  "Mobile": addDefaultValue(DriverDetails?.Mobile),
+  "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
+  "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
+  "Gender": addDefaultValue(DriverDetails?.Gender),
+  "Issuing Authority": addDefaultValue(DriverDetails?.RtoName),
+  "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
+  "License Type": addDefaultValue(DriverDetails?.LicenseType),
+  "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
+  "Vaild Upto": addDefaultValue(DriverDetails?.ValidUpto)
     };
 
     setRcDetailData(rcDetailsUpdated);
-  }, [DriverDetails]);
-  {
-    /*const handleExtract = async (format) => {
+  
+  },[DriverDetails]);
+  {/*const handleExtract = async (format) => {
     if (format === "Word") {
       // Generate Word document
       const doc = new Document();
@@ -98,8 +101,7 @@ const RCData = ({ DriverDetails }) => {
       });
       saveAs(blob, "RC_Details.pdf");
     }
-  };*/
-  }
+  };*/}
 
   const pdfRef = useRef();
 
@@ -141,7 +143,7 @@ const RCData = ({ DriverDetails }) => {
           </button>
         </div> */}
 
-        {/*} <Dropdown>
+       {/*} <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-extract">
             Extract
           </Dropdown.Toggle>
@@ -187,30 +189,20 @@ const RCData = ({ DriverDetails }) => {
             </tr>
           </thead>
           <tbody>
-            {rcDetailData
-              ? Object.entries(rcDetailData)?.map(([key, value]) => (
-                  <tr key={key} style={{ borderBottom: "1px solid #ddd" }}>
-                    <td
-                      style={{
-                        color: "black",
-                        textAlign: "left",
-                        padding: "10px",
-                      }}
-                    >
-                      {key}
-                    </td>
-                    <td
-                      style={{
-                        color: "blue",
-                        textAlign: "right",
-                        padding: "10px",
-                      }}
-                    >
-                      {value}
-                    </td>
-                  </tr>
-                ))
-              : ""}
+            { rcDetailData ? Object.entries(rcDetailData)?.map(([key, value]) => (
+              <tr key={key} style={{ borderBottom: "1px solid #ddd" }}>
+                <td
+                  style={{ color: "black", textAlign: "left", padding: "10px" }}
+                >
+                  {key}
+                </td>
+                <td
+                  style={{ color: "blue", textAlign: "right", padding: "10px" }}
+                >
+                  {value}
+                </td>
+              </tr>
+            )):""}
           </tbody>
         </table>
       </div>
