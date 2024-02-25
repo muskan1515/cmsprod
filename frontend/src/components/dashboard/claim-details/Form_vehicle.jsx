@@ -470,7 +470,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {PermanentAddress}
+                      {claim?.vehicleOnlineDetails?.PermanentAddress}
                     </label>
                   </div>
                 </td>
@@ -525,7 +525,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.VehicleClassDescription}
+                      {claim?.vehicleOnlineDetails?.VehicleClassDescription}
                     </label>
                   </div>
                 </td>
