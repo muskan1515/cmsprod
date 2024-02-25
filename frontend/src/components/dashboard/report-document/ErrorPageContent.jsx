@@ -723,7 +723,7 @@ const ErrorPageContent = ({ allInfo }) => {
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(b) Motor Driver License Number :</label>
-            <span>{allInfo?.otherInfo[0].LicenseNumber} </span>
+            <span>{allInfo?.otherInfo[0]?.LicenseNumber} </span>
           </div>
         </div>
 

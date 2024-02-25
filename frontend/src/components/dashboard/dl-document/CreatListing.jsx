@@ -52,11 +52,11 @@ const rcDetailsUpdated = {
   "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
   "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
   "Gender": addDefaultValue(DriverDetails?.Gender),
-  "Issuing Authority": addDefaultValue(DriverDetails?.IssuingAuthority),
+  "Issuing Authority": addDefaultValue(DriverDetails?.RtoName),
   "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
-  "License Type": addDefaultValue(DriverDetails?.Vov),
+  "License Type": addDefaultValue(DriverDetails?.LicenseType),
   "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
-  "Vaild Upto": addDefaultValue(DriverDetails?.VaildUpto)
+  "Vaild Upto": addDefaultValue(DriverDetails?.ValidUpto)
     };
 
     setRcDetailData(rcDetailsUpdated);

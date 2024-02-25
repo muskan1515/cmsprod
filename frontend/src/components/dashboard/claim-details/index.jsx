@@ -586,8 +586,8 @@ const Index = ({}) => {
     setPht(claim?.driverDetails?.Pht ? claim?.driverDetails?.Pht : Pht);
     setPhoto(claim?.driverDetails?.Photo ? claim?.driverDetails?.Photo : Photo);
     setValidUpto(
-      claim.driverDetails?.VaildUpto
-        ? formatDate(claim.driverDetails?.VaildUpto)
+      claim.driverDetails?.ValidUpto
+        ? formatDate(claim.driverDetails?.ValidUpto)
         : ValidUpto
     );
 

@@ -20,7 +20,7 @@ const getSpecificDriverDetails = async (req, res) => {
 
   try {
     const driverDetails = await executeQuery(
-      "SELECT * FROM DriverDetails WHERE LeadId=?",
+      "SELECT * FROM DriverDetailsOnline WHERE LeadId=?",
       [leadId]
     );
     
@@ -66,7 +66,7 @@ function removeBase64Prefix(encodedImage) {
     })
     .then((result)=>{
     const details=result?.data?.data?.data;
-    console.log(result);
+    console.log(result);s
     const stringformat = convertObjectToString(details);
     console.log("stringFormat",stringformat);
     
@@ -82,7 +82,7 @@ function removeBase64Prefix(encodedImage) {
       Pht,
       Photo,
       LicenseType,
-      VaildUpto,
+      ValidUpto,
       RtoName,
       Address,
       Mobile,
@@ -109,7 +109,7 @@ function removeBase64Prefix(encodedImage) {
       '${details?.fname}',
       '${details?.dob}',
      '${details?.issuedate}',
-      '${details}',
+      '${stringformat}',
       '${leadId}'
   );
     `;
@@ -124,7 +124,7 @@ SET
     Pht = '${''}',
     Photo = '${''}',
     LicenseType = '${details?.cov}',
-    VaildUpto = '${details?.validupto}',
+    ValidUpto = '${details?.vaildupto}',
     RtoName = '${details?.rtoname}',
     Address = '${details?.address}',
     Mobile = '${details?.mobile}',

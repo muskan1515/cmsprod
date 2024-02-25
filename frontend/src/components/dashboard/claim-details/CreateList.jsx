@@ -172,7 +172,7 @@ const CreateList = ({
 
       toast.loading("Sending Acknowledgment Mail!!");
       axios
-        .post("/api/sendEmail1", payload, {
+        .post("/api/acklowdmentEmail", payload, {
           headers: {
             Authorization: `Bearer ${userInfo[0].Token}`,
           },

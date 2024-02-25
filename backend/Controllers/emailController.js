@@ -111,6 +111,92 @@ const createToken = require("../Config/generateJWTToken");
       });
   };
   
+
+  const acknowledgmentMail = (req, res) => {
+    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail  } = req.body;
+
+
+    const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
+    db.query(sql, [leadId], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      const content = emailHandler(result[0]?.Status);
+  
+      const InsuredToken = generateUniqueToken();
+      
+      const insertClaimDetails = `
+          UPDATE ClaimDetails
+          SET
+          InsuredToken = '${InsuredToken}'
+          WHERE LeadId = ${leadId};
+        `;
+    
+       
+      db.query(insertClaimDetails, (err, result2) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+  
+        const emailContent = `
+      Dear Sir/Madam,
+  
+      Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+  
+        We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
+      Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
+      can procedd further in your case and we also request 
+      you to provide the following details as follows:-
+  
+      ${content}
+  
+          Please provide the clear copy of all the documents so that the claim processing can be fast or
+        <p><a href=https://claims-backend-apis.onrender.com/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+  
+      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+              claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+  
+    `;
+  
+        const mailOptions = {
+          from: "infosticstech@gmail.com",
+          to: toMail,
+          subject: "Survey Request for Vehicle Claim",
+          text: emailContent,
+        };
+  
+        // Send the email
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+          } 
+           
+            const updateClaimDetails = `
+            UPDATE ClaimDetails
+            SET
+            IsMailSent = 1
+            WHERE LeadId = ${leadId};
+          `;
+
+          db.query(updateClaimDetails, (err, result2) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+              res.status(200).send("Email sent successfully");
+            });
+          
+          });
+        });
+      });
+  };
+  
   const sendCustomEmail = (req, res) => {
     const {
       vehicleNo,
@@ -139,7 +225,7 @@ const createToken = require("../Config/generateJWTToken");
         const insertClaimDetails = `
         UPDATE ClaimDetails
         SET
-        Token = '${generatedToken}'
+        InsuredToken = '${generatedToken}'
         WHERE LeadId = ${leadId};
       `;
         db.query(insertClaimDetails, (err, result2) => {
@@ -155,7 +241,7 @@ const createToken = require("../Config/generateJWTToken");
           ${content}
   
               Please provide the clear copy of all the documents so that the claim processing can be fast or
-            <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${encodeURIComponent(
+            <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&type=${1}&content=${encodeURIComponent(
             content2
           )} target="_blank">Click me</a> to fill the documents information .</p>
   
@@ -191,7 +277,7 @@ const createToken = require("../Config/generateJWTToken");
             Please provide the clear copy of all the documents so that the claim processing can be fast or
           <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${
           result2[0].Token
-        }&content=${encodeURIComponent(
+        }&type=${1}&content=${encodeURIComponent(
           content2
         )} target="_blank">Click me</a> to fill the documents information .</p>
   
@@ -320,4 +406,4 @@ const createToken = require("../Config/generateJWTToken");
     });
   };
 
-  module.exports={sendEmail1,sendEmail2,sendEmail3,sendCustomEmail};
+  module.exports={sendEmail1,sendEmail2,sendEmail3,sendCustomEmail,acknowledgmentMail};

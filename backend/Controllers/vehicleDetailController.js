@@ -57,10 +57,14 @@ const getSpecificVehicleDetails = async (req, res) => {
       const details = result.data.vehicleDetails?.Data.result;
       const stringformat = convertObjectToString(details);
       
+      const additionalInfo = result?.data?.additionalInfo;
+      const stringformat2 = convertObjectToString(additionalInfo);
+
+      const surveyType = details?.VehicleType === "2W" ? "Motor2W" : "Motor4W";
+      
       if(!details){
         return res.status(500).send("Internal Server Error");
       }
-      const additionalInfo = result?.data?.additionalInfo;
       const insertVehicleDetails = `
       INSERT INTO VehicleDetailsOnline (
         RegisteredNumber,
@@ -100,6 +104,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         VehicleClassDescription,
         StateCode,
         VehicleInsuranceCompany,
+        OtherInfo,
         LeadId
     )
     VALUES (
@@ -140,6 +145,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         '${details?.rc_vh_class_desc}',
         '${details?.state_cd}',
         '${details?.rc_insurance_comp}',
+        '${stringformat2}',
         ${leadId}
     );
     `;
@@ -189,6 +195,8 @@ const getSpecificVehicleDetails = async (req, res) => {
 
         `;
 
+
+
     
       console.log(insertVehicleDetails,updateVehicleDetails);
     
@@ -206,7 +214,16 @@ const getSpecificVehicleDetails = async (req, res) => {
                 .status(500)
                 .json({ error: "Error updating data in driver Details." });
             }
-              res.status(200).json({ message: "Data updated successfully." });
+            db.query("UPDATE ClaimDetails SET SurveyType =? WHERE LeadID=?",[surveyType,leadId], (error, results) => {
+              if (error) {
+                console.error("Error updating data in driver Details:", error);
+                return res
+                  .status(500)
+                  .json({ error: "Error updating data in driver Details." });
+              }
+                res.status(200).json({ message: "Data updated successfully." });
+            });
+              
           });
          
         });

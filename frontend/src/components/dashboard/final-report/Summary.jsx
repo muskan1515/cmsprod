@@ -92,6 +92,8 @@ const Summary = ({
 
   const [isEdit,setIsEdit]=useState(false);
 
+  const [metalSalvageTotal,setmetalSalvageTotal]=useState(0);
+
   const returnTotal = () => {
     const a =
       Number(totalLabrorAssessed) +
@@ -125,6 +127,8 @@ const Summary = ({
     setPhoneNumber(truncatedValue);
   };
 
+ 
+  console.log("meta",totalMetalRows)
 
   const handleOtherValue=(val)=>{
     const finalVal = val===""?0 :val
@@ -584,9 +588,8 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={
-                      (Number(totalMetalRows) *
-                        Number(metalSalvageValue)) /
-                      100
+                      (totalMetalRows) 
+                      
                     }
                     // placeholder="Enter Registration No."
                   />

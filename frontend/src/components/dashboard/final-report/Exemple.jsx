@@ -119,11 +119,12 @@ export default function Exemple_01({
   setAllDepreciations,
   ClaimAddedDateTime,
   LeadId,
+  AccidentAddedDateTime,
   PolicyStartDate,
   VehicleAddedDate,
 
   setMetalSalvageValue,
-
+  DateRegistration,
   ageOfVehicleTotal,
   metaldepPct,
   totalPartsEstimate,
@@ -259,6 +260,7 @@ export default function Exemple_01({
         console.log(temp_row);
         setAllRows(temp_row);
         setCurrentType(type);
+        console.log("metal",metalParts)
         settotalMetalRows(metalParts)
         setMetalSalvageValue(total_metal);
         setTotaAssessed(total_assessed);
@@ -273,6 +275,7 @@ export default function Exemple_01({
       });
   }, []);
 
+ 
   // useEffect(()=>{
   //   let temp_row =[];
   //   newParts.map((part,index)=>{
@@ -395,17 +398,16 @@ export default function Exemple_01({
   const calculateVehicleAge = () => {
     if (
       !claim.vehicleDetails?.DateOfRegistration  ||
-      claim?.vehicleDetails?.DateOfRegistration === "undefined" ||
       !claim.claimDetails?.AddedDateTime
     ) {
       return "0";
     }
-    const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
+    const a = getMonthsDifference(DateRegistration);
 
-    const b = getMonthsDifference(claim.accidentDetails?.AccidentAddedDateTime);
-    // setAgeOfVehicle(a+b);
-    console.log("age", b-a);
-    return `${b-a}`;
+    const b = getMonthsDifference(AccidentAddedDateTime);
+    console.log(DateRegistration,AccidentAddedDateTime,a-b)
+   
+    return `${a-b}`;
   };
 
   const calculatePolicyAge = () => {

@@ -220,6 +220,9 @@ const PolicyDetails = ({
   phyCheck,
   setphyCheck,
 }) => {
+
+
+  console.log(DateOfBirth,DateOfIssue,DateRegistration,ValidUpto,OwnerSRST)
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -1342,7 +1345,7 @@ const PolicyDetails = ({
                               disabled={!isEditMode}
                               value={
                                 DateRegistration && DateRegistration !== "null"
-                                  ? DateRegistration.substring(0, 10)
+                                  ? new Date((DateRegistration))
                                   : ""
                               }
                               onChange={(e) =>
@@ -2359,7 +2362,7 @@ const PolicyDetails = ({
                       disabled={!isEditMode}
                       value={
                         DateOfBirth && DateOfBirth !== "null"
-                          ? DateOfBirth.substring(0, 10)
+                          ? DateOfBirth
                           : ""
                       }
                       onChange={(e) => setDateOfBirth(e.target.value)}

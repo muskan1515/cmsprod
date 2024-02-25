@@ -12,6 +12,7 @@ const Index = ({ leadId, token, content ,type}) => {
   const [check, setCheck] = useState(false);
   const [leadToken, setLeadToken] = useState(token ? token : "");
 
+  console.log(content);
   const [status, setStatus] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [document, setDocument] = useState([]);
@@ -106,12 +107,10 @@ const Index = ({ leadId, token, content ,type}) => {
 
     const payload = {
       token: token,
-      leadId: leadId,
-      type:type
+      leadId: Number(leadId),
+      type:Number(type)
     };
 
-    console.log(payload);
-    return ;
     axios
       .post("/api/getClaimDetails", payload, {
         headers: {

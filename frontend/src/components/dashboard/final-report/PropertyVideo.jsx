@@ -432,6 +432,23 @@ const [AccidentTime,setAccidentTime]=useState("");
   },[totalLabrorAssessed,totalPartsAssessed,lessExcess,lessImposed,Other]);
 
   console.log(PolicyPeriodStart);
+
+  
+  const convertStringTime=(inputDateString)=>{
+    const parsedDate = new Date(inputDateString);
+
+  // Extract day, month, and year components
+  const day = parsedDate.getDate();
+  const month = parsedDate.getMonth() + 1; // Note: Months are zero-indexed
+  const year = parsedDate.getFullYear();
+  
+  // Format the components to dd/mm/yyyy format
+  const formattedDateString = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+  
+  console.log("formatted",formattedDateString)
+  return formattedDateString;
+  }
+
   useEffect(() => {
 
   
@@ -439,7 +456,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setTotalLoss(claim?.claimDetails?.TotalLoss ? claim?.claimDetails?.TotalLoss : 0); 
     setIMT(claim?.claimDetails?.IMT ? claim?.claimDetails?.IMT : 0); 
 
-    setDateOfBirth(claim?.driverDetails?.DateOfBirth || "");
+    setDateOfBirth(convertStringTime(claim?.driverDetails?.DateOfBirth) || "");
     //summary states
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident ? claim?.accidentDetails?.TimeOfAccident : "");
@@ -506,9 +523,9 @@ const [AccidentTime,setAccidentTime]=useState("");
 
     setLessImposed(claim?.summaryDetails?.LessImposed)
 
-    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration );
+    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration ? convertStringTime(claim?.vehicleDetails?.DateOfRegistration ):"");
     setMailRecieveDate(claim?.claimDetails?.MailRecieveDate );
-    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate );
+    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate ?convertStringTime(claim?.vehicleDetails?.OwnerSrDate):"");
     setClaimRegion(claim?.claimDetails?.ClaimRegion );
     setInsuredName(claim?.insuredDetails?.InsuredName );
     setInsuredAddress(claim?.insuredDetails?.InsuredAddress );
@@ -593,7 +610,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv);
     setValidUntilTv(claim?.driverDetails?.ValidUntilTv);
     setValidFrom(claim?.driverDetails?.VaildUpto);
-    setDateOfIssue(claim?.driverDetails?.DateOfIssue);
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue ? convertStringTime(claim?.driverDetails?.DateOfIssue) : "");
     //commercial
     setFitnessCertificate(claim?.commercialVehicleDetails?.FitnessCertificate);
     setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom);
@@ -605,7 +622,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setAuthorization(claim?.commercialVehicleDetails?.Authorization);
     setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation);
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark);
-    setValidUpto(claim?.driverDetails?.VaildUpto)
+    setValidUpto(claim?.driverDetails?.ValidUpto ? convertStringTime(claim?.driverDetails?.ValidUpto) : "");
     setPolicyType(claim?.claimDetails?.PolicyType)
     setTotalLoss(claim?.claimDetails?.TotalLoss)
     setIMT(claim?.claimDetails?.IMT)
@@ -613,20 +630,28 @@ const [AccidentTime,setAccidentTime]=useState("");
   }, [claim]);
 
   // console.log("PolicyPeriodStart-----------",PolicyPeriodStart,claim?.claimDetails?.PolicyPeriodStart);
-  const calculateVehicleAge = () => {
-    if (
-      !claim.vehicleDetails?.DateOfRegistration  ||
-      claim?.vehicleDetails?.DateOfRegistration === "undefined" ||
-      !claim.claimDetails?.AddedDateTime
-    ) {
-      return "0";
-    }
-    const a = getMonthsDifference(claim.vehicleDetails?.DateOfRegistration);
-
-    const b = getMonthsDifference(claim.accidentDetails?.AccidentAddedDateTime);
-    // setAgeOfVehicle(a+b);
-    console.log("age", b-a);
-    return `${b-a}`;
+  // const calculateVehicleAge = () => {
+  //   if (
+  //     !claim.vehicleDetails?.DateOfRegistration  ||
+  //     claim?.vehicleDetails?.DateOfRegistration === "undefined" ||
+  //     !claim.claimDetails?.AddedDateTime
+  //   ) {
+  //     return "0";
+  //   }
+    const calculateVehicleAge = () => {
+      if (
+        !claim.vehicleDetails?.DateOfRegistration  ||
+        !claim.claimDetails?.AddedDateTime
+      ) {
+        return "0";
+      }
+      const a = getMonthsDifference(DateRegistration);
+  
+      const b = getMonthsDifference(AccidentAddedDateTime);
+      console.log(DateRegistration,AccidentAddedDateTime,a-b)
+     
+      return `${a-b}`;
+    
   };
 
   const calculateDepreciationOnMetal = () => {
@@ -1259,6 +1284,8 @@ const [AccidentTime,setAccidentTime]=useState("");
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
+                DateRegistration={DateRegistration}
+                AccidentAddedDateTime={AccidentAddedDateTime}
                   LeadId={leadId}
                   claim={claim}
                   settotalMetalRows={settotalMetalRows}
@@ -1334,6 +1361,8 @@ const [AccidentTime,setAccidentTime]=useState("");
                 </div>
                 <div className="col-lg-3">
                   <LabourForm
+                  AccidentAddedDateTime={AccidentAddedDateTime}
+                  DateRegistration={DateRegistration}
                     totalRemainingAssessed={totalRemainingAssessed}
                     currentGst={currentGst}
                     totalTaxableAMount={totalTaxableAMount}
