@@ -40,8 +40,6 @@ const RCData = ({ DriverDetails }) => {
 
   const [rcDetailData,setRcDetailData]=useState({})
 
-  useEffect(()=>{
-
   useEffect(() => {
     const addDefaultValue = (value) => (value !== undefined ? value : "N.A.");
 
