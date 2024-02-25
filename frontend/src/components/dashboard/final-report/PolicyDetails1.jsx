@@ -233,8 +233,11 @@ const PolicyDetails = ({
       day: "2-digit",
       year: "numeric",
     };
-  
-    const formattedDate = new Date(dateString).toLocaleDateString("en-US", options);
+
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "en-US",
+      options
+    );
     return formattedDate;
   };
 
@@ -402,7 +405,9 @@ const PolicyDetails = ({
                 <input
                   readOnly={!isEditMode}
                   type={"text"}
-                  value={ClaimAddedDateTime ? formatDate(ClaimAddedDateTime) : ""}
+                  value={
+                    ClaimAddedDateTime ? formatDate(ClaimAddedDateTime) : ""
+                  }
                   className="form-control"
                   id="propertyTitle"
                 />
@@ -417,8 +422,7 @@ const PolicyDetails = ({
                 <NewDatePicker
                   className="form-control"
                   id="propertyTitle"
-                  Date={ClaimAddedDateTime
-                  }
+                  Date={ClaimAddedDateTime}
                   setDate={setClaimAddedDateTime}
                 />
               )}
@@ -733,9 +737,8 @@ const PolicyDetails = ({
                         <NewDatePicker
                           className="form-control"
                           id="propertyTitle"
-                          Date={(PolicyPeriodStart)
-                          }
-                          setDate={ setPolicyPeriodStart}
+                          Date={PolicyPeriodStart}
+                          setDate={setPolicyPeriodStart}
                         />
                       )}
                     </div>
@@ -773,7 +776,7 @@ const PolicyDetails = ({
                         id="propertyTitle"
                       />
                     </div> */}
-                    <div className="col-lg-5">
+                    <div className="col-lg-10">
                       {!isEditMode ? (
                         <input
                           readOnly={!isEditMode}
@@ -795,8 +798,7 @@ const PolicyDetails = ({
                         <NewDatePicker
                           className="form-control"
                           id="propertyTitle"
-                          Date={(PolicyPeriodEnd)
-                          }
+                          Date={PolicyPeriodEnd}
                           setDate={setPolicyPeriodEnd}
                         />
                       )}
@@ -1167,9 +1169,8 @@ const PolicyDetails = ({
                             <NewDatePicker
                               className="form-control"
                               id="propertyTitle"
-                              Date={(OwnerSRST)
-                              }
-                              setDate={ setOwnerSRST}
+                              Date={OwnerSRST}
+                              setDate={setOwnerSRST}
                             />
                           )}
                         </div>
@@ -1238,8 +1239,7 @@ const PolicyDetails = ({
                             <NewDatePicker
                               className="form-control"
                               id="propertyTitle"
-                              Date={(DateRegistration)
-                              }
+                              Date={DateRegistration}
                               setDate={setDateRegistration}
                             />
                           )}
@@ -2291,7 +2291,7 @@ const PolicyDetails = ({
                       value={ValidFrom ? formatDate(ValidFrom) : ""}
                       className="form-control"
                       id="propertyTitle"
-                    // // disable={!isEdi
+                      // // disable={!isEdi
                     />
                   ) : (
                     // <MyDatePickertMode}
@@ -2312,15 +2312,13 @@ const PolicyDetails = ({
                     //   onChange={(date) => setValidUntilNtv(date)}
                     // />
                     <NewDatePicker
-                    className="form-control"
-                    id="propertyTitle"
-                    Date={
-                      ValidFrom 
-                    }
-                    setDate={ setValidFrom}
-                  />
+                      className="form-control"
+                      id="propertyTitle"
+                      Date={ValidFrom}
+                      setDate={setValidFrom}
+                    />
                   )}
-                  {console.log('ValidFrom>>>>>>>>>????',ValidFrom)}
+                  {console.log("ValidFrom>>>>>>>>>????", ValidFrom)}
                   {/* <input 
                   type={isEditMode ? "date" : "text"} 
                   readonly={!isEditMode}
@@ -2554,9 +2552,7 @@ const PolicyDetails = ({
                         <NewDatePicker
                           className="form-control"
                           id="propertyTitle"
-                          Date={
-                            FitnessFrom
-                          }
+                          Date={FitnessFrom}
                           setDate={setFitnessFrom}
                         />
                       )}
@@ -2611,10 +2607,8 @@ const PolicyDetails = ({
                         <NewDatePicker
                           className="form-control"
                           id="propertyTitle"
-                          Date={
-                            FitnessTo
-                          }
-                          setDate={ setFitnessTo}
+                          Date={FitnessTo}
+                          setDate={setFitnessTo}
                         />
                       )}
                     </div>
@@ -2689,10 +2683,8 @@ const PolicyDetails = ({
                         <NewDatePicker
                           className="form-control"
                           id="propertyTitle"
-                          Date={
-                            PermitFrom 
-                          }
-                          setDate={ setFitnessFrom}
+                          Date={PermitFrom}
+                          setDate={setFitnessFrom}
                         />
                       )}
                       {/* <span className="flaticon-calendar text-dark"></span> */}
@@ -2740,10 +2732,8 @@ const PolicyDetails = ({
                         <NewDatePicker
                           className="form-control"
                           id="propertyTitle"
-                          Date={
-                            PermitTo 
-                          }
-                          setDate={ setPermitTo}
+                          Date={PermitTo}
+                          setDate={setPermitTo}
                         />
                       )}
                       {/* <input 

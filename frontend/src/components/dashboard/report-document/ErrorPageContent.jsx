@@ -9,8 +9,6 @@ import { useRef, useState } from "react";
 const ErrorPageContent = ({ allInfo }) => {
   const pdfRef = useRef();
 
-
- 
   const downloadPDF = () => {
     const input = pdfRef.current;
     const pdf = new jsPDF("p", "mm", "a4", true);
@@ -120,25 +118,29 @@ const ErrorPageContent = ({ allInfo }) => {
     return formattedDate;
   };
 
-
   //*******************functions******************************//
 
   const calculateGlassDept = (part) => {
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
     const Depreciation =
       (assessed * Number(part.NewPartsDepreciationPct)) / 100;
-    if (String(part.NewPartsTypeOfMaterial === "Glass") && part.NewPartsIsActive) {
+    if (
+      String(part.NewPartsTypeOfMaterial === "Glass") &&
+      part.NewPartsIsActive
+    ) {
       return assessed;
     }
     return 0;
   };
 
   const calculateMetalDept = (part) => {
-
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
     const Depreciation =
       (assessed * Number(part.NewPartsDepreciationPct)) / 100;
-    if (String(part.NewPartsTypeOfMaterial === "Metal")&& part.NewPartsIsActive) {
+    if (
+      String(part.NewPartsTypeOfMaterial === "Metal") &&
+      part.NewPartsIsActive
+    ) {
       return assessed;
     }
     return 0;
@@ -151,7 +153,9 @@ const ErrorPageContent = ({ allInfo }) => {
     if (
       String(
         part.NewPartsTypeOfMaterial !== "Glass" &&
-          String(part.NewPartsTypeOfMaterial !== "Metal"&& part.NewPartsIsActive)
+          String(
+            part.NewPartsTypeOfMaterial !== "Metal" && part.NewPartsIsActive
+          )
       )
     ) {
       return assessed;
@@ -159,257 +163,288 @@ const ErrorPageContent = ({ allInfo }) => {
     return 0;
   };
 
-  const getTotalEstimate=()=>{
+  const getTotalEstimate = () => {
     let total = 0;
-    allInfo?.newPartsDetails.map((part,index)=>{
+    allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
-      total = total +( part.NewPartsIsActive) ? assessed : 0;
-     
+      total = total + part.NewPartsIsActive ? assessed : 0;
     });
     return total;
-  }
+  };
 
-  const getTotalGlassAssessed=()=>{
+  const getTotalGlassAssessed = () => {
     let total = 0;
-    allInfo?.newPartsDetails.map((part,index)=>{
+    allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-    
-    if (String(part.NewPartsTypeOfMaterial )=== "Glass" && part.NewPartsIsActive) {
-      total = total +  assessed;
-    }
-     
-    });
-    return total;
-  }
 
-  const getTotalMetalAssessed=()=>{
-    let total = 0;
-    allInfo?.newPartsDetails.map((part,index)=>{
-      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-      const Depreciation =
-        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
-      if (String(part.NewPartsTypeOfMaterial) === "Metal" && part.NewPartsIsActive) {
-        total = total + assessed;
-      }
-     
-    });
-    return total;
-  }
-
-  const getTotalOtherMetalAssesses=()=>{
-    let total = 0;
-    allInfo?.newPartsDetails.map((part,index)=>{
-      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-     
       if (
-        String(
-          part.NewPartsTypeOfMaterial) !== "Glass" &&
-            String(part.NewPartsTypeOfMaterial) !== "Metal"  && part.NewPartsIsActive
-        
+        String(part.NewPartsTypeOfMaterial) === "Glass" &&
+        part.NewPartsIsActive
       ) {
         total = total + assessed;
       }
-      
     });
     return total;
-  }
+  };
 
-  const getTotalDepreciation = (type,other)=>{
+  const getTotalMetalAssessed = () => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part,index)=>{
-    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-    const Depreciation =
-      (assessed * Number(part.NewPartsDepreciationPct)) / 100;
-  
-    if (  
-      String(
-        part.NewPartsTypeOfMaterial) === String(type)  && part.NewPartsIsActive
-      
-    ) {
-      total = total + Depreciation;
-    }
-  });
-  return total;
-  }
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(part.NewPartsTypeOfMaterial) === "Metal" &&
+        part.NewPartsIsActive
+      ) {
+        total = total + assessed;
+      }
+    });
+    return total;
+  };
 
-  const getTotalNonMetaDepreciation = ()=>{
+  const getTotalOtherMetalAssesses = () => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part,index)=>{
-    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-    const Depreciation =
-      (assessed * Number(part.NewPartsDepreciationPct)) / 100;
-    if(String(
-      part.NewPartsTypeOfMaterial) !== "Glass" &&
-        String(part.NewPartsTypeOfMaterial) !== "Metal"  && part.NewPartsIsActive){
-            total = total + Depreciation;
-    }
-   
-  });
-  return total;
-  }
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
 
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive
+      ) {
+        total = total + assessed;
+      }
+    });
+    return total;
+  };
 
-  const calculateTypeNewPartsGST = (type)=>{
+  const getTotalDepreciation = (type, other) => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part,index)=>{
-    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-    const gst =
-      (assessed * Number(part.NewPartsGSTPct)) / 100;
-  
-    if (  
-      String(
-        part.NewPartsTypeOfMaterial) === String(type)  && part.NewPartsIsActive
-      
-    ) {
-      total = total + gst;
-    }
-  });
-  return total;
-  }
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
 
-  const calculateOtherTypeNewPartsGST = ()=>{
+      if (
+        String(part.NewPartsTypeOfMaterial) === String(type) &&
+        part.NewPartsIsActive
+      ) {
+        total = total + Depreciation;
+      }
+    });
+    return total;
+  };
+
+  const getTotalNonMetaDepreciation = () => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part,index)=>{
-    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-    const gst =
-      (assessed * Number(part.NewPartsGSTPct)) / 100;
-  
-      if(String(
-        part.NewPartsTypeOfMaterial) !== "Glass" &&
-          String(part.NewPartsTypeOfMaterial) !== "Metal"  && part.NewPartsIsActive){
-       
-      total = total + gst;
-    }
-  });
-  return total;
-  }
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive
+      ) {
+        total = total + Depreciation;
+      }
+    });
+    return total;
+  };
 
-
-  const calculateEstimateNewPartsGST = (type)=>{
+  const calculateTypeNewPartsGST = (type) => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part,index)=>{
-    const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
-    const gst =
-      (assessed * Number(part.NewPartsGSTPct)) / 100;
-  
-    
-      total = total +  part.NewPartsIsActive ? gst : 0;
-    
-  });
-  return total;
-  }
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
 
+      if (
+        String(part.NewPartsTypeOfMaterial) === String(type) &&
+        part.NewPartsIsActive
+      ) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
 
+  const calculateOtherTypeNewPartsGST = () => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
 
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive
+      ) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
 
+  const calculateEstimateNewPartsGST = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
+      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
 
-  const getTotalEvaluationOfAssessedForNewParts=()=>{
-    const glassValue = calculateTypeNewPartsGST("Glass") + getTotalGlassAssessed() - getTotalDepreciation("Glass",false);
-    const metalValue = calculateTypeNewPartsGST("Metal") + getTotalMetalAssessed() - getTotalDepreciation("Metal",false);
-    const nonMetalValue = calculateOtherTypeNewPartsGST()+getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation();
+      total = total + part.NewPartsIsActive ? gst : 0;
+    });
+    return total;
+  };
+
+  const getTotalEvaluationOfAssessedForNewParts = () => {
+    const glassValue =
+      calculateTypeNewPartsGST("Glass") +
+      getTotalGlassAssessed() -
+      getTotalDepreciation("Glass", false);
+    const metalValue =
+      calculateTypeNewPartsGST("Metal") +
+      getTotalMetalAssessed() -
+      getTotalDepreciation("Metal", false);
+    const nonMetalValue =
+      calculateOtherTypeNewPartsGST() +
+      getTotalOtherMetalAssesses() -
+      getTotalNonMetaDepreciation();
 
     return glassValue + metalValue + nonMetalValue;
-  }
+  };
 
   ///******************Labour *********************888*/
 
-  const getTotalLabourEstimate=()=>{
+  const getTotalLabourEstimate = () => {
     let total = 0;
-    allInfo?.labourDetails?.map((part,index)=>{
-    const estimate = Number(part.Estimate) ;
-    
-      if( part.LabourIsActive){
-      total = total + estimate;
-    }
-  });
-  return total;
-  }
+    allInfo?.labourDetails?.map((part, index) => {
+      const estimate = Number(part.Estimate);
 
-  const getTotalLabourAssessed=()=>{
+      if (part.LabourIsActive) {
+        total = total + estimate;
+      }
+    });
+    return total;
+  };
+
+  const getTotalLabourAssessed = () => {
     let total = 0;
-    allInfo?.labourDetails?.map((part,index)=>{
-    const assessed = Number(part.Assessed) ;
-    
-      if( part.LabourIsActive){
-      total = total + assessed;
-    }
-  });
-  return total;
-  }
+    allInfo?.labourDetails?.map((part, index) => {
+      const assessed = Number(part.Assessed);
 
+      if (part.LabourIsActive) {
+        total = total + assessed;
+      }
+    });
+    return total;
+  };
 
-  const getTotalLabourEstimateGST=()=>{
+  const getTotalLabourEstimateGST = () => {
     let total = 0;
-    allInfo?.labourDetails?.map((part,index)=>{
-    const estimate = Number(part.Estimate) ;
-    
-    const gst =
-      (estimate * Number(part.GSTPercentage)) / 100;
-      if( part.LabourIsActive){
-      total = total + gst;
-    }
-  });
-  return total;
-  }
+    allInfo?.labourDetails?.map((part, index) => {
+      const estimate = Number(part.Estimate);
 
+      const gst = (estimate * Number(part.GSTPercentage)) / 100;
+      if (part.LabourIsActive) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
 
-  const getTotalLabourAssessedGST=()=>{
+  const getTotalLabourAssessedGST = () => {
     let total = 0;
-    allInfo?.labourDetails?.map((part,index)=>{
-    const assessed = Number(part.Assessed) ;
-    
-    const gst =
-      (assessed * Number(part.GSTPercentage)) / 100;
-      if( part.LabourIsActive){
-      total = total + gst;
-    }
-  });
-  return total;
-  }
+    allInfo?.labourDetails?.map((part, index) => {
+      const assessed = Number(part.Assessed);
+
+      const gst = (assessed * Number(part.GSTPercentage)) / 100;
+      if (part.LabourIsActive) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
 
   //*************SUMMARY**************** *//
 
   const lessExcess = Number(allInfo?.summaryReport[0]?.LessExcess) || 0;
   const lessSalvage = Number(allInfo?.summaryReport[0]?.ExpectedSalvage) || 0;
 
-  const getSummaryTotalWithLessExcess = ()=>{
-    return getTotalLabourAssessed()+
-    getTotalLabourAssessedGST()+
-    getTotalEvaluationOfAssessedForNewParts()
-    + lessExcess;
-  }
+  const getSummaryTotalWithLessExcess = () => {
+    return (
+      getTotalLabourAssessed() +
+      getTotalLabourAssessedGST() +
+      getTotalEvaluationOfAssessedForNewParts() +
+      lessExcess
+    );
+  };
 
-  const getSummaryTotalWithLessSalvage = ()=>{
-    return getTotalLabourAssessed()+
-    getTotalLabourAssessedGST()+
-    getTotalEvaluationOfAssessedForNewParts()
-    + lessExcess + lessSalvage;
-  }
+  const getSummaryTotalWithLessSalvage = () => {
+    return (
+      getTotalLabourAssessed() +
+      getTotalLabourAssessedGST() +
+      getTotalEvaluationOfAssessedForNewParts() +
+      lessExcess +
+      lessSalvage
+    );
+  };
 
   //********Value********* */
 
-
-  const newPartsGST =()=>{
-    let gst =0;
-    allInfo?.newPartsDetails.map((part,index)=>{
+  const newPartsGST = () => {
+    let gst = 0;
+    allInfo?.newPartsDetails.map((part, index) => {
       gst = part.NewPartsGSTPct;
-    })
+    });
     return gst;
-  }
+  };
 
-
-  const labourGST =()=>{
-    let gst =0;
-    allInfo?.labourDetails.map((part,index)=>{
+  const labourGST = () => {
+    let gst = 0;
+    allInfo?.labourDetails.map((part, index) => {
       gst = part.GSTPercentage;
-    })
+    });
     return gst;
-  }
+  };
   function numberToWords(number) {
-    const units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-    const teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-    const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-  
+    const units = [
+      "",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+    ];
+    const teens = [
+      "",
+      "eleven",
+      "twelve",
+      "thirteen",
+      "fourteen",
+      "fifteen",
+      "sixteen",
+      "seventeen",
+      "eighteen",
+      "nineteen",
+    ];
+    const tens = [
+      "",
+      "ten",
+      "twenty",
+      "thirty",
+      "forty",
+      "fifty",
+      "sixty",
+      "seventy",
+      "eighty",
+      "ninety",
+    ];
+
     const convertLessThanThousand = (num) => {
       if (num === 0) {
         return "";
@@ -424,10 +459,14 @@ const ErrorPageContent = ({ allInfo }) => {
       } else {
         const hundred = Math.floor(num / 100);
         const remainder = num % 100;
-        return units[hundred] + " hundred" + (remainder ? " and " + convertLessThanThousand(remainder) : "");
+        return (
+          units[hundred] +
+          " hundred" +
+          (remainder ? " and " + convertLessThanThousand(remainder) : "")
+        );
       }
     };
-  
+
     const convert = (num) => {
       if (num === 0) {
         return "zero";
@@ -435,21 +474,19 @@ const ErrorPageContent = ({ allInfo }) => {
         return convertLessThanThousand(num);
       }
     };
-  
+
     const roundOff = (num) => Math.round(num * 100) / 100;
-  
+
     const roundedNumber = roundOff(number);
-  
+
     const wholePart = Math.floor(roundedNumber);
     const decimalPart = Math.round((roundedNumber - wholePart) * 100);
-  
+
     const wordsWholePart = convert(wholePart);
     const wordsDecimalPart = convert(decimalPart);
-  
+
     return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
   }
-  
-  
 
   //*************************** */
 
@@ -469,7 +506,7 @@ const ErrorPageContent = ({ allInfo }) => {
 
       {/* Header Content */}
       <div>
-        <h3>MUTNEJA Tech</h3>{" "}
+        <h3>MT Engineer</h3>{" "}
         <span>
           {" "}
           <div style={{ position: "absolute", top: "10px", right: "10px" }}>
@@ -490,13 +527,16 @@ const ErrorPageContent = ({ allInfo }) => {
             </Dropdown> */}
           </div>
         </span>
-        <p>Insurance Surveyors and Loss Assessors Pvt. Ltd.</p>
+        <p>Legal Investigator Pvt. Ltd.</p>
         <p>
-          Mobile : 9910995122(DLH
-          NCR),9468881222(GURUGRAM),9414088243,6378710966,7597233966(RAJASTHAN)
+          69-Modal Town (1st), Behind U.I.T., Office, Sri Ganganagar -
+          335001(Rajasthan )
         </p>
-        <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p>
-        <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p>
+        <p>Tel. No. : +91 94688-81222</p>
+        {/* <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p> */}
+        <p>Email: legalmt04@gmail.com</p>
+        {/* <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p> */}
+        <p>GSTIN : 08AAPCM1051K1Z9</p>
       </div>
       <hr style={{ border: "2px solid black" }} />
       {/* Header Content */}
@@ -1007,13 +1047,20 @@ const ErrorPageContent = ({ allInfo }) => {
                   {part.NewPartsEstimate}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
-                  {String(part.NewPartsTypeOfMaterial) === "Glass" ? calculateGlassDept(part) : 0}
+                  {String(part.NewPartsTypeOfMaterial) === "Glass"
+                    ? calculateGlassDept(part)
+                    : 0}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
-                  {String(part.NewPartsTypeOfMaterial) === "Metal" ? calculateMetalDept(part) : 0}
+                  {String(part.NewPartsTypeOfMaterial) === "Metal"
+                    ? calculateMetalDept(part)
+                    : 0}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
-                  {String(part.NewPartsTypeOfMaterial) !== "Metal" && String(part.NewPartsTypeOfMaterial) !== "Glass"  ? calculateNonMetalDept(part) : 0}
+                  {String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+                  String(part.NewPartsTypeOfMaterial) !== "Glass"
+                    ? calculateNonMetalDept(part)
+                    : 0}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
                   {" "}
@@ -1165,10 +1212,18 @@ const ErrorPageContent = ({ allInfo }) => {
               <br />
               Grand Total F : <br />
             </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalEstimate()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalGlassAssessed()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalMetalAssessed()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalOtherMetalAssesses()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalEstimate()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalGlassAssessed()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalMetalAssessed()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalOtherMetalAssesses()}
+            </td>
             <td
               rowSpan={5}
               style={{ border: "1px solid black", padding: "5px" }}
@@ -1176,30 +1231,68 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalDepreciation("Glass",false)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalDepreciation("Metal",false)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalNonMetaDepreciation()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalDepreciation("Glass", false)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalDepreciation("Metal", false)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalNonMetaDepreciation()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalEstimate()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalGlassAssessed() - getTotalDepreciation("Glass",false)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalMetalAssessed() - getTotalDepreciation("Metal",false)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalEstimate()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalGlassAssessed() - getTotalDepreciation("Glass", false)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalMetalAssessed() - getTotalDepreciation("Metal", false)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateEstimateNewPartsGST()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateTypeNewPartsGST("Glass")}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateTypeNewPartsGST("Metal") }</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateOtherTypeNewPartsGST()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateEstimateNewPartsGST()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateTypeNewPartsGST("Glass")}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateTypeNewPartsGST("Metal")}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateOtherTypeNewPartsGST()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalEstimate() + calculateEstimateNewPartsGST()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateTypeNewPartsGST("Glass") + getTotalGlassAssessed() - getTotalDepreciation("Glass",false)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateTypeNewPartsGST("Metal") + getTotalMetalAssessed() - getTotalDepreciation("Metal",false)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{calculateOtherTypeNewPartsGST()+getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalEstimate() + calculateEstimateNewPartsGST()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateTypeNewPartsGST("Glass") +
+                getTotalGlassAssessed() -
+                getTotalDepreciation("Glass", false)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateTypeNewPartsGST("Metal") +
+                getTotalMetalAssessed() -
+                getTotalDepreciation("Metal", false)}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {calculateOtherTypeNewPartsGST() +
+                getTotalOtherMetalAssesses() -
+                getTotalNonMetaDepreciation()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalEstimate() + calculateEstimateNewPartsGST()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalEstimate() + calculateEstimateNewPartsGST()}
+            </td>
             <td
               colSpan={3}
               style={{
@@ -1217,7 +1310,6 @@ const ErrorPageContent = ({ allInfo }) => {
       <div>
         <h4>LABOUR & REPAIRS :</h4>
         <table>
-        
           <tr>
             <th style={{ border: "1px solid black", padding: "10px" }}>S.No</th>
             <th style={{ border: "1px solid black", padding: "10px" }}>SAC</th>
@@ -1240,20 +1332,29 @@ const ErrorPageContent = ({ allInfo }) => {
               Assessed
             </th>
           </tr>
-          {allInfo?.labourDetails.map((labour,index)=>{
-          return  labour.LabourIsActive === 1 ? (
-           
-            <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{index+1}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{labour.SAC}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{labour.BillSr}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {labour.Description}
-            </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{Number(labour.Estimate)}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{Number(labour.Assessed)}</td>
-          </tr>):null
-  
+          {allInfo?.labourDetails.map((labour, index) => {
+            return labour.LabourIsActive === 1 ? (
+              <tr>
+                <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {index + 1}
+                </td>
+                <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {labour.SAC}
+                </td>
+                <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {labour.BillSr}
+                </td>
+                <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {labour.Description}
+                </td>
+                <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {Number(labour.Estimate)}
+                </td>
+                <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {Number(labour.Assessed)}
+                </td>
+              </tr>
+            ) : null;
           })}
           {/*<tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
@@ -1314,16 +1415,28 @@ const ErrorPageContent = ({ allInfo }) => {
               Add : GST on F 0.00 @ 18.00% : <br />
               Total Labour Charges : F
             </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourEstimate()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourAssessed()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourEstimate()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourAssessed()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourEstimateGST()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourAssessedGST()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourEstimateGST()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourAssessedGST()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourEstimate()+getTotalLabourEstimateGST()}</td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourAssessed()+getTotalLabourAssessedGST()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourEstimate() + getTotalLabourEstimateGST()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourAssessed() + getTotalLabourAssessedGST()}
+            </td>
           </tr>
         </table>
       </div>
@@ -1363,16 +1476,20 @@ const ErrorPageContent = ({ allInfo }) => {
             <td style={{ paddingRight: "30px", paddingLeft: "20px" }}>
               Total Labour Charges
             </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourEstimate()+getTotalLabourEstimateGST()}</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourAssessed()+getTotalLabourAssessedGST()}
+              {getTotalLabourEstimate() + getTotalLabourEstimateGST()}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourAssessed() + getTotalLabourAssessedGST()}
             </td>
           </tr>
           <tr>
             <td style={{ paddingRight: "30px", paddingLeft: "20px" }}>
               Total Cost of Parts
             </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalEstimate() + calculateEstimateNewPartsGST()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalEstimate() + calculateEstimateNewPartsGST()}
+            </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {getTotalEvaluationOfAssessedForNewParts()}
             </td>
@@ -1392,16 +1509,26 @@ const ErrorPageContent = ({ allInfo }) => {
               Total : <br />
               Less : Salvage
             </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getTotalLabourAssessed()+getTotalLabourAssessedGST()+getTotalEvaluationOfAssessedForNewParts()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getTotalLabourAssessed() +
+                getTotalLabourAssessedGST() +
+                getTotalEvaluationOfAssessedForNewParts()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{lessExcess}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {lessExcess}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{getSummaryTotalWithLessExcess()}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getSummaryTotalWithLessExcess()}
+            </td>
           </tr>
           <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>{lessSalvage}</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {lessSalvage}
+            </td>
           </tr>
           <tr>
             <td>{getSummaryTotalWithLessSalvage()}</td>
@@ -1499,7 +1626,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {calculateOtherTypeNewPartsGST()+getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}
+              {calculateOtherTypeNewPartsGST() +
+                getTotalOtherMetalAssesses() -
+                getTotalNonMetaDepreciation()}
             </td>
             <td
               style={{
@@ -1507,7 +1636,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())/2}
+              {(calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST()) /
+                2}
             </td>
             <td
               style={{
@@ -1515,7 +1647,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())/2}
+              {(calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST()) /
+                2}
             </td>
             <td
               style={{
@@ -1531,7 +1666,12 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())+calculateOtherTypeNewPartsGST()+getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}
+              {calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST() +
+                calculateOtherTypeNewPartsGST() +
+                getTotalOtherMetalAssesses() -
+                getTotalNonMetaDepreciation()}
             </td>
           </tr>
           <tr>
@@ -1556,7 +1696,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {calculateOtherTypeNewPartsGST()+getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}
+              {calculateOtherTypeNewPartsGST() +
+                getTotalOtherMetalAssesses() -
+                getTotalNonMetaDepreciation()}
             </td>
             <td
               style={{
@@ -1564,7 +1706,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())/2}
+              {(calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST()) /
+                2}
             </td>
             <td
               style={{
@@ -1572,7 +1717,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())/2}
+              {(calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST()) /
+                2}
             </td>
             <td
               style={{
@@ -1588,7 +1736,12 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())+calculateOtherTypeNewPartsGST()+getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}
+              {calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST() +
+                calculateOtherTypeNewPartsGST() +
+                getTotalOtherMetalAssesses() -
+                getTotalNonMetaDepreciation()}
             </td>
           </tr>
           <tr>
@@ -1620,7 +1773,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 textAlign: "center",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass")+calculateTypeNewPartsGST("Metal")+calculateOtherTypeNewPartsGST())}
+              {calculateTypeNewPartsGST("Glass") +
+                calculateTypeNewPartsGST("Metal") +
+                calculateOtherTypeNewPartsGST()}
             </td>
             <td
               style={{
@@ -1739,7 +1894,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(getTotalLabourAssessedGST()/2)}
+              {getTotalLabourAssessedGST() / 2}
             </td>
             <td
               style={{
@@ -1747,7 +1902,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(getTotalLabourAssessedGST()/2)}
+              {getTotalLabourAssessedGST() / 2}
             </td>
             <td
               style={{
@@ -1763,7 +1918,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              { getTotalLabourAssessedGST()+getTotalLabourAssessed()}
+              {getTotalLabourAssessedGST() + getTotalLabourAssessed()}
             </td>
           </tr>
           <tr>
@@ -1789,7 +1944,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {getTotalLabourAssessed()}
+              {getTotalLabourAssessed()}
             </td>
             <td
               style={{
@@ -1797,7 +1952,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(getTotalLabourAssessedGST()/2)}
+              {getTotalLabourAssessedGST() / 2}
             </td>
             <td
               style={{
@@ -1805,7 +1960,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            {(getTotalLabourAssessedGST()/2)}
+              {getTotalLabourAssessedGST() / 2}
             </td>
             <td
               style={{
@@ -1821,7 +1976,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-            { getTotalLabourAssessedGST()+getTotalLabourAssessed()}
+              {getTotalLabourAssessedGST() + getTotalLabourAssessed()}
             </td>
           </tr>
           <tr>
@@ -1870,7 +2025,8 @@ const ErrorPageContent = ({ allInfo }) => {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            F {(getSummaryTotalWithLessSalvage())} <br /> ({numberToWords(getSummaryTotalWithLessSalvage())}){" "}
+            F {getSummaryTotalWithLessSalvage()} <br /> (
+            {numberToWords(getSummaryTotalWithLessSalvage())}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
           conditions of the policy of insurance.
@@ -1879,7 +2035,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <div>
         <h4>Notes :</h4>
         <ul>
-        {allInfo?.summaryReport[0]?.FinalReportNotes}
+          {allInfo?.summaryReport[0]?.FinalReportNotes}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>
@@ -1911,9 +2067,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </span>
         <br />
         <br />
-        <span>
-          Enclosures : {allInfo?.summaryReport[0]?.Endurance}
-        </span>
+        <span>Enclosures : {allInfo?.summaryReport[0]?.Endurance}</span>
       </div>
 
       {/* common footer content */}

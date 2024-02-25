@@ -38,11 +38,11 @@ const ErrorPageContent = () => {
     <div className="" ref={pdfRef}>
       {/* Header Content */}
       <div>
-        <h3>MUTNEJA Tech</h3>
+        <h3>MT Engineer</h3>{" "}
         <span>
           {" "}
           <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle variant="primary" id="dropdown-extract">
                 Extract
               </Dropdown.Toggle>
@@ -56,16 +56,19 @@ const ErrorPageContent = () => {
                   </button>
                 </Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </span>
-        <p>Insurance Surveyors and Loss Assessors Pvt. Ltd.</p>
+        <p>Legal Investigator Pvt. Ltd.</p>
         <p>
-          Mobile : 9910995122(DLH
-          NCR),9468881222(GURUGRAM),9414088243,6378710966,7597233966(RAJASTHAN)
+          69-Modal Town (1st), Behind U.I.T., Office, Sri Ganganagar -
+          335001(Rajasthan )
         </p>
-        <p>Email: Info@mutnejatech.co.in</p>
-        <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p>
+        <p>Tel. No. : +91 94688-81222</p>
+        {/* <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p> */}
+        <p>Email: legalmt04@gmail.com</p>
+        {/* <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p> */}
+        <p>GSTIN : 08AAPCM1051K1Z9</p>
       </div>
       <hr style={{ border: "2px solid black" }} />
       {/* Header Content */}

@@ -262,7 +262,6 @@ const CreateList = ({
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -303,7 +302,6 @@ const CreateList = ({
             </div>
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -344,7 +342,6 @@ const CreateList = ({
             </div>
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -410,7 +407,6 @@ const CreateList = ({
             </div> */}
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -436,6 +432,49 @@ const CreateList = ({
                 onChange={(e) => setPolicyIssuingOffice(e.target.value)}
                 // placeholder="Enter Registration No."
               />
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontSize: "14px",
+                  // marginTop: "-13px",
+                }}
+              >
+                Inspection Type
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <select
+                className="form-control p-1"
+                disabled={!edit}
+                value={!requestType ? "" : requestType}
+                onChange={(e) => setRequestType(e.target.value)}
+              >
+                {requestTypeTypes.map((sub, index) => {
+                  return (
+                    <option
+                      key={sub.id}
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#1560bd",
+                        fontSize: "14px",
+                        // marginTop: "-13px",
+                      }}
+                      value={sub.value}
+                    >
+                      {sub.type}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
           </div>
         </div>
@@ -469,7 +508,6 @@ const CreateList = ({
             </div>
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -498,7 +536,6 @@ const CreateList = ({
             </div>
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -542,7 +579,6 @@ const CreateList = ({
             </div>
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -591,7 +627,6 @@ const CreateList = ({
             </div>
           </div>
         </div>
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -634,34 +669,6 @@ const CreateList = ({
                     : null
                 }
                 onChange={(date) => setPolicyEndDate(date)}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-6">
-          <div className="row mt-1">
-            <div className="col-lg-4 my_profile_setting_input form-group">
-              <label
-                htmlFor=""
-                className="text-color"
-                style={{
-                  // paddingTop: "15px",
-                  color: "#1560bd",
-                  fontSize: "14px",
-                  // marginTop: "-13px",
-                }}
-              >
-                Insurance Company Name & Address
-              </label>
-            </div>
-            <div className="col-lg-7">
-              <input
-                className="form-control"
-                id="propertyTitle"
-                value={insuranceCompanyNameAddress}
-                onChange={(e) => setInsuranceCompanyNameAddress(e.target.value)}
-                // placeholder="Enter Registration No."
               />
             </div>
           </div>
@@ -737,7 +744,6 @@ const CreateList = ({
             </div>
           </div>
               </div>*/}
-
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
@@ -759,6 +765,33 @@ const CreateList = ({
                 type="text"
                 className="form-control"
                 id="propertyTitle"
+                // placeholder="Enter Registration No."
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontSize: "14px",
+                  // marginTop: "-13px",
+                }}
+              >
+                Insurance Company Name & Address
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input
+                className="form-control"
+                id="propertyTitle"
+                value={insuranceCompanyNameAddress}
+                onChange={(e) => setInsuranceCompanyNameAddress(e.target.value)}
                 // placeholder="Enter Registration No."
               />
             </div>

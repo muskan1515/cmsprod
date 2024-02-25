@@ -158,8 +158,6 @@ const Servey = ({
     return formattedDate;
   };
 
-
-
   const formatTime = (dateString) => {
     const options = {
       hour: "numeric",
@@ -173,7 +171,7 @@ const Servey = ({
 
   const calculateVehicleAge = () => {
     if (
-      !claim.vehicleDetails?.DateOfRegistration  ||
+      !claim.vehicleDetails?.DateOfRegistration ||
       !claim.claimDetails?.AddedDateTime
     ) {
       return "0";
@@ -181,9 +179,9 @@ const Servey = ({
     const a = getMonthsDifference(DateRegistration);
 
     const b = getMonthsDifference(AccidentAddedDateTime);
-    console.log(DateRegistration,AccidentAddedDateTime,a-b)
-   
-    return `${a-b}`;
+    console.log(DateRegistration, AccidentAddedDateTime, a - b);
+
+    return `${a - b}`;
   };
 
   const calculateDepreciationOnMetal = () => {
@@ -261,34 +259,32 @@ const Servey = ({
   function convertTimeFormat(inputTime) {
     // Parse the input time string
     const parsedTime = new Date("2000-01-01 " + inputTime);
-  
+
     // Check if the parsed time is valid
     if (isNaN(parsedTime)) {
       console.error("Invalid time format");
       return null;
     }
-  
+
     // Format the time in the desired format
-    const formattedTime = parsedTime.toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
+    const formattedTime = parsedTime.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
       hour12: true,
     });
-  
+
     return formattedTime;
   }
-  
 
-  useEffect(()=>{
-    console.log("Time",convertTimeFormat(formatTime(AccidentAddedDateTime)));
+  useEffect(() => {
+    console.log("Time", convertTimeFormat(formatTime(AccidentAddedDateTime)));
     setAccidentTime(convertTimeFormat(formatTime(AccidentAddedDateTime)));
-
-  },[]);
+  }, []);
 
   const editHandler = () => {
     setIsEditMode(true);
   };
-console.log('AccidentAddedDateTime',AccidentAddedDateTime);
+  console.log("AccidentAddedDateTime", AccidentAddedDateTime);
   return (
     <>
       <div className="row">
@@ -334,7 +330,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                       value={
                         AccidentAddedDateTime &&
                         AccidentAddedDateTime !== "null"
-                          ?  AccidentAddedDateTime
+                          ? AccidentAddedDateTime
                           : ""
                       }
                       onChange={(e) => setAccidentAddedDateTime(e.target.value)}
@@ -370,18 +366,15 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                   </label>
                 </div>
                 <div className="col-lg-7">
-                {!isEditMode ? 
-                  <input type="text"
-                  value={AccidentTime}
-                  readOnly={true}
-                  />
-                :  
-                <TimePicker
-                  selectedTime={AccidentTime ? (AccidentTime) : ""}
-                  setSelectedTime={setAccidentTime}
-                  />
-                }
-                {console.log(AccidentTime)}
+                  {!isEditMode ? (
+                    <input type="text" value={AccidentTime} readOnly={true} />
+                  ) : (
+                    <TimePicker
+                      selectedTime={AccidentTime ? AccidentTime : ""}
+                      setSelectedTime={setAccidentTime}
+                    />
+                  )}
+                  {console.log(AccidentTime)}
                 </div>
               </div>
             </div>
@@ -472,7 +465,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={PlaceOfSurvey?PlaceOfSurvey:""}
+                    value={PlaceOfSurvey ? PlaceOfSurvey : ""}
                     readOnly={!isEditMode}
                     onChange={(e) => setPlaceOfSurvey(e.target.value)}
                     // placeholder="Enter Registration No."
@@ -521,17 +514,15 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                    value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
           onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
                   <input
-                      readOnly={!isEditMode}
-                      type={"text"}
-                      value={
-                        SurveyAllotmentDate
-                          ? formatDate(SurveyAllotmentDate)
-                          : ""
-                      }
-                      className="form-control"
-                      id="propertyTitle"
-                    />
-                  
+                    readOnly={!isEditMode}
+                    type={"text"}
+                    value={
+                      SurveyAllotmentDate ? formatDate(SurveyAllotmentDate) : ""
+                    }
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -553,14 +544,17 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                   </label>
                 </div>
                 <div className="col-lg-7">
-                <input
-                disabled={!isEditMode}
-                type="date"
-                  disable={!isEditMode}
-                  value={(InspectionDate && InspectionDate !== "null" ? InspectionDate : "")
-                  }
-                  onChange={(e)=>setInspectionDate(e.target.value)}
-                />
+                  <input
+                    disabled={!isEditMode}
+                    type="date"
+                    disable={!isEditMode}
+                    value={
+                      InspectionDate && InspectionDate !== "null"
+                        ? InspectionDate
+                        : ""
+                    }
+                    onChange={(e) => setInspectionDate(e.target.value)}
+                  />
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
                 </div>
               </div>
@@ -591,16 +585,18 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
                 onChange={(e)=>setSurveyConductedDate(e.target.value)}
                 // placeholder="Enter Registration No."
                 />*/}
-                
-                    <input
-                    disabled={!isEditMode}
-                    type="text"
-                      disable={!isEditMode}
-                      value={(SurveyConductedDate && SurveyConductedDate !== "null" ? SurveyConductedDate : "")
-                      }
-                      onChange={(e)=>setSurveyConductedDate(e.target.value)}
-                    />
-                  
+
+                <input
+                  disabled={!isEditMode}
+                  type="text"
+                  disable={!isEditMode}
+                  value={
+                    SurveyConductedDate && SurveyConductedDate !== "null"
+                      ? SurveyConductedDate
+                      : ""
+                  }
+                  onChange={(e) => setSurveyConductedDate(e.target.value)}
+                />
               </div>
             </div>
             {/* <div className="my_profile_setting_input form-group">
@@ -616,12 +612,11 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
           <div className="col-lg-12">
             <div>
               <div className="">
-              <ReactEditor
-              readOnly={!isEditMode}
-              editorContent={CauseOfAccident}
-              setEditorContent={setCauseOfAccident}
-              />
-             
+                <ReactEditor
+                  readOnly={!isEditMode}
+                  editorContent={CauseOfAccident}
+                  setEditorContent={setCauseOfAccident}
+                />
               </div>
               {/*  <Editor/>*/}
               {/* <textarea
@@ -660,7 +655,7 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
               <Editor
                 readOnly={!isEditMode}
                 value={PoliceAction}
-                onChange={(e)=>setPoliceAction(e.target.value)}
+                onChange={(e) => setPoliceAction(e.target.value)}
                 onTextChange={(e) => setPoliceAction(e.htmlValue)}
                 style={{ height: "80px" }}
               />
@@ -699,14 +694,13 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
           </div>
           <div className="row">
             <div className="">
-             
               <Editor
-              readOnly={!isEditMode}
-              value={DetailsOfLoads}
-              onChange={(e)=>setDetailsOfLoads(e.target.value)}
-              onTextChange={(e) => setDetailsOfLoads(e.htmlValue)}
-              style={{ height: "80px" }}
-            />
+                readOnly={!isEditMode}
+                value={DetailsOfLoads}
+                onChange={(e) => setDetailsOfLoads(e.target.value)}
+                onTextChange={(e) => setDetailsOfLoads(e.htmlValue)}
+                style={{ height: "80px" }}
+              />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -714,14 +708,13 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
             <div className="">
-            
               <Editor
-              readOnly={!isEditMode}
-              value={ThirdPartyLoss}
-              onChange={(e)=>setThirdPartyLoss(e.target.value)}
-              onTextChange={(e) => setThirdPartyLoss(e.htmlValue)}
-              style={{ height: "80px" }}
-            />
+                readOnly={!isEditMode}
+                value={ThirdPartyLoss}
+                onChange={(e) => setThirdPartyLoss(e.target.value)}
+                onTextChange={(e) => setThirdPartyLoss(e.htmlValue)}
+                style={{ height: "80px" }}
+              />
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -729,15 +722,13 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
             <h4>Assesment :</h4>
             <hr />
             <div className="">
-              
               <Editor
-
-              readOnly={!isEditMode}
-              value={Assessment}
-              onChange={(e)=>setAssessment(e.target.value)}
-              onTextChange={(e) => setAssessment(e.htmlValue)}
-              style={{ height: "80px" }}
-            />
+                readOnly={!isEditMode}
+                value={Assessment}
+                onChange={(e) => setAssessment(e.target.value)}
+                onTextChange={(e) => setAssessment(e.htmlValue)}
+                style={{ height: "80px" }}
+              />
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>
@@ -844,138 +835,6 @@ console.log('AccidentAddedDateTime',AccidentAddedDateTime);
           </div>
         </div>
       </div>
-      {/* <div className="row">
-        <div className="text-center">
-          <div className="my_profile_setting_input">
-            <button className="btn btn-color fw-bold w-25">Submit</button>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="col-lg-4">
-        <div className="row mt-1">
-          <div className="col-lg-4 my_profile_setting_input form-group">
-            <label
-              htmlFor=""
-              className="text-color"
-              style={{
-                // paddingTop: "15px",
-                color: "#2e008b",
-                fontWeight: "",
-                // marginTop: "-13px",
-              }}
-            >
-              Endo. Doc 
-            </label>
-          </div>
-          <div className="col-lg-8">
-            <input
-              type="text"
-              className="form-control"
-              id="propertyTitle"
-              // placeholder="Enter Registration No."
-            />
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="col-lg-12">
-        <div className="my_profile_setting_textarea">
-          <label htmlFor="propertyDescription">Description</label>
-          <textarea
-            className="form-control"
-            id="propertyDescription"
-            rows="7"
-          ></textarea>
-        </div>
-      </div> */}
-      {/* End .col */}
-
-      {/* <div className="col-lg-6 col-xl-6">
-        <div className="my_profile_setting_input ui_kit_select_search form-group">
-          <label>Type</label>
-          <select
-            className="selectpicker form-select"
-            data-live-search="true"
-            data-width="100%"
-          >
-            <option data-tokens="type1">Type1</option>
-            <option data-tokens="Type2">Type2</option>
-            <option data-tokens="Type3">Type3</option>
-            <option data-tokens="Type4">Type4</option>
-            <option data-tokens="Type5">Type5</option>
-          </select>
-        </div>
-      </div> */}
-      {/* End .col */}
-
-      {/* <div className="col-lg-6 col-xl-6">
-        <div className="my_profile_setting_input ui_kit_select_search form-group">
-          <label>Status</label>
-          <select
-            className="selectpicker form-select"
-            data-live-search="true"
-            data-width="100%"
-          >
-            <option data-tokens="Status1">Status1</option>
-            <option data-tokens="Status2">Status2</option>
-            <option data-tokens="Status3">Status3</option>
-            <option data-tokens="Status4">Status4</option>
-            <option data-tokens="Status5">Status5</option>
-          </select>
-        </div>
-      </div> */}
-      {/* End .col */}
-
-      {/* <div className="col-lg-4 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="formGroupExamplePrice">Price</label>
-          <input
-            type="number"
-            className="form-control"
-            id="formGroupExamplePrice"
-          />
-        </div>
-      </div> */}
-      {/* End .col */}
-
-      {/* <div className="col-lg-4 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="formGroupExampleArea">Area</label>
-          <input
-            type="text"
-            className="form-control"
-            id="formGroupExampleArea"
-          />
-        </div>
-      </div> */}
-      {/* End .col */}
-
-      {/* <div className="col-lg-4 col-xl-4">
-        <div className="my_profile_setting_input ui_kit_select_search form-group">
-          <label>Rooms</label>
-          <select
-            className="selectpicker form-select"
-            data-live-search="true"
-            data-width="100%"
-          >
-            <option data-tokens="Status1">1</option>
-            <option data-tokens="Status2">2</option>
-            <option data-tokens="Status3">3</option>
-            <option data-tokens="Status4">4</option>
-            <option data-tokens="Status5">5</option>
-            <option data-tokens="Status6">Other</option>
-          </select>
-        </div>
-      </div> */}
-      {/* End .col */}
-
-      {/* <div className="col-xl-12">
-        <div className="my_profile_setting_input">
-          <button className="btn btn1 float-start">Back</button>
-          <button className="btn btn2 float-end">Next</button>
-        </div>
-      </div> */}
     </>
   );
 };

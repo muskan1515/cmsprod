@@ -44,7 +44,6 @@ const Form_driver = ({
   setDateOfIssue,
   DateOfIssue,
   setIsDriverDetailsFetched,
-
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -120,28 +119,62 @@ const Form_driver = ({
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Name
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.DriverName}
-                    </label>
+                    <div className="col-lg-3">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Name
+                      </label>
+                    </div>
+                    <div className="col-lg-9 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.DriverName}
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <div className="col-lg-3">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Status
+                      </label>
+                    </div>
+                    <div className="col-lg-9 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {checkStatus(claim?.claimStatus?.Status)}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -155,7 +188,7 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Status
+                      Valid Upto
                     </label>
                     <label
                       htmlFor=""
@@ -166,36 +199,10 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                    {checkStatus(claim?.claimStatus?.Status)}
+                      {formatDate(claim?.driverDetails?.VaildUpto)}
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
-                <div className="row">
-                  <label
-                    htmlFor=""
-                    className="col-lg-6 text-color"
-                    style={{
-                      color: "black",
-                      fontSize: "13px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Valid Upto
-                  </label>
-                  <label
-                    htmlFor=""
-                    className="col-lg-6 text-color text-end"
-                    style={{
-                      color: "#1560bd",
-                      fontSize: "13px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {formatDate(claim?.driverDetails?.VaildUpto)}
-                  </label>
-                </div>
-              </td>
                 {/*<td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -226,189 +233,218 @@ const Form_driver = ({
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      DL No.
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >{claim?.driverDetails?.LicenseNumber}</label>
+                    <div className="col-lg-3">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        DL No.
+                      </label>
+                    </div>
+                    <div className="col-lg-9 text-end">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.LicenseNumber}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Father Name
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.FatherName}
-                    </label>
+                    <div className="col-lg-5">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Father Name
+                      </label>
+                    </div>
+                    <div className="col-lg-7 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.FatherName}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-7 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Gender
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.Gender}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Gender
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className=" text-color "
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.Gender}
+                      </label>
+                    </div>
                   </div>
                 </td>
               </tr>
               <tr>
-              
-
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      License Type
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.LicenseType}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        License Type
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.LicenseType}
+                      </label>
+                    </div>
                   </div>
                 </td>
-               
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Blood Group
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.BloodGroup ? claim?.driverDetails?.BloodGroup : ""}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Blood Group
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.BloodGroup
+                          ? claim?.driverDetails?.BloodGroup
+                          : ""}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Mobile
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.Mobile}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Mobile
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.Mobile}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-7 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Address
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.Address}
-                    </label>
+                    <div className="col-lg-3">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Address
+                      </label>
+                    </div>
+                    <div className="col-lg-9 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.Address}
+                      </label>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -441,28 +477,32 @@ const Form_driver = ({
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      RTO Name
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.RtoName}
-                    </label>
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        RTO Name
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.RtoName}
+                      </label>
+                    </div>
                   </div>
                 </td>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -492,7 +532,6 @@ const Form_driver = ({
                   </div>
                 </td>
               </tr>
-            
             </table>
           </div>
         </div>
@@ -502,4 +541,3 @@ const Form_driver = ({
 };
 
 export default Form_driver;
-
