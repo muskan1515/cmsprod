@@ -123,50 +123,53 @@ const getDocuments = (req, res) => {
         photo5Longitude = "",
         photo6Longitude = "";
   
-      if (data.data[0][0]) {
-        photo1 = data.data[0][0].url;
-        photoAtt1 = data.data[0][0].name;
-        photo1Timestamp = data.data[0][0].time;
-        photo1Latitude = data.data[0][0].location.split(",")[0];
-        photo1Longitude = data.data[0][0].location.split(",")[1];
+      if (data.data[0][0] || data.data) {
+        photo1 = data.data[0][0].url  || data.data[0];
+        // console.log("data.data[0]",data.data[0]);
+        // photo1 = data.data[0]
+        photoAtt1 = data.data[0][0].name || data.docName;
+        photo1Timestamp = data.data[0][0]?.time;
+        photo1Latitude = data.data[0][0]?.location?.split(",")[0];
+        photo1Longitude = data.data[0][0]?.location?.split(",")[1];
+
       }
   
       if (data.data[1]?.length > 0) {
         photo2 = data.data[1][0].url;
         photoAtt2 = data.data[1][0].name;
-        photo2Timestamp = data.data[1][0].time;
-        photo2Latitude = data.data[1][0].location.split(",")[0];
-        photo2Longitude = data.data[1][0].location.split(",")[1];
+        photo2Timestamp = data.data[1][0]?.time;
+        photo2Latitude = data.data[1][0]?.location?.split(",")[0];
+        photo2Longitude = data.data[1][0]?.location?.split(",")[1];
       }
       if (data.data[2]?.length > 0) {
         photo3 = data.data[2][0].url;
         photoAtt3 = data.data[2][0].name;
-        photo3Timestamp = data.data[2][0].time;
-        photo3Latitude = data.data[2][0].location.split(",")[0];
-        photo3Longitude = data.data[2][0].location.split(",")[1];
+        photo3Timestamp = data.data[2][0]?.time;
+        photo3Latitude = data.data[2][0]?.location.split(",")[0];
+        photo3Longitude = data.data[2][0]?.location.split(",")[1];
       }
       if (data.data[3]?.length > 0) {
         photo4 = data.data[3][0].url;
         photoAtt4 = data.data[3][0].name;
-        photo4Timestamp = data.data[3][0].time;
-        photo4Latitude = data.data[3][0].location.split(",")[0];
-        photo4Longitude = data.data[3][0].location.split(",")[1];
+        photo4Timestamp = data.data[3][0]?.time;
+        photo4Latitude = data.data[3][0]?.location.split(",")[0];
+        photo4Longitude = data.data[3][0]?.location.split(",")[1];
       }
       if (data.data[4]?.length > 0) {
         photo5 = data.data[4][0].url;
         photoAtt5 = data.data[4][0].name;
-        photo5Timestamp = data.data[4][0].time;
-        photo5Latitude = data.data[4][0].location.split(",")[0];
-        photo5Longitude = data.data[4][0].location.split(",")[1];
+        photo5Timestamp = data.data[4][0]?.time;
+        photo5Latitude = data.data[4][0]?.location.split(",")[0];
+        photo5Longitude = data.data[4][0]?.location.split(",")[1];
       }
       if (data.data[5]?.length > 0) {
         photo6 = data.data[5][0].url;
         photoAtt6 = data.data[5][0].name;
-        photo6Timestamp = data.data[5][0].time;
-        photo6Latitude = data.data[5][0].location.split(",")[0];
-        photo6Longitude = data.data[5][0].location.split(",")[1];
+        photo6Timestamp = data.data[5][0]?.time;
+        photo6Latitude = data.data[5][0]?.location.split(",")[0];
+        photo6Longitude = data.data[5][0]?.location.split(",")[1];
       }
-  
+  console.log("Photo1",photo1)
       const insertUploadDetails = `
       INSERT INTO DocumentList (
         LeadId,

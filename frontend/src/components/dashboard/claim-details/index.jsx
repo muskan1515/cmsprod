@@ -1597,7 +1597,7 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <Exemple documents={documents} />
+                            <Exemple documents={documents}  leadId = {leadId}/>
                           </div>
                         </div>
                         <div
