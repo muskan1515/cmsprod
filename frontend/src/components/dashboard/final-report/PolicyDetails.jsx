@@ -2362,9 +2362,13 @@ const PolicyDetails = ({
                       type="date"
                       disabled={!isEditMode}
                       value={
-                        DateOfBirth && DateOfBirth !== "null" ? DateOfBirth : ""
+                        DateOfBirth && DateOfBirth !== "null"
+                          ? DateOfBirth.substring(0, 10)
+                          : ""
                       }
-                      onChange={(e) => setDateOfBirth(e.target.value)}
+                      onChange={(e) =>
+                        setDateOfBirth(e.target.value)
+                      }
                     />
                   )}
                 </div>

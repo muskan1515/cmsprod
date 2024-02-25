@@ -111,6 +111,8 @@ export default function Exemple_01({
   policyType,
   claim,
   settotalMetalRows,
+  setallNewParts,
+  allNewParts,
   DateOfRegistration,
   setOverallMetailDep,
   setTotalAgeOfVehicle,
@@ -274,6 +276,12 @@ export default function Exemple_01({
         alert(Err);
       });
   }, []);
+
+  useEffect(()=>{
+  
+      setallNewParts(allRows);
+    
+  },[allRows]);
 
  
   // useEffect(()=>{

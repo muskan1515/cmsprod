@@ -66,7 +66,7 @@ function removeBase64Prefix(encodedImage) {
     })
     .then((result)=>{
     const details=result?.data?.data?.data;
-    console.log(result);s
+    console.log(result);
     const stringformat = convertObjectToString(details);
     console.log("stringFormat",stringformat);
     
