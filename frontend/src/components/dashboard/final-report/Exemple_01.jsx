@@ -397,20 +397,36 @@ export default function Exemple_01({
                 ></button>
               ),
               sno: count,
-              dep: row.dep, 
+              dep: row.dep,
+              bill_sr: (
+                <input
+                  className="form-control"
+                  type="text"
+                  // placeholder="job description"
+                  // value={row.description}
+                  // onChange={(e) =>
+                  //   handleChange(index, e.target.value, "description")
+                  // }
+                  required
+                  disabled={!edit}
+                  id="terms"
+                  style={{ border: "1px solid black" }}
+                />
+              ),
               description: (
                 <input
                   className="form-control"
                   type="text"
                   placeholder="job description"
                   value={row.description}
-                  onChange={(e) => handleChange(index, e.target.value, "description")}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "description")
+                  }
                   required
                   disabled={!edit}
                   id="terms"
                   style={{ border: "1px solid black" }}
                 />
-                
               ),
               job_type: (
                 <select
@@ -477,7 +493,7 @@ export default function Exemple_01({
                     className="form-check-input"
                     type="checkbox"
                     value={row.gst}
-                    checked={row.gst %2 !==0}
+                    checked={row.gst % 2 !== 0}
                     onChange={(e) => handleChange(index, row.gst + 1, "gst")}
                     id="remeberMe"
                   />

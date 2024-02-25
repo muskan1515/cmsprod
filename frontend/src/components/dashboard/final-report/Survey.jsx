@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Calendar } from "primereact/calendar";
-
+// import RichTextEditor, { createEmptyValue } from "./RichTextEditor";
 import { Editor } from "primereact/editor";
 import { AccidentContent, AssessmentContent } from "./Content";
 import {
@@ -721,6 +721,47 @@ const Servey = ({
           <div className="col-lg-12 mt-3">
             <h4>Assesment :</h4>
             <hr />
+            {/* <div className="row">
+              <RichTextEditor
+                value={value}
+                onChange={this._onChange}
+                className="react-rte-demo"
+                placeholder="Tell a story"
+                toolbarClassName="demo-toolbar"
+                editorClassName="demo-editor"
+                readOnly={this.state.readOnly}
+                blockStyleFn={getTextAlignClassName}
+                customControls={[
+                  // eslint-disable-next-line no-unused-vars
+                  (setValue, getValue, editorState) => {
+                    let choices = new Map([
+                      ["1", { label: "1" }],
+                      ["2", { label: "2" }],
+                      ["3", { label: "3" }],
+                    ]);
+                    return (
+                      <ButtonGroup key={1}>
+                        <Dropdown
+                          choices={choices}
+                          selectedKey={getValue("my-control-name")}
+                          onChange={(value) =>
+                            setValue("my-control-name", value)
+                          }
+                        />
+                      </ButtonGroup>
+                    );
+                  },
+                  <ButtonGroup key={2}>
+                    <IconButton
+                      label="Remove Link"
+                      iconName="remove-link"
+                      focusOnClick={false}
+                      onClick={() => console.log("You pressed a button")}
+                    />
+                  </ButtonGroup>,
+                ]}
+              />
+            </div> */}
             <div className="">
               <Editor
                 readOnly={!isEditMode}

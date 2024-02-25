@@ -3,7 +3,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const CreateList = () => {
-  
   const router = useRouter();
   const { leadId } = router.query;
 
@@ -19,13 +18,9 @@ const CreateList = () => {
       router.push(`/dl-document/${leadId}`);
     }
     if (selectedValue === "billcreation") {
-      router.push(`/bill-creation/${leadId}`);
+      router.push(`/bill-document/${leadId}`);
     }
-
-
   };
-
-
 
   return (
     <>

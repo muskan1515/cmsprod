@@ -155,7 +155,7 @@ const rcDetailsUpdated = {
               </button>
             </Dropdown.Item>
           </Dropdown.Menu>
-      </Dropdown>*/}
+       </Dropdown>*/}
       </div>
       <div style={{ width: "30%", margin: "0 auto" }}>
         <table

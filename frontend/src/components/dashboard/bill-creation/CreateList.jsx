@@ -113,24 +113,24 @@ const CreateList = ({ allInfo, leadID }) => {
     setEstimate(total_estimate);
   };
 
-  const calculateProfessionalFees=()=>{
+  const calculateProfessionalFees = () => {
     let prof = 0;
-    if(!allInfo?.VehicleOnlineDetails){
+    if (!allInfo?.VehicleOnlineDetails) {
       return 0;
     }
-    if(String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "2W")
-    setFinalProfFees(500)
-     if(String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "4W")
-     setFinalProfFees(700)
+    if (String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "2W")
+      setFinalProfFees(500);
+    if (String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "4W")
+      setFinalProfFees(700);
 
-     console.log(allInfo?.VehicleOnlineDetails?.VehicleType , FinalProfFees)
-   
-  }
+    console.log(allInfo?.VehicleOnlineDetails?.VehicleType, FinalProfFees);
+  };
 
-  useEffect(()=>{
-    const fees = String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W" ? 700 : 500;
-    setFinalProfFees(fees)
-  },[allInfo])
+  useEffect(() => {
+    const fees =
+      String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W" ? 700 : 500;
+    setFinalProfFees(fees);
+  }, [allInfo]);
 
   const generateRegion = (region) => {
     const firstThreeLetters = Branch?.slice(0, 3);
@@ -213,9 +213,9 @@ const CreateList = ({ allInfo, leadID }) => {
     return total + calculate_cgst + calculate_igst + calculate_sgst;
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getTotalValue();
-  },[CGST,IGST,SGST]);
+  }, [CGST, IGST, SGST]);
 
   const onSubmitHnadler = () => {
     const payload = {
@@ -522,7 +522,7 @@ const CreateList = ({ allInfo, leadID }) => {
               <div className="col-lg-7">
                 <select
                   type="text"
-                  className="form-control"
+                  className="form-select"
                   id="broker_mail_id"
                   value={BillTo}
                   onChange={(e) => setBillTo(e.target.value)}
@@ -536,7 +536,7 @@ const CreateList = ({ allInfo, leadID }) => {
             </div>
           </div>
 
-          <div className="col-lg-12">
+          {/* <div className="col-lg-12">
             <div className="row mt-1">
               <div className="col-lg-2 my_profile_setting_input form-group">
                 <label
@@ -575,7 +575,7 @@ const CreateList = ({ allInfo, leadID }) => {
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="col-lg-12">
             <div className="row mt-1">
               <div className="col-lg-2 my_profile_setting_input form-group">
@@ -714,13 +714,25 @@ const CreateList = ({ allInfo, leadID }) => {
                 </label>
               </div>
               <div className="col-lg-9">
-                <input
+                {/* <input
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
                   value={DetailsFee}
                   onChange={(e) => setDetailsFee(e.target.value)}
-                />
+                /> */}
+                <select
+                  type="text"
+                  className="form-select"
+                  id="broker_mail_id"
+                  value={DetailsFee}
+                  onChange={(e) => setDetailsFee(e.target.value)}
+                >
+                  <option>Choose..</option>
+                  <option>Estimate</option>
+                  <option>Assessed</option>
+                  <option>IDV</option>
+                </select>
               </div>
             </div>
           </div>
@@ -822,7 +834,6 @@ const CreateList = ({ allInfo, leadID }) => {
                   className="form-control"
                   id="broker_mail_id"
                   value={FinalProfFees}
-                  
                 />
               </div>
             </div>
@@ -1022,7 +1033,6 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                 
                   value={FinalProfFees}
                 />
               </div>

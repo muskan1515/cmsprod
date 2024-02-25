@@ -6,8 +6,7 @@ import PropertyVideo from "./PropertyVideo";
 import axios from "axios";
 import ReportFinal from "../report-template/MainRouter";
 
-const index = ({SomeComponent,leadId}) => {
-  
+const index = ({ SomeComponent, leadId }) => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -15,7 +14,6 @@ const index = ({SomeComponent,leadId}) => {
 
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
-
 
       <div className="dashboard_sidebar_menu">
         <div
@@ -61,9 +59,7 @@ const index = ({SomeComponent,leadId}) => {
               </div>
               {/* End .row */}
               <div className="shop_single_tab_content style2">
-                <PropertyVideo  SomeComponent={SomeComponent}
-                leadId={leadId}
-                />
+                <PropertyVideo SomeComponent={SomeComponent} leadId={leadId} />
               </div>
 
               {/* <ChatBox /> */}
@@ -72,7 +68,11 @@ const index = ({SomeComponent,leadId}) => {
               <div className="row mt50">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    <p>© 2020 Find House. Made with love.</p>
+                    <p>
+                      {" "}
+                      &copy; {new Date().getFullYear()} Infostics. Made with
+                      love.
+                    </p>
                   </div>
                 </div>
               </div>
