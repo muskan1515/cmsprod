@@ -141,14 +141,27 @@ export default function Exemple({
     return val;
   };
 
-  function convertToIST(dateTimeString) {
-    const dateTime = new Date(dateTimeString);
-    const istTimeString = dateTime.toLocaleString("en-US", {
-      timeZone: "Asia/Kolkata",
-    });
+  function convertToIST(utcTimestamp) {
+    const utcDate = new Date(utcTimestamp);
 
-    return istTimeString;
-  }
+    // Convert to Indian Standard Time (IST)
+    const istDate = new Date(utcDate.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  
+    // Format IST date and time with hours, minutes, AM/PM
+    const options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      hour: 'numeric', 
+      minute: 'numeric', 
+      hour12: true 
+    };
+    const formattedISTDateTime = istDate.toLocaleString("en-US", options);
+  
+    // Return the formatted IST date and time as a string
+    return formattedISTDateTime;
+  };
 
   const formatDate = (dateString) => {
     const options = {
@@ -194,7 +207,7 @@ export default function Exemple({
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,
-        added_date: (claim.AddedDate),
+        added_date: convertToIST(claim.AddedDate),
         // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
         //   timeZone: "Asia/Kolkata",
         // }),

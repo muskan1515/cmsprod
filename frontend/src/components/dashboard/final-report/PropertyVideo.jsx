@@ -209,6 +209,26 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [FinalReportNotes,setFinalReportNotes]=useState("");
 
+  
+const [allNewParts,setallNewParts]=useState([]);
+
+
+useEffect(()=>{
+
+  console.log("allNewParts",allNewParts);
+
+    let total =0;
+  allNewParts.map((row,index)=>{
+    if(String(row.type) === "Metal"){
+      const assessed = Number(row.assessed)*Number(row.qa);
+      const gst = Number(assessed * Number(row.gst))/100;
+      const add = row.isActive ? assessed+gst:0;
+      total = total +  add;
+    }
+  })
+  console.log(total);
+},[allNewParts]);
+
 
   useEffect(() => {
     let total_estimate = 0,
@@ -456,7 +476,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setTotalLoss(claim?.claimDetails?.TotalLoss ? claim?.claimDetails?.TotalLoss : 0); 
     setIMT(claim?.claimDetails?.IMT ? claim?.claimDetails?.IMT : 0); 
 
-    setDateOfBirth(convertStringTime(claim?.driverDetails?.DateOfBirth) || "");
+    setDateOfBirth((claim?.driverDetails?.DateOfBirth) || "");
     //summary states
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident ? claim?.accidentDetails?.TimeOfAccident : "");
@@ -1285,6 +1305,8 @@ const [AccidentTime,setAccidentTime]=useState("");
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
+                setallNewParts={setallNewParts}
+                allNewParts={allNewParts}
                 DateRegistration={DateRegistration}
                 AccidentAddedDateTime={AccidentAddedDateTime}
                   LeadId={leadId}
