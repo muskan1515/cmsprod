@@ -408,83 +408,73 @@ const ErrorPageContent = ({ allInfo }) => {
     return gst;
   };
   function numberToWords(number) {
-    const units = [
-      "",
-      "one",
-      "two",
-      "three",
-      "four",
-      "five",
-      "six",
-      "seven",
-      "eight",
-      "nine",
-    ];
-    const teens = [
-      "",
-      "eleven",
-      "twelve",
-      "thirteen",
-      "fourteen",
-      "fifteen",
-      "sixteen",
-      "seventeen",
-      "eighteen",
-      "nineteen",
-    ];
-    const tens = [
-      "",
-      "ten",
-      "twenty",
-      "thirty",
-      "forty",
-      "fifty",
-      "sixty",
-      "seventy",
-      "eighty",
-      "ninety",
-    ];
-
+    const units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    const teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  
     const convertLessThanThousand = (num) => {
       if (num === 0) {
         return "";
-      } else if (num < 10) {
-        return units[num];
-      } else if (num < 20) {
-        return teens[num - 10];
-      } else if (num < 100) {
-        const ten = Math.floor(num / 10);
-        const remainder = num % 10;
-        return tens[ten] + (remainder ? " " + units[remainder] : "");
-      } else {
-        const hundred = Math.floor(num / 100);
-        const remainder = num % 100;
-        return (
-          units[hundred] +
-          " hundred" +
-          (remainder ? " and " + convertLessThanThousand(remainder) : "")
-        );
       }
+  
+      let result = "";
+  
+      if (num >= 100) {
+        result += units[Math.floor(num / 100)] + " hundred ";
+        num %= 100;
+      }
+  
+      if (num >= 11 && num <= 19) {
+        result += teens[num - 11];
+      } else {
+        result += tens[Math.floor(num / 10)];
+        num %= 10;
+  
+        if (num > 0) {
+          result += " " + units[num];
+        }
+      }
+  
+      return result;
     };
-
+  
     const convert = (num) => {
       if (num === 0) {
         return "zero";
-      } else {
-        return convertLessThanThousand(num);
       }
+  
+      let result = "";
+  
+      if (num >= 1e9) {
+        result += convertLessThanThousand(Math.floor(num / 1e9)) + " billion ";
+        num %= 1e9;
+      }
+  
+      if (num >= 1e6) {
+        result += convertLessThanThousand(Math.floor(num / 1e6)) + " million ";
+        num %= 1e6;
+      }
+  
+      if (num >= 1e3) {
+        result += convertLessThanThousand(Math.floor(num / 1e3)) + " thousand ";
+        num %= 1e3;
+      }
+  
+      result += convertLessThanThousand(num);
+  
+      return result.trim();
     };
-
+  
     const roundOff = (num) => Math.round(num * 100) / 100;
-
+  
     const roundedNumber = roundOff(number);
-
+  
     const wholePart = Math.floor(roundedNumber);
     const decimalPart = Math.round((roundedNumber - wholePart) * 100);
-
+  
     const wordsWholePart = convert(wholePart);
     const wordsDecimalPart = convert(decimalPart);
-
+  
     return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
   }
 

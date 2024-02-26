@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { FaBold, FaItalic, FaUnderline } from "react-icons/fa";
 
-const ReactEditor = ({ editorContent, setEditorContent, readOnly }) => {
+const ReactEditor = ({ editorContent, setEditorContent,index, finalValue,readOnly }) => {
+  // console.log("editorContent",editorContent)
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
     // Set the default content only on the first render
     if (isFirstRender) {
-      setEditorContent(editorContent || ""); // Use the default value or an empty string if not provided
+      console.log(editorContent)
+      // setEditorContent(editorContent || ""); // Use the default value or an empty string if not provided
       setIsFirstRender(false);
-    }
-  }, [isFirstRender, setEditorContent, editorContent]);
 
-  const handleTextChange = (e) => {
-    setEditorContent(e.target.innerHTML);
+      // Set the direction to left-to-right
+      handleDirectionLTR();
+    }
+  }, []);
+
+  const handleTextChange = (val) => {
+
+    console.log(val)
+    console.log(editorContent);
+    setEditorContent(val)
+    // setEditorContent(e.target.value);
   };
 
   const handleCommand = (command, value = null) => {
@@ -26,6 +35,14 @@ const ReactEditor = ({ editorContent, setEditorContent, readOnly }) => {
     document.execCommand("styleWithCSS", false, false);
   };
 
+  
+  const handleBlur = () => {
+    const editorDiv = document.getElementById(`editorDiv-${index}`);
+    if (editorDiv) {
+      setEditorContent(editorDiv.innerHTML);
+    }
+  };
+
   return (
     <div>
       <div
@@ -36,14 +53,6 @@ const ReactEditor = ({ editorContent, setEditorContent, readOnly }) => {
           justifyContent: "space-between",
         }}
       >
-        {/* <label htmlFor="editorHeader">Header Content: </label> */}
-        {/* <input
-          id="editorHeader"
-          type="text"
-          placeholder="Type header content"
-          onChange={(e) => console.log(e.target.value)}
-          style={{ marginRight: "10px" }}
-        /> */}
         <button onClick={() => handleCommand("bold")}>
           <FaBold />
         </button>
@@ -67,7 +76,6 @@ const ReactEditor = ({ editorContent, setEditorContent, readOnly }) => {
         <label style={{ marginLeft: "" }}>
           <select
             className="form-select"
-            // style={{ width: "40px", marginLeft: "5px" }}
             onChange={(e) => handleCommand("fontName", e.target.value)}
           >
             <option value="">Choose Text Family</option>
@@ -83,37 +91,24 @@ const ReactEditor = ({ editorContent, setEditorContent, readOnly }) => {
           type="color"
           onChange={(e) => handleCommand("foreColor", e.target.value)}
         />
-        <button className="" onClick={handleDirectionLTR}>
-          Left to Right
-        </button>
+       
       </div>
-      {readOnly ? (
-        <div
-          contentEditable
-          style={{
-            border: "1px solid #ccc",
-            minHeight: "200px",
-            padding: "10px",
-            marginTop: "10px",
-            direction: "ltr", // Ensure left-to-right text direction
-          }}
-          onInput={handleTextChange}
-          dangerouslySetInnerHTML={{ __html: editorContent }}
-        ></div>
-      ) : (
-        <div
-          contentEditable
-          style={{
-            border: "1px solid #ccc",
-            minHeight: "200px",
-            padding: "10px",
-            marginTop: "10px",
-            direction: "ltr", // Ensure left-to-right text direction
-          }}
-          onInput={handleTextChange}
-          dangerouslySetInnerHTML={{ __html: editorContent }}
-        ></div>
-      )}
+      <div
+      id={`editorDiv-${index}`}
+        contentEditable={!readOnly} 
+        style={{
+          border: "1px solid #ccc",
+          minHeight: "200px",
+          padding: "10px",
+          marginTop: "10px",
+          direction: "ltr", // Ensure left-to-right text direction
+        }}
+        
+        onBlur={handleBlur}
+        // onInput={(e)=>setEditorContent(e.target.value)}
+        dangerouslySetInnerHTML={{ __html: editorContent }}
+      ></div>
+    
     </div>
   );
 };

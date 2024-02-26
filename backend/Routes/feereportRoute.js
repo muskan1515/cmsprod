@@ -7,4 +7,6 @@ const authenticateUser = require("../Middleware/authenticateUser");
 
 router.post("/uploadFeeReport",feeReportController.upload);
 
+router.get("/getFeeReport",authenticateUser,feeReportController.getFeeReport);
+
 module.exports = router;

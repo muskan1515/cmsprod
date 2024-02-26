@@ -745,7 +745,6 @@ const getSpecificClaim = async (req, res) => {
     MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : ''},
     TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : ''},
     DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : ''},
-    PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : ''},
     TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : ''},
     EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : ''},
     AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : ''},
@@ -793,7 +792,7 @@ const getSpecificClaim = async (req, res) => {
     UPDATE InsuredDetails
     SET
     InsuredName = ${InsuredName ? `'${InsuredName}'` : ''},
-    InsuredMobileNo1 = ${InsuredMobileNo1 ? `'${InsuredMobileNo1}'` : ''},
+    InsuredMobileNo1 = ${InsuredMobileNo1 ? `${InsuredMobileNo1}'` : ''},
     InsuredMobileNo2 = ${InsuredMobileNo2 ? `'${InsuredMobileNo2}'` : ''},
     InsuredMailAddress = '${InsuredMailAddress}'
     WHERE LeadId = ${LeadId};
@@ -912,8 +911,6 @@ const getSpecificClaim = async (req, res) => {
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    AddedDate = ${DriverAddedDate ? `'${DriverAddedDate}'` : ''},
-    Vov = ${Vov ? `'${Vov}'` : ''},
     ValidUpto = ${ValidUpto ? `'${(ValidUpto)}'` : ''},
     RtoName = ${RtoName ? `'${RtoName}'` : ''},
     Address = ${Address ? `'${Address}'` : ''},
@@ -1054,18 +1051,17 @@ const getSpecificClaim = async (req, res) => {
    UPDATE VehicleDetails
    SET 
      RegisteredNumber = ${VehicleRegisteredNumber ? `'${VehicleRegisteredNumber}'` : ''},
-     MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `'${VehicleMakeVariantModelColor}'` : ''},
+     MakeVariantModelColor ='${VehicleMakeVariantModelColor}',
      TypeOfBody = ${VehicleTypeOfBody ? `'${VehicleTypeOfBody}'` : ''},
      DateOfRegistration = ${VehicleDateOfRegistration ? `'${VehicleDateOfRegistration}'` : ''},
-     PucNumber = ${VehiclePucNumber ? `'${VehiclePucNumber}'` : ''},
      TransferDate = ${VehicleTransferDate ? `'${VehicleTransferDate}'` : ''},
      EngineNumber = ${VehicleEngineNumber ? `'${VehicleEngineNumber}'` : ''},
-     AddedBy = ${VehicleAddedBy ? `'${VehicleAddedBy}'` : ''},
+     AddedBy = '${VehicleAddedBy}',
      ChassisNumber = ${VehicleChassisNumber ? `'${VehicleChassisNumber}'` : ''},
      FuelType = ${VehicleFuelType ? `'${VehicleFuelType}'` : ''},
      MakerDesc = ${MakerDesc ? `'${MakerDesc}'` : ''},
      MakerModel = ${MakerModel ? `'${MakerModel}'` : ''},
-     CubicCapacity = ${CubicCapacity ? `${parseInt(CubicCapacity)}` : ''},
+     CubicCapacity = '${parseInt(CubicCapacity)}',
      FitUpto = ${FitUpto ? `'${FitUpto}'` : ''},
      PasiaModelCode = ${PasiaModelCode ? `'${PasiaModelCode}'` : ''},
      VehicleType = ${RcVehicleType ? `'${RcVehicleType}'` : ''},

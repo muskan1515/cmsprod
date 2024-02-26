@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Calendar } from "primereact/calendar";
 // import RichTextEditor, { createEmptyValue } from "./RichTextEditor";
 import { Editor } from "primereact/editor";
-import { AccidentContent, AssessmentContent } from "./Content";
+import { AccidentContent, AssessmentContent, otherContent } from "./Content";
 import {
   calculateDepreciationsPercenatge,
   getMonthsDifference,
@@ -168,6 +168,22 @@ const Servey = ({
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   };
+
+  
+  useEffect(()=>{
+    const accident = AccidentContent(claim?.insuredDetails?.InsuredName);
+    const assessment = AssessmentContent(claim?.claimDetails?.claimServicingOffice,
+                                        SurveyAllotmentDate,AccidentAddedDateTime,PlaceOfSurvey);
+    const other = otherContent();
+    
+    console.log("accident",accident);
+    console.log("CauseOfAccident",CauseOfAccident)
+    setCauseOfAccident(CauseOfAccident !=="undefined"? CauseOfAccident : accident)
+    setAssessment(Assessment ? Assessment : assessment)
+    setThirdPartyLoss(ThirdPartyLoss ? ThirdPartyLoss : other)
+    setPoliceAction(PoliceAction ? PoliceAction : other)
+    setDetailsOfLoads(DetailsOfLoads ? DetailsOfLoads : other)
+  },[CauseOfAccident]);
 
   const calculateVehicleAge = () => {
     if (
@@ -608,12 +624,12 @@ const Servey = ({
             <h4>Cause & Nature of Accident :</h4>
             <hr />
           </div>
-          {console.log(CauseOfAccident)}
           <div className="col-lg-12">
             <div>
               <div className="">
                 <ReactEditor
                   readOnly={!isEditMode}
+                  index={1}
                   editorContent={CauseOfAccident}
                   setEditorContent={setCauseOfAccident}
                 />
@@ -652,13 +668,13 @@ const Servey = ({
           </div>
           <div className="col-lg-12 mb-2">
             <div className="">
-              <Editor
+                <ReactEditor
+                index={3}
                 readOnly={!isEditMode}
-                value={PoliceAction}
-                onChange={(e) => setPoliceAction(e.target.value)}
-                onTextChange={(e) => setPoliceAction(e.htmlValue)}
-                style={{ height: "80px" }}
+                editorContent={PoliceAction}
+                setEditorContent={setPoliceAction}
               />
+            
             </div>
           </div>
         </div>
@@ -694,13 +710,13 @@ const Servey = ({
           </div>
           <div className="row">
             <div className="">
-              <Editor
-                readOnly={!isEditMode}
-                value={DetailsOfLoads}
-                onChange={(e) => setDetailsOfLoads(e.target.value)}
-                onTextChange={(e) => setDetailsOfLoads(e.htmlValue)}
-                style={{ height: "80px" }}
-              />
+            <ReactEditor
+            index={3}
+              readOnly={!isEditMode}
+              editorContent={DetailsOfLoads}
+              setEditorContent={setDetailsOfLoads}
+            />
+             
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -708,13 +724,13 @@ const Servey = ({
             <h4>Third Party Loss / Injuries :</h4>
             <hr />
             <div className="">
-              <Editor
-                readOnly={!isEditMode}
-                value={ThirdPartyLoss}
-                onChange={(e) => setThirdPartyLoss(e.target.value)}
-                onTextChange={(e) => setThirdPartyLoss(e.htmlValue)}
-                style={{ height: "80px" }}
-              />
+            <ReactEditor
+            index={4}
+              readOnly={!isEditMode}
+              editorContent={ThirdPartyLoss}
+              setEditorContent={setThirdPartyLoss}
+            />
+            
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
@@ -763,13 +779,13 @@ const Servey = ({
               />
             </div> */}
             <div className="">
-              <Editor
-                readOnly={!isEditMode}
-                value={Assessment}
-                onChange={(e) => setAssessment(e.target.value)}
-                onTextChange={(e) => setAssessment(e.htmlValue)}
-                style={{ height: "80px" }}
-              />
+            <ReactEditor
+            index={5}
+              readOnly={!isEditMode}
+              editorContent={Assessment}
+              setEditorContent={setAssessment}
+            />
+            
             </div>
           </div>
           <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>

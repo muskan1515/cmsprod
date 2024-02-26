@@ -4,6 +4,8 @@ export const getMonthsDifference = (givenDate) => {
 
   // Get the current date
   const currentDate = new Date();
+  if(givenDateTime.getFullYear()<2000)
+   return 0;
 
   if(givenDateTime.getFullYear() < 2000){
     return 0;

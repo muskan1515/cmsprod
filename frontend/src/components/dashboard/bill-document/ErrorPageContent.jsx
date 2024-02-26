@@ -6,8 +6,132 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
 
-const ErrorPageContent = () => {
+const ErrorPageContent = ({feeReport}) => {
   const pdfRef = useRef();
+
+  console.log(feeReport)
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
+  const roundOff = (value)=>{
+    const roundedValue = parseFloat(value).toFixed(2);
+    return roundedValue
+  }
+  function numberToWords(number) {
+    const units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    const teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  
+    const convertLessThanThousand = (num) => {
+      if (num === 0) {
+        return "";
+      }
+  
+      let result = "";
+  
+      if (num >= 100) {
+        result += units[Math.floor(num / 100)] + " hundred ";
+        num %= 100;
+      }
+  
+      if (num >= 11 && num <= 19) {
+        result += teens[num - 11];
+      } else {
+        result += tens[Math.floor(num / 10)];
+        num %= 10;
+  
+        if (num > 0) {
+          result += " " + units[num];
+        }
+      }
+  
+      return result;
+    };
+  
+    const convert = (num) => {
+      if (num === 0) {
+        return "zero";
+      }
+  
+      let result = "";
+  
+      if (num >= 1e9) {
+        result += convertLessThanThousand(Math.floor(num / 1e9)) + " billion ";
+        num %= 1e9;
+      }
+  
+      if (num >= 1e6) {
+        result += convertLessThanThousand(Math.floor(num / 1e6)) + " million ";
+        num %= 1e6;
+      }
+  
+      if (num >= 1e3) {
+        result += convertLessThanThousand(Math.floor(num / 1e3)) + " thousand ";
+        num %= 1e3;
+      }
+  
+      result += convertLessThanThousand(num);
+  
+      return result.trim();
+    };
+  
+    const roundOff = (num) => Math.round(num * 100) / 100;
+  
+    const roundedNumber = roundOff(number);
+  
+    const wholePart = Math.floor(roundedNumber);
+    const decimalPart = Math.round((roundedNumber - wholePart) * 100);
+  
+    const wordsWholePart = convert(wholePart);
+    const wordsDecimalPart = convert(decimalPart);
+  
+    return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+  }
+  
+
+
+
+  const calculateTheTotalBillWithoutGST=()=>{
+
+    const propfessionalCharges = Number(feeReport?.feeDetails?.ProfessionalFees);
+    const photoCharges = Number(feeReport?.feeDetails?.Photos)*Number(feeReport?.feeDetails?.PhotsRate);
+    const conveyanceCharges = Number(feeReport?.feeDetails?.Conveyance);
+
+    return propfessionalCharges+photoCharges+conveyanceCharges;
+  }
+
+ const  calculateCGST=()=>{
+    const total = calculateTheTotalBillWithoutGST();
+
+    const CGST = (Number(feeReport?.feeDetails?.Cgst)*Number(total))/100;
+
+    return CGST;
+  } 
+
+  const  calculateSGST=()=>{
+    const total = calculateTheTotalBillWithoutGST();
+
+    const SGST = (Number(feeReport?.feeDetails?.Sgst)*Number(total))/100;
+
+    return SGST;
+  }
+
+  const grandTotalWithGST = ()=>{
+    const total = calculateTheTotalBillWithoutGST();
+    const cgstValue = calculateCGST();
+    const sgstValue = calculateSGST();
+    return total+cgstValue+sgstValue;
+  }
+
 
   const downloadPDF = () => {
     const input = pdfRef.current;
@@ -79,23 +203,18 @@ const ErrorPageContent = () => {
           <div className="row">
             <div className="col-lg-8">
               <h5>To,</h5>
-              <span>The Oriental Insurance Co. Ltd.</span>
+              <span>{feeReport.feeDetails?.InsuranceCompanyName}</span>
               <br />
-              <span>242596- Udaipur</span>
-              <br />
-              <span>
-                Shree Krishna Plaza, 100 Ft. Road, Shobhagpura, Udaipur
-              </span>
-              <br />
+              
               <span style={{ marginRight: "100px" }}>
                 GSTIN: 08AAACT0627R3ZX
               </span>
-              <span>State Code : Rajasthan (00)</span>
+              <span>State Code : {feeReport?.vehicleOnlineDetails?.StateCode}</span>
             </div>
             <div className="col-lg-4">
-              <span>Bill No. : MTL-02-24-01425</span>
+              <span>Bill No. : {feeReport?.feeDetails?.BillID}</span>
               <br />
-              <span>Date : 12/02/2024</span>
+              <span>Date : {formatDate(new Date())}</span>
               <br />
               <span>Code : GH000057355</span>
             </div>
@@ -104,22 +223,22 @@ const ErrorPageContent = () => {
             <div className="col-lg-7">
               <span>Report Ref No : MSL/GNR/2024/01/10263</span>
               <br />
-              <span>Vehicle No : PB22W0041</span>
+              <span>Vehicle No : {feeReport?.vehicleOnlineDetails?.RegisteredNumber}</span>
               <br />
-              <span>Insured Name : Dushyant Kumar S/o Bhani Ram</span>
+              <span>Insured Name : {feeReport?.driverDetails?.InsuredName} {String(feeReport?.driverDetails?.Gender) === "Male" ? "S/o":"D/o"}  {feeReport?.driverDetails?.fatherName}</span>
               <br />
-              <span>Date Of Accident : 20-Jan-24</span>
+              <span>Date Of Accident : {formatDate(feeReport?.accidentDetails?.DateOfAccident)}</span>
               <br />
-              <span>Policy/cover note no : 242596/31/2024/TMP/85856</span>
+              <span>Policy/cover note no : {feeReport?.claimDetails?.PolicyNumber}</span>
               <br />
-              <span>Claim No : -</span>
+              <span>Claim No : {feeReport?.claimDetails?.ClaimNumber}</span>
             </div>
             <div className="col-lg-5">
-              <span className="mt-5">Assessed : 987878</span>
+              <span className="mt-5">Assessed : Rs {roundOff(Number(feeReport?.feeDetails?.AssessedAmt))}</span>
               <br />
-              <span>Estimate : 24256</span>
+              <span>Estimate : Rs  {roundOff(Number(feeReport?.feeDetails?.EstimateAmt))}</span>
               <br />
-              <span>IDV : 987987</span>
+              <span>IDV : Rs {roundOff(Number(feeReport?.claimDetails?.IDV))}</span>
             </div>
           </div>
         </div>
@@ -180,11 +299,11 @@ const ErrorPageContent = () => {
             <td>
               <div>
                 <h4 className="text-decoration-underline mt-2">Final</h4>
-                <span>Professional Fee : Estimate Amount F 144,473.00</span>
+                <span>Professional Fee : Estimate Amount F Rs {roundOff(Number(feeReport?.feeDetails?.EstimateAmt))}</span>
                 <br />
                 <span>
-                  Photos/CD Expenses : <br /> 20 Photographs , Charged for 20 @
-                  Rs. 10.00
+                  Photos/CD Expenses : <br /> {feeReport?.feeDetails?.Photos} Photographs , Charged for {feeReport?.feeDetails?.Photos_cd} @
+                  Rs. {roundOff(Number(feeReport?.feeDetails?.PhotsRate))}
                 </span>
                 <br />
                 <span>Conveyance Expenses : </span>
@@ -204,11 +323,11 @@ const ErrorPageContent = () => {
               </span>
               <br />
               <br />
-              <span>473.00</span>
+              <span>Rs {roundOff(Number(feeReport?.feeDetails?.ProfessionalFees))}</span>
               <br />
-              <span>300.00</span>
+              <span>Rs {roundOff(Number(feeReport?.feeDetails?.Photos)*Number(feeReport?.feeDetails?.PhotsRate))}</span>
               <br />
-              <span>500.00</span>
+              <span>Rs {roundOff(Number(feeReport?.feeDetails?.Conveyance))}</span>
             </td>
             <td
               style={{
@@ -217,7 +336,7 @@ const ErrorPageContent = () => {
                 // paddingLeft: "20px",
               }}
             >
-              876.00
+            Rs  {roundOff(calculateTheTotalBillWithoutGST())}
             </td>
           </tr>
           <tr>
@@ -240,9 +359,9 @@ const ErrorPageContent = () => {
               {" "}
               <span>Sub Total : F</span>
               <br />
-              <span>C GST @ 9.00 %</span>
+              <span>C GST @ {roundOff(Number(feeReport?.feeDetails?.Cgst))} %</span>
               <br />
-              <span>S GST @ 9.00 % </span>
+              <span>S GST @ {roundOff(Number(feeReport?.feeDetails?.Sgst))} % </span>
             </td>
             <td
               style={{
@@ -251,10 +370,10 @@ const ErrorPageContent = () => {
                 // paddingLeft: "20px",
               }}
             >
-              <span>3500.00</span> <br /> <hr />
-              <span>315.00</span>
+              <span> Rs  {roundOff(calculateTheTotalBillWithoutGST())}</span> <br /> <hr />
+              <span>Rs {roundOff(calculateCGST())}</span>
               <br />
-              <span>315.00</span>
+              <span>Rs {roundOff(calculateSGST())}</span>
             </td>
           </tr>
           <tr>
@@ -285,7 +404,7 @@ const ErrorPageContent = () => {
                 // paddingLeft: "20px",
               }}
             >
-              <span>4130.00</span>
+              <span>Rs {grandTotalWithGST()}</span>
             </td>
           </tr>
           <tr>
@@ -314,7 +433,7 @@ const ErrorPageContent = () => {
                 // paddingLeft: "20px",
               }}
             >
-              <span>4130.00</span>
+              <span>Rs {roundOff(grandTotalWithGST())}</span>
             </td>
           </tr>
           <tr>
@@ -327,7 +446,7 @@ const ErrorPageContent = () => {
                 // paddingLeft: "20px",
               }}
             >
-              <span>In words : Rs. Four Thousand One Hundred Thirty Only</span>
+              <span>In words : Rs. {numberToWords(grandTotalWithGST())}</span>
             </td>
           </tr>
           <tr style={{ border: "1px solid black" }}>

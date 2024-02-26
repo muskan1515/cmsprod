@@ -277,10 +277,13 @@ export default function Exemple_01({
       });
   }, []);
 
+<<<<<<< Updated upstream
   const roundOff = (value)=>{
     const roundedValue = parseFloat(value).toFixed(2);
     return roundedValue
   }
+=======
+>>>>>>> Stashed changes
   useEffect(()=>{
   
       setallNewParts(allRows);

@@ -2,6 +2,7 @@ import Link from "next/link";
 import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { isDate } from "date-fns";
 
 const headCells = [
   {
@@ -130,6 +131,19 @@ export default function Exemple({
 }) {
   const [updatedData, setUpdatedData] = useState([]);
 
+  const getISTtIME=(utcTimestamp)=>{
+
+    const utcDate = new Date(utcTimestamp);
+
+    // Convert to Indian Standard Time (IST)
+    const istDate = new Date(utcDate.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  
+    // Log the IST time to the console
+    console.log("Indian Standard Time (IST):", istDate.toISOString());
+  
+    // Return the IST time as a string
+    return istDate.toISOString();
+  } 
   const getValue = (leadId) => {
     let val = "";
     //console.log(status,leadId)
@@ -207,7 +221,11 @@ export default function Exemple({
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,
+<<<<<<< Updated upstream
         added_date: convertToIST(claim.AddedDate),
+=======
+        added_date: getISTtIME(claim.AddedDate),
+>>>>>>> Stashed changes
         // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
         //   timeZone: "Asia/Kolkata",
         // }),

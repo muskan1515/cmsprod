@@ -273,14 +273,14 @@ const CreateList = ({ allInfo, leadID }) => {
       Sgst: SGST,
       Total: NetPay,
       ModeOfPayement: "",
-      BillID: Bill,
+      BillID: generateRegion(allInfo?.otherInfo[0]?.Region),
       FeebasedOn: DetailsFee,
       Remrk: DetailsRemark,
       KmRate: DetailsKM,
-      PhotoRate: DetailsPhotoRate,
+      PhotsRate: DetailsPhotoRate,
       EstimateAmt: Estimate,
       AssessedAmt: Assessed,
-      InsuranceCompanyNameAddress: Insurer,
+      InsuranceCompanyName: allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress  ,
       Branch: Branch,
       BillTo: BillTo,
       Others: Others,
@@ -470,7 +470,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   className="form-control"
                   id="broker_mail_id"
                   value={Insurer}
-                  onChange={(e) => setInsurer(e.target.value)}
+                  
                 />
               </div>
             </div>
@@ -503,38 +503,7 @@ const CreateList = ({ allInfo, leadID }) => {
             </div>
           </div>
 
-          <div className="col-lg-12">
-            <div className="row mt-1">
-              <div className="col-lg-2 my_profile_setting_input form-group">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                  }}
-                >
-                  Bill To
-                </label>
-              </div>
-              <div className="col-lg-7">
-                <select
-                  type="text"
-                  className="form-select"
-                  id="broker_mail_id"
-                  value={BillTo}
-                  onChange={(e) => setBillTo(e.target.value)}
-                >
-                  <option>Insurer</option>
-                  <option>Insured</option>
-                  <option>Appointing Office</option>
-                  <option>Other</option>
-                </select>
-              </div>
-            </div>
-          </div>
+         
 
           {/* <div className="col-lg-12">
             <div className="row mt-1">

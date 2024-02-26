@@ -89,7 +89,7 @@ const Form_01 = ({
       setDriverName(details?.DriverName);
       setDateOfBirth(details?.DateOfBirth);
       setDateOfIssue(details?.DateOfIssue);
-      setValidUpto(details?.VaildUpto);
+      setValidUpto(details?.ValidUpto);
       setVov(details?.Vov);
       setPht(details?.Pht);
       setPhoto(details?.Photo);

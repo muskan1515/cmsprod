@@ -268,6 +268,9 @@ const Index = ({}) => {
         : claimServicingOffice
     );
 
+
+    setMobile(claim?.driverDetails?.Mobile ? claim?.driverDetails?.Mobile :
+      "");
     setPolicyStartDate(
       claim?.claimDetails?.PolicyPeriodStart
         ? claim?.claimDetails?.PolicyPeriodStart

@@ -4,6 +4,7 @@ import MyDatePicker from "../../common/MyDatePicker";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Editor } from "primereact/editor";
+import ReactEditor from "../../common/TextEditor";
 
 const Summary = ({
   isEditMode,
@@ -102,7 +103,13 @@ const Summary = ({
       Number(totalPartsAssessed) +
       (Number(LessExcess) - Number(LessImposed) + Number(Other));
     const b =
+<<<<<<< Updated upstream
     ((totalMetalRows*MetalPercent)/100) 
+=======
+      (Number(totalMetalRows) *
+        Number(metalSalvageValue)) /
+      100;
+>>>>>>> Stashed changes
 
     return a - b > 1 ? a - b : 0;
   };
@@ -725,10 +732,12 @@ const Summary = ({
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
                   <div className="">
-                    <Editor style={{ height: "100px" }}
-                     value={FinalReportNotes}
-                     onChange={(e)=>{
-                      setFinalReportNotes(e.target.value)}}
+                    <ReactEditor style={{ height: "100px" }}
+                     editorContent={FinalReportNotes}
+                     setEditorContent={
+                      setFinalReportNotes}
+                      index={100}
+                      readOnly={!isEditMode                                                   }
                        />
 
                   </div>

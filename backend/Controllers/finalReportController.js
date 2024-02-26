@@ -103,6 +103,7 @@ const updateFinalReport = (req,res)=>{
       MetalPercent,
       RemarkOnSalvage,
       TotalCostOfParts,
+      AccidentInspectionDate,
       Other,
       GrandTotal,
       DepreciationOnParts,
@@ -117,6 +118,7 @@ const updateFinalReport = (req,res)=>{
       AnyFurtherConversation,
       RepairingPhotoDate,
       ReinspectionDate,
+    
       SalveDestroy,
       BillNo,
       BillDate,
@@ -239,6 +241,7 @@ const updateFinalReport = (req,res)=>{
     PlaceOfLoss = '${PlaceOfLoss}',
     SurveyConductedDate ='${SurveyConductedDate}',
     Pin='${Pin}',
+    InspectionDate='${InspectionDate}',
     PlaceOfSurvey='${PlaceOfSurvey}',
     DetailsOfLoads='${DetailsOfLoads}',
     CauseOfAccident='${CauseOfAccident}',
@@ -324,7 +327,7 @@ const updateFinalReport = (req,res)=>{
           BillAmount='${BillAmount}',
           Endurance='${Endurance}',
           OtherRemark='${OtherRemark}',
-          FinalReportNotes='${FinalReportNotes}'
+          SummaryNotes='${FinalReportNotes}'
           WHERE LeadId = ${leadId};
     `;
   
@@ -333,7 +336,7 @@ const updateFinalReport = (req,res)=>{
         LeadId, TotalLabour, TotalEstimate, TotalCostOfParts, LessExcess, ExpectedSalvage, MetalPercent, RemarkOnSalvage,
        Other, GrandTotal, DepreciationOnParts, NetAssessedAmount, SavageDepreciationDetails, CashLess,
         NoteOfSelf, RepairAutoDate, RepairCompletionDate, PartyAgreed, ReasonThereofDelay, AnyFurtherConversation,
-        RepairingPhotoDate, ReinspectionDate, SalveDestroy, BillNo, BillDate, BillAmount, Endurance,OtherRemark,FinalReportNotes
+        RepairingPhotoDate, ReinspectionDate, SalveDestroy, BillNo, BillDate, BillAmount, Endurance,OtherRemark,SummaryNotes
       ) VALUES (
         ${leadId}, ${TotalLabor}, ${TotalEstimate}, ${TotalCostOfParts}, ${LessExcess}, ${ExpectedSalvage}, ${MetalPercent},
         '${RemarkOnSalvage}', '${Other}', ${GrandTotal}, ${DepreciationOnParts}, ${NetAssessedAmount},

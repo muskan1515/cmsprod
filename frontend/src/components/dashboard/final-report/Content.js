@@ -12,6 +12,10 @@ const formatDate = (dateString) => {
   return formattedDate;
 };
 
+export const otherContent = ()=>{
+  return 'No,As states by insured';
+}
+
 export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAccident,PlaceOfAccident) => {
   return `In accordance with the instructions received from ${claimServicingOffice ? claimServicingOffice :"-"}
     dated ${AllotmentDate ? formatDate(AllotmentDate) :"-"} I visited Inspected/Examined Online Video Uploaded By The Undersigned

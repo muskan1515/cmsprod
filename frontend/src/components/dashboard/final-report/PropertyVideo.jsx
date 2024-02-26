@@ -14,6 +14,7 @@ import {
   calculateDepreciationsPercenatge,
   getMonthsDifference,
 } from "./functions";
+import { AccidentContent } from "./Content";
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -81,6 +82,24 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [IMT, setIMT] = useState(0);
   const [phyCheck, setphyCheck] = useState();
 
+  const [allNewParts,setallNewParts]=useState([]);
+
+
+  useEffect(()=>{
+
+    console.log("allNewParts",allNewParts);
+
+      let total =0;
+    allNewParts.map((row,index)=>{
+      if(String(row.type) === "Metal"){
+        const assessed = Number(row.assessed)*Number(row.qa);
+        const gst = Number(assessed * Number(row.gst))/100;
+        const add = row.isActive ? assessed+gst:0;
+        total = total +  add;
+      }
+    })
+    console.log(total);
+  },[allNewParts]);
   
   
   
@@ -215,8 +234,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [FinalReportNotes,setFinalReportNotes]=useState("");
 
-  
-const [allNewParts,setallNewParts]=useState([]);
 
 
 useEffect(()=>{
@@ -484,6 +501,7 @@ const [AccidentTime,setAccidentTime]=useState("");
   return formattedDateString;
   }
 
+
   useEffect(() => {
 
   
@@ -495,7 +513,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     //summary states
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident ? claim?.accidentDetails?.TimeOfAccident : "");
-    setFinalReportNotes(claim?.summaryDetails?.FinalReportNotes ? claim?.summaryDetails?.FinalReportNotes : "");
+    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? claim?.summaryDetails?.SummaryNotes : "");
     setTotalLabor(claim?.summaryDetails?.TotalLabor ? claim?.summaryDetails?.TotalLabor : 0 );
     setTotalEstimateSum( claim?.summaryDetails?.TotalEstimate ? claim?.summaryDetails?.TotalEstimate : 0);
     setLessExcess(claim?.summaryDetails?.LessExcess ? claim?.summaryDetails?.LessExcess : 0);
@@ -516,7 +534,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setReasonThereofDelay(claim?.summaryDetails?.ReasonThereofDelay?claim?.summaryDetails?.ReasonThereofDelay:"");
     setAnyFurtherConversation(claim?.summaryDetails?.AnyFurtherConversation?claim?.summaryDetails?.AnyFurtherConversation:"");
     setRepairingPhotoDate(claim?.summaryDetails?.AnyFurtherConversation?claim?.summaryDetails?.AnyFurtherConversation:"");
-    setReinspectionDate(claim?.summaryDetails?.ReinspectionDate?claim?.summaryDetails?.ReinspectionDate:"");
+    setReinspectionDate(claim?.accidentDetails?.ReinspectionDate?claim?.summaryDetails?.ReinspectionDate:"");
     setSalveDestroy(claim?.summaryDetails?.SalveDestroy?claim?.summaryDetails?.SalveDestroy:"");
     setBillNo(claim?.summaryDetails?.BillNo?claim?.summaryDetails?.BillNo:"");
     setBillDate(claim?.summaryDetails?.BillDate?claim?.summaryDetails?.BillDate:"");
@@ -532,7 +550,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setInsuredMobileNo2(
       claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 
     );
-    setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident? claim?.accidentDetails?.CauseOfAccident:"")
+    setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident)
     setVehicleUpto(claim?.vehicleDetails?.Upto);
     setClaimNumber(claim?.claimDetails?.ClaimNumber );
     setEngineType(claim?.vehicleDetails?.ModeOfCheck );
@@ -637,11 +655,11 @@ const [AccidentTime,setAccidentTime]=useState("");
     setPin(claim?.accidentDetails?.Pin);
     setPlaceOfSurvey(claim?.garageDetails?.GarageNameAndAddress ? 
       claim?.garageDetails?.GarageNameAndAddress : "");
-    setDetailsOfLoads(claim?.driverDetails?.DetailsOfLoads);
-    setCauseOfAccident(claim?.driverDetails?.CauseOfAccident);
-    setPoliceAction(claim?.driverDetails?.PoliceAction);
-    setThirdPartyLoss(claim?.driverDetails?.ThirdPartyLoss);
-    setAssessment(claim?.driverDetails?.Assessment);
+    setDetailsOfLoads(claim?.accidentDetails?.DetailsOfLoads);
+    setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident);
+    setPoliceAction(claim?.accidentDetails?.PoliceAction);
+    setThirdPartyLoss(claim?.accidentDetails?.ThirdPartyLoss);
+    setAssessment(claim?.accidentDetails?.Assessment);
 
     setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv);
     setValidUntilTv(claim?.driverDetails?.ValidUntilTv);
@@ -803,7 +821,6 @@ const [AccidentTime,setAccidentTime]=useState("");
       Authorization,
       AreasOfoperation,
       commercialRemark,
-      FinalReportNotes,
       FinalReportNotes,
       DetailsOfLoads,
       CauseOfAccident,
@@ -1321,8 +1338,8 @@ const [AccidentTime,setAccidentTime]=useState("");
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
-                setallNewParts={setallNewParts}
                 allNewParts={allNewParts}
+                setallNewParts={setallNewParts}
                 DateRegistration={DateRegistration}
                 AccidentAddedDateTime={AccidentAddedDateTime}
                   LeadId={leadId}
