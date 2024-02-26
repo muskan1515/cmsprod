@@ -1,4 +1,4 @@
-import LoginSignup from "./user-credentials/LoginSignup";
+// import LoginSignup from "./user-credentials/LoginSignup";
 
 const PopupSignInUp = () => {
   return (
@@ -8,12 +8,6 @@ const PopupSignInUp = () => {
       role="dialog"
       aria-hidden="true"
     >
-      <div
-        className="modal-dialog modal-dialog-centered modal-lg"
-        role="document"
-      >
-        <LoginSignup />
-      </div>
     </div>
   );
 };
