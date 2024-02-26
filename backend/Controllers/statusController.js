@@ -22,7 +22,6 @@ const db = require("../Config/dbConfig");
         res.status(500).send("Internal Server Error");
         return;
       }
-  
       const statusDetails = `
       UPDATE ClaimStatus
       SET
