@@ -3,7 +3,7 @@ import ErrorPageContent from "./ErrorPageContent";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const index = () => {
+const Index = () => {
   const [feeReport,setFeeReport]=useState({});
   useEffect(()=>{
     
@@ -48,4 +48,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

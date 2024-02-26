@@ -103,13 +103,7 @@ const Summary = ({
       Number(totalPartsAssessed) +
       (Number(LessExcess) - Number(LessImposed) + Number(Other));
     const b =
-<<<<<<< Updated upstream
     ((totalMetalRows*MetalPercent)/100) 
-=======
-      (Number(totalMetalRows) *
-        Number(metalSalvageValue)) /
-      100;
->>>>>>> Stashed changes
 
     return a - b > 1 ? a - b : 0;
   };

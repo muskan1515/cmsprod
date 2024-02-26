@@ -221,11 +221,7 @@ export default function Exemple({
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,
-<<<<<<< Updated upstream
         added_date: convertToIST(claim.AddedDate),
-=======
-        added_date: getISTtIME(claim.AddedDate),
->>>>>>> Stashed changes
         // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
         //   timeZone: "Asia/Kolkata",
         // }),
