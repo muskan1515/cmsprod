@@ -92,7 +92,6 @@ const headCells = [
   },
 ];
 
-
 function SmartTable(props) {
   const [loading, setLoading] = useState(false);
   const [sortDesc, setSortDesc] = useState({});

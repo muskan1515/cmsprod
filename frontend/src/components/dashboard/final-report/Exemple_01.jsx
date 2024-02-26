@@ -126,7 +126,6 @@ export default function Exemple_01({
   const [remark, setRemark] = useState("");
   const [edit, setEdit] = useState(false);
 
-
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -159,7 +158,7 @@ export default function Exemple_01({
               assessed: part.Assessed,
               bill_sr: part.BillSr,
               gst: part.IsGSTIncluded ? part.IsGSTIncluded : 0,
-              type: (part.JobType),
+              type: part.JobType,
               sno: part.ReportID,
               isActive: Number(part.IsActive),
             };
@@ -250,7 +249,7 @@ export default function Exemple_01({
         estimate: row.estimate,
         sac: row.sac,
         gst: row.gst,
-        type: Number(row.type) ,
+        type: Number(row.type),
         bill_sr: row.bill_sr,
         isActive: row.isActive,
       };
@@ -371,13 +370,11 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
-  const sortNewParts=()=>{
-    let sortedArray =allRows;
-     sortedArray.sort((a, b) => a.sno - b.sno);
+  const sortNewParts = () => {
+    let sortedArray = allRows;
+    sortedArray.sort((a, b) => a.sno - b.sno);
     return sortedArray;
-
-  }
-
+  };
 
   useEffect(() => {
     let temp = [];
@@ -435,7 +432,6 @@ export default function Exemple_01({
                   data-live-search="true"
                   data-width="100%"
                   value={row.type}
-                  
                   disabled={!edit}
                   onChange={(e) => handleChange(index, e.target.value, "type")}
                 >
