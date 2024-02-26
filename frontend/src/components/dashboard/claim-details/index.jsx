@@ -795,12 +795,18 @@ const Index = ({}) => {
       .then((res) => {
         // toast.loading();
         toast.dismiss();
-        toast.success("Successfully Updated the Information !!");
+        toast.success("Successfully Updated the Information !!", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
         // alert("Successfully Updated the Information !!");
       })
       .catch((err) => {
         toast.dismiss();
-        toast.error("Caught into Error ! Try Again.");
+        toast.error("Caught into Error ! Try Again.", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
         // alert("Caught into Error ! Try Again.");
       });
     if (func) {
@@ -1597,7 +1603,7 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <Exemple documents={documents}  leadId = {leadId}/>
+                            <Exemple documents={documents} leadId={leadId} />
                           </div>
                         </div>
                         <div

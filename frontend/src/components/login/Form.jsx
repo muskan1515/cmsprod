@@ -17,19 +17,28 @@ const Form = ({ setModalIsOpen, setModalIsOpenError, setErrorMessage }) => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (!isCaptchaVerified) {
-      toast.error("Please verify the captcha !!");
+      toast.error("Please verify the captcha !!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
       setChange(true);
     } else if (!username || !password) {
       setErrorMessage("Credentials Can't be empty");
       setModalIsOpenError(true);
-      toast.error("Please fill the credentials!");
+      toast.error("Please fill the credentials!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
     } else {
       const payload = {
         username: username,
         password: password,
       };
 
-      toast.loading("Logging!!!");
+      toast.loading("Logging!!!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
       axios
         .post("/api/login", payload)
         .then((res) => {
@@ -40,14 +49,20 @@ const Form = ({ setModalIsOpen, setModalIsOpenError, setErrorMessage }) => {
             "userInfo",
             JSON.stringify(res.data.userData.result)
           );
-          toast.success("Successfully logged in!");
+          toast.success("Successfully logged in!", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
           router.push("/my-dashboard");
         })
         .catch((err) => {
           toast.dismiss();
           setErrorMessage(err.response.data.error);
           setModalIsOpenError(true);
-          toast.error("Try Again!!");
+          toast.error("Try Again!!", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
         });
     }
   };

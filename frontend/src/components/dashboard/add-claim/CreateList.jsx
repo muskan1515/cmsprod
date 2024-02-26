@@ -126,12 +126,21 @@ const CreateList = () => {
     };
 
     if (!payload.PolicyNumber) {
-      toast.error("Policy Number should be filled !!");
+      toast.error("Policy Number should be filled !!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
     }
     if (!region) {
-      toast.error("Region should be filled!!");
+      toast.error("Region should be filled!!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
     } else {
-      toast.loading("Adding claim!!");
+      toast.loading("Adding claim!!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
       axios
         .post("/api/addClaim", payload, {
           headers: {
@@ -142,7 +151,10 @@ const CreateList = () => {
         .then((res) => {
           toast.dismiss();
           // toast.success("Successfully added");
-          toast.success("Success Notification !");
+          toast.success("Success Notification !", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
           // alert("Successfully added");
           router.push("/my-dashboard");
         })
