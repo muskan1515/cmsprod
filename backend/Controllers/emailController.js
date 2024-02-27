@@ -24,6 +24,7 @@ const createToken = require("../Config/generateJWTToken");
  const sendEmail1 = (req, res) => {
     const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type } = req.body;
 
+    console.log(req.body);
 
     const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
     db.query(sql, [leadId], (err, result) => {
