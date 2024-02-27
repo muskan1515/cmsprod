@@ -170,7 +170,7 @@ const updateFinalReport = (req,res)=>{
     IDV='${IDV}',
     MailRecieveDate='${MailRecieveDate}',
     HPA='${HPA}',
-    AddedDateTime = '${SurveyAllotmentDate}',
+    AddedDateTime = '${AddedDateTime}',
     TotalLoss = ${(TotalLoss) ? 1 : 0},
     IMT = ${(IMT) ? 1 : 0}
     WHERE LeadID = ${leadId};
