@@ -178,7 +178,7 @@ const Servey = ({
     
     console.log("accident",accident);
     console.log("CauseOfAccident",CauseOfAccident)
-    setCauseOfAccident(CauseOfAccident !=="undefined"? CauseOfAccident : accident)
+    setCauseOfAccident(CauseOfAccident ? CauseOfAccident : accident)
     setAssessment(Assessment ? Assessment : assessment)
     setThirdPartyLoss(ThirdPartyLoss ? ThirdPartyLoss : other)
     setPoliceAction(PoliceAction ? PoliceAction : other)
