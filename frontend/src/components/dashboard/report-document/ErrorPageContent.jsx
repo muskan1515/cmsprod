@@ -408,73 +408,106 @@ const ErrorPageContent = ({ allInfo }) => {
     return gst;
   };
   function numberToWords(number) {
-    const units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-    const teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-    const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-  
+    const units = [
+      "",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+    ];
+    const teens = [
+      "",
+      "eleven",
+      "twelve",
+      "thirteen",
+      "fourteen",
+      "fifteen",
+      "sixteen",
+      "seventeen",
+      "eighteen",
+      "nineteen",
+    ];
+    const tens = [
+      "",
+      "ten",
+      "twenty",
+      "thirty",
+      "forty",
+      "fifty",
+      "sixty",
+      "seventy",
+      "eighty",
+      "ninety",
+    ];
+
     const convertLessThanThousand = (num) => {
       if (num === 0) {
         return "";
       }
-  
+
       let result = "";
-  
+
       if (num >= 100) {
         result += units[Math.floor(num / 100)] + " hundred ";
         num %= 100;
       }
-  
+
       if (num >= 11 && num <= 19) {
         result += teens[num - 11];
       } else {
         result += tens[Math.floor(num / 10)];
         num %= 10;
-  
+
         if (num > 0) {
           result += " " + units[num];
         }
       }
-  
+
       return result;
     };
-  
+
     const convert = (num) => {
       if (num === 0) {
         return "zero";
       }
-  
+
       let result = "";
-  
+
       if (num >= 1e9) {
         result += convertLessThanThousand(Math.floor(num / 1e9)) + " billion ";
         num %= 1e9;
       }
-  
+
       if (num >= 1e6) {
         result += convertLessThanThousand(Math.floor(num / 1e6)) + " million ";
         num %= 1e6;
       }
-  
+
       if (num >= 1e3) {
         result += convertLessThanThousand(Math.floor(num / 1e3)) + " thousand ";
         num %= 1e3;
       }
-  
+
       result += convertLessThanThousand(num);
-  
+
       return result.trim();
     };
-  
+
     const roundOff = (num) => Math.round(num * 100) / 100;
-  
+
     const roundedNumber = roundOff(number);
-  
+
     const wholePart = Math.floor(roundedNumber);
     const decimalPart = Math.round((roundedNumber - wholePart) * 100);
-  
+
     const wordsWholePart = convert(wholePart);
     const wordsDecimalPart = convert(decimalPart);
-  
+
     return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
   }
 
@@ -517,14 +550,16 @@ const ErrorPageContent = ({ allInfo }) => {
             </Dropdown> */}
           </div>
         </span>
-        <p>Legal Investigator Pvt. Ltd.</p>
+        <p className="fw-bold">Legal Investigator Pvt. Ltd.</p>
         <p>
           69-Modal Town (1st), Behind U.I.T., Office, Sri Ganganagar -
           335001(Rajasthan )
         </p>
-        <p>Tel. No. : +91 94688-81222</p>
+        <div className="d-flex gap-5">
+          {" "}
+          <p>Tel. No. : +91 94688-81222</p> <p>Email: legalmt04@gmail.com</p>
+        </div>
         {/* <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p> */}
-        <p>Email: legalmt04@gmail.com</p>
         {/* <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p> */}
         <p>GSTIN : 08AAPCM1051K1Z9</p>
       </div>
@@ -936,7 +971,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <div style={{ border: "1px solid black" }} className="mb-2"></div>
       {/* common header for all page */}
 
-      <div>
+      <div className="">
         <h4>New Parts :</h4>
         <table border={1}>
           <tr>
@@ -1297,7 +1332,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </table>
       </div>
       <br />
-      <div>
+      <div className="" style={{ marginTop: "" }}>
         <h4>LABOUR & REPAIRS :</h4>
         <table>
           <tr>
@@ -1776,7 +1811,7 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
         </table>
       </div>
-      <div className="mt-2">
+      <div className="mt-2 mb-5">
         <table style={{ width: "100%" }}>
           <tr>
             <th
@@ -2010,6 +2045,19 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
         </table>
       </div>
+
+      {/* common header for all page */}
+      <div className="col-lg-12 d-flex justify-content-between">
+        <div>
+          <h5>Mutneja Tech</h5>
+        </div>
+        <div>
+          <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+        </div>
+      </div>
+      <div style={{ border: "1px solid black" }} className="mb-2"></div>
+      {/* common header for all page */}
+
       <div>
         <span>
           Based on details provided above, the liability under the subject
