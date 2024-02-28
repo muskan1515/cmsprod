@@ -6,8 +6,8 @@ const headCells = [
   {
     id: "sno",
     numeric: false,
-    label: "Sr.No",
-    width: 50,
+    label: "S.No.",
+    width: 10,
   },
   {
     id: "ref_no",
@@ -24,7 +24,7 @@ const headCells = [
   {
     id: "claim_no",
     numeric: false,
-    label: "row No.",
+    label: "Row No.",
     width: 150,
   },
   {
@@ -43,37 +43,37 @@ const headCells = [
     id: "insured_gst_no",
     numeric: false,
     label: "Insured GST No.",
-    width: 100,
+    width: 180,
   },
   {
     id: "survey_type",
     numeric: false,
     label: "Survey Type",
-    width: 100,
+    width: 150,
   },
   {
     id: "doi",
     numeric: false,
     label: "Date Of Information",
-    width: 150,
+    width: 240,
   },
   {
     id: "date_of_survey",
     numeric: false,
     label: "Date of Survey",
-    width: 150,
+    width: 170,
   },
   {
     id: "estimate_amt",
     numeric: false,
     label: "Estimate Amt.",
-    width: 100,
+    width: 170,
   },
   {
     id: "assessed_amt",
     numeric: false,
     label: "Assessed Amt.",
-    width: 100,
+    width: 160,
   },
   {
     id: "tat",
@@ -97,13 +97,13 @@ const headCells = [
     id: "bill_total",
     numeric: false,
     label: "Bill Total",
-    width: 100,
+    width: 140,
   },
   {
     id: "bill_date",
     numeric: false,
     label: "Bill Date",
-    width: 100,
+    width: 150,
   },
 ];
 
@@ -113,7 +113,7 @@ const data = [
     sno: "1",
     ref_no: "65465",
     policy_no: <Link href="/row-details">9617099995114</Link>,
-    row_no:"7675756",
+    row_no: "7675756",
     veh_no: "65756",
     insured: "ahlannn",
     insured_gst_no: "2765675",
@@ -134,7 +134,7 @@ const data = [
     sno: "1",
     ref_no: "65465",
     policy_no: <Link href="/row-details">9617099995114</Link>,
-    row_no:"7675756",
+    row_no: "7675756",
     veh_no: "65756",
     insured: "ahlannn",
     insured_gst_no: "2765675",
@@ -155,7 +155,7 @@ const data = [
     sno: "1",
     ref_no: "65465",
     policy_no: <Link href="/row-details">9617099995114</Link>,
-    row_no:"7675756",
+    row_no: "7675756",
     veh_no: "65756",
     insured: "ahlannn",
     insured_gst_no: "2765675",
@@ -177,7 +177,7 @@ const data = [
     ref_no: "65465",
     policy_no: <Link href="/row-details">9617099995114</Link>,
     veh_no: "65756",
-    row_no:"7675756",
+    row_no: "7675756",
     insured: "ahlannn",
     insured_gst_no: "2765675",
     survey_type: "123",
@@ -197,7 +197,7 @@ const data = [
     sno: "1",
     ref_no: "65465",
     policy_no: <Link href="/row-details">9617099995114</Link>,
-    row_no:"7675756",
+    row_no: "7675756",
     veh_no: "65756",
     insured: "ahlannn",
     insured_gst_no: "2765675",
@@ -220,91 +220,85 @@ export default function Exemple({
   setStartDate,
   setEndDate,
   startDate,
-  endDate
+  endDate,
 }) {
-
-
-  const [updatedData,setUpdatedData]=useState([]);
+  const [updatedData, setUpdatedData] = useState([]);
   let tempData = [];
-  const [start,setStart]=useState("");
-  const [end,setEnd]=useState("")
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const sortObjectsByOrderIdDescending = (data) => {
     return data.sort((a, b) => b.doi - a.doi);
   };
 
-  const changeHandler=()=>{
-    setStartDate(start)
+  const changeHandler = () => {
+    setStartDate(start);
     setEndDate(end);
-  }
+  };
 
-  const reloadHandler=()=>{
+  const reloadHandler = () => {
     setStartDate("");
     setEndDate("");
-  }
-
+  };
 
   function convertToIST(utcTimestamp) {
     const utcDate = new Date(utcTimestamp);
 
     // Convert to Indian Standard Time (IST)
-    const istDate = new Date(utcDate.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-  
+    const istDate = new Date(
+      utcDate.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
+
     // Format IST date and time with hours, minutes, AM/PM
-    const options = { 
-      
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric', 
-      hour: 'numeric', 
-      minute: 'numeric', 
-      hour12: true 
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
     };
     const formattedISTDateTime = istDate.toLocaleString("en-US", options);
-  
+
     // Return the formatted IST date and time as a string
     return formattedISTDateTime;
-  };
+  }
 
-  useEffect(()=>{
-
-   
-  
-
+  useEffect(() => {
     allRows?.map((row, index) => {
-
-      
       const updatedRow = {
-        sno:index+1,
-        ref_no:row.ReferenceNo,
-        policy_no:row.PolicyNumber,
-        claim_no:row.ClaimNumber,
-        veh_no:row.RegisteredNumber,
-        insured : row.InsuredName,
-        insured_gst_no : row.InsuredGSTNumber,
+        sno: index + 1,
+        ref_no: row.ReferenceNo,
+        policy_no: row.PolicyNumber,
+        claim_no: row.ClaimNumber,
+        veh_no: row.RegisteredNumber,
+        insured: row.InsuredName,
+        insured_gst_no: row.InsuredGSTNumber,
         doi: convertToIST(row.DateOfIntimation),
-        date_of_survey :convertToIST(row.DateOfSurvey),
-        estimate_amt:row.EstimateAmt,
-        assessed_amt:row.AssessedAmt,
-        tat:0,
-        remarks:row.Remarks,
-        bill_no:row.BillNo,
-        bill_total:row.BillTotal,
-        bill_date:convertToIST(row.BillDate),
-
+        date_of_survey: convertToIST(row.DateOfSurvey),
+        estimate_amt: row.EstimateAmt,
+        assessed_amt: row.AssessedAmt,
+        tat: 0,
+        remarks: row.Remarks,
+        bill_no: row.BillNo,
+        bill_total: row.BillTotal,
+        bill_date: convertToIST(row.BillDate),
       };
       tempData.push(updatedRow);
     });
     setUpdatedData(tempData);
-
-  },[allRows]);
+  }, [allRows]);
   console.log(updatedData);
-  return <SmartTable title="MIS Sheet" 
-  data={sortObjectsByOrderIdDescending(updatedData)} 
-  changeHandler={changeHandler}
-  setStart={setStart}
-  setEnd={setEnd}
-  start={start}
-  reloadHandler={reloadHandler}
-  end={end}
-  headCells={headCells} />;
+  return (
+    <SmartTable
+      title="MIS Sheet"
+      data={sortObjectsByOrderIdDescending(updatedData)}
+      changeHandler={changeHandler}
+      setStart={setStart}
+      setEnd={setEnd}
+      start={start}
+      reloadHandler={reloadHandler}
+      end={end}
+      headCells={headCells}
+    />
+  );
 }
