@@ -507,7 +507,7 @@ console.log(formattedDate)
 
          
 
-          {/* <div className="col-lg-12">
+           <div className="col-lg-12">
             <div className="row mt-1">
               <div className="col-lg-2 my_profile_setting_input form-group">
                 <label
@@ -546,7 +546,7 @@ console.log(formattedDate)
                 </select>
               </div>
             </div>
-          </div> */}
+          </div> 
           <div className="col-lg-12">
             <div className="row mt-1">
               <div className="col-lg-2 my_profile_setting_input form-group">
