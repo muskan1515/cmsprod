@@ -80,7 +80,8 @@ const createToken = require("../Config/generateJWTToken");
         const mailOptions = {
           from: "infosticstech@gmail.com",
           to: toMail,
-          subject: "Survey Request for Vehicle Claim",
+          subject: `Survey Request for Claim of
+          Vehicle Number - ${vehicleNo} A/c ${Insured} policy Number - ${PolicyNo}`,
           text: emailContent,
         };
   

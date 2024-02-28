@@ -458,6 +458,7 @@ const getSpecificClaim = async (req, res) => {
         Remark,
         LicenseType,
         DateOfBirth,
+        TypeOfverification,
         ValidUpto,
         LeadID
         FROM DriverDetails WHERE LeadID=?`,
@@ -923,6 +924,7 @@ const getSpecificClaim = async (req, res) => {
   
       LeadId,
     } = req.body;
+
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
@@ -930,15 +932,15 @@ const getSpecificClaim = async (req, res) => {
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    ValidUpto =' ${ValidUpto ? `${(ValidUpto)}` : ''}',
+    ValidUpto =' ${ValidUpto ? `${ValidUpto}` : ''}',
     RtoName = '${RtoName ? `${RtoName}` : ''}',
     Address =' ${Address ? `${Address}` : ''}',
     Mobile = '${Mobile ?`${(Mobile)}` : ''}',
     BloodGroup = '${BloodGroup ? `${BloodGroup}` : ''}',
     Gender = '${Gender ? `${Gender}` : ''}',
     FatherName = '${FatherName ? `${FatherName}` : ''}',
-    DateOfBirth =' ${DateOfBirth ? `${(DateOfBirth)}` : ''}',
-    DateOfIssue = '${DateOfIssue ? `${(DateOfIssue)}` : ''}',
+    DateOfBirth =' ${DateOfBirth ? `${DateOfBirth}` : ''}',
+    DateOfIssue = '${DateOfIssue ? `${DateOfIssue}` : ''}',
     TypeOfVerification = '${DriverTypeOfVerification}'
     WHERE LeadID = ${LeadId};
   `;
@@ -988,7 +990,7 @@ const getSpecificClaim = async (req, res) => {
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
     PolicyPeriodStart = '${PolicyPeriodStart ? `${PolicyPeriodStart}`: ''}',
-    PolicyPeriodEnd =' ${PolicyPeriodEnd ? `${PolicyPeriodEnd}` : ''}',
+    PolicyPeriodEnd ='${PolicyPeriodEnd ? `${PolicyPeriodEnd}` : ''}',
     IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
     IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : ''},
     InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress ? `${InsuranceCompanyNameAddress}` : ''}'

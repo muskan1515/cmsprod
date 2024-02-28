@@ -546,7 +546,7 @@ const ErrorPageContent = ({ allInfo }) => {
           {allInfo?.otherInfo[0]?.SurveyType} FINAL{" "}
           {allInfo?.otherInfo[0]?.InspectionType} REPORT (
           {allInfo?.otherInfo[0]?.SettlementType})- (
-          {allInfo?.otherInfo[0]?.PolicyType})
+          {allInfo?.otherInfo[0]?.PolicyType?allInfo?.otherInfo[0]?.PolicyType : "Regular"})
         </h4>
       </div>
       <div>

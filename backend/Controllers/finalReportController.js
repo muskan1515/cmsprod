@@ -312,7 +312,7 @@ const updateFinalReport = (req,res)=>{
           DepreciationOnParts='${DepreciationOnParts}',
           NetAssessedAmount='${NetAssessedAmount}',
           SavageDepreciationDetails='${SavageDepreciationDetails}',
-          CashLess='${CashLess}',
+          CashLess=${CashLess?1:0},
           NoteOfSelf='${NoteOfSelf}',
           RepairAutoDate='${RepairAutoDate}',
           RepairCompletionDate='${RepairCompletionDate}',

@@ -526,7 +526,8 @@ const [AccidentTime,setAccidentTime]=useState("");
     setDepreciationOnParts(claim?.summaryDetails?.DepreciationOnParts?claim?.summaryDetails?.DepreciationOnParts:"");
     setNetAssessedAmount(claim?.summaryDetails?.NetAssessedAmount?claim?.summaryDetails?.NetAssessedAmount:"");
     setSavageDepreciationDetails(claim?.summaryDetails?.SavageDepreciationDetails?claim?.summaryDetails?.SavageDepreciationDetails:"");
-    setCashLess(claim?.summaryDetails?.CashLess?claim?.summaryDetails?.CashLess:0);
+    console.log(String(claim?.summaryDetails?.CashLess) === "1.00")
+    setCashLess(String(claim?.summaryDetails?.CashLess) === "1.00"?1:0);
     setNoteOfSelf(claim?.summaryDetails?.NoteOfSelf?claim?.summaryDetails?.NoteOfSelf:"");
     setRepairAutoDate(claim?.summaryDetails?.RepairAutoDate?claim?.summaryDetails?.RepairAutoDate:"");
     setRepairCompletionDate(claim?.summaryDetails?.RepairCompletionDate?claim?.summaryDetails?.RepairCompletionDate:"");
