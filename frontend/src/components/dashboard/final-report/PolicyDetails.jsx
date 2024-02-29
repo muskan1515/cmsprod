@@ -236,6 +236,12 @@ const PolicyDetails = ({
     setPhoneNumber(truncatedValue);
   };
 
+  function removeMultipleSpaces(inputString) {
+    // Use regular expression to replace multiple spaces with a single space
+    const cleanedString = inputString.replace(/\s+/g, ' ').trim();
+    return cleanedString;
+}
+
   function isvaliddate(date) {
     return (
       date !== null &&
@@ -1665,74 +1671,7 @@ const PolicyDetails = ({
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-7">
-                      <div className="row mt-1">
-                        <div className="col-lg-6 my_profile_setting_input form-group text-end">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            PUC Details
-                          </label>
-                        </div>
-                        <div
-                          className="col-lg-5"
-                          style={{ marginLeft: "20px" }}
-                        >
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={VehicleTypeOfBody&&VehicleTypeOfBody!=="null" ? VehicleTypeOfBody : ""}
-                            readOnly={!isEditMode}
-                            onChange={(e) =>
-                              setVehicleTypeOfBody(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-5">
-                      <div className="row mt-1">
-                        <div className="col-lg-3 text-end my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              paddingTop: "5px",
-                              color: "#2e008b",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Upto
-                          </label>
-                        </div>
-                        <div className="col-lg-9">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="color"
-                            value={VehicleUpto&&VehicleUpto!=="null" ? VehicleUpto : ""}
-                            readOnly={!isEditMode}
-                            onChange={(e) => setVehicleUpto(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
+                   
                     {/* <div className="col-lg-12">
                   <div className="row mt-1">
                     <div className="col-lg-4 my_profile_setting_input form-group text-end">
@@ -2269,7 +2208,11 @@ const PolicyDetails = ({
                     id="propertyTitle"
                     readOnly={!isEditMode}
                     value={
-                      DriverName && DriverName !== "null" ? DriverName : ""
+                      DriverName && DriverName !== "null" ? 
+                     claim?.driverDetails?.Gender ==="Male" ?
+                     removeMultipleSpaces(DriverName) +" "+ "S/o"+" "+ removeMultipleSpaces(claim?.driverDetails?.FatherName)  : removeMultipleSpaces(DriverName) +" "+"D/o" +" "+ removeMultipleSpaces(claim?.driverDetails?.FatherName)
+                      
+                       : ""
                     }
                     onChange={(e) => setDriverName(e.target.value)}
 

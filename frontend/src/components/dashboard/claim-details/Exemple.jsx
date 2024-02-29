@@ -1,394 +1,377 @@
-import Link from "next/link";
-import SmartTable from "./SmartTable";
-import { useEffect, useState } from "react";
-import JSZip from "jszip";
-import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
-import axios from "axios";
-// import { useParams } from 'next/navigation'
-const headCells = [
-  {
-    id: "serial_num",
-    numeric: false,
-    label: "S. No.",
-    width: 10,
-  },
-  {
-    id: "doc_name",
-    numeric: false,
-    label: "Document Name",
-    width: 120,
-  },
-  {
-    id: "date",
-    numeric: false,
-    label: "Uploaded On",
-    width: 120,
-  },
-  // {
-  //   id: "status",
-  //   numeric: false,
-  //   label: "Status",
-  //   width: 120,
-  // },
-  {
-    id: "file",
-    numeric: false,
-    label: "File",
-    width: 150,
-  },
-  {
-    id: "action",
-    numeric: false,
-    label: "Action",
-    width: 50,
-  },
-];
+  import Link from "next/link";
+  import SmartTable from "./SmartTable";
+  import { useEffect, useState } from "react";
+  import JSZip from "jszip";
+  import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
+  import axios from "axios";
+import toast from "react-hot-toast";
+  // import { useParams } from 'next/navigation'
+  const headCells = [
+    {
+      id: "serial_num",
+      numeric: false,
+      label: "S. No.",
+      width: 10,
+    },
+    {
+      id: "doc_name",
+      numeric: false,
+      label: "Document Name",
+      width: 120,
+    },
+    {
+      id: "date",
+      numeric: false,
+      label: "Uploaded On",
+      width: 120,
+    },
+    // {
+    //   id: "status",
+    //   numeric: false,
+    //   label: "Status",
+    //   width: 120,
+    // },
+    {
+      id: "file",
+      numeric: false,
+      label: "File",
+      width: 150,
+    },
+    {
+      id: "action",
+      numeric: false,
+      label: "Action",
+      width: 50,
+    },
+  ];
 
-let data = [
-  {
-    _id: "6144145976c7fe",
-    serial_num: "1",
-    doc_name: "Driving licence",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    status: "verified",
-    file: "",
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "2",
-    doc_name: "Certificate of registration",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    file: "",
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "3",
-    doc_name: "Repair Estimate",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    file: "",
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "4",
-    doc_name: "Claim form",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "5",
-    doc_name: "Insurance policy",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "6",
-    doc_name: "Damage vehicle photographs/video",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "7",
-    doc_name: "Aadhar card",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "8",
-    doc_name: "Pan card",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "9",
-    doc_name: " Cancel cheque",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "10",
-    doc_name: " Satisfaction voucher",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "11",
-    doc_name: "Discharge voucher",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "12",
-    doc_name: "Dismantle photographs",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "13",
-    doc_name: "Reinspection photographs",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "14",
-    doc_name: "Repair Invoice",
-    file: "",
-    action: (
-      <button className="btn btn-thm">
-        <FaUpload />
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-  {
-    _id: "6144145976c7fe",
-    serial_num: "15",
-    doc_name: "Payment/cash receipt",
-    file: "",
-    action: (
-      <button className="btn btn-thm" >
-        <FaUpload/>
-      </button>
-    ),
-    verify: (
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        required
-        id="terms"
-        style={{ border: "1px solid black" }}
-      />
-    ),
-  },
-];
+  let data = [
+    {
+      _id: "6144145976c7fe",
+      serial_num: "1",
+      doc_name: "Driving licence",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      status: "verified",
+      file: "",
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "2",
+      doc_name: "Certificate of registration",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      file: "",
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "3",
+      doc_name: "Repair Estimate",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      file: "",
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "4",
+      doc_name: "Claim form",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "5",
+      doc_name: "Insurance policy",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "6",
+      doc_name: "Damage vehicle photographs/video",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "7",
+      doc_name: "Aadhar card",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "8",
+      doc_name: "Pan card",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "9",
+      doc_name: " Cancel cheque",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "10",
+      doc_name: " Satisfaction voucher",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "11",
+      doc_name: "Discharge voucher",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "12",
+      doc_name: "Dismantle photographs",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "13",
+      doc_name: "Reinspection photographs",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "14",
+      doc_name: "Repair Invoice",
+      file: "",
+      action: (
+        <button className="btn btn-thm">
+          <FaUpload />
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "15",
+      doc_name: "Payment/cash receipt",
+      file: "",
+      action: (
+        <button className="btn btn-thm" >
+          <FaUpload/>
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+  ];
 
-export default function Exemple({ documents,leadId  }) {
-  const [updatedCode, setUpdatedCode] = useState([]);
-  const [selectedFile, setSelectedFile] = useState([]);
+  export default function Exemple({ documents,leadId  }) {
+    const [updatedCode, setUpdatedCode] = useState([]);
+    const [selectedFile, setSelectedFile] = useState([]);
+    const [uploadedFiles,setUploadedFiles]=useState([]);
 
-  console.log("leadId------>", leadId);
+    const [currentDoc,setCurrentDoc]=useState("");
 
-  const onUploadHandler = async (label, index) => {
-    const selectedFileData = selectedFile.find((file) => file.index === index);
-  
-    if (selectedFileData) {
-      const payload = {
-        base64: selectedFileData.base64,
-        file: selectedFileData.file,
-        name: selectedFileData.file.name,
-      };
-  
-      try {
-        const response = await axios.post("/api/uploadFile", payload);
-        console.log("File uploaded successfully:", response.data);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
-    } else {
-      console.log("Error --------->selectedFileData");    }
-  };
-  
+    console.log("leadId------>", leadId);
 
 
   const checkValue = (label) => {
@@ -426,16 +409,55 @@ export default function Exemple({ documents,leadId  }) {
             url: doc.Photo5,
           });
         }
-
-        //  console.log(requiredInfo);
       }
-    });
+      })
+    }
+    
+  // console.log("selectedFile-------->",selectedFile);
+    
+  
+  const getIndex = (docName,fileData)=>{
+    let index = -1;
+    console.log(docName,fileData);
+    fileData.map((file,idx)=>{
+      if(String(docName) === String(file.docName)){
+        index=idx;
+      }
+    })
+    return index;
+  }
 
-    return requiredInfo;
-  };
+  function getFileNameFromUrl(url) {
+    // Create a URL object
+    const urlObject = new URL(url);
 
-  // const handleFileInputChange = async (e, idx) => {
-  //   const selectedFileCurrent = e.target.files[idx];
+    // Get the pathname (e.g., '/invoice.pdf')
+    const pathname = urlObject.pathname;
+
+    // Split the pathname using '/' and get the last part (filename)
+    const parts = pathname.split('/');
+    const filename = parts[parts.length - 1];
+
+    return filename;
+}
+
+let docCurrentName="Driving license";
+useEffect(()=>{
+  setCurrentDoc(docCurrentName)
+},[docCurrentName])
+
+  const handleFileInputChange = async (e, idx,docs)  => {
+   
+    console.log("idx------------>",idx,currentDoc,docCurrentName);
+   
+    const selectedFileCurrent = e.target.files[idx];
+    let oldFiles = selectedFile;
+    let currentIndex = oldFiles.findIndex((file) => file.index === idx);
+    let newFile = {
+      file: selectedFileCurrent,
+      index: currentIndex !== -1 ? currentIndex : idx,
+      base64: "",
+    };
   
   //   let oldFiles = selectedFile;
   //   let currentIndex = oldFiles.findIndex((file) => file.index === idx);
@@ -446,43 +468,72 @@ export default function Exemple({ documents,leadId  }) {
   //     base64: "",
   //   };
   
-  //   if (currentIndex !== -1) {
-  //     oldFiles[idx] = newFile;
-  //   } else {
-  //     oldFiles.push(newFile);
-  //   }
+    reader.readAsDataURL(selectedFileCurrent);
   
-  //   // Read file as base64
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     newFile.base64 = e.target.result;
-  //     setSelectedFile(oldFiles);
-  //   };
-  
-  //   reader.readAsDataURL(selectedFileCurrent);
-  //   console.log("selectedFile-------->",idx,"Filelll",newFile.base64);
+    setTimeout(async () => {
+      if (newFile) {
+        const payload = {
+          file: [newFile.base64],
+          name: [newFile.file.name],
+        };
 
-  //   setTimeout(async () => {
-  //     if (newFile) {
-  //       const payload = {
-  //         file: newFile.base64,
-  //         name: newFile.file.name,
-  //       };
+   
+        toast.loading("Uploading file!");
+          axios.post("/api/uploadFile", payload)
+          .then((res)=>{
+
+            toast.dismiss();
+            toast.success("Sucessfully uploaded!");
+            
+            let oldFiles = uploadedFiles;
+
+            const index = getIndex(docCurrentName,oldFiles);
+            console.log("index",index);
+
+            if(index!==-1){
+                const oldFiles = oldFiles[index];
+                const oldData = oldFiles.data;
+                oldData.push({
+                  name:getFileNameFromUrl(res.data.userData),
+                  url:res.data.userData
+                });
+                const newUpload={
+                  leadId:leadId,
+                  docName:docCurrentName,
+                  data:oldData
+                }
+                oldFiles[index]=newUpload;
+                console.log(oldFiles);
+                setUploadedFiles(oldFiles);
+            }
+            else{
+
+              let newData = [];
+              newData.push({
+                name:getFileNameFromUrl(res.data.userData),
+                url:res.data.userData
+              })
+              const newUpload={
+                leadId:leadId,
+                docName:docCurrentName,
+                data:newData
+              }
+              const oldFiles = uploadedFiles;
+              oldFiles.push(newUpload);
+              console.log(oldFiles);
+              setUploadedFiles(oldFiles);
+            }
+          })
+          .catch((err)=>{
+            toast.error(err);
+          })
+        }
+    }, 1000);
+  };
+
   
-  //       console.log('PAYLOAD',payload);
-    
-  //       try {
-  //         const response = await axios.post("/api/uploadFile", payload);
-  //         console.log("File uploaded successfully:", response.data);
-  //       } catch (error) {
-  //         console.error("Error uploading file:", error);
-  //       }
-  //     } else {
-  //       console.log("Accessing base64 after delay:", newFile.base64);
-  //     }
-  //   }, 1000);
-  // };
   
+  console.log(uploadedFiles);
 
   
 // console.log("selectedFile-------->",selectedFile);
@@ -492,73 +543,68 @@ const handleReload = () => {
 };
 
 
-const handleFileInputChange = async (e, idx,docs)  => {
-  console.log("idx------------>",idx);
-  const selectedFileCurrent = e.target.files[idx];
-  let oldFiles = selectedFile;
-  let currentIndex = oldFiles.findIndex((file) => file.index === idx);
-  let newFile = {
-    file: selectedFileCurrent,
-    index: currentIndex !== -1 ? currentIndex : idx,
-    base64: "",
-  };
 
-  if (currentIndex !== -1) {
-    oldFiles[idx] = newFile;
-  } else {
-    oldFiles.push(newFile);
-  }
 
-  // Read file as base64
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    newFile.base64 = e.target.result;
-    setSelectedFile(oldFiles);
-  };
+//     const handleButtonClick = (doc_name) => {
+//       console.log(doc_name)
+//       docCurrentName =(doc_name)
+//       // Trigger file input click when button is clicked
+//       document.getElementById('fileInput').click();
+//     };
 
-  reader.readAsDataURL(selectedFileCurrent);
-  console.log("selectedFile-------->", idx, "Filelll", newFile.base64);
+//       try {
+//         const zip = new JSZip();
 
-  setTimeout(async () => {
-    if (newFile) {
-      const payload = {
-        file: [newFile.base64],
-        name: [newFile.file.name],
-      };
+      
+      
 
-      console.log('PAYLOAD', payload);
+//         documents.map((data, index) => {
+//           if (data.Attribute1 !== "") {
+//             const fileName = data.Attribute1;
+//             zip.file(fileName, data.Photo1, { binary: true });
+//           }
+//           if (data.Attribute2 !== "") {
+//             const fileName = data.name;
+//             zip.file(fileName, data.url, { binary: true });
+//           }
+//           if (data.Attribute3 !== "") {
+//             const fileName = data.Attribute3;
+//             zip.file(fileName, data.Photo3, { binary: true });
+//           }
+//           if (data.Attribute4 !== "") {
+//             const fileName = data.Attribute4;
+//             zip.file(fileName, data.Photo4, { binary: true });
+//           }
+//           if (data.Attribute5 !== "") {
+//             const fileName = data.Attribute5;
+//             zip.file(fileName, data.Photo5, { binary: true });
+//           }
+//         });
 
-      try {
-        const response = await axios.post("/api/uploadFile", payload);
 
-        const data = []
-         data.push({
-          leadId: leadId,
-          docName: docs,
-          data: response.data.userData.data
-        })
-        console.log("File uploaded successfully:", response.data);
+//         // console.log(zip);
 
-        console.log('data',data)
-// return
-      const loot = JSON.stringify({ data: data });
-        const result = await  axios.post("/api/uploadDocument", loot, {
-          headers: {
-            Authorization: `Bearer ${""}`,
-            "Content-Type": "application/json",
-          },
-        })
-        console.log("Result returned", result);
-      if(result.status==200) handleReload()
+//         const content = await zip.generateAsync({ type: "blob" });
 
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
-    } else {
-      console.log("Accessing base64 after delay:", newFile.base64);
-    }
-  }, 1000);
-};
+//         // Triggering the download
+//         const a = document.createElement("a");
+//         const url = URL.createObjectURL(content);
+//         a.href = url;
+//         a.download = "downloadedFiles.zip";
+//         document.body.appendChild(a);
+//         a.click();
+//         document.body.removeChild(a);
+//         URL.revokeObjectURL(url);
+
+//         alert("Successfully downloaded the zip!");
+//       } catch (error) {
+//         console.error("Error uploading file:", error);
+//       }
+//     } else {
+//       console.log("Accessing base64 after delay:", newFile.base64);
+//     }
+//   }, 1000);
+// };
 
 
 
