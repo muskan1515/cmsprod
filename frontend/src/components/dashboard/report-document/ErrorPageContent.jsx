@@ -514,11 +514,15 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
-    <div className="" style={{ width: "" }} ref={pdfRef}>
+    <div
+      className="text-dark"
+      style={{ width: "", color: "black" }}
+      ref={pdfRef}
+    >
       {/* common header for all page */}
       {/* <div className="col-lg-12 d-flex justify-content-between">
         <div>
-          <h5>Mutneja Tech</h5>
+          <h5 >MT Engineer</h5>
         </div>
         <div>
           <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
@@ -528,8 +532,8 @@ const ErrorPageContent = ({ allInfo }) => {
       {/* common header for all page */}
 
       {/* Header Content */}
-      <div>
-        <h3>MT Engineer</h3>{" "}
+      <div style={{ width: "", color: "black" }}>
+        <h3 className="text-dark">MT Engineer</h3>{" "}
         <span>
           {" "}
           <div style={{ position: "absolute", top: "10px", right: "10px" }}>
@@ -550,42 +554,53 @@ const ErrorPageContent = ({ allInfo }) => {
             </Dropdown> */}
           </div>
         </span>
-        <p className="fw-bold">Legal Investigator Pvt. Ltd.</p>
-        <p>
+        <p className="fw-bold text-dark">Legal Investigator Pvt. Ltd.</p>
+        <p className="text-dark">
           69-Modal Town (1st), Behind U.I.T., Office, Sri Ganganagar -
           335001(Rajasthan )
         </p>
-        <div className="d-flex gap-5">
+        <div className="d-flex gap-5 text-dark">
           {" "}
-          <p>Tel. No. : +91 94688-81222</p> <p>Email: legalmt04@gmail.com</p>
+          <p className="text-dark">Tel. No. : +91 94688-81222</p>{" "}
+          <p className="text-dark">Email: legalmt04@gmail.com</p>
         </div>
         {/* <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p> */}
         {/* <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p> */}
-        <p>GSTIN : 08AAPCM1051K1Z9</p>
+        <p className="text-dark">GSTIN : 08AAPCM1051K1Z9</p>
       </div>
       <hr style={{ border: "2px solid black" }} />
       {/* Header Content */}
 
       <div className="d-flex justify-content-between">
         <div>
-          <label htmlFor="">Ref No. :</label>
+          <label htmlFor="" className="fw-bold text-dark">
+            Ref No. :
+          </label>
           <span> {allInfo?.otherInfo[0]?.ReferenceNo}</span>
         </div>
         <div>
-          <label htmlFor="">Date : </label>
-          <span> {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</span>
+          <label htmlFor="" className="fw-bold text-dark">
+            Date :{" "}
+          </label>
+          <span className="text-dark">
+            {" "}
+            {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}
+          </span>
         </div>
       </div>
-      <div className="text-center mt-5">
+      <div className="text-center mt-5 text-dark">
         <h4>
           {allInfo?.otherInfo[0]?.SurveyType} FINAL{" "}
           {allInfo?.otherInfo[0]?.InspectionType} REPORT (
           {allInfo?.otherInfo[0]?.SettlementType})- (
-          {allInfo?.otherInfo[0]?.PolicyType?allInfo?.otherInfo[0]?.PolicyType : "Regular"})
+          {allInfo?.otherInfo[0]?.PolicyType
+            ? allInfo?.otherInfo[0]?.PolicyType
+            : "Regular"}
+          )
         </h4>
       </div>
       <div>
-        <p>
+        <p className="text-dark">
           This report is issued by me/us as a licensed Surveyor(s) without
           prejudice in respect of cause, nature and extent of loss/damages and
           subject to the terms and conditions of the insurance policy.
@@ -593,11 +608,14 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
       <hr style={{ border: "2px solid black" }} />
       <div>
-        <h5>INSURANCE PARTICULARS :</h5>
-        <div className=" text-start d-flex gap-5">
+        <h5 className="text-dark">INSURANCE PARTICULARS :</h5>
+        <div className=" text-start d-flex gap-5 text-dark">
           <div>
             <label htmlFor="">(a) Policy / Cover Note No. : </label>
-            <span> {allInfo?.otherInfo[0]?.PolicyNumber}</span>
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.PolicyNumber}
+            </span>
           </div>
           <div>
             <label htmlFor="">IDV : -</label>
@@ -661,13 +679,16 @@ const ErrorPageContent = ({ allInfo }) => {
       <hr style={{ border: "2px solid black" }} />
       <div>
         <div className="d-flex gap-5">
-          <h5>VEHICLE PARTICULARS :</h5>
+          <h5 className="text-dark">VEHICLE PARTICULARS :</h5>
           <span>{allInfo?.otherInfo[0]?.Remark}</span>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(a) Registered Number :</label>
-            <span> {allInfo?.otherInfo[0]?.RegisteredNumber}</span>
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.RegisteredNumber}
+            </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
@@ -680,7 +701,7 @@ const ErrorPageContent = ({ allInfo }) => {
         {/* common header for all page */}
         <div className="col-lg-12 d-flex justify-content-between mt-5">
           <div>
-            <h5>Mutneja Tech</h5>
+            <h5>MT Engineer</h5>
           </div>
           <div>
             <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
@@ -709,7 +730,10 @@ const ErrorPageContent = ({ allInfo }) => {
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(d) Chassis Number :</label>
-            <span> {allInfo?.otherInfo[0]?.ChassisNumber}</span>
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.ChassisNumber}
+            </span>
           </div>
         </div>
 
@@ -762,13 +786,18 @@ const ErrorPageContent = ({ allInfo }) => {
       <hr style={{ border: "2px solid black" }} />
       <div>
         <div className="d-flex gap-5">
-          <h5>DRIVER PARTICULARS :</h5>
+          <h5 className="text-dark">DRIVER PARTICULARS :</h5>
           <span>{allInfo?.otherInfo[0]?.Remark}</span>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
-            <label htmlFor="">(a) Name of Driver :</label>
-            <span> {allInfo?.otherInfo[0]?.DriverName}</span>
+            <label htmlFor="" className="text-dark">
+              (a) Name of Driver :
+            </label>
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.DriverName}
+            </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
@@ -788,7 +817,9 @@ const ErrorPageContent = ({ allInfo }) => {
         <div className=" text-start d-flex gap-5">
           <div>
             <label htmlFor="">(b) Motor Driver License Number :</label>
-            <span>{allInfo?.otherInfo[0]?.LicenseNumber} </span>
+            <span className="fw-bold text-dark">
+              {allInfo?.otherInfo[0]?.LicenseNumber}{" "}
+            </span>
           </div>
         </div>
 
@@ -830,7 +861,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <hr style={{ border: "2px solid black" }} />
       <div>
         <div className="d-flex gap-5">
-          <h5>ACCIDENT & SURVEY PARTICULARS :</h5>
+          <h5 className="text-dark">ACCIDENT & SURVEY PARTICULARS :</h5>
         </div>
         <div className=" text-start d-flex gap-5">
           <div>
@@ -866,7 +897,7 @@ const ErrorPageContent = ({ allInfo }) => {
         {/* common header for all page */}
         <div className="col-lg-12 d-flex justify-content-between">
           <div>
-            <h5>Mutneja Tech</h5>
+            <h5 className="text-dark">MT Engineer</h5>
           </div>
           <div>
             <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
@@ -895,7 +926,7 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
       <hr style={{ border: "2px solid black" }} />
       <div>
-        <h5>CAUSE & NATURE OF ACCIDENT :</h5>
+        <h5 className="text-dark">CAUSE & NATURE OF ACCIDENT :</h5>
         <span>
           As filled in the claim form and discussion with the Insured that on
           the day and time of accident{" "}
@@ -906,28 +937,34 @@ const ErrorPageContent = ({ allInfo }) => {
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
           <div>
-            <h5 htmlFor="">POLICE ACTION :</h5>
+            <h5 htmlFor="" className="text-dark">
+              POLICE ACTION :
+            </h5>
             <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
           <div>
-            <h5 htmlFor="">DETAILS OF LOAD / PASSENGER :</h5>
+            <h5 htmlFor="" className="text-dark">
+              DETAILS OF LOAD / PASSENGER :
+            </h5>
             <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
           <div>
-            <h5 htmlFor="">THIRD PARTY LOSS/ INJURIES :</h5>
+            <h5 htmlFor="" className="text-dark">
+              THIRD PARTY LOSS/ INJURIES :
+            </h5>
             <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
       </div>
       <div>
-        <h5>PARTICULARS OF LOSS/DAMAGES :</h5>
+        <h5 className="text-dark">PARTICULARS OF LOSS/DAMAGES :</h5>
         <span className="">
           In accordance with the instructions received from
           <b>
@@ -962,7 +999,7 @@ const ErrorPageContent = ({ allInfo }) => {
       {/* common header for all page */}
       <div className="col-lg-12 d-flex justify-content-between">
         <div>
-          <h5>Mutneja Tech</h5>
+          <h5 className="text-dark">MT Engineer</h5>
         </div>
         <div>
           <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
@@ -972,7 +1009,7 @@ const ErrorPageContent = ({ allInfo }) => {
       {/* common header for all page */}
 
       <div className="">
-        <h4>New Parts :</h4>
+        <h4 className="text-dark">New Parts :</h4>
         <table border={1}>
           <tr>
             <th
@@ -1333,7 +1370,7 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
       <br />
       <div className="" style={{ marginTop: "" }}>
-        <h4>LABOUR & REPAIRS :</h4>
+        <h4 className="text-dark">LABOUR & REPAIRS :</h4>
         <table>
           <tr>
             <th style={{ border: "1px solid black", padding: "10px" }}>S.No</th>
@@ -1466,7 +1503,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </table>
       </div>
       <div className="mt-4">
-        <h4>SUMMARY OF ASSESSMENT</h4>
+        <h4 className="text-dark">SUMMARY OF ASSESSMENT</h4>
         <table border={1} style={{ width: "100%" }}>
           <tr>
             <th
@@ -1561,7 +1598,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </table>
       </div>
       <div className="mt-4">
-        <h4>GST Summary Tax Wise</h4>
+        <h4 className="text-dark">GST Summary Tax Wise</h4>
         <table style={{ width: "100%" }}>
           <tr>
             <th
@@ -2049,7 +2086,7 @@ const ErrorPageContent = ({ allInfo }) => {
       {/* common header for all page */}
       <div className="col-lg-12 d-flex justify-content-between">
         <div>
-          <h5>Mutneja Tech</h5>
+          <h5 className="text-dark">MT Engineer</h5>
         </div>
         <div>
           <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
@@ -2071,7 +2108,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </span>
       </div>
       <div>
-        <h4>Notes :</h4>
+        <h4 className="text-dark">Notes :</h4>
         <ul>
           {allInfo?.summaryReport[0]?.FinalReportNotes}
           {/*<li>
@@ -2100,7 +2137,7 @@ const ErrorPageContent = ({ allInfo }) => {
             </li>*/}
         </ul>
 
-        <span>
+        <span className="text-dark">
           Thanking you and assuring you of my best services at all times,
         </span>
         <br />
@@ -2110,12 +2147,12 @@ const ErrorPageContent = ({ allInfo }) => {
 
       {/* common footer content */}
       <hr style={{ border: "2px solid black" }} />
-      <div>
-        <h5 className="text-center">
+      <div className="text-dark">
+        <h5 className="text-center text-dark">
           H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
           Ganganagar(Raj.)-335001
         </h5>
-        <h5 className="text-center">
+        <h5 className="text-center text-dark">
           Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
           Mountville,Sector-79,Gurugram(Hr)
         </h5>
