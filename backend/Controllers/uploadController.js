@@ -91,157 +91,41 @@ const getDocuments = (req, res) => {
   
     const currentLeadId = data[0].leadId;
   
-    array.map((data, index) => {
-      let photo1 = "",
-        photo2 = "",
-        photo3 = "",
-        photo4 = "",
-        photo5 = "",
-        photo6 = "";
-      let photoAtt1 = "",
-        photoAtt2 = "",
-        photoAtt3 = "",
-        photoAtt4 = "",
-        photoAtt5 = "",
-        photoAtt6 = "";
-      let photo1Timestamp = "",
-        photo2Timestamp = "",
-        photo3Timestamp = "",
-        photo4Timestamp = "",
-        photo5Timestamp = "",
-        photo6Timestamp = "";
-      let photo1Latitude = "",
-        photo2Latitude = "",
-        photo3Latitude = "",
-        photo4Latitude = "",
-        photo5Latitude = "",
-        photo6Latitude = "";
-      let photo1Longitude = "",
-        photo2Longitude = "",
-        photo3Longitude = "",
-        photo4Longitude = "",
-        photo5Longitude = "",
-        photo6Longitude = "";
-  
-      if (data.data[0][0] || data.data) {
-        photo1 = data.data[0][0].url  || data.data[0];
-        // console.log("data.data[0]",data.data[0]);
-        // photo1 = data.data[0]
-        photoAtt1 = data.data[0][0].name || data.docName;
-        photo1Timestamp = data.data[0][0]?.time;
-        photo1Latitude = data.data[0][0]?.location?.split(",")[0];
-        photo1Longitude = data.data[0][0]?.location?.split(",")[1];
+    array.map((row, index) => {
+    
+      const currentData = row.data;
+      currentData.map((file,idx)=>{
+      const Photo1 = file.url;
+      const Attribute1 = file.name;
+      const leadID = row.leadId;
+      const docName = row.docName;
+      const Location = file.Location;
+      const photo1Timestamp=file.Timestamp;
+      const Photo1Latitude=Location?.split(",")[0];
+      const Photo1Longitude=Location?.split(",")[1];
 
-      }
-  
-      if (data.data[1]?.length > 0) {
-        photo2 = data.data[1][0].url;
-        photoAtt2 = data.data[1][0].name;
-        photo2Timestamp = data.data[1][0]?.time;
-        photo2Latitude = data.data[1][0]?.location?.split(",")[0];
-        photo2Longitude = data.data[1][0]?.location?.split(",")[1];
-      }
-      if (data.data[2]?.length > 0) {
-        photo3 = data.data[2][0].url;
-        photoAtt3 = data.data[2][0].name;
-        photo3Timestamp = data.data[2][0]?.time;
-        photo3Latitude = data.data[2][0]?.location.split(",")[0];
-        photo3Longitude = data.data[2][0]?.location.split(",")[1];
-      }
-      if (data.data[3]?.length > 0) {
-        photo4 = data.data[3][0].url;
-        photoAtt4 = data.data[3][0].name;
-        photo4Timestamp = data.data[3][0]?.time;
-        photo4Latitude = data.data[3][0]?.location.split(",")[0];
-        photo4Longitude = data.data[3][0]?.location.split(",")[1];
-      }
-      if (data.data[4]?.length > 0) {
-        photo5 = data.data[4][0].url;
-        photoAtt5 = data.data[4][0].name;
-        photo5Timestamp = data.data[4][0]?.time;
-        photo5Latitude = data.data[4][0]?.location.split(",")[0];
-        photo5Longitude = data.data[4][0]?.location.split(",")[1];
-      }
-      if (data.data[5]?.length > 0) {
-        photo6 = data.data[5][0].url;
-        photoAtt6 = data.data[5][0].name;
-        photo6Timestamp = data.data[5][0]?.time;
-        photo6Latitude = data.data[5][0]?.location.split(",")[0];
-        photo6Longitude = data.data[5][0]?.location.split(",")[1];
-      }
-  console.log("Photo1",photo1)
+        
       const insertUploadDetails = `
       INSERT INTO DocumentList (
         LeadId,
         DocumentName,
         Photo1,
-        Photo2,
-        Photo3,
-        Photo4,
-        Photo5,
-        Photo6,
         Attribute1,
-        Attribute2,
-        Attribute3,
-        Attribute4,
-        Attribute5,
-        Attribute6,
         Photo1Latitude,
-        Photo2Latitude,
-        Photo3Latitude,
-        Photo4Latitude,
-        Photo5Latitude,
-        Photo6Latitude,
         Photo1Longitude,
-        Photo2Longitude,
-        Photo3Longitude,
-        Photo4Longitude,
-        Photo5Longitude,
-        Photo6Longitude,
-        Photo1Timestamp,
-        Photo2Timestamp,
-        Photo3Timestamp,
-        Photo4Timestamp,
-        Photo5Timestamp,
-        Photo6Timestamp
+        Photo1Timestamp
       ) VALUES (
-        '${data.leadId}',
-        '${data.docName}',
-        '${photo1}',
-        '${photo2}',
-        '${photo3}',
-        '${photo4}',
-        '${photo5}',
-        '${photo6}',
-        '${photoAtt1}',
-        '${photoAtt2}',
-        '${photoAtt3}',
-        '${photoAtt4}',
-        '${photoAtt5}',
-        '${photoAtt6}',
-        '${photo1Timestamp}',
-        '${photo2Timestamp}',
-        '${photo3Timestamp}',
-        '${photo4Timestamp}',
-        '${photo5Timestamp}',
-        '${photo6Timestamp}',
-        '${photo1Latitude}',
-        '${photo2Latitude}',
-        '${photo3Latitude}',
-        '${photo4Latitude}',
-        '${photo5Latitude}',
-        '${photo6Latitude}',
-        '${photo1Longitude}',
-        '${photo2Longitude}',
-        '${photo3Longitude}',
-        '${photo4Longitude}',
-        '${photo5Longitude}',
-        '${photo6Longitude}'
+        '${leadID}',
+        '${docName}',
+        '${Photo1}',
+        '${Attribute1}',
+        '${Photo1Latitude}',
+        '${Photo1Longitude}',
+        '${photo1Timestamp}'
       );
     `;
-  
-      // console.log(insertUploadDetails);
-  
+
+    console.log(insertUploadDetails)
       db.query(insertUploadDetails, (error, results) => {
         if (error) {
           console.error("Error inserting data into Upload Details:", error);
@@ -250,6 +134,7 @@ const getDocuments = (req, res) => {
             .json({ error: "Error inserting data into DocumentDetails." });
         }
       });
+      })
     });
   
     const claimToken = generateUniqueToken();

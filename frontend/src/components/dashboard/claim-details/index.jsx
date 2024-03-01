@@ -962,54 +962,56 @@ const Index = ({}) => {
                 url: list.Photo1,
               });
             }
-            if (
-              list.Attribute2.toLowerCase().includes(".mp4") ||
-              list.Attribute2.toLowerCase().includes(".mp3")
-            ) {
-              requiredVideos.push({
-                name: list.Attribute2,
-                url: list.Photo2,
-              });
-            }
-            if (
-              list.Attribute3.toLowerCase().includes(".mp4") ||
-              list.Attribute3.toLowerCase().includes(".mp3")
-            ) {
-              requiredVideos.push({
-                name: list.Attribute3,
-                url: list.Photo3,
-              });
-            }
-            if (
-              list.Attribute4.toLowerCase().includes(".mp4") ||
-              list.Attribute4.toLowerCase().includes(".mp3")
-            ) {
-              requiredVideos.push({
-                name: list.Attribute4,
-                url: list.Photo4,
-              });
-            }
-            if (
-              list.Attribute5.toLowerCase().includes(".mp4") ||
-              list.Attribute5.toLowerCase().includes(".mp3")
-            ) {
-              requiredVideos.push({
-                name: list.Attribute5,
-                url: list.Photo5,
-              });
-            }
-            if (
-              list.Attribute6.toLowerCase().includes(".mp4") ||
-              list.Attribute6.toLowerCase().includes(".mp3")
-            ) {
-              requiredVideos.push({
-                name: list.Attribute6,
-                url: list.Photo6,
-              });
-            }
+           
           });
+
+
+          let requiredDocumenstList = [];
+          tempList.map((temp,index)=>{
+            let indexTobeFinded = -1;
+            requiredDocumenstList?.map((doc,idx)=>{
+              if(String(temp.DocumentName)===String(doc.docName)){
+                indexTobeFinded=idx;
+              }
+            })
+
+            if(indexTobeFinded!==-1){
+              const newDocListWithinWhole = requiredDocumenstList[indexTobeFinded];
+              const newDocListWithin = newDocListWithinWhole.data;
+
+              newDocListWithin.push({
+                name:temp.Attribute1,
+                url:temp.Photo1,
+                location:temp.Photo1Latitude+","+temp.Photo1Longitude,
+                Timestamp:temp.Photo1Timestamp
+              });
+
+              const oldData = requiredDocumenstList;
+              oldData[indexTobeFinded]=newDocListWithin;
+              requiredDocumenstList=oldData;
+            }
+            else{
+              let newDocListWithin = [];
+
+              newDocListWithin.push({
+                name:temp.Attribute1,
+                url:temp.Photo1,
+                location:temp.Photo1Latitude+","+temp.Photo1Longitude,
+                Timestamp:temp.Photo1Timestamp
+              });
+
+              const oldData = requiredDocumenstList;
+              oldData.push({
+                leadId:temp.LeadId,
+                docName:temp.DocumentName,
+                data:newDocListWithin
+              })
+              requiredDocumenstList=oldData;
+            }
+
+          })
           setVideosList(requiredVideos);
-          setDocuments(res.data.data);
+          setDocuments(requiredDocumenstList);
         })
         .catch((err) => {
           console.log(err);

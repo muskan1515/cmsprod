@@ -182,8 +182,8 @@ function SmartTable(props) {
                       >
                         {/* {props.title} */}
                       </div>
-                      <div className="row">
-                        <div className="col-lg-10"></div>
+                      {!props.disable && <div className="row">
+                         <div className="col-lg-10"></div>
                         <div
                           className="col-lg-1 btn-thm flaticon-plus"
                           title="Add Document"
@@ -197,7 +197,14 @@ function SmartTable(props) {
                           // style={{ marginLeft: "50px" }}
                           onClick={props.downloadAllFiles}
                         ></div>
-                      </div>
+
+                        <div
+                        className="col-lg-1 btn-thm w-10 flaticon-upload"
+                        title="pdf zip download"
+                        // style={{ marginLeft: "50px" }}
+                        onClick={props.onSubmitHandler}
+                      ></div>
+                      </div>}
                     </div>
                     {props.data.length > 0 ? (
                       <div className="row" style={{ marginTop: "5px" }}>

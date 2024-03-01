@@ -56,6 +56,8 @@ const createToken = require("../Config/generateJWTToken");
           res.status(500).send("Internal Server Error");
           return;
         }
+
+        console.log("path",`https://claims-backend-apis.onrender.com/documents/${leadId}?token=${sendingToken}&type=${type}&content=${""}`)
   
         const emailContent = `
       Dear Sir/Madam,
