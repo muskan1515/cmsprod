@@ -198,12 +198,7 @@ function SmartTable(props) {
                           onClick={props.downloadAllFiles}
                         ></div>
 
-                        <div
-                        className="col-lg-1 btn-thm w-10 flaticon-upload"
-                        title="pdf zip download"
-                        // style={{ marginLeft: "50px" }}
-                        onClick={props.onSubmitHandler}
-                      ></div>
+                        
                       </div>}
                     </div>
                     {props.data.length > 0 ? (

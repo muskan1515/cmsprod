@@ -85,20 +85,18 @@ const getDocuments = (req, res) => {
   };
 
  const uploadDocument = (req, res) => {
-    const { data, leadId } = req.body;
+    const data = req.body;
   console.log('data',data);
-    const array = data;
   
-    const currentLeadId = data[0].leadId;
+    const currentLeadId = data.leadId;
+
+    const currentData = data.data;
   
-    array.map((row, index) => {
-    
-      const currentData = row.data;
       currentData.map((file,idx)=>{
       const Photo1 = file.url;
       const Attribute1 = file.name;
-      const leadID = row.leadId;
-      const docName = row.docName;
+      const leadID = data.leadId;
+      const docName = data.docName;
       const Location = file.Location;
       const photo1Timestamp=file.Timestamp;
       const Photo1Latitude=Location?.split(",")[0];
@@ -134,7 +132,6 @@ const getDocuments = (req, res) => {
             .json({ error: "Error inserting data into DocumentDetails." });
         }
       });
-      })
     });
   
     const claimToken = generateUniqueToken();

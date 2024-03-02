@@ -1,10 +1,29 @@
-  import Link from "next/link";
+
   import SmartTable from "./SmartTable";
   import { useEffect, useState } from "react";
   import JSZip from "jszip";
+  import dotenv from 'dotenv';
   import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
   import axios from "axios";
-import toast from "react-hot-toast";
+  import toast from "react-hot-toast";
+
+  dotenv.config({path:".env.development"});
+
+  import AWS from 'aws-sdk';
+  const S3_BUCKET = 'cmsdocs2024';
+  const REGION ='ap-south-1';
+
+  AWS.config.update({
+    accessKeyId:process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
+  });
+
+  console.log("aws,cofgi.update", process.env.AWS_SECRET_ACCESS_KEY,process.env.AWS_ACCESS_KEY_ID,
+  process.env.REGION,process.env.S3_BUCKET);
+ 
+
+  const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},
+  region:REGION});
   // import { useParams } from 'next/navigation'
   const headCells = [
     {
@@ -490,99 +509,120 @@ useEffect(()=>{
 
   const handleFileInputChange = async (e, idx,docs)  => {
    
+    location();
     
     setDisable(true);
-    console.log("idx------------>",idx,currentDoc,docCurrentName);
    
     const selectedFileCurrent = e.target.files[idx];
-    let oldFiles = selectedFile;
-    let currentIndex = oldFiles.findIndex((file) => file.index === idx);
-    let newFile = {
-      file: selectedFileCurrent,
-      index: currentIndex !== -1 ? currentIndex : idx,
-      base64: "",
-    };
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      newFile.base64 = e.target.result;
-      setSelectedFile(oldFiles);
-    };  
-    reader.readAsDataURL(selectedFileCurrent);
+    
+      const params = {
+        ACL:'public-read',
+        Body:selectedFileCurrent,
+        Bucket:S3_BUCKET,
+        Key:selectedFileCurrent.name,
+        ContentType: 'image/jpeg',
+        ContentDisposition: 'inline'
+      };
+
+     
+      myBucket.putObject(params).send((err,data)=>{
+        if(err){
+          toast.error("Error while uploading!!");
+        }
+        else{
+          const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(selectedFileCurrent.name)}`;
+          
+          const payloadMain={
+            leadId:leadId,
+            docName:docCurrentName,
+            data:[{
+              name:selectedFileCurrent.name,
+              url:S3_URL,
+              Timestamp:new Date(),
+              Location:loc
+            }]
+          };
+
+        
+          toast.loading("Uploading files!!", {
+            className: "toast-loading-message",
+          });
+          axios.post("/api/uploadDocument", payloadMain, {
+              headers: {
+                Authorization: `Bearer ${""}`,
+                "Content-Type": "application/json",
+              },
+            })
+            .then((res) => {
+              toast.dismiss()
+              toast.success("Successfully updated !", {
+                // position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-loading-message",
+              });
+              let oldFiles = uploadedFiles;
+
+              const index = getIndex(docCurrentName,oldFiles);
+              const currentTimeStamp=new Date();
   
-    setTimeout(async () => {
-      if (newFile) {
-        const payload = {
-          file: [newFile.base64],
-          name: [newFile.file.name],
-        };
-
-        toast.loading("Uploading file!!", {
-          // position: toast.POSITION.BOTTOM_LEFT,
-          className: "toast-loading-message",
-        });
-          axios.post("/api/uploadFile", payload)
-          .then((res)=>{
-
-            toast.dismiss();
-            toast.success("Successfully uploaded !", {
-              // position: toast.POSITION.BOTTOM_LEFT,
-              className: "toast-loading-message",
-            });
-            
-            let oldFiles = uploadedFiles;
-
-            const index = getIndex(docCurrentName,oldFiles);
-            const currentTimeStamp=new Date();
-
-            if(index!==-1){
-                const oldFile = oldFiles[index];
-                const oldData = oldFile.data;
-                oldData.push({
-                  name:getFileNameFromUrl(res.data.userData),
-                  url:res.data.userData,
+              if(index!==-1){
+                  const oldFile = oldFiles[index];
+                  const oldData = oldFile.data;
+                  oldData.push({
+                    name:getFileNameFromUrl(S3_URL),
+                    url:res.data.userData,
+                    Timestamp:currentTimeStamp,
+                    Location: loc
+  
+                  });
+                  const newUpload={
+                    leadId:leadId,
+                    docName:docCurrentName,
+                    data:oldData,
+                   
+                  }
+                  oldFiles[index]=newUpload;
+                  console.log(oldFiles);
+                  setChanges(true)
+                  setUploadedFiles(oldFiles);
+              }
+              else{
+  
+                let newData = [];
+                newData.push({
+                  name:getFileNameFromUrl(S3_URL),
+                  url:S3_URL,
                   Timestamp:currentTimeStamp,
-                  Location: loc
-
-                });
+                  Location: loc,
+                  
+                })  
                 const newUpload={
                   leadId:leadId,
                   docName:docCurrentName,
-                  data:oldData,
-                  upload:true
+                  data:newData
                 }
-                oldFiles[index]=newUpload;
+                const oldFiles = uploadedFiles;
+                oldFiles.push(newUpload);
                 console.log(oldFiles);
                 setChanges(true)
                 setUploadedFiles(oldFiles);
-            }
-            else{
-
-              let newData = [];
-              newData.push({
-                name:getFileNameFromUrl(res.data.userData),
-                url:res.data.userData,
-                Timestamp:currentTimeStamp,
-                Location: loc,
-                upload:true
-              })  
-              const newUpload={
-                leadId:leadId,
-                docName:docCurrentName,
-                data:newData
               }
-              const oldFiles = uploadedFiles;
-              oldFiles.push(newUpload);
-              console.log(oldFiles);
-              setChanges(true)
-              setUploadedFiles(oldFiles);
-            }
-          })
-          .catch((err)=>{
-            toast.error(err);
-          })
+            })
+            .catch((err) => {
+              // isNotValidLink(true);
+              toast.dismiss()
+              toast.error("Try Again!!")
+            });
+         
+      
+            
+          
+          
 
         }
-    }, 1000);
+      })
+
+       
+        
     setDisable(false)
   };
 
