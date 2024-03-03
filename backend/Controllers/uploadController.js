@@ -174,22 +174,24 @@ const uploadDocument = (req, res) => {
     });
   });
 
-  const claimToken = generateUniqueToken();
+  return res.status(200).json({ message: "Data inserted successfully." });
 
-  const insertTokeDteials = `
-    UPDATE ClaimDetails
-    SET InsuredToken='${claimToken}'
-    WHERE LeadId = ${currentLeadId};
-  `;
+  // const claimToken = generateUniqueToken();
 
-  db.query(insertTokeDteials, (error, results) => {
-    if (error) {
-      console.error("Error inserting data into CL Details:", error);
-      return res.status(500).json({ error: "Error." });
-    }
-    console.log("Datatatata-------------", results);
-    return res.status(200).json({ message: "Data inserted successfully." });
-  });
+  // const insertTokeDteials = `
+  //   UPDATE ClaimDetails
+  //   SET InsuredToken='${claimToken}'
+  //   WHERE LeadId = ${currentLeadId};
+  // `;
+
+  // db.query(insertTokeDteials, (error, results) => {
+  //   if (error) {
+  //     console.error("Error inserting data into CL Details:", error);
+  //     return res.status(500).json({ error: "Error." });
+  //   }
+  //   console.log("Datatatata-------------", results);
+  //   return res.status(200).json({ message: "Data inserted successfully." });
+  // });
 };
 
 const uploadMedia = async (req, res) => {
