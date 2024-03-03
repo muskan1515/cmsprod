@@ -106,6 +106,7 @@ const uploadDocument = (req, res) => {
     .json({ error: "Error uploading documents ." });
   }
   const currentLeadId = data.leadId || data.data[0]?.leadId;
+  const docName = data.docName
 
   const currentData = data.data;
   const LeadId = currentData[0]?.leadId;
@@ -153,8 +154,8 @@ const uploadDocument = (req, res) => {
             Photo1Longitude,
             Photo1Timestamp
           ) VALUES (
-            '${LeadId}',
-            '${file.docName}',
+            '${LeadId || currentLeadId}',
+            '${file.docName || docName}',
             '${file.Photo1}',
             '${file.Attribute1}',
             '${file.Photo1Latitude}',

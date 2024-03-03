@@ -73,10 +73,10 @@ const createToken = require("../Config/generateJWTToken");
           Please provide the clear copy of all the documents so that the claim processing can be fast or
         <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${sendingToken}&type=${type}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
   
-        Please provide the clear copy of all the documents so that the claim processing can be fast or
+        Please provide the clear Vahicle Videos so that the claim processing can be fast or
         <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${sendingToken}&type=${type}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
   
-        Please provide the clear copy of all the documents so that the claim processing can be fast or
+        Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
         <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${sendingToken}&type=${type}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
   
       Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the

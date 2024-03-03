@@ -464,19 +464,19 @@ import SmartTable from "./SmartTable";
     return index;
   }
 
-//   function getFileNameFromUrl(url) {
-//     // Create a URL object
-//     const urlObject = new URL(url);
+  function getFileNameFromUrl(url) {
+    // Create a URL object
+    const urlObject = new URL(url);
 
-//     // Get the pathname (e.g., '/invoice.pdf')
-//     const pathname = urlObject.pathname;
+    // Get the pathname (e.g., '/invoice.pdf')
+    const pathname = urlObject.pathname;
 
-//     // Split the pathname using '/' and get the last part (filename)
-//     const parts = pathname.split('/');
-//     const filename = parts[parts.length - 1];
+    // Split the pathname using '/' and get the last part (filename)
+    const parts = pathname.split('/');
+    const filename = parts[parts.length - 1];
 
-//     return filename;
-// }
+    return filename;
+}
 
 const location = () => {
   if (navigator.geolocation) {
