@@ -164,7 +164,8 @@ const Index = ({ leadId, token, content ,type}) => {
     if (
       (
         (
-          calculateDocuments() !== Number(document.length) ) 
+          calculateDocuments() )
+          // calculateDocuments() !== Number(document.length) ) 
       )
     ) {
       alert("Please upload all the required data !!!");

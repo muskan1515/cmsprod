@@ -831,6 +831,7 @@ const getFileName = (idx)=>{
   useEffect(() => {
     setChanges(false)
     data.map((docs, index) => {
+      console.log("docs",docs);
       const allInfo = getAllLabelLinks(docs.doc_name);
       const fileName = getFileName(index);
       console.log(docs.doc_name,allInfo)
