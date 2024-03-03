@@ -25,16 +25,18 @@ const S3_BUCKET = "cmsdocs2024";
 const REGION = "ap-south-1";
 
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
 });
 
 console.log(
   "aws,cofgi.update",
-  process.env.AWS_SECRET_ACCESS_KEY,
-  process.env.AWS_ACCESS_KEY_ID,
-  process.env.REGION,
-  process.env.S3_BUCKET
+  process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+  process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+  process.env.NEXT_PUBLIC_REGION,
+  process.env.NEXT_PUBLIC_S3_BUCKET
 );
 
 const myBucket = new AWS.S3({ params: { Bucket: S3_BUCKET }, region: REGION });
