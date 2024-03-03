@@ -10,10 +10,6 @@ const nextConfig = {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "dcrq3m6dx",
     CLOUDINARY_CLOUD_NAME: "dcrq3m6dx",
     NEXT_PUBLIC_CLOUDINARY_API_KEY: "121866971488326",
-    S3_BUCKET:'',
-    REGION:'',
-    AWS_ACCESS_KEY_ID:'',
-    AWS_SECRET_ACCESS_KEY:''
    
   }
   ,
