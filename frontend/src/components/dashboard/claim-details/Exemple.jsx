@@ -1,30 +1,29 @@
-
-  import SmartTable from "./SmartTable";
+import SmartTable from "./SmartTable";
   import { useEffect, useState } from "react";
   import JSZip from "jszip";
-  import dotenv from 'dotenv';
-  import { FaCross, FaDropbox, FaRedo, FaUpload } from "react-icons/fa";
+  import dotenv from "dotenv"
+  import {  FaUpload } from "react-icons/fa";
   import axios from "axios";
   import toast from "react-hot-toast";
-
-  dotenv.config({path:".env.development"});
-
   import AWS from 'aws-sdk';
-  const S3_BUCKET = 'cmsdocs2024';
-  const REGION ='ap-south-1';
 
+
+  dotenv.config();
+  
   AWS.config.update({
-    accessKeyId:process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.REGION,
   });
+  
+  const S3_BUCKET = process.env.S3_BUCKET;
+  
+  const REGION ='ap-south-1';
+  console.log("AWS credentials:", process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY);
+  console.log("AWS region:", process.env.REGION);
+  console.log("S3 bucket:", S3_BUCKET);
+  const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
 
-  console.log("aws,cofgi.update", process.env.AWS_SECRET_ACCESS_KEY,process.env.AWS_ACCESS_KEY_ID,
-  process.env.REGION,process.env.S3_BUCKET);
- 
-
-  const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},
-  region:REGION});
-  // import { useParams } from 'next/navigation'
   const headCells = [
     {
       id: "serial_num",
@@ -468,19 +467,19 @@
     return index;
   }
 
-  function getFileNameFromUrl(url) {
-    // Create a URL object
-    const urlObject = new URL(url);
+//   function getFileNameFromUrl(url) {
+//     // Create a URL object
+//     const urlObject = new URL(url);
 
-    // Get the pathname (e.g., '/invoice.pdf')
-    const pathname = urlObject.pathname;
+//     // Get the pathname (e.g., '/invoice.pdf')
+//     const pathname = urlObject.pathname;
 
-    // Split the pathname using '/' and get the last part (filename)
-    const parts = pathname.split('/');
-    const filename = parts[parts.length - 1];
+//     // Split the pathname using '/' and get the last part (filename)
+//     const parts = pathname.split('/');
+//     const filename = parts[parts.length - 1];
 
-    return filename;
-}
+//     return filename;
+// }
 
 const location = () => {
   if (navigator.geolocation) {
@@ -500,21 +499,10 @@ const location = () => {
   }
 };
 
+
+
 location();
 
-function getFileNameFromUrl(url) {
-  // Create a URL object
-  const urlObject = new URL(url);
-
-  // Get the pathname (e.g., '/invoice.pdf')
-  const pathname = urlObject.pathname;
-
-  // Split the pathname using '/' and get the last part (filename)
-  const parts = pathname.split('/');
-  const filename = parts[parts.length - 1];
-
-  return filename;
-}
 let docCurrentName="Driving license";
 useEffect(()=>{
   setCurrentDoc(docCurrentName)
@@ -852,7 +840,7 @@ const getFileName = (idx)=>{
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
             <a href={info.url} key={idx} target="_blank">
-              {decodeURIComponent(getFileNameFromUrl(info.name))}
+              {decodeURIComponent((info.name))}
             </a>
           ))}
         </div>
