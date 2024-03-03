@@ -85,11 +85,15 @@ const uploadClaimMedia = (req, res) => {
 const uploadDocument = (req, res) => {
   const data = req.body;
 
+  if(!data){
+    res.status(500)
+    .json({ error: "Error uploading documents ." });
+  }
   const currentLeadId = data.leadId || data.data[0]?.leadId;
 
   const currentData = data.data;
-  const LeadId = currentData[0].leadId;
-  currentData.forEach((data, idx) => {
+  const LeadId = currentData[0]?.leadId;
+  currentData?.forEach((data, idx) => {
     let files;
 
     if (data.data) {
@@ -161,7 +165,7 @@ const uploadDocument = (req, res) => {
 
   const insertTokeDteials = `
     UPDATE ClaimDetails
-    SET Token='${claimToken}'
+    SET InsuredToken='${claimToken}'
     WHERE LeadId = ${currentLeadId};
   `;
 

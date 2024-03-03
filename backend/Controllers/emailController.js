@@ -57,8 +57,7 @@ const createToken = require("../Config/generateJWTToken");
           return;
         }
 
-        console.log("path",`https://claims-backend-apis.onrender.com/documents/${leadId}?token=${sendingToken}&type=${type}&content=${""}`)
-  
+     
         const emailContent = `
       Dear Sir/Madam,
   
@@ -72,10 +71,10 @@ const createToken = require("../Config/generateJWTToken");
       ${content}
   
           Please provide the clear copy of all the documents so that the claim processing can be fast or
-        <p><a href=https://claims-backend-apis.onrender.com/documents/${leadId}?token=${sendingToken}&type=${type}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
-  
+        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${sendingToken}&type=${type}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+        
       Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-              claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+            claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
   
     `;
   

@@ -885,22 +885,21 @@ const getSpecificClaim = async (req, res) => {
 
   const getClaimDetails = (req, res) => {
     const { token, leadId } = req.body;
-    res.status(200).send("Successfully found!!");
-    // const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
-    // db.query(sql, [leadId], (err, result2) => {
-    //   if (err) {
-    //     console.error(err);
-    //     res.status(500).send("Internal Server Error");
-    //     return;
-    //   }
-    //   if (result2[0]?.Token === token) {
-    //     // console.log(result2[0].Token === token);
-          //  res.status(200).send("Successfully found!!");
+    const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
+    db.query(sql, [leadId], (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (result2[0]?.InsuredToken === token) {
+        // console.log(result2[0].Token === token);
+           res.status(200).send("Successfully found!!");
        
-    //   } else {
-    //     res.status(403).send("Forbidden Access!");
-    //   }
-    // });
+      } else {
+        res.status(403).send("Forbidden Access!");
+      }
+    });
   };
 
   const updateDriverDetails=(req,res)=>{

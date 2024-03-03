@@ -133,8 +133,8 @@ const Index = ({ leadId, token, content ,type}) => {
     const url = window.location.pathname;
     const inputString = url?.split("&content=")[1];
     const numberOfCommas = (inputString?.split(",").length - 1);
-    if(numberOfCommas < 1)
-     return 10;
+   if(inputString === "")
+    return 10;
     return numberOfCommas;
   }
 
@@ -160,14 +160,10 @@ const Index = ({ leadId, token, content ,type}) => {
       }
     }
 
-    // console.log(!((String(status?.Status) === "1"  && Number(data.length) + Number(document.length) == 5) || (content && content.length !== data.length)))
+    console.log(String(calculateDocuments()) !== String(data.length),data.length,data)
     if (
-      (
-        (
-          calculateDocuments() )
-          // calculateDocuments() !== Number(document.length) ) 
-      )
-    ) {
+      !data)
+       {
       alert("Please upload all the required data !!!");
     } else {
 
@@ -188,7 +184,7 @@ const Index = ({ leadId, token, content ,type}) => {
           window.location.reload();
         })
         .catch((err) => {
-          // isNotValidLink(true);
+          toast.error(err);
         });
     }
   };

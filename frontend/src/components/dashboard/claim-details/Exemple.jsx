@@ -502,6 +502,19 @@ const location = () => {
 
 location();
 
+function getFileNameFromUrl(url) {
+  // Create a URL object
+  const urlObject = new URL(url);
+
+  // Get the pathname (e.g., '/invoice.pdf')
+  const pathname = urlObject.pathname;
+
+  // Split the pathname using '/' and get the last part (filename)
+  const parts = pathname.split('/');
+  const filename = parts[parts.length - 1];
+
+  return filename;
+}
 let docCurrentName="Driving license";
 useEffect(()=>{
   setCurrentDoc(docCurrentName)
@@ -839,7 +852,7 @@ const getFileName = (idx)=>{
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
             <a href={info.url} key={idx} target="_blank">
-              {decodeURIComponent(info.name)}
+              {decodeURIComponent(getFileNameFromUrl(info.name))}
             </a>
           ))}
         </div>
@@ -868,10 +881,6 @@ const getFileName = (idx)=>{
     // data = tempCode;
     setUpdatedCode(tempCode);
   }, [documents,uploadedFiles,changes]);
-
-
-
-  console.log("updatedCode><><><",updatedCode)
 
     return (
       <SmartTable

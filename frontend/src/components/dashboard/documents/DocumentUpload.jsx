@@ -5,8 +5,8 @@ import { useState } from "react";
 import { FaUpload } from "react-icons/fa";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
-import axios from "axios";
 import dotenv from "dotenv";
+import toast from 'react-hot-toast';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -346,7 +346,6 @@ export default function DocumentUpload({
 
   console.log("BLOBB>>>", blob);
 
-  // const uploadFiles = () => {
   //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   //   const params = {
@@ -449,15 +448,18 @@ export default function DocumentUpload({
 
     // Assuming uploadedUrl and uploadedFileName are arrays of strings
     uploadedUrl.forEach((url, index) => {
+      
       const fileName = uploadedFileName[index];
       const params = {
-        ACL: "public-read",
-        Body: url,
-        Bucket: S3_BUCKET,
-        Key: url.name,
-        ContentType: "image/jpeg",
-        ContentDisposition: "inline",
+        ACL:'public-read',
+        Body:url,
+        Bucket:S3_BUCKET,
+        Key:url.name,
+        ContentType: 'image/jpeg',
+        ContentDisposition: 'inline'
       };
+
+
 
       myBucket.putObject(params).send((err, data) => {
         if (err) {
@@ -495,6 +497,22 @@ export default function DocumentUpload({
     setIsVideo(false);
     setUploadedFileName([]);
   };
+
+
+  
+  function getFileNameFromUrl(url) {
+    // Create a URL object
+    const urlObject = new URL(url);
+
+    // Get the pathname (e.g., '/invoice.pdf')
+    const pathname = urlObject.pathname;
+
+    // Split the pathname using '/' and get the last part (filename)
+    const parts = pathname.split('/');
+    const filename = parts[parts.length - 1];
+
+    return filename;
+}
 
   const handleUploadImage = async () => {
     try {
@@ -620,6 +638,8 @@ export default function DocumentUpload({
   };
 
   const checkWithinTheContent = (row) => {
+    if(content==="")
+     return true;
     const present = content.includes(row.doc_name);
 
     return present;
@@ -710,7 +730,7 @@ export default function DocumentUpload({
                       </video>
                     )}
 
-                    <a>{fileName}</a>
+                    <a>{getFileNameFromUrl(fileName)}</a>
                     <div className="row">
                       <div className="col-lg-12">
                         <a
@@ -722,13 +742,6 @@ export default function DocumentUpload({
                         >
                           <span className="flaticon-view"></span>
                         </a>
-                        <button
-                          className="btn btn-color w-25"
-                          title="Remove"
-                          style={{ marginLeft: "5px" }}
-                        >
-                          <span className="flaticon-garbage fs-6"></span>
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -914,7 +927,7 @@ export default function DocumentUpload({
                       width={300}
                       height={200}
                     />
-                    <label className="mb-3">{file.name}</label>
+                    <label className="mb-3">{(file.name)}</label>
                   </>
                 ) : (
                   // Display Video
