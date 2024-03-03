@@ -21,7 +21,6 @@ import {
 dotenv.config({ path: ".env.development" });
 
 import AWS from "aws-sdk";
-import toast from "react-hot-toast";
 const S3_BUCKET = "cmsdocs2024";
 const REGION = "ap-south-1";
 
