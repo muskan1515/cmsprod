@@ -21,6 +21,7 @@ import {
 dotenv.config({ path: ".env.development" });
 
 import AWS from "aws-sdk";
+import toast from "react-hot-toast";
 const S3_BUCKET = "cmsdocs2024";
 const REGION = "ap-south-1";
 
@@ -150,6 +151,18 @@ const data = [
     doc_name: "Payment/cash receipt",
     action: "2021-09-17 19:10:50",
   },
+  {
+    _id: "6144145976c7fe",
+    serial_num: "16",
+    doc_name: "Videos",
+    action: "2021-09-17 19:10:50",
+  },
+  {
+    _id: "6144145976c7fe",
+    serial_num: "17",
+    doc_name: "Images",
+    action: "2021-09-17 19:10:50",
+  },
 ];
 
 export default function DocumentUpload({
@@ -168,6 +181,25 @@ export default function DocumentUpload({
   const [currentLabel, setCurrentLabel] = useState("");
   const [mediaArray, setMediaArray] = useState([]);
   const [change, setChange] = useState(false);
+  const [isVIdeoDisable, setisVIdeoDisable] = useState(true);
+  const [isVIdeoCaptureDisable, setisVIdeoCaptureDisable] = useState(true);
+
+
+  console.log('isVIdeoDisable?>?>?>?>?',isVIdeoDisable);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  useEffect(()=>{
+  const content = urlParams.get('content');
+  const isVideoDisable = content === 'Images';
+  const isVideoCaptureDisable = content === 'Vidoes';
+  setisVIdeoDisable(!isVideoDisable)
+  setisVIdeoCaptureDisable(!isVideoCaptureDisable)
+  
+
+  },[urlParams])
+
+
 
   const getIndex = (label, datas) => {
     let index = -1;
@@ -451,12 +483,12 @@ export default function DocumentUpload({
       
       const fileName = uploadedFileName[index];
       const params = {
-        ACL:'public-read',
-        Body:url,
-        Bucket:S3_BUCKET,
-        Key:url.name,
-        ContentType: 'image/jpeg',
-        ContentDisposition: 'inline'
+        ACL: "public-read",
+        Body: url,
+        Bucket: S3_BUCKET,
+        Key: url.name,
+        ContentType: url.type,
+        ContentDisposition: "inline",
       };
 
 
@@ -464,6 +496,7 @@ export default function DocumentUpload({
       myBucket.putObject(params).send((err, data) => {
         if (err) {
           toast.error("Error while uploading!!");
+          console.log("errrrrrrrr", err);
         } else {
           const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(
             url.name
@@ -604,8 +637,12 @@ export default function DocumentUpload({
 
         mediaRecorder.onstop = async () => {
           const blob = new Blob(chunksRef.current, { type: "video/webm" });
+          const videoFile = new File([blob], "captured_video.mp4", {
+            type: "video/mp4",
+          });
+
           const base64 = await blobToBase64(blob);
-          setUploadedUrl((prevBase64Array) => [...prevBase64Array, base64]);
+          setUploadedUrl((prevBase64Array) => [...prevBase64Array, videoFile]);
           // console.log("Blob>>", blob,chunksRef.current);
           const videoUrl = URL.createObjectURL(blob);
           const name = generateRandomFileName("mp4");
@@ -688,11 +725,18 @@ export default function DocumentUpload({
     };
   }, []);
 
+
   useEffect(() => {
     console.log("uploadedData", uploadedData);
     const getData = () => {
       const tempData = [];
       data.map((row, index) => {
+        console.log('ROWW>>>>',row.doc_name);
+        row.doc_name === "Images"
+          ? setisVIdeoDisable(false)
+          : setisVIdeoDisable(true);
+          setisVIdeoDisable(row.doc_name !== "Images");
+
         const isUploaded = checkIsUploaded(row.doc_name);
         const isDone = checkAlreadyDone(row.doc_name);
         const isAccordingToStatus = content
@@ -881,7 +925,9 @@ export default function DocumentUpload({
               >
                 <FontAwesomeIcon icon={faCamera} />
               </button>
-              <button
+
+
+             {isVIdeoDisable && <button
                 className="btn btn-color w-100 p-1"
                 onClick={handleUploadVideo}
               >
@@ -889,7 +935,7 @@ export default function DocumentUpload({
                 {isCapturingVideo
                   ? "Stop Capture Video"
                   : "Start Capture Video"}
-              </button>
+              </button>}
             </>
           )}
 
@@ -902,14 +948,14 @@ export default function DocumentUpload({
               >
                 <FontAwesomeIcon icon={faXmark} />
               </button>
-
-              <button
-                className="btn btn-color w-100"
-                title="Upload"
-                onClick={uploadFiles}
-              >
-                <FontAwesomeIcon icon={faCloudArrowUp} />
-              </button>
+          
+                <button
+                  className="btn btn-color w-100"
+                  title="Upload"
+                  onClick={uploadFiles}
+                >
+                  <FontAwesomeIcon icon={faCloudArrowUp} />
+                </button>
             </>
           )}
         </div>
@@ -932,7 +978,7 @@ export default function DocumentUpload({
                 ) : (
                   // Display Video
                   <video width={300} height={200} controls>
-                    <source src={media} type="video/webm" />
+                    <source src={file} type="video/webm" />
                     Your browser does not support the video tag.
                   </video>
                 )}

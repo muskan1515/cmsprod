@@ -198,6 +198,18 @@ const data = [
     doc_name: "Payment/cash receipt",
     action: "2021-09-17 19:10:50",
   },
+  {
+    _id: "6144145976c7fe",
+    serial_num: "16",
+    doc_name: "Videos",
+    action: "2021-09-17 19:10:50",
+  },
+  {
+    _id: "6144145976c7fe",
+    serial_num: "17",
+    doc_name: "Images",
+    action: "2021-09-17 19:10:50",
+  },
 ];
 
 export default function Exemple({

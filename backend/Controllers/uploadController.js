@@ -18,15 +18,31 @@ const getReportDocument = (req, res) => {
   });
 };
 
+// const getDocuments = (req, res) => {
+//   const LeadId = req.query.LeadId;
+//   console.log("get", LeadId);
+//   const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
+//   db.query(sql, [LeadId], (err, result) => {
+//     if (err) {
+//       // console.error(err);
+//       res.status(500).send("Internal Server Error");
+//       return;
+//     }
+//     res.send(result);
+//   });
+// };
+
 const getDocuments = (req, res) => {
   const LeadId = req.query.LeadId;
   console.log("get", LeadId);
-  const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
+  const sql = "SELECT DocumentName, GROUP_CONCAT(Photo1) as doc_url, GROUP_CONCAT(Attribute1) as file_name, GROUP_CONCAT(Photo1Latitude) as latitude, GROUP_CONCAT(Photo1Longitude) as longitude, GROUP_CONCAT(Photo1Timestamp) as timestamp  FROM DocumentList  WHERE LeadID = ?  GROUP BY DocumentName;";
   db.query(sql, [LeadId], (err, result) => {
     if (err) {
       // console.error(err);
       res.status(500).send("Internal Server Error");
       return;
+    }else {
+      console.log('Documents result ',result);
     }
     res.send(result);
   });
@@ -99,7 +115,6 @@ const uploadDocument = (req, res) => {
     if (data.data) {
       // Format 1: When data is an array
       files = data.data.flat().map((file) => {
-        console.log("file", file.url);
         return {
           Photo1: file.url,
           Attribute1: file.name,
@@ -126,10 +141,8 @@ const uploadDocument = (req, res) => {
         },
       ];
     }
-    console.log("FILSE------", files);
 
     files.forEach((file) => {
-      console.log("dataaaaaaaaaaa", file);
       const insertUploadDetails = `
           INSERT INTO DocumentList (
             LeadId,

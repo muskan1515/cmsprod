@@ -36,6 +36,8 @@ const Index = ({ leadId, token, content ,type}) => {
     { name: "Reinspection photographs" },
     { name: "Repair Invoice" },
     { name: "Payment/cash receipt" },
+    { name: "Images" },
+    { name: "Videos" },
   ];
 
   useEffect(() => {
@@ -142,7 +144,7 @@ const Index = ({ leadId, token, content ,type}) => {
 
 
     let data = [];
-    for (let i = 0; i < 15; i = i + 1) {
+    for (let i = 0; i < 17; i = i + 1) {
       const temp = types[i].name;
       const tempArray = [];
       uploadedData.map((data, index) => {

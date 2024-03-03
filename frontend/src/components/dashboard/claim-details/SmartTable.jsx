@@ -108,6 +108,7 @@ function SmartTable(props) {
         });
         return bool;
       });
+      console.log("tempData", tempData)
       setData(tempData);
     }
   }, props.searchDebounceTime ?? 800);
