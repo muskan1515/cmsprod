@@ -75,7 +75,18 @@ const addClaim =  (req, res) => {
         ${parseInt(IsActive)}
       );
     `;
+    
+  const generateReference = (leadId) => {
+      const firstThreeLetters = Region?.slice(0, 3);
   
+      const now = new Date();
+      const yy = String(now.getFullYear()).slice(-2);;
+      const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
+      const result = `${firstThreeLetters}/${yy}-${mm}/${leadId}`;
+  
+      return result;
+    };
+    
     db.query(insertClaimDetails, (error, results) => {
       if (error) {
         console.error("Error inserting data into ClaimDetails:", error);
