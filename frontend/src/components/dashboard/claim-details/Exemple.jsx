@@ -1,26 +1,23 @@
 import SmartTable from "./SmartTable";
   import { useEffect, useState } from "react";
   import JSZip from "jszip";
-  import dotenv from "dotenv"
   import {  FaUpload } from "react-icons/fa";
   import axios from "axios";
   import toast from "react-hot-toast";
   import AWS from 'aws-sdk';
 
 
-  dotenv.config();
-  
   AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.REGION,
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+    region: process.env.NEXT_PUBLIC_REGION,
   });
   
-  const S3_BUCKET = process.env.S3_BUCKET;
+  const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
   
   const REGION ='ap-south-1';
-  console.log("AWS credentials:", process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY);
-  console.log("AWS region:", process.env.REGION);
+  console.log("AWS credentials:", process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY);
+  console.log("AWS region:", process.env.NEXT_PUBLIC_REGION);
   console.log("S3 bucket:", S3_BUCKET);
   const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
 
