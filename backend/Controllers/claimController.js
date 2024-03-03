@@ -95,7 +95,15 @@ const addClaim =  (req, res) => {
           }
           console.log(results);
           const addLeadId = results[0].LeadId;
-  
+            const ReferenceNo=  generateReference(addLeadId)
+          const update_query = `UPDATE ClaimDetails SET ReferenceNo = '${ReferenceNo}' where LeadID=${addLeadId}`
+          db.query(update_query, (error, results) => {
+            if (error) {
+              console.error("Error updating data into Reference Number:", error);
+              return res
+                .status(500)
+                .json({ error: "Error updating data into Reference Number." });
+            }})
           const insertVehicleDetails = `
       INSERT INTO VehicleDetails (
         RegisteredNumber,
