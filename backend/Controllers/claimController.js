@@ -902,26 +902,31 @@ const getSpecificClaim = async (req, res) => {
     });
   };
 
-  const getClaimDetails = (req, res) => {
-    const { token, leadId } = req.body;
-      res.status(200).send("Successfully found!!");
-    const sql = "SELECT InsuredToken FROM ClaimDetails WHERE LeadId =?";
-    // db.query(sql, [leadId], (err, result2) => {
-    //   if (err) {
-    //     console.error(err);
-    //     res.status(500).send("Internal Server Error");
-    //     return;
-    //   }
-    //   console.log(result2);
-    //   if (result2[0]?.InsuredToken === token) {
-    //     // console.log(result2[0].Token === token);
-    //        res.status(200).send("Successfully found!!");
+   const getClaimDetails = (req, res) => {
+    const { token,type, leadId } = req.body;
+   
+    const sql = "SELECT InsuredToken ,ImageToken , VideoToken FROM ClaimDetails WHERE LeadId =?";
+    db.query(sql, [leadId], (err, result2) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+
+      const stat1 =  result2[0]?.InsuredToken === token && String(type) === "1";
+      const stat2 =  result2[0]?.ImageToken === token && String(type) === "2";
+      const stat3 =  result2[0]?.VideoToken === token && String(type) === "3";
+
+      if (stat1 || stat2 || stat3) {
+        // console.log(result2[0].Token === token);
+           res.status(200).send("Successfully found!!");
        
-    //   } else {
-    //     res.status(403).send("Forbidden Access!");
-    //   }
-    // });
+      }  else {
+        res.status(403).send("Forbidden Access!");
+      }
+    });
   };
+
 
   const updateDriverDetails=(req,res)=>{
 
