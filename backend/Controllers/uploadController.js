@@ -101,12 +101,12 @@ const uploadClaimMedia = (req, res) => {
 const uploadDocument = (req, res) => {
   const data = req.body;
 
+  const type = data.type;
   if(!data){
     res.status(500)
     .json({ error: "Error uploading documents ." });
   }
   const currentLeadId = data.leadId || data.data[0]?.leadId;
-  const docName = data.docName
 
   const currentData = data.data;
   const LeadId = currentData[0]?.leadId;
@@ -116,6 +116,7 @@ const uploadDocument = (req, res) => {
     if (data.data) {
       // Format 1: When data is an array
       files = data.data.flat().map((file) => {
+        console.log("file", file.url);
         return {
           Photo1: file.url,
           Attribute1: file.name,
@@ -142,8 +143,10 @@ const uploadDocument = (req, res) => {
         },
       ];
     }
+    console.log("FILSE------", files);
 
     files.forEach((file) => {
+      console.log("dataaaaaaaaaaa", file);
       const insertUploadDetails = `
           INSERT INTO DocumentList (
             LeadId,
@@ -154,8 +157,8 @@ const uploadDocument = (req, res) => {
             Photo1Longitude,
             Photo1Timestamp
           ) VALUES (
-            '${LeadId || currentLeadId}',
-            '${file.docName || docName}',
+            '${LeadId}',
+            '${file.docName}',
             '${file.Photo1}',
             '${file.Attribute1}',
             '${file.Photo1Latitude}',
@@ -175,24 +178,32 @@ const uploadDocument = (req, res) => {
     });
   });
 
-  return res.status(200).json({ message: "Data inserted successfully." });
+  const claimToken = generateUniqueToken();
 
-  // const claimToken = generateUniqueToken();
 
-  // const insertTokeDteials = `
-  //   UPDATE ClaimDetails
-  //   SET InsuredToken='${claimToken}'
-  //   WHERE LeadId = ${currentLeadId};
-  // `;
+  const insertTokeDteials =  String(type) === "1" ?  `
+    UPDATE ClaimDetails
+    SET InsuredToken='${claimToken}'
+    WHERE LeadId = ${currentLeadId};
+      ` : String(type) === "2" ?  `
+      UPDATE ClaimDetails
+      SET ImageToken='${claimToken}'
+      WHERE LeadId = ${currentLeadId};
+    `
+    :  `
+    UPDATE ClaimDetails
+    SET VideoToken='${claimToken}'
+    WHERE LeadId = ${currentLeadId};
+    `;
 
-  // db.query(insertTokeDteials, (error, results) => {
-  //   if (error) {
-  //     console.error("Error inserting data into CL Details:", error);
-  //     return res.status(500).json({ error: "Error." });
-  //   }
-  //   console.log("Datatatata-------------", results);
-  //   return res.status(200).json({ message: "Data inserted successfully." });
-  // });
+  db.query(insertTokeDteials, (error, results) => {
+    if (error) {
+      console.error("Error inserting data into CL Details:", error);
+      return res.status(500).json({ error: "Error." });
+    }
+    console.log("Datatatata-------------", results);
+    return res.status(200).json({ message: "Data inserted successfully." });
+  });
 };
 
 const uploadMedia = async (req, res) => {
