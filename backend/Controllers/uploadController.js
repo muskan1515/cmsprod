@@ -109,7 +109,7 @@ const uploadDocument = (req, res) => {
   const currentLeadId = data.leadId || data.data[0]?.leadId;
 
   const currentData = data.data;
-  const LeadId = currentData[0]?.leadId;
+  let LeadId = currentData[0]?.leadId;
   currentData?.forEach((data, idx) => {
     let files;
 
@@ -130,6 +130,7 @@ const uploadDocument = (req, res) => {
       });
     } else {
       // Format 2: When url is directly provided
+      LeadId = data.leadId;
       files = [
         {
           Photo1: data.url,
