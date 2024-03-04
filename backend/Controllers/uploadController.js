@@ -128,9 +128,33 @@ const uploadDocument = (req, res) => {
           Photo1Longitude: file.location?.split(",")[1],
         };
       });
+       const claimToken = generateUniqueToken();
+
+
+  const insertTokeDteials =  String(type) === "1" ?  `
+    UPDATE ClaimDetails
+    SET InsuredToken='${claimToken}'
+    WHERE LeadId = ${LeadId};
+      ` : String(type) === "2" ?  `
+      UPDATE ClaimDetails
+      SET ImageToken='${claimToken}'
+      WHERE LeadId = ${LeadId};
+    `
+    :  `
+    UPDATE ClaimDetails
+    SET VideoToken='${claimToken}'
+    WHERE LeadId = ${LeadId};
+    `;
+
+  db.query(insertTokeDteials, (error, results) => {
+    if (error) {
+      console.error("Error inserting data into CL Details:", error);
+      return res.status(500).json({ error: "Error." });
+    }
+  });
     } else {
       // Format 2: When url is directly provided
-      LeadId = data.leadId;
+     
       files = [
         {
           Photo1: data.url,
@@ -175,36 +199,11 @@ const uploadDocument = (req, res) => {
             .status(500)
             .json({ error: "Error inserting data into DocumentDetails." });
         }
+         return res.status(200).json({ message: "Data inserted successfully." });
       });
     });
   });
 
-  const claimToken = generateUniqueToken();
-
-
-  const insertTokeDteials =  String(type) === "1" ?  `
-    UPDATE ClaimDetails
-    SET InsuredToken='${claimToken}'
-    WHERE LeadId = ${LeadId};
-      ` : String(type) === "2" ?  `
-      UPDATE ClaimDetails
-      SET ImageToken='${claimToken}'
-      WHERE LeadId = ${LeadId};
-    `
-    :  `
-    UPDATE ClaimDetails
-    SET VideoToken='${claimToken}'
-    WHERE LeadId = ${LeadId};
-    `;
-
-  db.query(insertTokeDteials, (error, results) => {
-    if (error) {
-      console.error("Error inserting data into CL Details:", error);
-      return res.status(500).json({ error: "Error." });
-    }
-    console.log("Datatatata-------------", results);
-    return res.status(200).json({ message: "Data inserted successfully." });
-  });
 };
 
 const uploadMedia = async (req, res) => {
