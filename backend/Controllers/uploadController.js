@@ -131,27 +131,27 @@ const uploadDocument = (req, res) => {
        const claimToken = generateUniqueToken();
 
 
-  const insertTokeDteials =  String(type) === "1" ?  `
-    UPDATE ClaimDetails
-    SET InsuredToken='${claimToken}'
-    WHERE LeadId = ${LeadId};
-      ` : String(type) === "2" ?  `
-      UPDATE ClaimDetails
-      SET ImageToken='${claimToken}'
-      WHERE LeadId = ${LeadId};
-    `
-    :  `
-    UPDATE ClaimDetails
-    SET VideoToken='${claimToken}'
-    WHERE LeadId = ${LeadId};
-    `;
-
-  db.query(insertTokeDteials, (error, results) => {
-    if (error) {
-      console.error("Error inserting data into CL Details:", error);
-      return res.status(500).json({ error: "Error." });
-    }
-  });
+      const insertTokeDteials =  String(type) === "1" ?  `
+        UPDATE ClaimDetails
+        SET InsuredToken='${claimToken}'
+        WHERE LeadId = ${LeadId};
+          ` : String(type) === "2" ?  `
+          UPDATE ClaimDetails
+          SET ImageToken='${claimToken}'
+          WHERE LeadId = ${LeadId};
+        `
+        :  `
+        UPDATE ClaimDetails
+        SET VideoToken='${claimToken}'
+        WHERE LeadId = ${LeadId};
+        `;
+    
+      db.query(insertTokeDteials, (error, results) => {
+        if (error) {
+          console.error("Error inserting data into CL Details:", error);
+          return res.status(500).json({ error: "Error." });
+        }
+      });
     } else {
       // Format 2: When url is directly provided
      
@@ -167,6 +167,30 @@ const uploadDocument = (req, res) => {
           Photo1Longitude: data.Location?.split(",")[1],
         },
       ];
+
+       const claimToken = generateUniqueToken();
+      
+       const insertTokeDteials =  String(type) === "1" ?  `
+          UPDATE ClaimDetails
+          SET InsuredToken='${claimToken}'
+          WHERE LeadId = ${data.leadId};
+            ` : String(type) === "2" ?  `
+            UPDATE ClaimDetails
+            SET ImageToken='${claimToken}'
+            WHERE LeadId = ${data.leadId};
+          `
+          :  `
+          UPDATE ClaimDetails
+          SET VideoToken='${claimToken}'
+          WHERE LeadId = ${data.leadId};
+          `;
+      
+        db.query(insertTokeDteials, (error, results) => {
+          if (error) {
+            console.error("Error inserting data into CL Details:", error);
+            return res.status(500).json({ error: "Error." });
+          }
+        });
     }
     console.log("FILSE------", files);
 
