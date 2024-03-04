@@ -185,16 +185,16 @@ const uploadDocument = (req, res) => {
   const insertTokeDteials =  String(type) === "1" ?  `
     UPDATE ClaimDetails
     SET InsuredToken='${claimToken}'
-    WHERE LeadId = ${currentLeadId};
+    WHERE LeadId = ${LeadId};
       ` : String(type) === "2" ?  `
       UPDATE ClaimDetails
       SET ImageToken='${claimToken}'
-      WHERE LeadId = ${currentLeadId};
+      WHERE LeadId = ${LeadId};
     `
     :  `
     UPDATE ClaimDetails
     SET VideoToken='${claimToken}'
-    WHERE LeadId = ${currentLeadId};
+    WHERE LeadId = ${LeadId};
     `;
 
   db.query(insertTokeDteials, (error, results) => {
