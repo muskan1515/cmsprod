@@ -140,11 +140,11 @@ const Index = ({ leadId, token, content ,type}) => {
     return numberOfCommas;
   }
 
-  const onSubmitHandler = () => {
+   const onSubmitHandler = () => {
 
 
     let data = [];
-    for (let i = 0; i < 17; i = i + 1) {
+    for (let i = 0; i < 15; i = i + 1) {
       const temp = types[i].name;
       const tempArray = [];
       uploadedData.map((data, index) => {
@@ -172,7 +172,7 @@ const Index = ({ leadId, token, content ,type}) => {
       const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
       
       
-      const payload = JSON.stringify({ data: data });
+      const payload = JSON.stringify({type:type, data: data });
 
       toast.loading("Uploading!");
       axios.post("/api/uploadDocument", payload, {
@@ -190,7 +190,6 @@ const Index = ({ leadId, token, content ,type}) => {
         });
     }
   };
-
   return (
     <>
       {/* <!-- Main Header Nav --> */}
