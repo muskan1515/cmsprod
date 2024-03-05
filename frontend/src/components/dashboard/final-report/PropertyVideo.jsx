@@ -30,7 +30,7 @@ const materials = [
 const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [isOpen, setOpen] = useState(false);
 
-  const [policyType, setPolicyType] = useState("");
+  const [policyType, setPolicyType] = useState('');
   const [includeDepreciation, setIncludeDepreciation] = useState(true);
 
   const [claim, setClaim] = useState([]);
@@ -40,22 +40,23 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [lessImposed, setLessImposed] = useState(0);
   const [other, setOther] = useState(0);
 
-  const [VehicleUpto, setVehicleUpto] = useState("");
+  const [VehicleUpto,setVehicleUpto]=useState("");
 
-  const [metalSalvageValue, setMetalSalvageValue] = useState(5);
-  const [lessExcess, setLessExcess] = useState(0);
+  const [metalSalvageValue,setMetalSalvageValue]=useState(5);
+  const [lessExcess,setLessExcess]=useState(0);
   const [currentGst, setCurrentGst] = useState(0);
 
   const [overallMetalDep, setOverallMetailDep] = useState(0);
   const [totalAgeOfvehicle, setTotalAgeOfVehicle] = useState(0);
 
-  const [InspectionDate, setInspectionDate] = useState("");
+  const [InspectionDate,setInspectionDate]=useState("");
   const [totalAssessed, setTotalAssessed] = useState(0);
   const [totalEstimate, setTotalEstimate] = useState(0);
 
   const [taxAmount, setTaxAmount] = useState(0);
+  
 
-  const [DateOfBirth, setDateOfBirth] = useState("");
+  const [DateOfBirth,setDateOfBirth]=useState("");
 
   const [allDepreciations, setAllDepreciations] = useState([]);
 
@@ -81,23 +82,27 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [IMT, setIMT] = useState(0);
   const [phyCheck, setphyCheck] = useState();
 
-  const [allNewParts, setallNewParts] = useState([]);
+  const [allNewParts,setallNewParts]=useState([]);
 
-  useEffect(() => {
-    console.log("allNewParts", allNewParts);
 
-    let total = 0;
-    allNewParts.map((row, index) => {
-      if (String(row.type) === "Metal") {
-        const assessed = Number(row.assessed) * Number(row.qa);
-        const gst = Number(assessed * Number(row.gst)) / 100;
-        const add = row.isActive ? assessed + gst : 0;
-        total = total + add;
+  useEffect(()=>{
+
+    console.log("allNewParts",allNewParts);
+
+      let total =0;
+    allNewParts.map((row,index)=>{
+      if(String(row.type) === "Metal"){
+        const assessed = Number(row.assessed)*Number(row.qa);
+        const gst = Number(assessed * Number(row.gst))/100;
+        const add = row.isActive ? assessed+gst:0;
+        total = total +  add;
       }
-    });
+    })
     console.log(total);
-  }, [allNewParts]);
-
+  },[allNewParts]);
+  
+  
+  
   const [InsuranceCompanyNameAddress, setInsuranceCompanyNameAddress] =
     useState("");
 
@@ -143,20 +148,27 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       });
   }, []);
 
-  const [totalMetalRows, settotalMetalRows] = useState(0);
-  const [DepreciationValue, setDepreciationValue] = useState(0);
 
-  const calculateDepreciation = () => {};
+  const [totalMetalRows,settotalMetalRows]=useState(0);
+  const [DepreciationValue,setDepreciationValue]=useState(0);
+
+  const calculateDepreciation = ()=>{
+
+  }
 
   const returnTotal = () => {
     const a =
       Number(totalLabrorAssessed) +
       Number(totalPartsAssessed) +
       (Number(LessExcess) - Number(LessImposed) + Number(Other));
-    const b = (Number(totalMetalRows) * Number(metalSalvageValue)) / 100;
+    const b =
+      (Number(totalMetalRows) *
+        Number(metalSalvageValue)) /
+      100;
 
     return a - b > 1 ? a - b : 0;
   };
+
 
   const calculateGSTValue = (original, gstValue, gst) => {
     if (gst % 2 !== 0) {
@@ -167,18 +179,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const calculateGSTWithPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
-    if (String(type) === "1") {
-      return claim?.claimDetails?.PolicyType === "Regular"
-        ? (Number(original) * 12.5) / 100
-        : 0;
+    if (String(type) === "1" ) {
+      return claim?.claimDetails?.PolicyType === "Regular" ? (Number(original) * 12.5) / 100 : 0;
     }
     return 0;
   };
 
   const calculateGSTWithoutPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
-    if (String(type) === "1" && String((policyType) === "Regular" || String(policyType)==="") ) {
-
+    if (String(type) === "1" && gst % 2 === 0) {
       return (Number(original) * 12.5) / 100;
     }
     return 0;
@@ -191,61 +200,65 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     return 0;
   };
 
+  
   // summary states
-  const [TotalLabor, setTotalLabor] = useState("");
-  const [TotalEstimate, setTotalEstimateSum] = useState("");
-  const [LessExcess, setLessExcessSum] = useState(0);
-  const [ExpectedSalvage, setExpectedSalvage] = useState("");
-  const [MetalPercent, setMetalPercent] = useState(5);
-  const [RemarkOnSalvage, setRemarkOnSalvage] = useState("");
-  const [TotalCostOfParts, setTotalCostOfParts] = useState("");
-  const [Other, setOtherSum] = useState(0);
-  const [OtherRemark, setOtherRemark] = useState("");
-  const [GrandTotal, setGrandTotal] = useState(0);
-  const [DepreciationOnParts, setDepreciationOnParts] = useState("");
-  const [NetAssessedAmount, setNetAssessedAmount] = useState("");
-  const [SavageDepreciationDetails, setSavageDepreciationDetails] =
-    useState("");
-  const [CashLess, setCashLess] = useState(0);
-  const [NoteOfSelf, setNoteOfSelf] = useState("");
-  const [RepairAutoDate, setRepairAutoDate] = useState("");
-  const [RepairCompletionDate, setRepairCompletionDate] = useState("");
-  const [PartyAgreed, setPartyAgreed] = useState("");
-  const [ReasonThereofDelay, setReasonThereofDelay] = useState("");
-  const [AnyFurtherConversation, setAnyFurtherConversation] = useState("");
-  const [RepairingPhotoDate, setRepairingPhotoDate] = useState("");
-  const [ReinspectionDate, setReinspectionDate] = useState("");
-  const [SalveDestroy, setSalveDestroy] = useState("");
-  const [BillNo, setBillNo] = useState("");
-  const [BillDate, setBillDate] = useState("");
-  const [LessImposed, setLessImposedSum] = useState(0);
-  const [Endurance, setEndurance] = useState("");
+  const [TotalLabor,setTotalLabor]=useState("");
+  const [TotalEstimate,setTotalEstimateSum]=useState("");
+  const [LessExcess,setLessExcessSum]=useState(0);
+  const [ExpectedSalvage,setExpectedSalvage]=useState("");
+  const [MetalPercent,setMetalPercent]=useState(5);
+  const [RemarkOnSalvage,setRemarkOnSalvage]=useState("");
+  const [TotalCostOfParts,setTotalCostOfParts]=useState("");
+  const [Other,setOtherSum]=useState(0);
+  const[OtherRemark,setOtherRemark]=useState("");
+  const [GrandTotal,setGrandTotal]=useState(0);
+  const [DepreciationOnParts,setDepreciationOnParts]=useState("");
+  const [NetAssessedAmount,setNetAssessedAmount]=useState("");
+  const [SavageDepreciationDetails,setSavageDepreciationDetails]=useState("");
+  const [CashLess,setCashLess]=useState(0);
+  const [NoteOfSelf,setNoteOfSelf]=useState("");
+  const[RepairAutoDate,setRepairAutoDate]=useState("");
+  const [RepairCompletionDate,setRepairCompletionDate]=useState("");
+  const [PartyAgreed,setPartyAgreed]=useState("");
+  const [ReasonThereofDelay,setReasonThereofDelay]=useState("");
+  const [AnyFurtherConversation,setAnyFurtherConversation]=useState("");
+  const [RepairingPhotoDate,setRepairingPhotoDate]=useState("");
+  const [ReinspectionDate,setReinspectionDate]=useState("");
+  const [SalveDestroy,setSalveDestroy]=useState("");
+  const [BillNo,setBillNo]=useState(""); 
+  const [BillDate,setBillDate]=useState("");
+  const [LessImposed,setLessImposedSum]=useState(0);
+  const [Endurance,setEndurance]=useState("");
 
-  const [BillAmount, setBillAmount] = useState("");
+  const[BillAmount,setBillAmount]=useState("");
 
-  const [FinalReportNotes, setFinalReportNotes] = useState("");
+  const [FinalReportNotes,setFinalReportNotes]=useState("");
 
-  useEffect(() => {
-    let dep = 0;
 
-    let total = 0;
-    allNewParts.map((row, index) => {
-      if (String(row.type) === "Metal") {
-        const assessed = Number(row.assessed) * Number(row.qa);
-        const gst = Number(assessed * Number(row.gst)) / 100;
-        const add = row.isActive ? assessed + gst : 0;
-        total = total + add;
-      } else {
-        const assessed = Number(row.assessed) * Number(row.qa);
-        const gst = Number(assessed * Number(12.5)) / 100;
-        const add = row.isActive ? assessed + gst : 0;
-        dep = dep + add;
-      }
-    });
-    setDepreciationValue(
-      claim?.claimDetails?.PolicyType === "Regular" ? dep : 0
-    );
-  }, [allNewParts]);
+
+useEffect(()=>{
+
+  let dep = 0;
+
+    let total =0;
+  allNewParts.map((row,index)=>{
+    if(String(row.type) === "Metal"){
+      const assessed = Number(row.assessed)*Number(row.qa);
+      const gst = Number(assessed * Number(row.gst))/100;
+      const add = row.isActive ? assessed+gst:0;
+      total = total +  add;
+    }
+    
+    else{
+      const assessed = Number(row.assessed)*Number(row.qa);
+      const gst = Number(assessed * Number(12.5))/100;
+      const add = row.isActive ? assessed+gst:0;
+      dep = dep +  add;
+    }
+  })
+  setDepreciationValue(claim?.claimDetails?.PolicyType === "Regular" ? dep : 0);
+},[allNewParts]);
+
 
   useEffect(() => {
     let total_estimate = 0,
@@ -254,7 +267,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       total_taxable_amount = 0,
       total_tax = 0,
       total_aassessed_wihtout_tax = 0;
-
+      
     allRows.map((row, index) => {
       if (String(row.isActive) === "1") {
         const current_row_estimate =
@@ -265,21 +278,17 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     });
     allRows.map((row, index) => {
       if (String(row.isActive) === "1") {
-        const dep =
-          row.type === 1 &&
-          (String(policyType) === "Regular" || String(policyType) === "null")
-            ? (Number(row.assessed) * Number(12.5)) / 100
-            : 0;
+        const dep = row.type === 1 && (String(policyType) === "Regular" || String(policyType) === "null") ?
+        (Number(row.assessed)*Number(12.5))/100:0;
 
-        console.log(index, row.type, dep, policyType);
+        console.log(index,row.type,dep,policyType);
 
         const current_row_assessed =
           Number(row?.assessed) -
-          calculateGSTWithPaintValue(row?.assessed, row.type, row.gst) -
-          dep;
-
-        console.log("Policy Type", policyType);
-
+          calculateGSTWithPaintValue(row?.assessed, row.type, row.gst)-dep;
+      
+          console.log("Policy Type",policyType)
+       
         total_taxable_amount =
           total_taxable_amount +
           (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
@@ -292,12 +301,12 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         total_assessed = total_assessed + Number(row?.assessed);
 
         const remained_assessed_paint_dep =
-        row.gst % 2 == 0 ? 
-          (row?.assessed) -
-          calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst) : 0;
-          console.log("labour",index,row.assessed,calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst),remained_assessed_paint_dep,row.gst);
-        
-        total_aassessed_wihtout_tax += remained_assessed_paint_dep;
+          Number(row?.assessed) -
+          calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst);
+        total_aassessed_wihtout_tax =
+          total_aassessed_wihtout_tax + (row.gst % 2 === 0)
+            ? remained_assessed_paint_dep
+            : 0;
 
         total_tax = total_tax + current_row_assessed_tax;
         total_paint =
@@ -308,35 +317,24 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setTotalAssessed(total_assessed);
     setTotalLabrorAssessed(total_assessed);
     setTotalLabrorEstimate(total_estimate);
-    console.log("setTotalTaxbleAmount", total_taxable_amount);
+    console.log("setTotalTaxbleAmount",total_taxable_amount)
     setTotalTaxbleAmount(total_taxable_amount);
     setTotalEstimate(total_estimate);
-    setGrandTotal(
-      Number(total_assessed) +
-        -(Number(LessExcess) + Number(LessImposed) + Number(Other))
-    );
+    setGrandTotal(Number(total_assessed) + -
+    (Number(LessExcess) + Number(LessImposed) + Number(Other)))
 
     console.log("total_aassessed_wihtout_tax", total_aassessed_wihtout_tax);
     settotalRemainingAssessed(total_aassessed_wihtout_tax);
     setTaxAmount((total_taxable_amount * Number(currentGst)) / 100);
     setLaborWOPaint(total_paint);
     setReload(false);
-  }, [
-    claim,
-    toggleEstimate,
-    currentGst,
-    reload,
-    allRows,
-    toggleEstimate,
-    LessExcess,
-    LessImposed,
-    Other,
-  ]);
+  }, [claim,toggleEstimate, currentGst, reload, allRows, toggleEstimate,LessExcess,LessImposed,Other]);
 
   useEffect(() => {
     calculateVehicleAge();
     calculateDepreciationOnMetal();
   }, [claim]);
+
 
   const [subType, setSubType] = useState("Motor");
 
@@ -403,7 +401,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [VehicleOdometerReading, setVehicleOdometerReading] = useState("");
   const [VehiclePreAccidentCondition, setVehiclePreAccidentCondition] =
     useState("Average");
-  const [AccidentTime, setAccidentTime] = useState("");
+const [AccidentTime,setAccidentTime]=useState("");
   const [VehicleModel, setVehicleModel] = useState("");
   const [VehicleTaxParticulars, setVehicleTaxParticulars] = useState("");
   const [VehicleSeatingCapacity, setVehicleSeatingCapacity] = useState();
@@ -483,197 +481,108 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
       return formattedOneYearLater;
     }
-    return "";
-  };
+    return '';
+  }
 
-  useEffect(() => {
-    setGrandTotal(
-      totalLabrorAssessed +
-        totalPartsAssessed -
-        lessExcess -
-        lessImposed -
-        Other
-    );
-  }, [totalLabrorAssessed, totalPartsAssessed, lessExcess, lessImposed, Other]);
+  useEffect(()=>{
+
+    setGrandTotal(totalLabrorAssessed+totalPartsAssessed-lessExcess-lessImposed-Other)
+  },[totalLabrorAssessed,totalPartsAssessed,lessExcess,lessImposed,Other]);
 
   console.log(PolicyPeriodStart);
 
-  const convertStringTime = (inputDateString) => {
+  
+  const convertStringTime=(inputDateString)=>{
     const parsedDate = new Date(inputDateString);
 
-    // Extract day, month, and year components
-    const day = parsedDate.getDate();
-    const month = parsedDate.getMonth() + 1; // Note: Months are zero-indexed
-    const year = parsedDate.getFullYear();
+  // Extract day, month, and year components
+  const day = parsedDate.getDate();
+  const month = parsedDate.getMonth() + 1; // Note: Months are zero-indexed
+  const year = parsedDate.getFullYear();
+  
+  // Format the components to dd/mm/yyyy format
+  const formattedDateString = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+  
+  console.log("formatted",formattedDateString)
+  return formattedDateString;
+  }
 
-    // Format the components to dd/mm/yyyy format
-    const formattedDateString = `${day.toString().padStart(2, "0")}/${month
-      .toString()
-      .padStart(2, "0")}/${year}`;
-
-    console.log("formatted", formattedDateString);
-    return formattedDateString;
-  };
 
   useEffect(() => {
-    //
-    setTotalLoss(
-      claim?.claimDetails?.TotalLoss ? claim?.claimDetails?.TotalLoss : 0
-    );
-    setIMT(claim?.claimDetails?.IMT ? claim?.claimDetails?.IMT : 0);
 
-    setDateOfBirth(claim?.driverDetails?.DateOfBirth || "");
+  
+    //
+    setTotalLoss(claim?.claimDetails?.TotalLoss ? claim?.claimDetails?.TotalLoss : 0); 
+    setIMT(claim?.claimDetails?.IMT ? claim?.claimDetails?.IMT : 0); 
+
+    setDateOfBirth((claim?.driverDetails?.DateOfBirth) || "");
     //summary states
 
-    setAccidentTime(
-      claim?.accidentDetails?.TimeOfAccident
-        ? claim?.accidentDetails?.TimeOfAccident
-        : ""
-    );
-    setFinalReportNotes(
-      claim?.summaryDetails?.SummaryNotes
-        ? claim?.summaryDetails?.SummaryNotes
-        : ""
-    );
-    setTotalLabor(
-      claim?.summaryDetails?.TotalLabor ? claim?.summaryDetails?.TotalLabor : 0
-    );
-    setTotalEstimateSum(
-      claim?.summaryDetails?.TotalEstimate
-        ? claim?.summaryDetails?.TotalEstimate
-        : 0
-    );
-    setLessExcess(
-      claim?.summaryDetails?.LessExcess ? claim?.summaryDetails?.LessExcess : 0
-    );
-    setExpectedSalvage(
-      claim?.summaryDetails?.ExpectedSalvage
-        ? claim?.summaryDetails?.ExpectedSalvage
-        : 0
-    );
-    setMetalPercent(
-      claim?.summaryDetails?.MetalPercent
-        ? claim?.summaryDetails?.MetalPercent
-        : 0
-    );
-    setRemarkOnSalvage(
-      claim?.summaryDetails?.RemarkOnSalvage
-        ? claim?.summaryDetails?.RemarkOnSalvage
-        : ""
-    );
-    setTotalCostOfParts(
-      claim?.summaryDetails?.TotalCostOfParts
-        ? claim?.summaryDetails?.TotalCostOfParts
-        : 0
-    );
-    setOtherSum(
-      claim?.summaryDetails?.Other ? claim?.summaryDetails?.Other : 0
-    );
-    setGrandTotal(
-      claim?.summaryDetails?.GrandTotal ? claim?.summaryDetails?.GrandTotal : 0
-    );
-    setDepreciationOnParts(
-      claim?.summaryDetails?.DepreciationOnParts
-        ? claim?.summaryDetails?.DepreciationOnParts
-        : ""
-    );
-    setNetAssessedAmount(
-      claim?.summaryDetails?.NetAssessedAmount
-        ? claim?.summaryDetails?.NetAssessedAmount
-        : ""
-    );
-    setSavageDepreciationDetails(
-      claim?.summaryDetails?.SavageDepreciationDetails
-        ? claim?.summaryDetails?.SavageDepreciationDetails
-        : ""
-    );
-    console.log(String(claim?.summaryDetails?.CashLess) === "1.00");
-    setCashLess(String(claim?.summaryDetails?.CashLess) === "1.00" ? 1 : 0);
-    setNoteOfSelf(
-      claim?.summaryDetails?.NoteOfSelf ? claim?.summaryDetails?.NoteOfSelf : ""
-    );
-    setRepairAutoDate(
-      claim?.summaryDetails?.RepairAutoDate
-        ? claim?.summaryDetails?.RepairAutoDate
-        : ""
-    );
-    setRepairCompletionDate(
-      claim?.summaryDetails?.RepairCompletionDate
-        ? claim?.summaryDetails?.RepairCompletionDate
-        : ""
-    );
-    setPartyAgreed(
-      claim?.summaryDetails?.PartyAgreed
-        ? claim?.summaryDetails?.PartyAgreed
-        : ""
-    );
-    setReasonThereofDelay(
-      claim?.summaryDetails?.ReasonThereofDelay
-        ? claim?.summaryDetails?.ReasonThereofDelay
-        : ""
-    );
-    setAnyFurtherConversation(
-      claim?.summaryDetails?.AnyFurtherConversation
-        ? claim?.summaryDetails?.AnyFurtherConversation
-        : ""
-    );
-    setRepairingPhotoDate(
-      claim?.summaryDetails?.AnyFurtherConversation
-        ? claim?.summaryDetails?.AnyFurtherConversation
-        : ""
-    );
-    setReinspectionDate(
-      claim?.accidentDetails?.ReinspectionDate
-        ? claim?.summaryDetails?.ReinspectionDate
-        : ""
-    );
-    setSalveDestroy(
-      claim?.summaryDetails?.SalveDestroy
-        ? claim?.summaryDetails?.SalveDestroy
-        : ""
-    );
-    setBillNo(
-      claim?.summaryDetails?.BillNo ? claim?.summaryDetails?.BillNo : ""
-    );
-    setBillDate(
-      claim?.summaryDetails?.BillDate ? claim?.summaryDetails?.BillDate : ""
-    );
-    setBillAmount(
-      claim?.summaryDetails?.BillAmount ? claim?.summaryDetails?.BillAmount : ""
-    );
-    setLessImposedSum(
-      claim?.summaryDetails?.LessImposed
-        ? claim?.summaryDetails?.LessImposed
-        : 0
-    );
-    setEndurance(
-      claim?.summaryDetails?.Endurance ? claim?.summaryDetails?.Endurance : ""
-    );
-    //
-    setOtherRemark(
-      claim?.summaryDetails?.OtherRemark
-        ? claim?.summaryDetails?.OtherRemark
-        : ""
-    );
+    setAccidentTime(claim?.accidentDetails?.TimeOfAccident ? claim?.accidentDetails?.TimeOfAccident : "");
+    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? claim?.summaryDetails?.SummaryNotes : `
+    1. Reference No is coming at the place of claim No<br>
+    2. Date of Registration at the time of viewing the format is coming wrong.<br>
+    3. Driver and License Detail section<br>
+    4. Date of Birth and valid up to is coming invalid.<br>
+    5. map rc_fit_upto in tax particular.<br>
+    6. Commercial vehicle details should come on print if it is checked.<br>
+    7. Date of Accident is not coming in the right way.<br>
+    8. Sport Survey Received default Not conducted, As stated by insured<br>
+    9. All the variable we are fetching from Background needs to<br>
+    `);
 
+    
+    setTotalLabor(claim?.summaryDetails?.TotalLabor ? claim?.summaryDetails?.TotalLabor : 0 );
+    setTotalEstimateSum( claim?.summaryDetails?.TotalEstimate ? claim?.summaryDetails?.TotalEstimate : 0);
+    setLessExcess(claim?.summaryDetails?.LessExcess ? claim?.summaryDetails?.LessExcess : 0);
+    setExpectedSalvage( claim?.summaryDetails?.ExpectedSalvage ? claim?.summaryDetails?.ExpectedSalvage : 0);
+    setMetalPercent(claim?.summaryDetails?.MetalPercent?claim?.summaryDetails?.MetalPercent:0);
+    setRemarkOnSalvage(claim?.summaryDetails?.RemarkOnSalvage?claim?.summaryDetails?.RemarkOnSalvage:"");
+    setTotalCostOfParts(claim?.summaryDetails?.TotalCostOfParts?claim?.summaryDetails?.TotalCostOfParts:0);
+    setOtherSum(claim?.summaryDetails?.Other?claim?.summaryDetails?.Other:0);
+    setGrandTotal(claim?.summaryDetails?.GrandTotal?claim?.summaryDetails?.GrandTotal:0)
+    setDepreciationOnParts(claim?.summaryDetails?.DepreciationOnParts?claim?.summaryDetails?.DepreciationOnParts:"");
+    setNetAssessedAmount(claim?.summaryDetails?.NetAssessedAmount?claim?.summaryDetails?.NetAssessedAmount:"");
+    setSavageDepreciationDetails(claim?.summaryDetails?.SavageDepreciationDetails?claim?.summaryDetails?.SavageDepreciationDetails:"");
+    console.log(String(claim?.summaryDetails?.CashLess) === "1.00")
+    setCashLess(String(claim?.summaryDetails?.CashLess) === "1.00"?1:0);
+    setNoteOfSelf(claim?.summaryDetails?.NoteOfSelf?claim?.summaryDetails?.NoteOfSelf:"");
+    setRepairAutoDate(claim?.summaryDetails?.RepairAutoDate?claim?.summaryDetails?.RepairAutoDate:"");
+    setRepairCompletionDate(claim?.summaryDetails?.RepairCompletionDate?claim?.summaryDetails?.RepairCompletionDate:"");
+    setPartyAgreed(claim?.summaryDetails?.PartyAgreed?claim?.summaryDetails?.PartyAgreed:"");
+    setReasonThereofDelay(claim?.summaryDetails?.ReasonThereofDelay?claim?.summaryDetails?.ReasonThereofDelay:"");
+    setAnyFurtherConversation(claim?.summaryDetails?.AnyFurtherConversation?claim?.summaryDetails?.AnyFurtherConversation:"");
+    setRepairingPhotoDate(claim?.summaryDetails?.AnyFurtherConversation?claim?.summaryDetails?.AnyFurtherConversation:"");
+    setReinspectionDate(claim?.accidentDetails?.ReinspectionDate?claim?.summaryDetails?.ReinspectionDate:"");
+    setSalveDestroy(claim?.summaryDetails?.SalveDestroy?claim?.summaryDetails?.SalveDestroy:"");
+    setBillNo(claim?.summaryDetails?.BillNo?claim?.summaryDetails?.BillNo:"");
+    setBillDate(claim?.summaryDetails?.BillDate?claim?.summaryDetails?.BillDate:"");
+    setBillAmount(claim?.summaryDetails?.BillAmount?claim?.summaryDetails?.BillAmount:"");
+    setLessImposedSum(claim?.summaryDetails?.LessImposed?claim?.summaryDetails?.LessImposed:0);
+    setEndurance(claim?.summaryDetails?.Endurance?claim?.summaryDetails?.Endurance:"");
+    //
+    setOtherRemark(claim?.summaryDetails?.OtherRemark?claim?.summaryDetails?.OtherRemark:"");
+    
     setInspectionDate(claim?.accidentDetails?.InspectionDate || "");
     setInsuredMailAddress(claim?.insuredDetails?.InsuredMailAddress);
-    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1);
-    setInsuredMobileNo2(claim?.insuredDetails?.BadgeNumberInsuredMobileNo2);
-    setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident);
+    setInsuredMobileNo1(claim?.insuredDetails?.InsuredMobileNo1 );
+    setInsuredMobileNo2(
+      claim?.insuredDetails?.BadgeNumberInsuredMobileNo2 
+    );
+    setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident)
     setVehicleUpto(claim?.vehicleDetails?.Upto);
-    setClaimNumber(claim?.claimDetails?.ClaimNumber);
-    setEngineType(claim?.vehicleDetails?.ModeOfCheck);
-    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration);
-    setTransferDate(claim?.vehicleDetails?.TransferDate);
-    setAddedBy(claim?.vehicleDetails?.AddedBy);
-    setVerification(claim?.driverDetails?.TypeOfVerification);
-    setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress);
-    setGarageContactNo1(claim?.garageDetails?.GarageContactNo1);
-    setGarageContactNo2(claim?.garageDetails?.GarageContactNo2);
-    setGarageAddedBy(claim?.garageDetails?.AddedBy);
-    setClaimAddedDateTime(claim?.claimDetails?.AddedDateTime);
-    setClaimIsActive(claim?.claimDetails?.IsActive?.data[0]);
+    setClaimNumber(claim?.claimDetails?.ClaimNumber );
+    setEngineType(claim?.vehicleDetails?.ModeOfCheck );
+    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration );
+    setTransferDate(claim?.vehicleDetails?.TransferDate );
+    setAddedBy(claim?.vehicleDetails?.AddedBy );
+    setVerification(claim?.driverDetails?.TypeOfVerification );
+    setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress );
+    setGarageContactNo1(claim?.garageDetails?.GarageContactNo1 );
+    setGarageContactNo2(claim?.garageDetails?.GarageContactNo2 );
+    setGarageAddedBy(claim?.garageDetails?.AddedBy );
+    setClaimAddedDateTime(claim?.claimDetails?.AddedDateTime );
+    setClaimIsActive(claim?.claimDetails?.IsActive?.data[0] );
     // Policy Detail
     setReferenceNo(claim?.claimDetails?.ReferenceNo);
     setPolicyNumber(claim?.claimDetails?.PolicyNumber);
@@ -682,39 +591,33 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       claim?.claimDetails?.InsuranceCompanyNameAddress
     );
 
-    setPoliceAction(claim?.accidentDetails?.PoliceAction);
+    setPoliceAction(claim?.accidentDetails?.PoliceAction)
 
-    setLessImposed(claim?.summaryDetails?.LessImposed);
+    setLessImposed(claim?.summaryDetails?.LessImposed)
 
-    setDateOfRegistration(
-      claim?.vehicleDetails?.DateOfRegistration
-        ? convertStringTime(claim?.vehicleDetails?.DateOfRegistration)
-        : ""
-    );
-    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate);
-    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate);
-    setClaimRegion(claim?.claimDetails?.ClaimRegion);
-    setInsuredName(claim?.insuredDetails?.InsuredName);
-    setInsuredAddress(claim?.insuredDetails?.InsuredAddress);
-    setPolicyType(claim?.insuredDetails?.PolicyType);
+    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration ? convertStringTime(claim?.vehicleDetails?.DateOfRegistration ):"");
+    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate );
+    setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate );
+    setClaimRegion(claim?.claimDetails?.ClaimRegion );
+    setInsuredName(claim?.insuredDetails?.InsuredName );
+    setInsuredAddress(claim?.insuredDetails?.InsuredAddress );
+    setPolicyType(claim?.insuredDetails?.PolicyType );
     setVehicleType(claim?.vehicleDetails?.VehicleType);
 
+
+
     setDriverRemark(claim?.driverDetails?.Remark || "");
-    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident || "");
-    setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss || "");
-    setSurveyAllotmentDate(claim?.claimDetails?.AddedDateTime || "");
-    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate || "");
+    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident ||"");
+    setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss||"");
+    setSurveyAllotmentDate((claim?.claimDetails?.AddedDateTime)||"");
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate||"");
     //Drivers Details
     setDriverName(claim?.driverDetails?.DriverName);
     setDriverAddedDate(claim?.driverDetails?.DriverAddedDate);
     setIssuingAuthority(claim?.driverDetails?.RtoName);
     setLicenseNumber(claim?.driverDetails?.LicenseNumber);
     setLicenseType(claim?.driverDetails?.LicenseType);
-    setBadgeNumber(
-      claim?.driverDetails?.BadgeNumber
-        ? claim?.driverDetails?.BadgeNumber
-        : "--"
-    );
+    setBadgeNumber(claim?.driverDetails?.BadgeNumber ? claim?.driverDetails?.BadgeNumber : "--");
 
     //Vehicle Detais
     setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber);
@@ -728,13 +631,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd);
     setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart);
     setVehicleMakeVariantModelColor(
-      claim?.vehicleDetails?.MakerDesc
-        ? claim?.vehicleDetails?.MakerDesc +
-            "," +
-            claim?.vehicleDetails?.MakerModel
-        : VehicleMakeVariantModelColor
+      claim?.vehicleDetails?.MakerDesc?
+      claim?.vehicleDetails?.MakerDesc+","+claim?.vehicleDetails?.MakerModel : VehicleMakeVariantModelColor
     );
-
+    
     setVehicleColor(
       claim?.vehicleDetails?.MakeVariantModelColor?.split(",")[1] || ""
     );
@@ -758,25 +658,22 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setDateOfIssue(claim?.driverDetails?.DateOfIssue);
     setVehiclePreAccidentCondition(claim?.vehicleDetails?.PreAccidentCondition);
     setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate);
-    setVehicleTaxParticulars(claim?.vehicleDetails?.TaxParticulars);
+    setVehicleTaxParticulars(claim?.vehicleDetails?.FitUpto);
     setPUCNumber(claim?.vehicleDetails?.PucNumber);
     setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity || 0);
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice);
 
     setIDV(claim?.claimDetails?.IDV);
     setHPA(claim?.claimDetails?.HPA);
-    setVehicleRemark(claim?.vehicleDetails?.Remark);
-    setRegLadenWt(claim?.vehicleDetails?.RegLadenWt);
-    setRemarkIfRLW(claim?.vehicleDetails?.RemarkIfRLW);
-    setUnladenWT(claim?.vehicleDetails?.UnladenWT);
-    setRemarkIfULW(claim?.vehicleDetails?.RemarkIfULW);
+    setVehicleRemark(claim?.vehicleDetails?.Remark );
+    setRegLadenWt(claim?.vehicleDetails?.RegLadenWt );
+    setRemarkIfRLW(claim?.vehicleDetails?.RemarkIfRLW );
+    setUnladenWT(claim?.vehicleDetails?.UnladenWT );
+    setRemarkIfULW(claim?.vehicleDetails?.RemarkIfULW );
 
     setPin(claim?.accidentDetails?.Pin);
-    setPlaceOfSurvey(
-      claim?.garageDetails?.GarageNameAndAddress
-        ? claim?.garageDetails?.GarageNameAndAddress
-        : ""
-    );
+    setPlaceOfSurvey(claim?.garageDetails?.GarageNameAndAddress ? 
+      claim?.garageDetails?.GarageNameAndAddress : "");
     setDetailsOfLoads(claim?.accidentDetails?.DetailsOfLoads);
     setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident);
     setPoliceAction(claim?.accidentDetails?.PoliceAction);
@@ -799,10 +696,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation);
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark);
     setValidUpto(claim?.driverDetails?.ValidUpto);
-    setPolicyType(claim?.claimDetails?.PolicyType);
-    setTotalLoss(claim?.claimDetails?.TotalLoss);
-    setIMT(claim?.claimDetails?.IMT);
-    setphyCheck(claim?.vehicleDetails?.phyCheck);
+    setPolicyType(claim?.claimDetails?.PolicyType)
+    setTotalLoss(claim?.claimDetails?.TotalLoss)
+    setIMT(claim?.claimDetails?.IMT)
+    setphyCheck(claim?.vehicleDetails?.phyCheck)
   }, [claim]);
 
   // console.log("PolicyPeriodStart-----------",PolicyPeriodStart,claim?.claimDetails?.PolicyPeriodStart);
@@ -814,19 +711,20 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   //   ) {
   //     return "0";
   //   }
-  const calculateVehicleAge = () => {
-    if (
-      !claim.vehicleDetails?.DateOfRegistration ||
-      !claim.claimDetails?.AddedDateTime
-    ) {
-      return "0";
-    }
-    const a = getMonthsDifference(DateRegistration);
-
-    const b = getMonthsDifference(AccidentAddedDateTime);
-    console.log(DateRegistration, AccidentAddedDateTime, a - b);
-
-    return `${a - b}`;
+    const calculateVehicleAge = () => {
+      if (
+        !claim.vehicleDetails?.DateOfRegistration  ||
+        !claim.claimDetails?.AddedDateTime
+      ) {
+        return "0";
+      }
+      const a = getMonthsDifference(DateRegistration);
+  
+      const b = getMonthsDifference(AccidentAddedDateTime);
+      console.log(DateRegistration,AccidentAddedDateTime,a-b)
+     
+      return `${a-b}`;
+    
   };
 
   const calculateDepreciationOnMetal = () => {
@@ -867,19 +765,19 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       OwnerSRST,
       VehicleMakeVariantModelColor:
         VehicleMakeVariantModelColor + "," + VehicleColor,
-
+        
       DateOfIssue: DateOfIssue ? DateOfIssue : "",
       MailRecieveDate: MailRecieveDate,
       ValidFrom: ValidFrom ? ValidFrom : "",
       VehicleType,
-      ValidUntilNtv: ValidUntilNtv,
-      ValidUntilTv: ValidUntilTv,
+      ValidUntilNtv:(ValidUntilNtv),
+      ValidUntilTv : (ValidUntilTv),
       phoneNumber,
       AntiTheft,
       RegLadenWt,
       RemarkIfRLW,
       Pin,
-      DateOfRegistration: DateOfRegistration,
+      DateOfRegistration:(DateOfRegistration),
       PlaceOfSurvey,
       UnladenWT,
       RemarkIfULW,
@@ -928,10 +826,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       VehicleModel,
       VehicleTaxParticulars,
       VehicleSeatingCapacity,
-      AccidentAddedDateTime: AccidentAddedDateTime,
+      AccidentAddedDateTime :(AccidentAddedDateTime),
       PlaceOfLoss,
-      SurveyAllotmentDate: SurveyAllotmentDate,
-      SurveyConductedDate: SurveyConductedDate,
+      SurveyAllotmentDate : (SurveyAllotmentDate),
+      SurveyConductedDate : (SurveyConductedDate),
       FitnessCertificate,
       FitnessFrom: FitnessFrom,
       FitnessTo: FitnessTo,
@@ -950,25 +848,25 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       Assessment,
       AccidentTime,
       InspectionDate,
-      TotalLabor: totalLabrorAssessed,
-      TotalEstimate: totalPartsEstimate + totalLabrorEstimate,
+      TotalLabor:totalLabrorAssessed,
+      TotalEstimate : totalPartsEstimate + totalLabrorEstimate,
       LessExcess,
       LessImposed,
-      ExpectedSalvage,
-      MetalPercent,
+      ExpectedSalvage : (Number(totalMetalRows) *
+      Number(metalSalvageValue)) /
+    100,
+      MetalPercent ,
       RemarkOnSalvage,
-      TotalCostOfParts: totalPartsAssessed,
+      TotalCostOfParts:totalPartsAssessed,
       Other,
       OtherRemark,
-      GrandTotal:
-        Number(totalLabrorAssessed) +
-        Number(totalPartsAssessed) -
-        (Number(LessExcess) + Number(LessImposed) + Number(Other)),
-      DepreciationOnParts:
-        (Number(totalLabrorAssessed + totalPartsAssessed) *
-          Number(metalSalvageValue)) /
-        100,
-      NetAssessedAmount: returnTotal(),
+      GrandTotal : Number(totalLabrorAssessed) +
+      Number(totalPartsAssessed) -
+      (Number(LessExcess) + Number(LessImposed) + Number(Other)),
+      DepreciationOnParts:(Number(totalLabrorAssessed + totalPartsAssessed) *
+      Number(metalSalvageValue)) /
+      100,
+      NetAssessedAmount :returnTotal(),
       SavageDepreciationDetails,
       CashLess,
       NoteOfSelf,
@@ -986,31 +884,31 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       Endurance,
       DateOfBirth,
       ValidFrom,
-      TotalLoss: TotalLoss,
-      IMT: IMT,
+      TotalLoss : TotalLoss,
+      IMT : IMT,
       phyCheck,
       ValidUpto,
       leadId,
     };
 
-    axios
-      .put("/api/updateFinalReport", payload, {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          leadId: leadId,
-        },
-      })
-      .then((res) => {
-        alert("Successfully updated!");
-        window.location.reload();
-      })
-      .catch((Err) => {
-        alert(Err);
-      });
-  };
+    axios.put("/api/updateFinalReport",payload,{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].Token}`,
+        "Content-Type":"application/json"
+      },
+      params:{
+        leadId:leadId
+      }
+    })
+    .then((res)=>{
+      alert("Successfully updated!");
+      window.location.reload();
+    })
+    .catch((Err)=>{
+      alert(Err);
+    })
+  }
+
 
   useEffect(() => {
     if (String(policyType) === "Add on Policy") {
@@ -1029,15 +927,10 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         onClose={() => setOpen(false)}
         allow="picture-in-picture"
       />
-      <ul
-        className="nav nav-tabs"
-        id="myTab"
-        role="tablist"
-        style={{ backgroundColor: "lightblue" }}
-      >
+      <ul className="nav nav-tabs" id="myTab" role="tablist">
         <li className="nav-item">
           <a
-            className="nav-link active p-2"
+            className="nav-link active"
             data-bs-toggle="tab"
             href="#descriptions"
             role="tab"
@@ -1047,7 +940,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link p-2 "
+            className="nav-link "
             data-bs-toggle="tab"
             href="#description"
             role="tab"
@@ -1057,7 +950,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link p-2 "
+            className="nav-link "
             data-bs-toggle="tab"
             href="#newparts"
             role="tab"
@@ -1067,7 +960,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link p-2"
+            className="nav-link"
             data-bs-toggle="tab"
             href="#labour"
             role="tab"
@@ -1077,7 +970,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link p-2"
+            className="nav-link"
             data-bs-toggle="tab"
             href="#summary"
             role="tab"
@@ -1097,13 +990,13 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           id="descriptions"
           role="tabpanel"
         >
-          <div className="property_video bgc-f6">
+          <div className="property_video">
             <div className="thumb">
               <PolicyDetails
-                VehicleUpto={VehicleUpto}
-                setVehicleUpto={setVehicleUpto}
-                DateOfBirth={DateOfBirth}
-                setDateOfBirth={setDateOfBirth}
+              VehicleUpto={VehicleUpto}
+              setVehicleUpto={setVehicleUpto}
+              DateOfBirth={DateOfBirth}
+              setDateOfBirth={setDateOfBirth}
                 TypeOfDate={TypeOfDate}
                 setTypeOfDate={setTypeOfDate}
                 setPolicyType={setPolicyType}
@@ -1293,17 +1186,17 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setPUCCValidUpto={setPUCCValidUpto}
                 RegisteringAuthority={RegisteringAuthority}
                 setRegisteringAuthority={setRegisteringAuthority}
-                setValidUpto={setValidUpto}
-                ValidUpto={ValidUpto}
-                setTotalLoss={setTotalLoss}
-                TotalLoss={TotalLoss}
+                setValidUpto ={setValidUpto}
+                ValidUpto= {ValidUpto}
+                setTotalLoss= {setTotalLoss}
+                TotalLoss= {TotalLoss}
                 IMT={IMT}
-                setIMT={setIMT}
-                phyCheck={phyCheck}
-                setphyCheck={setphyCheck}
+                setIMT= {setIMT}
+                phyCheck = {phyCheck}
+                setphyCheck = {setphyCheck}
                 claim={claim}
               />
-
+              
               {/* <Image
                 width={692}
                 height={390}
@@ -1324,11 +1217,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           </div>
         </div>
         <div className="tab-pane fade show " id="description" role="tabpanel">
-          <div className="property_video bgc-f6">
+          <div className="property_video">
             <div className="thumb">
               <Servey
-                InspectionDate={InspectionDate}
-                setInspectionDate={setInspectionDate}
+              InspectionDate={InspectionDate}
+              setInspectionDate={setInspectionDate}
                 SomeComponent={SomeComponent}
                 isEditMode={isEditMode}
                 AccidentTime={AccidentTime}
@@ -1458,16 +1351,16 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           id="newparts"
           role="tabpanel"
         >
-          <div className="property_video bgc-f6">
+          <div className="property_video">
             <div className="thumb">
               {/* <EditableTable /> */}
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
-                  allNewParts={allNewParts}
-                  setallNewParts={setallNewParts}
-                  DateRegistration={DateRegistration}
-                  AccidentAddedDateTime={AccidentAddedDateTime}
+                allNewParts={allNewParts}
+                setallNewParts={setallNewParts}
+                DateRegistration={DateRegistration}
+                AccidentAddedDateTime={AccidentAddedDateTime}
                   LeadId={leadId}
                   claim={claim}
                   settotalMetalRows={settotalMetalRows}
@@ -1504,7 +1397,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           id="labour"
           role="tabpanel"
         >
-          <div className="property_video bgc-f6">
+          <div className="property_video">
             <div className="thumb">
               {/* <LabourSection /> */}
               <div className="row">
@@ -1543,8 +1436,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 </div>
                 <div className="col-lg-3">
                   <LabourForm
-                    AccidentAddedDateTime={AccidentAddedDateTime}
-                    DateRegistration={DateRegistration}
+                  AccidentAddedDateTime={AccidentAddedDateTime}
+                  DateRegistration={DateRegistration}
                     totalRemainingAssessed={totalRemainingAssessed}
                     currentGst={currentGst}
                     totalTaxableAMount={totalTaxableAMount}
@@ -1692,15 +1585,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           id="summary"
           role="tabpanel"
         >
-          <div className="property_video bgc-f6">
+          <div className="property_video">
             <div className="thumb">
               <Summary
-                totalMetalRows={totalMetalRows}
-                claim={claim}
-                DepreciationValue={DepreciationValue}
-                settotalMetalRows={settotalMetalRows}
-                FinalReportNotes={FinalReportNotes}
-                setFinalReportNotes={setFinalReportNotes}
+              totalMetalRows={totalMetalRows}
+              claim={claim}
+              DepreciationValue={DepreciationValue}
+              settotalMetalRows={settotalMetalRows}
+              FinalReportNotes={FinalReportNotes}
+              setFinalReportNotes={setFinalReportNotes}
                 metaldepPct={metaldepPct}
                 saveHandler={saveHandler}
                 ageOfVehicleTotal={ageOfVehicleTotal}
@@ -1720,8 +1613,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
                 setMetalSalvageValue={setMetalSalvageValue}
                 calculateDepreciationOnMetal={calculateDepreciationOnMetal}
                 calculateVehicleAge={calculateVehicleAge}
+
+
                 setLessImposedSum={setLessImposedSum}
                 LessImposed={LessImposed}
+
                 TotalLabor={TotalLabor}
                 setTotalLabor={setTotalLabor}
                 TotalEstimate={setTotalEstimateSum}
@@ -1783,7 +1679,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           id="table"
           role="tabpanel"
         >
-          <div className="property_video bgc-f6">
+          <div className="property_video">
             <div className="thumb">
               <Table data={materials} />
             </div>
