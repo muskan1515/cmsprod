@@ -106,13 +106,16 @@ const Index = ({ leadId, token, content ,type}) => {
   useEffect(() => {
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-
+    const current_url = window.location.href
+    const current_type = current_url?.split("&type=")[1]
+    const type_ = current_type?.split("&content")[0]
+    console.log(type_, current_type,current_url )
     const payload = {
       token: token,
       leadId: Number(leadId),
-      type:Number(type)
+      type:Number(type_)
     };
-
+    // console.log('22222222222222',payload)
     axios
       .post("/api/getClaimDetails", payload, {
         headers: {
