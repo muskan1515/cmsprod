@@ -177,7 +177,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const calculateGSTWithoutPaintValue = (original, type, gst) => {
     // console.log(original,type,gst,((Number(original) * (12.5))/100));
-    if (String(type) === "1" && gst % 2 === 0) {
+    if (String(type) === "1" && String((policyType) === "Regular" || String(policyType)==="") ) {
+
       return (Number(original) * 12.5) / 100;
     }
     return 0;
@@ -290,6 +291,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         );
         total_assessed = total_assessed + Number(row?.assessed);
 
+
+        console.log("labour",index,)
         const remained_assessed_paint_dep =
           Number(row?.assessed) -
           calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst);

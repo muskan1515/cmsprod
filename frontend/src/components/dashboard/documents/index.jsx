@@ -142,9 +142,10 @@ const Index = ({ leadId, token, content ,type}) => {
 
    const onSubmitHandler = () => {
 
+    console.log("uploaded",uploadedData);
 
     let data = [];
-    for (let i = 0; i < 15; i = i + 1) {
+    for (let i = 0; i < 17; i = i + 1) {
       const temp = types[i].name;
       const tempArray = [];
       uploadedData.map((data, index) => {

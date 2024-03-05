@@ -912,6 +912,32 @@ const Index = ({}) => {
     setIsStatusModal(false);
   };
 
+  const separateLinks=(linksString) =>{
+    // Split the input string into an array of links
+    const linksArray = linksString.split(',');
+  
+    // Trim whitespaces from each link
+    const trimmedLinks = linksArray.map(link => link.trim());
+  
+    // Define the common prefix
+    const prefix = 'https://';
+  
+    // Filter and form the final array with the common prefix
+    const finalArray = trimmedLinks.filter(link => link.startsWith(prefix));
+  
+    return finalArray;
+  }
+
+  const  separateStringToArray = (inputString) =>{
+    // Split the input string into an array using ','
+    const resultArray = inputString.split(',');
+  
+    // Trim whitespaces from each element in the array
+    const trimmedArray = resultArray.map(item => item.trim());
+  
+    return trimmedArray;
+  }
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -956,10 +982,21 @@ const Index = ({}) => {
               list.file_name.toLowerCase().includes(".mp4") ||
               list.file_name.toLowerCase().includes(".mp3")
             ) {
-              requiredVideos.push({
-                name: list.file_name,
-                url: list.doc_url,
-              });
+              const allList = separateLinks(list.doc_url);
+              const allName = separateStringToArray(list.file_name);
+              const allLatitude = separateStringToArray(list?.latitude);
+              const allLongitude = separateStringToArray(list?.longitude);
+              const allTimestamp = separateStringToArray(list?.timestamp);
+
+              allList?.map((link,idx)=>{
+                requiredVideos.push({
+                  name: allName[idx],
+                  url: allList[idx],
+                  longitude:allLongitude[idx],
+                  latitude:allLatitude[idx],
+                  timestamp:allTimestamp[idx]
+                });
+              })
             }
           });
 

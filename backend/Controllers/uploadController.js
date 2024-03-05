@@ -101,6 +101,9 @@ const uploadClaimMedia = (req, res) => {
 const uploadDocument = (req, res) => {
   const data = req.body;
 
+
+
+  
   const type = data.type;
   if(!data){
     res.status(500)
@@ -180,9 +183,43 @@ const uploadDocument = (req, res) => {
         }
          return res.status(200).json({ message: "Data inserted successfully." });
       });
+     
+    });
+
+    //updating the expire token
+
+
+    const claimToken = generateUniqueToken();
+
+
+    const insertTokeDteials =  String(type) === "1" ?  `
+      UPDATE ClaimDetails
+      SET InsuredToken='${claimToken}'
+      WHERE LeadId = ${LeadId};
+        ` : String(type) === "2" ?  `
+        UPDATE ClaimDetails
+        SET ImageToken='${claimToken}'
+        WHERE LeadId = ${LeadId};
+      `
+      :  `
+      UPDATE ClaimDetails
+      SET VideoToken='${claimToken}'
+      WHERE LeadId = ${LeadId};
+      `;
+  
+      console.log(insertTokeDteials);
+      
+    db.query(insertTokeDteials, (error, results) => {
+      if (error) {
+        console.error("Error updating token in claim Details:", error);
+        return res.status(500).json({ error: "Error." });
+      }
+      console.log("Datatatata-------------", results);
+      return res.status(200).json({ message: "Data inserted successfully." });
     });
   });
 
+ 
 };
 
 const uploadMedia = async (req, res) => {

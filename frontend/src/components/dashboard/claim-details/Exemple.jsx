@@ -377,6 +377,48 @@ import SmartTable from "./SmartTable";
         />
       ),
     },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "15",
+      doc_name: "Images",
+      file: "",
+      action: (
+        <button className="btn btn-thm" >
+          <FaUpload/>
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "15",
+      doc_name: "Videos",
+      file: "",
+      action: (
+        <button className="btn btn-thm" >
+          <FaUpload/>
+        </button>
+      ),
+      verify: (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          required
+          id="terms"
+          style={{ border: "1px solid black" }}
+        />
+      ),
+    },
   ];
 
   export default function Exemple({ documents,leadId  }) {

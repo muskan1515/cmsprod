@@ -229,7 +229,8 @@ export default function Exemple_01({
               bill_sr: part.BillSr,
               gst: part.GSTPct,
               type: part.TypeOfMaterial,
-              total: overall + GSTT,
+              total: String(part.WithTax) === "1" ||  String(part.WithTax) === "3"  
+              ? overall + GSTT : overall,
               sno: part.ReportID,
               isActive: Number(part.IsActive),
             };
@@ -323,6 +324,7 @@ export default function Exemple_01({
     setTotaAssessed(calculateTotalAssessed);
     setTotalEstimate(calculateTotalEstimated);
     setTotalDifference(totalEstimate - totalAssessed);
+   
   }, [change2, currentType]);
   const openEditHandler = (idx) => {
     // console.log(idx);
@@ -587,6 +589,48 @@ export default function Exemple_01({
     setChange(true);
     // console.log(oldRow);
   };
+
+  const updateTotalOfRows = ()=>{
+    let without_gst = 0,
+    with_gst = 0;
+
+    let newRows = [];
+  allRows.map((row, index) => {
+  
+      let current_total = Number(row.assessed) * Number(row.qa);
+      const subtract = 0;
+      without_gst =  (current_total - subtract);
+      with_gst =
+          ((current_total - subtract) * Number(row.gst)) / 100;
+    
+
+    const newRow = {
+      _id: row._id,
+      description:row.description,
+      dep: row.dep,
+      sac: row.sac,
+      remark: row.remark,
+      estimate: row.estimate,
+      assessed: row.assessed,
+      qa: row.qa,
+      qe: row.qe,
+      bill_sr: row.bill_sr,
+      gst: row.gst,
+      type: row.type,
+      total: (String(currentType) === "Assessed" || String(currentType) === "Both")  ? with_gst : without_gst, 
+      sno: row.sno,
+      isActive: row.isActive,
+    };
+
+   newRows.push(newRow);
+
+    });
+
+    setAllRows(newRows)
+  
+  
+};
+
 
   const calculateTotalAssessed = () => {
     let without_gst = 0,
