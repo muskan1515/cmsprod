@@ -351,7 +351,7 @@ const addClaim =  (req, res) => {
                         if (GarageMailAddress !== "") {
                           axios
                             .post(
-                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
+                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
                               {
                                 vehicleNo: RegisteredNumber,
                                 PolicyNo: PolicyNumber,
@@ -380,7 +380,7 @@ const addClaim =  (req, res) => {
                         if (BrokerMailAddress !== "") {
                           axios
                             .post(
-                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,
+                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
                               {
                                 vehicleNo: RegisteredNumber,
                                 PolicyNo: PolicyNumber,
@@ -916,7 +916,8 @@ const getSpecificClaim = async (req, res) => {
       const stat1 =  result2[0]?.InsuredToken === token && String(type) === "1";
       const stat2 =  result2[0]?.ImageToken === token && String(type) === "2";
       const stat3 =  result2[0]?.VideoToken === token && String(type) === "3";
-
+      console.log(type,token, result2[0]?.InsuredToken,  result2[0]?.ImageToken ,result2[0]?.VideoToken)
+      console.log(stat1, stat2, stat3)
       if (stat1 || stat2 || stat3) {
         // console.log(result2[0].Token === token);
            res.status(200).send("Successfully found!!");
