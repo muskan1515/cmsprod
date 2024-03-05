@@ -291,15 +291,13 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         );
         total_assessed = total_assessed + Number(row?.assessed);
 
-
-        console.log("labour",index,)
         const remained_assessed_paint_dep =
-          Number(row?.assessed) -
-          calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst);
-        total_aassessed_wihtout_tax =
-          total_aassessed_wihtout_tax + (row.gst % 2 === 0)
-            ? remained_assessed_paint_dep
-            : 0;
+        row.gst % 2 == 0 ? 
+          (row?.assessed) -
+          calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst) : 0;
+          console.log("labour",index,row.assessed,calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst),remained_assessed_paint_dep,row.gst);
+        
+        total_aassessed_wihtout_tax += remained_assessed_paint_dep;
 
         total_tax = total_tax + current_row_assessed_tax;
         total_paint =
@@ -956,8 +954,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       TotalEstimate: totalPartsEstimate + totalLabrorEstimate,
       LessExcess,
       LessImposed,
-      ExpectedSalvage:
-        (Number(totalMetalRows) * Number(metalSalvageValue)) / 100,
+      ExpectedSalvage,
       MetalPercent,
       RemarkOnSalvage,
       TotalCostOfParts: totalPartsAssessed,

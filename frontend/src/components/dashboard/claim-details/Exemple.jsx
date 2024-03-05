@@ -587,7 +587,7 @@ useEffect(()=>{
           toast.loading("Uploading files!!", {
             className: "toast-loading-message",
           });
-          axios.post("/api/uploadDocument", payloadMain, {
+          axios.post("/api/uploadManualDocument", payloadMain, {
               headers: {
                 Authorization: `Bearer ${""}`,
                 "Content-Type": "application/json",

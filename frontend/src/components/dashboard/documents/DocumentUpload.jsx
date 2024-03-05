@@ -627,7 +627,7 @@ export default function DocumentUpload({
   
     const formattedDateTime = `${year}${month}${day}${hours}${minutes}${seconds}`;
   
-    return "captured_video"+formattedDateTime;
+    return "captured_video"+formattedDateTime+".mp4";
   }
 
   const handleUploadVideo = async () => {

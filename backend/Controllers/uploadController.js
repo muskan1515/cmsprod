@@ -101,78 +101,38 @@ const uploadClaimMedia = (req, res) => {
 const uploadDocument = (req, res) => {
   const data = req.body;
 
-
-
   
   const type = data.type;
-  if(!data){
+  const file = data;
+
+  if(!file){
     res.status(500)
     .json({ error: "Error uploading documents ." });
   }
-  const currentLeadId = data.leadId || data.data[0]?.leadId;
+  
 
-  const currentData = data.data;
-  let LeadId = currentData[0]?.leadId;
-  currentData?.forEach((data, idx) => {
-    let files;
-
-    if (data.data) {
-      // Format 1: When data is an array
-      files = data.data.flat().map((file) => {
-        console.log("file", file.url);
-        return {
-          Photo1: file.url,
-          Attribute1: file.name,
-          leadID: LeadId,
-          docName: data.docName,
-          Location: file.location,
-          photo1Timestamp: file.time,
-          Photo1Latitude: file.location?.split(",")[0],
-          Photo1Longitude: file.location?.split(",")[1],
-        };
-      });
-      
-    } else {
-      // Format 2: When url is directly provided
-     
-      files = [
-        {
-          Photo1: data.url,
-          Attribute1: data.name,
-          leadID: data.leadId,
-          docName: data.docName,
-          Location: data.Location,
-          photo1Timestamp: data.Timestamp,
-          Photo1Latitude: data.Location?.split(",")[0],
-          Photo1Longitude: data.Location?.split(",")[1],
-        },
-      ];
-
-     
-    }
-    console.log("FILSE------", files);
-
-    files.forEach((file) => {
-      console.log("dataaaaaaaaaaa", file);
+      const Location = file.data[0].Location;
+      const latitude= Location?.split(",")[0];
+      const longitude = Location?.split(",")[1];
       const insertUploadDetails = `
-          INSERT INTO DocumentList (
-            LeadId,
-            DocumentName,
-            Photo1,
-            Attribute1,
-            Photo1Latitude,
-            Photo1Longitude,
-            Photo1Timestamp
-          ) VALUES (
-            '${LeadId}',
-            '${file.docName}',
-            '${file.Photo1}',
-            '${file.Attribute1}',
-            '${file.Photo1Latitude}',
-            '${file.Photo1Longitude}',
-            '${file.photo1Timestamp}'
-          );
-        `;
+      INSERT INTO DocumentList (
+        LeadId,
+        DocumentName,
+        Photo1,
+        Attribute1,
+        Photo1Latitude,
+        Photo1Longitude,
+        Photo1Timestamp
+      ) VALUES (
+        '${file.leadId}',
+        '${file.docName}',
+        '${file.data[0].url}',
+        '${file.data[0].name}',
+        '${latitude}',
+        '${longitude}',
+        '${file.data[0].Timestamp}'
+      );
+    `;
 
       db.query(insertUploadDetails, (error, results) => {
         if (error) {
@@ -181,15 +141,70 @@ const uploadDocument = (req, res) => {
             .status(500)
             .json({ error: "Error inserting data into DocumentDetails." });
         }
-         return res.status(200).json({ message: "Data inserted successfully." });
+        return res.status(200).json({ message: "Data inserted successfully." });
       });
-     
-    });
 
-    //updating the expire token
+};
 
 
-    const claimToken = generateUniqueToken();
+const uploadDocumentV2 = (req, res) => {
+  const data = req.body;
+
+
+
+  const type = data.type;
+  const files = data.data;
+
+  if(!files){
+    res.status(500)
+    .json({ error: "Error uploading documents ." });
+  }
+  
+  const LeadId = files[0].leadId;
+
+  files?.map((file,index)=>{
+    const insideData = file.data;
+    const docName = file.docName;
+
+    insideData?.map((tempData,idx)=>{
+      const Location = tempData[0]?.location;
+      const latitude= Location?.split(",")[0];
+      const longitude = Location?.split(",")[1];
+      const insertUploadDetails = `
+      INSERT INTO DocumentList (
+        LeadId,
+        DocumentName,
+        Photo1,
+        Attribute1,
+        Photo1Latitude,
+        Photo1Longitude,
+        Photo1Timestamp
+      ) VALUES (
+        '${LeadId}',
+        '${docName}',
+        '${tempData[0].url}',
+        '${tempData[0].name}',
+        '${latitude}',
+        '${longitude}',
+        '${tempData[0].time}'
+      );
+    `;
+
+   
+      db.query(insertUploadDetails, (error, results) => {
+        if (error) {
+          console.error("Error inserting data into Upload Details:", error);
+          return res
+            .status(500)
+            .json({ error: "Error inserting data into DocumentDetails." });
+        }
+      });
+    })
+   
+
+  });
+
+  const claimToken = generateUniqueToken();
 
 
     const insertTokeDteials =  String(type) === "1" ?  `
@@ -207,17 +222,17 @@ const uploadDocument = (req, res) => {
       WHERE LeadId = ${LeadId};
       `;
   
-      console.log(insertTokeDteials);
+     
       
     db.query(insertTokeDteials, (error, results) => {
       if (error) {
         console.error("Error updating token in claim Details:", error);
         return res.status(500).json({ error: "Error." });
       }
-      console.log("Datatatata-------------", results);
       return res.status(200).json({ message: "Data inserted successfully." });
     });
-  });
+
+  
 
  
 };
@@ -292,4 +307,5 @@ module.exports = {
   uploadDocument,
   uploadMedia,
   verifyReportUpload,
+  uploadDocumentV2
 };
