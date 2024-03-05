@@ -532,27 +532,13 @@ const ErrorPageContent = ({ allInfo }) => {
       {/* common header for all page */}
 
       {/* Header Content */}
-      <div style={{ width: "", color: "black" }}>
+      {/* <div style={{ width: "", color: "black" }}>
         <h3 className="text-dark">MT Engineer</h3>{" "}
         <span>
           {" "}
-          <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-            {/* <Dropdown>
-              <Dropdown.Toggle variant="primary" id="dropdown-extract">
-                Extract
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleExtract("Word")}>
-                  Extract to Word
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <button className="btn" onClick={downloadPDF}>
-                    Extract PDF
-                  </button>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown> */}
-          </div>
+          <div
+            style={{ position: "absolute", top: "10px", right: "10px" }}
+          ></div>
         </span>
         <p className="fw-bold text-dark">Legal Investigator Pvt. Ltd.</p>
         <p className="text-dark">
@@ -564,9 +550,17 @@ const ErrorPageContent = ({ allInfo }) => {
           <p className="text-dark">Tel. No. : +91 94688-81222</p>{" "}
           <p className="text-dark">Email: legalmt04@gmail.com</p>
         </div>
-        {/* <p>Email: {allInfo?.otherInfo[0]?.BrokerMailAddress}</p> */}
-        {/* <p>Lic No. IRDA/CORP/SLA-200018 DOE 07.02.2025</p> */}
         <p className="text-dark">GSTIN : 08AAPCM1051K1Z9</p>
+      </div> */}
+      <div>
+        <Image
+          width={661}
+          height={189}
+          priority
+          className="w50"
+          src="/assets/images/header.jpg"
+          alt="1.jpg"
+        />
       </div>
       <hr style={{ border: "2px solid black" }} />
       {/* Header Content */}
@@ -699,7 +693,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </div>
 
         {/* common header for all page */}
-        <div className="col-lg-12 d-flex justify-content-between mt-5">
+        {/* <div className="col-lg-12 d-flex justify-content-between mt-5">
           <div>
             <h5>MT Engineer</h5>
           </div>
@@ -707,7 +701,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
           </div>
         </div>
-        <div style={{ border: "1px solid black" }} className="mb-2"></div>
+        <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
         {/* common header for all page */}
 
         <div className=" text-start d-flex gap-5">
@@ -895,7 +889,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </div>
 
         {/* common header for all page */}
-        <div className="col-lg-12 d-flex justify-content-between">
+        {/* <div className="col-lg-12 d-flex justify-content-between">
           <div>
             <h5 className="text-dark">MT Engineer</h5>
           </div>
@@ -903,7 +897,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
           </div>
         </div>
-        <div style={{ border: "1px solid black" }} className="mb-2"></div>
+        <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
         {/* common header for all page */}
 
         <div className=" text-start d-flex gap-5">
@@ -986,6 +980,18 @@ const ErrorPageContent = ({ allInfo }) => {
           </span>
         </span>
       </div>
+
+      {/* common header for all page */}
+      {/* <div className="col-lg-12 d-flex justify-content-between">
+        <div>
+          <h5 className="text-dark">MT Engineer</h5>
+        </div>
+        <div>
+          <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+        </div>
+      </div>
+      <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
+      {/* common header for all page */}
       <hr />
       <div className="">
         <span>
@@ -995,18 +1001,6 @@ const ErrorPageContent = ({ allInfo }) => {
         </span>
       </div>
       <br />
-
-      {/* common header for all page */}
-      <div className="col-lg-12 d-flex justify-content-between">
-        <div>
-          <h5 className="text-dark">MT Engineer</h5>
-        </div>
-        <div>
-          <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
-        </div>
-      </div>
-      <div style={{ border: "1px solid black" }} className="mb-2"></div>
-      {/* common header for all page */}
 
       <div className="">
         <h4 className="text-dark">New Parts :</h4>
@@ -1504,6 +1498,17 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
       <div className="mt-4">
         <h4 className="text-dark">SUMMARY OF ASSESSMENT</h4>
+        {/* common header for all page */}
+        {/* <div className="col-lg-12 d-flex justify-content-between">
+          <div>
+            <h5 className="text-dark">MT Engineer</h5>
+          </div>
+          <div>
+            <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
+          </div>
+        </div>
+        <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
+        {/* common header for all page */}
         <table border={1} style={{ width: "100%" }}>
           <tr>
             <th
@@ -1597,7 +1602,7 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
         </table>
       </div>
-      <div className="mt-4">
+      <div className="mt-5 mb-5">
         <h4 className="text-dark">GST Summary Tax Wise</h4>
         <table style={{ width: "100%" }}>
           <tr>
@@ -2084,7 +2089,7 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
 
       {/* common header for all page */}
-      <div className="col-lg-12 d-flex justify-content-between">
+      {/* <div className="col-lg-12 d-flex justify-content-between mt-5">
         <div>
           <h5 className="text-dark">MT Engineer</h5>
         </div>
@@ -2092,7 +2097,7 @@ const ErrorPageContent = ({ allInfo }) => {
           <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
         </div>
       </div>
-      <div style={{ border: "1px solid black" }} className="mb-2"></div>
+      <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
       {/* common header for all page */}
 
       <div>

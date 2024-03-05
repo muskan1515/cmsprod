@@ -300,7 +300,7 @@ const Form = ({
               aria-labelledby="headingThree"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body">
+              <div class="accordion-body bgc-f6">
                 <div className="row">
                   <div className="">
                     {editCase_01 ? (

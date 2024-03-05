@@ -67,7 +67,7 @@ const Form = ({
               aria-labelledby="headingSeven"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body">
+              <div class="accordion-body bgc-f6">
                 <div className="row">
                   <div className="col-lg-2">
                     {editCase_03 ? (

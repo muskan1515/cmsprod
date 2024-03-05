@@ -119,7 +119,7 @@ const Video = ({ videos }) => {
               aria-labelledby="headingSix"
               data-bs-parent="#accordionExample"
             >
-              <div className="accordion-body">
+              <div className="accordion-body bgc-f6">
                 <div className="row">
                   <div className="col-lg-4 text-start mb-2">
                     <table>
