@@ -21795,3 +21795,6 @@ input:invalid {
   /* width: 34vw; */
   padding: 30px 20px;
 }
+.btn-clicked {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+}

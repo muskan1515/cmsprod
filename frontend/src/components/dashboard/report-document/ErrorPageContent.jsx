@@ -603,70 +603,124 @@ const ErrorPageContent = ({ allInfo }) => {
       <hr style={{ border: "2px solid black" }} />
       <div>
         <h5 className="text-dark">INSURANCE PARTICULARS :</h5>
-        <div className=" text-start d-flex gap-5 text-dark">
-          <div>
-            <label htmlFor="">(a) Policy / Cover Note No. : </label>
-            <span className="fw-bold text-dark">
-              {" "}
-              {allInfo?.otherInfo[0]?.PolicyNumber}
-            </span>
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="row">
+              <div className="col-lg-5 ">
+                <label htmlFor="">(a) Policy / Cover Note No. </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6 text-start">
+                <span className="fw-bold text-dark">
+                  {" "}
+                  {allInfo?.otherInfo[0]?.PolicyNumber}
+                </span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-5">
+                <label htmlFor="">(b) Period of Insurance </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span>
+                  {" "}
+                  {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to{" "}
+                  {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}
+                </span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-5">
+                <label htmlFor="">(c) Endorsement </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span> 33030331230100004487</span>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-5">
+                <label htmlFor="">(d) Insurers </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span>
+                  {" "}
+                  {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}
+                </span>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-5">
+                <label htmlFor="">(e) Insured </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span>
+                  {" "}
+                  {allInfo?.otherInfo[0]?.InsuredName}{" "}
+                  {allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
+                  {allInfo?.otherInfo[0]?.InsuredAddress}
+                </span>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-5">
+                <label htmlFor="">(f) H. P. A. </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span> {allInfo?.otherInfo[0]?.HPA} - SGNR</span>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-5">
+                <label htmlFor="">(g) Appointed By </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span> {allInfo?.otherInfo[0]?.VehicleInsuranceCompany}</span>
+              </div>
+            </div>
           </div>
-          <div>
-            <label htmlFor="">IDV : -</label>
-            <span> F {allInfo?.otherInfo[0]?.IDV}</span>
+          <div className="col-lg-6">
+            <div className="row">
+              <div className="col-lg-3">
+                <label htmlFor="">IDV </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span> F {allInfo?.otherInfo[0]?.IDV}</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-3">
+                <label htmlFor="">Claim No. </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-3">
+                <label htmlFor="">Token No. </label>
+              </div>
+              <div className="col-lg-1">:</div>
+              <div className="col-lg-6">
+                <span> {allInfo?.otherInfo[0].Token}</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="d-flex gap-5">
-          <div>
-            <label htmlFor="">(b) Period of Insurance</label>
-            <span>
-              {" "}
-              {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to{" "}
-              {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}
-            </span>
-          </div>
-          <div>
-            <label htmlFor="">Claim No. : -</label>
-            <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
-          </div>
-        </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(c) Endorsement : </label>
-            <span> 33030331230100004487</span>
-          </div>
-          <div>
-            <label htmlFor="">Token No. : -</label>
-            <span> {allInfo?.otherInfo[0].Token}</span>
-          </div>
-        </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(d) Insurers : </label>
-            <span> {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
-          </div>
-        </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(e) Insured : </label>
-            <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.InsuredName}{" "}
-              {allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
-              {allInfo?.otherInfo[0]?.InsuredAddress}
-            </span>
-          </div>
-        </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(f) H. P. A. : </label>
-            <span> {allInfo?.otherInfo[0]?.HPA} - SGNR</span>
-          </div>
-        </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(g) Appointed By : </label>
-            <span> {allInfo?.otherInfo[0]?.VehicleInsuranceCompany}</span>
+        <div className="row">
+          <div className="col-lg-12">
+            
           </div>
         </div>
       </div>
