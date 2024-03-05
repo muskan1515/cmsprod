@@ -42,8 +42,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [VehicleUpto, setVehicleUpto] = useState("");
 
-  const [metalSalvageValue,setMetalSalvageValue]=useState(5);
-  const [lessExcess,setLessExcess]=useState(0);
+  const [metalSalvageValue, setMetalSalvageValue] = useState(5);
+  const [lessExcess, setLessExcess] = useState(0);
   const [currentGst, setCurrentGst] = useState(0);
 
   const [overallMetalDep, setOverallMetailDep] = useState(0);
@@ -253,7 +253,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       total_taxable_amount = 0,
       total_tax = 0,
       total_aassessed_wihtout_tax = 0;
-      
+
     allRows.map((row, index) => {
       if (String(row.isActive) === "1") {
         const current_row_estimate =
@@ -264,17 +264,21 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
     });
     allRows.map((row, index) => {
       if (String(row.isActive) === "1") {
-        const dep = row.type === 1 && (String(policyType) === "Regular" || String(policyType) === "null") ?
-        (Number(row.assessed)*Number(12.5))/100:0;
+        const dep =
+          row.type === 1 &&
+          (String(policyType) === "Regular" || String(policyType) === "null")
+            ? (Number(row.assessed) * Number(12.5)) / 100
+            : 0;
 
-        console.log(index,row.type,dep,policyType);
+        console.log(index, row.type, dep, policyType);
 
         const current_row_assessed =
           Number(row?.assessed) -
-          calculateGSTWithPaintValue(row?.assessed, row.type, row.gst)-dep;
-      
-          console.log("Policy Type",policyType)
-       
+          calculateGSTWithPaintValue(row?.assessed, row.type, row.gst) -
+          dep;
+
+        console.log("Policy Type", policyType);
+
         total_taxable_amount =
           total_taxable_amount +
           (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
@@ -1025,10 +1029,15 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         onClose={() => setOpen(false)}
         allow="picture-in-picture"
       />
-      <ul className="nav nav-tabs" id="myTab" role="tablist">
+      <ul
+        className="nav nav-tabs"
+        id="myTab"
+        role="tablist"
+        style={{ backgroundColor: "lightblue" }}
+      >
         <li className="nav-item">
           <a
-            className="nav-link active"
+            className="nav-link active p-2"
             data-bs-toggle="tab"
             href="#descriptions"
             role="tab"
@@ -1038,7 +1047,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link "
+            className="nav-link p-2 "
             data-bs-toggle="tab"
             href="#description"
             role="tab"
@@ -1048,7 +1057,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link "
+            className="nav-link p-2 "
             data-bs-toggle="tab"
             href="#newparts"
             role="tab"
@@ -1058,7 +1067,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link"
+            className="nav-link p-2"
             data-bs-toggle="tab"
             href="#labour"
             role="tab"
@@ -1068,7 +1077,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
         </li>
         <li className="nav-item">
           <a
-            className="nav-link"
+            className="nav-link p-2"
             data-bs-toggle="tab"
             href="#summary"
             role="tab"
