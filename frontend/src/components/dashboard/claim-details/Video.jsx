@@ -311,7 +311,7 @@ const Video = ({ videos }) => {
           videos?.map((video,index)=>(
              
            
-            <tr>
+            <tr key={index}>
             <td
             style={{ border: "1px solid black", padding: "10px" }}
           >
