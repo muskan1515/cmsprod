@@ -75,18 +75,7 @@ const addClaim =  (req, res) => {
         ${parseInt(IsActive)}
       );
     `;
-    
-  const generateReference = (leadId) => {
-      const firstThreeLetters = Region?.slice(0, 3);
   
-      const now = new Date();
-      const yy = String(now.getFullYear()).slice(-2);;
-      const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
-      const result = `${firstThreeLetters}/${yy}-${mm}/${leadId}`;
-  
-      return result;
-    };
-    
     db.query(insertClaimDetails, (error, results) => {
       if (error) {
         console.error("Error inserting data into ClaimDetails:", error);
@@ -106,15 +95,7 @@ const addClaim =  (req, res) => {
           }
           console.log(results);
           const addLeadId = results[0].LeadId;
-          //   const ReferenceNo=  generateReference(addLeadId)
-          // const update_query = `UPDATE ClaimDetails SET ReferenceNo = '${ReferenceNo}' where LeadID=${addLeadId}`
-          // db.query(update_query, (error, results) => {
-          //   if (error) {
-          //     console.error("Error updating data into Reference Number:", error);
-          //     return res
-          //       .status(500)
-          //       .json({ error: "Error updating data into Reference Number." });
-          //   }})
+  
           const insertVehicleDetails = `
       INSERT INTO VehicleDetails (
         RegisteredNumber,
@@ -208,17 +189,6 @@ const addClaim =  (req, res) => {
   `;
 
 
-//   const insertSummaryDetails = `
-//   INSERT INTO CommercialVehicleDetails (
-//     LeadId
-//   ) VALUES (
-//     ${parseInt(results[0].LeadId)}
-//   );
-// `;
-
-   
-          // Execute the SQL queries individually
-  
           db.query(insertVehicleDetails, (error, results) => {
             if (error) {
               console.error("Error inserting data into VehicleDetails:", error);
@@ -293,31 +263,6 @@ const addClaim =  (req, res) => {
                         });
                       }
 
-                      // db.query(insertSummaryDetails, (error, results) => {
-                      //   if (error) {
-                      //     console.error(
-                      //       "Error inserting data into DriverDetails:",
-                      //       error
-                      //     );
-                      //     return res.status(500).json({
-                      //       error: "Error inserting data into InsuredDetails.",
-                      //     });
-                      //   }
-                      // });
-    
-
-                      // db.query(insertSummaryDetails, (error, results) => {
-                      //   if (error) {
-                      //     console.error(
-                      //       "Error inserting data into DriverDetails:",
-                      //       error
-                      //     );
-                      //     return res.status(500).json({
-                      //       error: "Error inserting data into InsuredDetails.",
-                      //     });
-                      //   }
-                      // });
-    
                       if(InsuredMailAddress !== "" ){
                       axios
                         .post(
@@ -329,6 +274,9 @@ const addClaim =  (req, res) => {
                             toMail: InsuredMailAddress,
                             Date: new Date(),
                             leadId: addLeadId,
+                            Region:Region,
+                            BrokerMailAddress:BrokerMailAddress,
+                            GarageMailAddress:GarageMailAddress,
                             type : 1
                           },
                           {
@@ -348,75 +296,11 @@ const addClaim =  (req, res) => {
                           });
                         });
                       }
-                        if (GarageMailAddress !== "") {
-                          axios
-                            .post(
-                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
-                              {
-                                vehicleNo: RegisteredNumber,
-                                PolicyNo: PolicyNumber,
-                                Insured: InsuredName,
-                                toMail: GarageMailAddress,
-                                Date: new Date(),
-                                leadId:addLeadId,
-                                type : 2
-                              },
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${token}`,
-                                  "Content-Type": "application/json",
-                                },
-                              }
-                            )
-                            .then((ressss) => {
-                             console.log(ressss);
-                            })
-                            .catch((Er) => {
-                              return res.status(500).json({
-                                error: "Error sending email into Garage Mail.",
-                              });
-                            });
-                        }
-                        if (BrokerMailAddress !== "") {
-                          axios
-                            .post(
-                              `${process.env.BACKEND_DOMAIN}/email/sendEmail/2`,
-                              {
-                                vehicleNo: RegisteredNumber,
-                                PolicyNo: PolicyNumber,
-                                Insured: InsuredName,
-                                toMail: BrokerMailAddress,
-                                Date: new Date(),
-                                leadId:addLeadId,
-                                type : 3
-                              },
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${token}`,
-                                  "Content-Type": "application/json",
-                                },
-                              }
-                            )
-                            .then((ressss) => {
-                              console.log(ressss);
-                            })
-                            .catch((Er) => {
-                              return res.status(500).json({
-                                error:
-                                  "Error sending email into Broker Mail.",
-                              });
-                            });
-
-                          
-
-                          
-                        }
-  
-                      //garage
+                       
                       return res.status(200).json({
                         message: "Data inserted successfully.",
                       });
-                      //broker
+                      
                     });
                   });
                 });
@@ -902,7 +786,7 @@ const getSpecificClaim = async (req, res) => {
     });
   };
 
-   const getClaimDetails = (req, res) => {
+  const getClaimDetails = (req, res) => {
     const { token,type, leadId } = req.body;
    
     const sql = "SELECT InsuredToken ,ImageToken , VideoToken FROM ClaimDetails WHERE LeadId =?";
@@ -916,8 +800,10 @@ const getSpecificClaim = async (req, res) => {
       const stat1 =  result2[0]?.InsuredToken === token && String(type) === "1";
       const stat2 =  result2[0]?.ImageToken === token && String(type) === "2";
       const stat3 =  result2[0]?.VideoToken === token && String(type) === "3";
-      console.log(type,token, result2[0]?.InsuredToken,  result2[0]?.ImageToken ,result2[0]?.VideoToken)
-      console.log(stat1, stat2, stat3)
+
+      console.log("stat1",token,result2[0]?.InsuredToken,type);
+      console.log("stat2",token,result2[0]?.ImageToken,type);
+      console.log("stat3",token,result2[0]?.VideoToken,type);
       if (stat1 || stat2 || stat3) {
         // console.log(result2[0].Token === token);
            res.status(200).send("Successfully found!!");
@@ -927,7 +813,6 @@ const getSpecificClaim = async (req, res) => {
       }
     });
   };
-
 
   const updateDriverDetails=(req,res)=>{
 
