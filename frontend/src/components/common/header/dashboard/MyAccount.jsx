@@ -2,8 +2,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { isSinglePageActive } from "../../../../utils/daynamicNavigation";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const MyAccount = () => {
+  const [userData, setUserData] = useState(null);
   const profileMenuItems = [
     { id: 1, name: "My Profile", ruterPath: "/my-profile" },
     // { id: 2, name: " My Message", ruterPath: "/my-message" },
@@ -17,6 +19,15 @@ const MyAccount = () => {
     localStorage.removeItem("regionType");
     route.push("/login");
   };
+  useEffect(() => {
+    const data = localStorage.getItem("userInfo");
+    const parsedData = JSON.parse(data);
+    const username = parsedData[0].Username;
+    setUserData(username);
+  }, []);
+
+  console.log("Data saved", userData);
+
   return (
     <>
       <div className="user_set_header">
@@ -27,10 +38,10 @@ const MyAccount = () => {
           src="/assets/images/team/e1.png"
           alt="e1.png"
         />
-        <p>
-          Ali Tufan <br />
-          <span className="address">alitufan@gmail.com</span>
-        </p>
+        <h3>
+          {userData}
+          <br />
+        </h3>
       </div>
       {/* End user_set_header */}
 

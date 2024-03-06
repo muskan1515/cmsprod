@@ -97,20 +97,19 @@ const AllStatistics = ({allClaims,setSelectedCard}) => {
       color: "#E6E6FA",
     },
   ];
-
-  const getCount = (item)=>{
-    let count =0;
+  console.log("allStatistics",allStatistics);
+  const getCount = (item) => {
+    console.log("item",item);
     
-    allClaims.map((stat,index)=>{
-      // console.log(stat,item)
-      if(String(stat.CurrentStatus) === String(item.id)){
-       
-        count  = count + 1;
+    return allClaims.reduce((count, stat) => {
+      if (String(stat.CurrentStatus) === String(item.id)) {
+        return count + 1;
       }
-    })
-    console.log(count)
-    return count;
-  }
+      console.log("Count",count);
+      return count;
+    }, 0);
+  };
+  
 
   return (
     <>

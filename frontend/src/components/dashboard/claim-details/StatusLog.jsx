@@ -69,7 +69,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim}) => {
               onChange={(e)=>setStat(e.target.value)}
             >
               {statusOptions.map((stat,index)=>{
-                return ( stat.id === currentStatus+1 || stat.id === currentStatus -1 || stat.id === currentStatus) ?  <option key={index} data-tokens="Status1" value={stat.id} >{stat.value}</option>
+                return ( stat.id === currentStatus+1 ||  stat.id === currentStatus) ?  <option key={index} data-tokens="Status1" value={stat.id} >{stat.value}</option>
                   :  null
 
               })}
