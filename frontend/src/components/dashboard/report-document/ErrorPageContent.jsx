@@ -718,30 +718,36 @@ const ErrorPageContent = ({ allInfo }) => {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-12">
-            
-          </div>
-        </div>
       </div>
       <hr style={{ border: "2px solid black" }} />
       <div>
-        <div className="d-flex gap-5">
-          <h5 className="text-dark">VEHICLE PARTICULARS :</h5>
-          <span>{allInfo?.otherInfo[0]?.Remark}</span>
+        <div className="row">
+          <div className="col-lg-5">
+            <h5 className="text-dark">VEHICLE PARTICULARS :</h5>
+          </div>
+          <div className="col-lg-5">
+            <span>{allInfo?.otherInfo[0]?.Remark}</span>
+          </div>
         </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(a) Registered Number :</label>
+
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">(a) Registered Number </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.RegisteredNumber}
             </span>
           </div>
         </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(b) Registered Owner :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </div>
         </div>
@@ -757,17 +763,22 @@ const ErrorPageContent = ({ allInfo }) => {
         </div>
         <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
         {/* common header for all page */}
-
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">Owner Serial No. / Transfer Date :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span> {formatDate(allInfo?.otherInfo[0]?.TransferDate)}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(c) Date of Registration :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span>
               {" "}
               {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}
@@ -775,9 +786,12 @@ const ErrorPageContent = ({ allInfo }) => {
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(d) Chassis Number :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.ChassisNumber}
@@ -785,16 +799,22 @@ const ErrorPageContent = ({ allInfo }) => {
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(f) Make / Variant/ Model /Color :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span> {allInfo?.otherInfo[0]?.MakeVariantModelColor}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(g) Type of Body and Class of vehicle :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.TypeOfBody} (S) -{" "}
@@ -803,54 +823,77 @@ const ErrorPageContent = ({ allInfo }) => {
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(h) Pre Accident Condition :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(k) Seating Capacity :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span> {allInfo?.otherInfo[0]?.SeatingCapacity} Nos.</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(l) Cubic Capacity :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">(m) Tax particulars :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-6">
             <span> {allInfo?.otherInfo[0]?.TaxParticulars}</span>
           </div>
         </div>
       </div>
       <hr style={{ border: "2px solid black" }} />
       <div>
-        <div className="d-flex gap-5">
-          <h5 className="text-dark">DRIVER PARTICULARS :</h5>
-          <span>{allInfo?.otherInfo[0]?.Remark}</span>
+        <div className="row">
+          <div className="col-lg-5">
+            <h5 className="text-dark">DRIVER PARTICULARS :</h5>
+          </div>
+          <div className="col-lg-5">
+            <span>{allInfo?.otherInfo[0]?.Remark}</span>
+          </div>
         </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="" className="text-dark">
               (a) Name of Driver :
             </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.DriverName}
             </span>
           </div>
         </div>
-        <div className=" text-start d-flex gap-5">
-          <div>
+
+        <div className="row">
+          <div className="col-lg-5">
             <label htmlFor="">Age :</label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.Age} Years ({" "}
@@ -862,46 +905,64 @@ const ErrorPageContent = ({ allInfo }) => {
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(b) Motor Driver License Number :</label>
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">(b) Motor Driver License Number </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span className="fw-bold text-dark">
               {allInfo?.otherInfo[0]?.LicenseNumber}{" "}
             </span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">Date of Issue :</label>
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">Date of Issue </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span> {formatDate(allInfo?.otherInfo[0]?.DateOfIssue)}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">Valid from :</label>
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">Valid from </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span> {formatDate(allInfo?.otherInfo[0]?.ValidFrom)}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(c) Issuing Authority :</label>
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">(c) Issuing Authority </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span> {allInfo?.otherInfo[0]?.IssuingAuthority}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(d) Type of License :</label>
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">(d) Type of License </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span>{allInfo?.otherInfo[0]?.LicenseType}</span>
           </div>
         </div>
 
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <label htmlFor="">(e) Badge Number :</label>
+        <div className="row">
+          <div className="col-lg-5">
+            <label htmlFor="">(e) Badge Number </label>
+          </div>
+          <div className="col-lg-1">:</div>
+          <div className="col-lg-5">
             <span> {allInfo?.otherInfo[0]?.BadgeNumber}</span>
           </div>
         </div>

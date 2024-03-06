@@ -188,9 +188,9 @@ const CreateList = ({
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
-  },[]);
+  }, []);
   const openStatusUpdateHandler = () => {
     setIsStatusModal(true);
   };
@@ -408,6 +408,48 @@ const CreateList = ({
                 ></button>
               )}
             </div> */}
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontSize: "14px",
+                  // marginTop: "-13px",
+                }}
+              >
+                Garage Mail Id
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input type="email" className="form-control" id="propertyTitle" />
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <div className="row mt-1">
+            <div className="col-lg-4 my_profile_setting_input form-group">
+              <label
+                htmlFor=""
+                className="text-color"
+                style={{
+                  // paddingTop: "15px",
+                  color: "#1560bd",
+                  fontSize: "14px",
+                  // marginTop: "-13px",
+                }}
+              >
+                Broker Mail Id
+              </label>
+            </div>
+            <div className="col-lg-7">
+              <input type="email" className="form-control" id="propertyTitle" />
+            </div>
           </div>
         </div>
         <div className="col-lg-6">

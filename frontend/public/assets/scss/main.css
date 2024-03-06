@@ -17119,8 +17119,8 @@ legend span {
   background-color: #28b928;
 }
 
-.bg-logo{
-  background-color: #36BBFF;
+.bg-logo {
+  background-color: #36bbff;
 }
 
 .bdrrn {
@@ -21796,5 +21796,9 @@ input:invalid {
   padding: 30px 20px;
 }
 .btn-clicked {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  */
+  background-color: white;
+}
+.btn-clicked:hover {
+  box-shadow: 0 0 10px rgba(139, 209, 252, 0.3);
 }
