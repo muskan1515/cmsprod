@@ -116,6 +116,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       assessed: "",
       bill_sr: "", // Assuming bill_sr increments with each new row
       gst: 0,
+      type: 0,
     }))
   );
 

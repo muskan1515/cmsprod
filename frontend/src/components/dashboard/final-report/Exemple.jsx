@@ -188,6 +188,7 @@ export default function Exemple_01({
         },
       })
       .then((res) => {
+        // console.log('res.data',res.data.data.results);
         setAllDepreciations(res.data.data.results);
       })
       .catch((Err) => {
@@ -326,7 +327,7 @@ export default function Exemple_01({
 
   useEffect(()=>{
     let tempDep = sortArrayOfObjects(allDepreciations);
-    setAllDepreciations(tempDep)
+    // setAllDepreciations(tempDep)
 
   },[allDepreciations]);
 
@@ -1392,6 +1393,7 @@ export default function Exemple_01({
                 }
               >
                 {allDepreciations.map((dep, index) => {
+                  console.log("Dep",dep);
                   return index > 0 &&
                     allDepreciations[index]?.PartType ===
                       allDepreciations[index - 1]?.PartType ? null : (

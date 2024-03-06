@@ -277,8 +277,8 @@ const Video = ({ videos }) => {
                                   controls
                                   autoPlay
                                   muted
-                                  onEnded={handleVideoEnded}
-                                  onPause={handleVideoPause}
+                                  // onEnded={handleVideoEnded}
+                                  // onPause={handleVideoPause}
                                   crossOrigin="anonymous"
                                 >
                                   <source

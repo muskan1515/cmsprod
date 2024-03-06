@@ -174,9 +174,9 @@ const Servey = ({
 
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-    const year = date.getFullYear().toString().slice(-2); // Get last two digits of the year
+    const year = date.getFullYear().toString().slice(-4); // Get last two digits of the year
 
-    const formattedDate = `${day}/${month}/${year}`;
+    const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   };
   function localDate(dateString) {
