@@ -6,6 +6,7 @@ const dotenv = require('dotenv').config()
 
 const nodemailer = require('nodemailer');
 
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -17,14 +18,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 const generateUniqueToken = require("../Config/generateToken");
 const createToken = require("../Config/generateJWTToken");
 
  const sendEmail1 = (req, res) => {
-    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type } = req.body;
-
-    console.log(req.body);
+    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
 
     const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
     db.query(sql, [leadId], (err, result) => {
@@ -35,7 +33,6 @@ const createToken = require("../Config/generateJWTToken");
       }
       const content = emailHandler(result[0]?.Status);
   
-      const value = type;
       const InsuredToken = generateUniqueToken();
       const ImageToken =  generateUniqueToken();
       const VideoToken  =  generateUniqueToken();
@@ -82,17 +79,43 @@ const createToken = require("../Config/generateJWTToken");
           claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
   `;
-  
+
+          const currentMailAddress = String(Region) === "Delhi" ? 
+          process.env.NODEMAILER_DELHI_EMAIL : String(Region) === "Jodhpur" ?
+          process.env.NODEMAILER_JODHPUR_EMAIL
+          : process.env.NODEMAILER_CHANDIGARH_EMAIL;
+
+          
+          const currentMailAddressPass = String(Region) === "Delhi" ? 
+          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : String(Region) === "Jodhpur" ?
+          process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+          : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+
+        const transporter2 = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: currentMailAddress,
+            pass: currentMailAddressPass,
+          },
+          tls: {
+            rejectUnauthorized: false,
+          },
+        });
+
+        const ccContent = GarageMailAddress && BrokerMailAddress ? `${GarageMailAddress},${BrokerMailAddress}` : GarageMailAddress ? GarageMailAddress :BrokerMailAddress;
+
         const mailOptions = {
-          from: "infosticstech@gmail.com",
+          from: currentMailAddress,
           to: toMail,
+          cc: ccContent,
           subject: `Survey Request for Claim of
           Vehicle Number - ${vehicleNo} A/c ${Insured} policy Number - ${PolicyNo}`,
           text: emailContent,
         };
-  
+
+      
         // Send the email
-        transporter.sendMail(mailOptions, (error, info) => {
+        transporter2.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
@@ -120,8 +143,7 @@ const createToken = require("../Config/generateJWTToken");
   };
   
   const acknowledgmentMail = (req, res) => {
-    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail  } = req.body;
-
+    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
 
     const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
     db.query(sql, [leadId], (err, result) => {
@@ -133,22 +155,26 @@ const createToken = require("../Config/generateJWTToken");
       const content = emailHandler(result[0]?.Status);
   
       const InsuredToken = generateUniqueToken();
+      const ImageToken =  generateUniqueToken();
+      const VideoToken  =  generateUniqueToken();
       
       const insertClaimDetails = `
           UPDATE ClaimDetails
           SET
-          InsuredToken = '${InsuredToken}'
+          InsuredToken = '${InsuredToken}',
+          ImageToken ='${ImageToken}',
+          VideoToken ='${VideoToken}'
           WHERE LeadId = ${leadId};
         `;
-    
        
-      db.query(insertClaimDetails, (err, result2) => {
+          db.query(insertClaimDetails, (err, result2) => {
         if (err) {
           console.error(err);
           res.status(500).send("Internal Server Error");
           return;
         }
-  
+
+     
         const emailContent = `
       Dear Sir/Madam,
   
@@ -158,39 +184,70 @@ const createToken = require("../Config/generateJWTToken");
       Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
       can procedd further in your case and we also request 
       you to provide the following details as follows:-
-  
+
       ${content}
-  
-          Please provide the clear copy of all the documents so that the claim processing can be fast or
-        <p><a href=https://claims-backend-apis.onrender.com/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
-  
-      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-              claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
-  
-    `;
-  
+
+      Please provide the clear copy of all the documents so that the claim processing can be fast or
+      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+
+      Please provide the clear Vahicle Videos so that the claim processing can be fast or
+      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
+
+      Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
+      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
+
+    Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+          claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+
+  `;
+
+          const currentMailAddress = String(Region) === "Delhi" ? 
+          process.env.NODEMAILER_DELHI_EMAIL : String(Region) === "Jodhpur" ?
+          process.env.NODEMAILER_JODHPUR_EMAIL
+          : process.env.NODEMAILER_CHANDIGARH_EMAIL;
+
+          
+          const currentMailAddressPass = String(Region) === "Delhi" ? 
+          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : String(Region) === "Jodhpur" ?
+          process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+          : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+
+        const transporter2 = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: currentMailAddress,
+            pass: currentMailAddressPass,
+          },
+          tls: {
+            rejectUnauthorized: false,
+          },
+        });
+
         const mailOptions = {
-          from: "infosticstech@gmail.com",
+          from: currentMailAddress,
           to: toMail,
-          subject: "Survey Request for Vehicle Claim",
+          cc: `${GarageMailAddress},${BrokerMailAddress}`,
+          subject: `Survey Request for Claim of
+          Vehicle Number - ${vehicleNo} A/c ${Insured} policy Number - ${PolicyNo}`,
           text: emailContent,
         };
-  
+
+      
         // Send the email
-        transporter.sendMail(mailOptions, (error, info) => {
+        transporter2.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
-          } 
+          } else if(String(type) === "1" ) {
+            console.log(type,String(type) === "1")
            
-            const updateClaimDetails = `
+            const insertClaimDetails = `
             UPDATE ClaimDetails
             SET
             IsMailSent = 1
             WHERE LeadId = ${leadId};
           `;
-
-          db.query(updateClaimDetails, (err, result2) => {
+          db.query(insertClaimDetails, (err, result2) => {
             if (err) {
               console.error(err);
               res.status(500).send("Internal Server Error");
@@ -198,7 +255,7 @@ const createToken = require("../Config/generateJWTToken");
             }
               res.status(200).send("Email sent successfully");
             });
-          
+          }
           });
         });
       });
