@@ -261,7 +261,7 @@ useEffect(()=>{
 },[allNewParts]);
 
 
-  useEffect(() => {
+   useEffect(() => {
     let total_estimate = 0,
       total_assessed = 0,
       total_paint = 0,
@@ -304,10 +304,8 @@ useEffect(()=>{
         const remained_assessed_paint_dep =
           Number(row?.assessed) -
           calculateGSTWithoutPaintValue(row.assessed, row.type, row.gst);
-        total_aassessed_wihtout_tax =
-          total_aassessed_wihtout_tax + (row.gst % 2 === 0)
-            ? remained_assessed_paint_dep
-            : 0;
+          console.log("labour",index+1,)
+        total_aassessed_wihtout_tax = total_aassessed_wihtout_tax + ((row.gst % 2) === 0? remained_assessed_paint_dep : 0);
 
         total_tax = total_tax + current_row_assessed_tax;
         total_paint =
