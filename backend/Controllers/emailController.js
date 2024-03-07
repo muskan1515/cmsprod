@@ -67,13 +67,13 @@ const createToken = require("../Config/generateJWTToken");
       ${content}
 
       Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
 
       Please provide the clear Vahicle Videos so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://cmsprod.vercel.app//documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
 
       Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://cmsprod.vercel.app//documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
 
     Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
           claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
@@ -188,13 +188,13 @@ const createToken = require("../Config/generateJWTToken");
       ${content}
 
       Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
 
       Please provide the clear Vahicle Videos so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
 
       Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
-      <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
 
     Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
           claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
@@ -305,7 +305,7 @@ const createToken = require("../Config/generateJWTToken");
           ${content}
   
               Please provide the clear copy of all the documents so that the claim processing can be fast or
-            <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&type=${1}&content=${encodeURIComponent(
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&type=${1}&content=${encodeURIComponent(
             content2
           )} target="_blank">Click me</a> to fill the documents information .</p>
   
@@ -339,7 +339,7 @@ const createToken = require("../Config/generateJWTToken");
         ${content}
   
             Please provide the clear copy of all the documents so that the claim processing can be fast or
-          <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${
+          <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${
           result2[0].Token
         }&type=${1}&content=${encodeURIComponent(
           content2
@@ -395,7 +395,7 @@ const createToken = require("../Config/generateJWTToken");
        3) LH Fender- Denting-250, Painting-2200
        
            Further approval will be provided after dismentaling of the vehicle.
-           <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+           <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
   
        Note:- Pleasae consider that the the claim is payable  subject to policy terms & conditions & Cashless facility will be allowed 
               Subject to all the documents get verified from online. It is for your information please.
@@ -442,7 +442,7 @@ const createToken = require("../Config/generateJWTToken");
         7) Pan Card
         8) Please destorey the items properly in the RI, Otherwise we will treat the part is repaired
 
-        <p><a href=https://claims-app-phi.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
   
           
         Please provide the clear copy of all the documents so that the claim processing can be fast
