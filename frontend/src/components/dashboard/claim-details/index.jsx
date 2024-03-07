@@ -1714,6 +1714,7 @@ const Index = ({}) => {
                               status={status}
                               statusOptions={statusOptions}
                               subStatus={subStatus}
+                              documents={documents}
                               claim={claim}
                             />
                             {/* <CreateList /> */}
