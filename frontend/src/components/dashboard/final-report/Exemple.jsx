@@ -1117,6 +1117,23 @@ export default function Exemple_01({
     setChange(true);
   };
 
+ const calculateRowTotal=(sno)=>{
+    let requiredRow = {};
+    allRows.map((row,index)=>{
+      if(String(row.sno) === String(sno)){
+        requiredRow = row;
+      }
+    });
+
+    const overall_Value = Number(requiredRow.assessed)*Number(requiredRow.qa);
+    const gstValue = (overall_Value * Number(requiredRow.gst))/100;
+
+    if(String(currentType) === "" || String(currentType) === "Both" || String(currentType) === "Assessed"){
+      return overall_Value+gstValue;
+    }
+    return overall_Value;
+  }
+
   useEffect(() => {
     let temp = [];
 
@@ -1372,7 +1389,7 @@ export default function Exemple_01({
               <input
                 className="form-control form-control-table"
                 type="number"
-                value={roundOff(calculateTotal(row.sno))}
+                value={roundOff(calculateRowTotal(row.sno))}
                 // onChange={(e)=>handleChange(index,e.target.value,"gst")}
                 required
                 disabled={!edit}
