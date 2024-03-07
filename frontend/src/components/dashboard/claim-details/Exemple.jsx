@@ -379,7 +379,7 @@ import SmartTable from "./SmartTable";
     },
     {
       _id: "6144145976c7fe",
-      serial_num: "15",
+      serial_num: "16",
       doc_name: "Images",
       file: "",
       action: (
@@ -400,7 +400,7 @@ import SmartTable from "./SmartTable";
     },
     {
       _id: "6144145976c7fe",
-      serial_num: "15",
+      serial_num: "17",
       doc_name: "Videos",
       file: "",
       action: (
