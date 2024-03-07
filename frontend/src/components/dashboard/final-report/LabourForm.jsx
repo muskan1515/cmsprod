@@ -96,11 +96,11 @@ const LabourForm = ({
                       />
                       Estimate W/O Tax :
                     </div>
-                    <div className="col-lg-12 text-center">{totalEstimate}</div>
+                    <div className="col-lg-12 text-center">{roundOff(totalEstimate)}</div>
                   </div>
                   <div className="col-lg-6">
-                    <div className="col-lg-12 text-end">[Assessed] :</div>
-                    <div className="col-lg-12 text-end">{totalAssessed}</div>
+                    <div className="col-lg-12 text-end">[roundOff(Assessed)] :</div>
+                    <div className="col-lg-12 text-end">{roundOff(totalAssessed)}</div>
                   </div>
                   {"   "}
                 </div>
@@ -131,7 +131,7 @@ const LabourForm = ({
                   value=""
                   id="remeberMe"
                 />
-                Paint :{laborWOPaint}
+                Paint :{roundOff(laborWOPaint)}
               </div>
             </div>
           </div>
