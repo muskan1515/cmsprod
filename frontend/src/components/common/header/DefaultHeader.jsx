@@ -24,9 +24,9 @@ const Header = () => {
         navbar ? "stricky-fixed " : ""
       }`}
     >
-      <div className="container-fluid p0">
+      <div className="container-fluid">
         {/* <!-- Menu Toggle btn--> */}
-        <Link href="/" className="navbar_brand float-start dn-smd">
+        <Link href="/" className="navbar_brand float-start dn-smd mb-2">
           <Image
             width={40}
             height={45}
@@ -45,9 +45,7 @@ const Header = () => {
         </Link>
         {/* site logo brand */}
 
-        <nav>
-          <HeaderMenuContent />
-        </nav>
+        <nav>{/* <HeaderMenuContent /> */}</nav>
         {/* End .navbar */}
       </div>
     </header>
