@@ -781,11 +781,12 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="InsuredAddress"
-                        value={
-                          InsuredAddress && InsuredAddress !== "null"
-                            ? InsuredAddress
-                            : ""
-                        }
+                        // value={
+                        //   InsuredAddress && InsuredAddress !== "null"
+                        //     ? InsuredAddress
+                        //     : ""
+                        // }/
+                        value={claim?.vehicleDetails?.PermanentAddress}
                         onChange={(e) => setInsuredAddress(e.target.value)}
                         readOnly={!isEditMode}
 

@@ -485,7 +485,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      ></label>
+                      >{claim?.garageDetails?.GarageMailAddress}</label>
                     </div>
                   </div>
                 </td>
@@ -514,7 +514,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {}
+                        {claim?.claimDetails?.BrokerMailAddress}
                       </label>
                     </div>
                   </div>

@@ -51,6 +51,7 @@ const addClaim =  (req, res) => {
         PolicyPeriodEnd,
         ClaimServicingOffice,
         AddedBy,
+        ClaimNumber,
         Region,
         InspectionType,
         IsClaimCompleted,
@@ -66,6 +67,7 @@ const addClaim =  (req, res) => {
         '${PolicyPeriodEnd}',
         '${ClaimServicingOffice}',
         '${(AddedBy)}',
+      '${ClaimNumber}',
         '${Region}',
         '${InspectionType}',
         ${parseInt(IsClaimCompleted)},
@@ -363,6 +365,7 @@ const getSpecificClaim = async (req, res) => {
         DateOfBirth,
         TypeOfverification,
         ValidUpto,
+        DLStatus,
         LeadID
         FROM DriverDetails WHERE LeadID=?`,
         [leadId]
@@ -425,7 +428,8 @@ const getSpecificClaim = async (req, res) => {
         BadgeNumber,
         Remark,
         LicenseType,
-        LeadID
+        LeadID,
+        DLStatus
         FROM DriverDetailsOnline WHERE LeadID=?`,
         [leadId]
       );

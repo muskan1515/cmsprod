@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FaBold, FaItalic, FaUnderline } from "react-icons/fa";
 
-const ReactEditor = ({ editorContent, setEditorContent,index, finalValue,readOnly }) => {
+const ReactEditor = ({ editorContent, setEditorContent,index, finalValue,readOnly ,InsuredName}) => {
   // console.log("editorContent",editorContent)
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
     // Set the default content only on the first render
     if (isFirstRender) {
-      console.log(editorContent)
+      
       // setEditorContent(editorContent || ""); // Use the default value or an empty string if not provided
       setIsFirstRender(false);
 
@@ -35,7 +35,14 @@ const ReactEditor = ({ editorContent, setEditorContent,index, finalValue,readOnl
     document.execCommand("styleWithCSS", false, false);
   };
 
-  
+  function makeBold(textToBold, content) {
+    // Use regular expression to replace occurrences of the textToBold with its bold version
+    const regex = new RegExp(`(${textToBold})`, 'gi'); // 'gi' ensures global and case-insensitive match
+    const boldContent = content?.replace(regex, "<strong>$1</strong>");
+    return boldContent;
+  }
+  const boldEditorContent = makeBold(InsuredName, editorContent);
+
   const handleBlur = () => {
     const editorDiv = document.getElementById(`editorDiv-${index}`);
     if (editorDiv) {
@@ -106,7 +113,7 @@ const ReactEditor = ({ editorContent, setEditorContent,index, finalValue,readOnl
         
         onBlur={handleBlur}
         // onInput={(e)=>setEditorContent(e.target.value)}
-        dangerouslySetInnerHTML={{ __html: editorContent }}
+        dangerouslySetInnerHTML={{ __html: boldEditorContent }}
       ></div>
     
     </div>

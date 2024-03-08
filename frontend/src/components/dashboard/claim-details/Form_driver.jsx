@@ -179,8 +179,9 @@ const Form_driver = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {(claim?.driverDetails?.TypeOfVerification&&claim?.driverDetails?.TypeOfVerification!=="null"?
-                        claim?.driverDetails?.TypeOfVerification :"Not Verified")}
+                        {/* {(claim?.driverDetails?.TypeOfVerification&&claim?.driverDetails?.TypeOfVerification!=="null"?
+                        claim?.driverDetails?.TypeOfVerification :"Not Verified")} */}
+                        {claim?.driverDetails?.DLStatus}
                       </label>
                     </div>
                   </div>
@@ -364,6 +365,38 @@ const Form_driver = ({
                     </div>
                   </div>
                 </td>
+
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <label
+                        htmlFor=""
+                        className=" text-color"
+                        style={{
+                          color: "black",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Verification Type
+                      </label>
+                    </div>
+                    <div className="col-lg-6 text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          color: "#1560bd",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {claim?.driverDetails?.TypeOfverification}
+                      </label>
+                    </div>
+                  </div>
+                </td>
+
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>

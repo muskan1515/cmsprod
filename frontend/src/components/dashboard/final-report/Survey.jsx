@@ -206,13 +206,13 @@ const Servey = ({
   useEffect(() => {
     const accident = AccidentContent(claim?.insuredDetails?.InsuredName);
     const assessment = AssessmentContent(
-      claim?.claimDetails?.claimServicingOffice,
+      claim?.claimDetails?.ClaimServicingOffice,
       SurveyAllotmentDate,
       AccidentAddedDateTime,
       PlaceOfSurvey
     );
+    
     const other = otherContent();
-
     console.log("accident", accident);
     console.log("CauseOfAccident", CauseOfAccident);
     setCauseOfAccident(CauseOfAccident ? CauseOfAccident : accident);
@@ -221,7 +221,7 @@ const Servey = ({
     setPoliceAction(PoliceAction ? PoliceAction : other);
     setDetailsOfLoads(DetailsOfLoads ? DetailsOfLoads : other);
   }, [CauseOfAccident]);
-
+   
   const calculateVehicleAge = () => {
     if (
       !claim.vehicleDetails?.DateOfRegistration ||
@@ -563,7 +563,7 @@ const Servey = ({
                     readOnly={!isEditMode}
                     type={"text"}
                     value={
-                      SurveyAllotmentDate ? formatDate(SurveyAllotmentDate) : ""
+                      SurveyAllotmentDate ? formatDateUpdated(SurveyAllotmentDate) : ""
                     }
                     className="form-control"
                     id="propertyTitle"
@@ -661,6 +661,7 @@ const Servey = ({
                   index={1}
                   editorContent={CauseOfAccident}
                   setEditorContent={setCauseOfAccident}
+                  InsuredName={InsuredName}
                 />
               </div>
               {/*  <Editor/>*/}
