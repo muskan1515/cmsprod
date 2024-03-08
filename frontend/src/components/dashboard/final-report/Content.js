@@ -34,3 +34,21 @@ export const AccidentContent = (InsuredName) => {
    </strong> was driving the subject vehicle. 
     `;
 };
+
+export const summaryNotes = (claim)=>{
+  return `
+  REMARKS:
+  01.The rates allowed above combination of authorised dealer prices. 	
+  02.The cause,nature and circumstances leading to  accident appears,
+   genuine,believable and losses recommended/assessed are corrobrating with this accident.	
+  03.The loss or damage or liability has arisen proximately caused by the insured perils.	
+  04.The prices are recommended exclusive of all taxes,duties,octroi etc.	
+  05.The used abbreviation as R.C.=Registration Certificate,D.L.= Driving License,
+  N.A.=Not Allowed,R.A.=Repair Allowed,W&T=Wear & Tear,O.D.=Own Damaged,M.P.=Manuplated i.e.replaced by old material.
+  06.Chassis No., As per RC: ${claim?.vehicleDetails?.ChassisNumber ? claim?.vehicleDetails?.ChassisNumber : 'N.A.'} ,
+   As per Policy: ${claim?.claimDetails?.PolicyNumber ? claim?.claimDetails?.PolicyNumber : 'N.A.'} ,
+   it is for your information please.
+  07.The above said vehicle was reinspected by us after repair, now vehicle is ready for road worthy condition, 
+  all the parts replaced and all repair work done as per final s/r.`
+ 
+};

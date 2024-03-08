@@ -2,27 +2,19 @@ import React, { useState, useEffect } from "react";
 import { FaBold, FaItalic, FaUnderline } from "react-icons/fa";
 
 const ReactEditor = ({ editorContent, setEditorContent,index, finalValue,readOnly ,InsuredName}) => {
-  // console.log("editorContent",editorContent)
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
-    // Set the default content only on the first render
     if (isFirstRender) {
-      
-      // setEditorContent(editorContent || ""); // Use the default value or an empty string if not provided
       setIsFirstRender(false);
-
-      // Set the direction to left-to-right
       handleDirectionLTR();
     }
   }, []);
 
   const handleTextChange = (val) => {
-
-    console.log(val)
+    console.log(val);
     console.log(editorContent);
     setEditorContent(val)
-    // setEditorContent(e.target.value);
   };
 
   const handleCommand = (command, value = null) => {

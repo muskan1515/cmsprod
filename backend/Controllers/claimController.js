@@ -365,7 +365,6 @@ const getSpecificClaim = async (req, res) => {
         DateOfBirth,
         TypeOfverification,
         ValidUpto,
-        DLStatus,
         LeadID
         FROM DriverDetails WHERE LeadID=?`,
         [leadId]
@@ -427,9 +426,7 @@ const getSpecificClaim = async (req, res) => {
         IssuingAuthority,
         BadgeNumber,
         Remark,
-        LicenseType,
-        LeadID,
-        DLStatus
+        LicenseType
         FROM DriverDetailsOnline WHERE LeadID=?`,
         [leadId]
       );

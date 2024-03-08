@@ -72,7 +72,7 @@ const updateLabrorer = async (req, res) => {
             }
   
             if (result2.length > 0) {
-              // console.log("updateQuery");
+              console.log("updateQuery");
               db.query(updateQuery, (err) => {
                 if (err) {
                   console.error(err);
@@ -82,7 +82,7 @@ const updateLabrorer = async (req, res) => {
                 resolve();
               });
             } else {
-              // console.log("insertQuery");
+              console.log("insertQuery");
               db.query(insertQuery, (err) => {
                 if (err) {
                   console.error(err);
