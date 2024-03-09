@@ -73,7 +73,7 @@ end }) => {
                 >
                 <option value={""}>--</option>
                 {allInsurer.map((insurer,index)=>{
-                  return  <option data-tokens="Status1" value={insurer.name}>{insurer.name}</option>
+                  return  <option key={index} data-tokens="Status1" value={insurer.name}>{insurer.name}</option>
                 })}
                 </select>
               </div>
