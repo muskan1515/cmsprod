@@ -29,7 +29,7 @@ const Index = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userInfo"));
     console.log(userData);
-    if (userData && userData[0].Token) {
+    if (userData && userData[0]?.Token) {
       router.push("/my-dashboard");
     }
   }, []);

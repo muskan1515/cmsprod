@@ -261,7 +261,7 @@ export default function Exemple_01({
               gst: part.GSTPct,
               type: part.TypeOfMaterial,
               total: requiredTotal,
-              sno: part.ReportID,
+              sno: part.SNO,
               isActive: Number(part.IsActive),
             };
 
@@ -404,17 +404,18 @@ export default function Exemple_01({
     setOpenSave(false);
   };
 
+  let tempValue = 0;
+
 
   const handleAddRow = () => {
 
-    const newSNO = Number(updatedSNO) + 1;
+    let newSNO = Number(updatedSNO) +1 ;
     setUpdatedSNO(newSNO);
-
-    console.log("inside");
+    console.log("inside",newSNO);
     // Assuming a new row has a specific structure, adjust this as needed
     const newRow = {
       _id: allRows.length, // You may use a more robust ID generation logic
-      sno: newSNO,
+      sno: generateSnoId(),
       dep: 0, // Add default values or leave empty as needed
       description: "",
       sac: "",
@@ -1157,8 +1158,8 @@ export default function Exemple_01({
         // console.log(row);
         if (Number(row.isActive) === 1) {
           const newRow = {
-            _id: index + 1, // You may use a more robust ID generation logic
-            row: (
+            _id: index + 1, 
+            row:(
               <button
                 className="flaticon-minus"
                 onClick={() => handleRemoveRow(row.sno)}

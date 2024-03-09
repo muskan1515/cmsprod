@@ -1111,6 +1111,7 @@ const Index = ({}) => {
             policyNo={claim.claimDetails?.PolicyNumber}
             vehicleNo={claim.vehicleDetails?.VehicleEngineNumber}
             Insured={claim.insuredDetails?.InsuredName}
+            Region={claim?.claimDetails?.Region}
           />
         </div>
       </div>

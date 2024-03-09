@@ -159,7 +159,7 @@ export default function Exemple_01({
               bill_sr: part.BillSr,
               gst: part.IsGSTIncluded ? part.IsGSTIncluded : 0,
               type: part.JobType,
-              sno: part.ReportID,
+              sno: part.SNO,
               isActive: Number(part.IsActive),
             };
             temp_row.push(temp);
@@ -167,7 +167,7 @@ export default function Exemple_01({
           }
         });
 
-        setCurrentGST(Number(gst_pct));
+        setCurrentGST(Number(gst_pct) !== 0 ? Number(gst_pct) : 18 );
         setAllRows(temp_row);
         setChange(true);
       })
@@ -176,10 +176,25 @@ export default function Exemple_01({
       });
   }, []);
 
+  
+  const generateSnoId = () => {
+    const now = new Date();
+    const yyyy = String(now.getFullYear());
+    const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
+    const dd = String(now.getDate()).padStart(2, "0");
+    const hh = String(now.getHours()).padStart(2, "0");
+    const min = String(now.getMinutes()).padStart(2, "0");
+    const ss = String(now.getSeconds()).padStart(2, "0");
+    const ms = String(now.getMilliseconds()).padStart(2, "0");
+    const result = `${yyyy}${mm}${dd}${hh}${min}${ss}${ms}`;
+    return result;
+  };
+
+
   const handleAddRow = () => {
     const newRow = {
       _id: allRows.length,
-      sno: lastIndex + 1, // You may use a more robust ID ge
+      sno: generateSnoId(), // You may use a more robust ID ge
       description: "",
       sac: "",
       estimate: "",

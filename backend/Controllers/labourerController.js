@@ -26,22 +26,26 @@ const updateLabrorer = async (req, res) => {
             INSERT INTO LabourReport (
               Description,
               SAC,
+              SNO,
               Estimate,
               Assessed,
               BillSr,
               IsGSTIncluded,
               GSTPercentage,
               IsActive,
+              JobType,
               LeadID
             ) VALUES (
               '${row.description}',
               '${row.sac}',
+              '${row.sno}',
               '${row.estimate}',
               '${row.assessed}',
               '${row.bill_sr}',
               '${row.gst}',
               '${gstPct}',
               '${row.isActive}',
+               ${row.type},
               '${parseInt(leadId)}'
             );
           `;
@@ -58,13 +62,13 @@ const updateLabrorer = async (req, res) => {
               GSTPercentage='${gstPct}',
               IsActive='${row.isActive}',
               JobType=${row.type}
-            WHERE ReportID = '${row.sno}' AND
+            WHERE SNO = '${row.sno}' AND
             LeadID = '${leadId}';
           `;
          
 
           console.log(updateQuery);
-          db.query("SELECT * FROM LabourReport WHERE ReportID = ? AND LeadID=? ", [row.sno,leadId], (err, result2) => {
+          db.query("SELECT * FROM LabourReport WHERE SNO = ? AND LeadID=? ", [row.sno,leadId], (err, result2) => {
             if (err) {
               console.error(err);
               reject(err);
@@ -72,7 +76,7 @@ const updateLabrorer = async (req, res) => {
             }
   
             if (result2.length > 0) {
-              console.log("updateQuery");
+              
               db.query(updateQuery, (err) => {
                 if (err) {
                   console.error(err);
@@ -82,7 +86,7 @@ const updateLabrorer = async (req, res) => {
                 resolve();
               });
             } else {
-              console.log("insertQuery");
+              
               db.query(insertQuery, (err) => {
                 if (err) {
                   console.error(err);

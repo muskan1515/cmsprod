@@ -1,4 +1,5 @@
 const db = require("../Config/dbConfig");
+const getLeadBYSNO = require("../Config/getLeadWithSNO");
 
 
 const getSpecificNewParts = (req,res)=>{
@@ -64,7 +65,6 @@ const getSpecificNewParts = (req,res)=>{
             UPDATE NewPartsReport
             SET
               DepreciationPct = '${row.dep}',
-              SNO=${row.sno},
               ItemName = '${row.description}',
               HSNCode='${row.sac}',
               Remark='${row.remark}',
@@ -77,22 +77,24 @@ const getSpecificNewParts = (req,res)=>{
               TypeOfMaterial='${row.type}',
               WithTax='${row.total}',
               IsActive='${row.isActive}'
-            WHERE ReportID = '${row.sno}' AND
+            WHERE SNO = '${row.sno}' AND
             LeadID = '${leadId}';
           `;
   
   
          
-          db.query("SELECT * FROM NewPartsReport WHERE ReportID = ? AND LeadID =?", [row.sno,leadId], (err, result2) => {
+          db.query("SELECT * FROM NewPartsReport WHERE SNO=? AND LeadID =?", [row.sno,leadId], (err, result2) => {
             if (err) {
               console.error(err);
               reject(err);
               return;
             }
-  
-           
-            if (result2.length ) {
+            console.log("result",result2);
+            const check = getLeadBYSNO(result2,row.sno);
+            if (result2.length > 0 ) {
+              console.log("update query",updateQuery)
               db.query(updateQuery, (err) => {
+               
                 if (err) {
                   console.error(err);
                   reject(err);
@@ -101,6 +103,7 @@ const getSpecificNewParts = (req,res)=>{
                 resolve();
               });
             } else {
+              console.log("insert query",insertQuery);
               db.query(insertQuery, (err) => {
                 if (err) {
                   console.error(err);

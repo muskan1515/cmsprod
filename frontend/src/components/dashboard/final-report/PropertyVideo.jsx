@@ -44,7 +44,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [metalSalvageValue,setMetalSalvageValue]=useState(5);
   const [lessExcess,setLessExcess]=useState(0);
-  const [currentGst, setCurrentGst] = useState(0);
+  const [currentGst, setCurrentGst] = useState(18);
 
   const [overallMetalDep, setOverallMetailDep] = useState(0);
   const [totalAgeOfvehicle, setTotalAgeOfVehicle] = useState(0);

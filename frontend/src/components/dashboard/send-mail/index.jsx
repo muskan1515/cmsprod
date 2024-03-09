@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
+const index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
   return (
     <>
       <Toaster />
@@ -83,6 +83,7 @@ const index = ({ leadId, email, policyNo, Insured, vehicleNo }) => {
                           policyNo={policyNo}
                           vehicleNo={vehicleNo}
                           Insured={Insured}
+                          Region={Region}
                         />
                       </div>
                     </div>
