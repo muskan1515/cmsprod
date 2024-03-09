@@ -219,13 +219,18 @@ export default function Exemple({
   allRows,
   setStartDate,
   setEndDate,
+  allInsurer,
   startDate,
+  DateType,
+  setDateType,
   endDate,
 }) {
   const [updatedData, setUpdatedData] = useState([]);
   let tempData = [];
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  
+  const [InsurerType,setInsurerType]=useState("");
   const sortObjectsByOrderIdDescending = (data) => {
     return data.sort((a, b) => b.doi - a.doi);
   };
@@ -265,6 +270,10 @@ export default function Exemple({
 
   useEffect(() => {
     allRows?.map((row, index) => {
+      
+      const isShow = (InsurerType && String(InsurerType) === String(row.InsuranceCompanyNameAddress)) ?
+      true : InsurerType==="" || InsurerType === undefined? true : false;
+      if(isShow){
       const updatedRow = {
         sno: index + 1,
         ref_no: row.ReferenceNo,
@@ -284,9 +293,10 @@ export default function Exemple({
         bill_date: convertToIST(row.BillDate),
       };
       tempData.push(updatedRow);
+    }
     });
     setUpdatedData(tempData);
-  }, [allRows]);
+  }, [allRows,InsurerType]);
   console.log(updatedData);
   return (
     <SmartTable
@@ -298,6 +308,11 @@ export default function Exemple({
       start={start}
       reloadHandler={reloadHandler}
       end={end}
+      InsurerType={InsurerType}
+      setInsurerType={setInsurerType}
+      DateType={DateType}
+      setDateType={setDateType}
+      allInsurer={allInsurer}
       headCells={headCells}
     />
   );

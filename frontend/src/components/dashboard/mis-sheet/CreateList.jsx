@@ -4,7 +4,12 @@ const CreateList = ({ setSearchInput, setType,
   changeHandler,
   setStart,
   setEnd,
+  allInsurer,
   reloadHandler,
+  InsurerType,
+  setInsurerType,
+  DateType,
+  setDateType,
 start,
 end }) => {
   const [currentType, setCurrentType] = useState(0);
@@ -15,12 +20,16 @@ end }) => {
   };
 
 
+  console.log("InsurenceType",setInsurerType)
+
   const searchHandler = ({
    
   }) => {
     setType(currentType);
     setSearchInput(searchValue);
   };
+
+  console.log(InsurerType,setInsurerType)
   return (
     <>
       <div className="col-lg-12">
@@ -55,23 +64,48 @@ end }) => {
               </div>
               <div className="col-lg-8">
                 <select
-                  // style={{ marginTop: "5px" }}
                   style={{ padding: "2px", marginTop: "3px" }}
                   className="selectpicker form-select"
                   data-live-search="true"
                   data-width="100%"
-                  // value={VehicleType}
-                  // onChange={(e) => setVehicleType(e.target.value)}
-                  // disabled={!isEditMode}
+                  value={InsurerType}
+                  onChange={(e) => setInsurerType(e.target.value)}
                 >
-                  <option data-tokens="Status1">Select</option>
-                  <option data-tokens="Status2">Swift</option>
-                  <option data-tokens="Status3">Honda</option>
-                  <option data-tokens="Status4">Maruti Sukuzi</option>
+                <option value={""}>--</option>
+                {allInsurer.map((insurer,index)=>{
+                  return  <option data-tokens="Status1" value={insurer.name}>{insurer.name}</option>
+                })}
                 </select>
               </div>
             </div>
           </div>
+
+          <div className="col-lg-4">
+            <div className="row">
+              <div className="col-lg-4 text-end">
+                <label htmlFor="" className="mt-2">
+                  Type Of Date
+                </label>
+              </div>
+              <div className="col-lg-8">
+                <select
+                  style={{ padding: "2px", marginTop: "3px" }}
+                  className="selectpicker form-select"
+                  data-live-search="true"
+                  data-width="100%"
+                  value={DateType}
+                  onChange={(e) => setDateType(e.target.value)}
+                >
+                <option value={""}></option>
+                <option value={"intimation"}>Date Of Intimation </option>
+                <option value={"submit"}> Date Of Submit</option>
+                
+                
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div className="col-lg-3">
             <div className="row">
               <div className="col-lg-3 text-end">

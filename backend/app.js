@@ -15,6 +15,7 @@ const reportRoutes = require("./Routes/reportRoutes");
 const feeReportRoutes = require("./Routes/feereportRoute");
 const driverDetailsRoute=require("./Routes/driverDetailRoutes");
 const misSheetRoutes=require("./Routes/misSheetRoutes");
+const insurerRoutes=require("./Routes/InsurerRoute");
 const multer = require("multer");
 
 
@@ -61,6 +62,8 @@ app.use("/report",reportRoutes);
 app.use("/fee",feeReportRoutes);
 
 app.use("/mis",misSheetRoutes);
+
+app.use("/Insurers",insurerRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello, this is your Express server!');

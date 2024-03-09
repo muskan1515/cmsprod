@@ -145,7 +145,13 @@ function SmartTable(props) {
               setEnd={props.setEnd}
               start={props.start}
               end={props.end}
-              reloadHandler={props.reloadHandler}/>
+              allInsurer={props.allInsurer}
+              InsurerType={props.InsurerType}
+              setInsurerType={props.setInsurerType}
+              DateType={props.DateType}
+              setDateType={props.setDateType}
+              reloadHandler={props.reloadHandler}
+              />
             </div>
           </div>
           {props.data.length > 0 ? (

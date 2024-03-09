@@ -181,7 +181,7 @@ const Form_driver = ({
                       >
                         {/* {(claim?.driverDetails?.TypeOfVerification&&claim?.driverDetails?.TypeOfVerification!=="null"?
                         claim?.driverDetails?.TypeOfVerification :"Not Verified")} */}
-                        {claim?.driverDetails?.DLStatus}
+                        {claim?.driverDetails?.Remark}
                       </label>
                     </div>
                   </div>

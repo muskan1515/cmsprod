@@ -25,7 +25,9 @@ const Index = () => {
 
   const [allRows,setAllRows]=useState([]);
   const [startDate,setStartDate]=useState("");
+  const [allInsurer,setAllInsurer]=useState([]);
   const [endDate,setEndDate]=useState("");
+  const [DateType,setDateType]=useState("");
   useEffect(()=>{
     const userInfo=JSON.parse(localStorage.getItem("userInfo"));
     const Start = startDate ? convertToYYYYMMDD(startDate):null;
@@ -43,7 +45,8 @@ const Index = () => {
       },
       params: {
         startDate: Start,
-        EndDate:End
+        EndDate:End,
+        DateType:DateType
       },
     })
     .then((res) => {
@@ -61,7 +64,29 @@ const Index = () => {
       toast.dismiss();
           toast.error("Got error while fetching Info!");
     });
-  },[startDate,endDate]);
+
+  },[startDate,endDate,DateType]);
+
+  useEffect(()=>{
+    const userInfo=JSON.parse(localStorage.getItem("userInfo"));
+    
+    axios.get("/api/getAllInsurers", {
+      headers: {
+        Authorization: `Bearer ${userInfo[0].Token}`,
+        "Content-Type": "application/json",
+      }
+    })
+    .then((res) => {
+      console.log(res.data.InsurerData.result);
+      setAllInsurer(res.data.InsurerData.result);
+    
+    })
+    .catch((err) => {
+      toast.dismiss();
+          toast.error("Got error while fetching Insurer Info!");
+    });
+
+  },[]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -142,6 +167,10 @@ const Index = () => {
                         setStartDate={setStartDate} 
                         setEndDate={setEndDate}
                         startDate={startDate}
+                        allInsurer={allInsurer}
+                        
+                        DateType={DateType}
+                        setDateType={setDateType}
                         endDate={endDate} />
                       </div>
                       {/* End .table-responsive */}
