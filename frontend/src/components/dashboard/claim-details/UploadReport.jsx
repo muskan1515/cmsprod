@@ -17,6 +17,8 @@ AWS.config.update({
   region: process.env.NEXT_PUBLIC_REGION,
 });
 
+  const REGION = process.env.NEXT_PUBLIC_REGION;
+
 const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
 
 const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
