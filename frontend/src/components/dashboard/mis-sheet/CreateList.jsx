@@ -95,7 +95,6 @@ end }) => {
                   value={DateType}
                   onChange={(e) => setDateType(e.target.value)}
                 >
-                <option value={""}></option>
                 <option value={"intimation"}>Date Of Intimation </option>
                 <option value={"submit"}> Date Of Submit</option>
                 
