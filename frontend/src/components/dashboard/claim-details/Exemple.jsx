@@ -12,6 +12,8 @@ import SmartTable from "./SmartTable";
     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
     region: process.env.NEXT_PUBLIC_REGION,
   });
+
+    const REGION = process.env.NEXT_PUBLIC_REGION;
   
   const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
   
