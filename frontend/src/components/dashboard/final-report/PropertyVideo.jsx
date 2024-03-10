@@ -846,7 +846,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       ExpectedSalvage : (Number(totalMetalRows) *
       Number(metalSalvageValue)) /
     100,
-      MetalPercent ,
+      MetalPercent:Number(MetalPercent)>0? MetalPercent :0 ,
       RemarkOnSalvage,
       TotalCostOfParts:totalPartsAssessed,
       Other,
