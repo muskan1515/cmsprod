@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npm install react-html-table-to-excel --force"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
