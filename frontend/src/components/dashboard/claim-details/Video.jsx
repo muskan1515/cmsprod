@@ -9,6 +9,7 @@ const Video = ({ videos }) => {
   const [popupContent, setPopupContent] = useState("");
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const [imageCount,setImageCount]=useState(1);
   const [selectedVideo, setSelectedVideo] = useState(0);
   const [capturedImages, setCapturedImages] = useState([]);
 
@@ -58,30 +59,38 @@ const Video = ({ videos }) => {
   console.log("selectedVideoIndex", selectedVideo, videos[selectedVideo]);
 
   const handleGeneratePDF = () => {
+    const imagesPerPage = imageCount;
     if (!capturedImages) {
       alert("First please click the snapshots!!");
     } else {
       const pdf = new jsPDF();
-
+  
       // Loop through captured images and add to PDF
-      capturedImages.forEach((image, index) => {
+      for (let index = 0; index < capturedImages.length; index += imagesPerPage) {
         if (index > 0) {
           pdf.addPage();
         }
-        pdf.addImage(image, "PNG", 10, 10, 180, 100);
-      });
-
+  
+        const endIndex = Math.min(index + imagesPerPage, capturedImages.length);
+  
+        for (let i = index; i < endIndex; i++) {
+          pdf?.addImage(capturedImages[i], "PNG", 10, 10, 180, 100);
+          // You may need to adjust the coordinates and dimensions based on your requirements
+        }
+      }
+  
       // Save PDF
-      pdf.save(`${videos[selectedVideo].name}_snapshots.pdf`);
-
+      pdf.save(`${videos[selectedVideo]?.name}_snapshots.pdf`);
+  
       // Show custom popup
       setPopupContent("PDF downloaded successfully!");
       setShowPopup(true);
-
+  
       setCapturedImages([]);
       setOpen(false);
     }
   };
+  
 
   const handlePopupClose = () => {
     setShowPopup(false);
@@ -318,13 +327,20 @@ const Video = ({ videos }) => {
                     </div>
                     {open && (
                       <div className="row">
-                        <div className="col-lg-12 text-center">
+                        {videos.length > 0 && (<div className="col-lg-12 text-center">
                           <button
                             className="btn btn-thm m-1"
                             onClick={handleCaptureSnapshot}
                           >
                             Capture
                           </button>
+                          <select onChange={(e)=>setImageCount(e.target.value)}>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                          <option value={4}>4</option>
+                          <option value={5}>5</option>
+                          </select>
                           <button
                             className="btn btn-thm m-1"
                             onClick={handleGeneratePDF}
@@ -332,6 +348,7 @@ const Video = ({ videos }) => {
                             Generate Pdf
                           </button>
                         </div>
+                    )}
                       </div>
                     )}
                   </div>

@@ -15,10 +15,6 @@ import SmartTable from "./SmartTable";
   
   const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
   
-  const REGION ='ap-south-1';
-  console.log("AWS credentials:", process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY);
-  console.log("AWS region:", process.env.NEXT_PUBLIC_REGION);
-  console.log("S3 bucket:", S3_BUCKET);
   const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
 
   const headCells = [

@@ -203,6 +203,20 @@ const Servey = ({
     return formattedDate;
   };
 
+  function convertHtmlToString(htmlString) {
+    // Create a new DOMParser
+    const parser = new DOMParser();
+  
+    // Parse the HTML string
+    const doc = parser.parseFromString(htmlString, 'text/html');
+  
+    // Extract the text content from the parsed document
+    const plainText = doc.body.textContent || "";
+  
+    return plainText;
+  }
+  
+
   useEffect(() => {
     const accident = AccidentContent(claim?.insuredDetails?.InsuredName);
     const assessment = AssessmentContent(
@@ -215,11 +229,11 @@ const Servey = ({
     const other = otherContent();
     console.log("accident", accident);
     console.log("CauseOfAccident", CauseOfAccident);
-    setCauseOfAccident(CauseOfAccident ? CauseOfAccident : accident);
-    setAssessment(Assessment ? Assessment : assessment);
-    setThirdPartyLoss(ThirdPartyLoss ? ThirdPartyLoss : other);
-    setPoliceAction(PoliceAction ? PoliceAction : other);
-    setDetailsOfLoads(DetailsOfLoads ? DetailsOfLoads : other);
+    setCauseOfAccident(CauseOfAccident ? convertHtmlToString(CauseOfAccident) : accident);
+    setAssessment(Assessment ? convertHtmlToString(Assessment) : assessment);
+    setThirdPartyLoss(ThirdPartyLoss ? convertHtmlToString(ThirdPartyLoss) : other);
+    setPoliceAction(PoliceAction ? convertHtmlToString(PoliceAction) : other);
+    setDetailsOfLoads(DetailsOfLoads ? convertHtmlToString(DetailsOfLoads) : other);
   }, [CauseOfAccident]);
    
   const calculateVehicleAge = () => {

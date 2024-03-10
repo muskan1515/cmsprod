@@ -21370,6 +21370,15 @@ main {
   color: white;
 }
 
+.export-toexcel-button{
+  justify-content: flex-end;
+  border-radius: 12px;
+  padding: 1%;
+  margin: 2%;
+  background-color: inherit;
+  color: white;
+}
+
 .my_profile_setting_input .btn-color:hover {
   color: #1560bd;
   background-color: #ffffff;

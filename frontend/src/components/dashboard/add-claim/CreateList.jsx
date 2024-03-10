@@ -63,15 +63,13 @@ const CreateList = () => {
   }, [policyStartDate]);
 
   const generateRegion = (region) => {
-    const firstThreeLetters = region?.slice(0, 3);
+    const firstThreeLetters = (String(region) === "Delhi") ? "DLH" : 
+    (String(region) === "Delhi") ? "JDH" : "CHD";
 
     const now = new Date();
     const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
-    const dd = String(now.getDate()).padStart(2, "0");
-    const hh = String(now.getHours()).padStart(2, "0");
-    const min = String(now.getMinutes()).padStart(2, "0");
-    const ss = String(now.getSeconds()).padStart(2, "0");
-    const result = `${firstThreeLetters}/${mm}/${dd}${hh}${min}${ss}`;
+    const yy = String(now.getFullYear()).padStart(2, "0");
+    const result = `${firstThreeLetters}/${mm}-${yy}`;
 
     console.log(result);
     return result;

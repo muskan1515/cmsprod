@@ -11,6 +11,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 // import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ExcelTable from "./ExcelTable";
 
 const Index = () => {
 
@@ -77,7 +78,7 @@ const Index = () => {
       }
     })
     .then((res) => {
-      console.log(res.data.InsurerData.result);
+      console.log('insurerdata',res.data.InsurerData.result);
       setAllInsurer(res.data.InsurerData.result);
     
     })
@@ -156,6 +157,9 @@ const Index = () => {
                   </div>
                 </div>
                 {/* End .col */}
+                <ExcelTable 
+                allRows={allRows}
+                />
 
                 <div className="col-lg-12">
                   <div className="my_dashboard_review mb40">

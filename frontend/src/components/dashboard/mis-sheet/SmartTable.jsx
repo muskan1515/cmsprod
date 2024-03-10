@@ -148,6 +148,8 @@ function SmartTable(props) {
               allInsurer={props.allInsurer}
               InsurerType={props.InsurerType}
               setInsurerType={props.setInsurerType}
+              RegionType={props.RegionType}
+              setRegionType={props.setRegionType}
               DateType={props.DateType}
               setDateType={props.setDateType}
               reloadHandler={props.reloadHandler}

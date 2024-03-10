@@ -1,6 +1,7 @@
 import axios, { all } from "axios";
 import { use, useEffect, useReducer } from "react";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
 import MyDatePicker from "../../common/MyDatePicker";
 import { useRouter } from "next/router";
 
@@ -14,7 +15,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-GB");
   console.log(formattedDate);
-  const [date, setDate] = useState(new Date());
+  const [BillDate, setBillDate] = useState(new Date());
   const [Insurer, setInsurer] = useState("");
   const [Branch, setBranch] = useState("");
   const [Others, setOthers] = useState("");
@@ -287,7 +288,7 @@ const CreateList = ({ allInfo, leadID }) => {
       Branch: Branch,
       BillTo: BillTo,
       Others: Others,
-      BillDate: date,
+      BillDate: BillDate,
     };
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -438,14 +439,17 @@ const CreateList = ({ allInfo, leadID }) => {
                 </label>
               </div>
               <div className="col-lg-4">
-                <input
-                  type="date"
-                  disable={false}
-                  className="form-control"
-                  id="broker_mail_id"
-                  value={new Date(date)}
-                  onChange={(e) => setDate(e.target.value)}
-                />
+              <DatePicker
+              className="form-control"
+              id="propertyTitle"
+              dateFormat="dd/MM/yyyy"
+              selected={
+                BillDate !== null && !isNaN(new Date(BillDate))
+                  ? new Date(BillDate)
+                  : ""
+              }
+              onChange={(date) => setBillDate(date)}
+            />
               </div>
             </div>
           </div>

@@ -520,7 +520,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     console.log("summaryNotes",summaryNotes(claim))
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident !==null ? claim?.accidentDetails?.TimeOfAccident : "");
-    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? claim?.summaryDetails?.SummaryNotes : summaryNotes(claim));
+    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? convertHtmlToString(claim?.summaryDetails?.SummaryNotes) : summaryNotes(claim));
 
     
     setTotalLabor(claim?.summaryDetails?.TotalLabor  !==null ? claim?.summaryDetails?.TotalLabor : 0 );
@@ -717,6 +717,20 @@ const [AccidentTime,setAccidentTime]=useState("");
       return `${a-b}`;
     
   };
+
+  function convertHtmlToString(htmlString) {
+    // Create a new DOMParser
+    const parser = new DOMParser();
+  
+    // Parse the HTML string
+    const doc = parser.parseFromString(htmlString, 'text/html');
+  
+    // Extract the text content from the parsed document
+    const plainText = doc.body.textContent || "";
+  
+    return plainText;
+  }
+  
 
   const calculateDepreciationOnMetal = () => {
     const a = calculateDepreciationsPercenatge(

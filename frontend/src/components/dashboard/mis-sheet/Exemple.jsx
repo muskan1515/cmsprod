@@ -108,7 +108,6 @@ const headCells = [
 ];
 
 
-
 export default function Exemple({
   allRows,
   setStartDate,
@@ -119,12 +118,14 @@ export default function Exemple({
   setDateType,
   endDate,
 }) {
+  console.log('allInsurer---',allInsurer)
   const [updatedData, setUpdatedData] = useState([]);
   let tempData = [];
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   
   const [InsurerType,setInsurerType]=useState("United India Insurance");
+  const [RegionType,setRegionType]=useState("Delhi");
   const sortObjectsByOrderIdDescending = (data) => {
     return data.sort((a, b) => b.doi - a.doi);
   };
@@ -138,6 +139,17 @@ export default function Exemple({
     setStartDate("");
     setEndDate("");
   };
+
+  const getRegionByReferenceNo=(referenceNo,Region)=>{
+    const defaultRegion=referenceNo.split("/")[0];
+    if(String(defaultRegion) === "Del" && String(Region) === "Delhi")
+     return true;
+    if(String(defaultRegion) === "Cha" && String(Region) === "Chandigarh")
+     return true;
+    if(String(defaultRegion) === "Jod" && String(Region) === "Jodhpur")
+     return true;
+    return false;
+  }
 
   function convertToIST(utcTimestamp) {
     const utcDate = new Date(utcTimestamp);
@@ -165,8 +177,22 @@ export default function Exemple({
   useEffect(() => {
     allRows?.map((row, index) => {
       
-      const isShow = (InsurerType && String(InsurerType) === String(row.InsuranceCompanyNameAddress)) ?
-      true : InsurerType==="" || InsurerType === undefined? true : false;
+      // const isShow = (InsurerType && String(InsurerType) === String(row.InsuranceCompanyNameAddress)) ?
+      // true : InsurerType==="" || InsurerType === undefined? true : false;
+      const insurerTypeLowerCase = (InsurerType || '').toLowerCase(); // Lowercase insurer type
+      const insuranceCompanyNameAddressLowerCase = (row.InsuranceCompanyNameAddress || '').toLowerCase(); // Lowercase InsuranceCompanyNameAddress
+
+      // Extracting the first two words of insurer type
+      const firstTwoWordsOfInsurerType = insurerTypeLowerCase.split(' ').slice(0, 2).join(' ');
+
+      const isShow = (
+        // Checking if the first two words of insurer type are present in InsuranceCompanyNameAddress
+        insuranceCompanyNameAddressLowerCase.includes(firstTwoWordsOfInsurerType) &&
+        getRegionByReferenceNo(row.ReferenceNo,RegionType)
+      );
+
+      // const isShow=true;
+      console.log('is_show',isShow)
       if(isShow){
       const updatedRow = {
         sno: index + 1,
@@ -190,7 +216,7 @@ export default function Exemple({
     }
     });
     setUpdatedData(tempData);
-  }, [allRows,InsurerType]);
+  }, [allRows,InsurerType,RegionType]);
   console.log(updatedData);
   return (
     <SmartTable
@@ -204,6 +230,8 @@ export default function Exemple({
       end={end}
       InsurerType={InsurerType}
       setInsurerType={setInsurerType}
+      RegionType={RegionType}
+      setRegionType={setRegionType}
       DateType={DateType}
       setDateType={setDateType}
       allInsurer={allInsurer}

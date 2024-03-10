@@ -7,6 +7,8 @@ const CreateList = ({ setSearchInput, setType,
   allInsurer,
   reloadHandler,
   InsurerType,
+  RegionType,
+  setRegionType,
   setInsurerType,
   DateType,
   setDateType,
@@ -19,8 +21,8 @@ end }) => {
     setSearchValue(value);
   };
 
-
-  console.log("InsurenceType",setInsurerType)
+  console.log("all_insurer",allInsurer)
+  // console.log("InsurenceType",setInsurerType)
 
   const searchHandler = ({
    
@@ -95,6 +97,7 @@ end }) => {
                   value={DateType}
                   onChange={(e) => setDateType(e.target.value)}
                 >
+                
                 <option value={"intimation"}>Date Of Intimation </option>
                 <option value={"submit"}> Date Of Submit</option>
                 
@@ -103,7 +106,32 @@ end }) => {
               </div>
             </div>
           </div>
-
+          <div className="col-lg-4">
+            <div className="row">
+              <div className="col-lg-4 text-end">
+                <label htmlFor="" className="mt-2">
+                  Region
+                </label>
+              </div>
+              <div className="col-lg-8">
+                <select
+                  style={{ padding: "2px", marginTop: "3px" }}
+                  className="selectpicker form-select"
+                  data-live-search="true"
+                  data-width="100%"
+                  value={RegionType}
+                  onChange={(e) => setRegionType(e.target.value)}
+                >
+                
+                <option value={"Delhi"}>Delhi</option>
+                <option value={"Chandigarh"}>Chandigarh</option>
+                <option value={"Jodhpur"}>Jodhpur</option>
+                
+                
+                </select>
+              </div>
+            </div>
+          </div>
           <div className="col-lg-3">
             <div className="row">
               <div className="col-lg-3 text-end">

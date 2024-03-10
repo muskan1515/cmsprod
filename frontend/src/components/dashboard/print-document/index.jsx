@@ -9,7 +9,8 @@ import CreateList from "./CreateList";
 
 const Index = () => {
   const url = window.location.pathname;
-  const leadId=url.split("/print-document/");
+  const leadId=url.split("/print-document/")[1];
+  console.log(leadId)
   return (
     <>
       {/* <!-- Main Header Nav --> */}
