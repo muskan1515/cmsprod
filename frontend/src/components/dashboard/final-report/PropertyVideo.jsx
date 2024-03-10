@@ -587,7 +587,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setLessImposed(claim?.summaryDetails?.LessImposed !==null ? claim?.summaryDetails?.LessImposed : "")
 
     setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration !==null ? convertStringTime(claim?.vehicleDetails?.DateOfRegistration ):"");
-    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate!==null ? laim?.claimDetails?.MailRecieveDate : "" );
+    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate!==null ? claim?.claimDetails?.MailRecieveDate : "" );
     setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate !==null ? claim?.vehicleDetails?.OwnerSrDate  : "");
     setClaimRegion(claim?.claimDetails?.ClaimRegion !==null ? claim?.claimDetails?.ClaimRegion : "" );
     setInsuredName(claim?.insuredDetails?.InsuredName!==null ? claim?.insuredDetails?.InsuredName : "" );
