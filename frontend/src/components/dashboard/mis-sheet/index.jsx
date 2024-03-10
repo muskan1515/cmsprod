@@ -27,7 +27,7 @@ const Index = () => {
   const [startDate,setStartDate]=useState("");
   const [allInsurer,setAllInsurer]=useState([]);
   const [endDate,setEndDate]=useState("");
-  const [DateType,setDateType]=useState("");
+  const [DateType,setDateType]=useState("intimation");
   useEffect(()=>{
     const userInfo=JSON.parse(localStorage.getItem("userInfo"));
     const Start = startDate ? convertToYYYYMMDD(startDate):null;
