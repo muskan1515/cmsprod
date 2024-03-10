@@ -70,7 +70,7 @@ function ExcelTable({allRows}){
                     <tbody>
                   
                          {allRows.map((res,index)=>
-                            <tr>
+                            <tr key={index}>
                             <td>{index+1}</td>
                             <td>{res.ReferenceNo}</td>
                             <td>{res.PolicyNumber}</td>
