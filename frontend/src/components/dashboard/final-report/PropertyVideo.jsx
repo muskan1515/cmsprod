@@ -520,7 +520,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     console.log("summaryNotes",summaryNotes(claim))
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident !==null ? claim?.accidentDetails?.TimeOfAccident : "");
-    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes  !==null? claim?.summaryDetails?.SummaryNotes : summaryNotes(claim));
+    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? claim?.summaryDetails?.SummaryNotes : summaryNotes(claim));
 
     
     setTotalLabor(claim?.summaryDetails?.TotalLabor  !==null ? claim?.summaryDetails?.TotalLabor : 0 );
