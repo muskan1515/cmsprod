@@ -9,9 +9,10 @@ const Video = ({ videos }) => {
   const [popupContent, setPopupContent] = useState("");
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [imageCount,setImageCount]=useState(1);
   const [selectedVideo, setSelectedVideo] = useState(0);
   const [capturedImages, setCapturedImages] = useState([]);
+
+  const [noOfImages,setNoOfImages]=useState(2);
 
   const [allLocations, setAllLocations] = useState([]);
 
@@ -59,28 +60,29 @@ const Video = ({ videos }) => {
   console.log("selectedVideoIndex", selectedVideo, videos[selectedVideo]);
 
   const handleGeneratePDF = () => {
-    const imagesPerPage = imageCount;
-    if (!capturedImages) {
-      alert("First please click the snapshots!!");
+    if (!capturedImages || capturedImages.length === 0) {
+      alert("First, please click the snapshots!!");
     } else {
       const pdf = new jsPDF();
   
-      // Loop through captured images and add to PDF
-      for (let index = 0; index < capturedImages.length; index += imagesPerPage) {
-        if (index > 0) {
+      const imagesPerPage = noOfImages; // Number of images to display per page
+      let pageIndex = 1;
+  
+      capturedImages.forEach((image, index) => {
+        if (index % imagesPerPage === 0 && index > 0) {
           pdf.addPage();
+          pageIndex++;
         }
   
-        const endIndex = Math.min(index + imagesPerPage, capturedImages.length);
+        const xOffset = (index % 2) * 100 + 10;
+        const yOffset = Math.floor(index / 2) % 2 * 100 + 10;
   
-        for (let i = index; i < endIndex; i++) {
-          pdf?.addImage(capturedImages[i], "PNG", 10, 10, 180, 100);
-          // You may need to adjust the coordinates and dimensions based on your requirements
-        }
-      }
+        pdf.addImage(image, "PNG", xOffset, yOffset, 90, 80);
+  
+      });
   
       // Save PDF
-      pdf.save(`${videos[selectedVideo]?.name}_snapshots.pdf`);
+      pdf.save(`${videos[selectedVideo].name}_snapshots.pdf`);
   
       // Show custom popup
       setPopupContent("PDF downloaded successfully!");
@@ -302,6 +304,10 @@ const Video = ({ videos }) => {
                                 ></canvas>
                               </>
                             ) : (
+                              videos.length <=0 ?
+                              <p>No Videos Found !!</p>
+                              :
+                              <>
                               <Image
                                 width={492}
                                 height={190}
@@ -309,8 +315,6 @@ const Video = ({ videos }) => {
                                 src="/assets/images/background/7.jpg"
                                 alt="7.jpg"
                               />
-                            )}
-                            {!open && (
                               <div className="overlay_icon">
                                 <div
                                   onClick={() => setOpen(!open)}
@@ -320,6 +324,8 @@ const Video = ({ videos }) => {
                                   <span className="flaticon-play"></span>
                                 </div>
                               </div>
+                              </>
+                             
                             )}
                           </div>
                         </div>
@@ -327,15 +333,14 @@ const Video = ({ videos }) => {
                     </div>
                     {open && (
                       <div className="row">
-                        {videos.length > 0 && (<div className="col-lg-12 text-center">
+                        <div className="col-lg-12 text-center">
                           <button
                             className="btn btn-thm m-1"
                             onClick={handleCaptureSnapshot}
                           >
                             Capture
                           </button>
-                          <select onChange={(e)=>setImageCount(e.target.value)}>
-                          <option value={1}>1</option>
+                          <select onChange={(e)=>setNoOfImages(e.target.value)}>
                           <option value={2}>2</option>
                           <option value={3}>3</option>
                           <option value={4}>4</option>
@@ -348,7 +353,6 @@ const Video = ({ videos }) => {
                             Generate Pdf
                           </button>
                         </div>
-                    )}
                       </div>
                     )}
                   </div>

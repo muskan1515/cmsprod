@@ -44,8 +44,6 @@ const CreateList = () => {
   const [claimNumber, setClaimNumber] = useState("");
   const [brokerMailId, setBrokerMailId] = useState("intimationmt@gmail.com");
 
-  const [BrokerMailAddress, setBrokerMailAddress] = useState("");
-
   const getNextYear = () => {
     if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
       const oneYearLater = new Date(policyStartDate);
@@ -63,17 +61,18 @@ const CreateList = () => {
   }, [policyStartDate]);
 
   const generateRegion = (region) => {
-    const firstThreeLetters = (String(region) === "Delhi") ? "DLH" : 
-    (String(region) === "Delhi") ? "JDH" : "CHD";
+    const firstThreeLetters = (String(region) === "Delhi") ? "DLH" :
+        (String(region) === "Delhi") ? "JDH" : "CHD";
 
     const now = new Date();
     const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
-    const yy = String(now.getFullYear()).padStart(2, "0");
-    const result = `${firstThreeLetters}/${mm}-${yy}`;
+    const yy = String(now.getFullYear() % 100).padStart(2, "0"); // Use the last two digits of the year
+    const result = `${firstThreeLetters}/${yy}-${mm}`;
 
-    console.log(result);
-    return result;
+      console.log(result);
+      return result;
   };
+
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

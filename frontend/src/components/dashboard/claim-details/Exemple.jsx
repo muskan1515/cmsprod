@@ -671,67 +671,13 @@ const handleReload = () => {
 };
 
 
-    const handleButtonClick = (doc_name) => {
+const handleButtonClick = (doc_name) => {
       setDisable(true)
       console.log(doc_name)
       docCurrentName =(doc_name)
       // Trigger file input click when button is clicked
       document.getElementById('fileInput').click();
-    };
-
-//       try {
-//         const zip = new JSZip();
-
-      
-      
-
-//         documents.map((data, index) => {
-//           if (data.Attribute1 !== "") {
-//             const fileName = data.Attribute1;
-//             zip.file(fileName, data.Photo1, { binary: true });
-//           }
-//           if (data.Attribute2 !== "") {
-//             const fileName = data.name;
-//             zip.file(fileName, data.url, { binary: true });
-//           }
-//           if (data.Attribute3 !== "") {
-//             const fileName = data.Attribute3;
-//             zip.file(fileName, data.Photo3, { binary: true });
-//           }
-//           if (data.Attribute4 !== "") {
-//             const fileName = data.Attribute4;
-//             zip.file(fileName, data.Photo4, { binary: true });
-//           }
-//           if (data.Attribute5 !== "") {
-//             const fileName = data.Attribute5;
-//             zip.file(fileName, data.Photo5, { binary: true });
-//           }
-//         });
-
-
-//         // console.log(zip);
-
-//         const content = await zip.generateAsync({ type: "blob" });
-
-//         // Triggering the download
-//         const a = document.createElement("a");
-//         const url = URL.createObjectURL(content);
-//         a.href = url;
-//         a.download = "downloadedFiles.zip";
-//         document.body.appendChild(a);
-//         a.click();
-//         document.body.removeChild(a);
-//         URL.revokeObjectURL(url);
-
-//         alert("Successfully downloaded the zip!");
-//       } catch (error) {
-//         console.error("Error uploading file:", error);
-//       }
-//     } else {
-//       console.log("Accessing base64 after delay:", newFile.base64);
-//     }
-//   }, 1000);
-// };
+};
 
 
 

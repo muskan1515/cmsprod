@@ -1,6 +1,4 @@
 
-
-import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Exemple from "./Exemple_01";
 import { useState } from "react";
@@ -109,30 +107,6 @@ const UploadReort = ({ leadId }) => {
             Location: loc
           };
 
-        
-          // toast.loading("Uploading files!!", {
-          //   className: "toast-loading-message",
-          // });
-          // axios.post("/api/uploadManualDocument", payload, {
-          //     headers: {
-          //       Authorization: `Bearer ${""}`,
-          //       "Content-Type": "application/json",
-          //     },
-          //   })
-          //   .then((res) => {
-          //     toast.dismiss()
-          //     toast.success("Successfully updated !", {
-          //       // position: toast.POSITION.BOTTOM_LEFT,
-          //       className: "toast-loading-message",
-          //     });
-          //    window.location.reload();
-              
-          //   })
-          //   .catch((err) => {
-          //     // isNotValidLink(true);
-          //     toast.dismiss()
-          //     toast.error("Try Again!!")
-          //   });
         }
       })
 
