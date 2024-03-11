@@ -4,7 +4,7 @@ import SmartTable from "./SmartTable";
   import {  FaUpload } from "react-icons/fa";
   import axios from "axios";
   import toast from "react-hot-toast";
-  import AWS from 'aws-sdk';
+  import AWS, { CodeCatalyst } from 'aws-sdk';
 
 
   AWS.config.update({
@@ -425,6 +425,14 @@ import SmartTable from "./SmartTable";
     const [uploadedFiles,setUploadedFiles]=useState([]);
     const [disable,setDisable]=useState(false)
 
+
+    const [addDocument,setAddDocument]=useState(false);
+
+    const [newLabel,setNewLabel]=useState("");
+
+  
+  
+
    
     const [currentDoc,setCurrentDoc]=useState("");
 
@@ -432,12 +440,42 @@ import SmartTable from "./SmartTable";
 
     const [loc,setLoc]=useState("")
 
-    console.log("leadId------>", leadId);
+    const [allDocumentLabels,setALlDocumentLabels]=useState([]);
+
+    useEffect(()=>{
+      axios.get("/api/getDocumentListLabels", {
+        headers: {
+          Authorization: `Bearer ${""}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+          console.log("DocumentLabels",res.data.data.results);
+          setALlDocumentLabels(res.data.data.results);
+      })  
+      .catch((err) => {
+        console.log(err);
+      });
+    },[]);
 
   
   useEffect(()=>{
     setUploadedFiles(documents)
   },[documents]);
+
+
+  const addNewLabel=()=>{
+    axios.post("/api/addDocumentLabel",{
+      DocumentLabel:newLabel
+    })
+    .then((res)=>{
+      toast.success("Successfully added !!");
+      window.location.reload();
+    })
+    .catch((err)=>{
+      toast.error("Try Again!!");
+    })
+  }
 
   const checkValue = (label) => {
     let requiredInfo = [];
@@ -821,10 +859,10 @@ const getFileName = (idx)=>{
   let tempCode = [];
   useEffect(() => {
     setChanges(false)
-    data.map((docs, index) => {
-      const allInfo = getAllLabelLinks(docs.doc_name);
+    allDocumentLabels.map((docs, index) => {
+      const allInfo = getAllLabelLinks(docs.DocumentName);
       const fileName = getFileName(index);
-      console.log(docs.doc_name,allInfo)
+      console.log(docs.DocumentName,allInfo)
       const alllinks = (
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
@@ -837,13 +875,13 @@ const getFileName = (idx)=>{
 
       console.log("alllinks",alllinks);
       const temp = {
-        _id: docs._id,
-        serial_num: docs.serial_num,
-        doc_name: docs.doc_name,
+        _id: docs.index+1,
+        serial_num: docs.id,
+        doc_name: docs.DocumentName,
         file: alllinks,
         action: <>
-        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.doc_name)} ></input>
-        <button  disabled={disable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.doc_name)}
+        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.DocumentName)} ></input>
+        <button  disabled={disable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.DocumentName)}
         >
         <FaUpload /></button>
         <p>{ fileName? `Selected File: ${fileName?.name}` : "Choose File"}</p>
@@ -867,6 +905,8 @@ const getFileName = (idx)=>{
         disable={disable}
         downloadAllFiles={downloadAllFiles}
         onSubmitHandler={onSubmitHandler}
+        setNewLabel={setNewLabel}
+        addNewLabel={addNewLabel}
       />
     );
   }

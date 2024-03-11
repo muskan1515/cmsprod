@@ -21,6 +21,7 @@ import {
 dotenv.config({ path: ".env.development" });
 
 import AWS from "aws-sdk";
+import axios from "axios";
 const S3_BUCKET = "cmsdocs2024";
 const REGION = "ap-south-1";
 
@@ -183,6 +184,24 @@ export default function DocumentUpload({
   console.log('isVIdeoDisable?>?>?>?>?',isVIdeoDisable);
 
   const urlParams = new URLSearchParams(window.location.search);
+
+  const [allDocumentLabels,setALlDocumentLabels]=useState([]);
+
+  useEffect(()=>{
+    axios.get("/api/getDocumentListLabels", {
+      headers: {
+        Authorization: `Bearer ${""}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+        console.log("DocumentLabels",res.data.data.results);
+        setALlDocumentLabels(res.data.data.results);
+    })  
+    .catch((err) => {
+      console.log(err);
+    });
+  },[]);
   
   useEffect(()=>{
   const content = urlParams.get('content');
@@ -195,6 +214,7 @@ export default function DocumentUpload({
   },[urlParams])
 
 
+  
 
   const getIndex = (label, datas) => {
     let index = -1;
@@ -802,7 +822,7 @@ export default function DocumentUpload({
   const checkWithinTheContent = (row) => {
     if(content==="")
      return true;
-    const present = content.includes(row.doc_name);
+    const present = content.includes(row.DocumentName);
 
     return present;
   };
@@ -819,7 +839,7 @@ export default function DocumentUpload({
   };
 
   const checkId = (status, row) => {
-    if (status?.Status === 1 && Number(row.serial_num) <= 10) return true;
+    if (status?.Status === 1 && Number(row.id) <= 10) return true;
     return false;
   };
   const checkIsUploaded = (label) => {
@@ -855,15 +875,15 @@ export default function DocumentUpload({
     console.log("uploadedData", uploadedData);
     const getData = () => {
       const tempData = [];
-      data.map((row, index) => {
-        console.log('ROWW>>>>',row.doc_name);
-        row.doc_name === "Images"
+      allDocumentLabels.map((row, index) => {
+        console.log('ROWW>>>>',row.DocumentName);
+        row.DocumentName === "Images"
           ? setisVIdeoDisable(false)
           : setisVIdeoDisable(true);
-          setisVIdeoDisable(row.doc_name !== "Images");
+          setisVIdeoDisable(row.DocumentName !== "Images");
 
-        const isUploaded = checkIsUploaded(row.doc_name);
-        const isDone = checkAlreadyDone(row.doc_name);
+        const isUploaded = checkIsUploaded(row.DocumentName);
+        const isDone = checkAlreadyDone(row.DocumentName);
         const isAccordingToStatus = content
           ? checkWithinTheContent(row)
           : checkId(status, row);
@@ -872,10 +892,10 @@ export default function DocumentUpload({
         if (!isDone && isAccordingToStatus) {
           const updatedRow = {
             _id: index + 1,
-            serial_num: row.serial_num,
-            doc_name: row.doc_name,
+            serial_num: row.id,
+            doc_name: row.DocumentName,
             files: uploadedData.map((file, idx) => {
-              if (file.docName === row.doc_name) {
+              if (file.docName === row.DocumentName) {
                 const fileName = String(file.data[0].thumbnail_url); // Convert to string
                 return (
                   <div
@@ -924,7 +944,7 @@ export default function DocumentUpload({
                   <button
                     className="btn btn-color w-100"
                     style={{}}
-                    onClick={() => openModal(row.doc_name, index)}
+                    onClick={() => openModal(row.DocumentName, index)}
                     title="Upload File"
                   >
                     <span className="">

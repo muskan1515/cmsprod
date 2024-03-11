@@ -20,25 +20,43 @@ const Index = ({ leadId, token, content ,type}) => {
 
   const [isNotValidLink, setIsNotValidLink] = useState(true);
 
-  const types = [
-    { name: "Driving licence" },
-    { name: "Certificate of registration" },
-    { name: "Repair Estimate" },
-    { name: "Claim form" },
-    { name: "Insurance policy" },
-    { name: "Damage vehicle photographs/video" },
-    { name: "Aadhar card" },
-    { name: "Pan card" },
-    { name: "Cancel cheque" },
-    { name: "Satisfaction voucher" },
-    { name: "Discharge voucher" },
-    { name: "Dismantle photographs" },
-    { name: "Reinspection photographs" },
-    { name: "Repair Invoice" },
-    { name: "Payment/cash receipt" },
-    { name: "Images" },
-    { name: "Videos" },
-  ];
+  const [allDocumentLabels,setALlDocumentLabels]=useState([]);
+
+  useEffect(()=>{
+    axios.get("/api/getDocumentListLabels", {
+      headers: {
+        Authorization: `Bearer ${""}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+        console.log("DocumentLabels",res.data.data.results);
+        setALlDocumentLabels(res.data.data.results);
+    })  
+    .catch((err) => {
+      console.log(err);
+    });
+  },[]);
+
+  // const types = [
+  //   { name: "Driving licence" },
+  //   { name: "Certificate of registration" },
+  //   { name: "Repair Estimate" },
+  //   { name: "Claim form" },
+  //   { name: "Insurance policy" },
+  //   { name: "Damage vehicle photographs/video" },
+  //   { name: "Aadhar card" },
+  //   { name: "Pan card" },
+  //   { name: "Cancel cheque" },
+  //   { name: "Satisfaction voucher" },
+  //   { name: "Discharge voucher" },
+  //   { name: "Dismantle photographs" },
+  //   { name: "Reinspection photographs" },
+  //   { name: "Repair Invoice" },
+  //   { name: "Payment/cash receipt" },
+  //   { name: "Images" },
+  //   { name: "Videos" },
+  // ];
 
   useEffect(() => {
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -149,7 +167,7 @@ const Index = ({ leadId, token, content ,type}) => {
 
     let data = [];
     for (let i = 0; i < 17; i = i + 1) {
-      const temp = types[i].name;
+      const temp = allDocumentLabels[i].DocumentName;
       const tempArray = [];
       uploadedData.map((data, index) => {
         if (data.docName === temp) {

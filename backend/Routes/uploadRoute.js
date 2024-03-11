@@ -9,6 +9,12 @@ router.get("/getUploadDocuments",uploadController.getReportDocument);
 
 router.get("/getDocuments",uploadController.getDocuments);
 
+
+router.post("/addDocumentLabel",uploadController.addDocumentLabel);
+
+
+router.get("/getDocumentsLabels",uploadController.getReportDocumentsLabels);
+
 router.post("/uploadClaimMedia",uploadController.uploadClaimMedia);
          
 router.post("/uploadDocument",uploadController.uploadDocumentV2);

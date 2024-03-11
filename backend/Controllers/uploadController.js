@@ -18,6 +18,21 @@ const getReportDocument = (req, res) => {
   });
 };
 
+
+const getReportDocumentsLabels = (req, res) => {
+  const sql = "SELECT * FROM DocumentNames";
+  db.query(sql,  (error, results) => {
+    if (error) {
+      console.error("Error while fetching the report documents labels:", error);
+      return res
+        .status(500)
+        .json({ error: "Error inserting data into report documents labels:." });
+    }
+
+    return res.status(200).json({ results });
+  });
+};
+
 // const getDocuments = (req, res) => {
 //   const LeadId = req.query.LeadId;
 //   console.log("get", LeadId);
@@ -146,6 +161,31 @@ const uploadDocument = (req, res) => {
 
 };
 
+
+const addDocumentLabel = (req,res)=>{
+  const {DocumentLabel} = req.body;
+  const insertAddDocument = `
+  INSERT INTO DocumentNames (
+    DocumentName,
+    IsActive
+  ) VALUES (
+    '${DocumentLabel}',
+    ${1}
+  );
+`;
+
+
+  db.query(insertAddDocument, (error, results) => {
+    if (error) {
+      console.error("Error inserting data into DocumentNames:", error);
+      return res
+        .status(500)
+        .json({ error: "Error inserting data into DocumentNames." });
+    }
+    return res.status(200).json({ message: "Data inserted successfully." });
+
+  });
+}
 
 const uploadDocumentV2 = (req, res) => {
   const data = req.body;
@@ -307,5 +347,7 @@ module.exports = {
   uploadDocument,
   uploadMedia,
   verifyReportUpload,
-  uploadDocumentV2
+  uploadDocumentV2,
+  getReportDocumentsLabels,
+  addDocumentLabel
 };

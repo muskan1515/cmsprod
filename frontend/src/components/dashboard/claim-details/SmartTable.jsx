@@ -397,6 +397,7 @@ function SmartTable(props) {
                               type="text"
                               className="form-control"
                               id="propertyTitle"
+                              onChange={(e)=>props.setNewLabel(e.target.value)}
                               // placeholder="Enter Registration No."
                             />
                           </div>
@@ -408,7 +409,7 @@ function SmartTable(props) {
                         >
                           Cancel
                         </button>
-                        <button className="btn btn-color m-1">Submit</button>
+                        <button className="btn btn-color m-1" onClick={props.addNewLabel}>Submit</button>
                       </div>
                       <div className="col-lg-4"></div>
                     </div>

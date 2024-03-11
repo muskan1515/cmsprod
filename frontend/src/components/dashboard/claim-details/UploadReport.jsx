@@ -1,7 +1,7 @@
 
 import { useRouter } from "next/router";
 import Exemple from "./Exemple_01";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Pako from "pako";
 
@@ -33,23 +33,25 @@ const UploadReort = ({ leadId }) => {
   const [loc,setLoc]=useState("")
   const router = useRouter();
 
-  const types = [
-    { name: "Driving licence" },
-    { name: "Certificate of registration" },
-    { name: "Repair Estimate" },
-    { name: "Claim form" },
-    { name: "Insurance policy" },
-    { name: "Damage vehicle photographs/video" },
-    { name: "Aadhar card" },
-    { name: "Pan card" },
-    { name: "Cancel cheque" },
-    { name: "Satisfaction voucher" },
-    { name: "Discharge voucher" },
-    { name: "Dismantle photographs" },
-    { name: "Reinspection photographs" },
-    { name: "Repair Invoice" },
-    { name: "Payment/cash receipt" },
-  ];
+  const [allDocumentLabels,setALlDocumentLabels]=useState([]);
+
+  useEffect(()=>{
+    axios.get("/api/getDocumentListLabels", {
+      headers: {
+        Authorization: `Bearer ${""}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+        console.log("DocumentLabels",res.data.data.results);
+        setALlDocumentLabels(res.data.data.results);
+    })  
+    .catch((err) => {
+      console.log(err);
+    });
+  },[]);
+
+
 
   const location = () => {
     if (navigator.geolocation) {
@@ -70,13 +72,15 @@ const UploadReort = ({ leadId }) => {
   };
 
 
-  const onUploadDoc = async (e)  => {
+  const onUploadDoc =  ()  => {
+
+    const unserInfo = JSON.parse(localStorage.getItem("userInfo"))
    
     location();
     
     setDisable(true);
    
-    const selectedFileCurrent = e.target.files[0];
+    const selectedFileCurrent = uploadedFile;
     
       const params = {
         ACL:'public-read',
@@ -98,14 +102,21 @@ const UploadReort = ({ leadId }) => {
           const payload = {
             garage: garage,
             reportType: reportType,
-            fileName: file.name,
+            fileName: fileName,
             fileUrl: S3_URL,
             LeadId: leadId,
-            token: userInfo[0].Token,
-            uploadedBy: userInfo[0].Username,
-            timestamp:new Date(),
-            Location: loc
+            token: unserInfo[0].Token,
+            uploadedBy: unserInfo[0].Username
           };
+
+          axios.post("/api/uploadReportDocument",payload).
+          then((res)=>{
+            toast.success("Successfully added!");
+            window.location.reload();
+          }).
+          catch((err)=>{
+            toast.error("Try Again!!");
+          })
 
         }
       })
@@ -117,19 +128,9 @@ const UploadReort = ({ leadId }) => {
 
 
   const fileUploadHandler = async (e) => {
-    try {
-      const file = document.getElementById("fileInput").files[0];
-      if (!file) {
-        console.error("No file selected");
-        return;
-      }
-
-      const fileContentBase64 = await readFileAsync(file);
-      const compressedContent = Pako.gzip(fileContentBase64, { to: "string" });
-      setUploadedFile(compressedContent);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+    const file = e.target.files[0];
+   setUploadedFile(file);
+   setFileName(file.name)
   };
   // Helper function to read file asynchronously
   const readFileAsync = (file) => {
@@ -236,14 +237,14 @@ const UploadReort = ({ leadId }) => {
                           value={reportType}
                           onChange={(e) => setReportType(e.target.value)}
                         >
-                          {types.map((type, index) => {
+                          {allDocumentLabels.map((type, index) => {
                             return (
                               <option
                                 data-tokens="Status1"
-                                value={type.name}
+                                value={type.DocumentName}
                                 key={index}
                               >
-                                {type.name}
+                                {type.DocumentName}
                               </option>
                             );
                           })}
