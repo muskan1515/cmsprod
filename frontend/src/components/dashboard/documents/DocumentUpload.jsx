@@ -665,7 +665,7 @@ export default function DocumentUpload({
       context.fillStyle = 'white';
       const textMargin = 25; // Margin from the right and bottom
       const textBaselineOffset = 25; // Offset from the bottom
-      context.fillText(`Latitude: ${lat}, Longitude: ${long}`, canvas.width - context.measureText(`Latitude: ${lat}, Longitude: ${long}`).width - textMargin, canvas.height - textBaselineOffset);
+      context.fillText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`, canvas.width - context.measureText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`).width - textMargin, canvas.height - textBaselineOffset);
       context.fillText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`, canvas.width - context.measureText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`).width - textMargin, canvas.height - textBaselineOffset - 25);
   
       const capturedImage = canvas.toDataURL('image/jpeg');
