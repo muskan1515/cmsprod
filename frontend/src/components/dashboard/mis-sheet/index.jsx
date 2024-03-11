@@ -157,9 +157,9 @@ const Index = () => {
                   </div>
                 </div>
                 {/* End .col */}
-                <ExcelTable 
+{/*                 <ExcelTable 
                 allRows={allRows}
-                />
+                /> */}
 
                 <div className="col-lg-12">
                   <div className="my_dashboard_review mb40">
