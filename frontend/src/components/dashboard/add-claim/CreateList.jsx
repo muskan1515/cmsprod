@@ -60,7 +60,7 @@ const CreateList = () => {
     setPolicyStartEnd(getNextYear(policyStartDate));
   }, [policyStartDate]);
 
-  const generateRegion = (region) => {
+   const generateRegion = (region) => {
     const firstThreeLetters = (String(region) === "Delhi") ? "DLH" :
         (String(region) === "Delhi") ? "JDH" : "CHD";
 
@@ -72,6 +72,7 @@ const CreateList = () => {
       console.log(result);
       return result;
   };
+
 
 
   const isValidEmail = (email) => {
