@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import Webcam from "react-webcam";
 import dotenv from "dotenv";
 import toast from 'react-hot-toast';
-// import { createCanvas, loadImage } from "canvas";
+import { createCanvas, loadImage } from "canvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowsRotate,
@@ -553,23 +553,23 @@ export default function DocumentUpload({
     try {
       const imageSrc = webcamRef.current.getScreenshot();
       const name = generateRandomFileName("jpg");
-//       const image = await loadImage(imageSrc);
+      const image = await loadImage(imageSrc);
 
    
-//   const canvas = createCanvas(image.width, image.height);
-//   const context = canvas.getContext('2d');
-//   context.drawImage(image, 0, 0);
+  const canvas = createCanvas(image.width, image.height);
+  const context = canvas.getContext('2d');
+  context.drawImage(image, 0, 0);
  
-// const date=new Date()
+const date=new Date()
   
-//   context.font = '28px Arial';
-//   context.fillStyle = 'white';
-//   context.fillText(`Latitude:${lat}, Longitude:${long}`, 30, 30);
-//   context.fillText(`Date:${date.toLocaleDateString()},Time:${date.toLocaleTimeString()}`, 60, 60);
+  context.font = '28px Arial';
+  context.fillStyle = 'white';
+  context.fillText(`Latitude:${lat}, Longitude:${long}`, 30, 30);
+  context.fillText(`Date:${date.toLocaleDateString()},Time:${date.toLocaleTimeString()}`, 60, 60);
 
-//   const capturedImage = canvas.toDataURL('image/jpeg');
+  const capturedImage = canvas.toDataURL('image/jpeg');
 
-      const byteCharacters = atob(imageSrc.split(",")[1]);
+      const byteCharacters = atob(capturedImage.split(",")[1]);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
