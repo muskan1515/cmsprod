@@ -584,7 +584,7 @@ const ErrorPageContent = ({ allInfo }) => {
       </div>
       <div className="text-center text-dark">
         <h4>
-          {allInfo?.otherInfo[0]?.SurveyType} FINAL{" "}
+          {allInfo?.otherInfo[0]?.SurveyType} {" "}
           {allInfo?.otherInfo[0]?.InspectionType} REPORT (
           {Number(allInfo?.summaryReport[0]?.CashLess) === 1
             ? "CashLess"

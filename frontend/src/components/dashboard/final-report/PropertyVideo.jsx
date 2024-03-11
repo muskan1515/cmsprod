@@ -483,6 +483,16 @@ const [AccidentTime,setAccidentTime]=useState("");
     return '';
   }
 
+  const removeHtmlTags = (htmlString) => {
+    // Remove HTML tags
+    const plainText = htmlString.replace(/<[^>]*>/g, '');
+  
+    // Replace <br> with newline characters
+    const withLineBreaks = plainText.replace(/<br\s*\/?>/g, '\n');
+  
+    return withLineBreaks;
+  };
+
   useEffect(()=>{
 
     setGrandTotal(totalLabrorAssessed+totalPartsAssessed-lessExcess-lessImposed-Other)
@@ -598,7 +608,7 @@ const [AccidentTime,setAccidentTime]=useState("");
 
 
     setDriverRemark(claim?.driverDetails?.Remark!==null ? claim?.driverDetails?.Remark : "");
-    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident!=null ? claim?.accidentDetails?.DateOfAccident :"");
+    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident!==null ? claim?.accidentDetails?.DateOfAccident :"");
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss!==null ? claim?.accidentDetails?.PlaceOfLoss : "");
     setSurveyAllotmentDate((claim?.claimDetails?.AddedDateTime)!==null ? claim?.claimDetails?.AddedDateTime : "");
     setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate !=null ? claim?.accidentDetails?.SurveyConductedDate : "");

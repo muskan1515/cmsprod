@@ -737,7 +737,7 @@ const PolicyDetails = ({
                         className="selectpicker form-select"
                         data-live-search="true"
                         data-width="100%"
-                        readOnly={!isEditMode}
+                        disabled={!isEditMode}
                         value={
                           policyType && policyType !== "null" ? policyType : ""
                         }

@@ -628,7 +628,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     // placeholder="Enter Registration No."
-                    value={RemarkOnSalvage}
+                    value={RemarkOnSalvage !=="undefined" || RemarkOnSalvage !== undefined ? RemarkOnSalvage : ""}
                     onChange={(e)=>setRemarkOnSalvage(e.target.value)}
                     placeholder="This is a metal salvage depreciation %"
                   />
