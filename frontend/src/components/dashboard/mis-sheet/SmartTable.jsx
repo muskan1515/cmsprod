@@ -153,6 +153,8 @@ function SmartTable(props) {
               DateType={props.DateType}
               setDateType={props.setDateType}
               reloadHandler={props.reloadHandler}
+              changeInRegion={props.changeInRegion}
+              setChangeInRegion={props.setChangeInRegion}
               />
             </div>
           </div>

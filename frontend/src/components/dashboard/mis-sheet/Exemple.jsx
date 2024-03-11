@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SmartTable from "./SmartTable";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const headCells = [
   {
@@ -123,9 +124,11 @@ export default function Exemple({
   let tempData = [];
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  const [finalRegion,setFinalRegion]=useState("");
+  const [changeInRegion,setChangeInRegion]=useState(false);
   
   const [InsurerType,setInsurerType]=useState("United India Insurance");
-  const [RegionType,setRegionType]=useState("Delhi");
+  const [RegionType,setRegionType]=useState("");
   const sortObjectsByOrderIdDescending = (data) => {
     return data.sort((a, b) => b.doi - a.doi);
   };
@@ -133,6 +136,10 @@ export default function Exemple({
   const changeHandler = () => {
     setStartDate(start);
     setEndDate(end);
+    if(changeInRegion){
+      setFinalRegion(RegionType);
+      setChangeInRegion(false);
+    }
   };
 
   const reloadHandler = () => {
@@ -141,6 +148,9 @@ export default function Exemple({
   };
 
   const getRegionByReferenceNo=(referenceNo,Region)=>{
+    if(RegionType === ""){
+      return true;
+    }
     const defaultRegion=referenceNo.split("/")[0];
     if(String(defaultRegion) === "Del" && String(Region) === "Delhi")
      return true;
@@ -175,6 +185,10 @@ export default function Exemple({
   }
 
   useEffect(() => {
+    toast.loading("Fetching the information!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     allRows?.map((row, index) => {
       
       // const isShow = (InsurerType && String(InsurerType) === String(row.InsuranceCompanyNameAddress)) ?
@@ -188,7 +202,7 @@ export default function Exemple({
       const isShow = (
         // Checking if the first two words of insurer type are present in InsuranceCompanyNameAddress
         insuranceCompanyNameAddressLowerCase.includes(firstTwoWordsOfInsurerType) &&
-        getRegionByReferenceNo(row.ReferenceNo,RegionType)
+        getRegionByReferenceNo(row.ReferenceNo,finalRegion)
       );
 
       // const isShow=true;
@@ -216,7 +230,13 @@ export default function Exemple({
     }
     });
     setUpdatedData(tempData);
-  }, [allRows,InsurerType,RegionType]);
+    toast.dismiss();
+    // toast.success("Successfully added");
+    toast.success("Fetched  Successfully !", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
+  }, [allRows,InsurerType,finalRegion]);
   console.log(updatedData);
   return (
     <SmartTable
@@ -234,6 +254,8 @@ export default function Exemple({
       setRegionType={setRegionType}
       DateType={DateType}
       setDateType={setDateType}
+      changeInRegion={changeInRegion}
+      setChangeInRegion={setChangeInRegion}
       allInsurer={allInsurer}
       headCells={headCells}
     />

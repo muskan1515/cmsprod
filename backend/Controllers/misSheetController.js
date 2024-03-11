@@ -25,14 +25,11 @@ const getMISSheet = async (req, res) => {
         "CALL GetMisSheetByDateOfIntimation(?,?)",
         [startDate,EndDate]
       )
-      : DateType === "submit" ? await executeQuery(
-        "CALL GetMisSheetByDateOfIntimation(?,?)",
+      :  await executeQuery(
+        "CALL GetMisSheetByDateOfSubmit(?,?)",
         [startDate,EndDate]
       )
-      : await executeQuery(
-        "CALL GetMisSheetByDateOfIntimation(?,?)",
-        [startDate,EndDate]
-      );
+      
         
      
     

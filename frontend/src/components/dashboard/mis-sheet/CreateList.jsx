@@ -12,6 +12,8 @@ const CreateList = ({ setSearchInput, setType,
   setInsurerType,
   DateType,
   setDateType,
+  changeInRegion,
+  setChangeInRegion,
 start,
 end }) => {
   const [currentType, setCurrentType] = useState(0);
@@ -22,7 +24,12 @@ end }) => {
   };
 
   console.log("all_insurer",allInsurer)
-  // console.log("InsurenceType",setInsurerType)
+  //console.log("InsurenceType",setInsurerType)
+
+  const handleRegionType=(value)=>{
+    setRegionType(value)
+    setChangeInRegion(true);
+  }
 
   const searchHandler = ({
    
@@ -120,9 +127,9 @@ end }) => {
                   data-live-search="true"
                   data-width="100%"
                   value={RegionType}
-                  onChange={(e) => setRegionType(e.target.value)}
+                  onChange={(e) => handleRegionType(e.target.value)}
                 >
-                
+                <option value={""}></option>
                 <option value={"Delhi"}>Delhi</option>
                 <option value={"Chandigarh"}>Chandigarh</option>
                 <option value={"Jodhpur"}>Jodhpur</option>
