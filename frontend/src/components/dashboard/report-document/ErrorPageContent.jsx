@@ -9,20 +9,6 @@ import { useRef, useState } from "react";
 const ErrorPageContent = ({ allInfo }) => {
   const pdfRef = useRef();
 
-    function convertHtmlToString(htmlString) {
-    // Create a new DOMParser
-    const parser = new DOMParser();
-  
-    // Parse the HTML string
-    const doc = parser.parseFromString(htmlString, 'text/html');
-  
-    // Extract the text content from the parsed document
-    const plainText = doc.body.textContent || "";
-  
-    return plainText;
-  }
-  
-
   const downloadPDF = () => {
     const input = pdfRef.current;
     const pdf = new jsPDF("p", "mm", "a4", true);
@@ -638,7 +624,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <div>
               <span>:</span>
             </div>
-            <span> F {allInfo?.otherInfo[0]?.IDV}</span>
+            <span> ₹ {allInfo?.otherInfo[0]?.IDV}</span>
           </div>
         </div>
         <div className="d-flex gap-5">
@@ -985,7 +971,7 @@ const ErrorPageContent = ({ allInfo }) => {
           As filled in the claim form and discussion with the Insured that on
           the day and time of accident{" "}
           <b>{allInfo?.otherInfo[0]?.InsuredName}</b> was driving the subject
-          vehicle. &quot; {convertHtmlToString(allInfo?.otherInfo[0]?.CauseOfAccident)} , causing
+          vehicle. &quot; {allInfo?.otherInfo[0]?.CauseOfAccident} , causing
           damages.
         </span>
         <hr style={{ border: "2px solid black" }} />
@@ -994,7 +980,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <h5 htmlFor="" className="text-dark">
               POLICE ACTION :
             </h5>
-            <span> {convertHtmlToString(allInfo?.otherInfo[0]?.PoliceAction)}</span>
+            <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
@@ -1003,7 +989,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <h5 htmlFor="" className="text-dark">
               DETAILS OF LOAD / PASSENGER :
             </h5>
-            <span> {convertHtmlToString(allInfo?.otherInfo[0]?.DetailsOfLoads)}</span>
+            <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
@@ -1012,7 +998,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <h5 htmlFor="" className="text-dark">
               THIRD PARTY LOSS/ INJURIES :
             </h5>
-            <span> {convertHtmlToString(allInfo?.otherInfo[0]?.ThirdPartyLoss)}</span>
+            <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
           </div>
         </div>
         <hr style={{ border: "2px solid black" }} />
@@ -1515,9 +1501,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 textAlign: "end",
               }}
             >
-              Sub Total Labour Charges : F <br />
-              Add : GST on F 0.00 @ 18.00% : <br />
-              Total Labour Charges : F
+              Sub Total Labour Charges : ₹ <br />
+              Add : GST on ₹ 0.00 @ 18.00% : <br />
+              Total Labour Charges : ₹
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {getTotalLabourEstimate()}
@@ -2130,7 +2116,7 @@ const ErrorPageContent = ({ allInfo }) => {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            F {getSummaryTotalWithLessSalvage()} <br /> (
+            ₹ {getSummaryTotalWithLessSalvage()} <br /> (
             {numberToWords(getSummaryTotalWithLessSalvage())}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
@@ -2140,7 +2126,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <div>
         <h4 className="text-dark">Notes :</h4>
         <ul>
-          {convertHtmlToString(allInfo?.summaryReport[0]?.FinalReportNotes)}
+          {allInfo?.summaryReport[0]?.FinalReportNotes}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>
@@ -2172,7 +2158,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </span>
         <br />
         <br />
-        <span>Enclosures : {convertHtmlToString(allInfo?.summaryReport[0]?.Endurance)}</span>
+        <span>Enclosures : {allInfo?.summaryReport[0]?.Endurance}</span>
       </div>
 
       {/* common footer content */}
