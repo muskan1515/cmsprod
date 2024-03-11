@@ -11,7 +11,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 // import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ExcelTable from "./ExcelTable";
+// import ExcelTable from "./ExcelTable";
 
 const Index = () => {
 
