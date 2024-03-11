@@ -895,7 +895,7 @@ const getFileName = (idx)=>{
     });
     // data = tempCode;
     setUpdatedCode(tempCode);
-  }, [documents,uploadedFiles,changes]);
+  }, [documents,allDocumentLabels,uploadedFiles,changes]);
 
     return (
       <SmartTable

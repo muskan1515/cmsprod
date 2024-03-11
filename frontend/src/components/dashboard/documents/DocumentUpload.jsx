@@ -873,6 +873,7 @@ export default function DocumentUpload({
 
   useEffect(() => {
     console.log("uploadedData", uploadedData);
+    console.log("documentLabels",allDocumentLabels);
     const getData = () => {
       const tempData = [];
       allDocumentLabels.map((row, index) => {
@@ -965,7 +966,7 @@ export default function DocumentUpload({
     // getData();
     setChange(false);
     setUpdatedCode(getData());
-  }, [uploadedData, change, document]);
+  }, [uploadedData, allDocumentLabels,change, document]);
 
   useEffect(() => {
     if (uploadedData) {
