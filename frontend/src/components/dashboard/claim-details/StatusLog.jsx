@@ -10,6 +10,23 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
 
   console.log("status",documents);
 
+  const [allDocumentLabels,setALlDocumentLabels]=useState([]);
+
+  useEffect(()=>{
+    axios.get("/api/getDocumentListLabels", {
+      headers: {
+        Authorization: `Bearer ${""}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+        console.log("DocumentLabels",res.data.data.results);
+        setALlDocumentLabels(res.data.data.results);
+    })  
+    .catch((err) => {
+      console.log(err);
+    });
+  },[]);
   let data = [
     {
       serial_num: "1",
@@ -99,10 +116,10 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
   },[status.length]);
 
   const getValueFromDocName=(docName)=>{
-    let value = -1;
-    data.map((temp,index)=>{
-      if(String(data.doc_name) === String(docName)){
-        value = temp.serial_num;
+    let value = 0;
+    allDocumentLabels.map((temp,index)=>{
+      if(String(temp.DocumentName) === String(docName)){
+        value = temp.id;
       }
     })
 
@@ -113,34 +130,36 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
     if(String(stat)=== "1")
       return 5;
     if(String(stat)=== "2")
-      return 8;
+      return 5;
     if(String(stat)=== "3")
-      return 11;
+      return 5;
     if(String(stat)=== "4")
-      return 14;
+      return 5;
     if(String(stat)=== "5")
-      return 17;
+      return 5;
   }
 
 
   //function to update the status on documents validation
   const checkIsValidated = ()=>{
-      let arr = new Array(17+1).fill(0);
+      let arr = new Array(allDocumentLabels.length + 1).fill(0);
       documents?.map((doc,index)=>{
         const value = getValueFromDocName(doc.docName);
-        arr[value]++;
+        arr[value] = value;
       })
 
       const upperValue = getUpperBound();
-      console.log(upperValue);
+      arr[0]=1;
 
       let canUpdateStatus = true;
       arr.map((value,index)=>{
-        if(Number(value) <= Number(upperValue) && Number(value) <= 0 ){
-            canUpdateStatus=false;
-        }
+       if( index <=5  && value === 0){
+          canUpdateStatus = false;
+       }
       })
 
+      
+      console.log(upperValue,arr,canUpdateStatus);
       return canUpdateStatus;
 
       
