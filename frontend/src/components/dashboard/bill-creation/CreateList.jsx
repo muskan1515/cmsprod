@@ -4,6 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import MyDatePicker from "../../common/MyDatePicker";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const CreateList = ({ allInfo, leadID }) => {
   // console.log(allInfo)
@@ -292,6 +293,10 @@ const CreateList = ({ allInfo, leadID }) => {
     };
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    toast.loading("Adding the bill !!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .post("/api/uploadFeeReport", payload, {
         headers: {
@@ -300,11 +305,17 @@ const CreateList = ({ allInfo, leadID }) => {
         },
       })
       .then((res) => {
-        alert("Successfully uploaded the receipt!");
+        toast.dismiss();
+        toast.success("Successfully added !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
         router.push(`/claim-details/${leadID}`);
       })
       .catch((Err) => {
         console.log(Err);
+        toast.dismiss();
+        toast.error("Got error while adding claim!");
       });
   };
 

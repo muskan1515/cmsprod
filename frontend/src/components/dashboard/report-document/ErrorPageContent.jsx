@@ -67,7 +67,6 @@ const ErrorPageContent = ({ allInfo }) => {
     generateAllPages();
   };
 
-  // const downloadPDF = () => {
   //   const input = pdfRef.current;
 
   //   html2canvas(input).then((canvas) => {

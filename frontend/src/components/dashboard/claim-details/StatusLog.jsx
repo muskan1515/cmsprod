@@ -181,16 +181,26 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
       token : Number(userInfo[0].Token)
     };
 
+    toast.loading("updatign the status!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios.put("/api/updateStatus",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,
         "Content-Type":"application/json"
       }
     }).then((res)=>{
-      alert("Successfully Updated!!");
+      toast.dismiss();
+          // toast.success("Successfully added");
+          toast.success("Successfully updated !", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
       window.location.reload();
     }).catch((err)=>{
-      alert(err);
+      toast.dismiss();
+          toast.error("Got error while updating status!");
     });
   }
   }

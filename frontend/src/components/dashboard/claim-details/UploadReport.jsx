@@ -109,13 +109,23 @@ const UploadReort = ({ leadId }) => {
             uploadedBy: unserInfo[0].Username
           };
 
+          toast.loading("Uploading the  report!!", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
+
           axios.post("/api/uploadReportDocument",payload).
           then((res)=>{
-            toast.success("Successfully added!");
+            toast.dismiss();
+            // toast.success("Successfully added");
+            toast.success("Successfully added !", {
+              // position: toast.POSITION.BOTTOM_LEFT,
+              className: "toast-loading-message",
+            });
             window.location.reload();
           }).
           catch((err)=>{
-            toast.error("Try Again!!");
+            toast.error("Got error while adding report!");
           })
 
         }
@@ -125,6 +135,26 @@ const UploadReort = ({ leadId }) => {
         
     setDisable(false)
   };
+
+  const types = [
+    { name: "Driving licence" },
+    { name: "Certificate of registration" },
+    { name: "Repair Estimate" },
+    { name: "Claim form" },
+    { name: "Insurance policy" },
+    { name: "Damage vehicle photographs/video" },
+    { name: "Aadhar card" },
+    { name: "Pan card" },
+    { name: "Cancel cheque" },
+    { name: "Satisfaction voucher" },
+    { name: "Discharge voucher" },
+    { name: "Dismantle photographs" },
+    { name: "Reinspection photographs" },
+    { name: "Repair Invoice" },
+    { name: "Payment/cash receipt" },
+    { name: "Videos" },
+    { name: "Images" },
+  ];
 
 
   const fileUploadHandler = async (e) => {
@@ -237,14 +267,14 @@ const UploadReort = ({ leadId }) => {
                           value={reportType}
                           onChange={(e) => setReportType(e.target.value)}
                         >
-                          {allDocumentLabels.map((type, index) => {
+                          {types.map((type, index) => {
                             return (
                               <option
                                 data-tokens="Status1"
-                                value={type.DocumentName}
+                                value={type.name}
                                 key={index}
                               >
-                                {type.DocumentName}
+                                {type.name}
                               </option>
                             );
                           })}

@@ -86,7 +86,10 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
       toast.error("Please select the documents to be passed over email!");
     } else {
 
-      toast.loading("Sending the customized email!!");
+      toast.loading("Sending the customized email!!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
       axios
         .post("/api/sendCustomEmail", payload, {
           headers: {
@@ -96,12 +99,16 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
         })
         .then((res) => {
           toast.dismiss();
-          toast.success("Successfully sent!!");
+          // toast.success("Successfully added");
+          toast.success("Successfully sent !", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
           router.push(`/claim-details?leadId=${leadId}`);
         })
         .catch((Err) => {
           toast.dismiss();
-          toast.error("Try again!");
+          toast.error("Got error while sending email!");
         });
     }
     // }

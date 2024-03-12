@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ErrorPageContent from "./ErrorPageContent";
 import axios from "axios";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const Index = () => {
   const [allInfo, setAllInfo] = useState(null);
@@ -17,6 +18,10 @@ const Index = () => {
     const leadId = url.split("/report-document/")[1];
 
     console.log(leadId);
+    toast.loading("Loading the report!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .get("/api/getReportInfo", {
         headers: {
@@ -27,10 +32,18 @@ const Index = () => {
         },
       })
       .then((res) => {
+        toast.dismiss();
+        // toast.success("Successfully added");
+        toast.success("Successfully loaded !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
         setAllInfo(res.data.data);
       })
       .catch((err) => {
         console.log(err);
+        toast.dismiss();
+          toast.error("Got error while loading report!");
       });
   }, []);
   return (

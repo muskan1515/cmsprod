@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import Webcam from "react-webcam";
 import dotenv from "dotenv";
 import toast from 'react-hot-toast';
-import { createCanvas, loadImage } from "canvas";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowsRotate,
@@ -21,7 +21,6 @@ import {
 dotenv.config({ path: ".env.development" });
 
 import AWS from "aws-sdk";
-import axios from "axios";
 const S3_BUCKET = "cmsdocs2024";
 const REGION = "ap-south-1";
 
@@ -32,6 +31,13 @@ AWS.config.update({
   secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
 });
 
+console.log(
+  "aws,cofgi.update",
+  process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+  process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+  process.env.NEXT_PUBLIC_REGION,
+  process.env.NEXT_PUBLIC_S3_BUCKET
+);
 
 const myBucket = new AWS.S3({ params: { Bucket: S3_BUCKET }, region: REGION });
 const headCells = [
@@ -178,30 +184,11 @@ export default function DocumentUpload({
   const [change, setChange] = useState(false);
   const [isVIdeoDisable, setisVIdeoDisable] = useState(true);
   const [isVIdeoCaptureDisable, setisVIdeoCaptureDisable] = useState(true);
-  const[lat, setLat] = useState("");
-  const[long, setLong] = useState("");
+
 
   console.log('isVIdeoDisable?>?>?>?>?',isVIdeoDisable);
 
   const urlParams = new URLSearchParams(window.location.search);
-
-  const [allDocumentLabels,setALlDocumentLabels]=useState([]);
-
-  useEffect(()=>{
-    axios.get("/api/getDocumentListLabels", {
-      headers: {
-        Authorization: `Bearer ${""}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-        console.log("DocumentLabels",res.data.data.results);
-        setALlDocumentLabels(res.data.data.results);
-    })  
-    .catch((err) => {
-      console.log(err);
-    });
-  },[]);
   
   useEffect(()=>{
   const content = urlParams.get('content');
@@ -214,7 +201,6 @@ export default function DocumentUpload({
   },[urlParams])
 
 
-  
 
   const getIndex = (label, datas) => {
     let index = -1;
@@ -228,8 +214,6 @@ export default function DocumentUpload({
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLat(latitude)
-          setLong(longitude)
           setLoc(latitude + "," + longitude);
           console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
           // You can use the latitude and longitude here as needed
@@ -333,7 +317,6 @@ export default function DocumentUpload({
   const [uploadedImages, setUploadedImages] = useState([]);
   const [uploadedVideos, setuploadedVideos] = useState([]);
   const [uploadedFileName, setUploadedFileName] = useState([]);
-  
 
   const [imageFileName, setImageFileName] = useState("");
   const cancelCapture = () => {
@@ -395,7 +378,6 @@ export default function DocumentUpload({
   }
 
   console.log("BLOBB>>>", blob);
-  // console.log('data',uploadedData, uploa)
 
   //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -511,12 +493,22 @@ export default function DocumentUpload({
       };
 
 
+      toast.loading("Uploading the media!!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
 
       myBucket.putObject(params).send((err, data) => {
         if (err) {
-          toast.error("Error while uploading!!");
-          console.log("errrrrrrrr", err);
+          toast.dismiss();
+          toast.error("Got error while adding claim!");
         } else {
+          toast.dismiss();
+          // toast.success("Successfully added");
+          toast.success("Successfully uploaded !", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
           const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(
             url.name
           )}`;
@@ -568,57 +560,35 @@ export default function DocumentUpload({
 
     return filename;
 }
- 
-//   const handleUploadImage = async () => {
-//     try {
-//       const imageSrc = webcamRef.current.getScreenshot();
-//       const name = generateRandomFileName("jpg");
-//       const image = await loadImage(imageSrc);
 
-   
-//   const canvas = createCanvas(image.width, image.height);
-//   const context = canvas.getContext('2d');
-//   context.drawImage(image, 0, 0);
- 
-// const date=new Date()
-  
-//   context.font = '28px Arial';
-//   context.fillStyle = 'white';
-//   context.fillText(`Latitude:${lat}, Longitude:${long}`, 30, 30);
-//   context.fillText(`Date:${date.toLocaleDateString()},Time:${date.toLocaleTimeString()}`, 60, 60);
+  const handleUploadImage = async () => {
+    try {
+      const imageSrc = webcamRef.current.getScreenshot();
+      const name = generateRandomFileName("jpg");
 
-//   const capturedImage = canvas.toDataURL('image/jpeg');
+      // console.log("Imagee Src ------> ", imageSrc);
+      const byteCharacters = atob(imageSrc.split(",")[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "image/jpeg" });
 
-//       const byteCharacters = atob(capturedImage.split(",")[1]);
-//       const byteNumbers = new Array(byteCharacters.length);
-//       for (let i = 0; i < byteCharacters.length; i++) {
-//         byteNumbers[i] = byteCharacters.charCodeAt(i);
-//       }
-//       const byteArray = new Uint8Array(byteNumbers);
-//       const blob = new Blob([byteArray], { type: "image/jpeg" });
+      // Create a File object
+      const file = new File([blob], name, { type: "image/jpeg" });
 
-//       // Create a File object
-//       const file = new File([blob], name, { type: "image/jpeg" });
-//       console.log(file)
+      setUploadedUrl((prevImages) => [...prevImages, file]);
+      // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
+      setImageFileName(name);
 
-//       setUploadedUrl((prevImages) => [...prevImages, file]);
-//       // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
-//       setImageFileName(name);
-//       // const location = Location()
-//       // const timestamp = new Date()
-//       // const newUploaded_image = {
-//       //   name : name,
-//       //   timestamp : timestamp,
-//       //   location : location
-
-//       // }
-//       setUploadedFileName((prevName) => [...prevName, name]);
-//       setIsImage(true);
-//       setRetake(true);
-//     } catch (error) {
-//       console.error("Error handling upload:", error);
-//     }
-//   };
+      setUploadedFileName((prevName) => [...prevName, name]);
+      setIsImage(true);
+      setRetake(true);
+    } catch (error) {
+      console.error("Error handling upload:", error);
+    }
+  };
 
   // const blobToBase64 = (blob) => {
   //   return new Promise((resolve, reject) => {
@@ -629,89 +599,6 @@ export default function DocumentUpload({
   //   });
   // };
 
-  // const handleUploadImage = async () => {
-  //   try {
-  //     const imageSrc = webcamRef.current.getScreenshot();
-  //     const name = generateRandomFileName("jpg");
-  //     const image = await loadImage(imageSrc);
-  
-  //     const canvas = createCanvas(image.width, image.height);
-  //     const context = canvas.getContext('2d');
-  //     context.drawImage(image, 0, 0);
-  
-  //     const date = new Date();
-  //     context.font = '20px Arial';
-  //     context.fillStyle = 'white';
-  //     const textMargin = 25; // Margin from the right and bottom
-  //     const textBaselineOffset = 25; // Offset from the bottom
-  //     context.fillText(`Latitude: ${lat}, Longitude: ${long}`, canvas.width - context.measureText(`Latitude: ${lat}, Longitude: ${long}`).width - textMargin, canvas.height - textBaselineOffset);
-  //     context.fillText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`, canvas.width - context.measureText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`).width - textMargin, canvas.height - textBaselineOffset - 25);
-  
-  //     const capturedImage = canvas.toDataURL('image/jpeg');
-  
-  //     const byteCharacters = atob(capturedImage.split(",")[1]);
-  //     const byteNumbers = new Array(byteCharacters.length);
-  //     for (let i = 0; i < byteCharacters.length; i++) {
-  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
-  //     }
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     const blob = new Blob([byteArray], { type: "image/jpeg" });
-  
-  //     // Create a File object
-  //     const file = new File([blob], name, { type: "image/jpeg" });
-  
-  //     setUploadedUrl((prevImages) => [...prevImages, file]);
-  //     setImageFileName(name);
-  //     setUploadedFileName((prevName) => [...prevName, name]);
-  //     setIsImage(true);
-  //     setRetake(true);
-  //   } catch (error) {
-  //     console.error("Error handling upload:", error);
-  //   }
-  // };
-
-    const handleUploadImage = async () => {
-    try {
-      const imageSrc = webcamRef.current.getScreenshot();
-      const name = generateRandomFileName("jpg");
-      const image = await loadImage(imageSrc);
-  
-      const canvas = createCanvas(image.width, image.height);
-      const context = canvas.getContext('2d');
-      context.drawImage(image, 0, 0);
-  
-      const date = new Date();
-      context.font = '20px Arial';
-      context.fillStyle = 'white';
-      const textMargin = 25; // Margin from the right and bottom
-      const textBaselineOffset = 25; // Offset from the bottom
-      context.fillText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`, canvas.width - context.measureText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`).width - textMargin, canvas.height - textBaselineOffset);
-      context.fillText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`, canvas.width - context.measureText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`).width - textMargin, canvas.height - textBaselineOffset - 25);
-  
-      const capturedImage = canvas.toDataURL('image/jpeg');
-  
-      const byteCharacters = atob(capturedImage.split(",")[1]);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: "image/jpeg" });
-  
-      // Create a File object
-      const file = new File([blob], name, { type: "image/jpeg" });
-  
-      setUploadedUrl((prevImages) => [...prevImages, file]);
-      setImageFileName(name);
-      setUploadedFileName((prevName) => [...prevName, name]);
-      setIsImage(true);
-      setRetake(true);
-    } catch (error) {
-      console.error("Error handling upload:", error);
-    }
-  };
-  
-  
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -822,7 +709,7 @@ export default function DocumentUpload({
   const checkWithinTheContent = (row) => {
     if(content==="")
      return true;
-    const present = content.includes(row.DocumentName);
+    const present = content.includes(row.doc_name);
 
     return present;
   };
@@ -839,7 +726,7 @@ export default function DocumentUpload({
   };
 
   const checkId = (status, row) => {
-    if (status?.Status === 1 && Number(row.id) <= 10) return true;
+    if (status?.Status === 1 && Number(row.serial_num) <= 10) return true;
     return false;
   };
   const checkIsUploaded = (label) => {
@@ -873,18 +760,17 @@ export default function DocumentUpload({
 
   useEffect(() => {
     console.log("uploadedData", uploadedData);
-    console.log("documentLabels",allDocumentLabels);
     const getData = () => {
       const tempData = [];
-      allDocumentLabels.map((row, index) => {
-        console.log('ROWW>>>>',row.DocumentName);
-        row.DocumentName === "Images"
+      data.map((row, index) => {
+        console.log('ROWW>>>>',row.doc_name);
+        row.doc_name === "Images"
           ? setisVIdeoDisable(false)
           : setisVIdeoDisable(true);
-          setisVIdeoDisable(row.DocumentName !== "Images");
+          setisVIdeoDisable(row.doc_name !== "Images");
 
-        const isUploaded = checkIsUploaded(row.DocumentName);
-        const isDone = checkAlreadyDone(row.DocumentName);
+        const isUploaded = checkIsUploaded(row.doc_name);
+        const isDone = checkAlreadyDone(row.doc_name);
         const isAccordingToStatus = content
           ? checkWithinTheContent(row)
           : checkId(status, row);
@@ -893,10 +779,10 @@ export default function DocumentUpload({
         if (!isDone && isAccordingToStatus) {
           const updatedRow = {
             _id: index + 1,
-            serial_num: row.id,
-            doc_name: row.DocumentName,
+            serial_num: row.serial_num,
+            doc_name: row.doc_name,
             files: uploadedData.map((file, idx) => {
-              if (file.docName === row.DocumentName) {
+              if (file.docName === row.doc_name) {
                 const fileName = String(file.data[0].thumbnail_url); // Convert to string
                 return (
                   <div
@@ -945,7 +831,7 @@ export default function DocumentUpload({
                   <button
                     className="btn btn-color w-100"
                     style={{}}
-                    onClick={() => openModal(row.DocumentName, index)}
+                    onClick={() => openModal(row.doc_name, index)}
                     title="Upload File"
                   >
                     <span className="">
@@ -966,7 +852,7 @@ export default function DocumentUpload({
     // getData();
     setChange(false);
     setUpdatedCode(getData());
-  }, [uploadedData, allDocumentLabels,change, document]);
+  }, [uploadedData, change, document]);
 
   useEffect(() => {
     if (uploadedData) {

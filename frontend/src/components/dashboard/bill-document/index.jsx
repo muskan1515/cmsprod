@@ -24,11 +24,14 @@ const Index = () => {
       .then((res) => {
         toast.dismiss();
         setFeeReport(res.data.data);
-        toast.success("Successfully Fetched !!");
+        toast.success("Successfully Fetched !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
       })
       .catch((err) => {
         toast.dismiss();
-        toast.error(err);
+        toast.error("Got error while fetching the bill information!");
       });
   }, []);
   return (

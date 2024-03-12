@@ -4,7 +4,7 @@ import SmartTable from "./SmartTable";
   import {  FaUpload } from "react-icons/fa";
   import axios from "axios";
   import toast from "react-hot-toast";
-  import AWS, { CodeCatalyst } from 'aws-sdk';
+  import AWS from 'aws-sdk';
 
 
   AWS.config.update({
@@ -12,11 +12,13 @@ import SmartTable from "./SmartTable";
     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
     region: process.env.NEXT_PUBLIC_REGION,
   });
-
-  const REGION = process.env.NEXT_PUBLIC_REGION;
   
   const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
   
+  const REGION ='ap-south-1';
+  console.log("AWS credentials:", process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY);
+  console.log("AWS region:", process.env.NEXT_PUBLIC_REGION);
+  console.log("S3 bucket:", S3_BUCKET);
   const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
 
   const headCells = [
@@ -425,14 +427,6 @@ import SmartTable from "./SmartTable";
     const [uploadedFiles,setUploadedFiles]=useState([]);
     const [disable,setDisable]=useState(false)
 
-
-    const [addDocument,setAddDocument]=useState(false);
-
-    const [newLabel,setNewLabel]=useState("");
-
-  
-  
-
    
     const [currentDoc,setCurrentDoc]=useState("");
 
@@ -440,42 +434,12 @@ import SmartTable from "./SmartTable";
 
     const [loc,setLoc]=useState("")
 
-    const [allDocumentLabels,setALlDocumentLabels]=useState([]);
-
-    useEffect(()=>{
-      axios.get("/api/getDocumentListLabels", {
-        headers: {
-          Authorization: `Bearer ${""}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-          console.log("DocumentLabels",res.data.data.results);
-          setALlDocumentLabels(res.data.data.results);
-      })  
-      .catch((err) => {
-        console.log(err);
-      });
-    },[]);
+    console.log("leadId------>", leadId);
 
   
   useEffect(()=>{
     setUploadedFiles(documents)
   },[documents]);
-
-
-  const addNewLabel=()=>{
-    axios.post("/api/addDocumentLabel",{
-      DocumentLabel:newLabel
-    })
-    .then((res)=>{
-      toast.success("Successfully added !!");
-      window.location.reload();
-    })
-    .catch((err)=>{
-      toast.error("Try Again!!");
-    })
-  }
 
   const checkValue = (label) => {
     let requiredInfo = [];
@@ -709,13 +673,67 @@ const handleReload = () => {
 };
 
 
-const handleButtonClick = (doc_name) => {
+    const handleButtonClick = (doc_name) => {
       setDisable(true)
       console.log(doc_name)
       docCurrentName =(doc_name)
       // Trigger file input click when button is clicked
       document.getElementById('fileInput').click();
-};
+    };
+
+//       try {
+//         const zip = new JSZip();
+
+      
+      
+
+//         documents.map((data, index) => {
+//           if (data.Attribute1 !== "") {
+//             const fileName = data.Attribute1;
+//             zip.file(fileName, data.Photo1, { binary: true });
+//           }
+//           if (data.Attribute2 !== "") {
+//             const fileName = data.name;
+//             zip.file(fileName, data.url, { binary: true });
+//           }
+//           if (data.Attribute3 !== "") {
+//             const fileName = data.Attribute3;
+//             zip.file(fileName, data.Photo3, { binary: true });
+//           }
+//           if (data.Attribute4 !== "") {
+//             const fileName = data.Attribute4;
+//             zip.file(fileName, data.Photo4, { binary: true });
+//           }
+//           if (data.Attribute5 !== "") {
+//             const fileName = data.Attribute5;
+//             zip.file(fileName, data.Photo5, { binary: true });
+//           }
+//         });
+
+
+//         // console.log(zip);
+
+//         const content = await zip.generateAsync({ type: "blob" });
+
+//         // Triggering the download
+//         const a = document.createElement("a");
+//         const url = URL.createObjectURL(content);
+//         a.href = url;
+//         a.download = "downloadedFiles.zip";
+//         document.body.appendChild(a);
+//         a.click();
+//         document.body.removeChild(a);
+//         URL.revokeObjectURL(url);
+
+//         alert("Successfully downloaded the zip!");
+//       } catch (error) {
+//         console.error("Error uploading file:", error);
+//       }
+//     } else {
+//       console.log("Accessing base64 after delay:", newFile.base64);
+//     }
+//   }, 1000);
+// };
 
 
 
@@ -859,10 +877,10 @@ const getFileName = (idx)=>{
   let tempCode = [];
   useEffect(() => {
     setChanges(false)
-    allDocumentLabels.map((docs, index) => {
-      const allInfo = getAllLabelLinks(docs.DocumentName);
+    data.map((docs, index) => {
+      const allInfo = getAllLabelLinks(docs.doc_name);
       const fileName = getFileName(index);
-      console.log(docs.DocumentName,allInfo)
+      console.log(docs.doc_name,allInfo)
       const alllinks = (
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
@@ -875,13 +893,13 @@ const getFileName = (idx)=>{
 
       console.log("alllinks",alllinks);
       const temp = {
-        _id: docs.index+1,
-        serial_num: docs.id,
-        doc_name: docs.DocumentName,
+        _id: docs._id,
+        serial_num: docs.serial_num,
+        doc_name: docs.doc_name,
         file: alllinks,
         action: <>
-        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.DocumentName)} ></input>
-        <button  disabled={disable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.DocumentName)}
+        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.doc_name)} ></input>
+        <button  disabled={disable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.doc_name)}
         >
         <FaUpload /></button>
         <p>{ fileName? `Selected File: ${fileName?.name}` : "Choose File"}</p>
@@ -895,7 +913,7 @@ const getFileName = (idx)=>{
     });
     // data = tempCode;
     setUpdatedCode(tempCode);
-  }, [documents,allDocumentLabels,uploadedFiles,changes]);
+  }, [documents,uploadedFiles,changes]);
 
     return (
       <SmartTable
@@ -905,8 +923,6 @@ const getFileName = (idx)=>{
         disable={disable}
         downloadAllFiles={downloadAllFiles}
         onSubmitHandler={onSubmitHandler}
-        setNewLabel={setNewLabel}
-        addNewLabel={addNewLabel}
       />
     );
   }

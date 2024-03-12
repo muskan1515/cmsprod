@@ -15,6 +15,7 @@ import {
   getMonthsDifference,
 } from "./functions";
 import { AccidentContent, summaryNotes } from "./Content";
+import toast from "react-hot-toast";
 
 const materials = [
   { qty: "12", desc: "12", price: "12" },
@@ -907,6 +908,11 @@ const [AccidentTime,setAccidentTime]=useState("");
     };
 
 
+    toast.loading("Updating the final Report!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
+
     axios.put("/api/updateFinalReport",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,
@@ -917,11 +923,17 @@ const [AccidentTime,setAccidentTime]=useState("");
       }
     })
     .then((res)=>{
-      alert("Successfully updated!");
+      toast.dismiss();
+      // toast.success("Successfully Updated");
+      toast.success("Successfully added !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
       window.location.reload();
     })
     .catch((Err)=>{
-      alert(Err);
+      toast.dismiss();
+      toast.error("Got error while updating the final report!");
     })
   }
 

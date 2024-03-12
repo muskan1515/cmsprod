@@ -122,7 +122,10 @@ const Index = () => {
     } else {
       const { Region1, Region2, Region3, CalimStatus } = userInfo[0];
       console.log(userInfo[0])
-      toast.loading("Fetching all the claims!!");
+      toast.loading("Loading the  claims!!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
       axios
         .get("/api/getAllClaims", {
           params: {
@@ -137,11 +140,16 @@ const Index = () => {
           },
         })
         .then((res) => {
-          toast.success("Successfully fetched!");
           toast.dismiss();
+         
+          toast.success("Successfully loaded all claims", {
+            // position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-loading-message",
+          });
           setAllClaims(res.data.data[0]);
         })
         .catch((err) => {
+          toast.dismiss();
           toast.error("error while fetching all claims!");
         });
 
