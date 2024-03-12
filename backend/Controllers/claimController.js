@@ -387,6 +387,7 @@ const getSpecificClaim = async (req, res) => {
         DateOfBirth,
         TypeOfverification,
         ValidUpto,
+        DLStatus,
         LeadID
         FROM DriverDetails WHERE LeadID=?`,
         [leadId]
@@ -634,7 +635,8 @@ const getSpecificClaim = async (req, res) => {
     IsDriverDetailsFetched,
     IsRcDetailsFetched,
     DateOfIssue,
-
+    GarageMailAddress,
+    BrokerMailAddress,
     LeadId,
   } = req.body;
 
@@ -653,6 +655,7 @@ const getSpecificClaim = async (req, res) => {
     IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
     IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : ''},
     InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `${InsuranceCompanyNameAddress}` : ''}
+    BrokerMailAddress =${BrokerMailAddress ? `${BrokerMailAddress}` : ""},
     WHERE LeadId = ${LeadId};
   `;
   
@@ -729,7 +732,8 @@ const getSpecificClaim = async (req, res) => {
     GarageNameAndAddress = ${GarageNameAndAddress ? `${GarageNameAndAddress}` : ''},
     GarageContactNo1 = ${GarageContactNo1 ? `${GarageContactNo1}` : ''},
     GarageContactNo2 = ${GarageContactNo2 ? `${GarageContactNo2}` : "''"},
-    AddedBy = ${GarageAddedBy ? `${GarageAddedBy}` : ''}
+    AddedBy = ${GarageAddedBy ? `${GarageAddedBy}` : ''},
+    GarageMailAddress=${GarageMailAddress ? `${GarageMailAddress}`:''}
     WHERE LeadId = ${LeadId};
   `;
   

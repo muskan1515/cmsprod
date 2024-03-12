@@ -36,6 +36,10 @@ const CreateList = ({
   setInsuredAddedBy,
   edit,
   setIsStatusModal,
+  setBrokerMailAddress,
+  setGarageMailAddress,
+  BrokerMailAddress,
+  GarageMailAddress,
 }) => {
   console.log(
     InsuredName,
@@ -165,8 +169,8 @@ const CreateList = ({
         Insured: Insured,
         toMail: mailAddress,
         leadId: claim?.claimDetails?.LeadID,
-        BrokerMailAddress: claim?.claimDetails?.BrokerMailAddress,
-        GarageMailAddress: claim?.garageDetails?.GarageNameAndAddress,
+        BrokerMailAddress: BrokerMailAddress,
+        GarageMailAddress: GarageMailAddress,
         Region: claim?.claimDetails?.Region,
         type: 4,
         date: formatDate(new Date()),
@@ -430,7 +434,13 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <input type="email" className="form-control" id="propertyTitle" />
+              <input
+                type="email"
+                className="form-control"
+                id="GarageMailAddress"
+                value={GarageMailAddress}
+                onChange={(e) => setGarageMailAddress(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -451,7 +461,13 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <input type="email" className="form-control" id="propertyTitle" />
+              <input
+                type="email"
+                className="form-control"
+                id="propertyTitle"
+                value={BrokerMailAddress}
+                onChange={(e) => setBrokerMailAddress(e.target.value)}
+              />
             </div>
           </div>
         </div>

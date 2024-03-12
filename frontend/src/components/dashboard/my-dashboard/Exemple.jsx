@@ -163,10 +163,9 @@ export default function Exemple({
   
     // Format IST date and time with hours, minutes, AM/PM
     const options = { 
-      weekday: 'long', 
+      day: '2-digit',
+      month: '2-digit',
       year: 'numeric', 
-      month: 'long', 
-      day: 'numeric', 
       // hour: 'numeric', 
       // minute: 'numeric', 
       // hour12: true 

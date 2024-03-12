@@ -111,7 +111,9 @@ const Index = ({}) => {
   const [editCase_02, setEditCase_02] = useState(false);
   const [editVechile, setEditVehichle] = useState(false);
   const [edit, setEdit] = useState(false);
-
+  const [BrokerMailAddress, setBrokerMailAddress] = useState("");
+  const [GarageMailAddress, setGarageMailAddress] = useState("");
+  const [DLStatus, setDLStatus] = useState("");
   const getNextYear = () => {
     const oneYearLater = new Date(policyStartDate);
     oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
@@ -618,6 +620,21 @@ const Index = ({}) => {
         ? claim?.claimDetails?.IsRcDetailsFetched
         : IsRcDetailsFetched
     );
+    setGarageMailAddress(
+      claim.garageDetails?.GarageMailAddress
+        ? claim.garageDetails?.GarageMailAddress
+        : ""
+    );
+    setBrokerMailAddress(
+      claim?.claimDetails?.BrokerMailAddress
+        ? claim?.claimDetails?.BrokerMailAddress
+        : ""
+    );
+    setDLStatus(
+      claim?.driverDetails?.DLStatus
+        ? claim?.driverDetails?.DLStatus
+        : DLStatus
+    );
   }, [claim]);
 
   // console.log("datat ", VehicleInsuranceCompany);
@@ -791,7 +808,8 @@ const Index = ({}) => {
       SeatingCapacity: VehicleSeatingCapacity,
       IsDriverDetailsFetched,
       IsRcDetailsFetched,
-
+      GarageMailAddress,
+      BrokerMailAddress,
       token: userInfo[0].Token,
     };
 
@@ -1277,6 +1295,8 @@ const Index = ({}) => {
                                 setVehicleRegisteredNumber={
                                   setVehicleRegisteredNumber
                                 }
+                                setBrokerMailAddress={setBrokerMailAddress}
+                                setGarageMailAddress={setGarageMailAddress}
                               />
                             </div>
                           ) : (
@@ -1324,6 +1344,10 @@ const Index = ({}) => {
                               setVehicleRegisteredNumber={
                                 setVehicleRegisteredNumber
                               }
+                              setBrokerMailAddress={setBrokerMailAddress}
+                              setGarageMailAddress={setGarageMailAddress}
+                              BrokerMailAddress={BrokerMailAddress}
+                              GarageMailAddress={GarageMailAddress}
                             />
                           )}
                         </div>
@@ -1611,6 +1635,8 @@ const Index = ({}) => {
                               setIsDriverDetailsFetched={
                                 setIsDriverDetailsFetched
                               }
+                              setDLStatus={setDLStatus}
+                              DLStatus={DLStatus}
                             />
                           </div>
                         </div>

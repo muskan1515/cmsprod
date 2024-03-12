@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const Form_driver = ({
   claim,
+  DLStatus,
   DriverName,
   setDriverName,
   DriverAddedDate,
@@ -178,10 +179,11 @@ const Form_driver = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
+                        value={DLStatus}
                       >
                         {/* {(claim?.driverDetails?.TypeOfVerification&&claim?.driverDetails?.TypeOfVerification!=="null"?
                         claim?.driverDetails?.TypeOfVerification :"Not Verified")} */}
-                        {claim?.driverDetails?.Remark}
+                        {DLStatus}
                       </label>
                     </div>
                   </div>

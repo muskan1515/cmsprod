@@ -21,6 +21,8 @@ const CreateList_02 = ({
   insuranceCompanyNameAddress,
   insuredAddedBy,
   VehicleRegisteredNumber,
+  BrokerMailAddress,
+  GarageMailAddress
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
@@ -477,6 +479,7 @@ const CreateList_02 = ({
                       </label>
                     </div>
                     <div className="col-lg-6 text-end">
+                      {console.log('GarageMailAddress',GarageMailAddress)}
                       <label
                         htmlFor=""
                         className="text-color"
@@ -485,7 +488,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      >{claim?.garageDetails?.GarageMailAddress}</label>
+                      >{GarageMailAddress}</label>
                     </div>
                   </div>
                 </td>
@@ -514,7 +517,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.claimDetails?.BrokerMailAddress}
+                        {BrokerMailAddress}
                       </label>
                     </div>
                   </div>

@@ -59,6 +59,8 @@ const Form_01 = ({
   setDateOfIssue,
   DateOfIssue,
   setIsDriverDetailsFetched,
+  setDLStatus,
+  DLStatus
 }) => {
   const router = useRouter();
   const [editCase_02, setEditCase_02] = useState(false);
@@ -782,6 +784,7 @@ const Form_01 = ({
                       Pht={Pht}
                       Photo={Photo}
                       setPhoto={setPhoto}
+                      DLStatus={DLStatus}
                       setIsDriverDetailsFetched={setIsDriverDetailsFetched}
                     />
                   </div>

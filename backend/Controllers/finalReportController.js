@@ -218,7 +218,8 @@ const updateFinalReport = (req,res)=>{
     GarageNameAndAddress = '${GarageNameAndAddress}',
     GarageContactNo1 = '${GarageContactNo1}',
     GarageContactNo2='${GarageContactNo2}',
-    AddedBy='${GarageAddedBy}'
+    AddedBy='${GarageAddedBy}',
+    GarageNameAndAddress= '${PlaceOfSurvey}'
     WHERE LeadID = ${leadId};
   `;
 
