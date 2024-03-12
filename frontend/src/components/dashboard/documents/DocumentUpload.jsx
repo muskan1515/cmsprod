@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import Webcam from "react-webcam";
 import dotenv from "dotenv";
 import toast from 'react-hot-toast';
+import { createCanvas, loadImage } from "canvas";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,13 +32,6 @@ AWS.config.update({
   secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
 });
 
-console.log(
-  "aws,cofgi.update",
-  process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
-  process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-  process.env.NEXT_PUBLIC_REGION,
-  process.env.NEXT_PUBLIC_S3_BUCKET
-);
 
 const myBucket = new AWS.S3({ params: { Bucket: S3_BUCKET }, region: REGION });
 const headCells = [
@@ -184,7 +178,8 @@ export default function DocumentUpload({
   const [change, setChange] = useState(false);
   const [isVIdeoDisable, setisVIdeoDisable] = useState(true);
   const [isVIdeoCaptureDisable, setisVIdeoCaptureDisable] = useState(true);
-
+  const[lat, setLat] = useState("");
+  const[long, setLong] = useState("");
 
   console.log('isVIdeoDisable?>?>?>?>?',isVIdeoDisable);
 
@@ -214,6 +209,8 @@ export default function DocumentUpload({
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
+          setLat(latitude)
+          setLong(longitude)
           setLoc(latitude + "," + longitude);
           console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
           // You can use the latitude and longitude here as needed
@@ -561,34 +558,34 @@ export default function DocumentUpload({
     return filename;
 }
 
-  const handleUploadImage = async () => {
-    try {
-      const imageSrc = webcamRef.current.getScreenshot();
-      const name = generateRandomFileName("jpg");
+  // const handleUploadImage = async () => {
+  //   try {
+  //     const imageSrc = webcamRef.current.getScreenshot();
+  //     const name = generateRandomFileName("jpg");
 
-      // console.log("Imagee Src ------> ", imageSrc);
-      const byteCharacters = atob(imageSrc.split(",")[1]);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: "image/jpeg" });
+  //     // console.log("Imagee Src ------> ", imageSrc);
+  //     const byteCharacters = atob(imageSrc.split(",")[1]);
+  //     const byteNumbers = new Array(byteCharacters.length);
+  //     for (let i = 0; i < byteCharacters.length; i++) {
+  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
+  //     }
+  //     const byteArray = new Uint8Array(byteNumbers);
+  //     const blob = new Blob([byteArray], { type: "image/jpeg" });
 
-      // Create a File object
-      const file = new File([blob], name, { type: "image/jpeg" });
+  //     // Create a File object
+  //     const file = new File([blob], name, { type: "image/jpeg" });
 
-      setUploadedUrl((prevImages) => [...prevImages, file]);
-      // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
-      setImageFileName(name);
+  //     setUploadedUrl((prevImages) => [...prevImages, file]);
+  //     // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
+  //     setImageFileName(name);
 
-      setUploadedFileName((prevName) => [...prevName, name]);
-      setIsImage(true);
-      setRetake(true);
-    } catch (error) {
-      console.error("Error handling upload:", error);
-    }
-  };
+  //     setUploadedFileName((prevName) => [...prevName, name]);
+  //     setIsImage(true);
+  //     setRetake(true);
+  //   } catch (error) {
+  //     console.error("Error handling upload:", error);
+  //   }
+  // };
 
   // const blobToBase64 = (blob) => {
   //   return new Promise((resolve, reject) => {
@@ -599,6 +596,48 @@ export default function DocumentUpload({
   //   });
   // };
 
+  const handleUploadImage = async () => {
+    try {
+      const imageSrc = webcamRef.current.getScreenshot();
+      const name = generateRandomFileName("jpg");
+      const image = await loadImage(imageSrc);
+  
+      const canvas = createCanvas(image.width, image.height);
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0);
+  
+      const date = new Date();
+      context.font = '20px Arial';
+      context.fillStyle = 'white';
+      const textMargin = 25; // Margin from the right and bottom
+      const textBaselineOffset = 25; // Offset from the bottom
+      context.fillText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`, canvas.width - context.measureText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`).width - textMargin, canvas.height - textBaselineOffset);
+      context.fillText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`, canvas.width - context.measureText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`).width - textMargin, canvas.height - textBaselineOffset - 25);
+  
+      const capturedImage = canvas.toDataURL('image/jpeg');
+  
+      const byteCharacters = atob(capturedImage.split(",")[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "image/jpeg" });
+  
+      // Create a File object
+      const file = new File([blob], name, { type: "image/jpeg" });
+  
+      setUploadedUrl((prevImages) => [...prevImages, file]);
+      setImageFileName(name);
+      setUploadedFileName((prevName) => [...prevName, name]);
+      setIsImage(true);
+      setRetake(true);
+    } catch (error) {
+      console.error("Error handling upload:", error);
+    }
+  };
+  
+  
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
