@@ -562,76 +562,27 @@ export default function DocumentUpload({
     return filename;
 }
 
-  // const handleUploadImage = async () => {
-  //   try {
-  //     const imageSrc = webcamRef.current.getScreenshot();
-  //     const name = generateRandomFileName("jpg");
-
-  //     // console.log("Imagee Src ------> ", imageSrc);
-  //     const byteCharacters = atob(imageSrc.split(",")[1]);
-  //     const byteNumbers = new Array(byteCharacters.length);
-  //     for (let i = 0; i < byteCharacters.length; i++) {
-  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
-  //     }
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     const blob = new Blob([byteArray], { type: "image/jpeg" });
-
-  //     // Create a File object
-  //     const file = new File([blob], name, { type: "image/jpeg" });
-
-  //     setUploadedUrl((prevImages) => [...prevImages, file]);
-  //     // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
-  //     setImageFileName(name);
-
-  //     setUploadedFileName((prevName) => [...prevName, name]);
-  //     setIsImage(true);
-  //     setRetake(true);
-  //   } catch (error) {
-  //     console.error("Error handling upload:", error);
-  //   }
-  // };
-
-  // const blobToBase64 = (blob) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => resolve(reader.result.split(",")[1]);
-  //     reader.onerror = reject;
-  //     reader.readAsDataURL(blob);
-  //   });
-  // };
-    const handleUploadImage = async () => {
+  const handleUploadImage = async () => {
     try {
       const imageSrc = webcamRef.current.getScreenshot();
       const name = generateRandomFileName("jpg");
-      const image = await loadImage(imageSrc);
-  
-      const canvas = createCanvas(image.width, image.height);
-      const context = canvas.getContext('2d');
-      context.drawImage(image, 0, 0);
-  
-      const date = new Date();
-      context.font = '20px Arial';
-      context.fillStyle = 'white';
-      const textMargin = 25; // Margin from the right and bottom
-      const textBaselineOffset = 25; // Offset from the bottom
-      context.fillText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`, canvas.width - context.measureText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`).width - textMargin, canvas.height - textBaselineOffset);
-      context.fillText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`, canvas.width - context.measureText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`).width - textMargin, canvas.height - textBaselineOffset - 25);
-  
-      const capturedImage = canvas.toDataURL('image/jpeg');
-  
-      const byteCharacters = atob(capturedImage.split(",")[1]);
+
+      // console.log("Imagee Src ------> ", imageSrc);
+      const byteCharacters = atob(imageSrc.split(",")[1]);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: "image/jpeg" });
-  
+
       // Create a File object
       const file = new File([blob], name, { type: "image/jpeg" });
-  
+
       setUploadedUrl((prevImages) => [...prevImages, file]);
+      // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
       setImageFileName(name);
+
       setUploadedFileName((prevName) => [...prevName, name]);
       setIsImage(true);
       setRetake(true);
@@ -639,6 +590,55 @@ export default function DocumentUpload({
       console.error("Error handling upload:", error);
     }
   };
+
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+  //   const handleUploadImage = async () => {
+  //   try {
+  //     const imageSrc = webcamRef.current.getScreenshot();
+  //     const name = generateRandomFileName("jpg");
+  //     const image = await loadImage(imageSrc);
+  
+  //     const canvas = createCanvas(image.width, image.height);
+  //     const context = canvas.getContext('2d');
+  //     context.drawImage(image, 0, 0);
+  
+  //     const date = new Date();
+  //     context.font = '20px Arial';
+  //     context.fillStyle = 'white';
+  //     const textMargin = 25; // Margin from the right and bottom
+  //     const textBaselineOffset = 25; // Offset from the bottom
+  //     context.fillText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`, canvas.width - context.measureText(`Latitude: ${lat.toFixed(2)}, Longitude: ${long.toFixed(2)}`).width - textMargin, canvas.height - textBaselineOffset);
+  //     context.fillText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`, canvas.width - context.measureText(`Date: ${date.toLocaleDateString()}, Time: ${date.toLocaleTimeString()}`).width - textMargin, canvas.height - textBaselineOffset - 25);
+  
+  //     const capturedImage = canvas.toDataURL('image/jpeg');
+  
+  //     const byteCharacters = atob(capturedImage.split(",")[1]);
+  //     const byteNumbers = new Array(byteCharacters.length);
+  //     for (let i = 0; i < byteCharacters.length; i++) {
+  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
+  //     }
+  //     const byteArray = new Uint8Array(byteNumbers);
+  //     const blob = new Blob([byteArray], { type: "image/jpeg" });
+  
+  //     // Create a File object
+  //     const file = new File([blob], name, { type: "image/jpeg" });
+  
+  //     setUploadedUrl((prevImages) => [...prevImages, file]);
+  //     setImageFileName(name);
+  //     setUploadedFileName((prevName) => [...prevName, name]);
+  //     setIsImage(true);
+  //     setRetake(true);
+  //   } catch (error) {
+  //     console.error("Error handling upload:", error);
+  //   }
+  // };
   
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
