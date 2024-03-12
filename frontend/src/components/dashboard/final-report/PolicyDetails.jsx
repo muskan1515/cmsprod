@@ -270,7 +270,42 @@ const PolicyDetails = ({
     return formattedDate;
   };
 
+  const updatedFormatDate = (dateString) => {
+    const isValidDate = (date) => {
+      return (
+        date !== null &&
+        date !== undefined &&
+        date !== "null" &&
+        date !== "undefined"
+      );
+    };
+  
+    if (!isValidDate(dateString)) {
+      console.error("Invalid date:", dateString);
+      return null;
+    }
+  
+    const separator = dateString.includes("/") ? "/" : "-";
+    const parts = dateString.split(separator);
+    let formattedDate;
+  
+    if (parts.length === 3 && parts[0].length === 4) {
+      // YYYY-MM-DD format
+      const [year, month, day] = parts;
+      formattedDate = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+    } else {
+      // MM-DD-YYYY format
+      const [day, month, year] = parts;
+      formattedDate = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+    }
+  
+    return formattedDate;
+  };
+  
+  
+
   function localDate(dateString) {
+    console.log('================date',typeof dateString)
     if (dateString && dateString !== "null") {
       return new Date(dateString).toLocaleDateString("fr-CA", {
         year: "numeric",
@@ -2454,16 +2489,16 @@ const PolicyDetails = ({
                     className="form-control"
                     id="propertyTitle"
                   /> */}
+                  {console.log(DateOfIssue,'==============================')}
                   {!isEditMode ? (
                     <input
                       readOnly={!isEditMode}
                       type={"text"}
                       value={
                         DateOfIssue !== "null" &&
-                        DateOfIssue !== "null" &&
                         DateOfIssue !== "" &&
                         DateOfIssue !== null
-                          ? formatDateUpdated(DateOfIssue)
+                          ? updatedFormatDate(DateOfIssue)
                           : ""
                       }
                       className="form-control"
@@ -2484,7 +2519,7 @@ const PolicyDetails = ({
                     <input
                       type="date"
                       disabled={!isEditMode}
-                      value={localDate(DateOfIssue)}
+                      value={localDate(formatDateUpdated(DateOfIssue))}
                       onChange={(e) => setDateOfIssue(e.target.value)}
                     />
                   )}
