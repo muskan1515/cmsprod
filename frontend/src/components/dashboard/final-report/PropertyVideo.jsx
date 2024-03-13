@@ -285,12 +285,9 @@ useEffect(()=>{
 
         console.log(index,row.type,dep,policyType);
 
+        
         const current_row_assessed =
-          Number(row?.assessed) -
-          calculateGSTWithPaintValue(row?.assessed, row.type, row.gst)-dep;
-      
-          console.log("Policy Type",policyType)
-       
+        Number(row.assessed) -dep;
         total_taxable_amount =
           total_taxable_amount +
           (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
@@ -933,7 +930,10 @@ const [AccidentTime,setAccidentTime]=useState("");
     })
     .catch((Err)=>{
       toast.dismiss();
-      toast.error("Got error while updating the final report!");
+      toast.error("Caught into Error ! Try Again.", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
     })
   }
 
