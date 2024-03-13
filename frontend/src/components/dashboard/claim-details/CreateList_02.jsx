@@ -479,7 +479,6 @@ const CreateList_02 = ({
                       </label>
                     </div>
                     <div className="col-lg-6 text-end">
-                      {console.log('GarageMailAddress',GarageMailAddress)}
                       <label
                         htmlFor=""
                         className="text-color"
@@ -488,7 +487,7 @@ const CreateList_02 = ({
                           fontSize: "13px",
                           fontWeight: "bold",
                         }}
-                      >{GarageMailAddress}</label>
+                      >{claim?.garageDetails?.GarageMailAddress}</label>
                     </div>
                   </div>
                 </td>
@@ -517,7 +516,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {BrokerMailAddress}
+                        {claim?.claimDetails?.BrokerMailAddress}
                       </label>
                     </div>
                   </div>

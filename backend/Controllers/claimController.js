@@ -918,9 +918,11 @@ const getSpecificClaim = async (req, res) => {
       insuredAddedBy,
       IsDriverDetailsFetched,
       IsRcDetailsFetched,
-  
+      BrokerMailAddress,
+      GarageMailAddress,
       LeadId,
     } = req.body;
+
 
     const updateClaimDetails = `
     UPDATE ClaimDetails
@@ -930,6 +932,7 @@ const getSpecificClaim = async (req, res) => {
     ClaimServicingOffice = '${ClaimServicingOffice ? `${ClaimServicingOffice}` : ''}',
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
+    BrokerMailAddress='${BrokerMailAddress?BrokerMailAddress : ''}',
     PolicyPeriodStart = '${PolicyPeriodStart ? `${PolicyPeriodStart}`: ''}',
     PolicyPeriodEnd ='${PolicyPeriodEnd ? `${PolicyPeriodEnd}` : ''}',
     IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
@@ -949,6 +952,15 @@ const getSpecificClaim = async (req, res) => {
     WHERE LeadId = ${LeadId};
   `;
 
+  const updateGarageDetails = `
+    UPDATE GarageDetails
+    SET
+    GarageMailAddress = '${GarageMailAddress ? `${GarageMailAddress}` : ''}'
+    WHERE LeadId = ${LeadId};
+  `;
+
+ 
+
    db.query(updateClaimDetails, (error, results) => {
     if (error) {
       console.error(`Error updating data in ${LeadId} specific CLAIM details:`, error);
@@ -956,6 +968,14 @@ const getSpecificClaim = async (req, res) => {
         .status(500)
         .json({ error: `Error updating data in ${LeadId} specific CLAIM details:`});
     }
+    db.query(updateGarageDetails, (error, results) => {
+      if (error) {
+        console.error(`Error updating data in ${LeadId} specific CLAIM details:`, error);
+        return res
+          .status(500)
+          .json({ error: `Error updating data in ${LeadId} specific CLAIM details:`});
+      }
+    })
     db.query(updateInsuredDetails, (error, results) => {
       if (error) {
         console.error(`Error updating data in ${LeadId} specific INSURED details:`, error);
@@ -1063,14 +1083,18 @@ const getSpecificClaim = async (req, res) => {
 
   const garageDetails = (req,res)=>{
 
+
     const {
       GarageNameAndAddress,
       GarageAddedBy,
       GarageContactNo1,
       GarageContactNo2,
+      GarageMailAddress,
       LeadId,
     } = req.body;
 
+    console.log(req.body);
+    return
     const updateGarageDetails = `
     UPDATE GarageDetails
     SET

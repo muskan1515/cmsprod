@@ -200,13 +200,10 @@ const createToken = require("../Config/generateJWTToken");
           claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
 
   `;
-
-          const currentMailAddress = String(Region) === "Delhi" ? 
+    const currentMailAddress = String(Region) === "Delhi" ? 
           process.env.NODEMAILER_DELHI_EMAIL : String(Region) === "Jodhpur" ?
           process.env.NODEMAILER_JODHPUR_EMAIL
           : process.env.NODEMAILER_CHANDIGARH_EMAIL;
-
-          
           const currentMailAddressPass = String(Region) === "Delhi" ? 
           process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : String(Region) === "Jodhpur" ?
           process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
@@ -222,7 +219,6 @@ const createToken = require("../Config/generateJWTToken");
             rejectUnauthorized: false,
           },
         });
-
         const mailOptions = {
           from: currentMailAddress,
           to: toMail,
@@ -232,8 +228,6 @@ const createToken = require("../Config/generateJWTToken");
           text: emailContent,
         };
 
-      
-        // Send the email
         transporter2.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error(error);

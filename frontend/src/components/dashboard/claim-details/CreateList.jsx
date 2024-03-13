@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Value } from "sass";
 const CreateList = ({
   claim,
   InsuredName,
@@ -169,8 +170,8 @@ const CreateList = ({
         Insured: Insured,
         toMail: mailAddress,
         leadId: claim?.claimDetails?.LeadID,
-        BrokerMailAddress: BrokerMailAddress,
-        GarageMailAddress: GarageMailAddress,
+        BrokerMailAddress: claim?.claimDetails?.BrokerMailAddress,
+        GarageMailAddress: claim?.garageDetails?.GarageMailAddress,
         Region: claim?.claimDetails?.Region,
         type: 4,
         date: formatDate(new Date()),
@@ -195,12 +196,31 @@ const CreateList = ({
     }
   };
 
+  function isValidEmail(email) {
+    var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    console.log(pattern.test(email))
+    return pattern.test(email);
+  }
+
   useEffect(() => {
     setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
   }, []);
   const openStatusUpdateHandler = () => {
     setIsStatusModal(true);
   };
+
+  const handleEmailChange=(value,setFunc)=>{
+    const checkIsValid = isValidEmail(value);
+    console.log("mail check",checkIsValid);
+    if(checkIsValid){
+      setFunc(value);
+    }
+    else{
+      toast.error("Enter  mail address is not proper !", {
+            className: "toast-loading-message",
+          });
+    }
+  }
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -374,7 +394,7 @@ const CreateList = ({
                 className="form-control"
                 id="propertyTitle"
                 value={InsuredMailAddress ? InsuredMailAddress : ""}
-                onChange={(e) => setInsuredMailAddress(e.target.value)}
+                onChange={(e) => handleEmailChange(e.target.value,setInsuredMailAddress)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
@@ -439,7 +459,7 @@ const CreateList = ({
                 className="form-control"
                 id="GarageMailAddress"
                 value={GarageMailAddress}
-                onChange={(e) => setGarageMailAddress(e.target.value)}
+                onChange={(e) => handleEmailChange(e.target.value,setGarageMailAddress)}
               />
             </div>
           </div>
@@ -466,7 +486,7 @@ const CreateList = ({
                 className="form-control"
                 id="propertyTitle"
                 value={BrokerMailAddress}
-                onChange={(e) => setBrokerMailAddress(e.target.value)}
+                onChange={(e) => handleEmailChange(e.target.value,setBrokerMailAddress)}
               />
             </div>
           </div>

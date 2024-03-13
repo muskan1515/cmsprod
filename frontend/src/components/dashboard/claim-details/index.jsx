@@ -23,6 +23,7 @@ import { toast, Toaster } from "react-hot-toast";
 import CreateList_04 from "./CreateList_04";
 import Loader from "../../common/Loader";
 import { useRouter } from "next/router";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -652,6 +653,8 @@ const Index = ({}) => {
 
     return result;
   };
+
+
   console.log("policyStartDate", policyStartDate);
 
   const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState("");
@@ -680,13 +683,10 @@ const Index = ({}) => {
 
   const onSaveHandler = (APItype, func, func2) => {
     const type = calculateTheUpdateType(APItype);
-
     console.log(insuranceCompanyNameAddress);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const vehicleParts = VehicleModel?.split(",");
-
     const region = JSON.parse(localStorage.getItem("regionType"));
-
     const payload = {
       InsuredName: InsuredName
         ? InsuredName
@@ -761,7 +761,6 @@ const Index = ({}) => {
         ? GarageContactNo2
         : claim.garageDetails?.GarageContactNo2,
       LeadId: claim.claimDetails?.LeadID,
-
       VehicleClassDescription,
       MakerDesc,
       MakerModel,
@@ -791,7 +790,6 @@ const Index = ({}) => {
       insuredAddedBy,
       VehicleRegisteredNumber,
       VehicleRegisteredOwner,
-
       FatherName,
       Gender,
       BloodGroup,
@@ -810,9 +808,34 @@ const Index = ({}) => {
       IsRcDetailsFetched,
       GarageMailAddress,
       BrokerMailAddress,
-      token: userInfo[0].Token,
+      token: userInfo[0].Token
     };
 
+    // if(!isValidEmail(BrokerMailAddress) ){
+    //   toast.error("Provided Broker mail address is not proper !", {
+    //     // position: toast.POSITION.BOTTOM_LEFT,
+    //     className: "toast-loading-message",
+    //   });
+    //   func(false);
+    //   func2(false);
+    // }
+    // else if(!isValidEmail(GarageMailAddress) ){
+    //   toast.error("Provided Garage mail address is not proper !", {
+    //     // position: toast.POSITION.BOTTOM_LEFT,
+    //     className: "toast-loading-message",
+    //   });
+    //   func(false);
+    //   func2(false);
+    // }
+    // else if(!isValidEmail(InsuredMailAddress) ){
+    //   toast.error("Provided Insured mail address is not proper !", {
+    //     // position: toast.POSITION.BOTTOM_LEFT,
+    //     className: "toast-loading-message",
+    //   });
+    //   func(false);
+    //   func2(false);
+    // }
+    // else{
     toast.loading("Updating the information!");
     axios
       .put("/api/updateClaimDetails", payload, {
@@ -836,10 +859,8 @@ const Index = ({}) => {
       .catch((err) => {
         toast.dismiss();
         toast.error("Caught into Error ! Try Again.", {
-          // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
-        // alert("Caught into Error ! Try Again.");
       });
     if (func) {
       func(false);
@@ -870,6 +891,7 @@ const Index = ({}) => {
 
     func(false);
     func2(false);
+    // }
   };
 
   const updateHandlerAfterFetching = () => {
