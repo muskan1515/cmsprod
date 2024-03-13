@@ -181,7 +181,7 @@ const CreateList_02 = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {InsuredMailAddress}
+                        {claim?.insuredDetails?.InsuredMailAddress}
                       </label>
                     </div>
                   </div>

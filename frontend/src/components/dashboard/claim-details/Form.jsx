@@ -372,13 +372,12 @@ const Form = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          {console.log("MakerModel", MakerModel)}
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={MakerModel}
-                            onChange={(e) => setMakerModel(e.target.value)}
+                            value={VehicleModel}
+                            onChange={(e) => setVehicleModel(e.target.value)}
                             disabled={false}
                             // placeholder="Enter Registration No."
                           />

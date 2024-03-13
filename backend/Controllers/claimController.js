@@ -923,7 +923,6 @@ const getSpecificClaim = async (req, res) => {
       LeadId,
     } = req.body;
 
-
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -948,7 +947,7 @@ const getSpecificClaim = async (req, res) => {
     InsuredName = '${InsuredName ? `${InsuredName}` : ''}',
     InsuredMobileNo1 = '${InsuredMobileNo1 ? `${InsuredMobileNo1}` : ''}',
     InsuredMobileNo2 = '${InsuredMobileNo2 ? `${InsuredMobileNo2}` : ''}',
-    InsuredMailAddress = '${InsuredMailAddress}'
+    InsuredMailAddress = '${InsuredMailAddress ? InsuredMailAddress : ''}'
     WHERE LeadId = ${LeadId};
   `;
 
@@ -959,6 +958,7 @@ const getSpecificClaim = async (req, res) => {
     WHERE LeadId = ${LeadId};
   `;
 
+ 
  
 
    db.query(updateClaimDetails, (error, results) => {

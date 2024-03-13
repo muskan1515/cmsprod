@@ -868,8 +868,6 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     }
 
-    setClaim([]);
-
     axios
       .get("/api/getSpecificClaim", {
         headers: {
@@ -888,33 +886,14 @@ const Index = ({}) => {
       .catch((err) => {
         toast.error(err);
       });
-
     func(false);
     func2(false);
     // }
   };
 
   const updateHandlerAfterFetching = () => {
-    setClaim([]);
-
-    axios
-      .get("/api/getSpecificClaim", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          LeadId: leadId,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        setClaim(res.data.data);
-        // toast.success("Successfully Fetched !!")
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
+   
+  
   };
 
   const editHandler = (value) => {

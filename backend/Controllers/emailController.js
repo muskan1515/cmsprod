@@ -232,10 +232,7 @@ const createToken = require("../Config/generateJWTToken");
           if (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
-          } else if(String(type) === "1" ) {
-            console.log(type,String(type) === "1")
-           
-            const insertClaimDetails = `
+          } const insertClaimDetails = `
             UPDATE ClaimDetails
             SET
             IsMailSent = 1
@@ -249,7 +246,7 @@ const createToken = require("../Config/generateJWTToken");
             }
               res.status(200).send("Email sent successfully");
             });
-          }
+          
           });
         });
       });
