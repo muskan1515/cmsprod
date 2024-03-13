@@ -100,7 +100,11 @@ const AllStatistics = ({allClaims,setSelectedCard}) => {
   console.log("allStatistics",allStatistics);
   const getCount = (item) => {
     console.log("item",item);
-    
+    if (String(item.id) === '12'){
+      return allClaims.length
+
+    }
+
     return allClaims.reduce((count, stat) => {
       if (String(stat.CurrentStatus) === String(item.id)) {
         return count + 1;

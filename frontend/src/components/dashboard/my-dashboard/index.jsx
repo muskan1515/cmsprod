@@ -48,6 +48,7 @@ const Index = () => {
     setFilterClaims(filterClaim);
   }, [searchInput]);
   console.log("regionSearchValue", regionSearchValue);
+  console.log('selectedcard', selectedCard);
 
   const [filterAccordingClaim, setFilterAccordingClaim] = useState([]);
   const [showRegionClaim, setShowRegionClaim] = useState(false);
@@ -174,8 +175,9 @@ const Index = () => {
     }
   }, []);
   useEffect(() => {
+    console.log('selectedCard',selectedCard)
     let temp = [];
-    if (selectedCard === 0) {
+    if (selectedCard === 12) {
       temp = allClaims;
     } else {
       temp = allClaims.filter((claim, index) => {
