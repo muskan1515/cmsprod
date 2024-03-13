@@ -6,7 +6,9 @@ import { FaUpload } from "react-icons/fa";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
 import dotenv from "dotenv";
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { Toaster, toast } from "react-hot-toast";
+
 import { createCanvas, loadImage } from "canvas";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -472,8 +474,21 @@ export default function DocumentUpload({
   //   setIsVideo(false);
   //   setUploadedFileName([]);
   // };
+
   console.log("uploadedUrl----->", uploadedUrl);
+  // toast.loading("Uploading the media!!", {
+  //   className: "toast-loading-message",
+  // });
+
+
   const uploadFiles = () => {
+
+    console.log('Uploading media .......');
+    toast.loading("Uploading the media!!", {
+      className: "toast-loading-message",
+    });
+
+
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     // Assuming uploadedUrl and uploadedFileName are arrays of strings
@@ -490,10 +505,7 @@ export default function DocumentUpload({
       };
 
 
-      toast.loading("Uploading the media!!", {
-        // position: toast.POSITION.BOTTOM_LEFT,
-        className: "toast-loading-message",
-      });
+     
 
       myBucket.putObject(params).send((err, data) => {
         if (err) {
@@ -510,6 +522,8 @@ export default function DocumentUpload({
             url.name
           )}`;
           console.log("url", S3_URL);
+          console.log('Uploaded successs.......');
+
 
           const newUploadData = {
             docName: currentLabel,
@@ -903,6 +917,7 @@ export default function DocumentUpload({
 
   return (
     <>
+      <Toaster />
       <SmartTable
         title="Documents Upload"
         data={updatedCode}
