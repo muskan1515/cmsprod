@@ -210,16 +210,16 @@ const CreateList = ({
   };
 
   const handleEmailChange=(value,setFunc)=>{
-    const checkIsValid = isValidEmail(value);
-    console.log("mail check",checkIsValid);
-    if(checkIsValid){
+    // const checkIsValid = isValidEmail(value);
+    // console.log("mail check",checkIsValid);
+    // if(checkIsValid){
       setFunc(value);
-    }
-    else{
-      toast.error("Enter  mail address is not proper !", {
-            className: "toast-loading-message",
-          });
-    }
+    // }
+    // else{
+    //   toast.error("Enter  mail address is not proper !", {
+    //         className: "toast-loading-message",
+    //       });
+    // }
   }
 
   const handleInputChange = (e) => {
