@@ -1013,73 +1013,58 @@ const Index = ({}) => {
           },
         })
         .then((res) => {
-          const tempList = res.data.data;
-          let requiredVideos = [];
-          const allList = (list.doc_urls);
-          const allName = (list.file_names);
-          const allLatitude = (list?.latitudes);
-          const allLongitude = (list?.longitudes);
-          const allTimestamp = (list?.timestamps);
+           const tempList = res.data.data.data;
 
-          console.log("requiredDocumenstList", tempList);
-          allList.map((list, index) => {
-            if (
-              list.toLowerCase().includes(".mp4") ||
-              list.toLowerCase().includes(".mp3")
-            ) {
-                requiredVideos.push({
+          let requiredVideos = [];
+          console.log("templist",tempList)
+          tempList.map((list, index) => {
+            
+              const allList = (list.doc_urls);
+              const allName = (list.file_names);
+              const allLatitude = (list?.latitudes);
+              const allLongitude = (list?.longitudes);
+              const allTimestamp = (list?.timestamps);
+
+              allList?.map((link, idx) => {
+                if (
+                  link.toLowerCase().includes(".mp4") ||
+                  link.toLowerCase().includes(".mp3")
+                  ) {
+                  requiredVideos.push({
+                    name: allName[idx],
+                    url: allList[idx],
+                    Location:allLatitude[idx]+","+allLongitude[idx],
+                    Timestamp: allTimestamp[idx],
+                  });
+                }
+              });
+          });
+
+          
+          let requiredDocumenstList = [];
+          tempList.map((listedDocument,index)=>{
+            let insideData = [];
+            const allList = (listedDocument.doc_urls);
+            const allName = (listedDocument.file_names);
+            const allLatitude = (listedDocument?.latitudes);
+            const allLongitude = (listedDocument?.longitudes);
+            const allTimestamp = (listedDocument?.timestamps);
+
+            allList?.map((link, idx) => {
+                insideData.push({
                   name: allName[idx],
                   url: allList[idx],
-                  longitude: allLongitude[idx],
-                  latitude: allLatitude[idx],
-                  timestamp: allTimestamp[idx],
+                  Location:allLatitude[idx]+","+allLongitude[idx],
+                  Timestamp: allTimestamp[idx],
                 });
-              
-            }
-          });
-
-          let requiredDocumenstList = [];
-          allList.map((temp, index) => {
-            let indexTobeFinded = -1;
-            requiredDocumenstList?.map((doc, idx) => {
-              if (String(temp.DocumentName) === String(doc.docName)) {
-                indexTobeFinded = idx;
-              }
             });
 
-            if (indexTobeFinded !== -1) {
-              const newDocListWithinWhole =
-                requiredDocumenstList[indexTobeFinded];
-              const newDocListWithin = newDocListWithinWhole.data;
-
-              newDocListWithin.push({
-                name: allName[index],
-                url: temp,
-                location: allLatitude[index] + "," + allLongitude[index],
-                Timestamp: allTimestamp[index],
-              });
-
-              const oldData = requiredDocumenstList;
-              oldData[indexTobeFinded] = newDocListWithin;
-              requiredDocumenstList = oldData;
-            } else {
-              newDocListWithin.push({
-                  name: fileNameArray[i],
-                  url: urlArray[i],
-                  location: temp.latitude + "," + temp.longitude,
-                  Timestamp: temp.timestamp,
-                });
-              
-
-              const oldData = requiredDocumenstList;
-              oldData.push({
-                leadId: temp.LeadId,
-                docName: temp.DocumentName,
-                data: newDocListWithin,
-              });
-              requiredDocumenstList = oldData;
-            }
-          });
+            requiredDocumenstList.push({
+              docName:listedDocument.DocumentName,
+              leadId:leadId,
+              data:insideData
+            })
+          })
           setVideosList(requiredVideos);
           setDocuments(requiredDocumenstList);
         })
