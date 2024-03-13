@@ -50,16 +50,46 @@ const getReportDocumentsLabels = (req, res) => {
 const getDocuments = (req, res) => {
   const LeadId = req.query.LeadId;
   console.log("get", LeadId);
-  const sql = "SELECT DocumentName, GROUP_CONCAT(Photo1) as doc_url, GROUP_CONCAT(Attribute1) as file_name, GROUP_CONCAT(Photo1Latitude) as latitude, GROUP_CONCAT(Photo1Longitude) as longitude, GROUP_CONCAT(Photo1Timestamp) as timestamp  FROM DocumentList  WHERE LeadID = ?  GROUP BY DocumentName;";
+  const sql = "SELECT DocumentName, Photo1 as doc_url, Attribute1 as file_name, Photo1Latitude as latitude, Photo1Longitude as longitude, Photo1Timestamp as timestamp FROM DocumentList WHERE LeadID = ?;";
+  
   db.query(sql, [LeadId], (err, result) => {
     if (err) {
       // console.error(err);
       res.status(500).send("Internal Server Error");
       return;
-    }else {
-      console.log('Documents result ',result);
+    } else {
+      console.log('Documents result ', result);
     }
-    res.send(result);
+    
+    // Process the result to group files by DocumentName
+    const groupedResult = {};
+    result.forEach(doc => {
+      const { DocumentName, doc_url, file_name, latitude, longitude, timestamp } = doc;
+      if (!groupedResult[DocumentName]) {
+        groupedResult[DocumentName] = {
+          DocumentName,
+          doc_urls: [],
+          file_names: [],
+          latitudes: [],
+          longitudes: [],
+          timestamps: []
+        };
+      }
+      console.log('result',result);
+      groupedResult[DocumentName].doc_urls.push(doc_url);
+      groupedResult[DocumentName].file_names.push(file_name);
+      groupedResult[DocumentName].latitudes.push(latitude);
+      groupedResult[DocumentName].longitudes.push(longitude);
+      groupedResult[DocumentName].timestamps.push(timestamp);
+    });
+
+    // Convert the grouped result to an array
+    const processedResult = {
+      msg: "OK",
+      data: Object.values(groupedResult)
+    };
+    
+    res.send(processedResult);
   });
 };
 

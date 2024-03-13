@@ -1013,22 +1013,20 @@ const Index = ({}) => {
           },
         })
         .then((res) => {
-          console.log("Documents--------------->", res.data.data);
           const tempList = res.data.data;
           let requiredVideos = [];
-          console.log("requiredDocumenstList", tempList);
-          tempList.map((list, index) => {
-            if (
-              list.file_name.toLowerCase().includes(".mp4") ||
-              list.file_name.toLowerCase().includes(".mp3")
-            ) {
-              const allList = separateLinks(list.doc_url);
-              const allName = separateStringToArray(list.file_name);
-              const allLatitude = separateStringToArray(list?.latitude);
-              const allLongitude = separateStringToArray(list?.longitude);
-              const allTimestamp = separateStringToArray(list?.timestamp);
+          const allList = (list.doc_urls);
+          const allName = (list.file_names);
+          const allLatitude = (list?.latitudes);
+          const allLongitude = (list?.longitudes);
+          const allTimestamp = (list?.timestamps);
 
-              allList?.map((link, idx) => {
+          console.log("requiredDocumenstList", tempList);
+          allList.map((list, index) => {
+            if (
+              list.toLowerCase().includes(".mp4") ||
+              list.toLowerCase().includes(".mp3")
+            ) {
                 requiredVideos.push({
                   name: allName[idx],
                   url: allList[idx],
@@ -1036,12 +1034,12 @@ const Index = ({}) => {
                   latitude: allLatitude[idx],
                   timestamp: allTimestamp[idx],
                 });
-              });
+              
             }
           });
 
           let requiredDocumenstList = [];
-          tempList.map((temp, index) => {
+          allList.map((temp, index) => {
             let indexTobeFinded = -1;
             requiredDocumenstList?.map((doc, idx) => {
               if (String(temp.DocumentName) === String(doc.docName)) {
@@ -1055,33 +1053,23 @@ const Index = ({}) => {
               const newDocListWithin = newDocListWithinWhole.data;
 
               newDocListWithin.push({
-                name: temp.file_name,
-                url: temp.doc_url,
-                location: temp.latitude + "," + temp.longitude,
-                Timestamp: temp.timestamp,
+                name: allName[index],
+                url: temp,
+                location: allLatitude[index] + "," + allLongitude[index],
+                Timestamp: allTimestamp[index],
               });
 
               const oldData = requiredDocumenstList;
               oldData[indexTobeFinded] = newDocListWithin;
               requiredDocumenstList = oldData;
             } else {
-              let newDocListWithin = [];
-
-              // Split the doc_url string into an array of URLs
-              let urlArray = temp.doc_url.split(",");
-
-              // Split the file_name string into an array of file names
-              let fileNameArray = temp.file_name.split(",");
-
-              // Iterate over the arrays and push the corresponding values to newDocListWithin
-              for (let i = 0; i < urlArray.length; i++) {
-                newDocListWithin.push({
+              newDocListWithin.push({
                   name: fileNameArray[i],
                   url: urlArray[i],
                   location: temp.latitude + "," + temp.longitude,
                   Timestamp: temp.timestamp,
                 });
-              }
+              
 
               const oldData = requiredDocumenstList;
               oldData.push({
