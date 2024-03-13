@@ -49,6 +49,7 @@ const ErrorPageContent = ({ allInfo }) => {
       });
     };
 
+   
     const totalPages = 3;
 
     let currentPage = 1;
@@ -94,23 +95,21 @@ const ErrorPageContent = ({ allInfo }) => {
 
   const formatDate = (dateString) => {
     const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
     };
 
-    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    const dateParts = new Date(dateString).toLocaleDateString("en-GB", options).split('/');
+    const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
     return formattedDate;
-  };
+};
 
   const formatDateTime = (dateString) => {
     const options = {
       year: "numeric",
       month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
+      day: "numeric"
     };
 
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
@@ -201,6 +200,13 @@ const ErrorPageContent = ({ allInfo }) => {
     });
     return total;
   };
+
+  function addCommasToNumber(number) {
+    if(Number(number)<=100 || number === undefined)
+    return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 
   const getTotalOtherMetalAssesses = () => {
     let total = 0;
@@ -379,6 +385,19 @@ const ErrorPageContent = ({ allInfo }) => {
     );
   };
 
+  function convertToProperHTML(htmlString) {
+    // Create a new DOMParser
+    const parser = new DOMParser();
+  
+    // Parse the HTML string
+    const doc = parser.parseFromString(htmlString, 'text/html');
+  
+    // Extract the text content from the parsed document
+    const plainText = doc.body.textContent || "";
+  
+    return plainText;
+}
+
   const getSummaryTotalWithLessSalvage = () => {
     return (
       getTotalLabourAssessed() +
@@ -406,6 +425,24 @@ const ErrorPageContent = ({ allInfo }) => {
     });
     return gst;
   };
+
+  const  roundOff=(number)=> {
+    return Math.round(number * 100) / 100;
+  }
+
+  function calculateAge(birthDate) {
+    var today = new Date();
+    var birthDateObj = new Date(birthDate);
+    var age = today.getFullYear() - birthDateObj.getFullYear();
+    var monthDiff = today.getMonth() - birthDateObj.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+        age--;
+    }
+    
+    return age;
+}
+
   function numberToWords(number) {
     const units = [
       "",
@@ -470,6 +507,7 @@ const ErrorPageContent = ({ allInfo }) => {
       return result;
     };
 
+    
     const convert = (num) => {
       if (num === 0) {
         return "zero";
@@ -497,8 +535,7 @@ const ErrorPageContent = ({ allInfo }) => {
       return result.trim();
     };
 
-    const roundOff = (num) => Math.round(num * 100) / 100;
-
+   
     const roundedNumber = roundOff(number);
 
     const wholePart = Math.floor(roundedNumber);
@@ -584,7 +621,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <div className="text-center text-dark">
         <h4>
           {allInfo?.otherInfo[0]?.SurveyType} {" "}
-          {allInfo?.otherInfo[0]?.InspectionType} REPORT (
+          {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
           {Number(allInfo?.summaryReport[0]?.CashLess) === 1
             ? "CashLess"
             : "Cash"}
@@ -623,7 +660,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <div>
               <span>:</span>
             </div>
-            <span> ₹ {allInfo?.otherInfo[0]?.IDV}</span>
+            <span> ₹ {addCommasToNumber(allInfo?.otherInfo[0]?.IDV)}</span>
           </div>
         </div>
         <div className="d-flex gap-5">
@@ -646,13 +683,9 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-4">
             <label htmlFor="">(c) Endorsement </label>
             <span style={{ marginLeft: "69px" }}>:</span>
-            <span> 33030331230100004487</span>
+            <span> --</span>
           </div>
-          <div className="d-flex gap-4" style={{ marginLeft: "90px" }}>
-            <label htmlFor="">Token No.</label>
-            <span>:</span>
-            <span> {allInfo?.otherInfo[0].Token}</span>
-          </div>
+          
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-4">
@@ -677,14 +710,14 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-4">
             <label htmlFor="">(f) H.P.A. </label>
             <span style={{ marginLeft: "120px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.HPA} SGNR</span>
+            <span> {allInfo?.otherInfo[0]?.HPA ? allInfo?.otherInfo[0]?.HPA : "-"} </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(g) Appointed By </label>
             <span style={{ marginLeft: "63px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.VehicleInsuranceCompany}</span>
+            <span> {allInfo?.otherInfo[0]?.ClaimServicingOffice}</span>
           </div>
         </div>
       </div>
@@ -710,7 +743,8 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Registered Owner </label>
             <span style={{ marginLeft: "133px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
+            <span> {allInfo?.otherInfo[0]?.RegisteredOwner}
+            </span>
           </div>
         </div>
 
@@ -730,7 +764,8 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-5">
             <label htmlFor="">Owner Serial No. / Transfer Date</label>
             <span style={{ marginLeft: "54px" }}>:</span>
-            <span> {formatDate(allInfo?.otherInfo[0]?.TransferDate)}</span>
+            <span> {allInfo?.otherInfo[0]?.TransferDate ?
+            formatDate(allInfo?.otherInfo[0]?.TransferDate) : "-"}</span>
           </div>
         </div>
 
@@ -825,6 +860,8 @@ const ErrorPageContent = ({ allInfo }) => {
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.DriverName}
+              {String(allInfo?.otherInfo[0]?.Gender) ==="Female" ? ` D/o allInfo?.otherInfo[0].FatherName` :
+             ` S/o ${allInfo?.otherInfo[0].FatherName}`} 
             </span>
           </div>
         </div>
@@ -834,8 +871,8 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "224px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.Age} Years ({" "}
-              {allInfo?.otherInfo[0]?.DateOfBirth
+              {allInfo?.otherInfo?.DateOfBirth ? calculateAge(allInfo?.otherInfo?.DateOfBirth ) : "-"} Years ({" "}
+              {allInfo?.otherInfo[0]?.DateOfBirth 
                 ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
                 : ""}
               )
@@ -857,7 +894,7 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-5">
             <label htmlFor="">Date of Issue </label>
             <span style={{ marginLeft: "159px" }}>:</span>
-            <span> {formatDate(allInfo?.otherInfo[0]?.DateOfIssue)}</span>
+            <span> {allInfo?.otherInfo[0]?.DateOfIssue ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue) : "-"}</span>
           </div>
         </div>
 
@@ -865,7 +902,8 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-5">
             <label htmlFor="">Valid from </label>
             <span style={{ marginLeft: "178px" }}>:</span>
-            <span> {formatDate(allInfo?.otherInfo[0]?.ValidFrom)}</span>
+            <span> {allInfo?.otherInfo[0]?.ValidFrom !=="undefined" 
+            ? formatDate(allInfo?.otherInfo[0]?.ValidFrom) : "-"}</span>
           </div>
         </div>
 
@@ -904,7 +942,9 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "108px" }}>:</span>
             <span>
               {" "}
-              {formatDateTime(allInfo?.otherInfo[0]?.TimeOfAccident)}
+              {formatDateTime(allInfo?.otherInfo[0]?.DateOfAccident)}
+              -
+              {allInfo?.otherInfo[0]?.TimeOfAccident}
             </span>
           </div>
         </div>
@@ -928,7 +968,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "80px" }}>:</span>
             <span>
               {" "}
-              {formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)}
+              {allInfo?.otherInfo[0]?.SurveyAllotmentDate ? formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate) : "--"}
             </span>
           </div>
         </div>
@@ -951,7 +991,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "120px" }}>:</span>
             <span>
               {" "}
-              {formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)}
+              {allInfo?.otherInfo[0]?.SurveyConductedDate ? formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate) : "-"}
             </span>
           </div>
         </div>
@@ -1133,27 +1173,27 @@ const ErrorPageContent = ({ allInfo }) => {
                   {part.NewPartsRemark}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
-                  {part.NewPartsEstimate}
+                  {roundOff(part.NewPartsEstimate)}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
                   {String(part.NewPartsTypeOfMaterial) === "Glass"
-                    ? calculateGlassDept(part)
+                    ? roundOff(calculateGlassDept(part))
                     : 0}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
                   {String(part.NewPartsTypeOfMaterial) === "Metal"
-                    ? calculateMetalDept(part)
+                    ? roundOff(calculateMetalDept(part))
                     : 0}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
                   {String(part.NewPartsTypeOfMaterial) !== "Metal" &&
                   String(part.NewPartsTypeOfMaterial) !== "Glass"
-                    ? calculateNonMetalDept(part)
+                    ? roundOff(calculateNonMetalDept(part))
                     : 0}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
                   {" "}
-                  {part.NewPartsGSTPct}.00
+                  {roundOff(part.NewPartsGSTPct)}.00
                 </td>
               </tr>
             ) : null;
@@ -1302,16 +1342,16 @@ const ErrorPageContent = ({ allInfo }) => {
               Grand Total F : <br />
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalEstimate()}
+              {roundOff(getTotalEstimate())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalGlassAssessed()}
+              {roundOff(getTotalGlassAssessed())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalMetalAssessed()}
+              {roundOff(getTotalMetalAssessed())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalOtherMetalAssesses()}
+              {roundOff(getTotalOtherMetalAssesses())}
             </td>
             <td
               rowSpan={5}
@@ -1321,66 +1361,66 @@ const ErrorPageContent = ({ allInfo }) => {
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalDepreciation("Glass", false)}
+              {roundOff(getTotalDepreciation("Glass", false))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalDepreciation("Metal", false)}
+              {roundOff(getTotalDepreciation("Metal", false))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalNonMetaDepreciation()}
-            </td>
-          </tr>
-          <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalEstimate()}
-            </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalGlassAssessed() - getTotalDepreciation("Glass", false)}
-            </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalMetalAssessed() - getTotalDepreciation("Metal", false)}
-            </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()}
+              {roundOff(getTotalNonMetaDepreciation())}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateEstimateNewPartsGST()}
+              {roundOff(getTotalEstimate())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateTypeNewPartsGST("Glass")}
+              {roundOff(getTotalGlassAssessed() - getTotalDepreciation("Glass", false))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateTypeNewPartsGST("Metal")}
+              {roundOff(getTotalMetalAssessed() - getTotalDepreciation("Metal", false))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateOtherTypeNewPartsGST()}
+              {roundOff(getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation())}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalEstimate() + calculateEstimateNewPartsGST()}
+              {roundOff(calculateEstimateNewPartsGST())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateTypeNewPartsGST("Glass") +
+              {roundOff(calculateTypeNewPartsGST("Glass"))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {roundOff(calculateTypeNewPartsGST("Metal"))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {roundOff(calculateOtherTypeNewPartsGST())}
+            </td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {roundOff(calculateTypeNewPartsGST("Glass") +
                 getTotalGlassAssessed() -
-                getTotalDepreciation("Glass", false)}
+                getTotalDepreciation("Glass", false))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateTypeNewPartsGST("Metal") +
+              {roundOff(calculateTypeNewPartsGST("Metal") +
                 getTotalMetalAssessed() -
-                getTotalDepreciation("Metal", false)}
+                getTotalDepreciation("Metal", false))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {calculateOtherTypeNewPartsGST() +
+              {roundOff(calculateOtherTypeNewPartsGST() +
                 getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()}
+                getTotalNonMetaDepreciation())}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalEstimate() + calculateEstimateNewPartsGST()}
+              {addCommasToNumber(roundOff(getTotalEstimate() + calculateEstimateNewPartsGST()))}
             </td>
             <td
               colSpan={3}
@@ -1390,7 +1430,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 textAlign: "center",
               }}
             >
-              {getTotalEvaluationOfAssessedForNewParts()}
+              {addCommasToNumber(roundOff(getTotalEvaluationOfAssessedForNewParts()))}
             </td>
           </tr>
         </table>
@@ -1437,10 +1477,10 @@ const ErrorPageContent = ({ allInfo }) => {
                   {labour.Description}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
-                  {Number(labour.Estimate)}
+                  {roundOff(labour.Estimate)}
                 </td>
                 <td style={{ border: "1px solid black", padding: "5px" }}>
-                  {Number(labour.Assessed)}
+                  {roundOff(labour.Assessed)}
                 </td>
               </tr>
             ) : null;
@@ -1505,26 +1545,26 @@ const ErrorPageContent = ({ allInfo }) => {
               Total Labour Charges : ₹
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourEstimate()}
+              {addCommasToNumber(roundOff(getTotalLabourEstimate()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourAssessed()}
-            </td>
-          </tr>
-          <tr>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourEstimateGST()}
-            </td>
-            <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourAssessedGST()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourEstimate() + getTotalLabourEstimateGST()}
+              {addCommasToNumber(roundOff(getTotalLabourEstimateGST()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourAssessed() + getTotalLabourAssessedGST()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST()))}
+            </td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST()))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST()))}
             </td>
           </tr>
         </table>
@@ -1566,10 +1606,10 @@ const ErrorPageContent = ({ allInfo }) => {
               Total Labour Charges
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourEstimate() + getTotalLabourEstimateGST()}
+              {addCommasToNumber(roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourAssessed() + getTotalLabourAssessedGST()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST()))}
             </td>
           </tr>
           <tr>
@@ -1577,10 +1617,10 @@ const ErrorPageContent = ({ allInfo }) => {
               Total Cost of Parts
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalEstimate() + calculateEstimateNewPartsGST()}
+              {addCommasToNumber(roundOff(getTotalEstimate() + calculateEstimateNewPartsGST()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalEvaluationOfAssessedForNewParts()}
+              {addCommasToNumber(roundOff(getTotalEvaluationOfAssessedForNewParts()))}
             </td>
           </tr>
           <tr>
@@ -1599,9 +1639,9 @@ const ErrorPageContent = ({ allInfo }) => {
               Less : Salvage
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getTotalLabourAssessed() +
+              {addCommasToNumber(roundOff(getTotalLabourAssessed() +
                 getTotalLabourAssessedGST() +
-                getTotalEvaluationOfAssessedForNewParts()}
+                getTotalEvaluationOfAssessedForNewParts()))}
             </td>
           </tr>
           <tr>
@@ -1611,7 +1651,7 @@ const ErrorPageContent = ({ allInfo }) => {
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {getSummaryTotalWithLessExcess()}
+              {addCommasToNumber(roundOff(getSummaryTotalWithLessExcess()))}
             </td>
           </tr>
           <tr>
@@ -1620,7 +1660,7 @@ const ErrorPageContent = ({ allInfo }) => {
             </td>
           </tr>
           <tr>
-            <td>{getSummaryTotalWithLessSalvage()}</td>
+            <td>{addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}</td>
           </tr>
         </table>
       </div>
@@ -1707,7 +1747,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {newPartsGST()}
+              {addCommasToNumber(roundOff(newPartsGST()))}
             </td>
             <td
               style={{
@@ -1715,9 +1755,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {calculateOtherTypeNewPartsGST() +
+              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGST() +
                 getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()}
+                getTotalNonMetaDepreciation()))}
             </td>
             <td
               style={{
@@ -1725,10 +1765,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
                 calculateOtherTypeNewPartsGST()) /
-                2}
+                2))}
             </td>
             <td
               style={{
@@ -1736,10 +1776,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
                 calculateOtherTypeNewPartsGST()) /
-                2}
+                2))}
             </td>
             <td
               style={{
@@ -1755,12 +1795,12 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
                 calculateOtherTypeNewPartsGST() +
                 calculateOtherTypeNewPartsGST() +
                 getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()}
+                getTotalNonMetaDepreciation()))}
             </td>
           </tr>
           <tr>
@@ -1785,9 +1825,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {calculateOtherTypeNewPartsGST() +
+              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGST() +
                 getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()}
+                getTotalNonMetaDepreciation()))}
             </td>
             <td
               style={{
@@ -1795,10 +1835,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
                 calculateOtherTypeNewPartsGST()) /
-                2}
+                2))}
             </td>
             <td
               style={{
@@ -1806,10 +1846,10 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {(calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
                 calculateOtherTypeNewPartsGST()) /
-                2}
+                2))}
             </td>
             <td
               style={{
@@ -1825,12 +1865,12 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
                 calculateOtherTypeNewPartsGST() +
                 calculateOtherTypeNewPartsGST() +
                 getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()}
+                getTotalNonMetaDepreciation()))}
             </td>
           </tr>
           <tr>
@@ -1862,9 +1902,9 @@ const ErrorPageContent = ({ allInfo }) => {
                 textAlign: "center",
               }}
             >
-              {calculateTypeNewPartsGST("Glass") +
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass") +
                 calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST()}
+                calculateOtherTypeNewPartsGST()))}
             </td>
             <td
               style={{
@@ -1967,7 +2007,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {labourGST()}
+              {addCommasToNumber(roundOff(labourGST()))}
             </td>
             <td
               style={{
@@ -1975,7 +2015,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessed()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
             </td>
             <td
               style={{
@@ -1983,7 +2023,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessedGST() / 2}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
             </td>
             <td
               style={{
@@ -1991,7 +2031,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessedGST() / 2}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
             </td>
             <td
               style={{
@@ -2007,7 +2047,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessedGST() + getTotalLabourAssessed()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed()))}
             </td>
           </tr>
           <tr>
@@ -2033,7 +2073,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessed()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
             </td>
             <td
               style={{
@@ -2041,7 +2081,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessedGST() / 2}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
             </td>
             <td
               style={{
@@ -2049,7 +2089,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessedGST() / 2}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
             </td>
             <td
               style={{
@@ -2065,7 +2105,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {getTotalLabourAssessedGST() + getTotalLabourAssessed()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed()))}
             </td>
           </tr>
           <tr>
@@ -2098,7 +2138,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 textAlign: "center",
               }}
             >
-              {getTotalLabourAssessedGST()}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST()))}
             </td>
             <td
               style={{
@@ -2115,8 +2155,8 @@ const ErrorPageContent = ({ allInfo }) => {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            ₹ {getSummaryTotalWithLessSalvage()} <br /> (
-            {numberToWords(getSummaryTotalWithLessSalvage())}){" "}
+            ₹ {roundOff(getSummaryTotalWithLessSalvage())} <br /> (
+            {numberToWords(roundOff(getSummaryTotalWithLessSalvage()))}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
           conditions of the policy of insurance.
@@ -2125,7 +2165,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <div>
         <h4 className="text-dark">Notes :</h4>
         <ul>
-          {allInfo?.summaryReport[0]?.FinalReportNotes}
+          {convertToProperHTML(allInfo?.summaryReport[0]?.SummaryNotes)}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>
@@ -2157,7 +2197,7 @@ const ErrorPageContent = ({ allInfo }) => {
         </span>
         <br />
         <br />
-        <span>Enclosures : {allInfo?.summaryReport[0]?.Endurance}</span>
+        <span>Enclosures : {allInfo?.summaryReport[0]?.Endurance === undefined ? allInfo?.summaryReport[0]?.Endurance : "--"}</span>
       </div>
 
       {/* common footer content */}

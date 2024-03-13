@@ -13,14 +13,15 @@ const ErrorPageContent = ({ feeReport }) => {
 
   const formatDate = (dateString) => {
     const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
     };
 
-    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+    const dateParts = new Date(dateString).toLocaleDateString("en-GB", options).split('/');
+    const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
     return formattedDate;
-  };
+};
 
   const roundOff = (value) => {
     const roundedValue = parseFloat(value).toFixed(2);
@@ -238,7 +239,7 @@ const ErrorPageContent = ({ feeReport }) => {
               </span>
               <br />
               <span style={{ marginLeft: "25px" }}>
-                State Code : {feeReport?.vehicleOnlineDetails?.StateCode}
+                State Code : {feeReport?.vehicleOnlineDetails?.StateCode ?feeReport?.vehicleDetails?.StateCode :"-"}
               </span>
             </div>
             <div className="" style={{ marginLeft: "px" }}>
@@ -251,7 +252,8 @@ const ErrorPageContent = ({ feeReport }) => {
                 <span>Date</span>
                 <span style={{ marginLeft: "17px" }}>:</span>
                 <span>
-                  {formatDate(new Date(feeReport?.feeDetails?.BillDate))}
+                  {feeReport?.feeDetails?.BillDate ?
+                  formatDate(new Date(feeReport?.feeDetails?.BillDate)) : "-"}
                 </span>{" "}
               </div>
               <div className="d-flex text-dark gap-5">
@@ -269,7 +271,7 @@ const ErrorPageContent = ({ feeReport }) => {
               <div className="d-flex text-dark gap-1">
                 <span>Report Ref No</span>
                 <span style={{ marginLeft: "43px" }}>:</span>
-                <span>MSL/GNR/2024/01/10263</span>
+                <span>{feeReport?.claimDetails?.ReferenceNo}</span>
               </div>
               <div className="d-flex text-dark gap-1">
                 <span>Vehicle No</span>
@@ -280,18 +282,15 @@ const ErrorPageContent = ({ feeReport }) => {
                 <span>Insured Name </span>
                 <span style={{ marginLeft: "45px" }}>:</span>
                 <span>
-                  {feeReport?.driverDetails?.InsuredName}{" "}
-                  {String(feeReport?.driverDetails?.Gender) === "Male"
-                    ? "S/o"
-                    : "D/o"}{" "}
-                  {feeReport?.driverDetails?.fatherName}
+                  {feeReport?.insuredDetails?.InsuredName}{" "}
                 </span>
               </div>
               <div className="d-flex text-dark gap-1">
                 <span>Date Of Accident</span>
                 <span style={{ marginLeft: "21px" }}>:</span>
                 <span>
-                  {formatDate(feeReport?.accidentDetails?.DateOfAccident)}
+                  {feeReport?.accidentDetails?.DateOfAccident?
+                  formatDate(feeReport?.accidentDetails?.DateOfAccident) : "--"}
                 </span>
               </div>
               <div className="d-flex text-dark gap-1">

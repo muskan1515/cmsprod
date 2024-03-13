@@ -232,13 +232,14 @@ const createToken = require("../Config/generateJWTToken");
           if (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
-          } const insertClaimDetails = `
+          } const insertStatusDetails = `
             UPDATE ClaimDetails
             SET
             IsMailSent = 1
             WHERE LeadId = ${leadId};
           `;
-          db.query(insertClaimDetails, (err, result2) => {
+
+          db.query(insertStatusDetails, (err, result2) => {
             if (err) {
               console.error(err);
               res.status(500).send("Internal Server Error");

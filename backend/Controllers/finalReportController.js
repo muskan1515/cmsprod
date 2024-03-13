@@ -3,7 +3,7 @@ const db = require("../Config/dbConfig");
 
 const updateFinalReport = (req,res)=>{
 
-  console.log("Updating final report", req.body);
+  
     const {
       PolicyType ,
       TypeOfDate,

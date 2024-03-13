@@ -126,6 +126,11 @@ const db = require("../Config/dbConfig");
         "SELECT * FROM ClaimDetails WHERE LeadId=?",
         [leadId]
       );
+
+      const insuredDetails = await executeQuery(
+        "SELECT * FROM InsuredDetails WHERE LeadId=?",
+        [leadId]
+      );
      
     
       const combinedResult = {
@@ -135,6 +140,7 @@ const db = require("../Config/dbConfig");
         vehicleDetails,
         vehicleOnlineDetails,
         feeDetails,
+        insuredDetails,
         accidentDetails : accidentDetails,
       };
 

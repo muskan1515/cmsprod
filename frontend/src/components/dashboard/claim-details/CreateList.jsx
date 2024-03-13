@@ -196,11 +196,8 @@ const CreateList = ({
     }
   };
 
-  function isValidEmail(email) {
-    var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    console.log(pattern.test(email))
-    return pattern.test(email);
-  }
+ 
+
 
   useEffect(() => {
     setPolicyEndDate(claim?.claimDetails?.PolicyPeriodEnd);
@@ -209,18 +206,7 @@ const CreateList = ({
     setIsStatusModal(true);
   };
 
-  const handleEmailChange=(value,setFunc)=>{
-    // const checkIsValid = isValidEmail(value);
-    // console.log("mail check",checkIsValid);
-    // if(checkIsValid){
-      setFunc(value);
-    // }
-    // else{
-    //   toast.error("Enter  mail address is not proper !", {
-    //         className: "toast-loading-message",
-    //       });
-    // }
-  }
+
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -390,11 +376,11 @@ const CreateList = ({
             </div>
             <div className="col-lg-7">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="propertyTitle"
                 value={InsuredMailAddress ? InsuredMailAddress : ""}
-                onChange={(e) => handleEmailChange(e.target.value,setInsuredMailAddress)}
+                onChange={(e) => setInsuredMailAddress(e.target.value)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
@@ -459,8 +445,7 @@ const CreateList = ({
                 className="form-control"
                 id="GarageMailAddress"
                 value={GarageMailAddress}
-                onChange={(e) => handleEmailChange(e.target.value,setGarageMailAddress)}
-              />
+                onChange={(e)=>setGarageMailAddress(e.target.value)}              />
             </div>
           </div>
         </div>
@@ -486,7 +471,7 @@ const CreateList = ({
                 className="form-control"
                 id="propertyTitle"
                 value={BrokerMailAddress}
-                onChange={(e) => handleEmailChange(e.target.value,setBrokerMailAddress)}
+                onChange={(e) => setBrokerMailAddress(e.target.value)}
               />
             </div>
           </div>

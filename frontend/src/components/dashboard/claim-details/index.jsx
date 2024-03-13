@@ -181,6 +181,8 @@ const Index = ({}) => {
   const [IsRcDetailsFetched, setIsRcDetailsFetched] = useState(1);
   const [IsDriverDetailsFetched, setIsDriverDetailsFetched] = useState(1);
 
+
+  const [reloadClaim,setReloadClaim]=useState(false)
   const statusOptions = [
     {
       id: 1,
@@ -655,6 +657,7 @@ const Index = ({}) => {
   };
 
 
+
   console.log("policyStartDate", policyStartDate);
 
   const [VehicleRegisteredNumber, setVehicleRegisteredNumber] = useState("");
@@ -679,6 +682,16 @@ const Index = ({}) => {
     const formattedDate = dateObject.toLocaleDateString("en-GB");
 
     return formattedDate;
+  }
+
+  function validateEmail(email) {
+    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!pattern.test(email)) {
+       return false    }
+    else{
+        return true
+    }
+
   }
 
   const onSaveHandler = (APItype, func, func2) => {
@@ -811,31 +824,34 @@ const Index = ({}) => {
       token: userInfo[0].Token
     };
 
-    // if(!isValidEmail(BrokerMailAddress) ){
-    //   toast.error("Provided Broker mail address is not proper !", {
-    //     // position: toast.POSITION.BOTTOM_LEFT,
-    //     className: "toast-loading-message",
-    //   });
-    //   func(false);
-    //   func2(false);
-    // }
-    // else if(!isValidEmail(GarageMailAddress) ){
-    //   toast.error("Provided Garage mail address is not proper !", {
-    //     // position: toast.POSITION.BOTTOM_LEFT,
-    //     className: "toast-loading-message",
-    //   });
-    //   func(false);
-    //   func2(false);
-    // }
-    // else if(!isValidEmail(InsuredMailAddress) ){
-    //   toast.error("Provided Insured mail address is not proper !", {
-    //     // position: toast.POSITION.BOTTOM_LEFT,
-    //     className: "toast-loading-message",
-    //   });
-    //   func(false);
-    //   func2(false);
-    // }
-    // else{
+    if(!validateEmail(BrokerMailAddress) ){
+      setBrokerMailAddress("")
+      toast.error("Provided Broker mail address is not proper !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      func(false);
+      func2(false);
+    }
+    else if(!validateEmail(GarageMailAddress) ){
+      setGarageMailAddress("")
+      toast.error("Provided Garage mail address is not proper !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      func(false);
+      func2(false);
+    }
+    else if(!validateEmail(InsuredMailAddress) ){
+      setInsuredMailAddress("")
+      toast.error("Provided Insured mail address is not proper !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      func(false);
+      func2(false);
+    }
+    else{
     toast.loading("Updating the information!");
     axios
       .put("/api/updateClaimDetails", payload, {
@@ -868,27 +884,10 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     }
 
-    axios
-      .get("/api/getSpecificClaim", {
-        headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          LeadId: leadId,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        setClaim(res.data.data);
-        // toast.success("Successfully Fetched !!")
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
+    
     func(false);
     func2(false);
-    // }
+    }
   };
 
   const updateHandlerAfterFetching = () => {
