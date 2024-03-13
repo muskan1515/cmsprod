@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { isDate } from "date-fns";
 
+
+
 const headCells = [
   {
     id: "lead_id",
@@ -72,6 +74,39 @@ const headCells = [
     width: 100,
   },
 ];
+
+const updatedFormatDate = (dateString) => {
+  const isValidDate = (date) => {
+    return (
+      date !== null &&
+      date !== undefined &&
+      date !== "null" &&
+      date !== "undefined"
+    );
+  };
+
+  if (!isValidDate(dateString)) {
+    console.error("Invalid date:", dateString);
+    return null;
+  }
+
+  const separator = dateString.includes("/") ? "/" : "-";
+  const parts = dateString.split(separator);
+  let formattedDate;
+
+  if (parts.length === 3 && parts[0].length === 4) {
+    // YYYY-MM-DD format
+    const [year, month, day] = parts;
+    formattedDate = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+  } else {
+    // MM-DD-YYYY format
+    const [month, day, year] = parts;
+    formattedDate = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+  }
+
+  return formattedDate;
+};
+
 
 const data = [
   {
@@ -200,6 +235,7 @@ export default function Exemple({
     const today = new Date();
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID);
+      // const addedDate = new Date(claim.AddedDate);
       const addedDate = new Date(claim.AddedDate);
       const tatInDays = Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
       const tempGarage = claim?.AssignedGarage?.split(",").map((item) =>
@@ -220,7 +256,7 @@ export default function Exemple({
         ),
         registration_no: claim.RegistrationNo,
         region: claim.Region,
-        added_date: convertToIST(claim.AddedDate),
+        added_date: updatedFormatDate(convertToIST(claim.AddedDate)),
         // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
         //   timeZone: "Asia/Kolkata",
         // }),
