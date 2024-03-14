@@ -62,7 +62,7 @@ const CreateList = () => {
 
    const generateRegion = (region) => {
     const firstThreeLetters = (String(region) === "Delhi") ? "DLH" :
-        (String(region) === "Delhi") ? "JDH" : "CHD";
+        (String(region) === "Jodhpur") ? "JDH" : "CHD";
 
     const now = new Date();
     const mm = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
