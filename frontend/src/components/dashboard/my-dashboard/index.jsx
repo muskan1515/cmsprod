@@ -33,15 +33,15 @@ const Index = () => {
   useEffect(() => {
     let filterClaim;
     if (type === 1) {
-      filterClaim = filterCardClaim.filter((claim, index) =>
+      filterClaim = allClaims.filter((claim, index) =>
         claim?.PolicyNo?.toLowerCase().includes(searchInput.toLowerCase())
       );
     } else if (type === 2) {
-      filterClaim = filterCardClaim.filter((claim, index) =>
+      filterClaim = allClaims.filter((claim, index) =>
         claim?.RegistrationNo?.toLowerCase().includes(searchInput.toLowerCase())
       );
     } else {
-      filterClaim = filterCardClaim.filter((claim, index) =>
+      filterClaim = allClaims.filter((claim, index) =>
         claim?.ReferenceID?.toLowerCase().includes(searchInput.toLowerCase())
       );
     }
@@ -76,7 +76,7 @@ const Index = () => {
   useEffect(() => {
     let filterClaim;
 
-    filterClaim = filterCardClaim.filter(
+    filterClaim = allClaims.filter(
       (claim, index) =>
         claim?.PolicyNo?.toLowerCase().includes(majorSearch.toLowerCase()) ||
         claim?.PolicyHolder?.toLowerCase().includes(
