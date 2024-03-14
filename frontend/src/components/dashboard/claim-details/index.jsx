@@ -694,7 +694,40 @@ const Index = ({}) => {
 
   }
 
-  const onSaveHandler = (APItype, func, func2) => {
+  const onSaveHandler=(APItype, func, func2)=>{
+    if(BrokerMailAddress && !validateEmail(BrokerMailAddress) ){
+      setBrokerMailAddress("")
+      toast.error("Provided Broker mail address is not proper !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      func(false);
+      func2(false);
+    }
+    else if(GarageMailAddress && !validateEmail(GarageMailAddress) ){
+      setGarageMailAddress("")
+      toast.error("Provided Garage mail address is not proper !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      func(false);
+      func2(false);
+    }
+    else if(InsuredMailAddress && !validateEmail(InsuredMailAddress) ){
+      setInsuredMailAddress("")
+      toast.error("Provided Insured mail address is not proper !", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      func(false);
+      func2(false);
+    }
+    else{
+      onFinalSubmitHandler(APItype,func,func2)
+    }
+  }
+
+  const onFinalSubmitHandler = (APItype, func, func2) => {
     const type = calculateTheUpdateType(APItype);
     console.log(insuranceCompanyNameAddress);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -824,34 +857,7 @@ const Index = ({}) => {
       token: userInfo[0].Token
     };
 
-    if(!validateEmail(BrokerMailAddress) ){
-      setBrokerMailAddress("")
-      toast.error("Provided Broker mail address is not proper !", {
-        // position: toast.POSITION.BOTTOM_LEFT,
-        className: "toast-loading-message",
-      });
-      func(false);
-      func2(false);
-    }
-    else if(!validateEmail(GarageMailAddress) ){
-      setGarageMailAddress("")
-      toast.error("Provided Garage mail address is not proper !", {
-        // position: toast.POSITION.BOTTOM_LEFT,
-        className: "toast-loading-message",
-      });
-      func(false);
-      func2(false);
-    }
-    else if(!validateEmail(InsuredMailAddress) ){
-      setInsuredMailAddress("")
-      toast.error("Provided Insured mail address is not proper !", {
-        // position: toast.POSITION.BOTTOM_LEFT,
-        className: "toast-loading-message",
-      });
-      func(false);
-      func2(false);
-    }
-    else{
+    
     toast.loading("Updating the information!");
     axios
       .put("/api/updateClaimDetails", payload, {
@@ -884,10 +890,13 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     }
 
+    if(APItype === 1){
+      window.location.reload();
+    }
     
     func(false);
     func2(false);
-    }
+    
   };
 
   const updateHandlerAfterFetching = () => {

@@ -109,7 +109,7 @@ const createToken = require("../Config/generateJWTToken");
           to: toMail,
           cc: ccContent,
           subject: `Survey Request for Claim of
-          Vehicle Number - ${vehicleNo} A/c ${Insured} policy Number - ${PolicyNo}`,
+          Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."} policy Number - ${PolicyNo}`,
           text: emailContent,
         };
 
@@ -143,8 +143,7 @@ const createToken = require("../Config/generateJWTToken");
   };
   
   const acknowledgmentMail = (req, res) => {
-    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
-
+    const { vehicleNo, PolicyNo , Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
     const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
     db.query(sql, [leadId], (err, result) => {
       if (err) {
@@ -224,7 +223,7 @@ const createToken = require("../Config/generateJWTToken");
           to: toMail,
           cc: `${GarageMailAddress},${BrokerMailAddress}`,
           subject: `Survey Request for Claim of
-          Vehicle Number - ${vehicleNo} A/c ${Insured} policy Number - ${PolicyNo}`,
+          Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."}  policy Number - ${PolicyNo}`,
           text: emailContent,
         };
 

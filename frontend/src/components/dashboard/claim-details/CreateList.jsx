@@ -165,8 +165,16 @@ const CreateList = ({
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
       const payload = {
-        vehicleNo: vehicleNo,
-        PolicyNo: PolicyNo,
+        vehicleNo: vehicleNo === "undefined" 
+        || vehicleNo === "null" 
+        || vehicleNo === undefined 
+        || !vehicleNo?
+        "N.A." : vehicleNo,
+        PolicyNo: PolicyNo === "undefined" 
+        || PolicyNo === "null" 
+        || PolicyNo === undefined 
+        || !PolicyNo?
+        "N.A." : PolicyNo,
         Insured: Insured,
         toMail: mailAddress,
         leadId: claim?.claimDetails?.LeadID,
@@ -394,8 +402,8 @@ const CreateList = ({
                     style={{ width: "100%" }}
                     onClick={() =>
                       sendMailHandler(
-                        claim?.vehichleDetails?.VehicleEngineNumber,
-                        claim?.claimDetails?.ReferenceNo,
+                        claim?.vehichleDetails?.RegisteredNumber,
+                        claim?.claimDetails?.PolicyNumber,
                         claim?.insuredDetails?.InsuredName,
                         claim.insuredDetails?.InsuredMailAddress
                       )

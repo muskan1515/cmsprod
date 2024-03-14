@@ -201,10 +201,45 @@ const ErrorPageContent = ({ allInfo }) => {
     return total;
   };
 
+  function convertToReadable(timeStr) {
+    try {
+        // Split the time string into hours and minutes
+        const [hours, minutes] = timeStr.split(':');
+        
+        // Convert hours and minutes to numbers
+        const hour = parseInt(hours, 10);
+        const minute = parseInt(minutes, 10);
+
+        // Format the time in readable format
+        const formattedHour = (hour % 12 || 12).toString().padStart(2, '0'); // Convert to 12-hour format
+        const period = hour < 12 ? 'AM' : 'PM';
+        const readableTime = `${formattedHour}:${minutes} ${period}`; // Example: 09:49 AM
+        return readableTime;
+    } catch (error) {
+        return "Invalid time format. Please provide time in HH:MM format.";
+    }
+}
+
   function addCommasToNumber(number) {
     if(Number(number)<=100 || number === undefined)
     return number;
     return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function convertToBulletPointsAndParseHTML(text) {
+  // Convert HTML tags to plain text
+  const plainText = text.replace(/<[^>]*>?/gm, '');
+
+  // Split the text into sentences
+  const sentences = plainText.split(/\d+\./).filter(sentence => sentence.trim() !== '');
+
+  // Convert sentences into bullet points
+  const bulletPoints = sentences.map(sentence => `<li>${sentence.trim()}</li>`);
+
+  // Join bullet points into an unordered list
+  const bulletList = `<ul>${bulletPoints.join('')}</ul>`;
+
+  return bulletList;
 }
 
 
@@ -839,7 +874,7 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-5">
             <label htmlFor="">(m) Tax particulars </label>
             <span style={{ marginLeft: "148px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.TaxParticulars}</span>
+            <span> {formatDate(allInfo?.otherInfo[0]?.TaxParticulars)}</span>
           </div>
         </div>
       </div>
@@ -942,9 +977,9 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "108px" }}>:</span>
             <span>
               {" "}
-              {formatDateTime(allInfo?.otherInfo[0]?.DateOfAccident)}
-              -
-              {allInfo?.otherInfo[0]?.TimeOfAccident}
+              {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)}
+              ,
+              {convertToReadable(allInfo?.otherInfo[0]?.TimeOfAccident)}
             </span>
           </div>
         </div>
@@ -2155,7 +2190,7 @@ const ErrorPageContent = ({ allInfo }) => {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            ₹ {roundOff(getSummaryTotalWithLessSalvage())} <br /> (
+            ₹ {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))} <br /> (
             {numberToWords(roundOff(getSummaryTotalWithLessSalvage()))}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
@@ -2165,7 +2200,7 @@ const ErrorPageContent = ({ allInfo }) => {
       <div>
         <h4 className="text-dark">Notes :</h4>
         <ul>
-          {convertToProperHTML(allInfo?.summaryReport[0]?.SummaryNotes)}
+          {(convertToProperHTML(allInfo?.summaryReport[0]?.SummaryNotes))}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>

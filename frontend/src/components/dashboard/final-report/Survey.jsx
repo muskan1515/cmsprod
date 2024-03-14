@@ -218,7 +218,7 @@ const Servey = ({
   
 
   useEffect(() => {
-    const accident = AccidentContent(claim?.insuredDetails?.InsuredName);
+    const accident = AccidentContent(claim?.driverDetails?.DriverName);
     const assessment = AssessmentContent(
       claim?.claimDetails?.ClaimServicingOffice,
       SurveyAllotmentDate,
