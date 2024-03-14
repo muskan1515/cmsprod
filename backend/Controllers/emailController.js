@@ -142,116 +142,237 @@ const createToken = require("../Config/generateJWTToken");
       });
   };
   
+  // const acknowledgmentMail = (req, res) => {
+  //   const { vehicleNo, PolicyNo , Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
+  //   const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
+  //   db.query(sql, [leadId], (err, result) => {
+  //     if (err) {
+  //       console.error(err);
+  //       res.status(500).send("Internal Server Error");
+  //       return;
+  //     }
+  //     const content = emailHandler(result[0]?.Status);
+  
+  //     const InsuredToken = generateUniqueToken();
+  //     const ImageToken =  generateUniqueToken();
+  //     const VideoToken  =  generateUniqueToken();
+      
+  //     const insertClaimDetails = `
+  //         UPDATE ClaimDetails
+  //         SET
+  //         InsuredToken = '${InsuredToken}',
+  //         ImageToken ='${ImageToken}',
+  //         VideoToken ='${VideoToken}'
+  //         WHERE LeadId = ${leadId};
+  //       `;
+       
+  //         db.query(insertClaimDetails, (err, result2) => {
+  //       if (err) {
+  //         console.error(err);
+  //         res.status(500).send("Internal Server Error");
+  //         return;
+  //       }
+
+     
+  //       const emailContent = `
+  //     Dear Sir/Madam,
+  
+  //     Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+  
+  //       We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
+  //     Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
+  //     can procedd further in your case and we also request 
+  //     you to provide the following details as follows:-
+
+  //     ${content}
+
+  //     Please provide the clear copy of all the documents so that the claim processing can be fast or
+  //     <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+
+  //     Please provide the clear Vahicle Videos so that the claim processing can be fast or
+  //     <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
+
+  //     Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
+  //     <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
+
+  //   Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+  //         claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+
+  // `;
+  //   const currentMailAddress = String(Region) === "Delhi" ? 
+  //         process.env.NODEMAILER_DELHI_EMAIL : String(Region) === "Jodhpur" ?
+  //         process.env.NODEMAILER_JODHPUR_EMAIL
+  //         : process.env.NODEMAILER_CHANDIGARH_EMAIL;
+  //         const currentMailAddressPass = String(Region) === "Delhi" ? 
+  //         process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : String(Region) === "Jodhpur" ?
+  //         process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+  //         : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+
+  //       const transporter2 = nodemailer.createTransport({
+  //         service: 'gmail',
+  //         auth: {
+  //           user: currentMailAddress,
+  //           pass: currentMailAddressPass,
+  //         },
+  //         tls: {
+  //           rejectUnauthorized: false,
+  //         },
+  //       });
+  //       const mailOptions = {
+  //         from: currentMailAddress,
+  //         to: toMail,
+  //         cc: `${GarageMailAddress},${BrokerMailAddress}`,
+  //         subject: `Survey Request for Claim of
+  //         Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."}  policy Number - ${PolicyNo}`,
+  //         text: emailContent,
+  //       };
+
+  //       transporter2.sendMail(mailOptions, (error, info) => {
+  //         if (error) {
+  //           console.error(error);
+  //           res.status(500).send("Internal Server Error");
+  //         } const insertStatusDetails = `
+  //           UPDATE ClaimDetails
+  //           SET
+  //           IsMailSent = 1
+  //           WHERE LeadId = ${leadId};
+  //         `;
+
+  //         db.query(insertStatusDetails, (err, result2) => {
+  //           if (err) {
+  //             console.error(err);
+  //             res.status(500).send("Internal Server Error");
+  //             return;
+  //           }
+  //             res.status(200).send("Email sent successfully");
+  //           });
+          
+  //         });
+  //       });
+  //     });
+  // };
+  
   const acknowledgmentMail = (req, res) => {
-    const { vehicleNo, PolicyNo , Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
+    const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail, type, BrokerMailAddress, GarageMailAddress } = req.body;
     const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
+    const sql1 = "SELECT Region FROM ClaimDetails WHERE LeadId =?";
+  
     db.query(sql, [leadId], (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
       }
-      const content = emailHandler(result[0]?.Status);
-  
-      const InsuredToken = generateUniqueToken();
-      const ImageToken =  generateUniqueToken();
-      const VideoToken  =  generateUniqueToken();
-      
-      const insertClaimDetails = `
-          UPDATE ClaimDetails
-          SET
-          InsuredToken = '${InsuredToken}',
-          ImageToken ='${ImageToken}',
-          VideoToken ='${VideoToken}'
-          WHERE LeadId = ${leadId};
-        `;
-       
-          db.query(insertClaimDetails, (err, result2) => {
+      db.query(sql1, [leadId], (err, resultRegion) => {
         if (err) {
           console.error(err);
           res.status(500).send("Internal Server Error");
           return;
         }
-
-     
-        const emailContent = `
-      Dear Sir/Madam,
+        const content = emailHandler(result[0]?.Status);
+        const Region = resultRegion[0]?.Region; // Updated assignment for Region
   
-      Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+        const InsuredToken = generateUniqueToken();
+        const ImageToken = generateUniqueToken();
+        const VideoToken = generateUniqueToken();
   
-        We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
-      Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
-      can procedd further in your case and we also request 
-      you to provide the following details as follows:-
-
-      ${content}
-
-      Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
-
-      Please provide the clear Vahicle Videos so that the claim processing can be fast or
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
-
-      Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
-
-    Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-          claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
-
-  `;
-    const currentMailAddress = String(Region) === "Delhi" ? 
-          process.env.NODEMAILER_DELHI_EMAIL : String(Region) === "Jodhpur" ?
-          process.env.NODEMAILER_JODHPUR_EMAIL
-          : process.env.NODEMAILER_CHANDIGARH_EMAIL;
-          const currentMailAddressPass = String(Region) === "Delhi" ? 
-          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : String(Region) === "Jodhpur" ?
-          process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
-          : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
-
-        const transporter2 = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: currentMailAddress,
-            pass: currentMailAddressPass,
-          },
-          tls: {
-            rejectUnauthorized: false,
-          },
-        });
-        const mailOptions = {
-          from: currentMailAddress,
-          to: toMail,
-          cc: `${GarageMailAddress},${BrokerMailAddress}`,
-          subject: `Survey Request for Claim of
-          Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."}  policy Number - ${PolicyNo}`,
-          text: emailContent,
-        };
-
-        transporter2.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error(error);
-            res.status(500).send("Internal Server Error");
-          } const insertStatusDetails = `
+        const insertClaimDetails = `
             UPDATE ClaimDetails
             SET
-            IsMailSent = 1
+            InsuredToken = '${InsuredToken}',
+            ImageToken ='${ImageToken}',
+            VideoToken ='${VideoToken}'
             WHERE LeadId = ${leadId};
           `;
-
-          db.query(insertStatusDetails, (err, result2) => {
-            if (err) {
-              console.error(err);
+  
+        db.query(insertClaimDetails, (err, result2) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+  
+          const emailContent = `
+        Dear Sir/Madam,
+  
+        Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+  
+          We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
+        Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
+        can procedd further in your case and we also request 
+        you to provide the following details as follows:-
+  
+        ${content}
+  
+        Please provide the clear copy of all the documents so that the claim processing can be fast or
+        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+  
+        Please provide the clear Vahicle Videos so that the claim processing can be fast or
+        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
+  
+        Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
+        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
+  
+      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+            claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+  
+    `;
+          
+          const currentMailAddress = Region === "Delhi" ?
+            process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
+              process.env.NODEMAILER_JODHPUR_EMAIL
+              : process.env.NODEMAILER_CHANDIGARH_EMAIL;
+          const currentMailAddressPass = Region === "Delhi" ?
+            process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
+              process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+              : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+  
+          const transporter2 = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: currentMailAddress,
+              pass: currentMailAddressPass,
+            },
+            tls: {
+              rejectUnauthorized: false,
+            },
+          });
+          const mailOptions = {
+            from: currentMailAddress,
+            to: toMail,
+            cc: `${GarageMailAddress},${BrokerMailAddress}`,
+            subject: `Survey Request for Claim of
+            Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."}  policy Number - ${PolicyNo}`,
+            text: emailContent,
+          };
+  
+          transporter2.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error(error);
               res.status(500).send("Internal Server Error");
-              return;
             }
+            const insertStatusDetails = `
+              UPDATE ClaimDetails
+              SET
+              IsMailSent = 1
+              WHERE LeadId = ${leadId};
+            `;
+  
+            db.query(insertStatusDetails, (err, result2) => {
+              if (err) {
+                console.error(err);
+                res.status(500).send("Internal Server Error");
+                return;
+              }
               res.status(200).send("Email sent successfully");
             });
-          
+  
           });
         });
       });
+    });
   };
-  
+   
   const sendCustomEmail = (req, res) => {
     const {
       vehicleNo,
