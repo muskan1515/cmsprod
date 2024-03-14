@@ -11,7 +11,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";
-import toast from "react-hot-toast";
+import toVehicleModelast from "react-hot-toast";
 // import toast from "react-hot-toast";
 
 const Form_01 = ({
@@ -68,11 +68,7 @@ const Form_01 = ({
   const [details, setDetails] = useState([]);
   const [change, setChange] = useState(false);
 
-  function removeMultipleSpaces(inputString) {
-    // Use regular expression to replace multiple spaces with a single space
-    const cleanedString = inputString.replace(/\s+/g, " ").trim();
-    return cleanedString;
-  }
+
   const handleFetchData = () => {
     if (
       !claim?.driverDetails?.LicenseNumber ||
@@ -226,10 +222,8 @@ const Form_01 = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
+                              fontWeight: ""
                             }}
                           >
                             Name
@@ -243,10 +237,9 @@ const Form_01 = ({
                             onChange={(e) => setDriverName(e.target.value)}
                             value={
                               DriverName && DriverName !== "null"
-                                ? removeMultipleSpaces(DriverName)
+                                ? (DriverName)
                                 : ""
                             }
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -274,7 +267,7 @@ const Form_01 = ({
                             className="form-control"
                             id="propertyTitle"
                             onChange={(e) => setFatherName(e.target.value)}
-                            value={removeMultipleSpaces(FatherName)}
+                            value={(FatherName)}
                             // placeholder="Enter Registration No."
                           />
                         </div>

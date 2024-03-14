@@ -8,25 +8,6 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
   const [subStage,setSubStage] = useState(0);
   const [currentStatus,setCurrentStatus]=useState(1);
 
-  console.log("status",documents);
-
-  const [allDocumentLabels,setALlDocumentLabels]=useState([]);
-
-  useEffect(()=>{
-    axios.get("/api/getDocumentListLabels", {
-      headers: {
-        Authorization: `Bearer ${""}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-        console.log("DocumentLabels",res.data.data.results);
-        setALlDocumentLabels(res.data.data.results);
-    })  
-    .catch((err) => {
-      console.log(err);
-    });
-  },[]);
   let data = [
     {
       serial_num: "1",
@@ -115,11 +96,13 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
 
   },[status.length]);
 
+  console.log("data",documents)
+
   const getValueFromDocName=(docName)=>{
     let value = 0;
-    allDocumentLabels.map((temp,index)=>{
-      if(String(temp.DocumentName) === String(docName)){
-        value = temp.id;
+    data.map((temp,index)=>{
+      if(String(temp.doc_name) === String(docName)){
+        value = temp.serial_num;
       }
     })
 
@@ -127,25 +110,19 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
   }
 
   const getUpperBound = ()=>{
-    if(String(stat)=== "1")
-      return 5;
-    if(String(stat)=== "2")
-      return 5;
-    if(String(stat)=== "3")
-      return 5;
-    if(String(stat)=== "4")
-      return 5;
-    if(String(stat)=== "5")
-      return 5;
+    return 5;
   }
 
 
   //function to update the status on documents validation
   const checkIsValidated = ()=>{
-      let arr = new Array(allDocumentLabels.length + 1).fill(0);
+    if(String(stat) === "10" || String(stat) === "1"){
+      return true;
+    }
+      let arr = new Array(data.length + 1).fill(0);
       documents?.map((doc,index)=>{
         const value = getValueFromDocName(doc.docName);
-        arr[value] = value;
+        arr[value]  = value;
       })
 
       const upperValue = getUpperBound();
@@ -157,18 +134,48 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
           canUpdateStatus = false;
        }
       })
-
       
       console.log(upperValue,arr,canUpdateStatus);
       return canUpdateStatus;
 
       
   }
+
+  function csvToArray(id) {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    const csvString = userInfo[0]?.CalimStatus;
+    const rows = csvString.split('\n');
+  
+    const result = [];
+  
+    rows.forEach(row => {
+      const columns = row.split(',');
+      result.push(columns);
+    });
+
+    let inside = -1;
+    result.map((value,index)=>{
+      if(String(value) === String(id)){
+        inside = index;
+      }
+    })
+    return inside;
+  }
+
+  const isFound = (allValues,id)=>{
+
+  }
   const onSubmitHandler = ()=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+
+    const isValid = csvToArray(stat);
 
     const canUpdate = checkIsValidated();
  
-    if(!canUpdate && stat>1){
+    if(!canUpdate && stat>1 && !isValid){
       toast.error("Cannot update Status as documents are filled !");
     }
     else{
@@ -204,6 +211,16 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
     });
   }
   }
+
+  const getShowOption=(stat)=>{
+    if(currentStatus === 10 || currentStatus === 11){
+      return true;
+    }
+    else if (stat.id === currentStatus || stat.id === 10 || stat.id === 11  || stat.id === currentStatus+1 || stat.id === currentStatus -1){
+      return true;
+    }
+    
+  }
   const getCurrentStatus=()=>{
     let status = "";
     statusOptions.map((stat,index)=>{
@@ -226,9 +243,8 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
               onChange={(e)=>setStat(e.target.value)}
             >
               {statusOptions.map((stat,index)=>{
-                return ( stat.id === currentStatus+1 || stat.id === currentStatus -1 || stat.id === currentStatus) ?  <option key={index} data-tokens="Status1" value={stat.id} >{stat.value}</option>
+                return getShowOption(stat) ?  <option key={index} data-tokens="Status1" value={stat.id} >{stat.value}</option>
                   :  null
-
               })}
             </select>
           </div>

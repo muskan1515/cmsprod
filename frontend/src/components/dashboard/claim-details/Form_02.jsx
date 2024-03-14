@@ -1,13 +1,8 @@
-// import axios from "axios";
-// import { useRef, useState } from "react";
-// import { useReducer } from "react";
 import { FaEye } from "react-icons/fa";
-// import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
 import Form_garage from "./Form_garage";
 import { useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
-// import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";

@@ -249,6 +249,12 @@ const Index = ({}) => {
     },
   ];
 
+  function removeMultipleSpaces(inputString) {
+    // Use regular expression to replace multiple spaces with a single space
+    const cleanedString = inputString.replace(/\s+/g, " ").trim();
+    return cleanedString;
+  }
+
   useEffect(() => {
     // const oneYearLater = (policyStartDate);
     // oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
@@ -363,7 +369,7 @@ const Index = ({}) => {
     );
     setVehicleRegisteredOwner(
       claim?.vehicleDetails?.RegisteredOwner
-        ? claim?.vehicleDetails?.RegisteredOwner
+        ? removeMultipleSpaces(claim?.vehicleDetails?.RegisteredOwner)
         : VehicleRegisteredOwner
     );
     setDateRegistration(
@@ -409,7 +415,7 @@ const Index = ({}) => {
 
     setDriverName(
       claim?.driverDetails?.DriverName
-        ? claim?.driverDetails?.DriverName
+        ? removeMultipleSpaces(claim?.driverDetails?.DriverName)
         : DriverName
     );
     setDriverAddedDate(
@@ -576,7 +582,7 @@ const Index = ({}) => {
     //driver details fetched
     setFatherName(
       claim?.driverDetails?.FatherName
-        ? claim?.driverDetails?.FatherName
+        ? removeMultipleSpaces(claim?.driverDetails?.FatherName)
         : FatherName
     );
     setGender(
@@ -693,6 +699,8 @@ const Index = ({}) => {
     }
 
   }
+
+
 
   const onSaveHandler=(APItype, func, func2)=>{
     if(BrokerMailAddress && !validateEmail(BrokerMailAddress) ){
