@@ -229,11 +229,11 @@ const Servey = ({
     const other = otherContent();
     console.log("accident", accident);
     console.log("CauseOfAccident", CauseOfAccident);
-    setCauseOfAccident(CauseOfAccident ? convertHtmlToString(CauseOfAccident) : accident);
-    setAssessment(Assessment ? convertHtmlToString(Assessment) : assessment);
-    setThirdPartyLoss(ThirdPartyLoss ? convertHtmlToString(ThirdPartyLoss) : other);
-    setPoliceAction(PoliceAction ? convertHtmlToString(PoliceAction) : other);
-    setDetailsOfLoads(DetailsOfLoads ? convertHtmlToString(DetailsOfLoads) : other);
+    setCauseOfAccident(CauseOfAccident ? (CauseOfAccident) : accident);
+    setAssessment(Assessment ? (Assessment) : assessment);
+    setThirdPartyLoss(ThirdPartyLoss ? (ThirdPartyLoss) : other);
+    setPoliceAction(PoliceAction ? (PoliceAction) : other);
+    setDetailsOfLoads(DetailsOfLoads ? (DetailsOfLoads) : other);
   }, [CauseOfAccident]);
    
   const calculateVehicleAge = () => {

@@ -68,6 +68,8 @@ const ErrorPageContent = ({ allInfo }) => {
     generateAllPages();
   };
 
+
+
   //   const input = pdfRef.current;
 
   //   html2canvas(input).then((canvas) => {
@@ -92,6 +94,21 @@ const ErrorPageContent = ({ allInfo }) => {
   //     pdf.save("invoice.pdf");
   //   });
   // };
+
+  function StringWithBulletPoints( text ) {
+    if(!text || text === "null" || text === "undefined")
+     return text;
+    // Split the string by bullet points and trim whitespace
+    const lines = text?.split(/\d{2}\./).map(line => line.trim());
+  
+    return (
+      <div>
+        {lines?.map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </div>
+    );
+  }
 
   const formatDate = (dateString) => {
     const options = {
@@ -465,17 +482,29 @@ function convertToBulletPointsAndParseHTML(text) {
     return Math.round(number * 100) / 100;
   }
 
-  function calculateAge(birthDate) {
-    var today = new Date();
-    var birthDateObj = new Date(birthDate);
-    var age = today.getFullYear() - birthDateObj.getFullYear();
-    var monthDiff = today.getMonth() - birthDateObj.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
-        age--;
+  function calculateAge() {
+    if( allInfo?.otherInfo[0]?.DateOfBirth !== undefined || allInfo?.otherInfo[0]?.DateOfBirth ==="undefined" || ! allInfo?.otherInfo[0]?.DateOfBirth)
+    {
+      return ""
     }
+    const birthDate =  allInfo?.otherInfo[0]?.DateOfBirth 
+    const [birthDay, birthMonth, birthYear] = birthDate?.split('/').map(Number);
+    const currentDate = new Date();
+
+    let ageInYears = currentDate.getFullYear() - birthYear;
+
+    if (currentDate.getMonth() < birthMonth - 1 || (currentDate.getMonth() === birthMonth - 1 && currentDate.getDate() < birthDay)) {
+        ageInYears--;
+    }
+
+    let ageInMonths = currentDate.getMonth() - (birthMonth - 1);
+    if (ageInMonths < 0) {
+        ageInMonths += 12;
+    }
+
+    console.log("agesss",`${ageInYears} Years ${ageInMonths} Months`)
+    return `${ageInYears} Years ${ageInMonths} Months`
     
-    return age;
 }
 
   function numberToWords(number) {
@@ -658,12 +687,12 @@ function convertToBulletPointsAndParseHTML(text) {
           {allInfo?.otherInfo[0]?.SurveyType} {" "}
           {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
           {Number(allInfo?.summaryReport[0]?.CashLess) === 1
-            ? "CashLess"
-            : "Cash"}
+            ? "CASH LESS"
+            : "NON CASH LESS"}
           )- (
           {allInfo?.otherInfo[0]?.PolicyType
-            ? allInfo?.otherInfo[0]?.PolicyType
-            : "Regular"}
+            ? (allInfo?.otherInfo[0]?.PolicyType).toUpperCase()
+            : "REGULAR"}
           )
         </h4>
       </div>
@@ -735,9 +764,10 @@ function convertToBulletPointsAndParseHTML(text) {
             <span style={{ marginLeft: "110px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.InsuredName},{" "}
-              {allInfo?.otherInfo[0]?.InsuredMobileNo1}, <br />
-              {allInfo?.otherInfo[0]?.InsuredAddress}
+              {allInfo?.otherInfo[0]?.InsuredName}
+              
+              {allInfo?.otherInfo[0]?.InsuredMobileNo1 ? ` , ${allInfo?.otherInfo[0]?.InsuredMobileNo1}` : ""} <br />
+              {allInfo?.otherInfo[0]?.InsuredAddress ? ` , ${allInfo?.otherInfo[0]?.InsuredAddress}` : ""} <br />
             </span>
           </div>
         </div>
@@ -906,7 +936,7 @@ function convertToBulletPointsAndParseHTML(text) {
             <span style={{ marginLeft: "224px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo?.DateOfBirth ? calculateAge(allInfo?.otherInfo?.DateOfBirth ) : "-"} Years ({" "}
+              {allInfo?.otherInfo?.DateOfBirth !=="null" ? `${calculateAge()} old `  : "-"} ({" "}
               {allInfo?.otherInfo[0]?.DateOfBirth 
                 ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
                 : ""}
@@ -935,10 +965,10 @@ function convertToBulletPointsAndParseHTML(text) {
 
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
-            <label htmlFor="">Valid from </label>
+            <label htmlFor="">Valid Upto </label>
             <span style={{ marginLeft: "178px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.ValidFrom !=="undefined" 
-            ? formatDate(allInfo?.otherInfo[0]?.ValidFrom) : "-"}</span>
+            <span> {allInfo?.otherInfo[0]?.ValidUpto !=="undefined"  && allInfo?.otherInfo[0].ValidUpto
+            ? formatDate(allInfo?.otherInfo[0]?.ValidUpto) : "-"}</span>
           </div>
         </div>
 
@@ -2200,7 +2230,7 @@ function convertToBulletPointsAndParseHTML(text) {
       <div>
         <h4 className="text-dark">Notes :</h4>
         <ul>
-          {(convertToProperHTML(allInfo?.summaryReport[0]?.SummaryNotes))}
+          {(StringWithBulletPoints(allInfo?.summaryReport[0]?.SummaryNotes))}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>

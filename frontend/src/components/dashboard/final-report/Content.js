@@ -29,7 +29,7 @@ export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAcc
 
 export const AccidentContent = (InsuredName) => {
   return `
-    As filled in the claim form and discussion with the insured, on the day and time of the accident, <strong>${InsuredName}</strong> was driving the subject vehicle.`;
+    As filled in the claim form and discussion with the insured, on the day and time of the accident, <strong> ${InsuredName} </strong> was driving the subject vehicle.`;
 };
 
 export const summaryNotes = (claim) => {

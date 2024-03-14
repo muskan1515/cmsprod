@@ -898,12 +898,10 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     }
 
-    if(APItype === 1){
-      window.location.reload();
-    }
     
     func(false);
     func2(false);
+    window.location.reload();
     
   };
 

@@ -151,6 +151,12 @@ const ErrorPageContent = ({ feeReport }) => {
     return CGST;
   };
 
+  function addCommasToNumber(number) {
+    if(Number(number)<=100 || number === undefined)
+    return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
   const calculateSGST = () => {
     const total = calculateTheTotalBillWithoutGST();
 
@@ -309,20 +315,20 @@ const ErrorPageContent = ({ feeReport }) => {
                 <span>Assessed</span>
                 <span>:</span>
                 <span>
-                  ₹ {roundOff(Number(feeReport?.feeDetails?.AssessedAmt))}
+                  ₹ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.AssessedAmt)))}
                 </span>
               </div>
               <div className="d-flex text-dark gap-3">
                 <span>Estimate</span>
                 <span style={{ marginLeft: "5px" }}>:</span>
                 <span>
-                  ₹ {roundOff(Number(feeReport?.feeDetails?.EstimateAmt))}
+                  ₹ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.EstimateAmt)))}
                 </span>
               </div>
               <div className="d-flex text-dark gap-3">
                 <span>IDV</span>
                 <span style={{ marginLeft: "42px" }}>:</span>
-                <span>₹ {roundOff(Number(feeReport?.claimDetails?.IDV))}</span>
+                <span>₹ {addCommasToNumber(roundOff(Number(feeReport?.claimDetails?.IDV)))}</span>
               </div>
             </div>
           </div>
@@ -392,11 +398,11 @@ const ErrorPageContent = ({ feeReport }) => {
                   <span style={{ marginLeft: "40px", fontWeight: "lighter" }}>
                     {" "}
                     Estimate Amount ₹{" "}
-                    {roundOff(Number(feeReport?.feeDetails?.EstimateAmt))}
+                    {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.EstimateAmt)))}
                   </span>
                 </span>
                 <br />
-                <span style={{ paddingLeft: "10px" }}>
+               {/* <span style={{ paddingLeft: "10px" }}>
                   Photos/CD Expenses : <br /> {feeReport?.feeDetails?.Photos}{" "}
                   Photographs , Charged for {feeReport?.feeDetails?.Photos_cd} @
                   ₹. {roundOff(Number(feeReport?.feeDetails?.PhotsRate))}
@@ -404,7 +410,7 @@ const ErrorPageContent = ({ feeReport }) => {
                 <br />
                 <span style={{ paddingLeft: "10px" }}>
                   Conveyance Expenses :{" "}
-                </span>
+            </span>*/}
               </div>
             </td>
             <td
@@ -419,7 +425,7 @@ const ErrorPageContent = ({ feeReport }) => {
               <span>
                 <h5 className="mt-3">47773</h5>
               </span>
-              <br />
+              {/*<br />
               <br />
               <span>
                 ₹ {roundOff(Number(feeReport?.feeDetails?.ProfessionalFees))}
@@ -435,7 +441,7 @@ const ErrorPageContent = ({ feeReport }) => {
               <br />
               <span>
                 ₹ {roundOff(Number(feeReport?.feeDetails?.Conveyance))}
-              </span>
+              </span>*/}
             </td>
             <td
               style={{
@@ -445,7 +451,7 @@ const ErrorPageContent = ({ feeReport }) => {
                 // paddingLeft: "20px",
               }}
             >
-              ₹ {roundOff(calculateTheTotalBillWithoutGST())}
+              ₹ {addCommasToNumber(roundOff(calculateTheTotalBillWithoutGST()))}
             </td>
           </tr>
           <tr>
@@ -469,11 +475,11 @@ const ErrorPageContent = ({ feeReport }) => {
               <span>Sub Total : ₹</span>
               <br />
               <span>
-                C GST @ {roundOff(Number(feeReport?.feeDetails?.Cgst))} %
+                C GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Cgst)))} %
               </span>
               <br />
               <span>
-                S GST @ {roundOff(Number(feeReport?.feeDetails?.Sgst))} %{" "}
+                S GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Sgst)))} %{" "}
               </span>
             </td>
             <td
@@ -484,11 +490,11 @@ const ErrorPageContent = ({ feeReport }) => {
                 // paddingLeft: "20px",
               }}
             >
-              <span> ₹ {roundOff(calculateTheTotalBillWithoutGST())}</span>{" "}
+              <span> ₹ {addCommasToNumber(roundOff(calculateTheTotalBillWithoutGST()))}</span>{" "}
               <br /> <hr />
-              <span>₹ {roundOff(calculateCGST())}</span>
+              <span>₹ {addCommasToNumber(roundOff(calculateCGST()))}</span>
               <br />
-              <span>₹ {roundOff(calculateSGST())}</span>
+              <span>₹ {addCommasToNumber(roundOff(calculateSGST()))}</span>
             </td>
           </tr>
           <tr>
@@ -520,7 +526,7 @@ const ErrorPageContent = ({ feeReport }) => {
                 // paddingLeft: "20px",
               }}
             >
-              <span>₹ {grandTotalWithGST()}</span>
+              <span>₹ {addCommasToNumber(roundOff(grandTotalWithGST()))}</span>
             </td>
           </tr>
           <tr>
@@ -550,7 +556,7 @@ const ErrorPageContent = ({ feeReport }) => {
                 // paddingLeft: "20px",
               }}
             >
-              <span>₹ {roundOff(grandTotalWithGST())}</span>
+              <span>₹ {addCommasToNumber(roundOff(grandTotalWithGST()))}</span>
             </td>
           </tr>
           <tr style={{ padding: "20px", marginBottom: "20px" }}>

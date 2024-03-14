@@ -304,14 +304,7 @@ export default function Exemple({
   };
 
   const checkAlreadyDone = (label) => {
-    let isPresent = false;
-    // console.log(label,document)
-    document.map((temp, index) => {
-      if (String(temp.DocumentName) === String(label)) {
-        isPresent = true;
-      }
-    });
-    return isPresent;
+    return false;
   };
 
   const checkId = (status, row) => {
