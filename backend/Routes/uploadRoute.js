@@ -23,6 +23,6 @@ router.post("/uploadManualDocument",uploadController.uploadDocument);
 
 router.post("/uploadMedia", uploadController.uploadMedia);
 
-router.post("/verifyReportUpload",authenticateUser, uploadController.verifyReportUpload);
+router.post("/verifyReportUpload", uploadController.verifyReportUpload);
 
 module.exports = router;

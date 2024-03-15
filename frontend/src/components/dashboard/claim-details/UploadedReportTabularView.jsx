@@ -6,7 +6,7 @@ import SVGChevronLeft from "./icons/SVGChevronLeft";
 import SVGChevronRight from "./icons/SVGChevronRight";
 import Modal from "react-modal";
 
-function SmartTable(props) {
+function UploadedReportTabularView(props) {
   const [loading, setLoading] = useState(false);
   const [sortDesc, setSortDesc] = useState({});
   const [tableWidth, setTableWidth] = useState(1000);
@@ -23,7 +23,7 @@ function SmartTable(props) {
   const fetchData = useCallback(
     async (queryString) => {
       setLoading(true);
-      try {
+      try {requiredLinks
         const response = await fetch(
           props.url + (queryString ? queryString : ""),
           {
@@ -180,13 +180,7 @@ function SmartTable(props) {
                       {!props.disable && (
                         <div className="row">
                           <div className="col-lg-10"></div>
-                          <div
-                            className="col-lg-1 btn-thm flaticon-plus"
-                            title="Add Document"
-                            style={{ marginLeft: "" }}
-                            // onClick={props.downloadAllFiles}
-                            onClick={props.openModal}
-                          ></div>
+                          
                           <div
                             className="col-lg-1 btn-thm w-10 flaticon-pdf"
                             title="pdf zip download"
@@ -418,7 +412,7 @@ function SmartTable(props) {
   );
 }
 
-SmartTable.propTypes = {
+UploadedReportTabularView.propTypes = {
   data: PropTypes.arrayOf(PropTypes.Object),
   rowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
@@ -437,4 +431,4 @@ SmartTable.propTypes = {
   ),
 };
 
-export default SmartTable;
+export default UploadedReportTabularView;

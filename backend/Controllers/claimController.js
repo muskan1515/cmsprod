@@ -1093,8 +1093,6 @@ const getSpecificClaim = async (req, res) => {
       LeadId,
     } = req.body;
 
-    console.log(req.body);
-    return
     const updateGarageDetails = `
     UPDATE GarageDetails
     SET
@@ -1116,18 +1114,6 @@ const getSpecificClaim = async (req, res) => {
     });
   }
 
-
-
-module.exports={addClaim,
-                getSpecificClaim,
-                updateClaim,
-                getAllClaims,
-                getClaimDetails,
-              updateClaimDetails,
-              updateDriverDetails,
-              updateVehicleDetails,
-              garageDetails
-            }
 module.exports={addClaim,
                 getSpecificClaim,
                 updateClaim,

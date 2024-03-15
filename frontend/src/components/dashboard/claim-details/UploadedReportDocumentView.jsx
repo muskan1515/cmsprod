@@ -1,10 +1,11 @@
-import SmartTable from "./SmartTable";
+import UploadedReportTabularView from "./UploadedReportTabularView";
   import { useEffect, useState } from "react";
   import JSZip from "jszip";
   import {  FaUpload } from "react-icons/fa";
   import axios from "axios";
   import toast from "react-hot-toast";
   import AWS from 'aws-sdk';
+
 
 
   AWS.config.update({
@@ -35,23 +36,17 @@ import SmartTable from "./SmartTable";
       width: 120,
     },
     {
-      id: "date",
-      numeric: false,
-      label: "Uploaded On",
-      width: 120,
-    },
-    // {
-    //   id: "status",
-    //   numeric: false,
-    //   label: "Status",
-    //   width: 120,
-    // },
-    {
       id: "file",
       numeric: false,
       label: "File",
       width: 150,
     },
+    {
+        id: "verified",
+        numeric: false,
+        label: "Verified",
+        width: 120,
+      },
     {
       id: "action",
       numeric: false,
@@ -148,12 +143,15 @@ import SmartTable from "./SmartTable";
     },
   ];
 
-  export default function Exemple({ documents,leadId  }) {
+  export default function UploadReportDocumentView({ leadId  }) {
     const [updatedCode, setUpdatedCode] = useState([]);
     const [selectedFile, setSelectedFile] = useState([]);
     const [uploadedFiles,setUploadedFiles]=useState([]);
     const [data,setData]=useState([])
-    const [disable,setDisable]=useState(false)
+    const [documents,setDocuments]=useState([])
+    const [disable,setDisable]=useState(false);
+
+    const [addReport,setAllReport]=useState([])
 
     const [isAdded,setIsAdded]=useState(false);
 
@@ -178,9 +176,8 @@ import SmartTable from "./SmartTable";
       setIsModalOpen(false);
     };
 
-  useEffect(()=>{
-    setUploadedFiles(documents)
-  },[documents]);
+
+
 
   useEffect(()=>{
     axios.get("/api/getDocumentListLabels",{
@@ -214,57 +211,112 @@ import SmartTable from "./SmartTable";
         console.log(err);
     })
 
+    axios.get("/api/getUploadedReportDocuments",{
+        params:{
+          leadId : leadId
+        }
+      })
+      .then((res)=>{
+        console.log("allUploadDocLists",res.data.data.results);
+        const tempData = res.data.data.results;
+        let storedData = [];
+        tempData.map((report,index)=>{
+            console.log("reportData",report);
+            let indexValue = -1;
+            storedData?.map((row,idx)=>{
+                if(String(row.docName)=== String(report.ReportType)){
+                    indexValue = idx;
+                }
+            })
+            console.log("report",report);
+            if(indexValue === -1){
+                let insideData = {
+                    name : report?.FileName,
+                    url : report?.FilePath,
+                    isVerified : report?.IsVerified,
+                    verifiedBy : report?.VerifiedBy,
+                    verifiedAt : report?.ModifiedDateTime,
+                    uploadedAt : report?.AddedDateTime,
+                    garageName : report?.GarageName,
+                    uploadedBy:report.UploadedBy
+                };
+                let newDataData = [];
+                newDataData.push(insideData)
+                const newData = {
+                    docName : report.ReportType,
+                    leadId : report.LeadId,
+                    data : newDataData
+                };
+
+                storedData.push(newData);
+            }
+            else{
+                 const oldReport = storedData[indexValue];
+                 let oldData = oldReport?.data;
+                
+                 let insideData = {
+                    name : report.FileName,
+                    url : report.FilePath,
+                    isVerified:report.IsVerified,
+                    verifiedBy : report.VerifiedBy,
+                    verifiedAt : report.ModifiedDateTime,
+                    uploadedAt : report.AdddedDateTime,
+                    garageName : report?.GarageName,
+                    uploadedBy:report.UploadedBy
+                };
+
+                oldData.push(insideData);
+
+                storedData[indexValue] = {
+                    docName : oldReport?.docName,
+                    leadId : oldReport?.leadId,
+                    data : oldData
+                };
+            }
+        })
+
+        console.log("allData",storedData,tempData)
+        setDocuments(storedData)
+       
+      })
+      .catch((err)=>{
+          console.log(err);
+      })
+
   },[])
 
-  const checkValue = (label) => {
-    let requiredInfo = [];
-    documents.map((doc, index) => {
-      if (String(doc.DocumentName) === String(label)) {
-        console.log(doc);
-        if (doc.Photo1 !== "") {
-          requiredInfo.push({
-            name: doc.Attribute1,
-            url: doc.Photo1,
-          });
-        }
-        if (doc.Photo2 !== "") {
-          requiredInfo.push({
-            name: doc.Attribute2,
-            url: doc.Photo2,
-          });
-        }
-        if (doc.Photo3 !== "") {
-          requiredInfo.push({
-            name: doc.Attribute3,
-            url: doc.Photo3,
-          });
-        }
-        if (doc.Photo4 !== "") {
-          requiredInfo.push({
-            name: doc.Attribute4,
-            url: doc.Photo4,
-          });
-        }
-        if (doc.Photo5 !== "") {
-          requiredInfo.push({
-            name: doc.Attribute5,
-            url: doc.Photo5,
-          });
-        }
-      }
-      })
-    }
-    
+
 
     const getAllLabelLinks = (docName)=>{
       let requiredLinks=[];
-      uploadedFiles.map((file,index)=>{
-        if(String(docName)===String(file.docName)){
+      let docFile = {};
+      console.log('getAllLabelLinks',uploadedFiles,documents)
+      documents?.map((file,index)=>{
+
+        console.log(docName,file.docName)
+        if(String(docName).toLowerCase().includes(String(file.docName).toLowerCase())){
+          docFile = file
           requiredLinks=file.data;
         }
       })
-      return requiredLinks;
+
+      return {requiredLinks,docFile};
     }
+
+    const formatDate = (dateString) => {
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+  
+      const dateParts = new Date(dateString)
+        .toLocaleDateString("en-GB", options)
+        .split("/");
+      const formattedDate =
+        dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
+      return formattedDate;
+    };
   // console.log("selectedFile-------->",selectedFile);
     
   
@@ -477,7 +529,6 @@ const handleReload = () => {
   window.location.reload();
 };
 
-
     const handleButtonClick = (doc_name) => {
       setDisable(true)
       console.log(doc_name)
@@ -485,62 +536,6 @@ const handleReload = () => {
       // Trigger file input click when button is clicked
       document.getElementById('fileInput').click();
     };
-
-//       try {
-//         const zip = new JSZip();
-
-      
-      
-
-//         documents.map((data, index) => {
-//           if (data.Attribute1 !== "") {
-//             const fileName = data.Attribute1;
-//             zip.file(fileName, data.Photo1, { binary: true });
-//           }
-//           if (data.Attribute2 !== "") {
-//             const fileName = data.name;
-//             zip.file(fileName, data.url, { binary: true });
-//           }
-//           if (data.Attribute3 !== "") {
-//             const fileName = data.Attribute3;
-//             zip.file(fileName, data.Photo3, { binary: true });
-//           }
-//           if (data.Attribute4 !== "") {
-//             const fileName = data.Attribute4;
-//             zip.file(fileName, data.Photo4, { binary: true });
-//           }
-//           if (data.Attribute5 !== "") {
-//             const fileName = data.Attribute5;
-//             zip.file(fileName, data.Photo5, { binary: true });
-//           }
-//         });
-
-
-//         // console.log(zip);
-
-//         const content = await zip.generateAsync({ type: "blob" });
-
-//         // Triggering the download
-//         const a = document.createElement("a");
-//         const url = URL.createObjectURL(content);
-//         a.href = url;
-//         a.download = "downloadedFiles.zip";
-//         document.body.appendChild(a);
-//         a.click();
-//         document.body.removeChild(a);
-//         URL.revokeObjectURL(url);
-
-//         alert("Successfully downloaded the zip!");
-//       } catch (error) {
-//         console.error("Error uploading file:", error);
-//       }
-//     } else {
-//       console.log("Accessing base64 after delay:", newFile.base64);
-//     }
-//   }, 1000);
-// };
-
-
 
 const getFileName = (idx)=>{
     let currentIndex = "";
@@ -634,6 +629,31 @@ const getFileName = (idx)=>{
     
   };
 
+  const VerifyReport = (docName)=>{
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    const payload = {
+        leadId : leadId,
+        DocumentName : docName,
+        VerifiedBy : userInfo[0]?.Username,
+        ModifiedDateTime : new Date()
+    }
+    axios.post("/api/verifyReportUpload", payload)
+    .then((res) => {
+        toast.dismiss()
+        toast.success("Successfully verified !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
+        window.location.reload();
+      })
+      .catch((err) => {
+        // isNotValidLink(true);
+        toast.dismiss()
+        toast.error("Try Again!!")
+      });
+  }
+
 
 
    const downloadAllFiles = async () => {
@@ -641,7 +661,7 @@ const getFileName = (idx)=>{
       const zip = new JSZip();
   
       // Iterate through uploadedFiles
-      for (const file of uploadedFiles) {
+      for (const file of documents) {
         const data = file.data;
   
         // Iterate through data array
@@ -681,35 +701,53 @@ const getFileName = (idx)=>{
 
   let tempCode = [];
   useEffect(() => {
+    const currentDate = new Date()
+    console.log("useEffect",documents)
     setChanges(false)
     data.map((docs, index) => {
-      const allInfo = getAllLabelLinks(docs.doc_name);
-      const fileName = getFileName(index);
-      console.log(docs.doc_name,allInfo)
+      const {requiredLinks,docFile} = getAllLabelLinks(docs.doc_name);
+      
+      console.log("docFile",docFile)
+      const showInfo = docFile?.data?.length ? docFile?.data[0] : {};
       const alllinks = (
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {allInfo?.map((info, idx) => (
-            <a href={info.url} key={idx} target="_blank">
-              {decodeURIComponent((info.name))}
-            </a>
+          {requiredLinks?.map((info, idx) => (
+            <div key={idx}>
+                <div style={{display:"flex",flexDirection:"row"}}>
+                <a href={info.url} key={idx} target="_blank">
+                    {decodeURIComponent((info.name))}
+                </a>
+                <p style={{fontSize:"10px",marginLeft:"10px",marginLeft:"12px"}}>{info?.uploadedAt ? formatDate(info?.uploadedAt) : "-"}</p>
+                </div>
+            <p>({info?.uploadedBy})</p>
+            </div>
           ))}
         </div>
       );
 
-      console.log("alllinks",alllinks);
       const temp = {
         _id: docs._id,
         serial_num: docs.serial_num,
         doc_name: docs.doc_name,
         file: alllinks,
-        action: <>
-        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.doc_name)} ></input>
-        <button  disabled={disable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.doc_name)}
-        >
-        <FaUpload /></button>
-        <p>{ fileName? `Selected File: ${fileName?.name}` : "Choose File"}</p>
-
         
+        verified: ( 
+        showInfo?.isVerified  === 1 ?
+        <div key={index}>
+        <div style={{display:"flex",flexDirection:"row"}}>
+        <span style={{textDecoration:"underline",color:"green"}}>{showInfo?.verifiedBy}</span> : 
+        <p style={{fontSize:"10px",marginLeft:"10px",marginLeft:"12px"}}>{showInfo?.verifiedAt ? formatDate(showInfo?.verifiedAt) : "-"}</p>
+        </div>
+        <p>({showInfo?.verifiedBy})</p>
+        </div> :
+         String(docFile?.leadId) === String(leadId) ?
+         <span style={{textDecoration:"underline",color:"red"}}>Not Verified</span> : <span>--</span> ),
+        action: 
+        (docFile?.leadId && showInfo?.isVerified) ? <span style={{textDecoration:"underline",color:"green"}}>Verified</span> : !docFile?.leadId ? <>--</> : <>
+        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.doc_name)} ></input>
+        <button  disabled={disable} className="btn btn-thm" onClick={()=>VerifyReport(docs.doc_name)}
+        >Verify</button>
+       
         </>,
         verify: docs.verify,
       };
@@ -718,11 +756,11 @@ const getFileName = (idx)=>{
     });
     // data = tempCode;
     setUpdatedCode(tempCode);
-  }, [documents,uploadedFiles,changes]);
+  }, [documents,uploadedFiles,changes,data]);
 
     return (
-      <SmartTable
-        title="Customer Documents"
+      <UploadedReportTabularView
+        title="Report Documents"
         data={updatedCode}
         headCells={headCells}
         disable={disable}

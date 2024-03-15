@@ -42,6 +42,7 @@ const CreateList = () => {
   const [garageNumber, setGarageNumber] = useState("");
   const [garageMailId, setGarageMailId] = useState("");
   const [claimNumber, setClaimNumber] = useState("");
+  const [allServicingOffice,setAllServicingOffice]=useState([]);
   const [brokerMailId, setBrokerMailId] = useState("intimationmt@gmail.com");
 
   const getNextYear = () => {
@@ -131,7 +132,7 @@ const CreateList = () => {
         className: "toast-loading-message",
       });
     }
-    if (!region) {
+    else if (!region) {
       toast.error("Region should be filled!!", {
         // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
@@ -520,14 +521,19 @@ const CreateList = () => {
               </label>
             </div>
             <div className="col-lg-7">
-              <input
+              <select
                 type="text"
                 className="form-control"
                 id="propertyTitle"
                 value={claimSurvicingOffice}
                 onChange={(e) => setClaimSurvicingOffice(e.target.value)}
-                // placeholder="Enter Registration No."
-              />
+                >
+                {allServicingOffice.map((office,index)=>{
+                  return <option key={index}>
+                    {office.OfficeName}
+                  </option>
+                })}
+              </select>
             </div>
           </div>
         </div>

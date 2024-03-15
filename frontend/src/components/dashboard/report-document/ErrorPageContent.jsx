@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const ErrorPageContent = ({ allInfo }) => {
   const pdfRef = useRef();
@@ -67,8 +67,6 @@ const ErrorPageContent = ({ allInfo }) => {
     generateAllPages();
   };
 
-
-
   //   const input = pdfRef.current;
 
   //   html2canvas(input).then((canvas) => {
@@ -93,21 +91,6 @@ const ErrorPageContent = ({ allInfo }) => {
   //     pdf.save("invoice.pdf");
   //   });
   // };
-
-  function StringWithBulletPoints( text ) {
-    if(!text || text === "null" || text === "undefined")
-     return text;
-    // Split the string by bullet points and trim whitespace
-    const lines = text?.split(/\d{2}\./).map(line => line.trim());
-  
-    return (
-      <div>
-        {lines?.map((line, index) => (
-          index === 0 ? "" : <p key={index}>{index}. {line}</p>
-        ))}
-      </div>
-    );
-  }
 
   const formatDate = (dateString) => {
     const options = {
@@ -486,28 +469,21 @@ const ErrorPageContent = ({ allInfo }) => {
     return Math.round(number * 100) / 100;
   };
 
-const calculateAge=(dateString)=>{
-  
-    const birthDate = new Date(dateString);
-    const currentDate = new Date();
+  function calculateAge(birthDate) {
+    var today = new Date();
+    var birthDateObj = new Date(birthDate);
+    var age = today.getFullYear() - birthDateObj.getFullYear();
+    var monthDiff = today.getMonth() - birthDateObj.getMonth();
 
-    let years = currentDate.getFullYear() - birthDate.getFullYear();
-    let months = currentDate.getMonth() - birthDate.getMonth();
-
-    if (months < 0) {
-        years--;
-        months += 12;
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
+    ) {
+      age--;
     }
 
-    let ageString = years > 0 ? years + " years" : "";
-    if (months > 0) {
-        ageString += (ageString ? " and " : "") + months + " months";
-    }
-
-    console.log("ageString",ageString)
-    return ageString || "0 years";
-
-}
+    return age;
+  }
 
   function numberToWords(number) {
     const units = [
@@ -687,12 +663,12 @@ const calculateAge=(dateString)=>{
           {allInfo?.otherInfo[0]?.SurveyType}{" "}
           {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
           {Number(allInfo?.summaryReport[0]?.CashLess) === 1
-            ? "CASH LESS"
-            : "NON CASH LESS"}
+            ? "CashLess"
+            : "Cash"}
           )- (
           {allInfo?.otherInfo[0]?.PolicyType
-            ? (allInfo?.otherInfo[0]?.PolicyType).toUpperCase()
-            : "REGULAR"}
+            ? allInfo?.otherInfo[0]?.PolicyType
+            : "Regular"}
           )
         </h4>
       </div>
@@ -708,16 +684,14 @@ const calculateAge=(dateString)=>{
         <h5 className="text-dark">INSURANCE PARTICULARS :</h5>
         <div className=" text-start d-flex text-dark">
           <div className="d-flex gap-5">
-            <div className="">
-              <label htmlFor="">(a) Policy / Cover Note No. </label>
-            </div>
+            <label htmlFor="">(a) Policy / Cover Note No. </label>
             <span> : </span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.PolicyNumber}
             </span>
           </div>
-          <div className="d-flex gap-4" style={{ marginLeft: "124px" }}>
+          <div className="d-flex gap-4" style={{ marginLeft: "82px" }}>
             <div className="">
               <label htmlFor="">IDV</label>
             </div>
@@ -737,7 +711,7 @@ const calculateAge=(dateString)=>{
               {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}
             </span>
           </div>
-          <div className="d-flex gap-4" style={{ marginLeft: "66px" }}>
+          <div className="d-flex gap-4" style={{ marginLeft: "20px" }}>
             <label htmlFor="">Claim No. </label>
             <span>:</span>
             <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
@@ -763,10 +737,9 @@ const calculateAge=(dateString)=>{
             <span style={{ marginLeft: "105px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.InsuredName}
-              
-              {allInfo?.otherInfo[0]?.InsuredMobileNo1 ? ` , ${allInfo?.otherInfo[0]?.InsuredMobileNo1}` : ""} <br />
-              {allInfo?.otherInfo[0]?.InsuredAddress ? ` , ${allInfo?.otherInfo[0]?.InsuredAddress}` : ""} <br />
+              {allInfo?.otherInfo[0]?.InsuredName},{" "}
+              {allInfo?.otherInfo[0]?.InsuredMobileNo1}, <br />
+              {allInfo?.otherInfo[0]?.InsuredAddress}
             </span>
           </div>
         </div>
@@ -794,14 +767,14 @@ const calculateAge=(dateString)=>{
       <div>
         <div className="d-flex gap-5">
           <h5 className="text-dark">VEHICLE PARTICULARS :</h5>
-          <span style={{ marginLeft: "160px" }}>
+          <span style={{ marginLeft: "130px" }}>
             {allInfo?.otherInfo[0]?.Remark}
           </span>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(a) Registered Number</label>
-            <span style={{ marginLeft: "105px" }}>:</span>
+            <span style={{ marginLeft: "100px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.RegisteredNumber}
@@ -811,7 +784,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Registered Owner </label>
-            <span style={{ marginLeft: "110px" }}>:</span>
+            <span style={{ marginLeft: "106px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </div>
         </div>
@@ -831,7 +804,7 @@ const calculateAge=(dateString)=>{
         <div className="text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">Owner Serial No. / Transfer Date</label>
-            <span style={{ marginLeft: "50px" }}>:</span>
+            <span style={{ marginLeft: "47px" }}>:</span>
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.TransferDate
@@ -844,7 +817,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(c) Date of Registration </label>
-            <span style={{ marginLeft: "100px" }}>:</span>
+            <span style={{ marginLeft: "97px" }}>:</span>
             <span>
               {" "}
               {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}
@@ -855,7 +828,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(d) Chassis Number </label>
-            <span style={{ marginLeft: "118px" }}>:</span>
+            <span style={{ marginLeft: "115px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.ChassisNumber}
@@ -866,7 +839,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(e) Engine Number </label>
-            <span style={{ marginLeft: "123px" }}>:</span>
+            <span style={{ marginLeft: "120px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.EngineNumber}
@@ -875,9 +848,9 @@ const calculateAge=(dateString)=>{
         </div>
 
         <div className=" text-start d-flex">
-          <div className="d-flex gap-5">
+          <div className="text-start d-flex gap-5">
             <label htmlFor="">(f) Make / Variant/ Model /Color </label>
-            <span style={{ marginLeft: "54px" }}>:</span>
+            <span style={{ marginLeft: "52px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.MakeVariantModelColor}</span>
           </div>
         </div>
@@ -944,7 +917,7 @@ const calculateAge=(dateString)=>{
             <label htmlFor="" className="text-dark">
               (a) Name of Driver
             </label>
-            <span style={{ marginLeft: "108px" }}>:</span>
+            <span style={{ marginLeft: "102px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.DriverName}
@@ -957,11 +930,14 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">Age </label>
-            <span style={{ marginLeft: "183px" }}>:</span>
+            <span style={{ marginLeft: "178px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo?.DateOfBirth !=="null" ? `${calculateAge(allInfo?.otherInfo[0]?.DateOfBirth)} old `  : "-"} ({" "}
-              {allInfo?.otherInfo[0]?.DateOfBirth 
+              {allInfo?.otherInfo?.DateOfBirth
+                ? calculateAge(allInfo?.otherInfo?.DateOfBirth)
+                : "-"}{" "}
+              Years ({" "}
+              {allInfo?.otherInfo[0]?.DateOfBirth
                 ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
                 : ""}
               )
@@ -972,7 +948,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Motor Driver License Number </label>
-            <span style={{ marginLeft: "28px" }}>:</span>
+            <span style={{ marginLeft: "25px" }}>:</span>
             <span className="fw-bold text-dark">
               {allInfo?.otherInfo[0]?.LicenseNumber}{" "}
             </span>
@@ -982,7 +958,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">Date of Issue </label>
-            <span style={{ marginLeft: "132px" }}>:</span>
+            <span style={{ marginLeft: "129px" }}>:</span>
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.DateOfIssue
@@ -990,15 +966,38 @@ const calculateAge=(dateString)=>{
                 : "-"}
             </span>
           </div>
-         
+          <div className="d-flex gap-2" style={{ marginLeft: "50px" }}>
+            <label htmlFor="">Valid upto (NTV) </label>
+            <span style={{ marginLeft: "px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.DateOfIssue
+                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+                : "-"}
+            </span>
+          </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
-            <label htmlFor="">Valid Upto </label>
-            <span style={{ marginLeft: "178px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.ValidUpto !=="undefined"  && allInfo?.otherInfo[0].ValidUpto
-            ? formatDate(allInfo?.otherInfo[0]?.ValidUpto) : "-"}</span>
+            <label htmlFor="">Valid from </label>
+            <span style={{ marginLeft: "144px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
+                ? formatDate(allInfo?.otherInfo[0]?.ValidFrom)
+                : "-"}
+            </span>
+          </div>
+          <div className="d-flex gap-2" style={{ marginLeft: "120px" }}>
+            <label htmlFor="">Valid upto (TV) </label>
+            <span style={{ marginLeft: "px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.DateOfIssue
+                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+                : "-"}
+            </span>
           </div>
         </div>
 
@@ -1034,7 +1033,7 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(a) Date & Time of Accident </label>
-            <span style={{ marginLeft: "50px" }}>:</span>
+            <span style={{ marginLeft: "48px" }}>:</span>
             <span>
               {" "}
               {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)},
@@ -1045,21 +1044,21 @@ const calculateAge=(dateString)=>{
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Place of Accident </label>
-            <span style={{ marginLeft: "87px" }}>:</span>
+            <span style={{ marginLeft: "85px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.PlaceOfLoss}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(c) Place of Survey </label>
-            <span style={{ marginLeft: "97px" }}>:</span>
+            <span style={{ marginLeft: "95px" }}>:</span>
             <span>{allInfo?.otherInfo[0]?.PlaceOfSurvey}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(d) Date of Allotment of Survey </label>
-            <span style={{ marginLeft: "27px" }}>:</span>
+            <span style={{ marginLeft: "26px" }}>:</span>
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.SurveyAllotmentDate
@@ -1146,7 +1145,7 @@ const calculateAge=(dateString)=>{
             {allInfo?.otherInfo[0]?.HPA}- SGNR
           </b>{" "}
           dated <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b> I
-          visited <b>{allInfo?.otherInfo[0]?.GarageName ? allInfo?.otherInfo[0]?.GarageName : "N.A."}, {allInfo?.otherInfo?.GarageNameAndAddress ? allInfo?.otherInfo?.GarageNameAndAddress : "N.A."}</b> and inspected the
+          visited <b>{allInfo?.otherInfo[0]?.InsuredName}</b> and inspected the
           subject vehicle, reported to have met with an accident on{" "}
           <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b> Between{" "}
           {allInfo?.otherInfo[0]?.PlaceOfLoss} and snapped the vehicle from
@@ -2334,7 +2333,7 @@ const calculateAge=(dateString)=>{
       <div>
         <h4 className="text-dark">Notes :</h4>
         <ul>
-          {(StringWithBulletPoints(allInfo?.summaryReport[0]?.SummaryNotes))}
+          {convertToProperHTML(allInfo?.summaryReport[0]?.SummaryNotes)}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>
@@ -2368,7 +2367,7 @@ const calculateAge=(dateString)=>{
         <br />
         <div
           className="d-flex justify-content-between"
-          style={{ marginBottom: "130%" }}
+          style={{ marginBottom: "" }}
         >
           <div>
             <span>

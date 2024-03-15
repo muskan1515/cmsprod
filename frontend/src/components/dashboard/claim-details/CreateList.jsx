@@ -42,12 +42,9 @@ const CreateList = ({
   BrokerMailAddress,
   GarageMailAddress,
 }) => {
-  console.log(
-    InsuredName,
-    InsuredMobileNo1,
-    InsuredMailAddress,
-    insuranceCompanyNameAddress
-  );
+
+  const [allServicingOffice,setAllServicingOffice]=useState([]);
+  
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
@@ -125,6 +122,18 @@ const CreateList = ({
     setPolicyEndDate(getNextYear());
   }, [policyStartDate]);
 
+  
+  useEffect(()=>{
+    axios.get("/api/getClaimServicingOffice")
+    .then((res)=>{
+      setAllServicingOffice(res.data.data.results);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  },[]);
+
+
   useEffect(() => {
     if (
       policyEndDate == "null" ||
@@ -144,6 +153,7 @@ const CreateList = ({
       }
     }
   }, [policyStartDate]);
+
 
   const checkStatus = (val) => {
     let status = "";
@@ -602,14 +612,20 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <input
+              <select
                 type="text"
                 className="form-control"
                 id="propertyTitle"
                 value={claimServicingOffice}
                 onChange={(e) => setClaimServicingOffice(e.target.value)}
                 // placeholder="Enter Registration No."
-              />
+              >
+                {allServicingOffice?.map((office,index)=>{
+                    return <option key={index}>
+                      {office.OfficeName}
+                    </option>
+                })}
+              </select>
             </div>
           </div>
         </div>

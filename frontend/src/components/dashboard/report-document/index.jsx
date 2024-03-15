@@ -54,15 +54,15 @@ const Index = () => {
         <PrintComponent>
           <div>
             {
-              <section className="" style={{ paddingTop: "10px" }}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <ErrorPageContent allInfo={allInfo} />
-                    </div>
+              // <section className="" style={{ paddingTop: "" }}>
+              <div className="container">
+                <div className="row">
+                  <div className="col-lg-12">
+                    <ErrorPageContent allInfo={allInfo} />
                   </div>
                 </div>
-              </section>
+              </div>
+              // </section>
             }
           </div>
         </PrintComponent>

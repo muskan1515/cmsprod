@@ -20,8 +20,10 @@ const getReportDocument = (req, res) => {
 
 
 const getReportDocumentsLabels = (req, res) => {
-  const sql = "SELECT * FROM DocumentNames";
-  db.query(sql,  (error, results) => {
+  const LeadId = req.query.leadId;
+  console.log("DcoList",LeadId)
+  const sql = "SELECT * FROM DocumentNames WHERE LeadID = ?";
+  db.query(sql, [LeadId],  (error, results) => {
     if (error) {
       console.error("Error while fetching the report documents labels:", error);
       return res
@@ -193,17 +195,21 @@ const uploadDocument = (req, res) => {
 
 
 const addDocumentLabel = (req,res)=>{
-  const {DocumentLabel} = req.body;
+  const {DocumentName , leadId} = req.body;
+  
   const insertAddDocument = `
   INSERT INTO DocumentNames (
     DocumentName,
-    IsActive
+    IsActive,
+    LeadID
   ) VALUES (
-    '${DocumentLabel}',
-    ${1}
+    '${DocumentName}',
+    ${1},
+    ${leadId}
   );
 `;
 
+console.log(insertAddDocument)
 
   db.query(insertAddDocument, (error, results) => {
     if (error) {
@@ -349,13 +355,14 @@ const uploadMedia = async (req, res) => {
 };
 
 const verifyReportUpload = (req, res) => {
-  const { userName, reportId } = req.body;
+  const { leadId, DocumentName,VerifiedBy ,ModifiedDateTime} = req.body;
   const updateVerifyReport = `
     UPDATE ReportDocuments
           SET
-          VerifiedBy = '${userName}',
-          IsVerified = '${1}'
-          WHERE ReportId = ${reportId};
+          VerifiedBy='${VerifiedBy}',
+          IsVerified ='${1}',
+          ModifiedDateTime='${ModifiedDateTime}'
+          WHERE ReportType ='${DocumentName}' AND LeadId = '${leadId}'
     `;
   db.query(updateVerifyReport, (err, result2) => {
     if (err) {

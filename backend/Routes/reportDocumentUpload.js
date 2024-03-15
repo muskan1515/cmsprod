@@ -6,4 +6,6 @@ const reportController = require("../Controllers/reportDocumentController");
 
 router.post("/uploadReportDocument",reportController.uploadDocument);
 
+router.get("/getReportDocuments",reportController.getReportDocuments)
+
 module.exports = router;

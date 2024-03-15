@@ -1,6 +1,25 @@
 // import logo from "./../logo.svg";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+
 const PrintComponent = ({ children }) => {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const handlePrint = () => {
+      if (footerRef.current) {
+        footerRef.current.style.position = "fixed";
+        footerRef.current.style.bottom = "0";
+        footerRef.current.style.width = "100%";
+      }
+    };
+
+    window.onbeforeprint = handlePrint;
+
+    return () => {
+      window.onbeforeprint = null;
+    };
+  }, []);
   const printAction = () => {
     window.print();
   };
@@ -9,6 +28,43 @@ const PrintComponent = ({ children }) => {
       {/* <button className={"print-preview-button"} onClick={printAction}>
         {"Print Preview"}
       </button> */}
+      <div className="page-footer">
+        <footer ref={footerRef} className="bg-gray-800 text-white" style={{}}>
+          <hr style={{ border: "2px solid black" }} />
+          <div className="">
+            <div className="d-flex gap-5">
+              <div className="">
+                <h5
+                  className="text-center text-dark"
+                  style={{ fontSize: "12px" }}
+                >
+                  H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
+                  Ganganagar(Raj.)-335001
+                </h5>
+                <h5
+                  className="text-center text-dark"
+                  style={{ fontSize: "12px" }}
+                >
+                  Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
+                  Mountville,Sector-79,Gurugram(Hr)
+                </h5>
+              </div>
+              <div className="" style={{ marginTop: "0px" }}>
+                <div className="text-end">
+                  <Image
+                    width={261}
+                    height={69}
+                    priority
+                    className="w50"
+                    src="/assets/images/stamp.jpg"
+                    alt="1.jpg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
       <table className="print-component">
         <thead>
           <tr>
@@ -20,23 +76,33 @@ const PrintComponent = ({ children }) => {
         </thead>
         <tbody>
           <tr>
-            <td>{children}</td>
+            <td className="page">{children}</td>
           </tr>
         </tbody>
-        <tfoot className="table-footer">
+        <tfoot className="table-footer" style={{}}>
           <tr>
             <td>
-              {
-                <footer className="bg-gray-800 text-white">
+              {/* {
+                <footer
+                  ref={footerRef}
+                  className="bg-gray-800 text-white"
+                  style={{}}
+                >
                   <hr style={{ border: "2px solid black" }} />
                   <div className="">
                     <div className="d-flex gap-5">
                       <div className="">
-                        <h5 className="text-center text-dark">
+                        <h5
+                          className="text-center text-dark"
+                          style={{ fontSize: "12px" }}
+                        >
                           H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School
                           ,Sri Ganganagar(Raj.)-335001
                         </h5>
-                        <h5 className="text-center text-dark">
+                        <h5
+                          className="text-center text-dark"
+                          style={{ fontSize: "12px" }}
+                        >
                           Ofce: B-43,NFL Society,Sector-PI,Gr
                           Noida-201310./E-201,MAPSKO
                           Mountville,Sector-79,Gurugram(Hr)
@@ -57,7 +123,8 @@ const PrintComponent = ({ children }) => {
                     </div>
                   </div>
                 </footer>
-              }
+              } */}
+              <div className="page-footer-space"></div>
             </td>
           </tr>
         </tfoot>

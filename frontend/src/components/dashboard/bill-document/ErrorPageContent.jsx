@@ -4,7 +4,8 @@ import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 const ErrorPageContent = ({ feeReport }) => {
   const pdfRef = useRef();
@@ -22,6 +23,29 @@ const ErrorPageContent = ({ feeReport }) => {
     const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
     return formattedDate;
 };
+const [selectedServicingOffice,setSelectedServicingOffice]=useState([]);
+  
+useEffect(()=>{
+  axios.get("/api/getClaimServicingOffice")
+  .then((res)=>{
+    const allOffice = res.data.data.results;
+    const name = feeReport?.claimDetails?.ClaimServicingOffice;
+    
+    let requiredOffice ={}
+    allOffice.map((office,index)=>{
+      if(String(office.OfficeName) === String(name)){
+        requiredOffice=office
+      }
+    })
+
+    console.log(requiredOffice);
+    setSelectedServicingOffice(requiredOffice)
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+},[feeReport]);
+
 
   const roundOff = (value) => {
     const roundedValue = parseFloat(value).toFixed(2);
@@ -237,15 +261,23 @@ const ErrorPageContent = ({ feeReport }) => {
           <div className="d-flex text-dark gap-5 fw-bold">
             <div className="">
               <span style={{ marginLeft: "25px" }}>
-                {feeReport.feeDetails?.InsuranceCompanyName}
+                Mr./Ms. {selectedServicingOffice?.EmployeeName} ({selectedServicingOffice?.Designation} )
+              </span>
+              <br/>
+              <span style={{ marginLeft: "25px" }}>
+                {selectedServicingOffice?.OfficeNameWithCode}
               </span>
               <br />
               <span style={{ marginLeft: "25px" }}>
-                GSTIN : 08AAACT0627R3ZX
+                {selectedServicingOffice?.State}
               </span>
               <br />
               <span style={{ marginLeft: "25px" }}>
-                State Code : {feeReport?.vehicleOnlineDetails?.StateCode ?feeReport?.vehicleDetails?.StateCode :"-"}
+                GSTIN : {selectedServicingOffice?.GST_No}
+              </span>
+              <br />
+              <span style={{ marginLeft: "25px" }}>
+                State Code : {selectedServicingOffice?.StateCode}
               </span>
             </div>
             <div className="" style={{ marginLeft: "px" }}>
@@ -595,8 +627,8 @@ const ErrorPageContent = ({ feeReport }) => {
           <tr style={{ border: "1px solid black" }}>
             <td colSpan={2} style={{ padding: "5px" }}>
               <span className="text-dark">
-                <span className="fw-bold">GSTIN </span>: 08AAJCM8228Q1ZM State :
-                (08)
+                <span className="fw-bold">GSTIN </span>: {selectedServicingOffice?.GST_No} State :
+                ({selectedServicingOffice?.StateCode})
               </span>
               <br />
               <span className="text-dark">
@@ -630,7 +662,7 @@ const ErrorPageContent = ({ feeReport }) => {
             <td colSpan={2} className="">
               <div>
                 <h4 className="" style={{ marginLeft: "50%" }}>
-                  For Mutneja Tech{" "}
+                  For MT ENGINEER{" "}
                 </h4>{" "}
                 <span style={{ color: "black", marginLeft: "28%" }}>
                   Insurance Surveyors & Loss assessors Pvt. Ltd.

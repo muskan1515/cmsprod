@@ -1,5 +1,23 @@
 
 const db = require("../Config/dbConfig");
+
+const getReportDocuments = (req, res) => {
+  const LeadId = req.query.leadId;
+  console.log("DcoList",LeadId)
+  const sql = "SELECT * FROM ReportDocuments WHERE LeadId = ?";
+  db.query(sql, [LeadId],  (error, results) => {
+    if (error) {
+      console.error("Error while fetching the report documents :", error);
+      return res
+        .status(500)
+        .json({ error: "Error inserting data into report documents :." });
+    }
+
+    return res.status(200).json({ results });
+  });
+};
+
+
 const uploadDocument = (req, res) => {
     const {
         garage,
@@ -10,6 +28,7 @@ const uploadDocument = (req, res) => {
         uploadedBy
     } = req.body;
  
+
 
         const insertUploadDetails = `
         INSERT INTO ReportDocuments (
@@ -28,7 +47,7 @@ const uploadDocument = (req, res) => {
           '${reportType}'
         );
       `;
-  
+
         db.query(insertUploadDetails, (error, results) => {
           if (error) {
             console.error("Error inserting data into Report Document Upload Details:", error);
@@ -41,4 +60,4 @@ const uploadDocument = (req, res) => {
   
   };
 
-  module.exports={uploadDocument}
+  module.exports={uploadDocument,getReportDocuments}

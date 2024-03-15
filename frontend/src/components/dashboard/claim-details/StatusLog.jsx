@@ -160,7 +160,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
         inside = index;
       }
     })
-    return inside;
+    return id === 10 ? inside : 1;
   }
 
   const isFound = (allValues,id)=>{
@@ -188,7 +188,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
       token : Number(userInfo[0].Token)
     };
 
-    toast.loading("updatign the status!!", {
+    toast.loading("updating the status!!", {
       // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });

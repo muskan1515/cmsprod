@@ -8,7 +8,7 @@ import axios from "axios";
     const domain = process.env.BACKEND_DOMAIN;
     const leadId = request.query.leadId;
 
-    const userResponse = await axios.get(`${domain}/upload/getDocumentsLabels`,
+    const userResponse = await axios.get(`${domain}/reportDocument/getReportDocuments`,
     {
         headers: {
           Authorization:token,

@@ -17,6 +17,7 @@ const driverDetailsRoute=require("./Routes/driverDetailRoutes");
 const misSheetRoutes=require("./Routes/misSheetRoutes");
 const insurerRoutes=require("./Routes/InsurerRoute");
 const uploadReportDoc = require("./Routes/reportDocumentUpload");
+const fetchRoutes = require("./Routes/fetchRoutes")
 const multer = require("multer");
 
 
@@ -67,6 +68,9 @@ app.use("/mis",misSheetRoutes);
 app.use("/Insurers",insurerRoutes);
 
 app.use("/reportDocument",uploadReportDoc);
+
+
+app.use("/fetch",fetchRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello, this is your Express server!');

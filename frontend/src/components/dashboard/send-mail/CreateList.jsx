@@ -1,30 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { data } from "./data";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast} from 'react-hot-toast'
+import { defaultContent } from "./EmailContent";
 const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
+
+    
+  if(!leadId)
+   return
   const [selectedItems, setSelectedItems] = useState([]);
   const [emailAddress, setEmailAddress] = useState(email ? email : "");
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
   const [date, setDate] = useState(new Date());
 
-  
+
 
   const [fromEmail, setFromEmail] = useState(String(Region) === "Delhi" ? "mt.dro123@gmail.com" : String(Region) === "Jodhpur" ? "mt.jdro123@gmail.com" : "mt.chro123@gmail.com" );
   const [subject, setSubject] = useState("Survey Request for Vehicle Claim");
-  const [body, setBody] = useState(` Dear Sir/Madam,
-
-  Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
-
-    We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${policyNo} on ${date} from the United India 
-  Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
-  can procedd further in your case and we also request 
-  you to provide the following details as follows:-`);
+  const [body, setBody] = useState("");
+  const [type,setType]=useState(1);
 
   const router = useRouter();
 
-  console.log(leadId, email, policyNo);
+  useEffect(()=>{
+    
+    const getData = ()=>{
+      const newContent = defaultContent(type,vehicleNo,policyNo,Insured,new Date());
+      console.log(type,newContent)
+      setBody(newContent)
+    }
+
+    getData()
+  },[type,policyNos,date,emailAddress])
+
+ 
   const handleCheckboxChange = (id, value, checked) => {
     if (checked) {
       // If checked, add the item to the selectedItems list
@@ -117,7 +127,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
   const [selectedOption, setSelectedOption] = useState("showDocument");
 
   const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
+    setType(e.target.value)
   };
 
   return (
@@ -131,14 +141,13 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
         <div className="col-lg-3">
           <select
             id="documentType"
-            value={selectedOption}
-            onChange={handleSelectChange}
+            value={type}
+            onChange={(e)=>handleSelectChange(e)}
             className="form-select"
           >
-            <option value="showDocument">Send Documents</option>
-            <option value="showInput">Send Documents -1</option>
-            <option value="showInput_01">Send Documents -2</option>
-            <option value="showInput_02">Send Documents -3</option>
+            <option value={1}>Custom Mail</option>
+            <option value={2}>Mail As Broker</option>
+            <option value={3}>Mail As Garage</option>
           </select>
         </div>
 

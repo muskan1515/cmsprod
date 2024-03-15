@@ -24,6 +24,7 @@ import CreateList_04 from "./CreateList_04";
 import Loader from "../../common/Loader";
 import { useRouter } from "next/router";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import UploadReportDocumentView from "./UploadedReportDocumentView";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -1687,9 +1688,20 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <UploadReort leadId={leadId} />
+                            <UploadReort leadId={leadId} claim={claim} />
                           </div>
                         </div>
+
+                        <div
+                          className="row mb-2"
+                          style={{ marginLeft: "-15px" }}
+                        >
+                          <div className="col-lg-12 text-center">
+                            {/* <ErrorPageContent /> */}
+                            <UploadReportDocumentView documents={documents} leadId={leadId} />
+                          </div>
+                        </div>
+
                         <div
                           className="row mb-2"
                           style={{ marginLeft: "-15px" }}

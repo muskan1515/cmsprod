@@ -23,7 +23,7 @@ const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
 const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
 
 
-const UploadReort = ({ leadId }) => {
+const UploadReort = ({ leadId ,claim}) => {
   const [garage, setGarage] = useState("");
   const [reportType, setReportType] = useState("");
   const [fileName, setFileName] = useState("");
@@ -136,25 +136,132 @@ const UploadReort = ({ leadId }) => {
     setDisable(false)
   };
 
-  const types = [
-    { name: "Driving licence" },
-    { name: "Certificate of registration" },
-    { name: "Repair Estimate" },
-    { name: "Claim form" },
-    { name: "Insurance policy" },
-    { name: "Damage vehicle photographs/video" },
-    { name: "Aadhar card" },
-    { name: "Pan card" },
-    { name: "Cancel cheque" },
-    { name: "Satisfaction voucher" },
-    { name: "Discharge voucher" },
-    { name: "Dismantle photographs" },
-    { name: "Reinspection photographs" },
-    { name: "Repair Invoice" },
-    { name: "Payment/cash receipt" },
-    { name: "Videos" },
-    { name: "Images" },
+  
+  let LabelData = [
+    {
+      _id: "6144145976c7fe",
+      serial_num: "1",
+      doc_name: "Driving licence",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "2",
+      doc_name: "Certificate of registration",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "3",
+      doc_name: "Repair Estimate",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "4",
+      doc_name: "Claim form",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "5",
+      doc_name: "Insurance policy",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "6",
+      doc_name: "Damage vehicle photographs/video",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "7",
+      doc_name: "Aadhar card",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "8",
+      doc_name: "Pan card"
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "9",
+      doc_name: " Cancel cheque",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "10",
+      doc_name: " Satisfaction voucher",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "11",
+      doc_name: "Discharge voucher",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "12",
+      doc_name: "Dismantle photographs",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "13",
+      doc_name: "Reinspection photographs",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "14",
+      doc_name: "Repair Invoice",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "15",
+      doc_name: "Payment/cash receipt",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "16",
+      doc_name: "Images",
+    },
+    {
+      _id: "6144145976c7fe",
+      serial_num: "17",
+      doc_name: "Videos",
+    },
   ];
+
+  
+  const [data,setData]=useState([])
+
+  
+  useEffect(()=>{
+    axios.get("/api/getDocumentListLabels",{
+      params:{
+        leadId : leadId
+      }
+    })
+    .then((res)=>{
+      console.log("allDocLists",res);
+      const tempAllDocsLabel = res.data.data.results;
+      const allLabelCount = LabelData.length
+      let newAddOnLabels = []
+
+      LabelData.map((data,index)=>{
+        newAddOnLabels.push(data)
+      })
+
+      tempAllDocsLabel.map((doc,index)=>{
+        const newLabel = {
+          _id:allLabelCount+2,
+          serial_num:allLabelCount+2,
+          doc_name:doc.DocumentName
+        };
+        newAddOnLabels.push(newLabel)
+      });
+
+      
+      setData(newAddOnLabels);
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+
+  },[])
 
 
   const fileUploadHandler = async (e) => {
@@ -221,9 +328,9 @@ const UploadReort = ({ leadId }) => {
                           value={garage}
                           onChange={(e) => setGarage(e.target.value)}
                         >
-                          <option data-tokens="Status1">Select</option>
+                          <option data-tokens="Status1">-</option>
                           <option data-tokens="Status1">
-                            Megapower Car Services
+                            {claim?.garageDetails?.GarageNameAndAddress}
                           </option>
                           {/* <option data-tokens="Status2">Delhi</option>
                                       <option data-tokens="Status3">Chandigarh</option> */}
@@ -267,14 +374,14 @@ const UploadReort = ({ leadId }) => {
                           value={reportType}
                           onChange={(e) => setReportType(e.target.value)}
                         >
-                          {types.map((type, index) => {
+                          {data.map((type, index) => {
                             return (
                               <option
                                 data-tokens="Status1"
-                                value={type.name}
-                                key={index}
+                                value={type.doc_name}
+                                key={type.serial_num}
                               >
-                                {type.name}
+                                {type.doc_name}
                               </option>
                             );
                           })}
@@ -346,11 +453,7 @@ const UploadReort = ({ leadId }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-12">
-                <div className="row">
-                  <Exemple leadId={leadId} />
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
