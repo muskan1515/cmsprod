@@ -49,7 +49,6 @@ const ErrorPageContent = ({ allInfo }) => {
       });
     };
 
-   
     const totalPages = 3;
 
     let currentPage = 1;
@@ -112,21 +111,24 @@ const ErrorPageContent = ({ allInfo }) => {
 
   const formatDate = (dateString) => {
     const options = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     };
 
-    const dateParts = new Date(dateString).toLocaleDateString("en-GB", options).split('/');
-    const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
+    const dateParts = new Date(dateString)
+      .toLocaleDateString("en-GB", options)
+      .split("/");
+    const formattedDate =
+      dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
     return formattedDate;
-};
+  };
 
   const formatDateTime = (dateString) => {
     const options = {
       year: "numeric",
       month: "short",
-      day: "numeric"
+      day: "numeric",
     };
 
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
@@ -220,45 +222,47 @@ const ErrorPageContent = ({ allInfo }) => {
 
   function convertToReadable(timeStr) {
     try {
-        // Split the time string into hours and minutes
-        const [hours, minutes] = timeStr.split(':');
-        
-        // Convert hours and minutes to numbers
-        const hour = parseInt(hours, 10);
-        const minute = parseInt(minutes, 10);
+      // Split the time string into hours and minutes
+      const [hours, minutes] = timeStr.split(":");
 
-        // Format the time in readable format
-        const formattedHour = (hour % 12 || 12).toString().padStart(2, '0'); // Convert to 12-hour format
-        const period = hour < 12 ? 'AM' : 'PM';
-        const readableTime = `${formattedHour}:${minutes} ${period}`; // Example: 09:49 AM
-        return readableTime;
+      // Convert hours and minutes to numbers
+      const hour = parseInt(hours, 10);
+      const minute = parseInt(minutes, 10);
+
+      // Format the time in readable format
+      const formattedHour = (hour % 12 || 12).toString().padStart(2, "0"); // Convert to 12-hour format
+      const period = hour < 12 ? "AM" : "PM";
+      const readableTime = `${formattedHour}:${minutes} ${period}`; // Example: 09:49 AM
+      return readableTime;
     } catch (error) {
-        return "Invalid time format. Please provide time in HH:MM format.";
+      return "Invalid time format. Please provide time in HH:MM format.";
     }
-}
+  }
 
   function addCommasToNumber(number) {
-    if(Number(number)<=100 || number === undefined)
-    return number;
+    if (Number(number) <= 100 || number === undefined) return number;
     return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  }
 
-function convertToBulletPointsAndParseHTML(text) {
-  // Convert HTML tags to plain text
-  const plainText = text.replace(/<[^>]*>?/gm, '');
+  function convertToBulletPointsAndParseHTML(text) {
+    // Convert HTML tags to plain text
+    const plainText = text.replace(/<[^>]*>?/gm, "");
 
-  // Split the text into sentences
-  const sentences = plainText.split(/\d+\./).filter(sentence => sentence.trim() !== '');
+    // Split the text into sentences
+    const sentences = plainText
+      .split(/\d+\./)
+      .filter((sentence) => sentence.trim() !== "");
 
-  // Convert sentences into bullet points
-  const bulletPoints = sentences.map(sentence => `<li>${sentence.trim()}</li>`);
+    // Convert sentences into bullet points
+    const bulletPoints = sentences.map(
+      (sentence) => `<li>${sentence.trim()}</li>`
+    );
 
-  // Join bullet points into an unordered list
-  const bulletList = `<ul>${bulletPoints.join('')}</ul>`;
+    // Join bullet points into an unordered list
+    const bulletList = `<ul>${bulletPoints.join("")}</ul>`;
 
-  return bulletList;
-}
-
+    return bulletList;
+  }
 
   const getTotalOtherMetalAssesses = () => {
     let total = 0;
@@ -440,15 +444,15 @@ function convertToBulletPointsAndParseHTML(text) {
   function convertToProperHTML(htmlString) {
     // Create a new DOMParser
     const parser = new DOMParser();
-  
+
     // Parse the HTML string
-    const doc = parser.parseFromString(htmlString, 'text/html');
-  
+    const doc = parser.parseFromString(htmlString, "text/html");
+
     // Extract the text content from the parsed document
     const plainText = doc.body.textContent || "";
-  
+
     return plainText;
-}
+  }
 
   const getSummaryTotalWithLessSalvage = () => {
     return (
@@ -478,9 +482,9 @@ function convertToBulletPointsAndParseHTML(text) {
     return gst;
   };
 
-  const  roundOff=(number)=> {
+  const roundOff = (number) => {
     return Math.round(number * 100) / 100;
-  }
+  };
 
   function calculateAge() {
     if( allInfo?.otherInfo[0]?.DateOfBirth !== undefined || allInfo?.otherInfo[0]?.DateOfBirth ==="undefined" || ! allInfo?.otherInfo[0]?.DateOfBirth)
@@ -571,7 +575,6 @@ function convertToBulletPointsAndParseHTML(text) {
       return result;
     };
 
-    
     const convert = (num) => {
       if (num === 0) {
         return "zero";
@@ -599,7 +602,6 @@ function convertToBulletPointsAndParseHTML(text) {
       return result.trim();
     };
 
-   
     const roundedNumber = roundOff(number);
 
     const wholePart = Math.floor(roundedNumber);
@@ -616,7 +618,7 @@ function convertToBulletPointsAndParseHTML(text) {
   return (
     <div
       className="text-dark"
-      style={{ width: "", color: "black" }}
+      style={{ width: "", color: "black", fontSize: "12px" }}
       ref={pdfRef}
     >
       {/* common header for all page */}
@@ -684,7 +686,7 @@ function convertToBulletPointsAndParseHTML(text) {
       </div>
       <div className="text-center text-dark">
         <h4>
-          {allInfo?.otherInfo[0]?.SurveyType} {" "}
+          {allInfo?.otherInfo[0]?.SurveyType}{" "}
           {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
           {Number(allInfo?.summaryReport[0]?.CashLess) === 1
             ? "CASH LESS"
@@ -706,8 +708,8 @@ function convertToBulletPointsAndParseHTML(text) {
       <hr style={{ border: "2px solid black" }} />
       <div>
         <h5 className="text-dark">INSURANCE PARTICULARS :</h5>
-        <div className=" text-start d-flex gap-5 text-dark">
-          <div className="d-flex gap-4">
+        <div className=" text-start d-flex text-dark">
+          <div className="d-flex gap-5">
             <div className="">
               <label htmlFor="">(a) Policy / Cover Note No. </label>
             </div>
@@ -717,7 +719,7 @@ function convertToBulletPointsAndParseHTML(text) {
               {allInfo?.otherInfo[0]?.PolicyNumber}
             </span>
           </div>
-          <div className="d-flex gap-4" style={{ marginLeft: "138px" }}>
+          <div className="d-flex gap-4" style={{ marginLeft: "124px" }}>
             <div className="">
               <label htmlFor="">IDV</label>
             </div>
@@ -730,7 +732,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className="d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(b) Period of Insurance</label>
-            <span style={{ marginLeft: "25px" }}> : </span>
+            <span style={{ marginLeft: "42px" }}> : </span>
             <span>
               {" "}
               {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to{" "}
@@ -746,22 +748,21 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className="d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(c) Endorsement </label>
-            <span style={{ marginLeft: "69px" }}>:</span>
+            <span style={{ marginLeft: "74px" }}>:</span>
             <span> --</span>
           </div>
-          
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(d) Insurers </label>
-            <span style={{ marginLeft: "105px" }}>:</span>
+            <span style={{ marginLeft: "101px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(e) Insured </label>
-            <span style={{ marginLeft: "110px" }}>:</span>
+            <span style={{ marginLeft: "105px" }}>:</span>
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.InsuredName}
@@ -774,14 +775,19 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(f) H.P.A. </label>
-            <span style={{ marginLeft: "120px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.HPA ? allInfo?.otherInfo[0]?.HPA : "-"} </span>
+            <span style={{ marginLeft: "112px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.HPA
+                ? allInfo?.otherInfo[0]?.HPA
+                : "-"}{" "}
+            </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-4">
             <label htmlFor="">(g) Appointed By </label>
-            <span style={{ marginLeft: "63px" }}>:</span>
+            <span style={{ marginLeft: "69px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.ClaimServicingOffice}</span>
           </div>
         </div>
@@ -797,7 +803,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(a) Registered Number</label>
-            <span style={{ marginLeft: "125px" }}>:</span>
+            <span style={{ marginLeft: "105px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.RegisteredNumber}
@@ -807,9 +813,8 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Registered Owner </label>
-            <span style={{ marginLeft: "133px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.RegisteredOwner}
-            </span>
+            <span style={{ marginLeft: "110px" }}>:</span>
+            <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </div>
         </div>
 
@@ -828,16 +833,20 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className="text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">Owner Serial No. / Transfer Date</label>
-            <span style={{ marginLeft: "54px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.TransferDate ?
-            formatDate(allInfo?.otherInfo[0]?.TransferDate) : "-"}</span>
+            <span style={{ marginLeft: "50px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.TransferDate
+                ? formatDate(allInfo?.otherInfo[0]?.TransferDate)
+                : "-"}
+            </span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(c) Date of Registration </label>
-            <span style={{ marginLeft: "120px" }}>:</span>
+            <span style={{ marginLeft: "100px" }}>:</span>
             <span>
               {" "}
               {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}
@@ -848,7 +857,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(d) Chassis Number </label>
-            <span style={{ marginLeft: "145px" }}>:</span>
+            <span style={{ marginLeft: "118px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.ChassisNumber}
@@ -858,8 +867,19 @@ function convertToBulletPointsAndParseHTML(text) {
 
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
+            <label htmlFor="">(e) Engine Number </label>
+            <span style={{ marginLeft: "123px" }}>:</span>
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.EngineNumber}
+            </span>
+          </div>
+        </div>
+
+        <div className=" text-start d-flex">
+          <div className="d-flex gap-5">
             <label htmlFor="">(f) Make / Variant/ Model /Color </label>
-            <span style={{ marginLeft: "60px" }}>:</span>
+            <span style={{ marginLeft: "54px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.MakeVariantModelColor}</span>
           </div>
         </div>
@@ -867,7 +887,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(g) Type of Body and Class of vehicle</label>
-            <span style={{ marginLeft: "20px" }}>:</span>
+            <span style={{ marginLeft: "23px" }}>:</span>
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.TypeOfBody} (S) -{" "}
@@ -879,7 +899,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(h) Pre Accident Condition </label>
-            <span style={{ marginLeft: "97px" }}>:</span>
+            <span style={{ marginLeft: "80px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
           </div>
         </div>
@@ -887,7 +907,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(k) Seating Capacity </label>
-            <span style={{ marginLeft: "140px" }}>:</span>
+            <span style={{ marginLeft: "113px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.SeatingCapacity} Nos.</span>
           </div>
         </div>
@@ -895,15 +915,20 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(l) Cubic Capacity </label>
-            <span style={{ marginLeft: "157px" }}>:</span>
+            <span style={{ marginLeft: "126px" }}>:</span>
             <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
+          </div>
+          <div className="d-flex gap-5" style={{ marginLeft: "14px" }}>
+            <label htmlFor=""> Fuel Used </label>
+            <span style={{ marginLeft: "px" }}>:</span>
+            <span>{allInfo?.otherInfo[0]?.FuelUsed}</span>
           </div>
         </div>
 
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(m) Tax particulars </label>
-            <span style={{ marginLeft: "148px" }}>:</span>
+            <span style={{ marginLeft: "120px" }}>:</span>
             <span> {formatDate(allInfo?.otherInfo[0]?.TaxParticulars)}</span>
           </div>
         </div>
@@ -921,19 +946,20 @@ function convertToBulletPointsAndParseHTML(text) {
             <label htmlFor="" className="text-dark">
               (a) Name of Driver
             </label>
-            <span style={{ marginLeft: "123px" }}>:</span>
+            <span style={{ marginLeft: "108px" }}>:</span>
             <span className="fw-bold text-dark">
               {" "}
               {allInfo?.otherInfo[0]?.DriverName}
-              {String(allInfo?.otherInfo[0]?.Gender) ==="Female" ? ` D/o allInfo?.otherInfo[0].FatherName` :
-             ` S/o ${allInfo?.otherInfo[0].FatherName}`} 
+              {String(allInfo?.otherInfo[0]?.Gender) === "Female"
+                ? ` D/o allInfo?.otherInfo[0].FatherName`
+                : ` S/o ${allInfo?.otherInfo[0].FatherName}`}
             </span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">Age </label>
-            <span style={{ marginLeft: "224px" }}>:</span>
+            <span style={{ marginLeft: "183px" }}>:</span>
             <span>
               {" "}
               {allInfo?.otherInfo?.DateOfBirth !=="null" ? `${calculateAge()} old `  : "-"} ({" "}
@@ -948,7 +974,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Motor Driver License Number </label>
-            <span style={{ marginLeft: "20px" }}>:</span>
+            <span style={{ marginLeft: "28px" }}>:</span>
             <span className="fw-bold text-dark">
               {allInfo?.otherInfo[0]?.LicenseNumber}{" "}
             </span>
@@ -958,8 +984,23 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">Date of Issue </label>
-            <span style={{ marginLeft: "159px" }}>:</span>
-            <span> {allInfo?.otherInfo[0]?.DateOfIssue ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue) : "-"}</span>
+            <span style={{ marginLeft: "132px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.DateOfIssue
+                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+                : "-"}
+            </span>
+          </div>
+          <div className="d-flex gap-2" style={{ marginLeft: "px" }}>
+            <label htmlFor="">Valid upto (NTV) </label>
+            <span style={{ marginLeft: "px" }}>:</span>
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.DateOfIssue
+                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+                : "-"}
+            </span>
           </div>
         </div>
 
@@ -975,7 +1016,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(c) Issuing Authority </label>
-            <span style={{ marginLeft: "107px" }}>:</span>
+            <span style={{ marginLeft: "92px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.IssuingAuthority}</span>
           </div>
         </div>
@@ -983,7 +1024,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(d) Type of License </label>
-            <span style={{ marginLeft: "117px" }}>:</span>
+            <span style={{ marginLeft: "99px" }}>:</span>
             <span>{allInfo?.otherInfo[0]?.LicenseType}</span>
           </div>
         </div>
@@ -991,7 +1032,7 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(e) Badge Number </label>
-            <span style={{ marginLeft: "119px" }}>:</span>
+            <span style={{ marginLeft: "100px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.BadgeNumber}</span>
           </div>
         </div>
@@ -1004,11 +1045,10 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(a) Date & Time of Accident </label>
-            <span style={{ marginLeft: "108px" }}>:</span>
+            <span style={{ marginLeft: "50px" }}>:</span>
             <span>
               {" "}
-              {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)}
-              ,
+              {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)},
               {convertToReadable(allInfo?.otherInfo[0]?.TimeOfAccident)}
             </span>
           </div>
@@ -1016,24 +1056,26 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(b) Place of Accident </label>
-            <span style={{ marginLeft: "158px" }}>:</span>
+            <span style={{ marginLeft: "87px" }}>:</span>
             <span> {allInfo?.otherInfo[0]?.PlaceOfLoss}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(c) Place of Survey </label>
-            <span style={{ marginLeft: "172px" }}>:</span>
+            <span style={{ marginLeft: "97px" }}>:</span>
             <span>{allInfo?.otherInfo[0]?.PlaceOfSurvey}</span>
           </div>
         </div>
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(d) Date of Allotment of Survey </label>
-            <span style={{ marginLeft: "80px" }}>:</span>
+            <span style={{ marginLeft: "27px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.SurveyAllotmentDate ? formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate) : "--"}
+              {allInfo?.otherInfo[0]?.SurveyAllotmentDate
+                ? formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)
+                : "--"}
             </span>
           </div>
         </div>
@@ -1053,14 +1095,16 @@ function convertToBulletPointsAndParseHTML(text) {
         <div className=" text-start d-flex gap-5">
           <div className="d-flex gap-5">
             <label htmlFor="">(e) Date & Time of Survey </label>
-            <span style={{ marginLeft: "120px" }}>:</span>
+            <span style={{ marginLeft: "57px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.SurveyConductedDate ? formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate) : "-"}
+              {allInfo?.otherInfo[0]?.SurveyConductedDate
+                ? formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)
+                : "-"}
             </span>
           </div>
         </div>
-        <div className=" text-start d-flex gap-5" style={{ marginTop: "60px" }}>
+        <div className=" text-start d-flex gap-5" style={{ marginTop: "0px" }}>
           <div className="d-flex gap-5">
             <label htmlFor="">(f) Date of Receipt of Spot Survey Report</label>
             <span style={{ marginLeft: "10px" }}>:</span>
@@ -1079,31 +1123,28 @@ function convertToBulletPointsAndParseHTML(text) {
           damages.
         </span>
         <hr style={{ border: "2px solid black" }} />
-        <div className=" text-start d-flex gap-5">
-          <div>
-            <h5 htmlFor="" className="text-dark">
-              POLICE ACTION :
-            </h5>
-            <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
-          </div>
+        <div className="d-flex gap-5">
+          <span htmlFor="" className="text-dark fw-bold">
+            POLICE ACTION
+          </span>
+          <span>:</span>
+          <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
         </div>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
-          <div>
-            <h5 htmlFor="" className="text-dark">
-              DETAILS OF LOAD / PASSENGER :
-            </h5>
-            <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
-          </div>
+          <span htmlFor="" className="text-dark fw-bold">
+            DETAILS OF LOAD / PASSENGER
+          </span>
+          <span>:</span>
+          <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
         </div>
         <hr style={{ border: "2px solid black" }} />
         <div className=" text-start d-flex gap-5">
-          <div>
-            <h5 htmlFor="" className="text-dark">
-              THIRD PARTY LOSS/ INJURIES :
-            </h5>
-            <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
-          </div>
+          <span htmlFor="" className="text-dark fw-bold">
+            THIRD PARTY LOSS/ INJURIES
+          </span>
+          <span>:</span>
+          <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
         </div>
         <hr style={{ border: "2px solid black" }} />
       </div>
@@ -1440,13 +1481,19 @@ function convertToBulletPointsAndParseHTML(text) {
               {roundOff(getTotalEstimate())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalGlassAssessed() - getTotalDepreciation("Glass", false))}
+              {roundOff(
+                getTotalGlassAssessed() - getTotalDepreciation("Glass", false)
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalMetalAssessed() - getTotalDepreciation("Metal", false))}
+              {roundOff(
+                getTotalMetalAssessed() - getTotalDepreciation("Metal", false)
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation())}
+              {roundOff(
+                getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()
+              )}
             </td>
           </tr>
           <tr>
@@ -1468,24 +1515,32 @@ function convertToBulletPointsAndParseHTML(text) {
               {roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateTypeNewPartsGST("Glass") +
-                getTotalGlassAssessed() -
-                getTotalDepreciation("Glass", false))}
+              {roundOff(
+                calculateTypeNewPartsGST("Glass") +
+                  getTotalGlassAssessed() -
+                  getTotalDepreciation("Glass", false)
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateTypeNewPartsGST("Metal") +
-                getTotalMetalAssessed() -
-                getTotalDepreciation("Metal", false))}
+              {roundOff(
+                calculateTypeNewPartsGST("Metal") +
+                  getTotalMetalAssessed() -
+                  getTotalDepreciation("Metal", false)
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateOtherTypeNewPartsGST() +
-                getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation())}
+              {roundOff(
+                calculateOtherTypeNewPartsGST() +
+                  getTotalOtherMetalAssesses() -
+                  getTotalNonMetaDepreciation()
+              )}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalEstimate() + calculateEstimateNewPartsGST()))}
+              {addCommasToNumber(
+                roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())
+              )}
             </td>
             <td
               colSpan={3}
@@ -1495,7 +1550,9 @@ function convertToBulletPointsAndParseHTML(text) {
                 textAlign: "center",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalEvaluationOfAssessedForNewParts()))}
+              {addCommasToNumber(
+                roundOff(getTotalEvaluationOfAssessedForNewParts())
+              )}
             </td>
           </tr>
         </table>
@@ -1626,10 +1683,14 @@ function convertToBulletPointsAndParseHTML(text) {
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST()))}
+              {addCommasToNumber(
+                roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST()))}
+              {addCommasToNumber(
+                roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST())
+              )}
             </td>
           </tr>
         </table>
@@ -1671,10 +1732,14 @@ function convertToBulletPointsAndParseHTML(text) {
               Total Labour Charges
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST()))}
+              {addCommasToNumber(
+                roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST()))}
+              {addCommasToNumber(
+                roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST())
+              )}
             </td>
           </tr>
           <tr>
@@ -1682,10 +1747,14 @@ function convertToBulletPointsAndParseHTML(text) {
               Total Cost of Parts
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalEstimate() + calculateEstimateNewPartsGST()))}
+              {addCommasToNumber(
+                roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())
+              )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalEvaluationOfAssessedForNewParts()))}
+              {addCommasToNumber(
+                roundOff(getTotalEvaluationOfAssessedForNewParts())
+              )}
             </td>
           </tr>
           <tr>
@@ -1704,9 +1773,13 @@ function convertToBulletPointsAndParseHTML(text) {
               Less : Salvage
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalLabourAssessed() +
-                getTotalLabourAssessedGST() +
-                getTotalEvaluationOfAssessedForNewParts()))}
+              {addCommasToNumber(
+                roundOff(
+                  getTotalLabourAssessed() +
+                    getTotalLabourAssessedGST() +
+                    getTotalEvaluationOfAssessedForNewParts()
+                )
+              )}
             </td>
           </tr>
           <tr>
@@ -1725,11 +1798,13 @@ function convertToBulletPointsAndParseHTML(text) {
             </td>
           </tr>
           <tr>
-            <td>{addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}</td>
+            <td>
+              {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}
+            </td>
           </tr>
         </table>
       </div>
-      <div className="" style={{ marginTop: "230px" }}>
+      <div className="" style={{ marginTop: "20px" }}>
         <h4 className="text-dark">GST Summary Tax Wise</h4>
         <table style={{ width: "100%" }}>
           <tr>
@@ -1820,9 +1895,13 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGST() +
-                getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()))}
+              {addCommasToNumber(
+                roundOff(
+                  calculateOtherTypeNewPartsGST() +
+                    getTotalOtherMetalAssesses() -
+                    getTotalNonMetaDepreciation()
+                )
+              )}
             </td>
             <td
               style={{
@@ -1830,10 +1909,14 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST()) /
-                2))}
+              {addCommasToNumber(
+                roundOff(
+                  (calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST()) /
+                    2
+                )
+              )}
             </td>
             <td
               style={{
@@ -1841,10 +1924,14 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST()) /
-                2))}
+              {addCommasToNumber(
+                roundOff(
+                  (calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST()) /
+                    2
+                )
+              )}
             </td>
             <td
               style={{
@@ -1860,12 +1947,16 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST() +
-                calculateOtherTypeNewPartsGST() +
-                getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()))}
+              {addCommasToNumber(
+                roundOff(
+                  calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST() +
+                    calculateOtherTypeNewPartsGST() +
+                    getTotalOtherMetalAssesses() -
+                    getTotalNonMetaDepreciation()
+                )
+              )}
             </td>
           </tr>
           <tr>
@@ -1890,9 +1981,13 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGST() +
-                getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()))}
+              {addCommasToNumber(
+                roundOff(
+                  calculateOtherTypeNewPartsGST() +
+                    getTotalOtherMetalAssesses() -
+                    getTotalNonMetaDepreciation()
+                )
+              )}
             </td>
             <td
               style={{
@@ -1900,10 +1995,14 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST()) /
-                2))}
+              {addCommasToNumber(
+                roundOff(
+                  (calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST()) /
+                    2
+                )
+              )}
             </td>
             <td
               style={{
@@ -1911,10 +2010,14 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff((calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST()) /
-                2))}
+              {addCommasToNumber(
+                roundOff(
+                  (calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST()) /
+                    2
+                )
+              )}
             </td>
             <td
               style={{
@@ -1930,12 +2033,16 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST() +
-                calculateOtherTypeNewPartsGST() +
-                getTotalOtherMetalAssesses() -
-                getTotalNonMetaDepreciation()))}
+              {addCommasToNumber(
+                roundOff(
+                  calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST() +
+                    calculateOtherTypeNewPartsGST() +
+                    getTotalOtherMetalAssesses() -
+                    getTotalNonMetaDepreciation()
+                )
+              )}
             </td>
           </tr>
           <tr>
@@ -1967,9 +2074,13 @@ function convertToBulletPointsAndParseHTML(text) {
                 textAlign: "center",
               }}
             >
-              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass") +
-                calculateTypeNewPartsGST("Metal") +
-                calculateOtherTypeNewPartsGST()))}
+              {addCommasToNumber(
+                roundOff(
+                  calculateTypeNewPartsGST("Glass") +
+                    calculateTypeNewPartsGST("Metal") +
+                    calculateOtherTypeNewPartsGST()
+                )
+              )}
             </td>
             <td
               style={{
@@ -2112,7 +2223,9 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed()))}
+              {addCommasToNumber(
+                roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed())
+              )}
             </td>
           </tr>
           <tr>
@@ -2170,7 +2283,9 @@ function convertToBulletPointsAndParseHTML(text) {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed()))}
+              {addCommasToNumber(
+                roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed())
+              )}
             </td>
           </tr>
           <tr>
@@ -2220,8 +2335,8 @@ function convertToBulletPointsAndParseHTML(text) {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            ₹ {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))} <br /> (
-            {numberToWords(roundOff(getSummaryTotalWithLessSalvage()))}){" "}
+            ₹ {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}{" "}
+            <br /> ({numberToWords(roundOff(getSummaryTotalWithLessSalvage()))}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
           conditions of the policy of insurance.
@@ -2262,7 +2377,29 @@ function convertToBulletPointsAndParseHTML(text) {
         </span>
         <br />
         <br />
-        <span>Enclosures : {allInfo?.summaryReport[0]?.Endurance === undefined ? allInfo?.summaryReport[0]?.Endurance : "--"}</span>
+        <div
+          className="d-flex justify-content-between"
+          style={{ marginBottom: "130%" }}
+        >
+          <div>
+            <span>
+              Enclosures :{" "}
+              {allInfo?.summaryReport[0]?.Endurance === undefined
+                ? allInfo?.summaryReport[0]?.Endurance
+                : "--"}
+            </span>
+          </div>
+          <div className="text-end">
+            <Image
+              width={261}
+              height={89}
+              priority
+              className="w50"
+              src="/assets/images/stamp.jpg"
+              alt="1.jpg"
+            />
+          </div>
+        </div>
       </div>
 
       {/* common footer content */}

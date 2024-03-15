@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import ErrorPageContent from "./ErrorPageContent";
 import axios from "axios";
 import Image from "next/image";
+import { useRef } from "react";
+import PrintComponent from "./PrintComponent";
 import toast from "react-hot-toast";
 
 const Index = () => {
@@ -43,97 +45,28 @@ const Index = () => {
       .catch((err) => {
         console.log(err);
         toast.dismiss();
-          toast.error("Got error while loading report!");
+        toast.error("Got error while loading report!");
       });
   }, []);
   return (
     <>
-      {/* <!-- Main Header Nav --> */}
-      {/* <Header /> */}
-
-      {/* <!--  Mobile Menu --> */}
-      {/* <MobileMenu /> */}
-
-      {/* <!-- Modal --> */}
-      {/* <PopupSignInUp /> */}
-      {/* <!-- Our Error Page --> */}
-
-      <div className="flex flex-col min-h-screen">
-        <header className="bg-gray-800 text-white">
-          {" "}
-          {/* <div className="col-lg-12 d-flex justify-content-between">
-            <div>
-              <h5>MT Engineer</h5>
-            </div>
-            <div>
-              <span>MSL/HMH/2024/11/10043 - RJ31CA6796</span>
-            </div>
-          </div>
-          <div style={{ border: "1px solid black" }} className="mb-2"></div> */}
-        </header>
-        <main className="flex-grow p-4">
-          {" "}
-          <div className="col-lg-12">
-            <ErrorPageContent allInfo={allInfo} />
-          </div>
-        </main>
-
-        <footer className="bg-gray-800 text-white">
-          {/* common footer content */}
-          <hr style={{ border: "2px solid black" }} />
-          <div className="">
-            <div className="d-flex gap-5">
-              <div className="">
-                <h5 className="text-center text-dark">
-                  H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
-                  Ganganagar(Raj.)-335001
-                </h5>
-                <h5 className="text-center text-dark">
-                  Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
-                  Mountville,Sector-79,Gurugram(Hr)
-                </h5>
-              </div>
-              <div className="" style={{ marginTop: "0px" }}>
-                <div className="text-end">
-                  <Image
-                    width={261}
-                    height={69}
-                    priority
-                    className="w50"
-                    src="/assets/images/stamp.jpg"
-                    alt="1.jpg"
-                  />
+      <div>
+        <PrintComponent>
+          <div>
+            {
+              <section className="" style={{ paddingTop: "10px" }}>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <ErrorPageContent allInfo={allInfo} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          {/* common footer content */}
-        </footer>
-        {/* Print-specific styles */}
-        <style>
-          {`
-          @media print {
-            footer {
-              position: fixed;
-              bottom: 0;
-              width: 100%;
-              background-color: #333; /* Customize as needed */
-              color: white; /* Customize as needed */
+              </section>
             }
-          }
-        `}
-        </style>
-      </div>
-
-      {/* <section className="" style={{ paddingTop: "10px" }}>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <ErrorPageContent allInfo={allInfo} />
-            </div>
           </div>
-        </div>
-      </section> */}
+        </PrintComponent>
+      </div>
     </>
   );
 };
