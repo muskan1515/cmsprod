@@ -28,8 +28,6 @@ const S3_BUCKET = "cmsdocs2024";
 const REGION = "ap-south-1";
 
 AWS.config.update({
-  // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
 });
@@ -213,7 +211,6 @@ export default function DocumentUpload({
           setLong(longitude)
           setLoc(latitude + "," + longitude);
           console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-          // You can use the latitude and longitude here as needed
         },
         (error) => {
           console.error("Error getting location:", error.message);
@@ -256,12 +253,11 @@ export default function DocumentUpload({
       width: "100%",
       height: "80%",
       top: "60%",
-      maxHeight: "80%", // Set a maximum height for the content
+      maxHeight: "80%",
       overflow: "auto",
       left: "50%",
       right: "auto",
       bottom: "auto",
-      // marginRight: "-50%",
       transform: "translate(-50%, -50%)",
       padding: "0px",
     },
@@ -364,106 +360,6 @@ export default function DocumentUpload({
     return `video_${formattedDate}_${formattedTime}_${randomString}.${extension}`;
   }
 
-  console.log("BLOBB>>>", blob);
-
-  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-  //   const params = {
-  //     ACL:'public-read',
-  //     Body:uploadedUrl,
-  //     Bucket:S3_BUCKET,
-  //     Key:uploadedFileName,
-  //     ContentType: 'image/jpeg',
-  //     ContentDisposition: 'inline'
-  //   };
-
-  //   // const payload = {
-  //   //   blob:blob,
-  //   //   file: uploadedUrl,
-  //   //   name: uploadedFileName,
-  //   //   token: userInfo[0].Token,
-  //   // };
-
-  //   myBucket.putObject(params).send((err,data)=>{
-  //     if(err){
-  //       toast.error("Error while uploading!!");
-  //     }
-  //     else{
-  //       const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(uploadedFileName)}`;
-
-  //       const newUploadData = {
-  //         docName: currentLabel,
-  //         index: index,
-  //         leadId: leadId,
-  //         data: [
-  //           {
-  //             name: uploadedFileName,
-  //             thumbnail_url: S3_URL,
-  //             url: S3_URL,
-  //             location: loc,
-  //             time: currentDate,
-  //           },
-  //         ],
-  //       };
-  //       let oldData = uploadedData;
-  //       oldData.push(newUploadData);
-  //       setUpdatedData(oldData);
-  //       console.log("Old  Data ---->", oldData);
-  //       console.log(oldData);
-  //       // setUploadedUrl("");
-  //       setChange(true);
-
-  //       alert("Successfully uploaded!!");
-  //       return res;
-
-  //     }})
-  //   // location();
-  //   // const currentDate = new Date();
-
-  //   // axios
-  //   //   .post("/api/uploadFile", payload)
-  //   //   .then((res) => {
-  //   //     console.log('res.data',res.data);
-
-  //   //     const uploaded_Url = res.data.userData.data;
-
-  //   //     const newUploadData = {
-  //   //       docName: currentLabel,
-  //   //       index: index,
-  //   //       leadId: leadId,
-  //   //       data: [
-  //   //         {
-  //   //           name: uploadedFileName,
-  //   //           thumbnail_url: uploaded_Url,
-  //   //           url: uploaded_Url,
-  //   //           location: loc,
-  //   //           time: currentDate,
-  //   //         },
-  //   //       ],
-  //   //     };
-  //   //     let oldData = uploadedData;
-  //   //     oldData.push(newUploadData);
-  //   //     setUpdatedData(oldData);
-  //   //     console.log("Old  Data ---->", oldData);
-  //   //     console.log(oldData);
-  //   //     // setUploadedUrl("");
-  //   //     setChange(true);
-
-  //   //     alert("Successfully uploaded!!");
-  //   //     return res;
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     alert(err);
-  //   //   });
-  //   setIsOpen(false);
-  //   setUploadedUrl([]);
-  //   setuploadedVideos([])
-  //   setIsImage(false);
-  //   setIsVideo(false);
-  //   setUploadedFileName([]);
-  // };
-
-  console.log("uploadedUrl----->", uploadedUrl);
 
 
   const uploadFiles = () => {
@@ -667,29 +563,15 @@ export default function DocumentUpload({
 
           const base64 = await blobToBase64(blob);
           setUploadedUrl((prevBase64Array) => [...prevBase64Array, videoFile]);
-          // console.log("Blob>>", blob,chunksRef.current);
           const videoUrl = URL.createObjectURL(blob);
           const name = generateRandomFileName("mp4");
           if (videoUrl) {
-            // setUploadedUrl((prevVideos) => [...prevVideos, videoUrl]);
             setUploadedFileName((prevName) => [...prevName, name]);
           }
-
-          // blobToBase64(blob)
-          //   .then((res) => {
-
-          //     setUploadedVideos((prevVideos) => [...prevVideos, res]);
-          //     setUploadedFileName((prevName) => [...prevName, name]);
-          //     setIsVideo(true);
-          //   })
-          //   .catch((err) => {
-          //     alert(err);
-          //   });
         };
 
         mediaRecorder.start();
       } else {
-        // Stop capturing video
         mediaRecorderRef.current.stop();
         setIsCapturingVideo(false);
       }
@@ -699,30 +581,17 @@ export default function DocumentUpload({
   };
 
   const checkWithinTheContent = (row) => {
-    if(content==="")
-     return true;
+    
     const present = content.includes(row.doc_name);
-
     return present;
   };
 
-  // const checkAlreadyDone = (label) => {
-  //   let isPresent = false;
-  //   // console.log(label,document)
-  //   document.map((temp, index) => {
-  //     if (String(temp.DocumentName) === String(label)) {
-  //       isPresent = true;
-  //     }
-  //   });
-  //   return isPresent;
-  // };
 
   const checkId = (status, row) => {
     if (status?.Status === 1 && Number(row.serial_num) <= 10) return true;
     return false;
   };
   const checkIsUploaded = (label) => {
-    // console.log(uploadedData);
     let selectedField = {};
     uploadedData.map((data, idx) => {
       if (String(label) === String(data.docName)) {
@@ -741,7 +610,6 @@ export default function DocumentUpload({
   };
 
   useEffect(() => {
-    // Update video constraints when the window is resized
     window.addEventListener("resize", updateVideoConstraints);
 
     return () => {
@@ -751,23 +619,21 @@ export default function DocumentUpload({
 
 
   useEffect(() => {
-    console.log("uploadedData", uploadedData);
     const getData = () => {
       const tempData = [];
       data.map((row, index) => {
-        console.log('ROWW>>>>',row.doc_name);
+      
         row.doc_name === "Images"
           ? setisVIdeoDisable(false)
           : setisVIdeoDisable(true);
           setisVIdeoDisable(row.doc_name !== "Images");
 
         const isUploaded = checkIsUploaded(row.doc_name);
-        // const isDone = checkAlreadyDone(row.doc_name);
-        const isAccordingToStatus = content
+        const isAccordingToStatus = content !==""
           ? checkWithinTheContent(row)
-          : checkId(status, row);
-
-        if ( isAccordingToStatus) {
+          : true;
+          console.log('ROWW>>>>',row.doc_name,isAccordingToStatus,row);
+        if (isAccordingToStatus) {
           const updatedRow = {
             _id: index + 1,
             serial_num: row.serial_num,
@@ -782,10 +648,9 @@ export default function DocumentUpload({
                   >
                     {console.log("UPLOAD>>>>>>", file)}
 
-                    {/* Check if it's an image or video based on file extension */}
                     {fileName.endsWith(".jpg") || fileName.endsWith(".png") ? (
                       <img
-                        src={fileName} // Use the 'name' field for images
+                        src={fileName}
                         alt="Image"
                         width={90}
                         height={90}
@@ -793,7 +658,6 @@ export default function DocumentUpload({
                     ) : (
                       <video width={90} height={90} controls loop autoPlay>
                         <source src={fileName} type="video/mp4" />{" "}
-                        {/* Use the 'name' field for videos */}
                       </video>
                     )}
 
@@ -802,7 +666,7 @@ export default function DocumentUpload({
                       <div className="col-lg-12">
                         <a
                           className="btn btn-color w-25"
-                          href={fileName} // Use the 'name' field for links
+                          href={fileName} 
                           target="_blank"
                           rel="noopener noreferrer"
                           title="View"
@@ -840,14 +704,11 @@ export default function DocumentUpload({
       });
       return tempData;
     };
-    // getData();
     setChange(false);
-    setUpdatedCode(getData());
-  }, [uploadedData, change, document,data]);
+    const updatedSections = getData();
+    setUpdatedCode(updatedSections)
+  }, [uploadedData, change, content, document]);
 
-
-
-  // console.log(uploadedData);
 
   return (
     <>
@@ -860,17 +721,8 @@ export default function DocumentUpload({
 
       <Modal
         isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        // style={{
-        //   overlay: { ...customStyles.overlay },
-        //   content: {
-        //     ...customStyles.content,
-        //     maxHeight: "80%", // Set a maximum height for the content
-        //     overflow: "auto", // Enable auto-scrolling
-        //   },
-        // }}
         contentLabel="Example Modal"
       >
         <div className="col-lg-12">
@@ -900,19 +752,6 @@ export default function DocumentUpload({
           </div>
         </div>
 
-        {/* {isImage && (
-          <div>
-            <h4 className="mt-4">Captured Image :</h4>
-            <Image
-              className="mb-3"
-              src={uploadedUrl}
-              alt="Captured Image"
-              width={300}
-              height={300}
-            />
-            <label className="mb-3">{uploadedFileName}</label>
-          </div>
-        )} */}
 
         {console.log("RETake", retake)}
 
@@ -1006,25 +845,7 @@ export default function DocumentUpload({
             ))}
           </div>
         </div>
-        {/* <div className="row">
-          <div className="col-lg-4">
-            {uploadedUrl.map((url, index) => (
-              <img
-                className="col-lg-3 mb-3"
-                key={`image_${index}`}
-                src={url}
-                alt={`Uploaded Image ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-  
-        {uploadedVideos.length && uploadedVideos.map((videoUrl, index) => (
-      <video key={`video_${index}`} width="300" height="200" controls>
-        <source src={videoUrl} type="video/webm" />
-        Your browser does not support the video tag.
-      </video>
-    ))} */}
+       
       </Modal>
     </>
   );
