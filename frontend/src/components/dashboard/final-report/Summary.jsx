@@ -5,6 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import { Editor } from "draft-js";
 import { Editor } from "primereact/editor";
 import ReactEditor from "../../common/TextEditor";
+import { summaryNotes } from "./Content";
 
 const Summary = ({
   isEditMode,
@@ -210,6 +211,11 @@ const Summary = ({
     setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
   },[MetalPercent])
 
+  useEffect(()=>{
+    if(FinalReportNotes === "" || FinalReportNotes ===null){
+      setFinalReportNotes(summaryNotes())
+    }
+  },[])
 
 
 

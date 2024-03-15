@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ErrorPageContent = ({ allInfo }) => {
   const pdfRef = useRef();
@@ -103,7 +103,7 @@ const ErrorPageContent = ({ allInfo }) => {
     return (
       <div>
         {lines?.map((line, index) => (
-          <p key={index}>{line}</p>
+          index === 0 ? "" : <p key={index}>{index}. {line}</p>
         ))}
       </div>
     );
@@ -486,29 +486,27 @@ const ErrorPageContent = ({ allInfo }) => {
     return Math.round(number * 100) / 100;
   };
 
-  function calculateAge() {
-    if( allInfo?.otherInfo[0]?.DateOfBirth !== undefined || allInfo?.otherInfo[0]?.DateOfBirth ==="undefined" || ! allInfo?.otherInfo[0]?.DateOfBirth)
-    {
-      return ""
-    }
-    const birthDate =  allInfo?.otherInfo[0]?.DateOfBirth 
-    const [birthDay, birthMonth, birthYear] = birthDate?.split('/').map(Number);
+const calculateAge=(dateString)=>{
+  
+    const birthDate = new Date(dateString);
     const currentDate = new Date();
 
-    let ageInYears = currentDate.getFullYear() - birthYear;
+    let years = currentDate.getFullYear() - birthDate.getFullYear();
+    let months = currentDate.getMonth() - birthDate.getMonth();
 
-    if (currentDate.getMonth() < birthMonth - 1 || (currentDate.getMonth() === birthMonth - 1 && currentDate.getDate() < birthDay)) {
-        ageInYears--;
+    if (months < 0) {
+        years--;
+        months += 12;
     }
 
-    let ageInMonths = currentDate.getMonth() - (birthMonth - 1);
-    if (ageInMonths < 0) {
-        ageInMonths += 12;
+    let ageString = years > 0 ? years + " years" : "";
+    if (months > 0) {
+        ageString += (ageString ? " and " : "") + months + " months";
     }
 
-    console.log("agesss",`${ageInYears} Years ${ageInMonths} Months`)
-    return `${ageInYears} Years ${ageInMonths} Months`
-    
+    console.log("ageString",ageString)
+    return ageString || "0 years";
+
 }
 
   function numberToWords(number) {
@@ -962,7 +960,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "183px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo?.DateOfBirth !=="null" ? `${calculateAge()} old `  : "-"} ({" "}
+              {allInfo?.otherInfo?.DateOfBirth !=="null" ? `${calculateAge(allInfo?.otherInfo[0]?.DateOfBirth)} old `  : "-"} ({" "}
               {allInfo?.otherInfo[0]?.DateOfBirth 
                 ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
                 : ""}
@@ -992,16 +990,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 : "-"}
             </span>
           </div>
-          <div className="d-flex gap-2" style={{ marginLeft: "px" }}>
-            <label htmlFor="">Valid upto (NTV) </label>
-            <span style={{ marginLeft: "px" }}>:</span>
-            <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.DateOfIssue
-                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
-                : "-"}
-            </span>
-          </div>
+         
         </div>
 
         <div className=" text-start d-flex gap-5">
@@ -1157,7 +1146,7 @@ const ErrorPageContent = ({ allInfo }) => {
             {allInfo?.otherInfo[0]?.HPA}- SGNR
           </b>{" "}
           dated <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b> I
-          visited <b>{allInfo?.otherInfo[0]?.InsuredName}</b> and inspected the
+          visited <b>{allInfo?.otherInfo[0]?.GarageName ? allInfo?.otherInfo[0]?.GarageName : "N.A."}, {allInfo?.otherInfo?.GarageNameAndAddress ? allInfo?.otherInfo?.GarageNameAndAddress : "N.A."}</b> and inspected the
           subject vehicle, reported to have met with an accident on{" "}
           <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b> Between{" "}
           {allInfo?.otherInfo[0]?.PlaceOfLoss} and snapped the vehicle from

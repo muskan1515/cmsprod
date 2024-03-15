@@ -146,17 +146,15 @@ const Servey = ({
 }) => {
   const formatDate = (dateString) => {
     const options = {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
     };
-  
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      "en-US",
-      options
-    );
+
+    const dateParts = new Date(dateString).toLocaleDateString("en-GB", options).split('/');
+    const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
     return formattedDate;
-  };
+};
   function isvaliddate(date) {
     return (
       date !== null &&
@@ -222,8 +220,8 @@ const Servey = ({
     const assessment = AssessmentContent(
       claim?.claimDetails?.ClaimServicingOffice,
       SurveyAllotmentDate,
-      AccidentAddedDateTime,
-      PlaceOfSurvey
+      claim?.accidentDetails?.DateOfAccident,
+      claim?.accidentDetails?.PlaceOfLoss
     );
     
     const other = otherContent();

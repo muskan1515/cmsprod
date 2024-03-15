@@ -265,7 +265,7 @@ const Video = ({ videos }) => {
                               padding: "10px",
                             }}
                           >
-                            {convertTimestampToReadableTime(video?.timestamp)}
+                            {convertTimestampToReadableTime(video?.Timestamp)}
                           </td>
                         </tr>
                       ))}
