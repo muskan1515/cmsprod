@@ -183,8 +183,6 @@ export default function DocumentUpload({
   const[lat, setLat] = useState("");
   const[long, setLong] = useState("");
 
-  console.log('isVIdeoDisable?>?>?>?>?',isVIdeoDisable);
-
   const urlParams = new URLSearchParams(window.location.search);
   
   useEffect(()=>{
@@ -319,8 +317,6 @@ export default function DocumentUpload({
 
   const [imageFileName, setImageFileName] = useState("");
   const cancelCapture = () => {
-    // Remove the last captured image from the array
-    // setUploadedImages((prevImages) => prevImages.slice(0, -1));
     setuploadedVideos((prev) => prev.slice(0, -1));
     setUploadedUrl((prevImages) => prevImages.slice(0, -1));
     setIsImage(false);
@@ -330,14 +326,6 @@ export default function DocumentUpload({
   useEffect(() => {
     setMediaArray([...uploadedUrl, ...uploadedVideos]);
   }, [uploadedUrl, uploadedVideos]);
-  // const proceedToNextCapture = () => {
-  //   // Do any necessary logic before proceeding to the next capture
-  //   // For example, you might want to clear the webcam capture or reset states
-  //   // ...
-
-  //   // Reset states for the next capture
-  //   setIsImage(false);
-  // };
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
@@ -476,9 +464,6 @@ export default function DocumentUpload({
   // };
 
   console.log("uploadedUrl----->", uploadedUrl);
-  // toast.loading("Uploading the media!!", {
-  //   className: "toast-loading-message",
-  // });
 
 
   const uploadFiles = () => {
@@ -490,8 +475,6 @@ export default function DocumentUpload({
 
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-    // Assuming uploadedUrl and uploadedFileName are arrays of strings
     uploadedUrl.forEach((url, index) => {
       
       const fileName = uploadedFileName[index];
@@ -513,9 +496,7 @@ export default function DocumentUpload({
           toast.error("Got error while adding claim!");
         } else {
           toast.dismiss();
-          // toast.success("Successfully added");
           toast.success("Successfully uploaded !", {
-            // position: toast.POSITION.BOTTOM_LEFT,
             className: "toast-loading-message",
           });
           const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(
@@ -559,57 +540,15 @@ export default function DocumentUpload({
 
   
   function getFileNameFromUrl(url) {
-    // Create a URL object
     const urlObject = new URL(url);
 
-    // Get the pathname (e.g., '/invoice.pdf')
     const pathname = urlObject.pathname;
 
-    // Split the pathname using '/' and get the last part (filename)
     const parts = pathname.split('/');
     const filename = parts[parts.length - 1];
 
     return filename;
 }
-
-  // const handleUploadImage = async () => {
-  //   try {
-  //     const imageSrc = webcamRef.current.getScreenshot();
-  //     const name = generateRandomFileName("jpg");
-
-  //     // console.log("Imagee Src ------> ", imageSrc);
-  //     const byteCharacters = atob(imageSrc.split(",")[1]);
-  //     const byteNumbers = new Array(byteCharacters.length);
-  //     for (let i = 0; i < byteCharacters.length; i++) {
-  //       byteNumbers[i] = byteCharacters.charCodeAt(i);
-  //     }
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     const blob = new Blob([byteArray], { type: "image/jpeg" });
-
-  //     // Create a File object
-  //     const file = new File([blob], name, { type: "image/jpeg" });
-
-  //     setUploadedUrl((prevImages) => [...prevImages, file]);
-  //     // setUploadedImages((prevImages) => [...prevImages, imageSrc]);
-  //     setImageFileName(name);
-
-  //     setUploadedFileName((prevName) => [...prevName, name]);
-  //     setIsImage(true);
-  //     setRetake(true);
-  //   } catch (error) {
-  //     console.error("Error handling upload:", error);
-  //   }
-  // };
-
-  // const blobToBase64 = (blob) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => resolve(reader.result.split(",")[1]);
-  //     reader.onerror = reject;
-  //     reader.readAsDataURL(blob);
-  //   });
-  // };
-
   const handleUploadImage = async () => {
     try {
       const imageSrc = webcamRef.current.getScreenshot();
@@ -767,16 +706,16 @@ export default function DocumentUpload({
     return present;
   };
 
-  const checkAlreadyDone = (label) => {
-    let isPresent = false;
-    // console.log(label,document)
-    document.map((temp, index) => {
-      if (String(temp.DocumentName) === String(label)) {
-        isPresent = true;
-      }
-    });
-    return isPresent;
-  };
+  // const checkAlreadyDone = (label) => {
+  //   let isPresent = false;
+  //   // console.log(label,document)
+  //   document.map((temp, index) => {
+  //     if (String(temp.DocumentName) === String(label)) {
+  //       isPresent = true;
+  //     }
+  //   });
+  //   return isPresent;
+  // };
 
   const checkId = (status, row) => {
     if (status?.Status === 1 && Number(row.serial_num) <= 10) return true;
@@ -823,13 +762,12 @@ export default function DocumentUpload({
           setisVIdeoDisable(row.doc_name !== "Images");
 
         const isUploaded = checkIsUploaded(row.doc_name);
-        const isDone = checkAlreadyDone(row.doc_name);
+        // const isDone = checkAlreadyDone(row.doc_name);
         const isAccordingToStatus = content
           ? checkWithinTheContent(row)
           : checkId(status, row);
-        console.log(isAccordingToStatus);
 
-        if (!isDone && isAccordingToStatus) {
+        if ( isAccordingToStatus) {
           const updatedRow = {
             _id: index + 1,
             serial_num: row.serial_num,
@@ -905,13 +843,9 @@ export default function DocumentUpload({
     // getData();
     setChange(false);
     setUpdatedCode(getData());
-  }, [uploadedData, change, document]);
+  }, [uploadedData, change, document,data]);
 
-  useEffect(() => {
-    if (uploadedData) {
-      console.log(uploadedData);
-    }
-  }, [uploadedData]);
+
 
   // console.log(uploadedData);
 
