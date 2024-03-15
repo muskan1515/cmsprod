@@ -600,28 +600,28 @@ const ErrorPageContent = ({ feeReport }) => {
               </span>
               <br />
               <span className="text-dark">
-                <span className="fw-bold">PAN </span> : AAJCM8228Q
+                <span className="fw-bold">PAN </span> : AAPCN1051K
               </span>
 
               <div className="d-flex gap-3 text-dark">
                 <span className="fw-bold">Bank Name</span>
                 <span>:</span>
-                <span style={{ marginLeft: "10px" }}>INDIAN BANK</span>
+                <span style={{ marginLeft: "10px" }}>HDFC BANK</span>
               </div>
               <div className="d-flex gap-3 text-dark ">
                 <span>A/c No.</span>
                 <span style={{ marginLeft: "30px" }}>:</span>
-                <span>CA 6360774855</span>
+                <span>50200064600220</span>
               </div>
-              <div className="d-flex gap-3 text-dark">
+              {/*<div className="d-flex gap-3 text-dark">
                 <span>MICR No</span>
                 <span style={{ marginLeft: "16px" }}>:</span>
                 <span>335019002</span>
-              </div>
+            </div>*/}
               <div className="d-flex gap-3 text-dark">
                 <span>IFS Code</span>
                 <span style={{ marginLeft: "16px" }}>:</span>
-                <span>IDIB000G067</span>
+                <span>HDFC0000505</span>
               </div>
             </td>
           </tr>
