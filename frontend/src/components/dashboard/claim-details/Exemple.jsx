@@ -152,7 +152,7 @@ import SmartTable from "./SmartTable";
     const [updatedCode, setUpdatedCode] = useState([]);
     const [selectedFile, setSelectedFile] = useState([]);
     const [uploadedFiles,setUploadedFiles]=useState([]);
-    const [data,setData]=useState([])
+    const [data,setData]=useState(LabelData)
     const [disable,setDisable]=useState(false)
 
     const [isAdded,setIsAdded]=useState(false);
@@ -200,8 +200,8 @@ import SmartTable from "./SmartTable";
 
       tempAllDocsLabel.map((doc,index)=>{
         const newLabel = {
-          _id:allLabelCount+2,
-          serial_num:allLabelCount+2,
+          _id:allLabelCount+1,
+          serial_num:allLabelCount+1,
           doc_name:doc.DocumentName
         };
         newAddOnLabels.push(newLabel)
@@ -214,7 +214,7 @@ import SmartTable from "./SmartTable";
         console.log(err);
     })
 
-  },[])
+  },[documents])
 
   const checkValue = (label) => {
     let requiredInfo = [];
