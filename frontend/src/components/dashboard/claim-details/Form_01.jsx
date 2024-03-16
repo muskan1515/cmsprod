@@ -12,7 +12,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";
 import toVehicleModelast from "react-hot-toast";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const Form_01 = ({
   claim,
