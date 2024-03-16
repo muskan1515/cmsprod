@@ -1682,25 +1682,25 @@ const Index = ({}) => {
                             <Exemple documents={documents} leadId={leadId} />
                           </div>
                         </div>
-                        <div
+                        {/*<div
                           className="row mb-2"
                           style={{ marginLeft: "-15px" }}
                         >
                           <div className="col-lg-12 text-center">
-                            {/* <ErrorPageContent /> */}
+                           
                             <UploadReort leadId={leadId} claim={claim} />
                           </div>
-                        </div>
+                        </div>*/}
 
-                        <div
+                       {/*  <div
                           className="row mb-2"
                           style={{ marginLeft: "-15px" }}
                         >
                           <div className="col-lg-12 text-center">
-                            {/* <ErrorPageContent /> */}
+                            
                             <UploadReportDocumentView documents={documents} leadId={leadId} />
                           </div>
-                        </div>
+                        </div>*/}
 
                         <div
                           className="row mb-2"

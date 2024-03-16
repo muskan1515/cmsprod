@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
@@ -8,7 +9,23 @@ import { Toaster } from "react-hot-toast";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
 
-const index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
+const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
+  const [LeadID,setLeadID]=useState("");
+  const [Policy,setPolicy]=useState("");
+  const [Email,setEmail]=useState("");
+  const [region,setRegion]=useState("Chandigarh");
+  const [name,setName]=useState("");
+  const [VehicleNo,setVehicleNo]=useState("");
+
+  useEffect(()=>{
+      setEmail(email)
+      setPolicy(policyNo)
+      setVehicleNo(vehicleNo)
+      setName(Insured);
+      setRegion(Region)
+  },[leadId,vehicleNo,policyNo,Insured,region,email])
+
+  console.log(leadId,vehicleNo,policyNo,Insured,Region)
   return (
     <>
       <Toaster />
@@ -78,12 +95,12 @@ const index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
                           }}
                         ></div>
                         <CreateList
-                          leadId={leadId}
-                          email={email}
-                          policyNo={policyNo}
-                          vehicleNo={vehicleNo}
-                          Insured={Insured}
-                          Region={Region}
+                          leadId={LeadID}
+                          email={Email}
+                          policyNo={Policy}
+                          vehicleNo={VehicleNo}
+                          Insured={name}
+                          Region={region}
                         />
                       </div>
                     </div>
@@ -143,4 +160,4 @@ const index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
   );
 };
 
-export default index;
+export default Index;

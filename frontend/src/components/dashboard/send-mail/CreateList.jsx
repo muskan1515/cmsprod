@@ -6,9 +6,7 @@ import { toast} from 'react-hot-toast'
 import { defaultContent } from "./EmailContent";
 const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
 
-    
-  if(!leadId)
-   return
+
   const [selectedItems, setSelectedItems] = useState([]);
   const [emailAddress, setEmailAddress] = useState(email ? email : "");
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
@@ -16,13 +14,18 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
 
 
 
+  console.log("Region",Region)
   const [fromEmail, setFromEmail] = useState(String(Region) === "Delhi" ? "mt.dro123@gmail.com" : String(Region) === "Jodhpur" ? "mt.jdro123@gmail.com" : "mt.chro123@gmail.com" );
   const [subject, setSubject] = useState("Survey Request for Vehicle Claim");
   const [body, setBody] = useState("");
   const [type,setType]=useState(1);
 
   const router = useRouter();
-
+  useEffect(() => {
+    if (!leadId) {
+      return () => {}; // Returning an empty function
+    }
+  }, []);
   useEffect(()=>{
     
     const getData = ()=>{
