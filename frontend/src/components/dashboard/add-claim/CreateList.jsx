@@ -400,7 +400,7 @@ const CreateList = () => {
             <div className="col-lg-7">
             <select
                 type="text"
-                className="form-control"
+                className="form-control form-control-add-claim"
                 id="propertyTitle"
                 value={policyIssuingOffice}
                 onChange={(e) => setPolicyIssuingOffice(e.target.value)}
@@ -532,13 +532,13 @@ const CreateList = () => {
                   // marginTop: "-13px",
                 }}
               >
-                Claim Survicing Off.
+                Claim Servicing Office
               </label>
             </div>
             <div className="col-lg-7">
               <select
                 type="text"
-                className="form-control"
+                className="form-control form-control-add-claim"
                 id="propertyTitle"
                 value={claimSurvicingOffice}
                 onChange={(e) => setClaimSurvicingOffice(e.target.value)}
