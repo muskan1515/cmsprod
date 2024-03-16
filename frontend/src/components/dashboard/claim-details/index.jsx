@@ -1665,7 +1665,7 @@ const Index = ({}) => {
                           </div>
                         </div>
 
-                       {/* <div
+                        <div
                           className="row mb-2"
                           style={{ marginLeft: "-15px" }}
                         >
@@ -1686,7 +1686,7 @@ const Index = ({}) => {
                             />
                           </div>
                         </div>
-                      */}
+                      
 
                         <div
                           className="row mb-2"
@@ -1816,10 +1816,6 @@ const Index = ({}) => {
                                     className="form-select"
                                     data-live-search="true"
                                     data-width="100%"
-                                    // value={buildinRef}
-                                    // onChange={(e) => setBuildinRef(e.target.value)}
-                                    // onChange={(e) => setBuildinRef(e.target.value)}
-                                    // disabled={isDisable}
                                     style={{
                                       paddingTop: "10px",
                                       paddingBottom: "10px",
