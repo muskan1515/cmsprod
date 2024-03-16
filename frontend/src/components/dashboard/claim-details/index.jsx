@@ -23,6 +23,7 @@ import { toast, Toaster } from "react-hot-toast";
 import CreateList_04 from "./CreateList_04";
 import Loader from "../../common/Loader";
 import { useRouter } from "next/router";
+import AccidentEditableForm from "./AccidentEditableForm";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import UploadReportDocumentView from "./UploadedReportDocumentView";
 // import FloorPlans from "./FloorPlans";
@@ -1663,6 +1664,29 @@ const Index = ({}) => {
                             />
                           </div>
                         </div>
+
+                       {/* <div
+                          className="row mb-2"
+                          style={{ marginLeft: "-15px" }}
+                        >
+                          <div className="col-lg-12">
+                           
+                            <AccidentEditableForm
+                              onSaveHandler={onSaveHandler}
+                              claim={claim}
+                              editHandler={editHandler}
+                              GarageNameAndAddress={GarageNameAndAddress}
+                              setGarageNameAndAddress={setGarageNameAndAddress}
+                              GarageContactNo1={GarageContactNo1}
+                              setGarageContactNo1={setGarageContactNo1}
+                              GarageContactNo2={GarageContactNo2}
+                              setGarageContactNo2={setGarageContactNo2}
+                              GarageAddedBy={GarageAddedBy}
+                              setGarageAddedBy={setGarageAddedBy}
+                            />
+                          </div>
+                        </div>
+                      */}
 
                         <div
                           className="row mb-2"
