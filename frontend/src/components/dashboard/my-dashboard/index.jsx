@@ -33,15 +33,15 @@ const Index = () => {
   useEffect(() => {
     let filterClaim;
     if (type === 1) {
-      filterClaim = filterAccordingClaim.filter((claim, index) =>
+      filterClaim = allClaims.filter((claim, index) =>
         claim?.PolicyNo?.toLowerCase().includes(searchInput.toLowerCase())
       );
     } else if (type === 2) {
-      filterClaim = filterAccordingClaim.filter((claim, index) =>
+      filterClaim = allClaims.filter((claim, index) =>
         claim?.RegistrationNo?.toLowerCase().includes(searchInput.toLowerCase())
       );
     } else {
-      filterClaim = filterAccordingClaim.filter((claim, index) =>
+      filterClaim = allClaims.filter((claim, index) =>
         claim?.ReferenceID?.toLowerCase().includes(searchInput.toLowerCase())
       );
     }
@@ -57,7 +57,7 @@ const Index = () => {
     if (region) {
       setShowRegionClaim(true);
 
-      const filterAccordingToRegion = filterAccordingClaim.filter((claim) => {
+      const filterAccordingToRegion = allClaims.filter((claim) => {
         console.log("all Claims", claim.Region, region);
         if (claim.Region == region) {
           return true;
