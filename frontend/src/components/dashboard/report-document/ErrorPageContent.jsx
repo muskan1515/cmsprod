@@ -469,20 +469,38 @@ const ErrorPageContent = ({ allInfo }) => {
     return Math.round(number * 100) / 100;
   };
 
-  function calculateAge(birthDate) {
-    var today = new Date();
-    var birthDateObj = new Date(birthDate);
-    var age = today.getFullYear() - birthDateObj.getFullYear();
-    var monthDiff = today.getMonth() - birthDateObj.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
-    ) {
-      age--;
+  function calculateAge() {
+    
+    const birthDate = (allInfo.otherInfo[0].DateOfBirth)
+    if (!birthDate) {
+      return "Invalid date";
     }
-
-    return age;
+  
+    // Split the birthDate string into day, month, and year components
+  var dateComponents = birthDate?.split('/');
+  var birthDay = parseInt(dateComponents[0]);
+  var birthMonth = parseInt(dateComponents[1]);
+  var birthYear = parseInt(dateComponents[2]);
+  
+  // Get the current date
+  var currentDate = new Date();
+  
+  // Calculate the difference in years and months
+  var yearsDiff = currentDate.getFullYear() - birthYear;
+  var monthsDiff = currentDate.getMonth() - (birthMonth - 1);
+  
+  // Adjust years and months if the current month is before the birth month
+  if (monthsDiff < 0 || (monthsDiff === 0 && currentDate.getDate() < birthDay)) {
+    yearsDiff--;
+    monthsDiff += 12;
+  }
+  
+  // Construct the age string
+  var ageString = yearsDiff + " years ";
+  if (monthsDiff > 0) {
+    ageString += monthsDiff + " months";
+  }
+  return ageString;
   }
 
   function numberToWords(number) {
@@ -663,12 +681,12 @@ const ErrorPageContent = ({ allInfo }) => {
           {allInfo?.otherInfo[0]?.SurveyType}{" "}
           {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
           {Number(allInfo?.summaryReport[0]?.CashLess) === 1
-            ? "CashLess"
-            : "Cash"}
+            ? "CASH LESS"
+            : "NON CASHLESS"}
           )- (
           {allInfo?.otherInfo[0]?.PolicyType
-            ? allInfo?.otherInfo[0]?.PolicyType
-            : "Regular"}
+            ? (allInfo?.otherInfo[0]?.PolicyType).toUpperCase()
+            : "REGULAR"}
           )
         </h4>
       </div>
@@ -933,10 +951,10 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "178px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo?.DateOfBirth
+              {allInfo?.otherInfo?.DateOfBirth !== null
                 ? calculateAge(allInfo?.otherInfo?.DateOfBirth)
                 : "-"}{" "}
-              Years ({" "}
+              old ({" "}
               {allInfo?.otherInfo[0]?.DateOfBirth
                 ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
                 : ""}
@@ -966,16 +984,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 : "-"}
             </span>
           </div>
-          <div className="d-flex gap-2" style={{ marginLeft: "50px" }}>
-            <label htmlFor="">Valid upto (NTV) </label>
-            <span style={{ marginLeft: "px" }}>:</span>
-            <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.DateOfIssue
-                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
-                : "-"}
-            </span>
-          </div>
+         
         </div>
 
         <div className=" text-start d-flex gap-5">
@@ -989,16 +998,7 @@ const ErrorPageContent = ({ allInfo }) => {
                 : "-"}
             </span>
           </div>
-          <div className="d-flex gap-2" style={{ marginLeft: "120px" }}>
-            <label htmlFor="">Valid upto (TV) </label>
-            <span style={{ marginLeft: "px" }}>:</span>
-            <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.DateOfIssue
-                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
-                : "-"}
-            </span>
-          </div>
+         
         </div>
 
         <div className=" text-start d-flex gap-5">

@@ -511,14 +511,19 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <input
+            <select
                 type="text"
                 className="form-control"
                 id="propertyTitle"
                 value={policyIssuingOffice}
                 onChange={(e) => setPolicyIssuingOffice(e.target.value)}
-                // placeholder="Enter Registration No."
-              />
+                >
+                {allServicingOffice.map((office,index)=>{
+                  return <option key={index}>
+                    {office.OfficeName}
+                  </option>
+                })}
+              </select>
             </div>
           </div>
         </div>
