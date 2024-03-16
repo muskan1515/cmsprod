@@ -297,7 +297,7 @@ useEffect(()=>{
               <div className="d-flex text-dark gap-5">
                 <span>Code</span>
                 <span style={{ marginLeft: "13px" }}>:</span>
-                <span>GH000057355</span>
+                <span>2300012369</span>
               </div>
             </div>
           </div>
