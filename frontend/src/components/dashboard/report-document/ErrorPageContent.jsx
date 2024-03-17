@@ -471,7 +471,7 @@ const ErrorPageContent = ({ allInfo }) => {
 
   function calculateAge() {
     
-    const birthDate = (allInfo.otherInfo[0].DateOfBirth)
+    const birthDate = (allInfo?.otherInfo[0]?.DateOfBirth)
     if (!birthDate) {
       return "Invalid date";
     }
