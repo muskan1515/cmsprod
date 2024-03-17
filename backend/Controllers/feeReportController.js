@@ -32,6 +32,62 @@ const db = require("../Config/dbConfig");
   BillDate
     } = req.body;
 
+    const insertQuery = 
+    `INSERT INTO BillReportFees (
+      Type,
+      ProfessionalFees,
+      TotalKM,
+      Visits,
+      Conveyance,
+      Photos,
+      Charge,
+      Photos_cd,
+      Cgst,
+      Igst,
+      Sgst,
+      Total,
+      FeebasedOn,
+      Remrk,
+      KmRate,
+      PhotsRate,
+      EstimateAmt,
+      AssessedAmt,
+      InsuranceCompanyName,
+      Branch,
+      BillTo,
+      Others,
+      BillDate,
+      BillID,
+      LeadId
+  ) VALUES (
+      '${Type}',
+      '${ProfessionalFees}',
+      '${TotalKM}',
+      '${Visits}',
+      '${Conveyance}',
+      '${Photos}',
+      '${Charge}',
+      '${Photos_cd}',
+      '${Cgst}',
+      '${Igst}',
+      '${Sgst}',
+      '${Total}',
+      '${FeebasedOn}',
+      '${Remrk}',
+      '${KmRate}',
+      '${PhotsRate}',
+      '${EstimateAmt}',
+      '${AssessedAmt}',
+      '${InsuranceCompanyName}',
+      '${Branch}',
+      '${BillTo}',
+      '${Others}',
+      '${BillDate}',
+      '${BillID}',
+      '${LeadId}'
+  );`;
+  
+
     const updateQuery = `
   UPDATE BillReportFees
   SET
@@ -70,7 +126,7 @@ const db = require("../Config/dbConfig");
   
      
       const query = result.length > 0 ?  updateQuery : insertQuery;
-   
+    
     db.query(query,  (err, result) => {
       if (err) {
         console.error(err);

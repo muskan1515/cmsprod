@@ -26,10 +26,11 @@ const ErrorPageContent = ({ feeReport }) => {
 const [selectedServicingOffice,setSelectedServicingOffice]=useState([]);
   
 useEffect(()=>{
+  console.log("feeReport",feeReport)
   axios.get("/api/getClaimServicingOffice")
   .then((res)=>{
     const allOffice = res.data.data.results;
-    const name = feeReport?.feeDetails?.Others;
+    const name = feeReport?.claimDetails?.ClaimServicingOffice;
     
     let requiredOffice ={}
     allOffice.map((office,index)=>{

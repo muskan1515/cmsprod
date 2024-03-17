@@ -75,6 +75,8 @@ const CreateList = ({ allInfo, leadID }) => {
   const [NetPay, setNetPay] = useState(0);
 
   useEffect(()=>{
+
+    
     axios.get("/api/getClaimServicingOffice")
     .then((res)=>{
       setAllServicingOffice(res.data.data.results);
@@ -84,21 +86,80 @@ const CreateList = ({ allInfo, leadID }) => {
     })
   },[])
 
+  useEffect(()=>{
+    if(!allInfo?.feesDetails)
+     return 
+    setBill(
+      allInfo?.feesDetails?.BillId 
+    );
+
+    setInsurer(allInfo?.feesDetails?.InsuranceCompanyName);
+    setBillTo(allInfo?.feesDetails?.BillTo);
+    setBranch(allInfo?.feesDetails?.Branch);
+    setOthers(allInfo?.feesDetails?.Others);
+    setDetailsKM(allInfo?.feesDetails?.KmRate);
+    setDetailsPhotoRate(allInfo?.feesDetails?.PhotsRate);
+    setDetailsFee(allInfo?.feesDetails?.FeebasedOn);
+    setDetailsRemark(allInfo?.feesDetails?.Remrk);
+
+    setcurrentSelectedInsprectiontype(String(allInfo?.feesDetails?.Type) === "Final" ?
+    1 : String(allInfo?.feesDetails?.Type) === "Spot" ?
+    3 : 2 )
+
+    setCGST(allInfo?.feesDetails?.Cgst);
+    setIGST(allInfo?.feesDetails?.Igst);
+    setSGST(allInfo?.feesDetails?.Sgst);
+   
+
+    if(String(allInfo?.feesDetails?.Type) === "Final"){
+      setFinalProfFees(allInfo?.feesDetails?.ProfessionalFees);
+      setFinalTotalKM(allInfo?.feesDetails?.TotalKm);
+      setFinalVisit(allInfo?.feesDetails?.Visits);
+      setFinalConveyance(allInfo?.feesDetails?.Conveyance);
+      setFinalPhotos(allInfo?.feesDetails?.Photos);
+      setFinalCharges(allInfo?.feesDetails?.Charge);
+      setFinalPhotoCD(allInfo?.feesDetails?.Photos_cd);
+      setFinalRemark(allInfo?.feesDetails?.Remrk);
+    }
+
+    else if(String(allInfo?.feesDetails?.Type) === "Spot"){
+      setSpotProfFees(allInfo?.feesDetails?.ProfessionalFees);
+      setSpotTotalKM(allInfo?.feesDetails?.TotalKm);
+      setSpotVisit(allInfo?.feesDetails?.Visits);
+      setSpotConveyance(allInfo?.feesDetails?.Conveyance);
+      setSpotPhotos(allInfo?.feesDetails?.Photos);
+      setSpotCharges(allInfo?.feesDetails?.Charge);
+      setSpotPhotoCD(allInfo?.feesDetails?.Photos_cd);
+      setSpotRemark(allInfo?.feesDetails?.Remrk);
+    }
+
+    else{
+      setReInsprectionProfFees(allInfo?.feesDetails?.ProfessionalFees);
+        setReInsprectionTotalKM(allInfo?.feesDetails?.TotalKm);
+        setReInsprectionVisit(allInfo?.feesDetails?.Visits);
+        setReInsprectionConveyance(allInfo?.feesDetails?.Conveyance);
+        setReInsprectionPhotos(allInfo?.feesDetails?.Photos);
+        setReInsprectionCharges(allInfo?.feesDetails?.Charge);
+        setReInsprectionPhotoCD(allInfo?.feesDetails?.Photos_cd);
+        setReInsprectionRemark(allInfo?.feesDetails?.Remrk);
+      
+    }
+
+
+  },[allInfo])
+
+  useEffect(()=>{
+
+  },[currentSelectedInsprectiontype])
+
 
   useEffect(()=>{
     console.log(BillTo)
     if(String(BillTo) === "Appointing Office")
-     setShow(true);
-    else
-     setShow(false)
-  },[BillTo]);
-
-  useEffect(()=>{
-    
-    if(String(BillTo) === "Appointing Office"){
-      let requiredStateCode = 0;
+    {
+      let requiredStateCode = {}
       allServicingOffice.map((office,index)=>{
-        if(String(office.OfficeNameWithCode) === String(Others)){
+        if(String(office.OfficeNameWithCode) === String(allInfo?.otherInfo[0]?.ClaimServicingOffice)){
           requiredStateCode = office.StateCode;
           }
       })
@@ -113,8 +174,14 @@ const CreateList = ({ allInfo, leadID }) => {
         setIGST(18);     
       }
     }
-    
-  },[Others]);
+    else
+     {
+      setCGST(0);
+        setSGST(0);
+        setIGST(0);  
+     }
+  },[BillTo]);
+
 
 
   const calculateTotalAssessed = () => {
@@ -355,7 +422,7 @@ const CreateList = ({ allInfo, leadID }) => {
           // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
-        router.push(`/claim-details/${leadID}`);
+        router.push(`/claim-details?leadId=${leadID}`);
       })
       .catch((Err) => {
         console.log(Err);
@@ -620,30 +687,14 @@ const CreateList = ({ allInfo, leadID }) => {
                 </label>
               </div>
               <div className="col-lg-7">
-                {!show
-                ? <input
+                <input
                   type="text"
                   className="form-control"
                   id="propertyTitle"
                   value={Others}
                   onChange={(e) => setOthers(e.target.value)}
                 />
-                :
-                <select
-                type="text"
-                className="form-control"
-                id="propertyTitle"
-                value={Others}
-                onChange={(e) => setOthers(e.target.value)}
-                >
-                {allServicingOffice.map((office,index)=>{
-                  return <option key={index} value={office.OfficeNameWithCode}>
-                    {office.OfficeNameWithCode}
-                  </option>
-                })}
-              </select>
-                }
-
+                
                 {/* <MyDatePicker /> */}
               </div>
             </div>
