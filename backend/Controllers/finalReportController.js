@@ -348,7 +348,6 @@ const updateFinalReport = (req,res)=>{
     `;
 
 
-    
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {
         console.error(err);
@@ -798,6 +797,8 @@ const updateFinalReport = (req,res)=>{
       `;
   
   
+      console.log(updateAccidentDetails);
+      return ;
       
       db.query(updateClaimDetails, (err, result2) => {
         if (err) {

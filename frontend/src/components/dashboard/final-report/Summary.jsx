@@ -188,6 +188,9 @@ const Summary = ({
   
 
   useEffect(()=>{
+    const summary = summaryNotes(claim)
+    console.log("summary",summary)
+    setFinalReportNotes(FinalReportNotes ? FinalReportNotes : summary)
     setTotalEstimate(totalPartsEstimate + totalLabrorEstimate);
     setTotalLabor(totalLabrorAssessed);
     setTotalCostOfParts(totalPartsAssessed);

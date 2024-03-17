@@ -26,11 +26,12 @@ const ErrorPageContent = ({ feeReport }) => {
 const [selectedServicingOffice,setSelectedServicingOffice]=useState([]);
   
 useEffect(()=>{
-  console.log("feeReport",feeReport)
   axios.get("/api/getClaimServicingOffice")
   .then((res)=>{
     const allOffice = res.data.data.results;
-    const name = feeReport?.claimDetails?.ClaimServicingOffice;
+    const name = String(feeReport?.feeDetails?.BillTo) === "Insurer" ?
+    feeReport?.claimDetails?.PolicyIssuingOffice :
+      feeReport?.claimDetails?.ClaimServicingOffice;
     
     let requiredOffice ={}
     allOffice.map((office,index)=>{
@@ -190,11 +191,20 @@ useEffect(()=>{
     return SGST;
   };
 
+  const calculateIGST = () => {
+    const total = calculateTheTotalBillWithoutGST();
+
+    const SGST = (Number(feeReport?.feeDetails?.Igst) * Number(total)) / 100;
+
+    return SGST;
+  };
+
   const grandTotalWithGST = () => {
     const total = calculateTheTotalBillWithoutGST();
     const cgstValue = calculateCGST();
     const sgstValue = calculateSGST();
-    return total + cgstValue + sgstValue;
+    const igstValue = calculateIGST();
+    return total + cgstValue + sgstValue + igstValue;
   };
 
   const downloadPDF = () => {
@@ -261,18 +271,29 @@ useEffect(()=>{
           <h5>To,</h5>
           <div className="d-flex text-dark gap-5 fw-bold">
             <div className="">
-              <span style={{ marginLeft: "25px" }}>
-                {selectedServicingOffice?.EmployeeName} ({selectedServicingOffice?.Designation} )
+              {feeReport?.feeDetails?.BillTo === "Insured" ? 
+              <><span style={{ marginLeft: "25px" }}>
+                {feeReport?.vehicleOnlineDetails?.RegisteredOwner} ({selectedServicingOffice?.Designation} )
               </span>
               <br/>
               <span style={{ marginLeft: "25px" }}>
-                {selectedServicingOffice?.OfficeNameWithCode}
+                {feeReport?.vehicleOnlineDetails?.PermanentAddress}
               </span>
-              <br />
-              <span style={{ marginLeft: "25px" }}>
-                {selectedServicingOffice?.State}
-              </span>
-              <br />
+              </> :
+              feeReport?.feeDetails?.BillTo === "Insurer" ? 
+              <>
+               <span style={{ marginLeft: "25px" }}>
+              {feeReport?.claimDetails?.InsuranceCompanyNameAddress} ,
+            </span>
+            <br />
+               <span style={{ marginLeft: "25px" }}>
+              {selectedServicingOffice?.OfficeNameWithCode}
+            </span>
+            <br />
+            <span style={{ marginLeft: "25px" }}>
+              {selectedServicingOffice?.State}
+            </span>
+            <br />
               <span style={{ marginLeft: "25px" }}>
                 GSTIN : {selectedServicingOffice?.GST_No}
               </span>
@@ -280,6 +301,27 @@ useEffect(()=>{
               <span style={{ marginLeft: "25px" }}>
                 State Code : {selectedServicingOffice?.StateCode}
               </span>
+              </> 
+              :
+              <>
+            <span style={{ marginLeft: "25px" }}>
+              {selectedServicingOffice?.OfficeNameWithCode}
+            </span>
+            <br />
+            <span style={{ marginLeft: "25px" }}>
+              {selectedServicingOffice?.State}
+            </span>
+            <br />
+              <span style={{ marginLeft: "25px" }}>
+                GSTIN : {selectedServicingOffice?.GST_No}
+              </span>
+              <br />
+              <span style={{ marginLeft: "25px" }}>
+                State Code : {selectedServicingOffice?.StateCode}
+              </span>
+            </>
+            }
+              
             </div>
             <div className="" style={{ marginLeft: "px" }}>
               <div className="d-flex text-dark gap-5">
@@ -513,6 +555,10 @@ useEffect(()=>{
               <br />
               <span>
                 S GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Sgst)))} %{" "}
+              </span> 
+              <br/>
+              <span>
+                I GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Igst)))} %
               </span>
             </td>
             <td
@@ -528,6 +574,8 @@ useEffect(()=>{
               <span>₹ {addCommasToNumber(roundOff(calculateCGST()))}</span>
               <br />
               <span>₹ {addCommasToNumber(roundOff(calculateSGST()))}</span>
+              <br />
+              <span>₹ {addCommasToNumber(roundOff(calculateIGST()))}</span>
             </td>
           </tr>
           <tr>
@@ -627,10 +675,10 @@ useEffect(()=>{
           </tr>
           <tr style={{ border: "1px solid black" }}>
             <td colSpan={2} style={{ padding: "5px" }}>
-              <span className="text-dark">
+              {feeReport?.feeDetails?.BillTo !== "Insured" && <span className="text-dark">
                 <span className="fw-bold">GSTIN </span>: {selectedServicingOffice?.GST_No} State :
                 ({selectedServicingOffice?.StateCode})
-              </span>
+              </span>}
               <br />
               <span className="text-dark">
                 <span className="fw-bold">PAN </span> : AAPCN1051K

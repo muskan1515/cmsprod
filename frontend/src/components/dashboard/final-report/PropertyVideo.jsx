@@ -529,10 +529,9 @@ const [AccidentTime,setAccidentTime]=useState("");
     setDateOfBirth((claim?.driverDetails?.DateOfBirth) || "");
     //summary states
 
-    console.log("summaryNotes",summaryNotes(claim))
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident !==null ? claim?.accidentDetails?.TimeOfAccident : "");
-    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? convertHtmlToString(claim?.summaryDetails?.SummaryNotes) : summaryNotes(claim));
+    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? convertHtmlToString(claim?.summaryDetails?.SummaryNotes) :"");
 
     
     setTotalLabor(claim?.summaryDetails?.TotalLabor  !==null ? claim?.summaryDetails?.TotalLabor : 0 );

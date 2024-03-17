@@ -27,6 +27,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const [DetailsFee, setDetailsFee] = useState("");
   const [DetailsRemark, setDetailsRemark] = useState("");
   const [show,setShow]=useState(false)
+  const [defaultProfFees,setDefaultProfFees]=useState(0)
 
   const [BillTo, setBillTo] = useState("");
 
@@ -88,7 +89,10 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(()=>{
     if(!allInfo?.feesDetails)
-     return 
+     {
+
+     }
+     else{
     setBill(
       allInfo?.feesDetails?.BillId 
     );
@@ -109,10 +113,8 @@ const CreateList = ({ allInfo, leadID }) => {
     setCGST(allInfo?.feesDetails?.Cgst);
     setIGST(allInfo?.feesDetails?.Igst);
     setSGST(allInfo?.feesDetails?.Sgst);
-   
 
     if(String(allInfo?.feesDetails?.Type) === "Final"){
-      setFinalProfFees(allInfo?.feesDetails?.ProfessionalFees);
       setFinalTotalKM(allInfo?.feesDetails?.TotalKm);
       setFinalVisit(allInfo?.feesDetails?.Visits);
       setFinalConveyance(allInfo?.feesDetails?.Conveyance);
@@ -123,7 +125,6 @@ const CreateList = ({ allInfo, leadID }) => {
     }
 
     else if(String(allInfo?.feesDetails?.Type) === "Spot"){
-      setSpotProfFees(allInfo?.feesDetails?.ProfessionalFees);
       setSpotTotalKM(allInfo?.feesDetails?.TotalKm);
       setSpotVisit(allInfo?.feesDetails?.Visits);
       setSpotConveyance(allInfo?.feesDetails?.Conveyance);
@@ -134,7 +135,6 @@ const CreateList = ({ allInfo, leadID }) => {
     }
 
     else{
-      setReInsprectionProfFees(allInfo?.feesDetails?.ProfessionalFees);
         setReInsprectionTotalKM(allInfo?.feesDetails?.TotalKm);
         setReInsprectionVisit(allInfo?.feesDetails?.Visits);
         setReInsprectionConveyance(allInfo?.feesDetails?.Conveyance);
@@ -144,22 +144,24 @@ const CreateList = ({ allInfo, leadID }) => {
         setReInsprectionRemark(allInfo?.feesDetails?.Remrk);
       
     }
+  }
 
 
   },[allInfo])
 
+ 
   useEffect(()=>{
 
   },[currentSelectedInsprectiontype])
 
 
   useEffect(()=>{
-    console.log(BillTo)
-    if(String(BillTo) === "Appointing Office")
+    if(String(BillTo) === "Appointing Office" || String(BillTo) === "Insurer")
     {
       let requiredStateCode = {}
+      let searchCode =String(BillTo) === "Appointing Office" ? allInfo?.otherInfo[0]?.ClaimServicingOffice : allInfo?.otherInfo[0]?.PolicyIssuingOffice 
       allServicingOffice.map((office,index)=>{
-        if(String(office.OfficeNameWithCode) === String(allInfo?.otherInfo[0]?.ClaimServicingOffice)){
+        if(String(office.OfficeNameWithCode) === String(searchCode)){
           requiredStateCode = office.StateCode;
           }
       })
@@ -235,12 +237,11 @@ const CreateList = ({ allInfo, leadID }) => {
     if (!allInfo?.VehicleOnlineDetails) {
       return 0;
     }
-    if (String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "2W")
-      setFinalProfFees(500);
-    if (String(allInfo?.VehicleOnlineDetails[0]?.VehicleType) === "4W")
-      setFinalProfFees(700);
-
-    console.log(allInfo?.VehicleOnlineDetails?.VehicleType, FinalProfFees);
+    console.log("info",allInfo.VehicleOnlineDetails?.VehicleType)
+    if (String(allInfo?.VehicleOnlineDetails?.VehicleType) === "2W")
+      return (500);
+    if (String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W")
+    return (700);
   };
 
   useEffect(() => {
@@ -265,12 +266,9 @@ const CreateList = ({ allInfo, leadID }) => {
   };
 
   const getTotalValue = () => {
+
     const professionalFees =
-      String(currentSelectedInsprectiontype) === "1"
-        ? FinalProfFees
-        : String(currentSelectedInsprectiontype) === "2"
-        ? ReInsprectionProfFees
-        : SpotProfFees;
+      Number(calculateProfessionalFees())
 
     const totalKM =
       String(currentSelectedInsprectiontype) === "1"
@@ -344,11 +342,7 @@ const CreateList = ({ allInfo, leadID }) => {
           ? "ReInspection"
           : "Spot",
       ProfessionalFees:
-        String(currentSelectedInsprectiontype) === "1"
-          ? FinalProfFees
-          : String(currentSelectedInsprectiontype) === "2"
-          ? ReInsprectionProfFees
-          : SpotProfFees,
+        calculateProfessionalFees(),
       TotalKM:
         String(currentSelectedInsprectiontype) === "1"
           ? FinalTotalKM
@@ -485,6 +479,7 @@ const CreateList = ({ allInfo, leadID }) => {
         ? ReInsprectionPhotosCD
         : SpotPhotosCD;
 
+        console.log(defaultProfFees,PhotoCD,Conveyance)
     const total =
       Number(professionalFees) + Number(Conveyance) + Number(PhotoCD);
 

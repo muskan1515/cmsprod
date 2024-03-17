@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Calendar } from "primereact/calendar";
 // import RichTextEditor, { createEmptyValue } from "./RichTextEditor";
 import { Editor } from "primereact/editor";
-import { AccidentContent, AssessmentContent, otherContent } from "./Content";
+import { AccidentContent, AssessmentContent, addVariables, otherContent } from "./Content";
 import {
   calculateDepreciationsPercenatge,
   getMonthsDifference,
@@ -669,9 +669,17 @@ const Servey = ({
                 <ReactEditor
                   readOnly={!isEditMode}
                   index={1}
-                  editorContent={CauseOfAccident}
+                  editorContent={addVariables(claim,
+                    CauseOfAccident,
+                    claim?.claimDetails?.ClaimServicingOffice,
+                    SurveyAllotmentDate,
+                    claim?.accidentDetails?.DateOfAccident,
+                    PlaceOfLoss,
+                    InsuredName,
+                    VehicleChassisNumber,
+                    PolicyNumber,
+                    InsuredName)}
                   setEditorContent={setCauseOfAccident}
-                  InsuredName={InsuredName}
                 />
               </div>
               {/*  <Editor/>*/}
@@ -711,7 +719,16 @@ const Servey = ({
               <ReactEditor
                 index={3}
                 readOnly={!isEditMode}
-                editorContent={PoliceAction}
+                editorContent={addVariables(claim,
+                  PoliceAction,
+                  claim?.claimDetails?.ClaimServicingOffice,
+                  SurveyAllotmentDate,
+                  claim?.accidentDetails?.DateOfAccident,
+                  PlaceOfLoss,
+                  InsuredName,
+                  VehicleChassisNumber,
+                  PolicyNumber,
+                  InsuredName)}
                 setEditorContent={setPoliceAction}
               />
             </div>
@@ -765,7 +782,16 @@ const Servey = ({
               <ReactEditor
                 index={4}
                 readOnly={!isEditMode}
-                editorContent={ThirdPartyLoss}
+                editorContent={addVariables(claim,
+                  ThirdPartyLoss,
+                  claim?.claimDetails?.ClaimServicingOffice,
+                  SurveyAllotmentDate,
+                  claim?.accidentDetails?.DateOfAccident,
+                  PlaceOfLoss,
+                  InsuredName,
+                  VehicleChassisNumber,
+                  PolicyNumber,
+                  InsuredName)}
                 setEditorContent={setThirdPartyLoss}
               />
             </div>
@@ -819,7 +845,16 @@ const Servey = ({
               <ReactEditor
                 index={5}
                 readOnly={!isEditMode}
-                editorContent={Assessment}
+                editorContent={addVariables(claim,
+                  Assessment,
+                  claim?.claimDetails?.ClaimServicingOffice,
+                  SurveyAllotmentDate,
+                  AccidentAddedDateTime,
+                  PlaceOfLoss,
+                  InsuredName,
+                  VehicleChassisNumber,
+                  PolicyNumber,
+                  InsuredName)}
                 setEditorContent={setAssessment}
               />
             </div>
