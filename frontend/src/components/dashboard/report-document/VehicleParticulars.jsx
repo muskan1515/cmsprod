@@ -1,22 +1,11 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const VehicleParticulars = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -620,67 +609,290 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
-
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+    <div>
+      <div className="d-flex gap-5">
+        <h6 className="text-dark" style={{ color: "black" }}>
+          VEHICLE PARTICULARS :
+        </h6>
+        <span style={{ marginLeft: "50px" }}>
+          {allInfo?.otherInfo[0]?.Remark}
+        </span>
+      </div>
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(a) Registered Number</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.RegisteredNumber}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="">
+            <span> (b) Registered Owner</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>Owner Serial No. / Transfer Date </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.TransferDate
+                ? formatDate(allInfo?.otherInfo[0]?.TransferDate)
+                : "-"}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(c) Date of Registration</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span>
+              {" "}
+              {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(d) Chassis Number </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.ChassisNumber}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(e) Engine Number </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.EngineNumber}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(f) Make / Variant/ Model /Color </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start ">
+            <span className="">
+              {" "}
+              {allInfo?.otherInfo[0]?.MakeVariantModelColor}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(g) Type of Body and Class of vehicle</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.TypeOfBody} (S) -{" "}
+              {allInfo?.otherInfo[0]?.ClassOfVehicle}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(h) Pre Accident Condition</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="">
+            <span> (k) Seating Capacity</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.SeatingCapacity} Nos.</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(l) Cubic Capacity </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
+          </td>
+          <td style={{ width: "20%" }}>
+            {" "}
+            <div className="d-flex gap-1" style={{}}>
+              <label htmlFor=""> Fuel Used </label>
+              <span style={{ marginLeft: "px" }}>:</span>
+              <span>{allInfo?.vehicleOnlineDetails?.FuelType}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "30%" }} className="text-start">
+            <span>(m) Tax particulars</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "45%" }} className="text-start">
+            <span> {formatDate(allInfo?.otherInfo[0]?.TaxParticulars)}</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(a) Registered Number</label>
+          <span style={{ marginLeft: "100px" }}>:</span>
+          <span className="fw-bold text-dark">
+            {" "}
+            {allInfo?.otherInfo[0]?.RegisteredNumber}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(b) Registered Owner </label>
+          <span style={{ marginLeft: "106px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">Owner Serial No. / Transfer Date</label>
+          <span style={{ marginLeft: "47px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.TransferDate
+              ? formatDate(allInfo?.otherInfo[0]?.TransferDate)
+              : "-"}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(c) Date of Registration </label>
+          <span style={{ marginLeft: "97px" }}>:</span>
+          <span> {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(d) Chassis Number </label>
+          <span style={{ marginLeft: "115px" }}>:</span>
+          <span className="fw-bold text-dark">
+            {" "}
+            {allInfo?.otherInfo[0]?.ChassisNumber}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(e) Engine Number </label>
+          <span style={{ marginLeft: "120px" }}>:</span>
+          <span className="fw-bold text-dark">
+            {" "}
+            {allInfo?.otherInfo[0]?.EngineNumber}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex">
+        <div className="text-start d-flex gap-5">
+          <label htmlFor="">(f) Make / Variant/ Model /Color </label>
+          <span style={{ marginLeft: "52px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.MakeVariantModelColor}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(g) Type of Body and Class of vehicle</label>
+          <span style={{ marginLeft: "23px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.TypeOfBody} (S) -{" "}
+            {allInfo?.otherInfo[0]?.ClassOfVehicle}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(h) Pre Accident Condition </label>
+          <span style={{ marginLeft: "80px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(k) Seating Capacity </label>
+          <span style={{ marginLeft: "113px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.SeatingCapacity} Nos.</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(l) Cubic Capacity </label>
+          <span style={{ marginLeft: "126px" }}>:</span>
+          <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
+        </div>
+        <div className="d-flex gap-5" style={{ marginLeft: "14px" }}>
+          <label htmlFor=""> Fuel Used </label>
+          <span style={{ marginLeft: "px" }}>:</span>
+          <span>{allInfo?.vehicleOnlineDetails?.FuelType}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(m) Tax particulars </label>
+          <span style={{ marginLeft: "120px" }}>:</span>
+          <span> {formatDate(allInfo?.otherInfo[0]?.TaxParticulars)}</span>
+        </div>
+      </div> */}
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default VehicleParticulars;

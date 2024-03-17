@@ -1,22 +1,19 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const SummaryOfAssessment = ({
+  allInfo,
+  //   lessExcess,
+  //   lessSalvage,
+  //   getTotalLabourEstimate,
+  //   getTotalLabourAssessed,
+  //   calculateEstimateNewPartsGST,
+  //   getTotalEvaluationOfAssessedForNewParts,
+}) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -618,69 +615,117 @@ const ErrorPageContent = ({ allInfo }) => {
   }
 
   //*************************** */
-
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
-
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+    <div className="" style={{ marginTop: "20px" }}>
+      <h5 className="text-dark">SUMMARY OF ASSESSMENT</h5>
+      <table border={1} style={{ width: "100%" }}>
+        <tr>
+          <th
+            style={{
+              border: "1px solid black",
+              paddingRight: "30px",
+              paddingLeft: "20px",
+            }}
+          >
+            PARTICULARS
+          </th>
+          <th
+            style={{
+              border: "1px solid black",
+              paddingRight: "30px",
+              paddingLeft: "20px",
+            }}
+          >
+            ORIGINAL ESTIMATE
+          </th>
+          <th
+            style={{
+              border: "1px solid black",
+              paddingRight: "30px",
+              paddingLeft: "20px",
+            }}
+          >
+            ASSESSED FOR
+          </th>
+        </tr>
+        <tr>
+          <td style={{ paddingRight: "30px", paddingLeft: "20px" }}>
+            Total Labour Charges
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())
+            )}
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST())
+            )}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ paddingRight: "30px", paddingLeft: "20px" }}>
+            Total Cost of Parts
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())
+            )}
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(getTotalEvaluationOfAssessedForNewParts())
+            )}
+          </td>
+        </tr>
+        <tr>
+          <td
+            colSpan={2}
+            rowSpan={6}
+            style={{
+              border: "1px solid black",
+              padding: "5px",
+              textAlign: "end",
+            }}
+          >
+            Total : <br />
+            Less : Excess <br />
+            Total : <br />
+            Less : Salvage
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(
+                getTotalLabourAssessed() +
+                  getTotalLabourAssessedGST() +
+                  getTotalEvaluationOfAssessedForNewParts()
+              )
+            )}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {lessExcess}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(roundOff(getSummaryTotalWithLessExcess()))}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {lessSalvage}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}
+          </td>
+        </tr>
+      </table>
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default SummaryOfAssessment;

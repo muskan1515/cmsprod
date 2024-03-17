@@ -1,22 +1,11 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const AccidentSurveyParticulars = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -620,67 +609,150 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
-
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+    <div>
+      <div className="d-flex gap-5">
+        <h6 className="text-dark">ACCIDENT & SURVEY PARTICULARS :</h6>
+      </div>
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "35%" }} className="text-start">
+            <span>(a) Date & Time of Accident </span>
+          </td>
+          <td style={{ width: "10%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)},{" "}
+              {convertToReadable(allInfo?.otherInfo[0]?.TimeOfAccident)}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "35%" }} className="text-start">
+            <span> (b) Place of Accident</span>
+          </td>
+          <td style={{ width: "10%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.PlaceOfLoss}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "35%" }} className="text-start">
+            <span>(c) Place of Survey </span>
+          </td>
+          <td style={{ width: "10%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>{allInfo?.otherInfo[0]?.PlaceOfSurvey}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "35%" }} className="text-start">
+            <span>(d) Date of Allotment of Survey </span>
+          </td>
+          <td style={{ width: "10%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.SurveyAllotmentDate
+                ? formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)
+                : "--"}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "35%" }} className="text-start">
+            <span>(e) Date & Time of Survey </span>
+          </td>
+          <td style={{ width: "10%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.SurveyConductedDate
+                ? formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)
+                : "-"}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "35%" }} className="text-start">
+            <span>(f) Date of Receipt of Spot Survey Report </span>
+          </td>
+          <td style={{ width: "10%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> Not Conducted, As Stated By the Insured.</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(a) Date & Time of Accident </label>
+          <span style={{ marginLeft: "48px" }}>:</span>
+          <span>
+            {" "}
+            {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)},{" "}
+            {convertToReadable(allInfo?.otherInfo[0]?.TimeOfAccident)}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(b) Place of Accident </label>
+          <span style={{ marginLeft: "85px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.PlaceOfLoss}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(c) Place of Survey </label>
+          <span style={{ marginLeft: "95px" }}>:</span>
+          <span>{allInfo?.otherInfo[0]?.PlaceOfSurvey}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(d) Date of Allotment of Survey </label>
+          <span style={{ marginLeft: "26px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.SurveyAllotmentDate
+              ? formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)
+              : "--"}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(e) Date & Time of Survey </label>
+          <span style={{ marginLeft: "57px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.SurveyConductedDate
+              ? formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)
+              : "-"}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5" style={{ marginTop: "0px" }}>
+        <div className="d-flex gap-5">
+          <label htmlFor="">(f) Date of Receipt of Spot Survey Report</label>
+          <span style={{ marginLeft: "10px" }}>:</span>
+          <span> Not Conducted, As stated by the insured.</span>
+        </div>
+      </div> */}
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default AccidentSurveyParticulars;

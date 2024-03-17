@@ -339,13 +339,16 @@ const updateFinalReport = (req,res)=>{
         NoteOfSelf, RepairAutoDate, RepairCompletionDate, PartyAgreed, ReasonThereofDelay, AnyFurtherConversation,
         RepairingPhotoDate, ReinspectionDate, SalveDestroy, BillNo, BillDate, BillAmount, Endurance,OtherRemark,SummaryNotes
       ) VALUES (
-        ${leadId}, ${TotalLabor}, ${TotalEstimate}, ${TotalCostOfParts}, ${LessExcess}, ${ExpectedSalvage}, ${MetalPercent},
+        ${leadId}, ${TotalLabor}, ${TotalEstimate}, ${TotalCostOfParts}, ${LessExcess}, '${ExpectedSalvage}', ${MetalPercent},
         '${RemarkOnSalvage}', '${Other}', ${GrandTotal}, ${DepreciationOnParts}, ${NetAssessedAmount},
         '${SavageDepreciationDetails}', '${CashLess}', '${NoteOfSelf}', '${RepairAutoDate}', '${RepairCompletionDate}',
         '${PartyAgreed}', '${ReasonThereofDelay}', '${AnyFurtherConversation}', '${RepairingPhotoDate}', '${ReinspectionDate}',
         '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}','''${FinalReportNotes}'''
       );
     `;
+
+    console.log(updateSummaryDetails);
+    return ;
 
 
     db.query(updateClaimDetails, (err, result2) => {

@@ -1,22 +1,11 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const AccidentDetails = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -618,19 +607,13 @@ const ErrorPageContent = ({ allInfo }) => {
   }
 
   //*************************** */
-
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
+    <div>
+      <h6 className="text-dark">CAUSE & NATURE OF ACCIDENT :</h6>
+      <span>
+       
+        {allInfo?.otherInfo[0]?.CauseOfAccident} , causing damages.
+      </span>
       <div
         style={{
           border: "1px solid black",
@@ -638,7 +621,13 @@ const ErrorPageContent = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <InsuranceParticulars allInfo={allInfo} />
+      <div className="d-flex gap-5">
+        <span htmlFor="" className="text-dark fw-bold">
+          POLICE ACTION
+        </span>
+        <span>:</span>
+        <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
+      </div>
       <div
         style={{
           border: "1px solid black",
@@ -646,7 +635,13 @@ const ErrorPageContent = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <VehicleParticulars allInfo={allInfo} />
+      <div className="text-start d-flex gap-5">
+        <span htmlFor="" className="text-dark fw-bold">
+          DETAILS OF LOAD / PASSENGER
+        </span>
+        <span>:</span>
+        <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
+      </div>
       <div
         style={{
           border: "1px solid black",
@@ -654,7 +649,13 @@ const ErrorPageContent = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <DriverParticulars allInfo={allInfo} />
+      <div className="text-start d-flex gap-5">
+        <span htmlFor="" className="text-dark fw-bold">
+          THIRD PARTY LOSS/ INJURIES
+        </span>
+        <span>:</span>
+        <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
+      </div>
       <div
         style={{
           border: "1px solid black",
@@ -662,25 +663,8 @@ const ErrorPageContent = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
-
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default AccidentDetails;

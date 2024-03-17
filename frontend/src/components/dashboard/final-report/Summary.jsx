@@ -252,8 +252,9 @@ const Summary = ({
   
 
   useEffect(()=>{
+    console.log(totalMetalRows)
     setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
-  },[MetalPercent])
+  },[MetalPercent,totalMetalRows,ExpectedSalvage])
 
   
 
@@ -586,7 +587,7 @@ const Summary = ({
                     value={
                       roundOff(Number(totalLabrorAssessed) +
                       Number(totalPartsAssessed) 
-                        -Number(LessExcess)-Number(LessImposed)+Number(Other))
+                        -Number(LessExcess ? LessExcess : 0)-Number(LessImposed ? LessImposed: 0)+Number(Other ? Other : 0))
                       
                     }
                     // placeholder="Enter Registration No."
@@ -745,8 +746,8 @@ const Summary = ({
                     id="propertyTitle"
                     value={ roundOff(Number(totalLabrorAssessed) +
                       Number(totalPartsAssessed) 
-                        -Number(LessExcess)-Number(LessImposed)+Number(Other)
-                        -ExpectedSalvage - DepreciationValue)
+                        -Number(LessExcess ? LessExcess : 0)-Number(LessImposed ? LessImposed : 0)+Number(Other ? Other : 0)
+                        -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) - DepreciationValue)
                       }
                     // placeholder="Enter Registration No."
                   />

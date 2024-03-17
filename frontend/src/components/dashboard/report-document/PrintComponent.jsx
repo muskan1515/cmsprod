@@ -30,30 +30,36 @@ const PrintComponent = ({ children }) => {
       </button> */}
       <div className="page-footer">
         <footer ref={footerRef} className="bg-gray-800 text-white" style={{}}>
-          <hr style={{ border: "2px solid black" }} />
+          <div
+            style={{
+              border: "1px solid black",
+              marginBottom: "5px",
+              marginTop: "5px",
+            }}
+          ></div>
           <div className="">
-            <div className="d-flex gap-5">
-              <div className="">
-                <h5
-                  className="text-center text-dark"
-                  style={{ fontSize: "12px" }}
-                >
+            <div className="d-flex gap-3 align-item-center">
+              <div
+                className=""
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <h5 className="text-dark" style={{ fontSize: "12px" }}>
                   H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
                   Ganganagar(Raj.)-335001
                 </h5>
-                <h5
+                {/* <h5
                   className="text-center text-dark"
                   style={{ fontSize: "12px" }}
                 >
                   Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
                   Mountville,Sector-79,Gurugram(Hr)
-                </h5>
+                </h5> */}
               </div>
-              <div className="" style={{ marginTop: "0px" }}>
+              <div className="" style={{ marginTop: "" }}>
                 <div className="text-end">
                   <Image
-                    width={261}
-                    height={69}
+                    width={201}
+                    height={54}
                     priority
                     className="w50"
                     src="/assets/images/stamp.jpg"

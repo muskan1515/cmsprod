@@ -1,8 +1,3 @@
-// import CopyrightFooter from "../common/footer/CopyrightFooter";
-// import Footer from "../common/footer/Footer";
-// import Header from "../common/header/DefaultHeader";
-// import MobileMenu from "../common/header/MobileMenu";
-// import PopupSignInUp from "../common/PopupSignInUp";
 import { useEffect, useState } from "react";
 import ErrorPageContent from "./ErrorPageContent";
 import axios from "axios";
@@ -55,9 +50,9 @@ const Index = () => {
           <div>
             {
               // <section className="" style={{ paddingTop: "" }}>
-              <div className="container">
+              <div className="container-fluid">
                 <div className="row">
-                  <div className="col-lg-12">
+                  <div className="col-lg-12" >
                     <ErrorPageContent allInfo={allInfo} />
                   </div>
                 </div>

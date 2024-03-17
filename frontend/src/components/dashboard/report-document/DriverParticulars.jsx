@@ -1,22 +1,11 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const DriverParticulars = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -620,67 +609,221 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
-
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+    <div>
+      <div className="d-flex gap-5">
+        <h6 className="text-dark" style={{ color: "black" }}>
+          DRIVER PARTICULARS :
+        </h6>
+        <span style={{ marginLeft: "122px" }}>
+          {allInfo?.otherInfo[0]?.Remark}
+        </span>
+      </div>
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(a) Name of Driver </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {" "}
+              {allInfo?.otherInfo[0]?.DriverName}
+              {String(allInfo?.otherInfo[0]?.Gender) === "Female"
+                ? ` D/o ${allInfo?.otherInfo[0]?.FatherName}`
+                : ` S/o ${allInfo?.otherInfo[0]?.FatherName}`}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="">
+            <span style={{ marginLeft: "20px" }}> Age</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo?.DateOfBirth !== null
+                ? calculateAge(allInfo?.otherInfo?.DateOfBirth)
+                : "-"}{" "}
+              old ({" "}
+              {allInfo?.otherInfo[0]?.DateOfBirth
+                ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
+                : ""}
+              )
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(b) Motor Driver License Number </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {allInfo?.otherInfo[0]?.LicenseNumber}{" "}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span style={{ marginLeft: "20px" }}>Date of Issue </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.DateOfIssue
+                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+                : "-"}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span style={{ marginLeft: "20px" }}>Valid from </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
+                ? formatDate(allInfo?.otherInfo[0]?.ValidFrom)
+                : "-"}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(c) Issuing Authority </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.IssuingAuthority}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(d) Type of License </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>{allInfo?.otherInfo[0]?.LicenseType}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span> (e) Badge Number</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.BadgeNumber}</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="" className="text-dark">
+            (a) Name of Driver
+          </label>
+          <span style={{ marginLeft: "102px" }}>:</span>
+          <span className="fw-bold text-dark">
+            {" "}
+            {allInfo?.otherInfo[0]?.DriverName}
+            {String(allInfo?.otherInfo[0]?.Gender) === "Female"
+              ? ` D/o ${allInfo?.otherInfo[0]?.FatherName}`
+              : ` S/o ${allInfo?.otherInfo[0]?.FatherName}`}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">Age </label>
+          <span style={{ marginLeft: "178px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo?.DateOfBirth !== null
+              ? calculateAge(allInfo?.otherInfo?.DateOfBirth)
+              : "-"}{" "}
+            old ({" "}
+            {allInfo?.otherInfo[0]?.DateOfBirth
+              ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
+              : ""}
+            )
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(b) Motor Driver License Number </label>
+          <span style={{ marginLeft: "25px" }}>:</span>
+          <span className="fw-bold text-dark">
+            {allInfo?.otherInfo[0]?.LicenseNumber}{" "}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">Date of Issue </label>
+          <span style={{ marginLeft: "129px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.DateOfIssue
+              ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+              : "-"}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">Valid from </label>
+          <span style={{ marginLeft: "144px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
+              ? formatDate(allInfo?.otherInfo[0]?.ValidFrom)
+              : "-"}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(c) Issuing Authority </label>
+          <span style={{ marginLeft: "92px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.IssuingAuthority}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(d) Type of License </label>
+          <span style={{ marginLeft: "99px" }}>:</span>
+          <span>{allInfo?.otherInfo[0]?.LicenseType}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(e) Badge Number </label>
+          <span style={{ marginLeft: "100px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.BadgeNumber}</span>
+        </div>
+      </div> */}
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default DriverParticulars;

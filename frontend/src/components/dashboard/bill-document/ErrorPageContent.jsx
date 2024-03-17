@@ -14,40 +14,44 @@ const ErrorPageContent = ({ feeReport }) => {
 
   const formatDate = (dateString) => {
     const options = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     };
 
-    const dateParts = new Date(dateString).toLocaleDateString("en-GB", options).split('/');
-    const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
+    const dateParts = new Date(dateString)
+      .toLocaleDateString("en-GB", options)
+      .split("/");
+    const formattedDate =
+      dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
     return formattedDate;
-};
-const [selectedServicingOffice,setSelectedServicingOffice]=useState([]);
-  
-useEffect(()=>{
-  axios.get("/api/getClaimServicingOffice")
-  .then((res)=>{
-    const allOffice = res.data.data.results;
-    const name = String(feeReport?.feeDetails?.BillTo) === "Insurer" ?
-    feeReport?.claimDetails?.PolicyIssuingOffice :
-      feeReport?.claimDetails?.ClaimServicingOffice;
-    
-    let requiredOffice ={}
-    allOffice.map((office,index)=>{
-      if(String(office.OfficeNameWithCode) === String(name)){
-        requiredOffice=office
-      }
-    })
+  };
+  const [selectedServicingOffice, setSelectedServicingOffice] = useState([]);
 
-    console.log(requiredOffice);
-    setSelectedServicingOffice(requiredOffice)
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
-},[feeReport]);
+  useEffect(() => {
+    axios
+      .get("/api/getClaimServicingOffice")
+      .then((res) => {
+        const allOffice = res.data.data.results;
+        const name =
+          String(feeReport?.feeDetails?.BillTo) === "Insurer"
+            ? feeReport?.claimDetails?.PolicyIssuingOffice
+            : feeReport?.claimDetails?.ClaimServicingOffice;
 
+        let requiredOffice = {};
+        allOffice.map((office, index) => {
+          if (String(office.OfficeNameWithCode) === String(name)) {
+            requiredOffice = office;
+          }
+        });
+
+        console.log(requiredOffice);
+        setSelectedServicingOffice(requiredOffice);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [feeReport]);
 
   const roundOff = (value) => {
     const roundedValue = parseFloat(value).toFixed(2);
@@ -178,10 +182,9 @@ useEffect(()=>{
   };
 
   function addCommasToNumber(number) {
-    if(Number(number)<=100 || number === undefined)
-    return number;
+    if (Number(number) <= 100 || number === undefined) return number;
     return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  }
 
   const calculateSGST = () => {
     const total = calculateTheTotalBillWithoutGST();
@@ -233,36 +236,28 @@ useEffect(()=>{
     });
   };
   return (
-    <div className="" ref={pdfRef}>
-      {/* Header Content */}
-      {/* <div>
-        <h3>MT Engineer</h3>{" "}
-        <span>
-          {" "}
-          <div
-            style={{ position: "absolute", top: "10px", right: "10px" }}
-          ></div>
-        </span>
-        <p>Legal Investigator Pvt. Ltd.</p>
-        <p>
-          69-Modal Town (1st), Behind U.I.T., Office, Sri Ganganagar -
-          335001(Rajasthan )
-        </p>
-        <p>Tel. No. : +91 94688-81222</p>
-        <p>Email: legalmt04@gmail.com</p>
-        <p>GSTIN : 08AAPCM1051K1Z9</p>
-      </div> */}
+    <div
+      className=""
+      ref={pdfRef}
+      style={{ fontSize: "12px", fontFamily: "arial" }}
+    >
       <div>
-        <Image
-          width={561}
-          height={169}
+        <img
+          width={421}
+          height={139}
           priority
           className="w50"
           src="/assets/images/header.jpg"
           alt="1.jpg"
         />
       </div>
-      <hr style={{ border: "2px solid black" }} />
+      <div
+        style={{
+          border: "1px solid black",
+          marginBottom: "5px",
+          marginTop: "5px",
+        }}
+      ></div>
       {/* Header Content */}
 
       <div>
@@ -271,61 +266,62 @@ useEffect(()=>{
           <h5>To,</h5>
           <div className="d-flex text-dark gap-5 fw-bold">
             <div className="">
-              {feeReport?.feeDetails?.BillTo === "Insured" ? 
-              <><span style={{ marginLeft: "25px" }}>
-                {feeReport?.vehicleOnlineDetails?.RegisteredOwner} ({selectedServicingOffice?.Designation} )
-              </span>
-              <br/>
-              <span style={{ marginLeft: "25px" }}>
-                {feeReport?.vehicleOnlineDetails?.PermanentAddress}
-              </span>
-              </> :
-              feeReport?.feeDetails?.BillTo === "Insurer" ? 
-              <>
-               <span style={{ marginLeft: "25px" }}>
-              {feeReport?.claimDetails?.InsuranceCompanyNameAddress} ,
-            </span>
-            <br />
-               <span style={{ marginLeft: "25px" }}>
-              {selectedServicingOffice?.OfficeNameWithCode}
-            </span>
-            <br />
-            <span style={{ marginLeft: "25px" }}>
-              {selectedServicingOffice?.State}
-            </span>
-            <br />
-              <span style={{ marginLeft: "25px" }}>
-                GSTIN : {selectedServicingOffice?.GST_No}
-              </span>
-              <br />
-              <span style={{ marginLeft: "25px" }}>
-                State Code : {selectedServicingOffice?.StateCode}
-              </span>
-              </> 
-              :
-              <>
-             <span style={{ marginLeft: "25px" }}>
-              {feeReport?.claimDetails?.InsuranceCompanyNameAddress} ,
-            </span>
-            <br />
-            <span style={{ marginLeft: "25px" }}>
-              {selectedServicingOffice?.OfficeNameWithCode}
-            </span>
-            <br />
-            <span style={{ marginLeft: "25px" }}>
-              {selectedServicingOffice?.State}
-            </span>
-            <br />
-              <span style={{ marginLeft: "25px" }}>
-                GSTIN : {selectedServicingOffice?.GST_No}
-              </span>
-              <br />
-              <span style={{ marginLeft: "25px" }}>
-                State Code : {selectedServicingOffice?.StateCode}
-              </span>
-            </>
-            }
-              
+              {feeReport?.feeDetails?.BillTo === "Insured" ? (
+                <>
+                  <span style={{ marginLeft: "25px" }}>
+                    {feeReport?.vehicleOnlineDetails?.RegisteredOwner} (
+                    {selectedServicingOffice?.Designation} )
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    {feeReport?.vehicleOnlineDetails?.PermanentAddress}
+                  </span>
+                </>
+              ) : feeReport?.feeDetails?.BillTo === "Insurer" ? (
+                <>
+                  <span style={{ marginLeft: "25px" }}>
+                    {feeReport?.claimDetails?.InsuranceCompanyNameAddress} ,
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    {selectedServicingOffice?.OfficeNameWithCode}
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    {selectedServicingOffice?.State}
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    GSTIN : {selectedServicingOffice?.GST_No}
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    State Code : {selectedServicingOffice?.StateCode}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span style={{ marginLeft: "25px" }}>
+                    {feeReport?.claimDetails?.InsuranceCompanyNameAddress} ,
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    {selectedServicingOffice?.OfficeNameWithCode}
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    {selectedServicingOffice?.State}
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    GSTIN : {selectedServicingOffice?.GST_No}
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "25px" }}>
+                    State Code : {selectedServicingOffice?.StateCode}
+                  </span>
+                </>
+              )}
             </div>
             <div className="" style={{ marginLeft: "px" }}>
               <div className="d-flex text-dark gap-5">
@@ -337,8 +333,9 @@ useEffect(()=>{
                 <span>Date</span>
                 <span style={{ marginLeft: "17px" }}>:</span>
                 <span>
-                  {feeReport?.feeDetails?.BillDate ?
-                  formatDate(new Date(feeReport?.feeDetails?.BillDate)) : "-"}
+                  {feeReport?.feeDetails?.BillDate
+                    ? formatDate(new Date(feeReport?.feeDetails?.BillDate))
+                    : "-"}
                 </span>{" "}
               </div>
               <div className="d-flex text-dark gap-5">
@@ -349,8 +346,8 @@ useEffect(()=>{
             </div>
           </div>
           <div
-            className="d-flex text-dark mt-3 fw-bold mb-1"
-            style={{ marginLeft: "40px" }}
+            className="d-flex text-dark fw-bold mb-1"
+            style={{ marginLeft: "25px" }}
           >
             <div className="">
               <div className="d-flex text-dark gap-1">
@@ -366,16 +363,15 @@ useEffect(()=>{
               <div className="d-flex text-dark gap-1">
                 <span>Insured Name </span>
                 <span style={{ marginLeft: "45px" }}>:</span>
-                <span>
-                  {feeReport?.insuredDetails?.InsuredName}{" "}
-                </span>
+                <span>{feeReport?.insuredDetails?.InsuredName} </span>
               </div>
               <div className="d-flex text-dark gap-1">
                 <span>Date Of Accident</span>
                 <span style={{ marginLeft: "21px" }}>:</span>
                 <span>
-                  {feeReport?.accidentDetails?.DateOfAccident?
-                  formatDate(feeReport?.accidentDetails?.DateOfAccident) : "--"}
+                  {feeReport?.accidentDetails?.DateOfAccident
+                    ? formatDate(feeReport?.accidentDetails?.DateOfAccident)
+                    : "--"}
                 </span>
               </div>
               <div className="d-flex text-dark gap-1">
@@ -394,20 +390,31 @@ useEffect(()=>{
                 <span>Assessed</span>
                 <span>:</span>
                 <span>
-                  ₹ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.AssessedAmt)))}
+                  ₹{" "}
+                  {addCommasToNumber(
+                    roundOff(Number(feeReport?.feeDetails?.AssessedAmt))
+                  )}
                 </span>
               </div>
               <div className="d-flex text-dark gap-3">
                 <span>Estimate</span>
                 <span style={{ marginLeft: "5px" }}>:</span>
                 <span>
-                  ₹ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.EstimateAmt)))}
+                  ₹{" "}
+                  {addCommasToNumber(
+                    roundOff(Number(feeReport?.feeDetails?.EstimateAmt))
+                  )}
                 </span>
               </div>
               <div className="d-flex text-dark gap-3">
                 <span>IDV</span>
                 <span style={{ marginLeft: "42px" }}>:</span>
-                <span>₹ {addCommasToNumber(roundOff(Number(feeReport?.claimDetails?.IDV)))}</span>
+                <span>
+                  ₹{" "}
+                  {addCommasToNumber(
+                    roundOff(Number(feeReport?.claimDetails?.IDV))
+                  )}
+                </span>
               </div>
             </div>
           </div>
@@ -471,17 +478,19 @@ useEffect(()=>{
             </td>
             <td>
               <div>
-                <h4 className="text-decoration-underline m-2">Final</h4>
+                <h5 className="text-decoration-underline m-2">Final</h5>
                 <span style={{ paddingLeft: "10px" }}>
                   Professional Fee :{" "}
                   <span style={{ marginLeft: "40px", fontWeight: "lighter" }}>
                     {" "}
                     Estimate Amount ₹{" "}
-                    {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.EstimateAmt)))}
+                    {addCommasToNumber(
+                      roundOff(Number(feeReport?.feeDetails?.EstimateAmt))
+                    )}
                   </span>
                 </span>
                 <br />
-               {/* <span style={{ paddingLeft: "10px" }}>
+                {/* <span style={{ paddingLeft: "10px" }}>
                   Photos/CD Expenses : <br /> {feeReport?.feeDetails?.Photos}{" "}
                   Photographs , Charged for {feeReport?.feeDetails?.Photos_cd} @
                   ₹. {roundOff(Number(feeReport?.feeDetails?.PhotsRate))}
@@ -554,15 +563,27 @@ useEffect(()=>{
               <span>Sub Total : ₹</span>
               <br />
               <span>
-                C GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Cgst)))} %
+                C GST @{" "}
+                {addCommasToNumber(
+                  roundOff(Number(feeReport?.feeDetails?.Cgst))
+                )}{" "}
+                %
               </span>
               <br />
               <span>
-                S GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Sgst)))} %{" "}
-              </span> 
-              <br/>
+                S GST @{" "}
+                {addCommasToNumber(
+                  roundOff(Number(feeReport?.feeDetails?.Sgst))
+                )}{" "}
+                %{" "}
+              </span>
+              <br />
               <span>
-                I GST @ {addCommasToNumber(roundOff(Number(feeReport?.feeDetails?.Igst)))} %
+                I GST @{" "}
+                {addCommasToNumber(
+                  roundOff(Number(feeReport?.feeDetails?.Igst))
+                )}{" "}
+                %
               </span>
             </td>
             <td
@@ -573,7 +594,11 @@ useEffect(()=>{
                 // paddingLeft: "20px",
               }}
             >
-              <span> ₹ {addCommasToNumber(roundOff(calculateTheTotalBillWithoutGST()))}</span>{" "}
+              <span>
+                {" "}
+                ₹{" "}
+                {addCommasToNumber(roundOff(calculateTheTotalBillWithoutGST()))}
+              </span>{" "}
               <br /> <hr />
               <span>₹ {addCommasToNumber(roundOff(calculateCGST()))}</span>
               <br />
@@ -644,24 +669,6 @@ useEffect(()=>{
               <span>₹ {addCommasToNumber(roundOff(grandTotalWithGST()))}</span>
             </td>
           </tr>
-          <tr style={{ padding: "20px", marginBottom: "20px" }}>
-            <td
-              style={{
-                padding: "50px",
-                marginBottom: "20px",
-                // border: "1px solid transparent",
-              }}
-            ></td>
-          </tr>
-          <tr style={{ padding: "10px", marginBottom: "10px" }}>
-            <td
-              style={{
-                padding: "15px",
-                marginBottom: "20px",
-                // border: "1px solid transparent",
-              }}
-            ></td>
-          </tr>
           <tr>
             <td
               colSpan={4}
@@ -672,17 +679,20 @@ useEffect(()=>{
                 // paddingLeft: "20px",
               }}
             >
-              <h4 className="text-dark">
+              <h5 className="text-dark">
                 In words : ₹. {numberToWords(grandTotalWithGST())}
-              </h4>
+              </h5>
             </td>
           </tr>
           <tr style={{ border: "1px solid black" }}>
             <td colSpan={2} style={{ padding: "5px" }}>
-              {feeReport?.feeDetails?.BillTo !== "Insured" && <span className="text-dark">
-                <span className="fw-bold">GSTIN </span>: {selectedServicingOffice?.GST_No} State :
-                ({selectedServicingOffice?.StateCode})
-              </span>}
+              {feeReport?.feeDetails?.BillTo !== "Insured" && (
+                <span className="text-dark">
+                  <span className="fw-bold">GSTIN </span>:{" "}
+                  {selectedServicingOffice?.GST_No} State : (
+                  {selectedServicingOffice?.StateCode})
+                </span>
+              )}
               <br />
               <span className="text-dark">
                 <span className="fw-bold">PAN </span> : AAPCN1051K
@@ -714,10 +724,10 @@ useEffect(()=>{
             <td></td>
             <td colSpan={2} className="">
               <div>
-                <h4 className="" style={{ marginLeft: "50%" }}>
+                <h5 className="" style={{ marginLeft: "63%" }}>
                   For MT ENGINEER{" "}
-                </h4>{" "}
-                <span style={{ color: "black", marginLeft: "28%" }}>
+                </h5>{" "}
+                <span style={{ color: "black", marginLeft: "50%" }}>
                   Insurance Surveyors & Loss assessors Pvt. Ltd.
                 </span>
               </div>
@@ -727,7 +737,13 @@ useEffect(()=>{
       </div>
 
       {/* footer content */}
-      {/* <hr style={{ border: "2px solid black" }} />
+      {/* <div
+            style={{
+              border: "1px solid black",
+              marginBottom: "5px",
+              marginTop: "5px",
+            }}
+          ></div>
       <div>
         <h5 className="text-center">
           H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri

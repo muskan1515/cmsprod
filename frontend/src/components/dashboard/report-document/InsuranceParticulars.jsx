@@ -1,22 +1,11 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const InsuranceParticulars = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -620,67 +609,223 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
+    <div>
+      <h6 className="text-dark" style={{ color: "black" }}>
+        INSURANCE PARTICULARS :
+      </h6>
 
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(a) Policy / Cover Note No. </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {allInfo?.otherInfo[0]?.PolicyNumber}
+            </span>
+          </td>
+          <td style={{ width: "30%" }}>
+            <div className="d-flex gap-4" style={{ marginLeft: "" }}>
+              <div>
+                <label htmlFor="">IDV</label>
+              </div>
+              <div>
+                <span style={{ marginLeft: "12px" }}>:</span>
+              </div>
+              <span> ₹ {addCommasToNumber(allInfo?.otherInfo[0]?.IDV)}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="">
+            <span> (b) Period of Insurance</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span>
+              {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to{" "}
+              {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}
+            </span>
+          </td>
+          <td style={{ width: "30%" }}>
+            <div className="d-flex gap-1" style={{ marginLeft: "" }}>
+              <div>
+                <label htmlFor="">Claim No.</label>
+              </div>
+              <div>
+                <span>:</span>
+              </div>
+              <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(c) Endorsement </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span> --</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(d) Insurers</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(e) Insured</span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.InsuredName}
+              {allInfo?.driverOnlineDetails?.FatherName
+                ? String(allInfo?.driverOnlineDetails?.Gender) === "Female"
+                  ? ` D/o ${allInfo?.driverOnlineDetails?.FatherName}`
+                  : `S/o ${allInfo?.driverOnlineDetails?.FatherName}`
+                : "-"}
+              ,{" "}
+              {allInfo?.driverOnlineDetails?.Mobile === null
+                ? allInfo?.driverOnlineDetails?.Mobile
+                : allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
+              <br />
+              {allInfo?.vehicleOnlineDetails?.PermanentAddress}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(f) H.P.A. </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.HPA
+                ? allInfo?.otherInfo[0]?.HPA
+                : "-"}{" "}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style={{ width: "25%" }} className="text-start">
+            <span>(g) Appointed By </span>
+          </td>
+          <td style={{ width: "5%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.ClaimServicingOffice}</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="text-start d-flex text-dark">
+        <div className="d-flex gap-5">
+          <label htmlFor="">(a) Policy / Cover Note No. </label>
+          <span> : </span>
+          <span className="fw-bold text-dark">
+            {allInfo?.otherInfo[0]?.PolicyNumber}
+          </span>
+        </div>
+        <div className="d-flex gap-4" style={{ marginLeft: "82px" }}>
+          <div>
+            <label htmlFor="">IDV</label>
+          </div>
+          <div>
+            <span>:</span>
+          </div>
+          <span> ₹ {addCommasToNumber(allInfo?.otherInfo[0]?.IDV)}</span>
+        </div>
+      </div>
+      <div className="d-flex gap-5">
+        <div className="d-flex gap-4">
+          <label htmlFor="">(b) Period of Insurance</label>
+          <span style={{ marginLeft: "42px" }}> : </span>
+          <span>
+            {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to{" "}
+            {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}
+          </span>
+        </div>
+        <div className="d-flex gap-4" style={{ marginLeft: "20px" }}>
+          <label htmlFor="">Claim No. </label>
+          <span>:</span>
+          <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
+        </div>
+      </div>
+      <div className="d-flex gap-5">
+        <div className="d-flex gap-4">
+          <label htmlFor="">(c) Endorsement </label>
+          <span style={{ marginLeft: "74px" }}>:</span>
+          <span> --</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-4">
+          <label htmlFor="">(d) Insurers </label>
+          <span style={{ marginLeft: "101px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-4">
+          <label htmlFor="">(e) Insured </label>
+          <span style={{ marginLeft: "105px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.InsuredName}
+            {allInfo?.driverOnlineDetails?.FatherName
+              ? String(allInfo?.driverOnlineDetails?.Gender) === "Female"
+                ? ` D/o ${allInfo?.driverOnlineDetails?.FatherName}`
+                : `S/o ${allInfo?.driverOnlineDetails?.FatherName}`
+              : "-"}
+            ,{" "}
+            {allInfo?.driverOnlineDetails?.Mobile === null
+              ? allInfo?.driverOnlineDetails?.Mobile
+              : allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
+            <br />
+            {allInfo?.vehicleOnlineDetails?.PermanentAddress}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-4">
+          <label htmlFor="">(f) H.P.A. </label>
+          <span style={{ marginLeft: "112px" }}>:</span>
+          <span>
+            {" "}
+            {allInfo?.otherInfo[0]?.HPA ? allInfo?.otherInfo[0]?.HPA : "-"}{" "}
+          </span>
+        </div>
+      </div>
+      <div className="text-start d-flex gap-5">
+        <div className="d-flex gap-4">
+          <label htmlFor="">(g) Appointed By </label>
+          <span style={{ marginLeft: "69px" }}>:</span>
+          <span> {allInfo?.otherInfo[0]?.ClaimServicingOffice}</span>
+        </div>
+      </div> */}
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default InsuranceParticulars;

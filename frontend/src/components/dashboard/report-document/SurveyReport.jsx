@@ -1,22 +1,11 @@
-import Link from "next/link";
-import Form from "./Form";
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
 
-const ErrorPageContent = ({ allInfo }) => {
+const SurveyReport = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -620,17 +609,19 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
+    <div>
+      {/* Header Content */}
+      <div>
+        {/* Replace Image component with your actual Image component */}
+        <img
+          width={421}
+          height={139}
+          priority
+          className="w50"
+          src="/assets/images/header.jpg"
+          alt="1.jpg"
+        />
+      </div>
       <div
         style={{
           border: "1px solid black",
@@ -638,49 +629,48 @@ const ErrorPageContent = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
+      {/* Header Content */}
 
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+      <div className="d-flex justify-content-between">
+        <div>
+          <label htmlFor="" className="fw-bold text-dark">
+            Ref No. :
+          </label>
+          <span> {allInfo?.otherInfo[0]?.ReferenceNo}</span>
+        </div>
+        <div>
+          <label htmlFor="" className="fw-bold text-dark">
+            Date :{" "}
+          </label>
+          <span className="text-dark">
+            {" "}
+            {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}
+          </span>
+        </div>
+      </div>
+      <div className="text-center">
+        <h5 style={{ fontFamily: "sans-serif", color: "black" }}>
+          {allInfo?.otherInfo[0]?.SurveyType}{" "}
+          {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
+          {Number(allInfo?.summaryReport[0]?.CashLess) === 1
+            ? "CASH LESS"
+            : "NON CASHLESS"}
+          )- (
+          {allInfo?.otherInfo[0]?.PolicyType
+            ? (allInfo?.otherInfo[0]?.PolicyType).toUpperCase()
+            : "REGULAR"}
+          )
+        </h5>
+      </div>
+      <div>
+        <p className="text-dark">
+          This report is issued by me/us as a licensed Surveyor(s) without
+          prejudice in respect of cause, nature and extent of loss/damages and
+          subject to the terms and conditions of the insurance policy.
+        </p>
+      </div>
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default SurveyReport;

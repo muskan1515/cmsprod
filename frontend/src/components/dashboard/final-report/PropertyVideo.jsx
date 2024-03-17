@@ -224,12 +224,18 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   }, []);
 
 
+
   const [totalMetalRows,settotalMetalRows]=useState(0);
   const [DepreciationValue,setDepreciationValue]=useState(0);
 
   const calculateDepreciation = ()=>{
 
   }
+
+  useEffect(()=>{
+    setExpectedSalvage(Number(totalMetalRows) * Number(MetalPercent)/100);
+  },[totalMetalRows])
+
 
   const returnTotal = () => {
     const a =
@@ -941,9 +947,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       TotalEstimate : totalPartsEstimate + totalLabrorEstimate,
       LessExcess,
       LessImposed,
-      ExpectedSalvage : (Number(totalMetalRows) *
-      Number(metalSalvageValue)) /
-    100,
+      ExpectedSalvage ,
       MetalPercent:Number(MetalPercent)>0? MetalPercent :0 ,
       RemarkOnSalvage,
       TotalCostOfParts:totalPartsAssessed,
@@ -1324,6 +1328,7 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <Servey
+              
               InspectionDate={InspectionDate}
               setInspectionDate={setInspectionDate}
                 SomeComponent={SomeComponent}

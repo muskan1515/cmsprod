@@ -1,23 +1,18 @@
-import Link from "next/link";
-import Form from "./Form";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
-import SurveyReport from "./SurveyReport";
-import InsuranceParticulars from "./InsuranceParticulars";
-import VehicleParticulars from "./VehicleParticulars";
-import DriverParticulars from "./DriverParticulars";
-import AccidentSurveyParticulars from "./AccidentSurveyParticulars";
-import AccidentDetails from "./AccidentDetails";
-import LossDamagesDetails from "./LossDamagesDetails";
-import LabourRepairsDetails from "./LabourRepairsDetails";
-import SummaryOfAssessment from "./SummaryOfAssessment";
-import GSTSummary from "./GSTSummary";
+import { array } from "prop-types";
 
-const ErrorPageContent = ({ allInfo }) => {
+const LabourRepairsDetails = ({ allInfo }) => {
   const pdfRef = useRef();
+
+  
+  const [allGST,setGST]=useState([]);
+
+  const [noGST,setNoGST]=useState([]);
 
   const downloadPDF = () => {
     const input = pdfRef.current;
@@ -76,6 +71,23 @@ const ErrorPageContent = ({ allInfo }) => {
 
     generateAllPages();
   };
+
+  useEffect(()=>{
+    let array = [],array2=[];
+    const labours = allInfo?.labourDetails;
+    labours?.map((part,index)=>{
+      if(Number(part.IsGSTIncluded)% 2 ===0){
+        array.push(part);
+      }
+      else{
+        array2.push(part)
+      }
+    });
+    setNoGST(array);
+    setGST(array2)
+
+  },[allInfo]);
+
 
   //   const input = pdfRef.current;
 
@@ -618,69 +630,186 @@ const ErrorPageContent = ({ allInfo }) => {
   }
 
   //*************************** */
-
   return (
-    <div
-      className="text-dark"
-      style={{
-        width: "",
-        color: "black",
-        fontSize: "12px",
-        fontFamily: "arial",
-      }}
-      ref={pdfRef}
-    >
-      <SurveyReport allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <InsuranceParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <VehicleParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <DriverParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentSurveyParticulars allInfo={allInfo} />
-      <div
-        style={{
-          border: "1px solid black",
-          marginBottom: "5px",
-          marginTop: "5px",
-        }}
-      ></div>
-      <AccidentDetails allInfo={allInfo} />
-
-      <LossDamagesDetails allInfo={allInfo} />
-      <br />
-      <LabourRepairsDetails allInfo={allInfo} />
-
-      <SummaryOfAssessment allInfo={allInfo} />
-
-      <GSTSummary allInfo={allInfo} />
+    <div className="" style={{ marginTop: "" }}>
+      <h5 className="text-dark">LABOUR & REPAIRS :</h5>
+      <table style={{ width: "100%" }}>
+        <tr>
+          <th style={{ border: "1px solid black", padding: "10px" }}>S.No</th>
+          <th style={{ border: "1px solid black", padding: "10px" }}>SAC</th>
+          <th style={{ border: "1px solid black", padding: "10px" }}>
+            Bill S.No.
+          </th>
+          <th
+            style={{
+              border: "1px solid black",
+              padding: "10px",
+              textAlign: "center",
+            }}
+          >
+            Labour Description
+          </th>
+          <th style={{ border: "1px solid black", padding: "10px" }}>
+            Estimated
+          </th>
+          <th style={{ border: "1px solid black", padding: "10px" }}>
+            Assessed
+          </th>
+        </tr>
+        
+          <tr>
+          <th colSpan={2}>Parts without GST</th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+        </tr>
+        {noGST?.map((labour, index) => {
+          return labour.LabourIsActive === 1  ? (
+            <tr>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {index + 1}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {labour.SAC}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {labour.BillSr}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {labour.Description}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {roundOff(labour.Estimate)}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {roundOff(labour.Assessed)}
+              </td>
+            </tr>
+          ) : null;
+        })}
+       
+        <tr>
+          <th colSpan={2}>Parts with {allInfo?.labourDetails[0]?.GSTPercentage} % GST</th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+          <th style={{ border: "1px solid black", padding: "10px" }}></th>
+        </tr>
+        {allGST?.map((labour, index) => {
+          return labour.LabourIsActive === 1 ? (
+            
+            <tr>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {index + 1}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {labour.SAC}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {labour.BillSr}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {labour.Description}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {roundOff(labour.Estimate)}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {roundOff(labour.Assessed)}
+              </td>
+            </tr>
+          ) : null;
+        })}
+        {/*<tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Ac Condenser Opening Fitting & Ac Charge (Condenser 2000.00 300.00
+              Opening Fitting)
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Tie- Member Opening Fitting
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Bumper Opening Fitting
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}></td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              Head Light Opening Fitting (Not Allowed)
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>700</td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>300</td>
+              </tr>*/}
+        <tr>
+          <td
+            rowSpan={3}
+            style={{ border: "1px solid black", padding: "5px" }}
+          ></td>
+          <td
+            colSpan={3}
+            rowSpan={3}
+            style={{
+              border: "1px solid black",
+              padding: "10px",
+              textAlign: "end",
+            }}
+          >
+            Sub Total Labour Charges : ₹ <br />
+            Add : GST on ₹ 0.00 @ 18.00% : <br />
+            Total Labour Charges : ₹
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(roundOff(getTotalLabourEstimate()))}
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(roundOff(getTotalLabourEstimateGST()))}
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(roundOff(getTotalLabourAssessedGST()))}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())
+            )}
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
+            {addCommasToNumber(
+              roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST())
+            )}
+          </td>
+        </tr>
+      </table>
     </div>
   );
 };
 
-export default ErrorPageContent;
+export default LabourRepairsDetails;
