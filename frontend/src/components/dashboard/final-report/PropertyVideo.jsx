@@ -297,7 +297,9 @@ useEffect(()=>{
           currentGst,
           row.gst
         );
-        total_assessed = total_assessed + Number(row?.assessed);
+
+        const calculateWithGST = (Number(row.assessed) * Number(row.gst))/100;
+        total_assessed = total_assessed + Number(row.gst) % 2 !== 0 ? Number(row?.assessed) : Number(row?.assessed);
 
         const remained_assessed_paint_dep =
           Number(row?.assessed) -
@@ -311,8 +313,10 @@ useEffect(()=>{
       }
     });
 
+    const totalFinalLabourGST = (Number(total_taxable_amount)* Number(currentGst))/100;
     setTotalAssessed(total_assessed);
-    setTotalLabrorAssessed(total_assessed);
+    console.log("total_labour_assessed",total_taxable_amount,totalFinalLabourGST)
+    setTotalLabrorAssessed(total_taxable_amount+totalFinalLabourGST );
     setTotalLabrorEstimate(total_estimate);
     console.log("setTotalTaxbleAmount",total_taxable_amount)
     setTotalTaxbleAmount(total_taxable_amount);
@@ -671,8 +675,8 @@ const [AccidentTime,setAccidentTime]=useState("");
     setRemarkIfULW(claim?.vehicleDetails?.RemarkIfULW !==null ? claim?.vehicleDetails?.RemarkIfULW : "" );
 
     setPin(claim?.accidentDetails?.Pin!==null ? claim?.accidentDetails?.Pin : "");
-    setPlaceOfSurvey(claim?.garageDetails?.GarageNameAndAddress!==null ? 
-      claim?.garageDetails?.GarageNameAndAddress : "");
+    setPlaceOfSurvey(claim?.accidentDetails?.PlaceOfSurvey !==null ? 
+      claim?.accidentDetails?.PlaceOfSurvey : "");
     setDetailsOfLoads(claim?.accidentDetails?.DetailsOfLoads!==null ? claim?.accidentDetails?.DetailsOfLoads : "");
     setCauseOfAccident(claim?.accidentDetails?.CauseOfAccident!==null ? claim?.accidentDetails?.CauseOfAccident : "");
     setPoliceAction(claim?.accidentDetails?.PoliceAction!==null ? claim?.accidentDetails?.PoliceAction : "");

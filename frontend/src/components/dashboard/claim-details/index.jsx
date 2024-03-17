@@ -180,6 +180,13 @@ const Index = ({}) => {
   const [Pht, setPht] = useState("");
   const [Photo, setPhoto] = useState("");
 
+  //accident details
+  const [DateOfAccident,setDateOfAccident] = useState("");
+  const [TimeOfAccident,setTimeOfAccident] = useState("");
+  const [PlaceOfSurvey , setPlaceOfSurvey] = useState("");
+  const [Pin , setPin] = useState("");
+  const [PlaceOfLoss , setPlaceOfLoss] = useState("");
+
   const [IsRcDetailsFetched, setIsRcDetailsFetched] = useState(1);
   const [IsDriverDetailsFetched, setIsDriverDetailsFetched] = useState(1);
 
@@ -646,6 +653,38 @@ const Index = ({}) => {
         ? claim?.driverDetails?.DLStatus
         : DLStatus
     );
+
+    //accident Details setting up according to the added claim
+    setPlaceOfLoss(
+      claim?.accidentDetails?.PlaceOfLoss 
+      ? claim?.accidentDetails?.PlaceOfLoss 
+      : PlaceOfLoss
+    );
+
+    setPlaceOfSurvey(
+      claim?.accidentDetails?.PlaceOfSurvey 
+      ? claim?.accidentDetails?.PlaceOfSurvey
+      : PlaceOfSurvey
+    );
+
+    setDateOfAccident(
+      claim?.accidentDetails?.DateOfAccident
+      ? claim?.accidentDetails?.DateOfAccident
+      : DateOfAccident
+    );
+
+    setTimeOfAccident(
+      claim?.accidentDetails?.TimeOfAccident
+      ? claim?.accidentDetails?.TimeOfAccident
+      : TimeOfAccident
+    );
+
+
+    setPin(
+      claim?.accidentDetails?.Pin
+      ? claim?.accidentDetails?.Pin
+      : Pin
+    )
   }, [claim]);
 
   // console.log("datat ", VehicleInsuranceCompany);
@@ -674,6 +713,7 @@ const Index = ({}) => {
     if (String(type) === "1") return "updateClaimDetails";
     else if (String(type) === "2") return "updateVehicleDetails";
     else if (String(type) === "3") return "updateDriverDetails";
+    else if (String(type) === "5") return "updateAccidentDetails";
     return "updategarageDetails";
   };
 
@@ -864,6 +904,13 @@ const Index = ({}) => {
       IsRcDetailsFetched,
       GarageMailAddress,
       BrokerMailAddress,
+
+      PlaceOfLoss,
+      PlaceOfSurvey,
+      DateOfAccident,
+      TimeOfAccident,
+      PlaceOfLoss,
+      Pin,
       token: userInfo[0].Token
     };
 
@@ -1675,14 +1722,16 @@ const Index = ({}) => {
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               editHandler={editHandler}
-                              GarageNameAndAddress={GarageNameAndAddress}
-                              setGarageNameAndAddress={setGarageNameAndAddress}
-                              GarageContactNo1={GarageContactNo1}
-                              setGarageContactNo1={setGarageContactNo1}
-                              GarageContactNo2={GarageContactNo2}
-                              setGarageContactNo2={setGarageContactNo2}
-                              GarageAddedBy={GarageAddedBy}
-                              setGarageAddedBy={setGarageAddedBy}
+                              PlaceOfLoss={PlaceOfLoss}
+                              setPlaceOfLoss={setPlaceOfLoss}
+                              PlaceOfSurvey={PlaceOfSurvey}
+                              setPlaceOfSurvey={setPlaceOfSurvey}
+                              TimeOfAccident={TimeOfAccident}
+                              setTimeOfAccident={setTimeOfAccident}
+                              DateOfAccident={DateOfAccident}
+                              setDateOfAccident={setDateOfAccident}
+                              Pin={Pin}
+                              setPin={setPin}
                             />
                           </div>
                         </div>

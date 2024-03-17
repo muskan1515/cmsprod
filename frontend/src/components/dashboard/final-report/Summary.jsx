@@ -211,11 +211,7 @@ const Summary = ({
     setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
   },[MetalPercent])
 
-  useEffect(()=>{
-    if(FinalReportNotes === "" || FinalReportNotes ===null){
-      setFinalReportNotes(summaryNotes())
-    }
-  },[])
+  
 
 
 
@@ -762,7 +758,7 @@ const Summary = ({
                 :
                 <>
                  <label htmlFor="" className="m-1" >
-                  Cash Less
+                 Cash Less
                 </label>
                
                  <input

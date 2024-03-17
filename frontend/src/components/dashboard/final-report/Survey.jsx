@@ -225,8 +225,6 @@ const Servey = ({
     );
     
     const other = otherContent();
-    console.log("accident", accident);
-    console.log("CauseOfAccident", CauseOfAccident);
     setCauseOfAccident(CauseOfAccident ? (CauseOfAccident) : accident);
     setAssessment(Assessment ? (Assessment) : assessment);
     setThirdPartyLoss(ThirdPartyLoss ? (ThirdPartyLoss) : other);

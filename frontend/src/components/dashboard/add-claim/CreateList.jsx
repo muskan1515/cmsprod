@@ -82,7 +82,7 @@ const CreateList = () => {
     .catch((err)=>{
       console.log(err)
     })
-  })
+  },[])
 
 
 
@@ -407,7 +407,7 @@ const CreateList = () => {
                 >
                 {allServicingOffice.map((office,index)=>{
                   return <option key={index}>
-                    {office.OfficeName}
+                    {office.OfficeNameWithCode}
                   </option>
                 })}
               </select>
@@ -545,7 +545,7 @@ const CreateList = () => {
                 >
                 {allServicingOffice.map((office,index)=>{
                   return <option key={index}>
-                    {office.OfficeName}
+                    {office.OfficeNameWithCode}
                   </option>
                 })}
               </select>

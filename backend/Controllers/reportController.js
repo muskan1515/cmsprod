@@ -19,6 +19,16 @@ const getAllInfo = async(req,res)=>{
         "CALL GetLabourReport(?)",
         [leadId]
       );
+
+      const vehicleOnlineDetails = await executeQuery(
+        "SELECT * FROM VehicleDetailsOnline WHERE LeadId=?",
+        [leadId]
+      );
+
+      const driverOnlineDetails = await executeQuery(
+        "SELECT * FROM DriverDetailsOnline WHERE LeadId=?",
+        [leadId]
+      );
       const newPartsDetails = await executeQuery(
         "CALL GetNewPartsReport(?)",
         [leadId]
@@ -37,6 +47,8 @@ const getAllInfo = async(req,res)=>{
         labourDetails,
         newPartsDetails,
         otherInfo,
+        vehicleOnlineDetails,
+        driverOnlineDetails,
         summaryReport
       };
   

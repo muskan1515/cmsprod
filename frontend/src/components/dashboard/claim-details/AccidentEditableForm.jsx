@@ -6,21 +6,22 @@ import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";
+import TimePicker from "../../common/TimePicker";
 
 const AccidentEditableForm = ({
   claim,
   edit,
-  setReload,
-  reload,
-  GarageNameAndAddress,
-  setGarageNameAndAddress,
-  GarageContactNo1,
-  setGarageContactNo1,
-  GarageContactNo2,
-  setGarageContactNo2,
-  GarageAddedBy,
-  setGarageAddedBy,
   onSaveHandler,
+  PlaceOfLoss,
+  setPlaceOfLoss,
+  PlaceOfSurvey,
+  setPlaceOfSurvey,
+  TimeOfAccident,
+  setTimeOfAccident,
+  DateOfAccident,
+  setDateOfAccident,
+  Pin,
+  setPin
 }) => {
   const router = useRouter();
   const [editCase_03, setEditCase_03] = useState(false);
@@ -33,9 +34,23 @@ const AccidentEditableForm = ({
 
   const formatDate = (val) => {
     const date = new Date(val);
-    const formattedDate = date.toLocaleDateString("en-GB");
-    return formattedDate;
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Note: Month is zero-indexed
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
+  function localDate(dateString) {
+    if (dateString && dateString !== "null") {
+      return new Date(dateString).toLocaleDateString("fr-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Kolkata",
+      });
+    } else {
+      return "";
+    }
+  }
   return (
     <>
       <div className="faq_according row mt-2">
@@ -72,7 +87,7 @@ const AccidentEditableForm = ({
                           style={{}}
                           onClick={() => {
                             setisUpdateVehicleLoading(true);
-                            onSaveHandler(4, closeFunction, closeFunction);
+                            onSaveHandler(5, closeFunction, closeFunction);
                           }}
                         >
                           Save
@@ -121,27 +136,24 @@ const AccidentEditableForm = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Name & Address<span class="req-btn">*</span>
+                            Date Of Accident
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            onChange={(e) =>
-                              setGarageNameAndAddress(e.target.value)
-                            }
-                            value={GarageNameAndAddress}
-                            // disabled={!edit}
-                            // placeholder="Enter Registration No."
-                          />
+                        <DatePicker
+                          className="form-control"
+                          id="propertyTitle"
+                          dateFormat="dd-MM-yyyy"
+                          selected={
+                            DateOfAccident !== null && !isNaN(new Date(DateOfAccident))
+                              ? new Date(DateOfAccident)
+                              : ""
+                          }
+                          onChange={(date) => setDateOfAccident(date)}
+                        />
                         </div>
                       </div>
-                      {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
+                      
                     </div>
 
                     <div className="col-lg-6">
@@ -157,38 +169,19 @@ const AccidentEditableForm = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Contact Number <span class="req-btn">*</span>
+                           Time Of Accident
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={GarageContactNo1}
-                            onChange={(e) =>
-                              setGarageContactNo1(e.target.value)
-                            }
-                            // disabled={!edit}
-                            // placeholder="Enter Registration No."
-                          />
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={GarageContactNo2}
-                            onChange={(e) =>
-                              setGarageContactNo2(e.target.value)
-                            }
-                            // disabled={!edit}
-                            // placeholder="Enter Registration No."
-                          />
+                        <TimePicker
+                          selectedTime={TimeOfAccident ? TimeOfAccident : ""}
+                          setSelectedTime={setTimeOfAccident}
+                        />
                         </div>
                       </div>
                     </div>
 
-                    {/*} <div className="col-lg-6">
+                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -201,47 +194,23 @@ const AccidentEditableForm = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Added Date <span class="req-btn">*</span>
+                            Place Of Accident
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
-                            disable={true}
-                            className="form-control"
-                            id="propertyTitle"
-                            selectedDate={
-                              claim.garageDetails?.AddedDate
-                                ? new Date(claim.garageDetails?.AddedDate)
-                                : ""
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                          {/* <DatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            selected={
-                              DateRegistration !== null && !isNaN(new Date(DateRegistration))
-                                ? new Date(DateRegistration)
-                                : ""
-                            }
-                            onChange={(date) => setDateRegistration(date)}
-                          /> 
-                           <DatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            selected={
-                              DateRegistration !== null && !isNaN(new Date(DateRegistration))
-                                ? new Date(DateRegistration)
-                                : ""
-                            }
-                            onChange={(date) => setDateRegistration(date)}
-                          /> 
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
+                          value={PlaceOfLoss ? PlaceOfLoss : ""}
+                          onChange={(e) => setPlaceOfLoss(e.target.value)}
+                          // placeholder="Enter Registration No."
+                        />
                         </div>
                       </div>
-                        </div>*/}
+                        </div>
 
-                    {/* <div className="col-lg-6">
+                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -254,7 +223,7 @@ const AccidentEditableForm = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Added By <span class="req-btn">*</span>
+                            Pin Code
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -262,16 +231,15 @@ const AccidentEditableForm = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={GarageAddedBy}
-                            onChange={(e) => setGarageAddedBy(e.target.value)}
-                            // disabled={!edit}
-                            // placeholder="Enter Registration No."
+                            value={Pin}
+                            onChange={(e) => setPin(e.target.value)}
+  
                           />
                         </div>
                       </div>
-                          </div>*/}
+                      </div>
 
-                    {/* <div className="col-lg-6">
+                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -284,32 +252,27 @@ const AccidentEditableForm = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Modified Date <span class="req-btn">*</span>
+                           Place Of Survey
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          <MyDatePicker
-                            disable={true}
-                            className="form-control"
-                            id="propertyTitle"
-                            selectedDate={
-                              claim.garageDetails?.ModifiedDate
-                                ? new Date(claim.garageDetails?.ModifiedDate)
-                                : ""
-                            }
-                            // placeholder="Enter Registration No."
-                          />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="propertyTitle"
+                          value={PlaceOfSurvey ? PlaceOfSurvey : ""}
+                          onChange={(e) => setPlaceOfSurvey(e.target.value)}
+                          // placeholder="Enter Registration No."
+                        />
                         </div>
                       </div>
-                          </div>*/}
+                          </div>
                   </div>
                 ) : (
                   <div className="row">
                     <AccidentViewForm
                       claim={claim}
-                      GarageNameAndAddress={GarageNameAndAddress}
-                      GarageContactNo1={GarageContactNo1}
-                      GarageAddedBy={GarageAddedBy}
+                      
                     />
                   </div>
                 )}

@@ -8,7 +8,6 @@ async function handler(request, response) {
     const payload = request.body;
     const type =  request.query.type;
     
-    console.log(type)
     const userResponse = await axios.put(`${domain}/claim/${type}`, payload,{
         headers:{
             Authorization:token,

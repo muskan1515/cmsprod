@@ -25,7 +25,7 @@ function convertHtmlToString(htmlString) {
 }
 
 export const otherContent = () => {
-  return 'No, as stated by insured';
+  return 'No,As stated by Insurer';
 };
 
 export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAccident, PlaceOfAccident) => {

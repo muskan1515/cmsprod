@@ -20,6 +20,8 @@ router.put("/updateDriverDetails",claimController.updateDriverDetails);
 
 router.put("/updategarageDetails",claimController.garageDetails);
 
+router.put("/updateAccidentDetails",claimController.accidentdetails);
+
 router.put("/updateClaim/:leadId",claimController.updateClaim);
 
 module.exports = router;

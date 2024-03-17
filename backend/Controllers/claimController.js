@@ -549,6 +549,7 @@ const getSpecificClaim = async (req, res) => {
 
 
  const updateClaim = async(req, res) => {
+
   
   const {
     InsuredName,
@@ -1081,6 +1082,38 @@ const getSpecificClaim = async (req, res) => {
   
   }
 
+  const accidentdetails = (req,res)=>{
+    const {
+      PlaceOfLoss,
+      PlaceOfSurvey,
+      DateOfAccident,
+      TimeOfAccident,
+      Pin,
+      LeadId
+    } = req.body;
+
+      const updateAccidentDetails = `
+      UPDATE AccidentDetails
+      SET
+      PlaceOfLoss = '${PlaceOfLoss}',
+      Pin='${Pin}',
+      PlaceOfSurvey='${PlaceOfSurvey}',
+      DateOfAccident='${DateOfAccident}',
+      TimeOfAccident='${TimeOfAccident}'
+      WHERE LeadID = ${LeadId};
+    `;
+
+      db.query(updateAccidentDetails, (err, result2) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        res.status(200).send("Successfully Updated!!");
+        
+      });
+  }
+
   const garageDetails = (req,res)=>{
 
 
@@ -1122,5 +1155,6 @@ module.exports={addClaim,
               updateClaimDetails,
               updateDriverDetails,
               updateVehicleDetails,
-              garageDetails
+              garageDetails,
+              accidentdetails
             }

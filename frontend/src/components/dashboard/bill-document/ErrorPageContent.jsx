@@ -29,11 +29,11 @@ useEffect(()=>{
   axios.get("/api/getClaimServicingOffice")
   .then((res)=>{
     const allOffice = res.data.data.results;
-    const name = feeReport?.claimDetails?.ClaimServicingOffice;
+    const name = feeReport?.feeDetails?.Others;
     
     let requiredOffice ={}
     allOffice.map((office,index)=>{
-      if(String(office.OfficeName) === String(name)){
+      if(String(office.OfficeNameWithCode) === String(name)){
         requiredOffice=office
       }
     })
@@ -261,7 +261,7 @@ useEffect(()=>{
           <div className="d-flex text-dark gap-5 fw-bold">
             <div className="">
               <span style={{ marginLeft: "25px" }}>
-                Mr./Ms. {selectedServicingOffice?.EmployeeName} ({selectedServicingOffice?.Designation} )
+                {selectedServicingOffice?.EmployeeName} ({selectedServicingOffice?.Designation} )
               </span>
               <br/>
               <span style={{ marginLeft: "25px" }}>

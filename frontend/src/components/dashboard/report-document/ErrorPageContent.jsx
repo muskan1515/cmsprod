@@ -755,9 +755,14 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "105px" }}>:</span>
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.InsuredName},{" "}
-              {allInfo?.otherInfo[0]?.InsuredMobileNo1}, <br />
-              {allInfo?.otherInfo[0]?.InsuredAddress}
+              {allInfo?.otherInfo[0]?.InsuredName}
+              {allInfo?.driverOnlineDetails?.FatherName  ? 
+                String(allInfo?.driverOnlineDetails?.Gender) === "Female" ?
+                ` D/o ${allInfo?.driverOnlineDetails?.FatherName}` :
+                `S/o ${allInfo?.driverOnlineDetails?.FatherName}` : "-"}
+              ,{" "}
+              {allInfo?.driverOnlineDetails?.Mobile === null ?allInfo?.driverOnlineDetails?.Mobile : allInfo?.otherInfo[0]?.InsuredMobileNo1} <br/>
+              {allInfo?.vehicleOnlineDetails?.PermanentAddress}
             </span>
           </div>
         </div>
@@ -910,7 +915,7 @@ const ErrorPageContent = ({ allInfo }) => {
           <div className="d-flex gap-5" style={{ marginLeft: "14px" }}>
             <label htmlFor=""> Fuel Used </label>
             <span style={{ marginLeft: "px" }}>:</span>
-            <span>{allInfo?.otherInfo[0]?.FuelUsed}</span>
+            <span>{allInfo?.vehicleOnlineDetails?.FuelType}</span>
           </div>
         </div>
 
@@ -998,6 +1003,8 @@ const ErrorPageContent = ({ allInfo }) => {
                 : "-"}
             </span>
           </div>
+
+         
          
         </div>
 
@@ -1036,7 +1043,7 @@ const ErrorPageContent = ({ allInfo }) => {
             <span style={{ marginLeft: "48px" }}>:</span>
             <span>
               {" "}
-              {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)},
+              {formatDate(allInfo?.otherInfo[0]?.DateOfAccident)}, {" "}
               {convertToReadable(allInfo?.otherInfo[0]?.TimeOfAccident)}
             </span>
           </div>
@@ -1106,7 +1113,12 @@ const ErrorPageContent = ({ allInfo }) => {
         <span>
           As filled in the claim form and discussion with the Insured that on
           the day and time of accident{" "}
-          <b>{allInfo?.otherInfo[0]?.InsuredName}</b> was driving the subject
+          <b>{allInfo?.otherInfo[0]?.InsuredName}
+              {allInfo?.driverOnlineDetails?.FatherName  ? 
+                String(allInfo?.driverOnlineDetails?.Gender) === "Female" ?
+                ` D/o ${allInfo?.driverOnlineDetails?.FatherName}` :
+                `S/o ${allInfo?.driverOnlineDetails?.FatherName}` : "-"}
+              ,{" "}</b> was driving the subject
           vehicle. &quot; {allInfo?.otherInfo[0]?.CauseOfAccident} , causing
           damages.
         </span>
@@ -1436,16 +1448,16 @@ const ErrorPageContent = ({ allInfo }) => {
               Grand Total F : <br />
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalEstimate())}
+              {addCommasToNumber(roundOff(getTotalEstimate()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalGlassAssessed())}
+              {addCommasToNumber(roundOff(getTotalGlassAssessed()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalMetalAssessed())}
+              {addCommasToNumber(roundOff(getTotalMetalAssessed()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalOtherMetalAssesses())}
+              {addCommasToNumber(roundOff(getTotalOtherMetalAssesses()))}
             </td>
             <td
               rowSpan={5}
@@ -1455,72 +1467,72 @@ const ErrorPageContent = ({ allInfo }) => {
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalDepreciation("Glass", false))}
+              {addCommasToNumber(roundOff(getTotalDepreciation("Glass", false)))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalDepreciation("Metal", false))}
+              {addCommasToNumber(roundOff(getTotalDepreciation("Metal", false)))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalNonMetaDepreciation())}
+              {addCommasToNumber(roundOff(getTotalNonMetaDepreciation()))}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalEstimate())}
+              {addCommasToNumber(roundOff(getTotalEstimate()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(
+              {addCommasToNumber(roundOff(
                 getTotalGlassAssessed() - getTotalDepreciation("Glass", false)
-              )}
+              ))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(
+              {addCommasToNumber(roundOff(
                 getTotalMetalAssessed() - getTotalDepreciation("Metal", false)
-              )}
+              ))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(
+              {addCommasToNumber(roundOff(
                 getTotalOtherMetalAssesses() - getTotalNonMetaDepreciation()
-              )}
+              ))}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateEstimateNewPartsGST())}
+              {addCommasToNumber(roundOff(calculateEstimateNewPartsGST()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateTypeNewPartsGST("Glass"))}
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass")))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateTypeNewPartsGST("Metal"))}
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Metal")))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(calculateOtherTypeNewPartsGST())}
+              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGST()))}
             </td>
           </tr>
           <tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())}
+              {addCommasToNumber(roundOff(getTotalEstimate() + calculateEstimateNewPartsGST()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(
+              {addCommasToNumber(roundOff(
                 calculateTypeNewPartsGST("Glass") +
                   getTotalGlassAssessed() -
                   getTotalDepreciation("Glass", false)
-              )}
+              ))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(
+              {addCommasToNumber(roundOff(
                 calculateTypeNewPartsGST("Metal") +
                   getTotalMetalAssessed() -
                   getTotalDepreciation("Metal", false)
-              )}
+              ))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {roundOff(
+              {addCommasToNumber(roundOff(
                 calculateOtherTypeNewPartsGST() +
                   getTotalOtherMetalAssesses() -
-                  getTotalNonMetaDepreciation()
+                  getTotalNonMetaDepreciation())
               )}
             </td>
           </tr>

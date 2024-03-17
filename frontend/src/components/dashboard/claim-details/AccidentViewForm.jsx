@@ -15,8 +15,30 @@ const AccidentViewForm = ({
 }) => {
   const formatDate = (val) => {
     const date = new Date(val);
-    const formattedDate = date.toLocaleDateString("en-GB");
-    return formattedDate;
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Note: Month is zero-indexed
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const formatTime = (time24) => {
+    if(!time24)
+     return ""
+    let [hours, minutes] = time24?.split(':');
+    let period = 'AM';
+  
+    if (hours >= 12) {
+      period = 'PM';
+      if (hours > 12) {
+        hours -= 12;
+      }
+    }
+  
+    if (hours == 0) {
+      hours = 12;
+    }
+  
+    return `${hours}:${minutes} ${period}`;
   };
   const statusOptions = [
     {
@@ -76,6 +98,7 @@ const AccidentViewForm = ({
     return status;
   };
 
+
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -94,7 +117,7 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Name & Address
+                      Date Of Accident
                     </label>
                     <label
                       htmlFor=""
@@ -105,7 +128,7 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.garageDetails?.GarageNameAndAddress}
+                      {formatDate(claim?.accidentDetails?.DateOfAccident)}
                     </label>
                   </div>
                 </td>
@@ -120,7 +143,7 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Contact Number
+                      Time Of Accident
                     </label>
                     <label
                       htmlFor=""
@@ -131,7 +154,7 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.garageDetails?.GarageContactNo1}
+                      {formatTime(claim?.accidentDetails?.TimeOfAccident)}
                     </label>
                   </div>
                 </td>
@@ -146,7 +169,7 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      Status
+                      Place of Survey
                     </label>
                     <label
                       htmlFor=""
@@ -157,7 +180,61 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {checkStatus(claim.claimStatus?.Status)}
+                      {claim?.accidentDetails?.PlaceOfSurvey}
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                     Place Of Loss 
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-4 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                       {claim?.accidentDetails?.PlaceOfLoss}
+                    </label>
+                  </div>
+                </td>
+                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Pin Code
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-4 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.accidentDetails?.Pin}
                     </label>
                   </div>
                 </td>

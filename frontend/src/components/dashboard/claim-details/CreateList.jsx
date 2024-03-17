@@ -519,8 +519,8 @@ const CreateList = ({
                 onChange={(e) => setPolicyIssuingOffice(e.target.value)}
                 >
                 {allServicingOffice.map((office,index)=>{
-                  return <option key={index}>
-                    {office.OfficeName}
+                  return <option key={index} style={{padding:"4px"}}>
+                    {office.OfficeNameWithCode}
                   </option>
                 })}
               </select>
@@ -627,7 +627,7 @@ const CreateList = ({
               >
                 {allServicingOffice?.map((office,index)=>{
                     return <option key={index}>
-                      {office.OfficeName}
+                      {office.OfficeNameWithCode}
                     </option>
                 })}
               </select>
@@ -694,34 +694,18 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              {/*<input
-            // type="date"
-              className="form-control"
-              id="propertyTitle"
-              value={formatDate(policyStartDate)}
-              // onChange={(e)=>setPolicyStartDate(e.target.value)}
-              // placeholder="Enter Registration No."
-            />*/}
-
               <DatePicker
-                className="form-control"
-                id="propertyTitle"
-                dateFormat="dd/MM/yyyy"
-                selected={
-                  policyStartDate !== null && !isNaN(new Date(policyStartDate))
-                    ? new Date(policyStartDate)
-                    : ""
-                }
-                onChange={(date) => setPolicyStartDate(date)}
-              />
-              {/* <MyDatePicker
-                selectedDate={
-                  policyStartDate && !isNaN(new Date(policyStartDate))
-                    ? new Date(policyStartDate)
-                    : ""
-                }
-                setSelectedDate={setPolicyStartDate}
-              /> */}
+                  className="form-control"
+                  id="propertyTitle"
+                  dateFormat="dd/MM/yyyy"
+                  selected={
+                    policyStartDate !== null && !isNaN(new Date(policyStartDate))
+                      ? new Date(policyStartDate)
+                      : ""
+                  }
+                  onChange={(date) => setPolicyStartDate(date)}
+                />
+              
             </div>
           </div>
         </div>

@@ -26,6 +26,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const [DetailsPhotoRate, setDetailsPhotoRate] = useState("");
   const [DetailsFee, setDetailsFee] = useState("");
   const [DetailsRemark, setDetailsRemark] = useState("");
+  const [show,setShow]=useState(false)
 
   const [BillTo, setBillTo] = useState("");
 
@@ -58,6 +59,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const [SpotCharges, setSpotCharges] = useState("");
   const [SpotPhotosCD, setSpotPhotoCD] = useState("");
   const [SpotRemark, setSpotRemark] = useState("");
+  const [allServicingOffice,setAllServicingOffice]=useState([]);
 
   const [OtherTotal, setOtherTotal] = useState("");
 
@@ -71,6 +73,49 @@ const CreateList = ({ allInfo, leadID }) => {
 
   const [Cash, setCash] = useState("");
   const [NetPay, setNetPay] = useState(0);
+
+  useEffect(()=>{
+    axios.get("/api/getClaimServicingOffice")
+    .then((res)=>{
+      setAllServicingOffice(res.data.data.results);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  },[])
+
+
+  useEffect(()=>{
+    console.log(BillTo)
+    if(String(BillTo) === "Appointing Office")
+     setShow(true);
+    else
+     setShow(false)
+  },[BillTo]);
+
+  useEffect(()=>{
+    
+    if(String(BillTo) === "Appointing Office"){
+      let requiredStateCode = 0;
+      allServicingOffice.map((office,index)=>{
+        if(String(office.OfficeNameWithCode) === String(Others)){
+          requiredStateCode = office.StateCode;
+          }
+      })
+      if(String(requiredStateCode) === "8"){
+        setCGST(9);
+        setSGST(9);
+        setIGST(0);
+      }
+      else{
+        setCGST(0);
+        setSGST(0);
+        setIGST(18);     
+      }
+    }
+    
+  },[Others]);
+
 
   const calculateTotalAssessed = () => {
     let total_assessed = 0,
@@ -539,19 +584,19 @@ const CreateList = ({ allInfo, leadID }) => {
                   className="selectpicker form-select"
                   data-live-search="true"
                   data-width="100%"
-                  value={inspectionType}
-                  onChange={(e) => setInspectionType(e.target.value)}
+                  value={BillTo}
+                  onChange={(e) => setBillTo(e.target.value)}
                 >
                   <option data-tokens="Status1" value={""}>
                     Select Type
                   </option>
-                  <option data-tokens="Status1" value={"spot"}>
+                  <option data-tokens="Status1" value={"Insured"}>
                     Insured
                   </option>
-                  <option data-tokens="Status2" value={"final"}>
+                  <option data-tokens="Status2" value={"Appointing Office"}>
                     Appointing office
                   </option>
-                  <option data-tokens="Status3" value={"re-inspection"}>
+                  <option data-tokens="Status3" value={"Insurer"}>
                     Insurer
                   </option>
                 </select>
@@ -575,13 +620,29 @@ const CreateList = ({ allInfo, leadID }) => {
                 </label>
               </div>
               <div className="col-lg-7">
-                <input
+                {!show
+                ? <input
                   type="text"
                   className="form-control"
                   id="propertyTitle"
                   value={Others}
                   onChange={(e) => setOthers(e.target.value)}
                 />
+                :
+                <select
+                type="text"
+                className="form-control"
+                id="propertyTitle"
+                value={Others}
+                onChange={(e) => setOthers(e.target.value)}
+                >
+                {allServicingOffice.map((office,index)=>{
+                  return <option key={index} value={office.OfficeNameWithCode}>
+                    {office.OfficeNameWithCode}
+                  </option>
+                })}
+              </select>
+                }
 
                 {/* <MyDatePicker /> */}
               </div>
