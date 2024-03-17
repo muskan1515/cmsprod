@@ -2384,7 +2384,7 @@ const ErrorPageContent = ({ allInfo }) => {
           <div>
             <span>
               Enclosures :{" "}
-              {allInfo?.summaryReport[0]?.Endurance === undefined
+              {allInfo?.summaryReport[0]?.Endurance === "undefined"
                 ? allInfo?.summaryReport[0]?.Endurance
                 : "--"}
             </span>

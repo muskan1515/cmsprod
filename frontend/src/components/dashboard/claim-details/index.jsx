@@ -733,12 +733,12 @@ const Index = ({}) => {
   }
 
   function validateEmail(email) {
-    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!pattern.test(email)) {
-       return false    }
-    else{
-        return true
-    }
+    if (!email || email === "null" || email === "undefined" || email === "None" || email === "") {
+      return true;
+  } else {
+      const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return pattern.test(email);
+  }
 
   }
 
@@ -763,7 +763,7 @@ const Index = ({}) => {
       func(false);
       func2(false);
     }
-    else if(InsuredMailAddress && !validateEmail(InsuredMailAddress) ){
+    else if((InsuredMailAddress !==null || InsuredMailAddress !=="None") && !validateEmail(InsuredMailAddress) ){
       setInsuredMailAddress("")
       toast.error("Provided Insured mail address is not proper !", {
         // position: toast.POSITION.BOTTOM_LEFT,

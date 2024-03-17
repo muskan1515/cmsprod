@@ -304,6 +304,10 @@ useEffect(()=>{
               </> 
               :
               <>
+             <span style={{ marginLeft: "25px" }}>
+              {feeReport?.claimDetails?.InsuranceCompanyNameAddress} ,
+            </span>
+            <br />
             <span style={{ marginLeft: "25px" }}>
               {selectedServicingOffice?.OfficeNameWithCode}
             </span>

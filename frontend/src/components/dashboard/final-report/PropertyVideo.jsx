@@ -129,6 +129,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [totalTaxableAMount, setTotalTaxbleAmount] = useState(0);
 
+  const [videosList,setVideosList]=useState([]);
+  const [documents,setDocuments]=useState([])
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     axios
@@ -148,6 +151,76 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
       .catch((err) => {
         alert(err);
       });
+
+      axios
+        .get("/api/getDocumentList", {
+          headers: {
+            Authorization: `Bearer ${userInfo[0].Token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            leadId: leadId,
+          },
+        })
+        .then((res) => {
+           const tempList = res.data.data.data;
+
+          let requiredVideos = [];
+          console.log("templist",tempList)
+          tempList.map((list, index) => {
+            
+              const allList = (list.doc_urls);
+              const allName = (list.file_names);
+              const allLatitude = (list?.latitudes);
+              const allLongitude = (list?.longitudes);
+              const allTimestamp = (list?.timestamps);
+
+              allList?.map((link, idx) => {
+                if (
+                  link.toLowerCase().includes(".mp4") ||
+                  link.toLowerCase().includes(".mp3")
+                  ) {
+                  requiredVideos.push({
+                    name: allName[idx],
+                    url: allList[idx],
+                    Location:allLatitude[idx]+","+allLongitude[idx],
+                    Timestamp: allTimestamp[idx],
+                  });
+                }
+              });
+          });
+
+          
+          let requiredDocumenstList = [];
+          tempList.map((listedDocument,index)=>{
+            let insideData = [];
+            const allList = (listedDocument.doc_urls);
+            const allName = (listedDocument.file_names);
+            const allLatitude = (listedDocument?.latitudes);
+            const allLongitude = (listedDocument?.longitudes);
+            const allTimestamp = (listedDocument?.timestamps);
+
+            allList?.map((link, idx) => {
+                insideData.push({
+                  name: allName[idx],
+                  url: allList[idx],
+                  Location:allLatitude[idx]+","+allLongitude[idx],
+                  Timestamp: allTimestamp[idx],
+                });
+            });
+
+            requiredDocumenstList.push({
+              docName:listedDocument.DocumentName,
+              leadId:leadId,
+              data:insideData
+            })
+          })
+          setVideosList(requiredVideos);
+          setDocuments(requiredDocumenstList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }, []);
 
 
@@ -531,7 +604,7 @@ const [AccidentTime,setAccidentTime]=useState("");
 
 
     setAccidentTime(claim?.accidentDetails?.TimeOfAccident !==null ? claim?.accidentDetails?.TimeOfAccident : "");
-    setFinalReportNotes(claim?.summaryDetails?.SummaryNotes ? convertHtmlToString(claim?.summaryDetails?.SummaryNotes) :"");
+    setFinalReportNotes( convertHtmlToString(claim?.summaryDetails?.SummaryNotes) );
 
     
     setTotalLabor(claim?.summaryDetails?.TotalLabor  !==null ? claim?.summaryDetails?.TotalLabor : 0 );
@@ -856,7 +929,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       Authorization,
       AreasOfoperation,
       commercialRemark,
-      FinalReportNotes,
+      FinalReportNotes : "",
       DetailsOfLoads,
       CauseOfAccident,
       PoliceAction,
@@ -1619,6 +1692,8 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <Summary
+              leadId={leadId}
+              documents={documents}
               totalMetalRows={totalMetalRows}
               claim={claim}
               DepreciationValue={DepreciationValue}

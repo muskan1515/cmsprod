@@ -79,9 +79,21 @@ export const AccidentContent = (InsuredName) => {
 //     <li>07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
 //   </ul>`);
 // };
+export const getDocumentList = (data, leadId) => {
+  let documentString = `all uploaded documents for leadId ${leadId} are:`;
+  data.forEach((item, index) => {
+      if (index !== 0) {
+          documentString += ", ";
+      }
+      documentString += `${item.docName}`;
+  });
+  console.log("documentString",documentString)
+  return documentString;
+};
 
-export const summaryNotes = (claim) => {
-  console.log(claim)
+export const summaryNotes = () => {
+
+  console.log()
   return 
   (`
   <ul>
@@ -109,12 +121,14 @@ export const addVariables = (
   InsuredName,
   ChassisNumber,
   PolicyNumber)=>{
-    string = string?.replace("**CLAIMSERVICINGOFFICE**", claimServicingOffice);
-    string = string?.replace("**ALLOTMENTDATE**", AllotmentDate);
-    string = string?.replace("**DATEOFACCIDENT**", DateOfAccident);
-    string = string?.replace("**PLACEOFACCIDENT**", PlaceOfAccident);
-    string = string?.replace("**INSUREDNAME**", InsuredName);
-    string = string?.replace("**CASSISNUMBER**", ChassisNumber);
-    string = string?.replace("**POLICYNUMBER**", PolicyNumber);
+
+    console.log("string",string);
+    string = string?.replace("**CLAIMSERVICINGOFFICE**", `<strong>${claimServicingOffice}</strong>`);
+    string = string?.replace("**ALLOTMENTDATE**", `<strong>${formatDate(AllotmentDate)}</strong>`);
+    string = string?.replace("**DATEOFACCIDENT**", `<strong>${formatDate(DateOfAccident)}</strong>`);
+    string = string?.replace("**PLACEOFACCIDENT**", `<strong>${PlaceOfAccident}</strong>`);
+    string = string?.replace("**INSUREDNAME**", `<strong>${InsuredName}</strong>`);
+    string = string?.replace("**CASSISNUMBER**", `<strong>${ChassisNumber}</strong>`);
+    string = string?.replace("**POLICYNUMBER**", `<strong>${PolicyNumber}</strong>`);
     return string
 }
