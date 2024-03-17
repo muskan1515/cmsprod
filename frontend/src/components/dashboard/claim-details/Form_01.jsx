@@ -703,12 +703,12 @@ const Form_01 = ({
                         <div className="col-lg-7">
                           <select
                             type="text"
-                            className="form-control"
+                            className="form-control form-control-add-claim"
                             id="propertyTitle"
                             value={
                               Verification
-                                ? Verification
-                                : claim?.driverDetails?.TypeOfVerification
+                                ? Number(Verification)
+                                : Number(claim?.driverDetails?.TypeOfVerification)
                             }
                             onChange={(e) => setVerification(e.target.value)}
 

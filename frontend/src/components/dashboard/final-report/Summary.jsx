@@ -192,79 +192,11 @@ const Summary = ({
 
   useEffect(()=>{
 
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+   if(Endurance === undefined ){
+    setEndurance(getDocumentList())
+   }
 
-    axios
-    .get("/api/getDocumentList", {
-      headers: {
-        Authorization: `Bearer ${userInfo[0].Token}`,
-        "Content-Type": "application/json",
-      },
-      params: {
-        leadId: leadId,
-      },
-    })
-    .then((res) => {
-       const tempList = res.data.data.data;
-
-      let requiredVideos = [];
-      console.log("templist",tempList)
-      tempList.map((list, index) => {
-        
-          const allList = (list.doc_urls);
-          const allName = (list.file_names);
-          const allLatitude = (list?.latitudes);
-          const allLongitude = (list?.longitudes);
-          const allTimestamp = (list?.timestamps);
-
-          allList?.map((link, idx) => {
-            if (
-              link.toLowerCase().includes(".mp4") ||
-              link.toLowerCase().includes(".mp3")
-              ) {
-              requiredVideos.push({
-                name: allName[idx],
-                url: allList[idx],
-                Location:allLatitude[idx]+","+allLongitude[idx],
-                Timestamp: allTimestamp[idx],
-              });
-            }
-          });
-      });
-
-      
-      let requiredDocumenstList = [];
-      tempList.map((listedDocument,index)=>{
-        let insideData = [];
-        const allList = (listedDocument.doc_urls);
-        const allName = (listedDocument.file_names);
-        const allLatitude = (listedDocument?.latitudes);
-        const allLongitude = (listedDocument?.longitudes);
-        const allTimestamp = (listedDocument?.timestamps);
-
-        allList?.map((link, idx) => {
-            insideData.push({
-              name: allName[idx],
-              url: allList[idx],
-              Location:allLatitude[idx]+","+allLongitude[idx],
-              Timestamp: allTimestamp[idx],
-            });
-        });
-
-        requiredDocumenstList.push({
-          docName:listedDocument.DocumentName,
-          leadId:leadId,
-          data:insideData
-        })
-      })
-      setVideosList(requiredVideos);
-      console.log(requiredDocumenstList)
-      setDocuments(requiredDocumenstList);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
+   console.log("Endurance",Endurance,getDocumentList())
     const summary = summaryNotes(claim)
    
     setTotalEstimate(totalPartsEstimate + totalLabrorEstimate);
@@ -286,6 +218,15 @@ const Summary = ({
   },[]);
 
   useEffect(()=>{
+    if(Endurance === undefined ){
+      setEndurance(getDocumentList())
+     }
+  
+     console.log("Endurance",Endurance,getDocumentList())
+    
+  },[Endurance])
+
+  useEffect(()=>{
     console.log(documents)
     console.log("FinalReportNotes",FinalReportNotes)
     if(Endurance === "" || Endurance === "undefined"){
@@ -294,16 +235,16 @@ const Summary = ({
     if(FinalReportNotes === "" || FinalReportNotes === null || FinalReportNotes === "undefined"){
       setFinalReportNotes(  (`
       <ul>
-        <li>01. The rates allowed above combination <br>
+        <li>01. The rates allowed above combination 
             of authorized dealer prices.</li>
-        <li>02. The cause, nature, and circumstances <br>
-            leading to the accident appear genuine, <br>
-            believable, and losses recommended/assessed <br>
-            are corroborating with this accident.<br></li>
-        <li>03. The loss or damage or liability has arisen  <br> proximately caused by the insured perils. <br></li>
+        <li>02. The cause, nature, and circumstances 
+            leading to the accident appear genuine, 
+            believable, and losses recommended/assessed 
+            are corroborating with this accident.</li>
+        <li>03. The loss or damage or liability has arisen  <br> proximately caused by the insured perils. </li>
         <li>04. The prices are recommended exclusive of all taxes, duties, octroi etc.</li>
         <li>05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.</li>
-        <li>06. Chassis No., As per RC: **CASSISNUMBER** : 'N.A.'}, As per Policy: **POLICYNUMBER** , it is for your information please.</li>
+        <li>06. Chassis No., As per RC: **CASSISNUMBER** , As per Policy: **POLICYNUMBER** , it is for your information please.</li>
         <li>07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
       </ul>`))
     }
@@ -848,7 +789,8 @@ const Summary = ({
                     claim?.accidentDetails?.PlaceOfLoss,
                     claim?.claimDetails?.InsuredName,
                     claim?.vehicleDetails?.ChassisNumber,
-                    claim?.claimDetails?.PolicyNumber)}
+                    claim?.claimDetails?.PolicyNumber,
+                    claim?.accidentDetails?.TimeOfAccident)}
                   setEditorContent={setFinalReportNotes}
                 />
                   </div>
@@ -915,7 +857,7 @@ const Summary = ({
                 <div className="col-lg-12">
                   <textarea name="" id="" cols="50" rows="3" 
                   readOnly={!isEdit}
-                  value={NoteOfSelf !== "undefined" ? NoteOfSelf :""} 
+                  value={NoteOfSelf} 
                   onChange={(e)=>setNoteOfSelf(e.target.value)}></textarea>
                   {/* <div className="card">
                     <Editor />

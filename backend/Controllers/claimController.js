@@ -887,7 +887,7 @@ const getSpecificClaim = async (req, res) => {
     WHERE LeadID = ${LeadId};
   `;
 
-  console.log(updateDriverDetails)
+  
 
   db.query(updateDriverDetails, (error, results) => {
     if (error) {
@@ -1135,6 +1135,7 @@ const getSpecificClaim = async (req, res) => {
     AddedBy = '${GarageAddedBy ? `${GarageAddedBy}` : ''}'
     WHERE LeadId = ${LeadId};
   `;
+  
 
     db.query(updateGarageDetails, (error, results) => {
       if (error) {

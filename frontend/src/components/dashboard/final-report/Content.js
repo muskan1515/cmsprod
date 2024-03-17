@@ -28,23 +28,11 @@ export const otherContent = () => {
   return 'No,As stated by Insurer';
 };
 
-// export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAccident, PlaceOfAccident) => {
-//   console.log(claimServicingOffice,PlaceOfAccident,AllotmentDate,DateOfAccident)
-//   return (`In accordance with the instructions received from ${claimServicingOffice !== null ? `<strong>${claimServicingOffice}</strong>` : "N.A." }
-//     dated  ${AllotmentDate ? `<strong>${formatDate(AllotmentDate)}</strong>` : "-"} , I visited, inspected/examined online video uploaded by the undersigned,
-//     and inspected the subject vehicle. It was reported to have met with an accident on ${DateOfAccident ? `<strong>${formatDate(DateOfAccident)}</strong>` : "-"} at ${PlaceOfAccident ? `<strong>${PlaceOfAccident}</strong>` : "N.A."}.
-//     Loss was discussed with the repairer and finally settled as under, subject to policy terms, conditions, and approval of the insurers. This is done keeping in view
-//     the cause and nature of the accident. <br/>
 
-//     <strong>Observations:</strong> Subject with good condition overall. No other damages except as mentioned above were observed over the vehicle. Policy
-//     report of the accident was not carried out by the insured.`);
-// };
-
-
-export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAccident, PlaceOfAccident) => {
+export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAccident, PlaceOfAccident,TimeOfAccident) => {
   return (`In accordance with the instructions received from **CLAIMSERVICINGOFFICE**
     dated  **ALLOTMENTDATE** , I visited, inspected/examined online video uploaded by the undersigned,
-    and inspected the subject vehicle. It was reported to have met with an accident on **DATEOFACCIDENT** at **PLACEOFACCIDENT** .
+    and inspected the subject vehicle. It was reported to have met with an accident on **DATEOFACCIDENT**  **TIMEOFACCIDENT** , **PLACEOFACCIDENT** .
     Loss was discussed with the repairer and finally settled as under, subject to policy terms, conditions, and approval of the insurers. This is done keeping in view
     the cause and nature of the accident. <br/>
 
@@ -52,42 +40,15 @@ export const AssessmentContent = (claimServicingOffice, AllotmentDate, DateOfAcc
     report of the accident was not carried out by the insured.`);
 };
 
-// export const AccidentContent = (InsuredName) => {
-//   return  (`
-//     As filled in the claim form and discussion with the insured, on the day and time of the accident,  ${InsuredName !== null ? `<strong>${InsuredName}</strong>` : "-"}  was driving the subject vehicle.`);
-// };
-
 export const AccidentContent = (InsuredName) => {
   return  (`
     As filled in the claim form and discussion with the insured, on the day and time of the accident, **INSUREDNAME**  was driving the subject vehicle.`);
 };
-// export const summaryNotes = (claim) => {
-//   console.log(claim)
-//   return 
-//   (`
-//   <ul>
-//     <li>01. The rates allowed above combination <br>
-//         of authorized dealer prices.</li>
-//     <li>02. The cause, nature, and circumstances <br>
-//         leading to the accident appear genuine, <br>
-//         believable, and losses recommended/assessed <br>
-//         are corroborating with this accident.<br></li>
-//     <li>03. The loss or damage or liability has arisen  <br> proximately caused by the insured perils. <br></li>
-//     <li>04. The prices are recommended exclusive of all taxes, duties, octroi etc.</li>
-//     <li>05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.</li>
-//     <li>06. Chassis No., As per RC: ${claim?.vehicleDetails?.ChassisNumber ? `<strong>${claim?.vehicleDetails?.ChassisNumber}</strong>` : 'N.A.'}, As per Policy: <strong>${claim?.claimDetails?.PolicyNumber ?`${claim?.claimDetails?.PolicyNumber}</strong>` : 'N.A.'}, it is for your information please.</li>
-//     <li>07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
-//   </ul>`);
-// };
+
 export const getDocumentList = (data, leadId) => {
-  let documentString = `all uploaded documents for leadId ${leadId} are:`;
-  data.forEach((item, index) => {
-      if (index !== 0) {
-          documentString += ", ";
-      }
-      documentString += `${item.docName}`;
-  });
-  console.log("documentString",documentString)
+  let documentString = `Driving license,Certificate of registration,Repair Estimate 
+  Claim form, Insurance Policy,Damage vehicle,AadhaarCard ,Pan card,Cancel Cheque,Satisfaction voucher,Dishcharge voucher
+  Dismantle photographs,Renspection photographs,Repair invoice,Payment/cash receipt,Images,Videos`
   return documentString;
 };
 
@@ -106,7 +67,7 @@ export const summaryNotes = () => {
     <li>03. The loss or damage or liability has arisen  <br> proximately caused by the insured perils. <br></li>
     <li>04. The prices are recommended exclusive of all taxes, duties, octroi etc.</li>
     <li>05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.</li>
-    <li>06. Chassis No., As per RC: **CASSISNUMBER** : 'N.A.'}, As per Policy: **POLICYNUMBER** , it is for your information please.</li>
+    <li>06. Chassis No., As per RC: **CASSISNUMBER** , As per Policy: **POLICYNUMBER** , it is for your information please.</li>
     <li>07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
   </ul>`);
 };
@@ -118,17 +79,19 @@ export const addVariables = (
   AllotmentDate,
   DateOfAccident,
   PlaceOfAccident,
-  InsuredName,
+  DriverName,
   ChassisNumber,
-  PolicyNumber)=>{
+  PolicyNumber,
+  TimeOfAccident)=>{
 
-    console.log("string",string);
+    console.log("string",TimeOfAccident);
     string = string?.replace("**CLAIMSERVICINGOFFICE**", `<strong>${claimServicingOffice}</strong>`);
     string = string?.replace("**ALLOTMENTDATE**", `<strong>${formatDate(AllotmentDate)}</strong>`);
     string = string?.replace("**DATEOFACCIDENT**", `<strong>${formatDate(DateOfAccident)}</strong>`);
     string = string?.replace("**PLACEOFACCIDENT**", `<strong>${PlaceOfAccident}</strong>`);
-    string = string?.replace("**INSUREDNAME**", `<strong>${InsuredName}</strong>`);
+    string = string?.replace("**INSUREDNAME**", `<strong>${DriverName}</strong>`);
     string = string?.replace("**CASSISNUMBER**", `<strong>${ChassisNumber}</strong>`);
     string = string?.replace("**POLICYNUMBER**", `<strong>${PolicyNumber}</strong>`);
+    string = string?.replace("**TIMEOFACCIDENT**", `<strong>${TimeOfAccident}</strong>`);
     return string
 }

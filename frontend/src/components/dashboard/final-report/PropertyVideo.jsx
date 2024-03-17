@@ -929,7 +929,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       Authorization,
       AreasOfoperation,
       commercialRemark,
-      FinalReportNotes : "",
+      FinalReportNotes : convertHtmlToString(FinalReportNotes) ,
       DetailsOfLoads,
       CauseOfAccident,
       PoliceAction,

@@ -238,7 +238,7 @@ const PolicyDetails = ({
 
   function removeMultipleSpaces(inputString) {
     // Use regular expression to replace multiple spaces with a single space
-    const cleanedString = inputString.replace(/\s+/g, " ").trim();
+    const cleanedString = inputString?.replace(/\s+/g, " ").trim();
     return cleanedString;
   }
 

@@ -393,7 +393,8 @@ const Form_driver = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.driverDetails?.TypeOfverification}
+                        {String(claim?.driverDetails?.TypeOfverification) === "1" ?
+                        "Verified Manually" : "Verified by Online"}
                       </label>
                     </div>
                   </div>

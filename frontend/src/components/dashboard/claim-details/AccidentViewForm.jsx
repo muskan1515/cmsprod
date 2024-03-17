@@ -128,7 +128,8 @@ const AccidentViewForm = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {formatDate(claim?.accidentDetails?.DateOfAccident)}
+                      {claim?.accidentDetails?.DateOfAccident !== null ? 
+                      formatDate(claim?.accidentDetails?.DateOfAccident) : ""}
                     </label>
                   </div>
                 </td>

@@ -225,6 +225,7 @@ const Servey = ({
     );
     
     const other = otherContent();
+    console.log("assessment",assessment)
     setCauseOfAccident(CauseOfAccident ? (CauseOfAccident) : accident);
     setAssessment(Assessment ? (Assessment) : assessment);
     setThirdPartyLoss(ThirdPartyLoss ? (ThirdPartyLoss) : other);
@@ -675,10 +676,12 @@ const Servey = ({
                     SurveyAllotmentDate,
                     claim?.accidentDetails?.DateOfAccident,
                     PlaceOfLoss,
-                    InsuredName,
+                    DriverName,
                     VehicleChassisNumber,
                     PolicyNumber,
-                    InsuredName)}
+                    InsuredName,
+                    AccidentTime
+                    )}
                   setEditorContent={setCauseOfAccident}
                 />
               </div>
@@ -725,10 +728,11 @@ const Servey = ({
                   SurveyAllotmentDate,
                   claim?.accidentDetails?.DateOfAccident,
                   PlaceOfLoss,
-                  InsuredName,
+                  DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  InsuredName)}
+                  InsuredName,
+                  AccidentTime)}
                 setEditorContent={setPoliceAction}
               />
             </div>
@@ -788,10 +792,11 @@ const Servey = ({
                   SurveyAllotmentDate,
                   claim?.accidentDetails?.DateOfAccident,
                   PlaceOfLoss,
-                  InsuredName,
+                  DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  InsuredName)}
+                  InsuredName,
+                  AccidentTime)}
                 setEditorContent={setThirdPartyLoss}
               />
             </div>
@@ -851,10 +856,11 @@ const Servey = ({
                   SurveyAllotmentDate,
                   AccidentAddedDateTime,
                   PlaceOfLoss,
-                  InsuredName,
+                  DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  InsuredName)}
+                  InsuredName,
+                  AccidentTime)}
                 setEditorContent={setAssessment}
               />
             </div>
