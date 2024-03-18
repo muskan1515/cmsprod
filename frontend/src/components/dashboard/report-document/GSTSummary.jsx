@@ -6,18 +6,7 @@ import jsPDF from "jspdf";
 import { useRef, useState } from "react";
 
 const GSTSummary = ({
-  allInfo,
-  //   addCommasToNumber,
-  //   roundOff,
-  //   newPartsGST,
-  //   calculateOtherTypeNewPartsGST,
-  //   getTotalOtherMetalAssesses,
-  //   getTotalNonMetaDepreciation,
-  //   calculateTypeNewPartsGST,
-  //   labourGST,
-  //   getTotalLabourAssessed,
-  //   getTotalLabourAssessedGST,
-  //   numberToWords,
+  allInfo
 }) => {
   const pdfRef = useRef();
 
@@ -437,16 +426,28 @@ const GSTSummary = ({
   };
 
   function convertToProperHTML(htmlString) {
-    // Create a new DOMParser
-    const parser = new DOMParser();
+     // Create a new DOMParser
+  const parser = new DOMParser();
 
-    // Parse the HTML string
-    const doc = parser.parseFromString(htmlString, "text/html");
+  // Parse the HTML string
+  const doc = parser.parseFromString(htmlString, "text/html");
 
-    // Extract the text content from the parsed document
-    const plainText = doc.body.textContent || "";
+  // Extract the text content from the parsed document
+  let plainText = doc.body.textContent || "";
 
-    return plainText;
+  // Add line breaks after every period (.)
+  plainText = plainText.replace(/\./g, "\n");
+
+  return plainText;
+  }
+
+const addVariables = (string)=>{
+  
+      string = string?.replace("**CASSISNUMBER**", `<strong>${allInfo?.otherInfo[0]?.ChassisNumber}</strong>`);
+      string = string?.replace("**POLICYNUMBER**", `<strong>${allInfo?.otherInfo[0]?.PolicyNumber}</strong>`);
+       string = string?.replace(".", "\n");
+      
+      return string
   }
 
   const getSummaryTotalWithLessSalvage = () => {
@@ -1166,7 +1167,7 @@ const GSTSummary = ({
           Notes :
         </h5>
         <ul>
-          {convertToProperHTML(allInfo?.summaryReport[0]?.SummaryNotes)}
+          {convertToProperHTML(addVariables(allInfo?.summaryReport[0]?.SummaryNotes))}
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>
