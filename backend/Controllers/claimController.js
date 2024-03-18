@@ -1131,7 +1131,7 @@ const getSpecificClaim = async (req, res) => {
     SET
     GarageNameAndAddress = '${GarageNameAndAddress ? `${GarageNameAndAddress}` : ''}',
     GarageContactNo1 =' ${GarageContactNo1 ? `${GarageContactNo1}` : ''}',
-    GarageContactNo2 = '${GarageContactNo2 ? `${GarageContactNo2}` : "''"}',
+    GarageContactNo2 = '${GarageContactNo2 ? `${GarageContactNo2}` : ''}',
     AddedBy = '${GarageAddedBy ? `${GarageAddedBy}` : ''}'
     WHERE LeadId = ${LeadId};
   `;
