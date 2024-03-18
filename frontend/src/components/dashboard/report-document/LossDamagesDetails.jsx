@@ -153,6 +153,8 @@ const LossDamagesDetails = ({ allInfo }) => {
     return 0;
   };
 
+
+
   const calculateNonMetalDept = (part) => {
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
     const Depreciation =
@@ -512,6 +514,12 @@ const LossDamagesDetails = ({ allInfo }) => {
     return ageString;
   }
 
+  //Sort function 
+  const sortFunction = (array)=>{
+   return  array.sort((a, b) => parseFloat(a.SNO) - parseFloat(b.SNO));
+    
+  }
+
   function numberToWords(number) {
     const units = [
       "",
@@ -733,7 +741,7 @@ const LossDamagesDetails = ({ allInfo }) => {
                     <th style={{ border: "1px solid black", padding: "10px" }}></th>
                   </tr>
             
-                  {allInfo?.newPartsDetails.map((part, index) => {
+                  {sortFunction(allInfo?.newPartsDetails).map((part, index) => {
                     return part.NewPartsIsActive === 1 && String(part.NewPartsGSTPct) === String(field.field) ? (
                       <tr key={index}>
                         <td style={{ border: "1px solid black", padding: "5px" }}>
