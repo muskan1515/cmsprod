@@ -93,5 +93,7 @@ export const addVariables = (
     string = string?.replace("**CASSISNUMBER**", `<strong>${ChassisNumber}</strong>`);
     string = string?.replace("**POLICYNUMBER**", `<strong>${PolicyNumber}</strong>`);
     string = string?.replace("**TIMEOFACCIDENT**", `<strong>${TimeOfAccident}</strong>`);
+    string = string?.replace("**BREAK**", "\n");
+    
     return string
 }
