@@ -327,7 +327,7 @@ const updateFinalReport = (req,res)=>{
           BillAmount='${BillAmount}',
           Endurance='${Endurance}',
           OtherRemark='${OtherRemark}',
-          SummaryNotes='${FinalReportNotes}'
+          SummaryNotes='${FinalReportNotes.replace(/'/g, "''").replace(/\n/g, '<br>')}'
           WHERE LeadId = ${leadId};
     `;
   
