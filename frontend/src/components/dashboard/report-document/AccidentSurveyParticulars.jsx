@@ -618,7 +618,7 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="text-start">
             <span>(a) Date & Time of Accident </span>
           </td>
-          <td style={{ width: "10%" }} className="text-start">
+          <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -633,7 +633,7 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="text-start">
             <span> (b) Place of Accident</span>
           </td>
-          <td style={{ width: "10%" }} className="text-start">
+          <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -644,7 +644,7 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="text-start">
             <span>(c) Place of Survey </span>
           </td>
-          <td style={{ width: "10%" }} className="text-start">
+          <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -655,7 +655,7 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="text-start">
             <span>(d) Date of Allotment of Survey </span>
           </td>
-          <td style={{ width: "10%" }} className="text-start">
+          <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -671,7 +671,7 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="text-start">
             <span>(e) Date & Time of Survey </span>
           </td>
-          <td style={{ width: "10%" }} className="text-start">
+          <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -687,7 +687,7 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="text-start">
             <span>(f) Date of Receipt of Spot Survey Report </span>
           </td>
-          <td style={{ width: "10%" }} className="text-start">
+          <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">

@@ -217,7 +217,6 @@ const updateFinalReport = (req,res)=>{
     SET
     GarageNameAndAddress = '${GarageNameAndAddress}',
     GarageContactNo1 = '${GarageContactNo1}',
-    GarageContactNo2='${GarageContactNo2}',
     AddedBy='${GarageAddedBy}',
     GarageNameAndAddress= '${PlaceOfSurvey}'
     WHERE LeadID = ${leadId};
@@ -346,6 +345,9 @@ const updateFinalReport = (req,res)=>{
         '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}','${FinalReportNotes}'
       );
     `;
+
+
+
 
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {
@@ -666,7 +668,6 @@ const updateFinalReport = (req,res)=>{
       SET
       GarageNameAndAddress = '${GarageNameAndAddress}',
       GarageContactNo1 = '${GarageContactNo1}',
-      GarageContactNo2='${GarageContactNo2}',
       AddedBy='${GarageAddedBy}'
       WHERE LeadID = ${leadId};
     `;

@@ -732,7 +732,6 @@ const getSpecificClaim = async (req, res) => {
     SET
     GarageNameAndAddress = ${GarageNameAndAddress ? `${GarageNameAndAddress}` : ''},
     GarageContactNo1 = ${GarageContactNo1 ? `${GarageContactNo1}` : ''},
-    GarageContactNo2 = ${GarageContactNo2 ? `${GarageContactNo2}` : "''"},
     AddedBy = ${GarageAddedBy ? `${GarageAddedBy}` : ''},
     GarageMailAddress=${GarageMailAddress ? `${GarageMailAddress}`:''}
     WHERE LeadId = ${LeadId};
@@ -1133,9 +1132,9 @@ const getSpecificClaim = async (req, res) => {
     GarageContactNo1 =' ${GarageContactNo1 ? `${GarageContactNo1}` : ''}',
     GarageContactNo2 = '${GarageContactNo2 ? `${GarageContactNo2}` : ''}',
     AddedBy = '${GarageAddedBy ? `${GarageAddedBy}` : ''}'
-    WHERE LeadId = ${LeadId};
+    WHERE LeadId = '${LeadId}';
   `;
-  
+
 
     db.query(updateGarageDetails, (error, results) => {
       if (error) {

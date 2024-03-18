@@ -292,11 +292,11 @@ const PolicyDetails = ({
     if (parts.length === 3 && parts[0].length === 4) {
       // YYYY-MM-DD format
       const [year, month, day] = parts;
-      formattedDate = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+      formattedDate = `${day?.padStart(2, "0")}-${month?.padStart(2, "0")}-${year}`;
     } else {
       // MM-DD-YYYY format
       const [day, month, year] = parts;
-      formattedDate = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+      formattedDate = `${day?.padStart(2, "0")}-${month?.padStart(2, "0")}-${year}`;
     }
   
     return formattedDate;

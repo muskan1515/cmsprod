@@ -9,10 +9,9 @@ import { array } from "prop-types";
 const LabourRepairsDetails = ({ allInfo }) => {
   const pdfRef = useRef();
 
-  
-  const [allGST,setGST]=useState([]);
+  const [allGST, setGST] = useState([]);
 
-  const [noGST,setNoGST]=useState([]);
+  const [noGST, setNoGST] = useState([]);
 
   const downloadPDF = () => {
     const input = pdfRef.current;
@@ -72,22 +71,20 @@ const LabourRepairsDetails = ({ allInfo }) => {
     generateAllPages();
   };
 
-  useEffect(()=>{
-    let array = [],array2=[];
+  useEffect(() => {
+    let array = [],
+      array2 = [];
     const labours = allInfo?.labourDetails;
-    labours?.map((part,index)=>{
-      if(Number(part.IsGSTIncluded)% 2 ===0){
+    labours?.map((part, index) => {
+      if (Number(part.IsGSTIncluded) % 2 === 0) {
         array.push(part);
-      }
-      else{
-        array2.push(part)
+      } else {
+        array2.push(part);
       }
     });
     setNoGST(array);
-    setGST(array2)
-
-  },[allInfo]);
-
+    setGST(array2);
+  }, [allInfo]);
 
   //   const input = pdfRef.current;
 
@@ -656,8 +653,8 @@ const LabourRepairsDetails = ({ allInfo }) => {
             Assessed
           </th>
         </tr>
-        
-          <tr>
+
+        <tr>
           <th colSpan={2}>Parts without GST</th>
           <th style={{ border: "1px solid black", padding: "10px" }}></th>
           <th style={{ border: "1px solid black", padding: "10px" }}></th>
@@ -665,7 +662,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
           <th style={{ border: "1px solid black", padding: "10px" }}></th>
         </tr>
         {noGST?.map((labour, index) => {
-          return labour.LabourIsActive === 1  ? (
+          return labour.LabourIsActive === 1 ? (
             <tr>
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {index + 1}
@@ -688,9 +685,11 @@ const LabourRepairsDetails = ({ allInfo }) => {
             </tr>
           ) : null;
         })}
-       
+
         <tr>
-          <th colSpan={2}>Parts with {allInfo?.labourDetails[0]?.GSTPercentage} % GST</th>
+          <th colSpan={2}>
+            Parts with {allInfo?.labourDetails[0]?.GSTPercentage} % GST
+          </th>
           <th style={{ border: "1px solid black", padding: "10px" }}></th>
           <th style={{ border: "1px solid black", padding: "10px" }}></th>
           <th style={{ border: "1px solid black", padding: "10px" }}></th>
@@ -698,7 +697,6 @@ const LabourRepairsDetails = ({ allInfo }) => {
         </tr>
         {allGST?.map((labour, index) => {
           return labour.LabourIsActive === 1 ? (
-            
             <tr>
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {index + 1}
@@ -769,16 +767,16 @@ const LabourRepairsDetails = ({ allInfo }) => {
           ></td>
           <td
             colSpan={3}
-            rowSpan={3}
+            // rowSpan={3}
             style={{
-              border: "1px solid black",
+              borderTop: "1px solid black",
               padding: "10px",
               textAlign: "end",
             }}
           >
             Sub Total Labour Charges : ₹ <br />
-            Add : GST on ₹ 0.00 @ 18.00% : <br />
-            Total Labour Charges : ₹
+            {/* Add : GST on ₹ 0.00 @ 18.00% : <br />
+            Total Labour Charges : ₹ */}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(roundOff(getTotalLabourEstimate()))}
@@ -788,6 +786,19 @@ const LabourRepairsDetails = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
+          <td
+            colSpan={3}
+            // rowSpan={3}
+            style={{
+              border: "none",
+              padding: "10px",
+              textAlign: "end",
+            }}
+          >
+            Add : GST on ₹ 0.00 @ 18.00% : <br />
+            {/* Add : GST on ₹ 0.00 @ 18.00% : <br />
+            Total Labour Charges : ₹ */}
+          </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(roundOff(getTotalLabourEstimateGST()))}
           </td>
@@ -796,6 +807,19 @@ const LabourRepairsDetails = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
+          <td
+            colSpan={3}
+            // rowSpan={3}
+            style={{
+              borderBottom: "1px solid black",
+              padding: "10px",
+              textAlign: "end",
+            }}
+          >
+            Total Labour Charges : ₹
+            {/* Add : GST on ₹ 0.00 @ 18.00% : <br />
+            Total Labour Charges : ₹ */}
+          </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())

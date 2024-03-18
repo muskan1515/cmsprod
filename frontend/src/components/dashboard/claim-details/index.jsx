@@ -850,12 +850,8 @@ const Index = ({}) => {
       GarageAddedBy: GarageAddedBy
         ? GarageAddedBy
         : claim.garageDetails?.GarageAddedBy,
-      GarageContactNo1: GarageContactNo1
-        ? GarageContactNo1
-        : claim.garageDetails?.GarageContactNo1,
-      GarageContactNo2: GarageContactNo2
-        ? GarageContactNo2
-        : claim.garageDetails?.GarageContactNo2,
+      GarageContactNo1,
+      GarageContactNo2,
       LeadId: claim.claimDetails?.LeadID,
       VehicleClassDescription,
       MakerDesc,
@@ -914,7 +910,6 @@ const Index = ({}) => {
       token: userInfo[0].Token
     };
 
-    
     toast.loading("Updating the information!");
     axios
       .put("/api/updateClaimDetails", payload, {
