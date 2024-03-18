@@ -228,25 +228,23 @@ const Summary = ({
 
   useEffect(()=>{
     console.log(documents)
-    console.log("FinalReportNotes",FinalReportNotes)
     if(Endurance === "" || Endurance === "undefined"){
       setEndurance(getDocumentList(documents,leadId))
     }
     if(FinalReportNotes === "" || FinalReportNotes === null || FinalReportNotes === "undefined"){
       setFinalReportNotes(  (`
-      <ul>
-        <li>01. The rates allowed above combination 
-            of authorized dealer prices.</li>
-        <li>02. The cause, nature, and circumstances 
+     01. The rates allowed above combination 
+      of authorized dealer prices.<br>
+      02. The cause, nature, and circumstances 
             leading to the accident appear genuine, 
             believable, and losses recommended/assessed 
-            are corroborating with this accident.</li>
-        <li>03. The loss or damage or liability has arisen  <br> proximately caused by the insured perils. </li>
-        <li>04. The prices are recommended exclusive of all taxes, duties, octroi etc.</li>
-        <li>05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.</li>
-        <li>06. Chassis No., As per RC: **CASSISNUMBER** , As per Policy: **POLICYNUMBER** , it is for your information please.</li>
-        <li>07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
-      </ul>`))
+            are corroborating with this accident.<br>
+      03. The loss or damage or liability has arisen  proximately caused by the insured perils.<br> 
+      04. The prices are recommended exclusive of all taxes, duties, octroi etc.<br>
+      05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.<br>
+      06. Chassis No., As per RC: **CASSISNUMBER** , As per Policy: **POLICYNUMBER** , it is for your information please.<br>
+      07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.<br>
+      `))
     }
   },[documents,Endurance,FinalReportNotes])
   
@@ -254,7 +252,7 @@ const Summary = ({
   useEffect(()=>{
     console.log(totalMetalRows)
     setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
-  },[MetalPercent,totalMetalRows,ExpectedSalvage])
+  },[MetalPercent,totalMetalRows,ExpectedSalvage,])
 
   
 
