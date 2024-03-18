@@ -76,6 +76,10 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
   const handleSubmit = () => {
    
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+    const mainUrl=window.location.href
+    const leadUrl = mainUrl?.split("/send-mail/")[1]
+    const requiredLeadId = leadUrl?.split("?")[0]
     // /console.log(selectedItems);
     const payload = {
       toMail: emailAddress ? emailAddress : email,
@@ -85,7 +89,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
       Insured: Insured,
       content: createStringFromSelectedItems(selectedItems),
       content2: createStringFromSelectedItems2(selectedItems),
-      leadId: leadId,
+      leadId: requiredLeadId,
       subject: subject,
       body: body,
       fromEmail: fromEmail,
@@ -103,6 +107,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
         // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
       });
+
       axios
         .post("/api/sendCustomEmail", payload, {
           headers: {
