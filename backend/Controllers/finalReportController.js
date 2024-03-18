@@ -217,7 +217,6 @@ const updateFinalReport = (req,res)=>{
     SET
     GarageNameAndAddress = '${GarageNameAndAddress}',
     GarageContactNo1 = '${GarageContactNo1}',
-    GarageContactNo2='${GarageContactNo2}',
     AddedBy='${GarageAddedBy}',
     GarageNameAndAddress= '${PlaceOfSurvey}'
     WHERE LeadID = ${leadId};
@@ -347,8 +346,7 @@ const updateFinalReport = (req,res)=>{
       );
     `;
 
-    console.log(updateSummaryDetails);
-    return ;
+
 
 
     db.query(updateClaimDetails, (err, result2) => {

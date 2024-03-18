@@ -614,7 +614,7 @@ const VehicleParticulars = ({ allInfo }) => {
         <h6 className="text-dark" style={{ color: "black" }}>
           VEHICLE PARTICULARS :
         </h6>
-        <span style={{ marginLeft: "50px" }}>
+        <span style={{ marginLeft: "110px" }}>
           {allInfo?.otherInfo[0]?.Remark}
         </span>
       </div>
@@ -762,15 +762,18 @@ const VehicleParticulars = ({ allInfo }) => {
           </td>
           <td style={{ width: "45%" }} className="text-start">
             <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
+            <span style={{ marginLeft: "60px" }}>
+              Fuel Used : {allInfo?.vehicleOnlineDetails?.FuelType}
+            </span>
           </td>
-          <td style={{ width: "20%" }}>
+          {/* <td style={{ width: "20%" }}>
             {" "}
             <div className="d-flex gap-1" style={{}}>
               <label htmlFor=""> Fuel Used </label>
               <span style={{ marginLeft: "px" }}>:</span>
               <span>{allInfo?.vehicleOnlineDetails?.FuelType}</span>
             </div>
-          </td>
+          </td> */}
         </tr>
         <tr>
           <td style={{ width: "30%" }} className="text-start">

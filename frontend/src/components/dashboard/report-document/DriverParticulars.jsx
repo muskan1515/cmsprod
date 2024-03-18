@@ -614,16 +614,16 @@ const DriverParticulars = ({ allInfo }) => {
         <h6 className="text-dark" style={{ color: "black" }}>
           DRIVER PARTICULARS :
         </h6>
-        <span style={{ marginLeft: "122px" }}>
+        <span style={{ marginLeft: "119px" }}>
           {allInfo?.otherInfo[0]?.Remark}
         </span>
       </div>
       <table style={{ width: "100%" }}>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span>(a) Name of Driver </span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -637,10 +637,10 @@ const DriverParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="">
+          <td style={{ width: "36%" }} className="">
             <span style={{ marginLeft: "20px" }}> Age</span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -658,10 +658,10 @@ const DriverParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span>(b) Motor Driver License Number </span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -671,10 +671,10 @@ const DriverParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span style={{ marginLeft: "20px" }}>Date of Issue </span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -684,13 +684,14 @@ const DriverParticulars = ({ allInfo }) => {
                 ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
                 : "-"}
             </span>
+            <span style={{ marginLeft: "60px" }}>Valid upto (NTV) : -</span>
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span style={{ marginLeft: "20px" }}>Valid from </span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -700,13 +701,14 @@ const DriverParticulars = ({ allInfo }) => {
                 ? formatDate(allInfo?.otherInfo[0]?.ValidFrom)
                 : "-"}
             </span>
+            <span style={{ marginLeft: "118px" }}>Valid upto (TV) : -</span>
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span>(c) Issuing Authority </span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -714,10 +716,10 @@ const DriverParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span>(d) Type of License </span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">
@@ -725,10 +727,10 @@ const DriverParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "36%" }} className="text-start">
             <span> (e) Badge Number</span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
           </td>
           <td style={{ width: "55%" }} className="text-start">

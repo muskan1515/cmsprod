@@ -681,17 +681,14 @@ const SummaryOfAssessment = ({
         <tr>
           <td
             colSpan={2}
-            rowSpan={6}
+            // rowSpan={6}
             style={{
-              border: "1px solid black",
+              borderTop: "1px solid black",
               padding: "5px",
               textAlign: "end",
             }}
           >
-            Total : <br />
-            Less : Excess <br />
-            Total : <br />
-            Less : Salvage
+            <span style={{ fontWeight: "bold" }}> Total : ₹</span>
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
@@ -704,22 +701,66 @@ const SummaryOfAssessment = ({
           </td>
         </tr>
         <tr>
+          <td
+            colSpan={2}
+            // rowSpan={6}
+            style={{
+              border: "none",
+              padding: "5px",
+              textAlign: "end",
+            }}
+          >
+            Less : Excess : ₹<br />
+          </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {lessExcess}
           </td>
         </tr>
         <tr>
+          <td
+            colSpan={2}
+            // rowSpan={6}
+            style={{
+              border: "none",
+              padding: "5px",
+              textAlign: "end",
+            }}
+          >
+            <span style={{ fontWeight: "bold" }}> Total : ₹</span>
+          </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(roundOff(getSummaryTotalWithLessExcess()))}
           </td>
         </tr>
         <tr>
+          <td
+            colSpan={2}
+            // rowSpan={6}
+            style={{
+              border: "none",
+              padding: "5px",
+              textAlign: "end",
+            }}
+          >
+            Less : Salvage : ₹
+          </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {lessSalvage}
           </td>
         </tr>
         <tr>
-          <td>
+          <td
+            colSpan={2}
+            // rowSpan={6}
+            style={{
+              borderBottom: "1px solid black",
+              padding: "5px",
+              textAlign: "end",
+            }}
+          >
+            <span style={{ fontWeight: "bold" }}>Net Assessed Amount ₹</span>
+          </td>
+          <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}
           </td>
         </tr>
