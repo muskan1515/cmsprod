@@ -18,7 +18,7 @@ const Index = () => {
   const [properties, setProperties] = useState([]);
   const [allClaims, setAllClaims] = useState([]);
   const [filterCardClaim, setFilterCardClaim] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(1);
   const [end, setEnd] = useState(10);
   const [type, setType] = useState(0);
   const [searchInput, setSearchInput] = useState("");
@@ -192,7 +192,7 @@ const Index = () => {
     console.log(temp);
 
     setFilterCardClaim(temp);
-  }, [selectedCard]);
+  }, [selectedCard,allClaims]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -301,7 +301,7 @@ const Index = () => {
                       ? filterClaims
                       : selectedCard
                       ? filterCardClaim
-                      : allClaims
+                      : filterCardClaim
                   }
                   start={start}
                   end={end}

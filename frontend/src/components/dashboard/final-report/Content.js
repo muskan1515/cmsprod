@@ -72,6 +72,25 @@ export const summaryNotes = () => {
   </ul>`);
 };
 
+function convertToReadable(timeStr) {
+  try {
+    // Split the time string into hours and minutes
+    const [hours, minutes] = timeStr.split(":");
+
+    // Convert hours and minutes to numbers
+    const hour = parseInt(hours, 10);
+    const minute = parseInt(minutes, 10);
+
+    // Format the time in readable format
+    const formattedHour = (hour % 12 || 12).toString().padStart(2, "0"); // Convert to 12-hour format
+    const period = hour < 12 ? "AM" : "PM";
+    const readableTime = `${formattedHour}:${minutes} ${period}`; // Example: 09:49 AM
+    return readableTime;
+  } catch (error) {
+    return "Invalid time format. Please provide time in HH:MM format.";
+  }
+}
+
 
 export const addVariables = (
   claim,string , 
@@ -84,7 +103,6 @@ export const addVariables = (
   PolicyNumber,
   TimeOfAccident)=>{
 
-    console.log("string",TimeOfAccident);
     string = string?.replace("**CLAIMSERVICINGOFFICE**", `<strong>${claimServicingOffice}</strong>`);
     string = string?.replace("**ALLOTMENTDATE**", `<strong>${formatDate(AllotmentDate)}</strong>`);
     string = string?.replace("**DATEOFACCIDENT**", `<strong>${formatDate(DateOfAccident)}</strong>`);
@@ -92,7 +110,7 @@ export const addVariables = (
     string = string?.replace("**INSUREDNAME**", `<strong>${DriverName}</strong>`);
     string = string?.replace("**CASSISNUMBER**", `<strong>${ChassisNumber}</strong>`);
     string = string?.replace("**POLICYNUMBER**", `<strong>${PolicyNumber}</strong>`);
-    string = string?.replace("**TIMEOFACCIDENT**", `<strong>${TimeOfAccident}</strong>`);
+    string = string?.replace("**TIMEOFACCIDENT**", `<strong>${convertToReadable(TimeOfAccident)}</strong>`);
     string = string?.replace("**BREAK**", "\n");
     
     return string

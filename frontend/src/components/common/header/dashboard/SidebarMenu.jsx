@@ -112,6 +112,21 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                   <li
                     className={`treeview ${
                       isSinglePageActive(
+                        `/claim-details?leadId=${leadId}`,
+                        route.pathname
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <Link href={`/claim-details?leadId=${leadId}`} title="Claim Details">
+                      <i className="flaticon-building"></i>
+                      {/* <span> Message</span> */}
+                    </Link>
+                  </li>
+                  <li
+                    className={`treeview ${
+                      isSinglePageActive(
                         `/final-report/${leadId}`,
                         route.pathname
                       )

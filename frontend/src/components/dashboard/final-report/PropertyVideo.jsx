@@ -362,14 +362,14 @@ useEffect(()=>{
         const dep = row.type === 1 && (String(policyType) === "Regular" || String(policyType) === "null") ?
         (Number(row.assessed)*Number(12.5))/100:0;
 
-        console.log(index,row.type,dep,policyType);
+        console.log("total_taxable_amount",index,row.type,dep,policyType);
 
         
         const current_row_assessed =
         Number(row.assessed) -dep;
         total_taxable_amount =
           total_taxable_amount +
-          (Number(row.gst) % 2 !== 0 ? current_row_assessed : 0);
+          (Number(row.gst) % 2 !== 0 ? Number(row.assessed) -dep : 0);
 
         const current_row_assessed_tax = calculateTaxValue(
           row?.assessed,

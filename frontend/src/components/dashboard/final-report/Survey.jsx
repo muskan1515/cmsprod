@@ -679,7 +679,6 @@ const Servey = ({
                     DriverName,
                     VehicleChassisNumber,
                     PolicyNumber,
-                    InsuredName,
                     AccidentTime
                     )}
                   setEditorContent={setCauseOfAccident}
@@ -731,7 +730,6 @@ const Servey = ({
                   DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  InsuredName,
                   AccidentTime)}
                 setEditorContent={setPoliceAction}
               />
@@ -795,7 +793,6 @@ const Servey = ({
                   DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  InsuredName,
                   AccidentTime)}
                 setEditorContent={setThirdPartyLoss}
               />
@@ -859,7 +856,6 @@ const Servey = ({
                   DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  InsuredName,
                   AccidentTime)}
                 setEditorContent={setAssessment}
               />

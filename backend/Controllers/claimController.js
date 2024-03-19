@@ -59,6 +59,7 @@ const addClaim =  (req, res) => {
         BrokerMailAddress,
         InsuredToken,
         PolicyIssuingOffice,
+        PolicyType,
         IsActive
       ) VALUES (
         '${SurveyType}',
@@ -75,6 +76,7 @@ const addClaim =  (req, res) => {
         '${BrokerMailAddress}',
         '${generatedToken}',
         '${PolicyIssuingOffice}',
+        'Regular',
         ${parseInt(IsActive)}
       );
     `;
