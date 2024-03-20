@@ -8,6 +8,7 @@ import { array } from "prop-types";
 
 const LossDamagesDetails = ({ allInfo }) => {
   const pdfRef = useRef();
+  let count = 1;
 
   const [allGSTType, setAllGSTType] = useState([]);
 
@@ -167,16 +168,56 @@ const LossDamagesDetails = ({ allInfo }) => {
     return 0;
   };
 
-  const getTotalEstimate = () => {
+  const getTotalEstimate = (type) => {
     let total = 0;
+    let typeTotalValue = 0;
     allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
       total = total + part.NewPartsIsActive ? assessed : 0;
+      typeTotalValue = typeTotalValue + (part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type) ? assessed : 0);
     });
-    return total;
+
+    console.log("type",type,total,typeTotalValue)
+    if(!type){
+      return total;
+    }
+    else{
+      return typeTotalValue;
+    }
   };
 
-  const getTotalGlassAssessed = () => {
+  //calculate New Parts overall calculation with all type gst values
+  const getOverallTotalEstimate =()=>{
+    let total = 0;
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
+      total = total + (part.NewPartsIsActive ? assessed : 0);
+    });
+    return total
+
+  }
+
+   //calculate New Parts overall calculation with all type gst values
+   const getOverallTotalEstimateGST =()=>{
+    let total = 0;
+    allGSTType.map((gst,index)=>{
+      total = (total + calculateEstimateNewPartsGST(gst.field))
+    })
+    return total
+
+  }
+
+     //calculate New Parts overall calculation with all type gst values
+     const getOverallTotalEstimateNewParts=()=>{
+      let total = 0;
+      allGSTType.map((gst,index)=>{
+        total = (total + getTotalEstimate(gst.field))
+      })
+      return total
+  
+    }
+
+  const getTotalGlassAssessed = (type) => {
     let total = 0;
     allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
@@ -186,7 +227,22 @@ const LossDamagesDetails = ({ allInfo }) => {
         part.NewPartsIsActive
       ) {
         total = total + assessed;
-      }
+          }
+    });
+    return total;
+  };
+
+  const getTotalGlassAssessedWithGSTType = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+
+      if (
+        String(part.NewPartsTypeOfMaterial) === "Glass" &&
+        part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type)
+      ) {
+        total = total + assessed;
+          }
     });
     return total;
   };
@@ -201,10 +257,25 @@ const LossDamagesDetails = ({ allInfo }) => {
         String(part.NewPartsTypeOfMaterial) === "Metal" &&
         part.NewPartsIsActive
       ) {
-        total = total + assessed;
-      }
+        total = total + assessed; }
     });
-    return total;
+    return total
+  };
+
+  const getTotalMetalAssessedWithGST = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(part.NewPartsTypeOfMaterial) === "Metal" &&
+        part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type)
+      ) {
+        total = total + assessed;
+        }
+    });
+    return total
   };
 
   function convertToReadable(timeStr) {
@@ -261,10 +332,27 @@ const LossDamagesDetails = ({ allInfo }) => {
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         part.NewPartsIsActive
       ) {
-        total = total + assessed;
-      }
-    });
-    return total;
+        total = total + assessed; }
+      });
+  
+      return total;
+  };
+
+
+  const getTotalOtherMetalAssessesWithGST = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type)
+      ) {
+        total = total + assessed; }
+      });
+  
+      return total;
   };
 
   const getTotalDepreciation = (type, other) => {
@@ -278,13 +366,28 @@ const LossDamagesDetails = ({ allInfo }) => {
         String(part.NewPartsTypeOfMaterial) === String(type) &&
         part.NewPartsIsActive
       ) {
-        total = total + Depreciation;
-      }
+        total = total + Depreciation;}
     });
-    return total;
+  return total
   };
 
-  const getTotalNonMetaDepreciation = () => {
+  const getTotalDepreciationWithGSTType = (type, other,gstType) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+
+      if (
+        String(part.NewPartsTypeOfMaterial) === String(type) &&
+        part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(gstType)
+      ) {
+        total = total + Depreciation;}
+    });
+  return total
+  };
+
+  const getTotalNonMetaDepreciation = (type) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
@@ -298,7 +401,27 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + Depreciation;
       }
     });
-    return total;
+
+    return total
+  };
+
+
+  const getTotalNonMetaDepreciationWithGST = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type)
+      ) {
+        total = total + Depreciation;
+      }
+    });
+
+    return total
   };
 
   const calculateTypeNewPartsGST = (type) => {
@@ -310,6 +433,22 @@ const LossDamagesDetails = ({ allInfo }) => {
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
         part.NewPartsIsActive
+      ) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
+
+  const calculateTypeNewPartsGSTType = (type,gstType) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+
+      if (
+        String(part.NewPartsTypeOfMaterial) === String(type) &&
+        part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(gstType)
       ) {
         total = total + gst;
       }
@@ -334,15 +473,53 @@ const LossDamagesDetails = ({ allInfo }) => {
     return total;
   };
 
+  const calculateOtherTypeNewPartsGSTType = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive &&
+        String(part.NewPartsGSTPct) === String(type)
+      ) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
+
   const calculateEstimateNewPartsGST = (type) => {
     let total = 0;
+    
+    let typeTotalValue = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
       const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
 
       total = total + part.NewPartsIsActive ? gst : 0;
+      typeTotalValue = typeTotalValue + (part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type) ? gst : 0);
     });
-    return total;
+
+    console.log("type",type,total,typeTotalValue)
+    if(!type){
+      return total;
+    }
+    else{
+      return typeTotalValue;
+    }
+  };
+
+  const getTotalEvaluationOfEstimateForNewParts = () => {
+      let total = 0;
+      allInfo?.newPartsDetails?.map((part, index) => {
+        const estimate = Number(part.NewPartsEstimate) * Number(part.QE);
+        total += estimate;
+      });
+      return total;
+
   };
 
   const getTotalEvaluationOfAssessedForNewParts = () => {
@@ -461,6 +638,7 @@ const LossDamagesDetails = ({ allInfo }) => {
     return gst;
   };
 
+
   const labourGST = () => {
     let gst = 0;
     allInfo?.labourDetails.map((part, index) => {
@@ -578,6 +756,7 @@ const LossDamagesDetails = ({ allInfo }) => {
       return result;
     };
 
+
     const convert = (num) => {
       if (num === 0) {
         return "zero";
@@ -617,6 +796,8 @@ const LossDamagesDetails = ({ allInfo }) => {
   }
 
   //*************************** */
+
+  
   return (
     <div>
       <div>
@@ -630,8 +811,7 @@ const LossDamagesDetails = ({ allInfo }) => {
           dated <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b> I
           visited{" "}
           <b>
-            {allInfo?.otherInfo[0]?.GarageNameAndAddress},
-            {allInfo?.otherInfo[0]?.GarageContactNo1}
+            {allInfo?.otherInfo[0]?.GarageNameAndAddress}
           </b>{" "}
           and inspected the subject vehicle, reported to have met with an
           accident on <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b>{" "}
@@ -750,13 +930,14 @@ const LossDamagesDetails = ({ allInfo }) => {
                     style={{ border: "1px solid black", padding: "10px" }}
                   ></th>
                 </tr>
-
+            
                 {sortFunction(allInfo?.newPartsDetails).map((part, index) => {
                   return part.NewPartsIsActive === 1 &&
                     String(part.NewPartsGSTPct) === String(field.field) ? (
+                    
                     <tr key={index}>
                       <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {part.NewPartsReportID}
+                        {count ++}
                       </td>
                       <td style={{ border: "1px solid black", padding: "5px" }}>
                         {part.NewPartsItemName}
@@ -794,10 +975,120 @@ const LossDamagesDetails = ({ allInfo }) => {
                         {roundOff(part.NewPartsGSTPct)}.00
                       </td>
                     </tr>
-                  ) : null;
+                 
+          
+          
+                    
+                  ) : null
                 })}
-              </>
+
+          <tr>
+            <td
+              colSpan={5}
+              style={{ border: "none", padding: "5px" }}
+              className="text-end"
+            >
+              <span className="mt-0">Total : </span>
+              <br />
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(getTotalEstimate(field.field)))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(
+                  getTotalGlassAssessedWithGSTType(field.field) - getTotalDepreciationWithGSTType("Glass", false,field.field)
+                )
+              )}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(
+                  getTotalMetalAssessedWithGST(field.field) - getTotalDepreciationWithGSTType("Metal", false,field.field)
+                )
+              )}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(
+                  getTotalOtherMetalAssessesWithGST(field.field) - getTotalNonMetaDepreciationWithGST(field.field)
+                )
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={5}
+              style={{ border: "none", padding: "5px" }}
+              className="text-end"
+            >
+              <span className="mt-0">Gst @ {field.field} % : </span>
+              <br />
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(calculateEstimateNewPartsGST(field.field)))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGSTType("Glass",field.field)))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(calculateTypeNewPartsGSTType("Metal",field.field)))}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGSTType(field.field)))}
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={5}
+              // rowSpan={6}
+              style={{ border: "none", padding: "5px" }}
+              className="text-end"
+            >
+              <span className="mt-0">Net Total : </span>
+              <br />
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(getTotalEstimate(field.field) + calculateEstimateNewPartsGST(field.field))
+              )}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(
+                  calculateTypeNewPartsGSTType("Glass",field.field) +
+                  getTotalGlassAssessedWithGSTType(field.field) -
+                  getTotalDepreciationWithGSTType("Glass", false,field,field)
+                )
+              )}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(
+                  calculateTypeNewPartsGSTType("Metal",field.field) +
+                  getTotalMetalAssessedWithGST(field.field) -
+                  getTotalDepreciationWithGSTType("Metal", false,field.field)
+                )
+              )}
+            </td>
+            <td style={{ border: "1px solid black", padding: "5px" }}>
+              {addCommasToNumber(
+                roundOff(
+                  calculateOtherTypeNewPartsGSTType(field.field) +
+                  getTotalOtherMetalAssessesWithGST(field.field) -
+                  getTotalNonMetaDepreciationWithGST(field.field)
+                )
+              )}
+            </td>
+          </tr> 
+                 
+           : null;
+           </>
+
+        
+              
             );
+            
           })}
 
           <tr>
@@ -815,21 +1106,14 @@ const LossDamagesDetails = ({ allInfo }) => {
           <tr>
             <td
               colSpan={5}
-              // rowSpan={6}
               style={{ borderTop: "1px solid black", padding: "5px" }}
               className="text-end"
             >
               <span className="mt-0">Total : </span>
               <br />
-              {/* Less: Depreciation : <br />
-              Total : <br />
-              Add : Applicable GST : <br />
-              Net Total F :
-              <br />
-              Grand Total F : <br /> */}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalEstimate()))}
+              {addCommasToNumber(roundOff(getOverallTotalEstimate()))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(roundOff(getTotalGlassAssessed()))}
@@ -848,18 +1132,10 @@ const LossDamagesDetails = ({ allInfo }) => {
           <tr>
             <td
               colSpan={5}
-              // rowSpan={6}
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
               <span className="mt-0">Less: Depreciation : </span>
-              <br />
-              {/* Less: Depreciation : <br />
-              Total : <br />
-              Add : Applicable GST : <br />
-              Net Total F :
-              <br />
-              Grand Total F : <br /> */}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -879,21 +1155,14 @@ const LossDamagesDetails = ({ allInfo }) => {
           <tr>
             <td
               colSpan={5}
-              // rowSpan={6}
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
               <span className="mt-0">Total : </span>
               <br />
-              {/* Less: Depreciation : <br />
-              Total : <br />
-              Add : Applicable GST : <br />
-              Net Total F :
-              <br />
-              Grand Total F : <br /> */}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalEstimate()))}
+              {addCommasToNumber(roundOff(getOverallTotalEstimate(0)))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
@@ -920,21 +1189,14 @@ const LossDamagesDetails = ({ allInfo }) => {
           <tr>
             <td
               colSpan={5}
-              // rowSpan={6}
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
               <span className="mt-0">Add : Applicable GST : </span>
               <br />
-              {/* Less: Depreciation : <br />
-              Total : <br />
-              Add : Applicable GST : <br />
-              Net Total F :
-              <br />
-              Grand Total F : <br /> */}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(calculateEstimateNewPartsGST()))}
+              {addCommasToNumber(roundOff(getOverallTotalEstimateGST(0)))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Glass")))}
@@ -955,16 +1217,10 @@ const LossDamagesDetails = ({ allInfo }) => {
             >
               <span className="mt-0">Net Total F : </span>
               <br />
-              {/* Less: Depreciation : <br />
-              Total : <br />
-              Add : Applicable GST : <br />
-              Net Total F :
-              <br />
-              Grand Total F : <br /> */}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
-                roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())
+                roundOff(getOverallTotalEstimateNewParts(0) + getOverallTotalEstimateGST(0))
               )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1013,7 +1269,7 @@ const LossDamagesDetails = ({ allInfo }) => {
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
-                roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())
+                roundOff(getOverallTotalEstimateNewParts(0) + getOverallTotalEstimateGST(0))
               )}
             </td>
             <td

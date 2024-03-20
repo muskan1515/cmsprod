@@ -57,7 +57,6 @@ const db = require("../Config/dbConfig");
       BillTo,
       Others,
       BillDate,
-      BillID,
       LeadId
   ) VALUES (
       '${Type}',
@@ -83,7 +82,6 @@ const db = require("../Config/dbConfig");
       '${BillTo}',
       '${Others}',
       '${BillDate}',
-      '${BillID}',
       '${LeadId}'
   );`;
   
@@ -113,12 +111,13 @@ const db = require("../Config/dbConfig");
     Branch = '${Branch}',
     BillTo = '${BillTo}',
     Others = '${Others}',
-    BillDate = '${BillDate}',
-    BillID = '${BillID}'
-  WHERE LeadId = '${LeadId}';
+    BillDate = '${BillDate}'
+    WHERE LeadID = ${LeadId};
 `;
 
-    db.query("SELECT * FROM BillReportFees WHERE LeadID=?",[LeadId],  (err, result) => {
+
+
+    db.query("SELECT * FROM BillReportFees WHERE BillSno=?",[BillID],  (err, result) => {
       if (err) {
         console.error(err);
         return res.status(500).send("Internal Server Error");

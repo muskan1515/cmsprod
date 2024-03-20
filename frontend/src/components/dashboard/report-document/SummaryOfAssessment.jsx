@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
@@ -16,7 +16,36 @@ const SummaryOfAssessment = ({
 }) => {
   const pdfRef = useRef();
 
+  const [allGSTType, setAllGSTType] = useState([]);
+
+  useEffect(() => {
+    let array = [];
+    const newParts = allInfo?.newPartsDetails;
+    newParts?.map((part, index) => {
+      let indexValue = -1;
+      array?.map((temp, idx) => {
+        if (String(temp.field) === String(part.NewPartsGSTPct)) {
+          indexValue = idx;
+        }
+      });
+
+      if (indexValue === -1) {
+        const newField = {
+          field: part.NewPartsGSTPct,
+          value: 1,
+        };
+        array.push(newField);
+      }
+    });
+
+    array.sort((a, b) => parseFloat(a.field) - parseFloat(b.field));
+    console.log("array", array);
+    setAllGSTType(array);
+  }, [allInfo]);
+
+
   const downloadPDF = () => {
+
     const input = pdfRef.current;
     const pdf = new jsPDF("p", "mm", "a4", true);
 
@@ -58,6 +87,7 @@ const SummaryOfAssessment = ({
 
     const totalPages = 3;
 
+   
     let currentPage = 1;
 
     const generateAllPages = () => {
@@ -472,6 +502,55 @@ const SummaryOfAssessment = ({
     return gst;
   };
 
+  const getTotalEstimate2 = (type) => {
+    let total = 0;
+    let typeTotalValue = 0;
+    allInfo?.newPartsDetails.map((part, index) => {
+      const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
+      total = total + part.NewPartsIsActive ? assessed : 0;
+      typeTotalValue = typeTotalValue + (part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type) ? assessed : 0);
+    });
+
+    console.log("type",type,total,typeTotalValue)
+    if(!type){
+      return total;
+    }
+    else{
+      return typeTotalValue;
+    }
+  };
+
+      //calculate New Parts overall calculation with all type gst values
+     const getOverallTotalEstimateNewParts=()=>{
+      let total = 0;
+      allGSTType.map((gst,index)=>{
+        total = (total + getTotalEstimate2(gst.field))
+      })
+      return total
+    }
+
+    const calculateEstimateNewPartsGST2 = (type) => {
+      let total = 0;
+      
+      allInfo?.newPartsDetails?.map((part, index) => {
+        const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
+        const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+  
+        total = total + part.NewPartsIsActive ? gst : 0;
+         });
+  
+      return total
+    };
+
+   //calculate New Parts overall calculation with all type gst values
+   const getOverallTotalEstimateGST =()=>{
+      let total = 0;
+    allGSTType.map((gst,index)=>{
+      total = (total + calculateEstimateNewPartsGST2(gst.field))
+    })
+    return total
+  }
+
   const roundOff = (number) => {
     return Math.round(number * 100) / 100;
   };
@@ -668,9 +747,9 @@ const SummaryOfAssessment = ({
             Total Cost of Parts
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(
-              roundOff(getTotalEstimate() + calculateEstimateNewPartsGST())
-            )}
+          {addCommasToNumber(
+                roundOff(getOverallTotalEstimateNewParts(0) + getOverallTotalEstimateGST(0))
+              )}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(

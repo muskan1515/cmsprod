@@ -686,6 +686,8 @@ const LabourRepairsDetails = ({ allInfo }) => {
           ) : null;
         })}
 
+        
+
         <tr>
           <th colSpan={2}>
             Parts with {allInfo?.labourDetails[0]?.GSTPercentage} % GST
@@ -795,7 +797,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
               textAlign: "end",
             }}
           >
-            Add : GST on ₹ 0.00 @ 18.00% : <br />
+            Add : GST on ₹ {addCommasToNumber(roundOff(getTotalLabourAssessed()))} @ 18.00% : <br />
             {/* Add : GST on ₹ 0.00 @ 18.00% : <br />
             Total Labour Charges : ₹ */}
           </td>

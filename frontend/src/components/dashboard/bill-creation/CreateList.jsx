@@ -17,7 +17,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const formattedDate = currentDate.toLocaleDateString("en-GB");
   console.log(formattedDate);
   const [BillDate, setBillDate] = useState(new Date());
-  const [Insurer, setInsurer] = useState("");
+  const [Insurer, setInsurer] = useState("United India Insurance Company Limited");
   const [Branch, setBranch] = useState("");
   const [Others, setOthers] = useState("");
   const [Estimate, setEstimate] = useState("");
@@ -67,6 +67,8 @@ const CreateList = ({ allInfo, leadID }) => {
   const [CGST, setCGST] = useState(0);
   const [SGST, setSGST] = useState(0);
   const [IGST, setIGST] = useState(18);
+  
+  const [allInsurer,setAllInsurer]=useState([]);
 
   const [CGSTValue, setCGSTValue] = useState("");
   const [SGSTValue, setSGSTValue] = useState("");
@@ -88,13 +90,34 @@ const CreateList = ({ allInfo, leadID }) => {
   },[])
 
   useEffect(()=>{
+    const userInfo=JSON.parse(localStorage.getItem("userInfo"));
+    
+    axios.get("/api/getAllInsurers", {
+      headers: {
+        Authorization: `Bearer ${userInfo[0].Token}`,
+        "Content-Type": "application/json",
+      }
+    })
+    .then((res) => {
+      console.log('insurerdata',res.data.InsurerData.result);
+      setAllInsurer(res.data.InsurerData.result);
+    
+    })
+    .catch((err) => {
+      toast.dismiss();
+          toast.error("Got error while fetching Insurer Info!");
+    });
+
+  },[]);
+
+  useEffect(()=>{
     if(!allInfo?.feesDetails)
      {
 
      }
      else{
     setBill(
-      allInfo?.feesDetails?.BillId 
+      allInfo?.feesDetails?.BillSno 
     );
 
     setInsurer(allInfo?.feesDetails?.InsuranceCompanyName);
@@ -384,7 +407,7 @@ const CreateList = ({ allInfo, leadID }) => {
       Sgst: SGST,
       Total: NetPay,
       ModeOfPayement: "",
-      BillID: allInfo?.feesDetails?.BillID,
+      BillID: Number(allInfo?.feesDetails?.BillSno),
       FeebasedOn: DetailsFee,
       Remrk: DetailsRemark,
       KmRate: DetailsKM,
@@ -541,7 +564,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={allInfo?.feesDetails?.BillID}
+                  value={'MTE-'+`${allInfo?.feesDetails?.BillSno}`}
                 />
               </div>
               <div className="col-lg-1 my_profile_setting_input form-group">
@@ -588,12 +611,18 @@ const CreateList = ({ allInfo, leadID }) => {
                 </label>
               </div>
               <div className="col-lg-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="broker_mail_id"
+              <select
+                  style={{ padding: "2px", marginTop: "3px" }}
+                  className="selectpicker form-select"
+                  data-live-search="true"
+                  data-width="100%"
                   value={Insurer}
-                />
+                  onChange={(e) => setInsurer(e.target.value)}
+                >
+                {allInsurer.map((insurer,index)=>{
+                  return  <option key={index} data-tokens="Status1" value={insurer.name}>{insurer.name}</option>
+                })}
+                </select>
               </div>
             </div>
           </div>

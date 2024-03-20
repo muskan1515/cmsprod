@@ -327,7 +327,7 @@ const ErrorPageContent = ({ feeReport }) => {
               <div className="d-flex text-dark gap-5">
                 <span>Bill No.</span>
                 <span>:</span>
-                <span> {feeReport?.feeDetails?.BillID}</span>
+                <span> MTE-{feeReport?.feeDetails?.BillSno}</span>
               </div>
               <div className="d-flex text-dark gap-5">
                 <span>Date</span>

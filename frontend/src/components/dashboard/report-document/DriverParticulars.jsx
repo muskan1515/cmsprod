@@ -162,6 +162,11 @@ const DriverParticulars = ({ allInfo }) => {
     return 0;
   };
 
+  const changeFormat = (string) => {
+    string = string?.replace(/\//g, "-");
+    return string;
+  }
+
   const getTotalEstimate = () => {
     let total = 0;
     allInfo?.newPartsDetails.map((part, index) => {
@@ -651,7 +656,7 @@ const DriverParticulars = ({ allInfo }) => {
                 : "-"}{" "}
               old ({" "}
               {allInfo?.otherInfo[0]?.DateOfBirth
-                ? formatDate(allInfo?.otherInfo[0]?.DateOfBirth)
+                ? changeFormat(allInfo?.otherInfo[0]?.DateOfBirth)
                 : ""}
               )
             </span>
@@ -681,10 +686,15 @@ const DriverParticulars = ({ allInfo }) => {
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.DateOfIssue
-                ? formatDate(allInfo?.otherInfo[0]?.DateOfIssue)
+                ? changeFormat(allInfo?.otherInfo[0]?.DateOfIssue)
                 : "-"}
             </span>
-            <span style={{ marginLeft: "60px" }}>Valid upto (NTV) : -</span>
+            <span style={{ marginLeft: "60px" }}>Valid upto (NTV) : 
+            {" "}
+              {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
+                ? changeFormat(allInfo?.otherInfo[0]?.ValidUntilNtv)
+                : "-"}
+            </span>
           </td>
         </tr>
         <tr>
@@ -698,10 +708,15 @@ const DriverParticulars = ({ allInfo }) => {
             <span>
               {" "}
               {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
-                ? formatDate(allInfo?.otherInfo[0]?.ValidFrom)
+                ? changeFormat(allInfo?.otherInfo[0]?.ValidFrom)
                 : "-"}
             </span>
-            <span style={{ marginLeft: "118px" }}>Valid upto (TV) : -</span>
+            <span style={{ marginLeft: "118px" }}>Valid upto (TV) : 
+            {" "}
+              {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
+                ? changeFormat(allInfo?.otherInfo[0]?.ValidUntilTv)
+                : "-"}
+            </span>
           </td>
         </tr>
         <tr>
