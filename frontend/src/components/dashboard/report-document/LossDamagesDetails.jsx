@@ -696,8 +696,16 @@ const LossDamagesDetails = ({ allInfo }) => {
   }
 
   //Sort function
-  const sortFunction = (array) => {
-    return array.sort((a, b) => parseFloat(a.SNO) - parseFloat(b.SNO));
+  const sortFunction = (array,type) => {
+    
+    const updatedArray =  array.sort((a, b) => parseFloat(a.SNO) - parseFloat(b.SNO));
+    let newRevisedArray = [];
+    updatedArray.map((row,index)=>{
+      if(String(row.NewPartsGSTPct) === String(type)){
+        newRevisedArray.push(row)
+      }
+    })
+    return newRevisedArray;
   };
 
   function numberToWords(number) {
@@ -933,12 +941,13 @@ const LossDamagesDetails = ({ allInfo }) => {
                     style={{ border: "1px solid black", padding: "10px" }}
                   ></th>
                 </tr>
-                {sortFunction(allInfo?.newPartsDetails).map((part, index) => {
+            
+                {sortFunction(allInfo?.newPartsDetails,field.field).map((part, index) => {
                   return part.NewPartsIsActive === 1 &&
                     String(part.NewPartsGSTPct) === String(field.field) ? (
                     <tr key={index}>
                       <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {count++}
+                        {index + 1}
                       </td>
                       <td style={{ border: "1px solid black", padding: "5px" }}>
                         {part.NewPartsItemName}

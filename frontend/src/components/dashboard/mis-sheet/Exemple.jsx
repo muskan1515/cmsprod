@@ -237,7 +237,9 @@ export default function Exemple({
       className: "toast-loading-message",
     });
   }, [allRows,InsurerType,finalRegion]);
-  console.log(updatedData);
+
+
+  
   return (
     <SmartTable
       title="MIS Sheet"

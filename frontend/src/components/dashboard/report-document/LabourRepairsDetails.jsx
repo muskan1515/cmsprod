@@ -9,6 +9,8 @@ import { array } from "prop-types";
 const LabourRepairsDetails = ({ allInfo }) => {
   const pdfRef = useRef();
 
+  
+
   const [allGST, setGST] = useState([]);
 
   const [noGST, setNoGST] = useState([]);

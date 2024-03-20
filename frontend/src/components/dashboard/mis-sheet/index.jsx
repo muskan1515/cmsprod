@@ -12,86 +12,125 @@ import toast, { Toaster } from "react-hot-toast";
 // import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ExcelTable from "./ExcelTable";
+import { useRouter } from "next/router";
 
 const Index = () => {
 
   const convertToYYYYMMDD = (inputDate) => {
     const date = new Date(inputDate);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-  
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
     return `${year}-${month}-${day}`;
   };
 
-  const [allRows,setAllRows]=useState([]);
-  const [startDate,setStartDate]=useState("");
-  const [allInsurer,setAllInsurer]=useState([]);
-  const [endDate,setEndDate]=useState("");
-  const [DateType,setDateType]=useState("intimation");
-  useEffect(()=>{
-    const userInfo=JSON.parse(localStorage.getItem("userInfo"));
-    const Start = startDate ? convertToYYYYMMDD(startDate):null;
-    const End = endDate ? convertToYYYYMMDD(endDate):null;
-    
+  const [allRows, setAllRows] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [allInsurer, setAllInsurer] = useState([]);
+  const [endDate, setEndDate] = useState("");
+  const [DateType, setDateType] = useState("intimation");
+
+  const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
+    Date.now()
+  );
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const activityHandler = () => {
+      setLastActivityTimestamp(Date.now());
+    };
+
+    // Attach event listeners for user activity
+    window.addEventListener("mousemove", activityHandler);
+    window.addEventListener("keydown", activityHandler);
+    window.addEventListener("click", activityHandler);
+
+    // Cleanup event listeners when the component is unmounted
+    return () => {
+      window.removeEventListener("mousemove", activityHandler);
+      window.removeEventListener("keydown", activityHandler);
+      window.removeEventListener("click", activityHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    const inactivityCheckInterval = setInterval(() => {
+      const currentTime = Date.now();
+      const timeSinceLastActivity = currentTime - lastActivityTimestamp;
+      if (timeSinceLastActivity > 100000) {
+        localStorage.removeItem("userInfo");
+        router.push("/login");
+      }
+    }, 60000);
+    return () => clearInterval(inactivityCheckInterval);
+  }, [lastActivityTimestamp]);
+
+
+  console.log("datetypeindex",DateType);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const Start = startDate ? convertToYYYYMMDD(startDate) : null;
+    const End = endDate ? convertToYYYYMMDD(endDate) : null;
+
     toast.loading("Fetching the information!!", {
       // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
     axios
-    .get("/api/misSheet", {
-      headers: {
-        Authorization: `Bearer ${userInfo[0].Token}`,
-        "Content-Type": "application/json",
-      },
-      params: {
-        startDate: Start,
-        EndDate:End,
-        DateType:DateType
-      },
-    })
-    .then((res) => {
-      console.log(res.data.userData.misSheetDetails);
-     setAllRows(res.data.userData.misSheetDetails);
-     toast.dismiss();
-     // toast.success("Successfully added");
-     toast.success("Fetched  Successfully !", {
-       // position: toast.POSITION.BOTTOM_LEFT,
-       className: "toast-loading-message",
-     });
-      // toast.success("Successfully Fetched !!")
-    })
-    .catch((err) => {
-      toast.dismiss();
-          toast.error("Got error while fetching Info!");
-    });
+      .get("/api/misSheet", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          startDate: Start,
+          EndDate: End,
+          DateType: DateType,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.userData.misSheetDetails);
+        setAllRows(res.data.userData.misSheetDetails);
+        toast.dismiss();
+        // toast.success("Successfully added");
+        toast.success("Fetched  Successfully !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
+        // toast.success("Successfully Fetched !!")
+      })
+      .catch((err) => {
+        toast.dismiss();
+        toast.error("Got error while fetching Info!");
+      });
+  }, [startDate, endDate]);
 
-  },[startDate,endDate,DateType]);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  useEffect(()=>{
-    const userInfo=JSON.parse(localStorage.getItem("userInfo"));
-    
-    axios.get("/api/getAllInsurers", {
-      headers: {
-        Authorization: `Bearer ${userInfo[0].Token}`,
-        "Content-Type": "application/json",
-      }
-    })
-    .then((res) => {
-      console.log('insurerdata',res.data.InsurerData.result);
-      setAllInsurer(res.data.InsurerData.result);
-    
-    })
-    .catch((err) => {
-      toast.dismiss();
-          toast.error("Got error while fetching Insurer Info!");
-    });
-
-  },[]);
+    axios
+      .get("/api/getAllInsurers", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("insurerdata", res.data.InsurerData.result);
+        setAllInsurer(res.data.InsurerData.result);
+      })
+      .catch((err) => {
+        toast.dismiss();
+        toast.error("Got error while fetching Insurer Info!");
+      });
+  }, []);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
       <Header />
+      <Toaster/>
 
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
@@ -139,43 +178,24 @@ const Index = () => {
                 </div> */}
                 {/* End .col */}
 
-                <div className="col-lg-8 col-xl-8">
-                  <div className="candidate_revew_select style2 text-end mb30-991">
-                    <ul className="mb0">
-                      <li className="list-inline-item">
-                        <div className="candidate_revew_search_box course fn-520">
-                          {/* <SearchBox /> */}
-                        </div>
-                      </li>
-                      {/* End li */}
-
-                      <li className="list-inline-item">
-                        {/* <Filtering /> */}
-                      </li>
-                      {/* End li */}
-                    </ul>
-                  </div>
-                </div>
                 {/* End .col */}
-                <ExcelTable 
-                allRows={allRows}
-              /> 
+                <ExcelTable allRows={allRows} />
 
                 <div className="col-lg-12">
                   <div className="my_dashboard_review mb40">
                     <div className="property_table">
                       <div className="table-responsive mt0">
                         {/* <TableData /> */}
-                        <Exemple 
-                        allRows={allRows} 
-                        setStartDate={setStartDate} 
-                        setEndDate={setEndDate}
-                        startDate={startDate}
-                        allInsurer={allInsurer}
-                        
-                        DateType={DateType}
-                        setDateType={setDateType}
-                        endDate={endDate} />
+                        <Exemple
+                          allRows={allRows}
+                          setStartDate={setStartDate}
+                          setEndDate={setEndDate}
+                          startDate={startDate}
+                          allInsurer={allInsurer}
+                          DateType={DateType}
+                          setDateType={setDateType}
+                          endDate={endDate}
+                        />
                       </div>
                       {/* End .table-responsive */}
 

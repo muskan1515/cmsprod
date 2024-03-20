@@ -3,9 +3,46 @@ import ErrorPageContent from "./ErrorPageContent";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Index = () => {
   const [feeReport, setFeeReport] = useState({});
+  const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
+    Date.now()
+  );
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const activityHandler = () => {
+      setLastActivityTimestamp(Date.now());
+    };
+
+    // Attach event listeners for user activity
+    window.addEventListener("mousemove", activityHandler);
+    window.addEventListener("keydown", activityHandler);
+    window.addEventListener("click", activityHandler);
+
+    // Cleanup event listeners when the component is unmounted
+    return () => {
+      window.removeEventListener("mousemove", activityHandler);
+      window.removeEventListener("keydown", activityHandler);
+      window.removeEventListener("click", activityHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    const inactivityCheckInterval = setInterval(() => {
+      const currentTime = Date.now();
+      const timeSinceLastActivity = currentTime - lastActivityTimestamp;
+      if (timeSinceLastActivity > 100000) {
+        localStorage.removeItem("userInfo");
+        router.push("/login");
+      }
+    }, 60000);
+    return () => clearInterval(inactivityCheckInterval);
+  }, [lastActivityTimestamp]);
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const url = window.location.pathname;

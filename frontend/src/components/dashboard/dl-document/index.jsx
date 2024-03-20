@@ -13,6 +13,42 @@ const Index = () => {
   const router = useRouter();
   const [driverDetails,setDriverDetails]=useState({});
   const [isLoading,setIsLoading]=useState(true)
+
+
+  const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
+    Date.now()
+  );
+
+  useEffect(() => {
+    const activityHandler = () => {
+      setLastActivityTimestamp(Date.now());
+    };
+
+    // Attach event listeners for user activity
+    window.addEventListener("mousemove", activityHandler);
+    window.addEventListener("keydown", activityHandler);
+    window.addEventListener("click", activityHandler);
+
+    // Cleanup event listeners when the component is unmounted
+    return () => {
+      window.removeEventListener("mousemove", activityHandler);
+      window.removeEventListener("keydown", activityHandler);
+      window.removeEventListener("click", activityHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    const inactivityCheckInterval = setInterval(() => {
+      const currentTime = Date.now();
+      const timeSinceLastActivity = currentTime - lastActivityTimestamp;
+      if (timeSinceLastActivity > 100000) {
+        localStorage.removeItem("userInfo");
+        router.push("/login");
+      }
+    }, 60000);
+    return () => clearInterval(inactivityCheckInterval);
+  }, [lastActivityTimestamp]);
+
  
   useEffect(() => {
 
