@@ -43,7 +43,7 @@ const PrintComponent = ({ children }) => {
                 className=""
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <h5 className="text-dark" style={{ fontSize: "12px" }}>
+                <h5 className="text-dark" style={{ fontSize: "12px", paddingLeft:"10px" }}>
                   H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
                   Ganganagar(Raj.)-335001
                 </h5>

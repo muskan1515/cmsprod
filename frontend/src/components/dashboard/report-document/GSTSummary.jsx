@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
 
-const GSTSummary = ({
-  allInfo
-}) => {
+const GSTSummary = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
@@ -426,29 +424,34 @@ const GSTSummary = ({
   };
 
   function convertToProperHTML(htmlString) {
-     // Create a new DOMParser
-  const parser = new DOMParser();
+    // Create a new DOMParser
+    const parser = new DOMParser();
 
-  // Parse the HTML string
-  const doc = parser.parseFromString(htmlString, "text/html");
+    // Parse the HTML string
+    const doc = parser.parseFromString(htmlString, "text/html");
 
-  // Extract the text content from the parsed document
-  let plainText = doc.body.textContent || "";
+    // Extract the text content from the parsed document
+    let plainText = doc.body.textContent || "";
 
-  // Add line breaks after every period (.)
-  plainText = plainText.replace(/\./g, "\n");
+    // Add line breaks after every period (.)
+    plainText = plainText.replace(/\./g, "\n");
 
-  return plainText;
+    return plainText;
   }
 
-const addVariables = (string)=>{
-  
-      string = string?.replace("**CASSISNUMBER**", `<strong>${allInfo?.otherInfo[0]?.ChassisNumber}</strong>`);
-      string = string?.replace("**POLICYNUMBER**", `<strong>${allInfo?.otherInfo[0]?.PolicyNumber}</strong>`);
-       string = string?.replace(".", "\n");
-      
-      return string
-  }
+  const addVariables = (string) => {
+    string = string?.replace(
+      "**CASSISNUMBER**",
+      `<strong>${allInfo?.otherInfo[0]?.ChassisNumber}</strong>`
+    );
+    string = string?.replace(
+      "**POLICYNUMBER**",
+      `<strong>${allInfo?.otherInfo[0]?.PolicyNumber}</strong>`
+    );
+    string = string?.replace(".", "\n");
+
+    return string;
+  };
 
   const getSummaryTotalWithLessSalvage = () => {
     return (
@@ -619,6 +622,19 @@ const addVariables = (string)=>{
 
     return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
   }
+  const [splitText, setSplitText] = useState([]);
+
+  const text = convertToProperHTML(
+    addVariables(allInfo?.summaryReport[0]?.SummaryNotes)
+  );
+  // Using useState to store the split text
+
+  useEffect(() => {
+    // Splitting the text based on the pattern
+    const regex = /\s(?=\d{2}\s)/g; // Lookahead regex to split where there's a number (two digits) followed by a space
+    const splitParts = text.split(regex).map((part) => part.trim()); // Splitting and trimming the parts
+    setSplitText(splitParts);
+  }, [text]);
 
   //*************************** */
   return (
@@ -1167,7 +1183,20 @@ const addVariables = (string)=>{
           Notes :
         </h5>
         <ul>
-          {convertToProperHTML(addVariables(allInfo?.summaryReport[0]?.SummaryNotes))}
+          <div>
+            {splitText.map((part, index) => (
+              <div key={index}>
+                <p className="text-dark fw-bold">{part}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* <li>
+            {convertToProperHTML(
+              addVariables(allInfo?.summaryReport[0]?.SummaryNotes)
+            )}
+          </li> */}
+
           {/*<li>
             <h4>1. Vehicle Re-inspected by me & photogarphs of same .</h4>
           </li>

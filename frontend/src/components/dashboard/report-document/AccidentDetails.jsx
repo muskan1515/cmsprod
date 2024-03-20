@@ -610,10 +610,7 @@ const AccidentDetails = ({ allInfo }) => {
   return (
     <div>
       <h6 className="text-dark">CAUSE & NATURE OF ACCIDENT :</h6>
-      <span>
-       
-        {allInfo?.otherInfo[0]?.CauseOfAccident} , causing damages.
-      </span>
+      <span>{allInfo?.otherInfo[0]?.CauseOfAccident} , causing damages.</span>
       <div
         style={{
           border: "1px solid black",
@@ -621,13 +618,28 @@ const AccidentDetails = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <div className="d-flex gap-5">
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "36%" }}>
+            <span htmlFor="" className="text-dark fw-bold">
+              POLICE ACTION
+            </span>
+          </td>
+          <td>
+            <span>:</span>
+          </td>
+          <td>
+            <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="d-flex gap-5">
         <span htmlFor="" className="text-dark fw-bold">
           POLICE ACTION
         </span>
         <span>:</span>
         <span> {allInfo?.otherInfo[0]?.PoliceAction}</span>
-      </div>
+      </div> */}
       <div
         style={{
           border: "1px solid black",
@@ -635,13 +647,28 @@ const AccidentDetails = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <div className="text-start d-flex gap-5">
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "36%" }}>
+            <span htmlFor="" className="text-dark fw-bold">
+              DETAILS OF LOAD / PASSENGER
+            </span>
+          </td>
+          <td>
+            <span>:</span>
+          </td>
+          <td>
+            <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="text-start d-flex gap-5">
         <span htmlFor="" className="text-dark fw-bold">
           DETAILS OF LOAD / PASSENGER
         </span>
         <span>:</span>
         <span> {allInfo?.otherInfo[0]?.DetailsOfLoads}</span>
-      </div>
+      </div> */}
       <div
         style={{
           border: "1px solid black",
@@ -649,13 +676,28 @@ const AccidentDetails = ({ allInfo }) => {
           marginTop: "5px",
         }}
       ></div>
-      <div className="text-start d-flex gap-5">
+      <table style={{ width: "100%" }}>
+        <tr>
+          <td style={{ width: "36%" }}>
+            <span htmlFor="" className="text-dark fw-bold">
+              THIRD PARTY LOSS/ INJURIES
+            </span>
+          </td>
+          <td>
+            <span>:</span>
+          </td>
+          <td>
+            <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
+          </td>
+        </tr>
+      </table>
+      {/* <div className="text-start d-flex gap-5">
         <span htmlFor="" className="text-dark fw-bold">
           THIRD PARTY LOSS/ INJURIES
         </span>
         <span>:</span>
         <span> {allInfo?.otherInfo[0]?.ThirdPartyLoss}</span>
-      </div>
+      </div> */}
       <div
         style={{
           border: "1px solid black",
