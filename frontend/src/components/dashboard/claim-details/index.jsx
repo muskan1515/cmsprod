@@ -79,7 +79,7 @@ const Index = ({}) => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 100000) {
+      if (timeSinceLastActivity > 900000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }
@@ -1049,6 +1049,8 @@ const Index = ({}) => {
 
     return trimmedArray;
   };
+
+  
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));

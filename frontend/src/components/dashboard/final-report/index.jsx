@@ -36,7 +36,7 @@ const Index = ({ SomeComponent, leadId }) => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 100000) {
+      if (timeSinceLastActivity > 900000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }

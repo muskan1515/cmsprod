@@ -5,10 +5,6 @@ import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
 import { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
-// import DetailedInfo from "./DetailedInfo";
-// import FloorPlans from "./FloorPlans";
-// import LocationField from "./LocationField";
-// import PropertyMediaUploader from "./PropertyMediaUploader";
 
 const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
   const [LeadID,setLeadID]=useState("");
@@ -46,7 +42,7 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 100000) {
+      if (timeSinceLastActivity > 900000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }

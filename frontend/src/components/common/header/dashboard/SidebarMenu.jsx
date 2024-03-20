@@ -17,7 +17,7 @@ import {
 } from "react-icons/fa";
 
 const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => {
-  console.log(leadId);
+  
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -53,6 +53,11 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
     { id: 3, name: "Logout", route: "/login", icon: "flaticon-logout" },
   ];
 
+  const checkIsActive = (path)=>{
+    const defaultUrl = window.location.href;
+    return defaultUrl.toLowerCase().includes(path.toLowerCase());
+  }
+
   return (
     <>
       <div className="container">
@@ -87,7 +92,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                 <ul>
                   <li
                     className={`treeview ${
-                      isSinglePageActive("/my-dashboard", route.pathname)
+                      checkIsActive("/my-dashboard")
                         ? "active"
                         : ""
                     }`}
@@ -99,7 +104,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive("/add-claim", route.pathname)
+                      checkIsActive("/add-claim")
                         ? "active"
                         : ""
                     }`}
@@ -111,9 +116,8 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive(
-                        `/claim-details?leadId=${leadId}`,
-                        route.pathname
+                      checkIsActive(
+                        `/claim-details`
                       )
                         ? "active"
                         : ""
@@ -126,9 +130,8 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive(
-                        `/final-report/${leadId}`,
-                        route.pathname
+                      checkIsActive(
+                        `/final-report`
                       )
                         ? "active"
                         : ""
@@ -141,9 +144,8 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                   </li>
                   <li
                     className={`treeview ${
-                      isSinglePageActive(
-                        `/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}`,
-                        route.pathname
+                      checkIsActive(
+                        `/send-mail`
                       )
                         ? "active"
                         : ""
@@ -160,7 +162,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                  
                  <li
                     className={`treeview ${
-                      isSinglePageActive("/bill-creation", route.pathname)
+                      checkIsActive("/bill-creation")
                         ? "active"
                         : ""
                     }`}
@@ -205,98 +207,10 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                   </li>
                 </ul>
               </li>
-              {/* End Main */}
-
-              <li className="title">
-                {/* <span>Manage Listings</span> */}
-                <ul>
-                  {/* <li
-                    className={`treeview ${
-                      isParentPageActive(myProperties, route.pathname)
-                        ? "active"
-                        : ""
-                    }`}
-                  >
-                    <a data-bs-toggle="collapse" href="#my-property">
-                      <i className="flaticon-home"></i>{" "}
-                      <span>My Properties</span>
-                      <i className="fa fa-angle-down pull-right"></i>
-                    </a>
-                    <ul className="treeview-menu collapse" id="my-property">
-                      {myProperties.map((item) => (
-                        <li key={item.id}>
-                          <Link href={item.route}>
-                            <i className="fa fa-circle"></i> {item.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li> */}
-                  {/* end properties */}
-
-                  {/* <li
-                    className={`treeview ${
-                      isParentPageActive(reviews, route.pathname)
-                        ? "active"
-                        : ""
-                    }`}
-                  >
-                    <a data-bs-toggle="collapse" href="#review">
-                      <i className="flaticon-chat"></i>
-                      <span>Reviews</span>
-                      <i className="fa fa-angle-down pull-right"></i>
-                    </a>
-                    <ul className="treeview-menu collapse" id="review">
-                      {reviews.map((item) => (
-                        <li key={item.id}>
-                          <Link href={item.route}>
-                            <i className="fa fa-circle"></i> {item.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li> */}
-                  {/* End Review */}
-
-                  {/* <li
-                    className={`treeview ${
-                      isSinglePageActive("/my-saved-search", route.pathname)
-                        ? "active"
-                        : ""
-                    }`}
-                  >
-                    <Link href="/my-saved-search">
-                      <i className="flaticon-magnifying-glass"></i>
-                      <span> Saved Search</span>
-                    </Link>
-                  </li> */}
-                </ul>
-              </li>
-              {/* End manage listing */}
-
-              <li className="title">
-                {/* <span>Manage Account</span> */}
-                {/* <ul>
-                  {manageAccount.map((item) => (
-                    <li
-                      className={
-                        isSinglePageActive(item.route, route.pathname)
-                          ? "active"
-                          : ""
-                      }
-                      key={item.id}
-                    >
-                      <Link href={item.route}>
-                        <i className={item.icon}></i> <span>{item.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul> */}
-              </li>
+              
             </ul>
           </div>
         </div>
-        {/* <main>{children}</main> */}
       </div>
     </>
   );

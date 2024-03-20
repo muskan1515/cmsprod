@@ -1,8 +1,4 @@
-// import CopyrightFooter from "../common/footer/CopyrightFooter";
-// import Footer from "../common/footer/Footer";
-// import Header from "../common/header/DefaultHeader";
-// import MobileMenu from "../common/header/MobileMenu";
-// import PopupSignInUp from "../common/PopupSignInUp";
+
 import DLData from "./CreatListing";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -41,7 +37,7 @@ const Index = () => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 100000) {
+      if (timeSinceLastActivity > 900000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }

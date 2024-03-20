@@ -3,10 +3,7 @@ import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import CreateList from "./CreateList";
-// import DetailedInfo from "./DetailedInfo";
-// import FloorPlans from "./FloorPlans";
-// import LocationField from "./LocationField";
-// import PropertyMediaUploader from "./PropertyMediaUploader";
+import { useEffect, useState } from "react";
 
 const Index = () => {
 
@@ -38,7 +35,7 @@ const Index = () => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 100000) {
+      if (timeSinceLastActivity > 900000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }

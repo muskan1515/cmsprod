@@ -2,14 +2,9 @@ import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu_01";
 import MobileMenu from "../../common/header/MobileMenu";
-// import TableData from "./TableData";
-// import Filtering from "./Filtering";
-// import Pagination from "./Pagination";
-// import SearchBox from "./SearchBox";
 import Exemple from "./Exemple";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ExcelTable from "./ExcelTable";
 import { useRouter } from "next/router";
@@ -59,7 +54,7 @@ const Index = () => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 100000) {
+      if (timeSinceLastActivity > 900000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }
