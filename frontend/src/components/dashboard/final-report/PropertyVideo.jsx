@@ -1035,13 +1035,14 @@ const [AccidentTime,setAccidentTime]=useState("");
         onClose={() => setOpen(false)}
         allow="picture-in-picture"
       />
-      <ul className="nav nav-tabs" id="myTab" role="tablist">
+      <ul className="nav nav-tabs bgc-f6" id="myTab" role="tablist">
         <li className="nav-item">
           <a
             className="nav-link active"
             data-bs-toggle="tab"
             href="#descriptions"
             role="tab"
+            style={{ padding: "10px" }}
           >
             Policy & Vehicle
           </a>
@@ -1052,6 +1053,7 @@ const [AccidentTime,setAccidentTime]=useState("");
             data-bs-toggle="tab"
             href="#description"
             role="tab"
+            style={{ padding: "10px" }}
           >
             Survey
           </a>
@@ -1062,6 +1064,7 @@ const [AccidentTime,setAccidentTime]=useState("");
             data-bs-toggle="tab"
             href="#newparts"
             role="tab"
+            style={{ padding: "10px" }}
           >
             New Parts
           </a>
@@ -1072,6 +1075,7 @@ const [AccidentTime,setAccidentTime]=useState("");
             data-bs-toggle="tab"
             href="#labour"
             role="tab"
+            style={{ padding: "10px" }}
           >
             Labour
           </a>
@@ -1082,6 +1086,7 @@ const [AccidentTime,setAccidentTime]=useState("");
             data-bs-toggle="tab"
             href="#summary"
             role="tab"
+            style={{ padding: "10px" }}
           >
             Summary & Notes
           </a>
@@ -1092,7 +1097,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       </ul>
       {/* End .nav-tabs */}
 
-      <div className="tab-content" id="myTabContent2">
+      <div className="tab-content bgc-f6" id="myTabContent2">
         <div
           className="tab-pane fade show active"
           id="descriptions"
