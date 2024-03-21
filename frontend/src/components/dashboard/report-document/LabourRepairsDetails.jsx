@@ -79,9 +79,17 @@ const LabourRepairsDetails = ({ allInfo }) => {
     const labours = allInfo?.labourDetails;
     labours?.map((part, index) => {
       if (Number(part.IsGSTIncluded) % 2 === 0) {
-        array.push(part);
+        const newRow = {
+          ...part,
+          pos : index + 1
+        }
+        array.push(newRow);
       } else {
-        array2.push(part);
+        const newRow = {
+          ...part,
+          pos : index + 1
+        }
+        array2.push(newRow);
       }
     });
     setNoGST(array);
@@ -667,7 +675,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
           return labour.LabourIsActive === 1 ? (
             <tr>
               <td style={{ border: "1px solid black", padding: "5px" }}>
-                {index + 1}
+                {labour.pos}
               </td>
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {labour.SAC}
@@ -703,7 +711,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
           return labour.LabourIsActive === 1 ? (
             <tr>
               <td style={{ border: "1px solid black", padding: "5px" }}>
-                {index + 1}
+                {labour.pos}
               </td>
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {labour.SAC}

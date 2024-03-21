@@ -702,7 +702,11 @@ const LossDamagesDetails = ({ allInfo }) => {
     let newRevisedArray = [];
     updatedArray.map((row,index)=>{
       if(String(row.NewPartsGSTPct) === String(type)){
-        newRevisedArray.push(row)
+        const newRow ={
+          ...row,
+          pos : index +1
+        }
+        newRevisedArray.push(newRow)
       }
     })
     return newRevisedArray;
@@ -947,7 +951,7 @@ const LossDamagesDetails = ({ allInfo }) => {
                     String(part.NewPartsGSTPct) === String(field.field) ? (
                     <tr key={index}>
                       <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {index + 1}
+                        {part.pos}
                       </td>
                       <td style={{ border: "1px solid black", padding: "5px" }}>
                         {part.NewPartsItemName}
