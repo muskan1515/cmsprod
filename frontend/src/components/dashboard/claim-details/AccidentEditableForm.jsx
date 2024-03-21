@@ -57,14 +57,14 @@ const AccidentEditableForm = ({
         {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingSeven">
+            <h2 class="accordion-header" id="headingTen">
               <button
                 class="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseSeven"
+                data-bs-target="#collapseTen"
                 aria-expanded="false"
-                aria-controls="collapseSeven"
+                aria-controls="collapseTen"
                 style={{ padding: "10px 10px 0 25px" }}
               >
                 <h4 className="">Accident Details</h4>
@@ -72,9 +72,9 @@ const AccidentEditableForm = ({
               </button>
             </h2>
             <div
-              id="collapseSeven"
+              id="collapseTen"
               class="accordion-collapse collapse"
-              aria-labelledby="headingSeven"
+              aria-labelledby="headingTen"
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body bgc-f6">
