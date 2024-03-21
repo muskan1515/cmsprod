@@ -5,14 +5,20 @@ import { useRouter } from "next/router";
 
 const Index = () => {
   const router = useRouter();
-  const { leadId, email, policyNo , vehicleNo,Insured,Region } = router.query;
+  const { leadId, email, policyNo , vehicleNo,Insured,Region,BrokerMailAddress,GarageMailAddress } = router.query;
 
   console.log(leadId,email,policyNo);
   // console.log(leadId);
   return (
     <>
       <Seo pageTitle="Send Mail" />
-      <Documents leadId={leadId} email={email} policyNo={policyNo} vehicleNo={vehicleNo} Insured={Insured} Region={Region}/>
+      <Documents leadId={leadId} email={email} 
+      policyNo={policyNo} 
+      GarageMailAddress={GarageMailAddress}
+      BrokerMailAddress={BrokerMailAddress}
+      vehicleNo={vehicleNo} 
+      Insured={Insured} 
+      Region={Region}/>
     </>
   );
 };

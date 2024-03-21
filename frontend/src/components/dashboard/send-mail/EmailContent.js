@@ -28,7 +28,7 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
             5) Payment receipt duly signed & stamped of dealer
             6) Previous Year Policy
             7) Pan Card
-            8) Please destorey the items properly in the RI, Otherwise we will treat the part is repaired
+            8) Please destory the items properly in the RI, Otherwise we will treat the part is repaired.
 
         `
     }
@@ -47,7 +47,7 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
          Labour
          1) Fr Bumper- R/R-150, Painting-2500
          2) LH Head Light- R/R-100
-         3) LH Fender- Denting-250, Painting-2200`
+         3) LH Fender- Denting-250, Painting-2200.`
     }
     else{
         return `Dear Sir/Madam,

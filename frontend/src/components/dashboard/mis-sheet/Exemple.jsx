@@ -22,18 +22,14 @@ const headCells = [
     label: "Policy No.",
     width: 150,
   },
-  {
-    id: "claim_no",
-    numeric: false,
-    label: "Row No.",
-    width: 150,
-  },
+  
   {
     id: "veh_no",
     numeric: false,
     label: "Veh. No.",
     width: 150,
   },
+  
   {
     id: "insured",
     numeric: false,
@@ -55,7 +51,7 @@ const headCells = [
   {
     id: "doi",
     numeric: false,
-    label: "Date Of Information",
+    label: "Date Of Intimation",
     width: 240,
   },
   {
@@ -75,6 +71,12 @@ const headCells = [
     numeric: false,
     label: "Assessed Amt.",
     width: 160,
+  },
+  {
+    id: "date_of_submit",
+    numeric: false,
+    label: "Date Of Submit",
+    width: 150,
   },
   {
     id: "tat",
@@ -106,6 +108,7 @@ const headCells = [
     label: "Bill Date",
     width: 150,
   },
+ 
 ];
 
 
@@ -161,6 +164,11 @@ export default function Exemple({
     return false;
   }
 
+  function addCommasToNumber(number) {
+    if (Number(number) <= 100 || number === undefined) return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   function convertToIST(utcTimestamp) {
     const utcDate = new Date(utcTimestamp);
 
@@ -183,6 +191,20 @@ export default function Exemple({
     // Return the formatted IST date and time as a string
     return formattedISTDateTime;
   }
+
+  const formatDateUpdated = (dateString) => {
+    if(dateString === null || dateString === undefined || !dateString || String(dateString) === "undefined"){
+      return "-"
+    }
+    const date = new Date(dateString);
+
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const year = date.getFullYear().toString().slice(-4); // Get last two digits of the year
+
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  };
 
   useEffect(() => {
     toast.loading("Fetching the information!!", {
@@ -212,19 +234,20 @@ export default function Exemple({
         sno: index + 1,
         ref_no: row.ReferenceNo,
         policy_no: row.PolicyNumber,
-        claim_no: row.ClaimNumber,
         veh_no: row.RegisteredNumber,
         insured: row.InsuredName,
-        insured_gst_no: row.InsuredGSTNumber,
-        doi: convertToIST(row.DateOfIntimation),
-        date_of_survey: convertToIST(row.DateOfSurvey),
-        estimate_amt: row.EstimateAmt,
-        assessed_amt: row.AssessedAmt,
+        insured_gst_no: row.GST_No,
+        survey_type:row.SurveyType,
+        doi: formatDateUpdated(row.DateOfIntimation),
+        date_of_survey: formatDateUpdated(row.DateOfSurvey),
+        estimate_amt: addCommasToNumber(row.EstimateAmt),
+        assessed_amt: addCommasToNumber(row.AssessedAmt),
+        date_of_submit: formatDateUpdated(row.DateOfIntimation),
         tat: 0,
         remarks: row.Remarks,
         bill_no: row.BillNo,
-        bill_total: row.BillTotal,
-        bill_date: convertToIST(row.BillDate),
+        bill_total: addCommasToNumber(row.BillTotal),
+        bill_date: formatDateUpdated(row.BillDate),
       };
       tempData.push(updatedRow);
     }

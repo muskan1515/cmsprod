@@ -4,11 +4,11 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { toast} from 'react-hot-toast'
 import { defaultContent } from "./EmailContent";
-const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
+const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,BrokerMailAddress,GarageMailAddress}) => {
 
 
   const [selectedItems, setSelectedItems] = useState([]);
-  const [emailAddress, setEmailAddress] = useState(email ? email : "");
+  const [emailAddress, setEmailAddress] = useState("");
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
   const [date, setDate] = useState(new Date());
 
@@ -25,17 +25,38 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region}) => {
     if (!leadId) {
       return () => {}; // Returning an empty function
     }
+
+   
+
   }, []);
+
+  useEffect(()=>{
+    
+ 
+    if(String(type) === "1" && (email !== undefined && email !== "None" && email !== "undefined" && email!=="null" && email !== "")){
+      setEmailAddress(email)
+    }
+    if(String(type) === "2" && (BrokerMailAddress !== undefined && BrokerMailAddress !== "undefined" && BrokerMailAddress!=="null" && BrokerMailAddress!=="")){
+      setEmailAddress(BrokerMailAddress)
+    }
+    if(String(type) === "3" && (GarageMailAddress !== undefined && GarageMailAddress !== "undefined" && GarageMailAddress!=="null" && GarageMailAddress!=="")){
+      setEmailAddress(GarageMailAddress)
+    }
+   
+  
+  },[type,email,BrokerMailAddress,GarageMailAddress])
+
+
+  
   useEffect(()=>{
     
     const getData = ()=>{
       const newContent = defaultContent(type,vehicleNo,policyNo,Insured,new Date());
-      console.log(type,newContent)
       setBody(newContent)
     }
 
     getData()
-  },[type,policyNos,date,emailAddress])
+  },[type,policyNos,date,BrokerMailAddress,GarageMailAddress,email])
 
  
   const handleCheckboxChange = (id, value, checked) => {

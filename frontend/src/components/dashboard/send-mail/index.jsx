@@ -6,7 +6,7 @@ import CreateList from "./CreateList";
 import { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 
-const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
+const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMailAddress,GarageMailAddress}) => {
   const [LeadID,setLeadID]=useState("");
   const [Policy,setPolicy]=useState("");
   const [Email,setEmail]=useState("");
@@ -42,7 +42,7 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 900000) {
+      if (timeSinceLastActivity > 600000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }
@@ -135,6 +135,8 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region}) => {
                           vehicleNo={VehicleNo}
                           Insured={name}
                           Region={region}
+                          BrokerMailAddress={BrokerMailAddress}
+                          GarageMailAddress={GarageMailAddress}
                         />
                       </div>
                     </div>

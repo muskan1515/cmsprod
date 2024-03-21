@@ -21,6 +21,25 @@ function ExcelTable({ allRows }) {
     return formattedISTDateTime;
   }
 
+  function addCommasToNumber(number) {
+    if (Number(number) <= 100 || number === undefined) return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  
+  const formatDateUpdated = (dateString) => {
+    if(dateString === null || dateString === undefined || !dateString || String(dateString) === "undefined"){
+      return "-"
+    }
+    const date = new Date(dateString);
+
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const year = date.getFullYear().toString().slice(-4); // Get last two digits of the year
+
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  };
+
   function exportToExcel() {
     const wb = XLSX.utils.book_new();
     const wsData = [
@@ -54,12 +73,12 @@ function ExcelTable({ allRows }) {
         res.SurveyType,
         convertToIST(res.DateOfInformation),
         convertToIST(res.DateOfSurvey),
-        res.EstimateAmt,
-        res.AssessedAmt,
+        addCommasToNumber(res.EstimateAmt),
+        addCommasToNumber(res.AssessedAmt),
         0, // TAT
         res.Remarks,
         res.BillNo,
-        res.BillTotal,
+        addCommasToNumber(res.BillTotal),
         convertToIST(res.BillDate),
       ]),
     ];
@@ -86,7 +105,6 @@ function ExcelTable({ allRows }) {
                 <th>S.No.</th>
                 <th>Ref No.</th>
                 <th>Policy No.</th>
-                <th>Row No.</th>
                 <th>Veh. No.</th>
                 <th>Insured</th>
                 <th>Insured GST No.</th>
@@ -95,6 +113,7 @@ function ExcelTable({ allRows }) {
                 <th>Date of Survey</th>
                 <th>Estimate Amt.</th>
                 <th>Assessed Amt.</th>
+                <th>Date Of Submit</th>
                 <th>TAT</th>
                 <th>Remarks</th>
                 <th>Bill No.</th>
@@ -108,20 +127,20 @@ function ExcelTable({ allRows }) {
                   <td>{index + 1}</td>
                   <td>{res.ReferenceNo}</td>
                   <td>{res.PolicyNumber}</td>
-                  <td>{res.ClaimNumber}</td>
                   <td>{res.RegisteredNumber}</td>
-                  <td>{res.Insured}</td>
-                  <td>{res.InsuredGSTNumber}</td>
+                  <td>{res.InsuredName}</td>
+                  <td>{res.GST_No}</td>
                   <td>{res.SurveyType}</td>
-                  <td>{convertToIST(res.DateOfInformation)}</td>
-                  <td>{convertToIST(res.DateOfSurvey)}</td>
+                  <td>{formatDateUpdated(res.DateOfInformation)}</td>
+                  <td>{formatDateUpdated(res.DateOfSurvey)}</td>
                   <td>{res.EstimateAmt}</td>
                   <td>{res.AssessedAmt}</td>
+                  <td>{res.BillDate}</td>
                   <td>0</td>
                   <td>{res.Remarks}</td>
                   <td>{res.BillNo}</td>
                   <td>{res.BillTotal}</td>
-                  <td>{convertToIST(res.BillDate)}</td>
+                  <td>{formatDateUpdated(res.BillDate)}</td>
                 </tr>
               ))}
             </tbody>

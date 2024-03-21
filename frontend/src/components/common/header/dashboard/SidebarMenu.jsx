@@ -16,7 +16,7 @@ import {
   FaThList,
 } from "react-icons/fa";
 
-const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => {
+const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,BrokerMailAddress,GarageMailAddress}) => {
   
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -152,7 +152,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region}) => 
                     }`}
                   >
                     <Link
-                      href={`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}&Region=${Region}`}
+                      href={`/send-mail/${leadId}?email=${email}&policyNo=${policyNo}&vehicle=${vehicleNo}&Insured=${Insured}&Region=${Region}&GarageMailAddress=${GarageMailAddress}&BrokerMailAddress=${BrokerMailAddress}`}
                       title="Send Mail"
                     >
                       <i className="flaticon-envelope"></i>

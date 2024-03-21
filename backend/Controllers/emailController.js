@@ -20,6 +20,7 @@ const transporter = nodemailer.createTransport({
 
 const generateUniqueToken = require("../Config/generateToken");
 const createToken = require("../Config/generateJWTToken");
+const { splitStringToArray } = require("../Config/getStringFromCSV");
 
  const sendEmail1 = (req, res) => {
     const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
@@ -388,6 +389,8 @@ const createToken = require("../Config/generateJWTToken");
       body,
     } = req.body;
 
+
+
     const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
     db.query(sql, [leadId], (err, result2) => {
       if (err) {
@@ -421,8 +424,8 @@ const createToken = require("../Config/generateJWTToken");
             content2
           )} target="_blank">Click me</a> to fill the documents information .</p>
   
-          Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-                  claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+          ${`<strong>Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
+                  claim. So close the file as"No Claim" in non copperation & non submission of the documents. </strong>`}
   
         `;
   

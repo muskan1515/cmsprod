@@ -79,7 +79,7 @@ const Index = ({}) => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 900000) {
+      if (timeSinceLastActivity > 600000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }
@@ -1199,6 +1199,8 @@ const Index = ({}) => {
             vehicleNo={claim.vehicleDetails?.VehicleEngineNumber}
             Insured={claim.insuredDetails?.InsuredName}
             Region={claim?.claimDetails?.Region}
+            BrokerMailAddress={BrokerMailAddress}
+            GarageMailAddress={GarageMailAddress}
           />
         </div>
       </div>
