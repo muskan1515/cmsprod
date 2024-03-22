@@ -620,6 +620,24 @@ const ErrorPageContent = ({ allInfo }) => {
   //*************************** */
 
   return (
+    <>
+      <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+        <Dropdown>
+          <Dropdown.Toggle variant="primary" id="dropdown-extract">
+            Extract
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => handleExtract("Word")}>
+              Extract to Word
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <button className="btn" onClick={downloadPDF}>
+                Extract PDF
+              </button>
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
     <div
       className="text-dark"
       style={{
@@ -680,6 +698,7 @@ const ErrorPageContent = ({ allInfo }) => {
 
       <GSTSummary allInfo={allInfo} />
     </div>
+    </>
   );
 };
 
