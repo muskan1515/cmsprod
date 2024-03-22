@@ -4,6 +4,7 @@ import SVGArrowDown from "./icons/SVGArrowDown";
 import SVGArrowUp from "./icons/SVGArrowUp";
 import SVGChevronLeft from "./icons/SVGChevronLeft";
 import SVGChevronRight from "./icons/SVGChevronRight";
+import Loader from "../../common/Loader";
 
 function SmartTable(props) {
   console.log(props.setMajorSearch);
@@ -125,6 +126,7 @@ function SmartTable(props) {
   };
 
 
+  console.log("isloading",props)
   return (
     <div className="col-12 p-2">
       <div className="smartTable-container row">
@@ -142,6 +144,7 @@ function SmartTable(props) {
                 type="text"
                 className="form-control"
                 placeholder="Search..."
+                disabled={props.IsLoading}
                 onChange={(e) => props.setMajorSearch(e.target.value)}
               />
             </div>
@@ -191,7 +194,11 @@ function SmartTable(props) {
                     </tr>
                   </thead>
                   <tbody>
-                  {data.length > 0
+                  {
+                  props.IsLoading ?
+                  <Loader/>
+                  :
+                  data.length > 0
                     ? data.map((row, idx) => {
                         if (idx >= props.start && idx <= props.end) {
                           return (

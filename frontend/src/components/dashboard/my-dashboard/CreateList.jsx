@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CreateList = ({ setSearchInput, setType }) => {
+const CreateList = ({ setSearchInput, setType , IsLoading}) => {
   const [currentType, setCurrentType] = useState(0);
   const [searchValue, setSearchValue] = useState("");
   const handleInputChange = (value, type) => {
@@ -25,6 +25,7 @@ const CreateList = ({ setSearchInput, setType }) => {
               className="form-control"
               id="propertyTitle"
               placeholder="Enter Policy No."
+              disabled={IsLoading}
               onChange={(e) => handleInputChange(e.target.value, 1)}
             />
           </div>
@@ -34,6 +35,7 @@ const CreateList = ({ setSearchInput, setType }) => {
               className="form-control"
               id="propertyTitle"
               placeholder="Enter Registration No."
+              disabled={IsLoading}
               onChange={(e) => handleInputChange(e.target.value, 1)}
             />
           </div>
@@ -43,6 +45,7 @@ const CreateList = ({ setSearchInput, setType }) => {
               className="form-control"
               id="propertyTitle"
               placeholder="Enter MT Reference ID"
+              disabled={IsLoading}
               onChange={(e) => handleInputChange(e.target.value, 1)}
             />
           </div>
@@ -57,6 +60,7 @@ const CreateList = ({ setSearchInput, setType }) => {
           <div className="col-lg-1">
             <div className="my_profile_setting_input">
               <button
+                disabled={IsLoading}
                 className="btn float-end btn-color mt-0"
                 onClick={searchHandler}
               >

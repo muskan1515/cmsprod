@@ -726,7 +726,7 @@ const VehicleParticulars = ({ allInfo }) => {
           <td style={{ width: "45%" }} className="text-start">
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.TypeOfBody} (S) -{" "}
+              {allInfo?.otherInfo[0]?.VehicleBancsBodyType} (S) -{" "}
               {allInfo?.otherInfo[0]?.ClassOfVehicle}
             </span>
           </td>

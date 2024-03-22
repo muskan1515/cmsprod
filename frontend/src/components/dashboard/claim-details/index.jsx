@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import AccidentEditableForm from "./AccidentEditableForm";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import UploadReportDocumentView from "./UploadedReportDocumentView";
+import { Type } from "docx";
 // import FloorPlans from "./FloorPlans";
 // import LocationField from "./LocationField";
 // import PropertyMediaUploader from "./PropertyMediaUploader";
@@ -847,9 +848,8 @@ const Index = ({}) => {
         ? InsuredMobileNo2
         : claim.insuredDetails?.InsuredMobileNo2,
       ClaimNumber: ClaimNumber ? ClaimNumber : claim.claimDetails?.ClaimNumber,
-      VehicleTypeOfBody: VehicleModel
-        ? VehicleModel
-        : claim.claimDetails?.VehicleModel,
+      VehicleTypeOfBody: VehicleModel     ? VehicleModel
+        : claim.claimDetails?.VehicleType,
       SurveyType: subType ? subType : "Motor",
       InspectionType: inspectionType ? inspectionType : "Final",
       VehicleDateOfRegistration: DateRegistration,

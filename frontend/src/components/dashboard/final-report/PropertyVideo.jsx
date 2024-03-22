@@ -712,8 +712,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd!=null ? claim?.claimDetails?.PolicyPeriodEnd : "");
     setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart!=null ? claim?.claimDetails?.PolicyPeriodStart : "");
     setVehicleMakeVariantModelColor(
-      claim?.vehicleDetails?.MakerDesc?
-      claim?.vehicleDetails?.MakerDesc+","+claim?.vehicleDetails?.MakerModel : VehicleMakeVariantModelColor
+      claim?.vehicleDetails?.MakerDesc? claim?.vehicleDetails?.MakerModel : VehicleMakeVariantModelColor
     );
     
     setVehicleColor(
@@ -731,7 +730,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       ? "Registration"
       : "Purchase";
     setTypeOfDate(temp);
-    setVehicleTypeOfBody(claim?.vehicleDetails?.TypeOfBody!=null ? claim?.vehicleDetails?.TypeOfBody : "");
+    setVehicleTypeOfBody(claim?.vehicleDetails?.BancsBodyType!=null ? claim?.vehicleDetails?.BancsBodyType : "");
     setVehicleCubicCapacity(claim?.vehicleDetails?.CubicCapacity!==null ? claim?.vehicleDetails?.CubicCapacity : "");
     setVehicleClassOfVehicle(claim?.vehicleDetails?.VehicleClassDescription !=null ? claim?.vehicleDetails?.VehicleClassDescription : "");
     setVehicleFuelType(claim?.vehicleDetails?.FuelType!=null ? claim?.vehicleDetails?.FuelType:"");

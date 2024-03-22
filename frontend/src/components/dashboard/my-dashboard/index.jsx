@@ -23,6 +23,7 @@ const Index = () => {
   const [type, setType] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
+  const [IsLoading,setIsLoading]= useState(true)
   const [filterClaims, setFilterClaims] = useState([]);
   const [majorSearch, setMajorSearch] = useState("");
 
@@ -206,6 +207,9 @@ const Index = () => {
         .catch((err) => {
           console.log(err);
         });
+
+        setIsLoading(false
+          )
     }
   }, []);
   useEffect(() => {
@@ -337,6 +341,7 @@ const Index = () => {
                       ? filterCardClaim
                       : filterCardClaim
                   }
+                  IsLoading={IsLoading}
                   start={start}
                   end={end}
                   setMajorSearch={setMajorSearch}
