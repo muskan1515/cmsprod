@@ -57,7 +57,7 @@ const getSpecificVehicleDetails = async (req, res) => {
       const details = result.data.vehicleDetails?.Data.result;
       const stringformat = convertObjectToString(details);
       
-      console.log(result);
+      console.log("results",result);
       const additionalInfo = result?.data?.additionalInfo;
       const stringformat2 = convertObjectToString(additionalInfo);
       console.log("details",stringformat);

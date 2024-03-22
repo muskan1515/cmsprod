@@ -21,7 +21,7 @@ const getReportDocument = (req, res) => {
 
 const getReportDocumentsLabels = (req, res) => {
   const LeadId = req.query.leadId;
-  console.log("DcoList",LeadId)
+  //console.log("DcoList",LeadId)
   const sql = "SELECT * FROM DocumentNames WHERE LeadID = ?";
   db.query(sql, [LeadId],  (error, results) => {
     if (error) {
@@ -37,7 +37,7 @@ const getReportDocumentsLabels = (req, res) => {
 
 // const getDocuments = (req, res) => {
 //   const LeadId = req.query.LeadId;
-//   console.log("get", LeadId);
+//   //console.log("get", LeadId);
 //   const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
 //   db.query(sql, [LeadId], (err, result) => {
 //     if (err) {
@@ -51,7 +51,7 @@ const getReportDocumentsLabels = (req, res) => {
 
 const getDocuments = (req, res) => {
   const LeadId = req.query.LeadId;
-  console.log("get", LeadId);
+  //console.log("get", LeadId);
   const sql = "SELECT DocumentName, Photo1 as doc_url, Attribute1 as file_name, Photo1Latitude as latitude, Photo1Longitude as longitude, Photo1Timestamp as timestamp FROM DocumentList WHERE LeadID = ?;";
   
   db.query(sql, [LeadId], (err, result) => {
@@ -60,7 +60,7 @@ const getDocuments = (req, res) => {
       res.status(500).send("Internal Server Error");
       return;
     } else {
-      console.log('Documents result ', result);
+      //console.log('Documents result ', result);
     }
     
     // Process the result to group files by DocumentName
@@ -77,7 +77,7 @@ const getDocuments = (req, res) => {
           timestamps: []
         };
       }
-      console.log('result',result);
+      //console.log('result',result);
       groupedResult[DocumentName].doc_urls.push(doc_url);
       groupedResult[DocumentName].file_names.push(file_name);
       groupedResult[DocumentName].latitudes.push(latitude);
@@ -209,7 +209,7 @@ const addDocumentLabel = (req,res)=>{
   );
 `;
 
-console.log(insertAddDocument)
+//console.log(insertAddDocument)
 
   db.query(insertAddDocument, (error, results) => {
     if (error) {
@@ -338,18 +338,18 @@ const uploadMedia = async (req, res) => {
 
         const data = await uploadToAWSVideo(dataWithoutPrefix, fileName);
         // const data = await uploadToAWSVideo(fileData, fileName);
-        // console.log('BLOBB',fileData);
+        // //console.log('BLOBB',fileData);
         results.push(data);
       } else {
-        console.log(`Unsupported file format for ${fileName}`);
+        //console.log(`Unsupported file format for ${fileName}`);
         // Optionally handle the error or skip the file
         continue;
       }
     }
-    console.log("result", results);
+    //console.log("result", results);
     return res.status(200).json({ data: results });
   } catch (error) {
-    console.log("Error log", error);
+    //console.log("Error log", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -372,7 +372,7 @@ const verifyReportUpload = (req, res) => {
         .send("Internal Server Error while updating the verified status");
       return;
     }
-    // console.log(result2[0].Token === token);
+    // //console.log(result2[0].Token === token);
     res.status(200).send("Successfully Updated!!");
   });
 };

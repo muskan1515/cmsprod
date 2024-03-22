@@ -1046,7 +1046,7 @@ const getSpecificClaim = async (req, res) => {
      MakerDesc = '${MakerDesc ? `${MakerDesc}` : ''}',
      MakerModel = '${MakerModel ? `${MakerModel}` : ''}',
      CubicCapacity = '${parseInt(CubicCapacity)}',
-     FitUpto = '${FitUpto ?'${FitUpto}' : ''}',
+     FitUpto = '${FitUpto ?`${FitUpto}` : ''}',
      PasiaModelCode = '${PasiaModelCode ? `${PasiaModelCode}` : ''}',
      VehicleType =' ${RcVehicleType ? `${RcVehicleType}` : ''}',
      BancsModelCode = '${BancsModelCode ? `${BancsModelCode}` : ''}',
@@ -1054,9 +1054,9 @@ const getSpecificClaim = async (req, res) => {
      BancsSubtypeCode = '${BancsSubtypeCode ? `${BancsSubtypeCode}` : ''}',
      BancsBodyType = '${BancsBodyType ? `${BancsBodyType}` : ''}',
      BancsVehicleClass = '${BancsVehicleClass ? `${BancsVehicleClass}` : ''}',
-     BancsVehicleSegment = '${BancsVehicleSegment ? `${BancsVehicleSegment}' `: ''}',
+     BancsVehicleSegment = '${BancsVehicleSegment ? `${BancsVehicleSegment}`: ''}',
      RcRtoCode = '${RcRtoCode ? `${RcRtoCode}` : ''}',
-     VehicleRcStatus = '${VehicleRcStatus ? `${VehicleRcStatus}' `: ''}',
+     VehicleRcStatus = '${VehicleRcStatus ? `${VehicleRcStatus}`: ''}',
      VehicleBlackListStatus = '${VehicleBlackListStatus ? `${VehicleBlackListStatus}` : ''}',
      VehicleRegistedAt = '${VehicleRegistedAt ? `${VehicleRegistedAt}`: ''}',
      VehicleInsuranceCompany = '${VehicleInsuranceCompany ? `${VehicleInsuranceCompany}` : ''}',
@@ -1073,10 +1073,11 @@ const getSpecificClaim = async (req, res) => {
 
   db.query(updateVehicleDetails, (error, results) => {
     if (error) {
+      console.log(error)
       console.error(`Error updating data in ${LeadId} specific VEHICLE details:`, error);
       return res
         .status(500)
-        .json({ error: `Error updating data in ${LeadId} specific EVHICLVE details:`});
+        .json({ error: error});
     }
     res.status(200).json({ message: "Data updated successfully." });
   });
