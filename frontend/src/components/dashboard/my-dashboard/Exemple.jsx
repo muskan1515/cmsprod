@@ -162,6 +162,7 @@ export default function Exemple({
   setMajorSearch,
   status,
   start,
+  IsLoading,
   end,
 }) {
   const [updatedData, setUpdatedData] = useState([]);
@@ -290,6 +291,7 @@ export default function Exemple({
       data={sortObjectsByOrderIdDescending(updatedData)}
       start={start}
       end={end}
+      IsLoading={IsLoading}
       headCells={headCells}
       setMajorSearch={setMajorSearch}
     />

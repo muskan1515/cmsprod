@@ -313,7 +313,7 @@ const Index = () => {
                 }}
               ></div>
               <div className="row">
-                <CreateList setSearchInput={setSearchInput} setType={setType} />
+                <CreateList IsLoading={IsLoading} setSearchInput={setSearchInput} setType={setType} />
               </div>
               <div
                 className="bg-dark"

@@ -712,7 +712,7 @@ const VehicleParticulars = ({ allInfo }) => {
           <td style={{ width: "45%" }} className="text-start ">
             <span className="">
               {" "}
-              {allInfo?.otherInfo[0]?.MakeVariantModelColor}
+              {allInfo?.otherInfo[0]?.MakerDesc},{allInfo?.otherInfo[0]?.MakerModel}
             </span>
           </td>
         </tr>
