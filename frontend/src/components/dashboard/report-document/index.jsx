@@ -53,7 +53,8 @@ const Index = () => {
 
 
   useEffect(() => {
-
+     let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
     const url = window.location.pathname;
     const leadId = url.split("/report-document/")[1];
 
