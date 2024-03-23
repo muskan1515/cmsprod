@@ -21858,3 +21858,10 @@ input:invalid {
     margin: 0;
   }
 }
+
+/* CSS to hide the export button when printing */
+@media print {
+  #dropdown-extract {
+    display: none !important;
+  }
+}
