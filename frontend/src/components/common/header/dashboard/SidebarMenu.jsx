@@ -5,7 +5,7 @@ import {
   isSinglePageActive,
 } from "../../../../utils/daynamicNavigation";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaTh,
   FaBars,
@@ -20,6 +20,9 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,Broke
   
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isBill,setIsBill]=useState(true)
+  
+  const [isprint,setIsPrint]=useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const openQuoteModal = () => {
@@ -57,6 +60,21 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,Broke
     const defaultUrl = window.location.href;
     return defaultUrl.toLowerCase().includes(path.toLowerCase());
   }
+
+  useEffect(()=>{
+    let userData = JSON.parse(localStorage.getItem("userInfo"))
+    if(!userData){
+      route.push("/login")
+    }
+    else{
+    if(String(userData[0].isBill) === "0"){
+      setIsBill(false)
+    }
+    if(String(userData[0].IsPrintDocument) === "0"){
+      setIsPrint(false)
+    }
+  }
+  },[]);
 
   return (
     <>
@@ -160,7 +178,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,Broke
                     </Link>
                   </li>
                  
-                 <li
+                 {isBill && <li
                     className={`treeview ${
                       checkIsActive("/bill-creation")
                         ? "active"
@@ -175,6 +193,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,Broke
                       <span> </span>
                     </Link>
                   </li>
+                  }
                    {/* <li
                     className={`treeview ${
                       isSinglePageActive("/mis-sheet", route.pathname)
@@ -187,7 +206,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,Broke
                       <span> </span>
                     </Link>
                   </li>*/}
-                  <li
+                  {isprint && <li
                     className={`treeview ${
                       isSinglePageActive(
                         `/print-document/${leadId}`,
@@ -204,7 +223,7 @@ const SidebarMenu = ({ leadId, email, policyNo, vehicleNo, Insured ,Region,Broke
                       <i className="flaticon-pdf"></i>
                       <span> </span>
                     </Link>
-                  </li>
+                  </li>}
                 </ul>
               </li>
               

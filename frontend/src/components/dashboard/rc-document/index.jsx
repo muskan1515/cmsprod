@@ -3,7 +3,7 @@ import RCData from "./CreatListing";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const Index = ({leadId}) => {
   const [vehicleDetails,setDriverDetails]=useState({});
@@ -89,6 +89,7 @@ const Index = ({leadId}) => {
       {/* <!-- Modal --> */}
       {/* <PopupSignInUp /> */}
       {/* <!-- Our Error Page --> */}
+      <Toaster/>
       <section className="" style={{ paddingTop: "10px" }}>
         <div className="container">
           <div className="row">

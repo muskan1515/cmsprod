@@ -4,7 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRef } from "react";
 import PrintComponent from "./PrintComponent";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 
 const Index = () => {
@@ -91,6 +91,7 @@ const Index = () => {
     <>
       <div>
         <PrintComponent>
+          <Toaster/>
           <div>
             {
               // <section className="" style={{ paddingTop: "" }}>

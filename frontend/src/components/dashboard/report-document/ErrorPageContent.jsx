@@ -15,11 +15,13 @@ import LossDamagesDetails from "./LossDamagesDetails";
 import LabourRepairsDetails from "./LabourRepairsDetails";
 import SummaryOfAssessment from "./SummaryOfAssessment";
 import GSTSummary from "./GSTSummary";
+import toast from "react-hot-toast";
 
 const ErrorPageContent = ({ allInfo }) => {
   const pdfRef = useRef();
 
   const downloadPDF = () => {
+    toast.loading("Downloading the word document")
     const input = pdfRef.current;
     const pdf = new jsPDF("p", "mm", "a4", true);
 
@@ -57,6 +59,8 @@ const ErrorPageContent = ({ allInfo }) => {
           }
         });
       });
+      toast.dismiss();
+      toast.success("Successfully downloaded!!");
     };
 
     const totalPages = 3;
@@ -475,6 +479,19 @@ const ErrorPageContent = ({ allInfo }) => {
     return gst;
   };
 
+  //convert to word
+  const handleExtract=()=>{
+    toast.loading("Downloading the word document")
+    const content = document.getElementById('report-content').innerHTML;
+    const blob = new Blob(['<!DOCTYPE html><html><head><title>Document</title></head><body>' + content + '</body></html>'], { type: 'application/msword' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'document.doc';
+    toast.dismiss();
+    toast.success("Successfully downloaded!!");
+    link.click();
+  }
+
   const roundOff = (number) => {
     return Math.round(number * 100) / 100;
   };
@@ -646,6 +663,7 @@ const ErrorPageContent = ({ allInfo }) => {
         fontSize: "12px",
         fontFamily: "arial",
       }}
+      id="report-content"
       ref={pdfRef}
     >
       <SurveyReport allInfo={allInfo} />

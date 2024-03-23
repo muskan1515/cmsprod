@@ -15,6 +15,7 @@ import jsPDF from "jspdf";
 import { useRef } from "react";
 
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const styles = StyleSheet.create({
   title: {
@@ -98,44 +99,23 @@ const RCData = ({ vehicleDetails }) => {
 
   },[vehicleDetails]);
 
-  const handleExtract = async (format) => {
-    if (format === "Word") {
-      // Generate Word document
-      const doc = new Document();
-      Object.entries(vehicleDetails).forEach(([key, value]) => {
-        doc.addParagraph(new Paragraph(`${key}: ${value}`));
-      });
-      Packer.toBlob(doc).then((blob) => {
-        // Download Word document
-        saveAs(blob, "RC_Details.docx");
-      });
-    } else if (format === "PDF") {
-      // Generate PDF document
-      const pdfDoc = (
-        <PDFDocument>
-          <Page size="A4">
-            <View style={{ padding: 20 }}>
-              <Text style={styles.title}>RC Details</Text>
-              {Object.entries(vehicleDetails).map(([key, value]) => (
-                <View key={key} style={styles.row}>
-                  <Text style={styles.boldText}>{key}:</Text>
-                  <Text style={styles.normalText}>{value}</Text>
-                </View>
-              ))}
-            </View>
-          </Page>
-        </PDFDocument>
-      );
-
-      // Convert PDF to Blob and download
-      const blob = await pdfToBlob(pdfDoc);
-      saveAs(blob, "RC_Details.pdf");
-    }
-  };
+  //convert to word
+  const handleExtract=()=>{
+    toast.loading("Downloading the word document")
+    const content = document.getElementById('rc-content').innerHTML;
+    const blob = new Blob(['<!DOCTYPE html><html><head><title>Document</title></head><body>' + content + '</body></html>'], { type: 'application/msword' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'document.doc';
+    toast.dismiss();
+    toast.success("Successfully downloaded!!");
+    link.click();
+  }
 
   const pdfRef = useRef();
 
   const downloadPDF = () => {
+    toast.loading("Downloading the word document")
     const input = pdfRef.current; 
 
     html2canvas(input).then((canvas) => {
@@ -159,6 +139,8 @@ const RCData = ({ vehicleDetails }) => {
       );
       pdf.save("invoice.pdf");
     });
+    toast.dismiss();
+      toast.success("Successfully downloaded!!");
   };
 
   return (
@@ -173,7 +155,7 @@ const RCData = ({ vehicleDetails }) => {
           </button>
         </div> */}
 
-        {/*<Dropdown>
+        <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-extract">
             Extract
           </Dropdown.Toggle>
@@ -187,10 +169,11 @@ const RCData = ({ vehicleDetails }) => {
               </button>
             </Dropdown.Item>
           </Dropdown.Menu>
-      </Dropdown>*/}
+      </Dropdown>
       </div>
       <div style={{ width: "30%", margin: "0 auto" }}>
         <table
+          id='rc-content'
           className="table table-striped"
           style={{ borderCollapse: "collapse", width: "100%" }}
         >

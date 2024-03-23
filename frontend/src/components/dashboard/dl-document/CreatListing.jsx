@@ -15,6 +15,7 @@ import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 
 const RCData = ({ DriverDetails }) => {
   console.log(DriverDetails);
@@ -63,49 +64,25 @@ const rcDetailsUpdated = {
     setRcDetailData(rcDetailsUpdated);
   
   },[DriverDetails]);
-  {/*const handleExtract = async (format) => {
-    if (format === "Word") {
-      // Generate Word document
-      const doc = new Document();
-      Object.entries(rcDetails).forEach(([key, value]) => {
-        doc.addParagraph(new Paragraph(`${key}: ${value}`));
-      });
-      Packer.toBlob(doc).then((blob) => {
-        // Download Word document
-        saveAs(blob, "RC_Details.docx");
-      });
-    } else if (format === "PDF") {
-      // Generate PDF document
-      const pdfDoc = (
-        <PDFDocument>
-          <Page size="A4">
-            <View style={{ padding: 20 }}>
-              <Text style={{ fontSize: 16, marginBottom: 10 }}>RC Details</Text>
-              {Object.entries(rcDetails).map(([key, value]) => (
-                <View
-                  key={key}
-                  style={{ flexDirection: "row", marginBottom: 5 }}
-                >
-                  <Text style={{ flex: 1, fontWeight: "bold" }}>{key}:</Text>
-                  <Text style={{ flex: 1 }}>{value}</Text>
-                </View>
-              ))}
-            </View>
-          </Page>
-        </PDFDocument>
-      );
+  const handleExtract=()=>{
+    toast.loading("Downloading the word document")
+    const content = document.getElementById('dl-content').innerHTML;
+    const blob = new Blob(['<!DOCTYPE html><html><head><title>Document</title></head><body>' + content + '</body></html>'], { type: 'application/msword' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'document.doc';
+    toast.dismiss();
+    toast.success("Successfully downloaded!!");
+    link.click();
+  }
 
-      // Convert PDF to Blob and download
-      const blob = await new Promise((resolve) => {
-        BlobProvider(pdfDoc, resolve);
-      });
-      saveAs(blob, "RC_Details.pdf");
-    }
-  };*/}
+  
 
   const pdfRef = useRef();
 
   const downloadPDF = () => {
+
+    toast.loading("Downloading the word document")
     const input = pdfRef.current;
 
     html2canvas(input).then((canvas) => {
@@ -129,6 +106,8 @@ const rcDetailsUpdated = {
       );
       pdf.save("invoice.pdf");
     });
+    toast.dismiss();
+      toast.success("Successfully downloaded!!");
   };
 
   return (
@@ -143,7 +122,7 @@ const rcDetailsUpdated = {
           </button>
         </div> */}
 
-       {/*} <Dropdown>
+        <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-extract">
             Extract
           </Dropdown.Toggle>
@@ -157,10 +136,11 @@ const rcDetailsUpdated = {
               </button>
             </Dropdown.Item>
           </Dropdown.Menu>
-       </Dropdown>*/}
+       </Dropdown>
       </div>
       <div style={{ width: "30%", margin: "0 auto" }}>
         <table
+        id="dl-content"
           className="table table-striped"
           style={{ borderCollapse: "collapse", width: "100%" }}
         >

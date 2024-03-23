@@ -251,6 +251,7 @@ const Index = ({ leadId, token, content ,type}) => {
     <>
       {/* <!-- Main Header Nav --> */}
       <Header />
+      <toaster/>
 
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />

@@ -10,6 +10,7 @@ const LabourForm = ({
   setTotalAssessed,
   totalRemainingAssessed,
   totalAssessed,
+  disable,
   totalTaxableAMount,
   totalEstimate,
   taxAmount,
