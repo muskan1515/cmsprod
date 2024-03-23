@@ -425,7 +425,7 @@ const CreateList = ({ allInfo, leadID }) => {
     };
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    toast.loading("Adding the bill !!", {
+    toast.loading(allInfo?.feesDetails?.BillID ?"Updating the bill !!" :  "Adding the bill !!", {
       // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
@@ -438,7 +438,7 @@ const CreateList = ({ allInfo, leadID }) => {
       })
       .then((res) => {
         toast.dismiss();
-        toast.success("Successfully added !", {
+        toast.success(`Successfully ${allInfo?.feesDetails?.BillID ? 'updated' : 'added'} !`, {
           // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });

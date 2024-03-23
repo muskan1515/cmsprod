@@ -56,9 +56,16 @@ const SidebarMenu = () => {
 
   useEffect(()=>{
     let userInfo = JSON.parse(localStorage.getItem("userInfo"))
-    if(String(userInfo[0]?.isMis) === "0"){
+    if(!userInfo){
+      route.push("/login")
+    }
+    else{
+    console.log("mis",userInfo,userInfo[0]?.IsMis);
+    if(String(userInfo[0].IsMis) === "0"){
       setIsMis(false)
     }
+    
+  }
   },[]);
 
   return (

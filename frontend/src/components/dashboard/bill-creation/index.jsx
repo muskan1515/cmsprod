@@ -89,6 +89,7 @@ const Index = () => {
     <>
       {/* <!-- Main Header Nav --> */}
       <Header />
+      <Toaster/>
 
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ErrorPageContent from "./ErrorPageContent";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -84,6 +84,7 @@ const Index = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen">
+        <Toaster/>
         <header className="bg-gray-800 text-white"></header>
         <main className="flex-grow p-4">
           {" "}

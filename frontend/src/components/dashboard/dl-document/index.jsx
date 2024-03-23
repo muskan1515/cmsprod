@@ -3,7 +3,7 @@ import DLData from "./CreatListing";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Index = () => {
   const router = useRouter();
@@ -89,6 +89,7 @@ const Index = () => {
   return (
     <>
       <section className="" style={{ paddingTop: "10px" }}>
+        <Toaster/>
         <div className="container">
           <div className="row">
             <div className="col-lg-12">

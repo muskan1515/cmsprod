@@ -52,6 +52,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [InspectionDate,setInspectionDate]=useState("");
   const [totalAssessed, setTotalAssessed] = useState(0);
+  const [disable,setDisable]=useState(false)
   const [totalEstimate, setTotalEstimate] = useState(0);
 
   const [taxAmount, setTaxAmount] = useState(0);
@@ -133,6 +134,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [documents,setDocuments]=useState([])
 
   useEffect(() => {
+
+    toast.loading("fetchig the final report!");
+    setDisable(true)
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     axios
       .get("/api/getSpecificClaim", {
@@ -163,6 +167,8 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           },
         })
         .then((res) => {
+          toast.dismiss();
+          toast.success("Successfully fetched!")
            const tempList = res.data.data.data;
 
           let requiredVideos = [];
@@ -219,8 +225,11 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           setDocuments(requiredDocumenstList);
         })
         .catch((err) => {
+          toast.dismiss();
+          toast.error("Error while fetchign the details")
           console.log(err);
         });
+        setDisable(false)
   }, []);
 
 
@@ -848,6 +857,9 @@ const [AccidentTime,setAccidentTime]=useState("");
   };
 
   const saveHandler = () => {
+
+    toast.success("Updating  the final report!")
+    setDisable(true)
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload = {
       PolicyType: policyType,
@@ -1001,7 +1013,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     .then((res)=>{
       toast.dismiss();
       // toast.success("Successfully Updated");
-      toast.success("Successfully added !", {
+      toast.success("Successfully updated !", {
         // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
       });
@@ -1014,6 +1026,7 @@ const [AccidentTime,setAccidentTime]=useState("");
         className: "toast-loading-message",
       });
     })
+    setDisable(false)
   }
 
 
@@ -1105,6 +1118,7 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <PolicyDetails
+              disable={disable}
               VehicleUpto={VehicleUpto}
               setVehicleUpto={setVehicleUpto}
               DateOfBirth={DateOfBirth}
@@ -1332,7 +1346,7 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <Servey
-              
+               disable={disable}
               InspectionDate={InspectionDate}
               setInspectionDate={setInspectionDate}
                 SomeComponent={SomeComponent}
@@ -1470,6 +1484,7 @@ const [AccidentTime,setAccidentTime]=useState("");
               {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
+                 disable={disable}
                 allNewParts={allNewParts}
                 setallNewParts={setallNewParts}
                 DateRegistration={DateRegistration}
@@ -1519,6 +1534,7 @@ const [AccidentTime,setAccidentTime]=useState("");
                   style={{ borderRight: "1px solid black" }}
                 >
                   <Exemple_01
+                   disable={disable}
                     claim={claim}
                     currentGst={currentGst}
                     setTotalAssessed={setTotalAssessed}
@@ -1549,6 +1565,7 @@ const [AccidentTime,setAccidentTime]=useState("");
                 </div>
                 <div className="col-lg-3">
                   <LabourForm
+                   disable={disable}
                   AccidentAddedDateTime={AccidentAddedDateTime}
                   DateRegistration={DateRegistration}
                     totalRemainingAssessed={totalRemainingAssessed}
@@ -1701,6 +1718,7 @@ const [AccidentTime,setAccidentTime]=useState("");
           <div className="property_video">
             <div className="thumb">
               <Summary
+               disable={disable}
               leadId={leadId}
               documents={documents}
               totalMetalRows={totalMetalRows}

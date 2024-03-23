@@ -6,6 +6,7 @@ import PropertyVideo from "./PropertyVideo";
 import axios from "axios";
 import ReportFinal from "../report-template/MainRouter";
 import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
 
 const Index = ({ SomeComponent, leadId }) => {
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
@@ -54,6 +55,7 @@ const Index = ({ SomeComponent, leadId }) => {
     <>
       {/* <!-- Main Header Nav --> */}
       <Header />
+      <Toaster/>
 
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
