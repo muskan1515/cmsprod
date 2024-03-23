@@ -14,6 +14,7 @@ const Index = () => {
   const router = useRouter();
 
   useEffect(() => {
+    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -32,6 +33,12 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
@@ -47,7 +54,10 @@ const Index = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const url = window.location.pathname;
     const leadId = url.split("/bill-document/")[1];
-    toast.loading("Fetching details!!!");
+    toast.loading("Fetching bill documents!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .get("/api/getFeeReport", {
         headers: {

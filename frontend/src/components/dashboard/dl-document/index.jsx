@@ -16,6 +16,7 @@ const Index = () => {
   );
 
   useEffect(() => {
+    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -34,6 +35,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
@@ -51,6 +57,10 @@ const Index = () => {
     const url = window.location.pathname;
     const leadId = url.split("/dl-document/")[1];
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    toast.loading("Fetching dl Details!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .get("/api/getSpecificDriverDetails", {
         headers: {
@@ -62,11 +72,16 @@ const Index = () => {
         },
       })
       .then((res) => {
-       
+        toast.dismiss()
+        toast.success("Successfully fetched !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
         setDriverDetails(res.data.data.driverDetails);
       })
       .catch((err) => {
-        toast.error(err);
+        toast.dismiss();
+        toast.error("Got error while fetching details!");
       });
       setIsLoading(false)
     },[]);

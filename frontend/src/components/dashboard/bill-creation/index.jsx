@@ -34,6 +34,12 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
@@ -51,7 +57,10 @@ const Index = () => {
     const leadId = url.split("/bill-creation/")[1];
     setLeadID(leadId);
 
-    console.log(leadId);
+    toast.loading("Fetching bill creation!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .get("/api/getBillInfo", {
         headers: {
@@ -62,9 +71,15 @@ const Index = () => {
         },
       })
       .then((res) => {
+        toast.dismiss()
+        toast.success("Successfully fetched !", {
+          className: "toast-loading-message",
+        });
         setAllInfo(res.data.data);
       })
       .catch((err) => {
+        toast.dismiss();
+        toast.error("Got error while fetching details!");
         console.log(err);
       });
   }, []);

@@ -34,6 +34,12 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
@@ -47,7 +53,7 @@ const Index = () => {
 
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userInfo"));
+
     const url = window.location.pathname;
     const leadId = url.split("/report-document/")[1];
 
@@ -59,7 +65,7 @@ const Index = () => {
     axios
       .get("/api/getReportInfo", {
         headers: {
-          Authorization: `Bearer ${userData[0].Token}`,
+          Authorization: `Bearer ${userData[0]?.Token}`,
         },
         params: {
           LeadId: leadId,

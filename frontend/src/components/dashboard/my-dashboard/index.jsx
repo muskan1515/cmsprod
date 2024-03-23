@@ -36,6 +36,7 @@ const Index = () => {
   );
 
   useEffect(() => {
+    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -54,6 +55,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
@@ -192,7 +198,7 @@ const Index = () => {
       axios
         .get("/api/getStatus", {
           headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
+            Authorization: `Bearer ${userInfo[0]?.Token}`,
             "Content-Type": "application/json",
           },
           params: {

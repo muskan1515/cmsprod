@@ -14,6 +14,7 @@ const CreateList = ({ allInfo, leadID }) => {
 
   const [Bill, setBill] = useState("");
   const currentDate = new Date();
+  const [disable,setDisable]=useState(false)
   const formattedDate = currentDate.toLocaleDateString("en-GB");
   console.log(formattedDate);
   const [BillDate, setBillDate] = useState(new Date());
@@ -94,7 +95,7 @@ const CreateList = ({ allInfo, leadID }) => {
     
     axios.get("/api/getAllInsurers", {
       headers: {
-        Authorization: `Bearer ${userInfo[0].Token}`,
+        Authorization: `Bearer ${userInfo[0]?.Token}`,
         "Content-Type": "application/json",
       }
     })
@@ -356,6 +357,8 @@ const CreateList = ({ allInfo, leadID }) => {
   }, [CGST, IGST, SGST]);
 
   const onSubmitHnadler = () => {
+
+    setDisable(true)
     const payload = {
       LeadId: leadID,
       Type:
@@ -446,6 +449,7 @@ const CreateList = ({ allInfo, leadID }) => {
         toast.dismiss();
         toast.error("Got error while adding claim!");
       });
+      setDisable(false)
   };
 
   useEffect(() => {
@@ -1714,6 +1718,7 @@ const CreateList = ({ allInfo, leadID }) => {
         <div className="col-lg-12">
           <div className="my_profile_setting_input">
             <button
+              disabled={disable}
               className="btn float-end btn-color"
               onClick={onSubmitHnadler}
             >

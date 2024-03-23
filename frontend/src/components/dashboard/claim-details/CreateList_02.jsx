@@ -7,6 +7,7 @@ const CreateList_02 = ({
   InsuredName,
   RegisteredNumber,
   subType,
+  disable,
   InsuredMobileNo1,
   InsuredMailAddress,
   requestType,

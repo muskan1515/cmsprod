@@ -24,7 +24,7 @@ const PolicyDetails = ({
   setPhoneNumber,
   applicantNumber,
   setApplicantNumber,
-
+  disable,
   handleUpdateClick,
   IDV,
   setIDV,
@@ -611,7 +611,7 @@ const PolicyDetails = ({
               >
                 Cancel
               </button>
-              <button className="btn btn-color m-1" onClick={handleUpdateClick}>
+              <button disabled={!isEditMode} className="btn btn-color m-1" onClick={handleUpdateClick}>
                 Update
               </button>
             </>

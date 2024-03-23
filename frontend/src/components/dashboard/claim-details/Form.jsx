@@ -239,7 +239,7 @@ const Form = ({
           const response = axios
             .get("/api/getOnlineVehicleData", {
               headers: {
-                Authorization: `Bearer ${userInfo[0].Token}`,
+                Authorization: `Bearer ${userInfo[0]?.Token}`,
                 "Content-Type": "application/json",
               },
               params: {
@@ -310,6 +310,7 @@ const Form = ({
                             <button
                               className="btn-thm m-1"
                               style={{}}
+                              disabled={!editCase_01}
                               onClick={() => {
                                 setisUpdateVehicleLoading(true);
                                 onSaveHandler(2, closeFunction, closeFunction);
@@ -328,6 +329,7 @@ const Form = ({
                             style={{ marginLeft: "-70px" }}
                           >
                             <button
+                              disabled={!editCase_01}
                               className="btn-thm m-1 flaticon-transfer"
                               onClick={handleFetchData}
                             ></button>

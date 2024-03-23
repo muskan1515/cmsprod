@@ -54,11 +54,14 @@ const Index = ({}) => {
     useState("");
   const [insuredAddedBy, setInsuredAddedBy] = useState("");
 
+  const [disable,setDisable]=useState(false)
+
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
     Date.now()
   );
 
   useEffect(() => {
+    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -77,6 +80,11 @@ const Index = ({}) => {
   }, []);
 
   useEffect(() => {
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
@@ -944,12 +952,16 @@ const Index = ({}) => {
       Pin,
       token: userInfo[0].Token
     };
+    setDisable(true)
 
-    toast.loading("Updating the information!");
+    toast.loading("Fetching claim Details!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .put("/api/updateClaimDetails", payload, {
         headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
+          Authorization: `Bearer ${userInfo[0]?.Token}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -958,11 +970,12 @@ const Index = ({}) => {
       })
       .then((res) => {
         // toast.loading();
-        toast.dismiss();
-        toast.success("Successfully Updated the Information !!", {
+        toast.dismiss()
+        toast.success("Successfully fetched !", {
           // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
+       
         // alert("Successfully Updated the Information !!");
       })
       .catch((err) => {
@@ -977,7 +990,7 @@ const Index = ({}) => {
       setEditCase((prop) => !prop);
     }
 
-    
+    setDisable(false)
     func(false);
     func2(false);
     window.location.reload();
@@ -1053,6 +1066,7 @@ const Index = ({}) => {
   
 
   useEffect(() => {
+    setDisable(true);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     if (!userInfo) {
@@ -1061,7 +1075,7 @@ const Index = ({}) => {
       axios
         .get("/api/getSpecificClaim", {
           headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
+            Authorization: `Bearer ${userInfo[0]?.Token}`,
             "Content-Type": "application/json",
           },
           params: {
@@ -1170,6 +1184,7 @@ const Index = ({}) => {
           console.log(err);
         });
     }
+    setDisable(false)
   }, [leadId]);
 
   useEffect(() => {
@@ -1319,6 +1334,7 @@ const Index = ({}) => {
                           ) : !editCase ? (
                             <div className="col-lg-12">
                               <CreateList_02
+                                disable={disable}
                                 claim={claim}
                                 InsuredName={InsuredName}
                                 inspectionType={inspectionType}
@@ -1373,6 +1389,7 @@ const Index = ({}) => {
                           ) : (
                             <CreateList
                               claim={claim}
+                              disable={disable}
                               inspectionType={inspectionType}
                               setInspectionType={setInspectionType}
                               InsuredName={InsuredName}
@@ -1535,6 +1552,7 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                             <Form
+                             disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               edit={editCase_01}
@@ -1660,6 +1678,7 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                             <Form_01
+                               disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               edit={editCase_02}
@@ -1731,6 +1750,7 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                             <Form_02
+                               disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               editHandler={editHandler}
@@ -1753,6 +1773,7 @@ const Index = ({}) => {
                           <div className="col-lg-12">
                            
                             <AccidentEditableForm
+                               disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               editHandler={editHandler}
@@ -1776,7 +1797,7 @@ const Index = ({}) => {
                           style={{ marginLeft: "-15px" }}
                         >
                           <div className="col-lg-12">
-                            <EstimateList onSaveHandler={onSaveHandler} />
+                            <EstimateList  disable={disable} onSaveHandler={onSaveHandler} />
                           </div>
                         </div>
 
@@ -1786,7 +1807,7 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <Exemple documents={documents} leadId={leadId} />
+                            <Exemple  disable={disable} documents={documents} leadId={leadId} />
                           </div>
                         </div>
                         {/*<div

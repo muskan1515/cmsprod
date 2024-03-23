@@ -28,6 +28,7 @@ const Index = ({ leadId, token, content ,type}) => {
   const router = useRouter();
 
   useEffect(() => {
+  
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -46,6 +47,11 @@ const Index = ({ leadId, token, content ,type}) => {
   }, []);
 
   useEffect(() => {
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;

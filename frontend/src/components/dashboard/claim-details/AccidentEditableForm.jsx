@@ -12,6 +12,7 @@ const AccidentEditableForm = ({
   claim,
   edit,
   onSaveHandler,
+  disable,
   PlaceOfLoss,
   setPlaceOfLoss,
   PlaceOfSurvey,
@@ -85,6 +86,7 @@ const AccidentEditableForm = ({
                         <button
                           className="btn-thm m-1"
                           style={{}}
+                          disabled={disable}
                           onClick={() => {
                             setisUpdateVehicleLoading(true);
                             onSaveHandler(5, closeFunction, closeFunction);

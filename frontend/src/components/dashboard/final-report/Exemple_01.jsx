@@ -85,6 +85,7 @@ export default function Exemple_01({
   totalEstimate,
   setTotalEstimate,
   claim,
+  disable,
   taxAmount,
   setCurrentGST,
   allRows,
@@ -279,7 +280,7 @@ export default function Exemple_01({
     axios
       .put("/api/updateLabrorer", payload, {
         headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
+          Authorization: `Bearer ${userInfo[0]?.Token}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -536,6 +537,7 @@ export default function Exemple_01({
       editHandler={editHandler}
       allDepreciations
       claim={claim}
+      disable={disable}
       updateHandler={onSaveHandler}
       edit={edit}
     />

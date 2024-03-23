@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Value } from "sass";
 const CreateList = ({
   claim,
+  disable,
   InsuredName,
   setInsuredName,
   InsuredMailAddress,

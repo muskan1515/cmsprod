@@ -110,6 +110,7 @@ const headCells = [
 export default function Exemple_01({
   policyType,
   claim,
+  disable,
   settotalMetalRows,
   setallNewParts,
   allNewParts,
@@ -706,7 +707,7 @@ export default function Exemple_01({
     axios
       .put("/api/updateNewParts", payload, {
         headers: {
-          Authorization: `Bearer ${userInfo[0].Token}`,
+          Authorization: `Bearer ${userInfo[0]?.Token}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -1459,6 +1460,7 @@ export default function Exemple_01({
   return (
     <SmartTable
       title=""
+      disable={disable}
       ToggleGST={toggleGST}
       data={updatedCode}
       headCells={headCells}

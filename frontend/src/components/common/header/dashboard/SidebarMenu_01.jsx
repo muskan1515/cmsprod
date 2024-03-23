@@ -5,7 +5,7 @@ import {
   isSinglePageActive,
 } from "../../../../utils/daynamicNavigation";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaTh,
   FaBars,
@@ -18,6 +18,8 @@ import {
 
 const SidebarMenu = () => {
   const route = useRouter();
+  const [isMis,setIsMis]=useState(true);
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
@@ -52,6 +54,13 @@ const SidebarMenu = () => {
     { id: 3, name: "Logout", route: "/login", icon: "flaticon-logout" },
   ];
 
+  useEffect(()=>{
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    if(String(userInfo[0]?.isMis) === "0"){
+      setIsMis(false)
+    }
+  },[]);
+
   return (
     <>
       <div className="container">
@@ -79,10 +88,8 @@ const SidebarMenu = () => {
                   <span>FindHouse</span>
                 </Link>
               </li>
-              {/* End header */}
 
               <li className="title">
-                {/* <span>Main</span> */}
                 <ul>
                   <li
                     className={`treeview ${
@@ -109,21 +116,22 @@ const SidebarMenu = () => {
                     </Link>
                   </li>
 
-                  <li
-                  className={`treeview ${
-                    isSinglePageActive("/mis-sheet", route.pathname)
-                      ? "active"
-                      : ""
-                  }`}
-                >
-                  <Link
-                    href={`/mis-sheet`}
-                    title="Mis - Sheet"
+                  
+                    { isMis && <li
+                    className={`treeview ${
+                      isSinglePageActive("/mis-sheet", route.pathname)
+                        ? "active"
+                        : ""
+                    }`}
                   >
-                    <i className="flaticon-document"></i>
-                    <span> </span>
-                  </Link>
-                </li>
+                    <Link
+                      href={`/mis-sheet`}
+                      title="Mis - Sheet"
+                    >
+                      <i className="flaticon-document"></i>
+                      <span> </span>
+                    </Link>
+                  </li>}
                 </ul>
               </li>
               {/* End Main */}

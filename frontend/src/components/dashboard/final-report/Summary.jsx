@@ -12,7 +12,7 @@ const Summary = ({
   isEditMode,
   metaldepPct,
   ageOfVehicleTotal,
-  claim,
+  claim,disable,
   DepreciationValue,
   FinalReportNotes,
   setFinalReportNotes,
@@ -764,7 +764,7 @@ const Summary = ({
               
             {!isEdit ? <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
             :<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
-                <button className="btn btn-color m-1" onClick={saveHandler}>Update</button>
+                <button className="btn btn-color m-1" disabled={disable} onClick={saveHandler}>Update</button>
                 </>}
              
               {/* <button className="btn btn-color m-1">Add</button> */}

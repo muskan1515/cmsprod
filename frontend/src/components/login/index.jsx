@@ -29,8 +29,8 @@ const Index = () => {
   useEffect(() => {
     let userData = {};
     userData = JSON.parse(localStorage.getItem("userInfo"));
-   
-    if (userData && userData[0]?.Token) {
+   let info = userData?.length > 0 ? userData[0] : {};
+    if (info?.Token) {
       router.push("/my-dashboard");
     }
   }, []);

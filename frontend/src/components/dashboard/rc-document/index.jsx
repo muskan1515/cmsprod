@@ -3,6 +3,7 @@ import RCData from "./CreatListing";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const Index = ({leadId}) => {
   const [vehicleDetails,setDriverDetails]=useState({});
@@ -49,6 +50,10 @@ const Index = ({leadId}) => {
     const url = window.location.pathname;
     const leadId = url.split("/rc-document/")[1];
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    toast.loading("Fetching rc Details!!", {
+      // position: toast.POSITION.BOTTOM_LEFT,
+      className: "toast-loading-message",
+    });
     axios
       .get("/api/getSpecificVehicleDetails", {
         headers: {
@@ -60,11 +65,17 @@ const Index = ({leadId}) => {
         },
       })
       .then((res) => {
+        toast.dismiss()
+        toast.success("Successfully fetched !", {
+          // position: toast.POSITION.BOTTOM_LEFT,
+          className: "toast-loading-message",
+        });
        
         setDriverDetails(res.data.data.vehicleDetails);
       })
       .catch((err) => {
-        toast.error(err);
+        toast.dismiss();
+        toast.error("Got error while fetching details!");
       });
     },[]);
   return (

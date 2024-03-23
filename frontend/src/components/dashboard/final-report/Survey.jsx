@@ -20,6 +20,7 @@ const Servey = ({
   phoneNumber,
   setPhoneNumber,
   applicantNumber,
+  disable,
   setApplicantNumber,
   DetailsOfLoads,
   AccidentTime,
@@ -751,7 +752,7 @@ const Servey = ({
                   >
                     Cancel
                   </button>
-                  <button className="btn btn-color m-1" onClick={SaveHandler}>
+                  <button disabled={disable} className="btn btn-color m-1" onClick={SaveHandler}>
                     Update
                   </button>
                 </>

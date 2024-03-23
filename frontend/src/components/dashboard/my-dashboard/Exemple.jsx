@@ -191,6 +191,8 @@ export default function Exemple({
     return val;
   };
 
+  console.log("isLoading",IsLoading)
+
   function convertToIST(utcTimestamp) {
     const utcDate = new Date(utcTimestamp);
 

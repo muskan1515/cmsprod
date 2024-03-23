@@ -102,7 +102,7 @@ const Form_01 = ({
       axios
         .get("/api/getOnlineDriverData", {
           headers: {
-            Authorization: `Bearer ${userInfo[0].Token}`,
+            Authorization: `Bearer ${userInfo[0]?.Token}`,
             "Content-Type": "application/json",
           },
           params: {
@@ -172,6 +172,7 @@ const Form_01 = ({
                                 setisUpdateVehicleLoading(true);
                                 onSaveHandler(3, closeFunction, closeFunction);
                               }}
+                              disabled={!editCase_02}
                             >
                               Save
                             </button>{" "}
@@ -190,6 +191,7 @@ const Form_01 = ({
                             <button
                               className="btn-thm m-1 flaticon-transfer"
                               style={{}}
+                              disabled={!editCase_02}
                               onClick={handleFetchData}
                             ></button>
                           </div>

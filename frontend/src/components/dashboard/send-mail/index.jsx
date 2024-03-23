@@ -21,6 +21,8 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
   const router = useRouter();
 
   useEffect(() => {
+
+   
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -39,6 +41,11 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
   }, []);
 
   useEffect(() => {
+    let userData = {};
+    userData = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userData) {
+      router.push("/login");
+    }
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
