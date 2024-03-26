@@ -151,15 +151,17 @@ export default function Exemple({
   };
 
   const getRegionByReferenceNo=(referenceNo,Region)=>{
+
+
     if(RegionType === ""){
       return true;
     }
     const defaultRegion=referenceNo.split("/")[0];
-    if(String(defaultRegion) === "Del" && String(Region) === "Delhi")
+    if(String(defaultRegion) === "DLH" && String(Region) === "Delhi")
      return true;
-    if(String(defaultRegion) === "Cha" && String(Region) === "Chandigarh")
+    if(String(defaultRegion) === "CHD" && String(Region) === "Chandigarh")
      return true;
-    if(String(defaultRegion) === "Jod" && String(Region) === "Jodhpur")
+    if(String(defaultRegion) === "JDH" && String(Region) === "Jodhpur")
      return true;
     return false;
   }
@@ -213,8 +215,6 @@ export default function Exemple({
     });
     allRows?.map((row, index) => {
       
-      // const isShow = (InsurerType && String(InsurerType) === String(row.InsuranceCompanyNameAddress)) ?
-      // true : InsurerType==="" || InsurerType === undefined? true : false;
       const insurerTypeLowerCase = (InsurerType || '').toLowerCase(); // Lowercase insurer type
       const insuranceCompanyNameAddressLowerCase = (row.InsuranceCompanyNameAddress || '').toLowerCase(); // Lowercase InsuranceCompanyNameAddress
 
@@ -226,9 +226,6 @@ export default function Exemple({
         insuranceCompanyNameAddressLowerCase.includes(firstTwoWordsOfInsurerType) &&
         getRegionByReferenceNo(row.ReferenceNo,finalRegion)
       );
-
-      // const isShow=true;
-      console.log('is_show',isShow)
       if(isShow){
       const updatedRow = {
         sno: index + 1,
@@ -242,7 +239,7 @@ export default function Exemple({
         date_of_survey: formatDateUpdated(row.DateOfSurvey),
         estimate_amt: addCommasToNumber(row.EstimateAmt),
         assessed_amt: addCommasToNumber(row.AssessedAmt),
-        date_of_submit: formatDateUpdated(row.DateOfIntimation),
+        date_of_submit: formatDateUpdated(row.date_of_survey),
         tat: 0,
         remarks: row.Remarks,
         bill_no: row.BillNo,

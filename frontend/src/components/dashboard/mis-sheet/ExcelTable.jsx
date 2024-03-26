@@ -4,41 +4,29 @@ import * as XLSX from "xlsx";
 function ExcelTable({ allRows }) {
   const [isExportClicked, setIsExportClicked] = useState(false);
 
-  function convertToIST(utcTimestamp) {
-    const utcDate = new Date(utcTimestamp);
-    const istDate = new Date(
-      utcDate.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-    );
+  function formatDate(dateString) {
+    if(dateString === "" || dateString === null){
+      return "-"
+    }
     const options = {
+      day: "2-digit",
+      month: "2-digit",
       year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
     };
-    const formattedISTDateTime = istDate.toLocaleString("en-US", options);
-    return formattedISTDateTime;
+
+    const dateParts = new Date(dateString)
+      .toLocaleDateString("en-GB", options)
+      .split("/");
+    const formattedDate =
+      dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
+    return formattedDate;
   }
 
   function addCommasToNumber(number) {
     if (Number(number) <= 100 || number === undefined) return number;
     return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-  
-  const formatDateUpdated = (dateString) => {
-    if(dateString === null || dateString === undefined || !dateString || String(dateString) === "undefined"){
-      return "-"
-    }
-    const date = new Date(dateString);
 
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-    const year = date.getFullYear().toString().slice(-4); // Get last two digits of the year
-
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
-  };
 
   function exportToExcel() {
     const wb = XLSX.utils.book_new();
@@ -71,15 +59,15 @@ function ExcelTable({ allRows }) {
         res.Insured,
         res.InsuredGSTNumber,
         res.SurveyType,
-        convertToIST(res.DateOfInformation),
-        convertToIST(res.DateOfSurvey),
+        formatDate(res.DateOfIntimation),
+        formatDate(res.DateOfSurvey),
         addCommasToNumber(res.EstimateAmt),
         addCommasToNumber(res.AssessedAmt),
         0, // TAT
         res.Remarks,
         res.BillNo,
         addCommasToNumber(res.BillTotal),
-        convertToIST(res.BillDate),
+        formatDate(res.BillDate),
       ]),
     ];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
@@ -131,16 +119,16 @@ function ExcelTable({ allRows }) {
                   <td>{res.InsuredName}</td>
                   <td>{res.GST_No}</td>
                   <td>{res.SurveyType}</td>
-                  <td>{formatDateUpdated(res.DateOfInformation)}</td>
-                  <td>{formatDateUpdated(res.DateOfSurvey)}</td>
+                  <td>{formatDate(res.DateOfIntimation)}</td>
+                  <td>{formatDate(res.DateOfSurvey)}</td>
                   <td>{res.EstimateAmt}</td>
                   <td>{res.AssessedAmt}</td>
-                  <td>{res.BillDate}</td>
+                  <td>{formatDate(res.BillDate)}</td>
                   <td>0</td>
                   <td>{res.Remarks}</td>
                   <td>{res.BillNo}</td>
                   <td>{res.BillTotal}</td>
-                  <td>{formatDateUpdated(res.BillDate)}</td>
+                  <td>{formatDate(res.BillDate)}</td>
                 </tr>
               ))}
             </tbody>

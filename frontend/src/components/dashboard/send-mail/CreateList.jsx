@@ -15,7 +15,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
 
 
   console.log("Region",Region)
-  const [fromEmail, setFromEmail] = useState(String(Region) === "Delhi" ? "mt.dro123@gmail.com" : String(Region) === "Jodhpur" ? "mt.jdro123@gmail.com" : "mt.chro123@gmail.com" );
+  const [fromEmail, setFromEmail] = useState( "mt.chro123@gmail.com" );
   const [subject, setSubject] = useState("Survey Request for Vehicle Claim");
   const [body, setBody] = useState("");
   const [type,setType]=useState(1);
@@ -32,20 +32,25 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
 
   useEffect(()=>{
     
+    let requiredString = ""
  
-    if(String(type) === "1" && (email !== undefined && email !== "None" && email !== "undefined" && email!=="null" && email !== "")){
-      setEmailAddress(email)
+    if( (email !== undefined && email !== "None" && email !== "undefined" && email!=="null" && email !== "")){
+      requiredString += email + ",";
     }
-    if(String(type) === "2" && (BrokerMailAddress !== undefined && BrokerMailAddress !== "undefined" && BrokerMailAddress!=="null" && BrokerMailAddress!=="")){
-      setEmailAddress(BrokerMailAddress)
+    if( (BrokerMailAddress !== undefined && BrokerMailAddress !== "undefined" && BrokerMailAddress!=="null" && BrokerMailAddress!=="")){
+      requiredString += BrokerMailAddress + ",";
     }
-    if(String(type) === "3" && (GarageMailAddress !== undefined && GarageMailAddress !== "undefined" && GarageMailAddress!=="null" && GarageMailAddress!=="")){
-      setEmailAddress(GarageMailAddress)
+    if( (GarageMailAddress !== undefined && GarageMailAddress !== "undefined" && GarageMailAddress!=="null" && GarageMailAddress!=="")){
+      requiredString += GarageMailAddress +",";
     }
    
-  
+  setEmailAddress(requiredString)
   },[type,email,BrokerMailAddress,GarageMailAddress])
 
+  useEffect(()=>{
+    const requiredMail = String(Region) === "Delhi" ? "mt.dro123@gmail.com" : String(Region) === "Jodhpur" ? "mt.jdro123@gmail.com" : "mt.chro123@gmail.com";
+    setFromEmail(requiredMail) 
+  },[Region])
 
   
   useEffect(()=>{
@@ -113,6 +118,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
       leadId: requiredLeadId,
       subject: subject,
       body: body,
+      Region:Region ? Region : "Chandigarh",
       fromEmail: fromEmail,
     };
 
@@ -120,7 +126,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
       toast.error("Email is required field !!");
     } else if (!payload.PolicyNo) {
       toast.error("PolicyNo is required field !!");
-    } else if (!payload.content || !payload.content2) {
+    } else if ((!payload.content || !payload.content2) && String(type) === "1") {
       toast.error("Please select the documents to be passed over email!");
     } else {
 
@@ -143,7 +149,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
             // position: toast.POSITION.BOTTOM_LEFT,
             className: "toast-loading-message",
           });
-          router.push(`/claim-details?leadId=${leadId}`);
+          router.push(`/claim-details?leadId=${requiredLeadId}`);
         })
         .catch((Err) => {
           toast.dismiss();

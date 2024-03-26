@@ -21,6 +21,7 @@ const transporter = nodemailer.createTransport({
 const generateUniqueToken = require("../Config/generateToken");
 const createToken = require("../Config/generateJWTToken");
 const { splitStringToArray } = require("../Config/getStringFromCSV");
+const { csvStringToArray } = require("../Config/getArrayFromCSVString");
 
  const sendEmail1 = (req, res) => {
     const { vehicleNo, PolicyNo, Insured, Date, leadId, toMail , type , BrokerMailAddress,GarageMailAddress,Region} = req.body;
@@ -281,7 +282,7 @@ const { splitStringToArray } = require("../Config/getStringFromCSV");
       Region
     } = req.body;
 
-
+    const emailArray = csvStringToArray(toMail);
 
     const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
     db.query(sql, [leadId], (err, result2) => {
@@ -321,9 +322,11 @@ const { splitStringToArray } = require("../Config/getStringFromCSV");
   
         `;
   
+
+        emailArray.map((email,index)=>{
           const mailOptions = {
             from: fromEmail,
-            to: toMail,
+            to: email,
             subject: subject,
             text: emailContent,
           };
@@ -332,23 +335,23 @@ const { splitStringToArray } = require("../Config/getStringFromCSV");
           process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
             process.env.NODEMAILER_JODHPUR_EMAIL
             : process.env.NODEMAILER_CHANDIGARH_EMAIL;
-        const currentMailAddressPass = Region === "Delhi" ?
-          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
-            process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
-            : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+          const currentMailAddressPass = Region === "Delhi" ?
+            process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
+              process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+              : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
 
-        const transporter2 = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: currentMailAddress,
-            pass: currentMailAddressPass,
-          },
-          tls: {
-            rejectUnauthorized: false,
-          },
-        });
+          const transporter2 = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: currentMailAddress,
+              pass: currentMailAddressPass,
+            },
+            tls: {
+              rejectUnauthorized: false,
+            },
+          });
+
   
-          // Send the email
           transporter2.sendMail(mailOptions, (error, info) => {
             if (error) {
               console.error(error);
@@ -358,8 +361,11 @@ const { splitStringToArray } = require("../Config/getStringFromCSV");
               res.status(200).send("Email sent successfully");
             }
           });
+        })
+         
         });
-      } else {
+      }
+       else {
         const emailContent = `
         ${body}
   
@@ -377,33 +383,34 @@ const { splitStringToArray } = require("../Config/getStringFromCSV");
   
       `;
   
+      emailArray.map((email,index)=>{
         const mailOptions = {
           from: fromEmail,
-          to: toMail,
+          to: email,
           subject: subject,
           text: emailContent,
         };
-  
+
         const currentMailAddress = Region === "Delhi" ?
         process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
           process.env.NODEMAILER_JODHPUR_EMAIL
           : process.env.NODEMAILER_CHANDIGARH_EMAIL;
-      const currentMailAddressPass = Region === "Delhi" ?
-        process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
-          process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
-          : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+        const currentMailAddressPass = Region === "Delhi" ?
+          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
+            process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+            : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
 
-      const transporter2 = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: currentMailAddress,
-          pass: currentMailAddressPass,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      });
-        // Send the email
+        const transporter2 = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: currentMailAddress,
+            pass: currentMailAddressPass,
+          },
+          tls: {
+            rejectUnauthorized: false,
+          },
+        });
+
         transporter2.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error(error);
@@ -413,6 +420,8 @@ const { splitStringToArray } = require("../Config/getStringFromCSV");
             res.status(200).send("Email sent successfully");
           }
         });
+      })
+       
       }
     });
   };

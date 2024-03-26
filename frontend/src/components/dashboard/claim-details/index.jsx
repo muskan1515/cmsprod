@@ -954,7 +954,7 @@ const Index = ({}) => {
     };
     setDisable(true)
 
-    toast.loading("Fetching claim Details!!", {
+    toast.loading("Updating claim Details!!", {
       // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
