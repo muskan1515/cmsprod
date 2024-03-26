@@ -21,47 +21,47 @@ const Index = ({ leadId, token, content ,type}) => {
 
   const [isNotValidLink, setIsNotValidLink] = useState(true);
 
-  const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
-    Date.now()
-  );
+  // const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
+  //   Date.now()
+  // );
 
   const router = useRouter();
 
-  useEffect(() => {
+  // useEffect(() => {
   
-    const activityHandler = () => {
-      setLastActivityTimestamp(Date.now());
-    };
+  //   const activityHandler = () => {
+  //     setLastActivityTimestamp(Date.now());
+  //   };
 
-    // Attach event listeners for user activity
-    window.addEventListener("mousemove", activityHandler);
-    window.addEventListener("keydown", activityHandler);
-    window.addEventListener("click", activityHandler);
+  //   // Attach event listeners for user activity
+  //   window.addEventListener("mousemove", activityHandler);
+  //   window.addEventListener("keydown", activityHandler);
+  //   window.addEventListener("click", activityHandler);
 
-    // Cleanup event listeners when the component is unmounted
-    return () => {
-      window.removeEventListener("mousemove", activityHandler);
-      window.removeEventListener("keydown", activityHandler);
-      window.removeEventListener("click", activityHandler);
-    };
-  }, []);
+  //   // Cleanup event listeners when the component is unmounted
+  //   return () => {
+  //     window.removeEventListener("mousemove", activityHandler);
+  //     window.removeEventListener("keydown", activityHandler);
+  //     window.removeEventListener("click", activityHandler);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    let userData = {};
-    userData = JSON.parse(localStorage.getItem("userInfo"));
-    if (!userData) {
-      router.push("/login");
-    }
-    const inactivityCheckInterval = setInterval(() => {
-      const currentTime = Date.now();
-      const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 600000) {
-        localStorage.removeItem("userInfo");
-        router.push("/login");
-      }
-    }, 60000);
-    return () => clearInterval(inactivityCheckInterval);
-  }, [lastActivityTimestamp]);
+  // useEffect(() => {
+  //   let userData = {};
+  //   userData = JSON.parse(localStorage.getItem("userInfo"));
+  //   if (!userData) {
+  //     router.push("/login");
+  //   }
+  //   const inactivityCheckInterval = setInterval(() => {
+  //     const currentTime = Date.now();
+  //     const timeSinceLastActivity = currentTime - lastActivityTimestamp;
+  //     if (timeSinceLastActivity > 600000) {
+  //       localStorage.removeItem("userInfo");
+  //       router.push("/login");
+  //     }
+  //   }, 60000);
+  //   return () => clearInterval(inactivityCheckInterval);
+  // }, [lastActivityTimestamp]);
 
   const types = [
     { name: "Driving licence" },
