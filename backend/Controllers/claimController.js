@@ -539,9 +539,6 @@ const getSpecificClaim = async (req, res) => {
         summaryDetails
       };
   
-      // console.log(combinedResult)
-      // console.log(combinedResult)
-  
       res.json(combinedResult);
     } catch (error) {
       console.error(error);
@@ -644,7 +641,6 @@ const getSpecificClaim = async (req, res) => {
   } = req.body;
 
 
-  console.log(ValidFrom);
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -800,7 +796,6 @@ const getSpecificClaim = async (req, res) => {
 
 
   const getAllClaims = (req, res) => {
-    // const region = req.query.region;
     const { Region1, Region2, Region3, CalimStatus } = req.query;
     const sql = "CALL GetPolicyInfoByRegions(?, ?, ?, ?)";
     const params = [Region1 || null, Region2 || null, Region3 || null, CalimStatus || null];
@@ -834,7 +829,6 @@ const getSpecificClaim = async (req, res) => {
       console.log("stat2",token,result2[0]?.ImageToken,type);
       console.log("stat3",token,result2[0]?.VideoToken,type);
       if (stat1 || stat2 || stat3) {
-        // console.log(result2[0].Token === token);
            res.status(200).send("Successfully found!!");
        
       }  else {
@@ -1068,8 +1062,6 @@ const getSpecificClaim = async (req, res) => {
      VehicleInsuranceUpto = '${RcInsuranceUpto ? `${RcInsuranceUpto}` : ''}'
    WHERE LeadId = ${LeadId};
  `;
-
- console.log(updateVehicleDetails);
 
   db.query(updateVehicleDetails, (error, results) => {
     if (error) {

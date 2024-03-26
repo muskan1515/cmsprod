@@ -137,25 +137,7 @@ const Index = () => {
     setFilterClaims(filterClaim);
   }, [majorSearch]);
 
-  // useEffect(() => {
-  //   let filterClaim;
-  //   const region = JSON.parse(localStorage.getItem("regionType"));
-
-  //   if (region) {
-  //     filterClaim = allClaims.filter((claim, index) => {
-  //       const regiontest = claim?.reference_id?.split("/")[0];
-  //       if (region.toLowerCase().includes(regiontest?.toLowerCase())) {
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     });
-
-  //     setFilterClaims(filterClaim);
-  //   }
-  // }, [isRegionChange]);
-
-  useEffect(() => {
+  const fetchData = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     console.log(userInfo);
@@ -164,8 +146,7 @@ const Index = () => {
     } else {
       const { Region1, Region2, Region3, CalimStatus } = userInfo[0];
       console.log(userInfo[0])
-      toast.loading("Loading the  claims!!", {
-        // position: toast.POSITION.BOTTOM_LEFT,
+      toast.loading("Loading the claims!!", {
         className: "toast-loading-message",
       });
       axios
@@ -183,9 +164,7 @@ const Index = () => {
         })
         .then((res) => {
           toast.dismiss();
-         
           toast.success("Successfully loaded all claims", {
-            // position: toast.POSITION.BOTTOM_LEFT,
             className: "toast-loading-message",
           });
           setAllClaims(res.data.data[0]);
@@ -207,19 +186,27 @@ const Index = () => {
         })
         .then((res) => {
           const temp = res.data.data;
-
           setStatus(temp);
         })
         .catch((err) => {
           console.log(err);
         });
 
-        setIsLoading(false
-          )
+      setIsLoading(false);
     }
-  }, []);
+  };
+
+  //Auto reloading for the dashboard cards
   useEffect(() => {
-    console.log('selectedCard',selectedCard)
+    fetchData(); 
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 15 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+
+  useEffect(() => {
     let temp = [];
     if (selectedCard === 12) {
       temp = allClaims;
@@ -232,8 +219,6 @@ const Index = () => {
         }
       });
     }
-
-    console.log(temp);
 
     setFilterCardClaim(temp);
   }, [selectedCard,allClaims]);

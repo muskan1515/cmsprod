@@ -14,14 +14,10 @@ router.post("/addDocumentLabel",uploadController.addDocumentLabel);
 
 
 router.get("/getDocumentsLabels",uploadController.getReportDocumentsLabels);
-
-router.post("/uploadClaimMedia",uploadController.uploadClaimMedia);
          
 router.post("/uploadDocument",uploadController.uploadDocumentV2);
 
 router.post("/uploadManualDocument",uploadController.uploadDocument);
-
-router.post("/uploadMedia", uploadController.uploadMedia);
 
 router.post("/verifyReportUpload", uploadController.verifyReportUpload);
 

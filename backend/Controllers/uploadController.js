@@ -1,7 +1,5 @@
 const db = require("../Config/dbConfig");
 const generateUniqueToken = require("../Config/generateToken");
-const uploadToAWS = require("../Middleware/awsUpload");
-const uploadToAWSVideo = require("../Middleware/awsUploadVideo");
 
 const getReportDocument = (req, res) => {
   const LeadId = req.query.leadId;
@@ -35,19 +33,7 @@ const getReportDocumentsLabels = (req, res) => {
   });
 };
 
-// const getDocuments = (req, res) => {
-//   const LeadId = req.query.LeadId;
-//   //console.log("get", LeadId);
-//   const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
-//   db.query(sql, [LeadId], (err, result) => {
-//     if (err) {
-//       // console.error(err);
-//       res.status(500).send("Internal Server Error");
-//       return;
-//     }
-//     res.send(result);
-//   });
-// };
+
 
 const getDocuments = (req, res) => {
   const LeadId = req.query.LeadId;
@@ -95,56 +81,6 @@ const getDocuments = (req, res) => {
   });
 };
 
-const uploadClaimMedia = (req, res) => {
-  const {
-    garage,
-    fileUrl,
-    fileName,
-    reportType,
-    LeadId,
-    isLastChunk,
-    uploadedBy,
-    file,
-  } = req.body;
-
-  uploadToAWS(file, fileName)
-    .then((Location) => {
-      const insertUploadDetails = `
-          INSERT INTO ReportDocuments (
-            LeadId,
-            FileName,
-            FilePath,
-            UploadedBy,
-            GarageName,
-            ReportType
-          ) VALUES (
-            '${LeadId}',
-            '${fileName}',
-            '${Location}',
-            '${uploadedBy}',
-            '${garage}',
-            '${reportType}'
-          );
-        `;
-
-      // Execute the SQL queries individually
-
-      db.query(insertUploadDetails, (error, results) => {
-        if (error) {
-          console.error("Error inserting data into VehicleDetails:", error);
-          return res
-            .status(500)
-            .json({ error: "Error inserting data into VehicleDetails." });
-        }
-
-        return res.status(200).json({ Location });
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(500).json({ error: "Internal Server Error" });
-    });
-};
 const uploadDocument = (req, res) => {
   const data = req.body;
 
@@ -313,47 +249,6 @@ const uploadDocumentV2 = (req, res) => {
  
 };
 
-const uploadMedia = async (req, res) => {
-  try {
-    const { file, name } = req.body;
-    const filesData = file;
-    const nameInfo = name;
-
-    const results = [];
-
-    for (let i = 0; i < filesData.length; i++) {
-      const fileData = filesData[i]; // Use a different name for the loop iteration
-      const fileName = nameInfo[i];
-
-      // Check if the file data starts with "data:image/"
-      if (
-        fileData.startsWith("data:image/") ||
-        fileData.startsWith("'data:application/pdf")
-      ) {
-        const data = await uploadToAWS(fileData, fileName);
-        results.push(data);
-      } else if (fileData.startsWith("data:video/")) {
-        const prefixToRemove = "data:video/webm;base64,";
-        const dataWithoutPrefix = fileData.substring(prefixToRemove.length);
-
-        const data = await uploadToAWSVideo(dataWithoutPrefix, fileName);
-        // const data = await uploadToAWSVideo(fileData, fileName);
-        // //console.log('BLOBB',fileData);
-        results.push(data);
-      } else {
-        //console.log(`Unsupported file format for ${fileName}`);
-        // Optionally handle the error or skip the file
-        continue;
-      }
-    }
-    //console.log("result", results);
-    return res.status(200).json({ data: results });
-  } catch (error) {
-    //console.log("Error log", error);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 const verifyReportUpload = (req, res) => {
   const { leadId, DocumentName,VerifiedBy ,ModifiedDateTime} = req.body;
   const updateVerifyReport = `
@@ -372,7 +267,6 @@ const verifyReportUpload = (req, res) => {
         .send("Internal Server Error while updating the verified status");
       return;
     }
-    // //console.log(result2[0].Token === token);
     res.status(200).send("Successfully Updated!!");
   });
 };
@@ -380,9 +274,7 @@ const verifyReportUpload = (req, res) => {
 module.exports = {
   getReportDocument,
   getDocuments,
-  uploadClaimMedia,
   uploadDocument,
-  uploadMedia,
   verifyReportUpload,
   uploadDocumentV2,
   getReportDocumentsLabels,
