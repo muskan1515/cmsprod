@@ -75,6 +75,10 @@ function ExcelTable({ allRows }) {
     XLSX.writeFile(wb, "table.xls");
   }
 
+  const calculateTAT = (today,addedDate)=>{
+    return  Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+  }
+
   return (
     <div className="">
       <div className="row">
@@ -124,7 +128,7 @@ function ExcelTable({ allRows }) {
                   <td>{res.EstimateAmt}</td>
                   <td>{res.AssessedAmt}</td>
                   <td>{formatDate(res.BillDate)}</td>
-                  <td>0</td>
+                  <td>{calculateTAT(new Date(),new Date(res.DateOfIntimation))}</td>
                   <td>{res.Remarks}</td>
                   <td>{res.BillNo}</td>
                   <td>{res.BillTotal}</td>

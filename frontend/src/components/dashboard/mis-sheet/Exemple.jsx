@@ -214,6 +214,10 @@ export default function Exemple({
       className: "toast-loading-message",
     });
     allRows?.map((row, index) => {
+      const today = new Date();
+      const addedDate = new Date(row.DateOfIntimation);
+      const tatInDays = Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+      
       
       const insurerTypeLowerCase = (InsurerType || '').toLowerCase(); // Lowercase insurer type
       const insuranceCompanyNameAddressLowerCase = (row.InsuranceCompanyNameAddress || '').toLowerCase(); // Lowercase InsuranceCompanyNameAddress
@@ -240,7 +244,7 @@ export default function Exemple({
         estimate_amt: addCommasToNumber(row.EstimateAmt),
         assessed_amt: addCommasToNumber(row.AssessedAmt),
         date_of_submit: formatDateUpdated(row.date_of_survey),
-        tat: 0,
+        tat: tatInDays,
         remarks: row.Remarks,
         bill_no: row.BillNo,
         bill_total: addCommasToNumber(row.BillTotal),
