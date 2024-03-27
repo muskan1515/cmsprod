@@ -1,5 +1,6 @@
 
 const db = require("../Config/dbConfig");
+const { JSDOM } = require('jsdom');
 const emailHandler = require("../Config/getEmailContent");
 
 const dotenv = require('dotenv').config()
@@ -17,6 +18,15 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
   },
 });
+
+function convertHtmlToString(htmlString) {
+  const dom = new JSDOM(htmlString);
+
+  // Extract the text content from the parsed document
+  const plainText = dom.window.document.body.textContent || "";
+
+  return plainText;
+}
 
 const generateUniqueToken = require("../Config/generateToken");
 const createToken = require("../Config/generateJWTToken");
@@ -190,24 +200,32 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
   
         Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
   
-          We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
-        Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
+        We are Appointed for the survey of vehicle no.${vehicleNo},
+        Insured:${Insured} & Policy No.-${PolicyNo} on 
+        ${Date} from the United India Insurance co. Ltd.,
+        So we request you please provide the complete 
+        contact deatils & mails of Repairer/insured. So that we 
         can procedd further in your case and we also request 
         you to provide the following details as follows:-
   
         ${content}
   
-        Please provide the clear copy of all the documents so that the claim processing can be fast or
+        Please provide the clear copy of all the documents so that 
+        the claim processing can be fast or
         <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
   
-        Please provide the clear Vahicle Videos so that the claim processing can be fast or
+        Please provide the clear Vahicle Videos so that the claim 
+        processing can be fast or
         <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
   
-        Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
+        Please provide the  all the clear Images of the Vehicle so 
+        that the claim processing can be fast or
         <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
   
-      Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-            claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+      Note:-  If We Cannot get the response with in 02 days we will 
+      inform the insurer that the insured is not interseted in the
+      claim. So close the file as"No Claim" in non copperation & non
+      submission of the documents. 
   
     `;
           
@@ -306,20 +324,17 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             res.status(500).send("Internal Server Error");
             return;
           }
+
+          const formattedString = convertHtmlToString(
+            `Please provide the clear copy of all the documents so that the claim processing can be fast or <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&type=${1}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
+    
+            Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in theclaim. So close the file as"No Claim" in non copperation & non submission of the documents.`)
   
           const emailContent = `
           ${body}
-  
           ${content}
-  
-              Please provide the clear copy of all the documents so that the claim processing can be fast or
-            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&type=${1}&content=${encodeURIComponent(
-            content2
-          )} target="_blank">Click me</a> to fill the documents information .</p>
-  
-          ${`<strong>Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-                  claim. So close the file as"No Claim" in non copperation & non submission of the documents. </strong>`}
-  
+          ${formattedString}
+          
         `;
   
 
@@ -371,15 +386,18 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
   
         ${content}
   
-            Please provide the clear copy of all the documents so that the claim processing can be fast or
-          <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${
+        Please provide the clear copy of all the documents so that
+         the claim processing can be fast or
+        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${
           result2[0].Token
         }&type=${1}&content=${encodeURIComponent(
           content2
         )} target="_blank">Click me</a> to fill the documents information .</p>
   
-        Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-                claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+        Note:- If We Cannot get the response with in 02 days we will 
+        inform the insurer that the insured is not interseted in the claim. 
+        So close the file as"No Claim" in non copperation & non submission
+        of the documents. 
   
       `;
   
@@ -437,8 +455,9 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
   
       Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
   
-        We are Appointed for the survey of vehicle no.-${vehicleNo}, Insured:-${Insured} & Policy No.-${PolicyNo} on ${Date} and the approval
-        is as follows;-
+        We are Appointed for the survey of vehicle no.-${vehicleNo},
+       Insured:-${Insured} & Policy No.-${PolicyNo} on ${Date} and 
+       the approval is as follows;-
        Parts
        1) Fr Bumper- New Allowed
        2) FR Grill- New Allowed
@@ -449,11 +468,13 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
        2) LH Head Light- R/R-100
        3) LH Fender- Denting-250, Painting-2200
        
-           Further approval will be provided after dismentaling of the vehicle.
+       Further approval will be provided after dismentaling of the vehicle.
            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
   
-       Note:- Pleasae consider that the the claim is payable  subject to policy terms & conditions & Cashless facility will be allowed 
-              Subject to all the documents get verified from online. It is for your information please.
+       Note:- Pleasae consider that the the claim is payable  subject to 
+        policy terms & conditions & Cashless facility will be allowed 
+        Subject to all the documents get verified from online. 
+        It is for your information please.
     `;
   
     const mailOptions = {

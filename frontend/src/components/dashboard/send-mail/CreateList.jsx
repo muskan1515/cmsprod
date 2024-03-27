@@ -3,7 +3,7 @@ import { data } from "./data";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast} from 'react-hot-toast'
-import { defaultContent } from "./EmailContent";
+import { defaultContent, defaultSubjectContent } from "./EmailContent";
 const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,BrokerMailAddress,GarageMailAddress}) => {
 
 
@@ -12,11 +12,8 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
   const [policyNos, setPolicyNo] = useState(policyNo ? policyNo : "");
   const [date, setDate] = useState(new Date());
 
-
-
-  console.log("Region",Region)
   const [fromEmail, setFromEmail] = useState( "mt.chro123@gmail.com" );
-  const [subject, setSubject] = useState("Survey Request for Vehicle Claim");
+  const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [type,setType]=useState(1);
 
@@ -31,6 +28,8 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
   }, []);
 
   useEffect(()=>{
+
+    setSubject(defaultSubjectContent(type,vehicleNo,policyNo,Insured,date))
     
     let requiredString = ""
  
@@ -87,7 +86,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
   const createStringFromSelectedItems = (selectedItems) => {
     return selectedItems
       .map((item, index) => {
-        return `${index + 1}) ${item.value}`;
+        return `${index + 1}) ${index > 0 ? ` ${item.value}` : item.value}`;
       })
       .join("\n");
   };
@@ -180,9 +179,9 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
             onChange={(e)=>handleSelectChange(e)}
             className="form-select"
           >
-            <option value={1}>Custom Mail</option>
-            <option value={2}>Mail As Broker</option>
-            <option value={3}>Mail As Garage</option>
+            <option value={1}>Document Pending</option>
+            <option value={2}>Status</option>
+            <option value={3}>Work Approval</option>
           </select>
         </div>
 

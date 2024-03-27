@@ -119,42 +119,6 @@ const data = [
     date: "2021-09-17 19:10:50",
     serial: "123",
   },
-  //   {
-  //     _id: "6143989f9d87cc",
-  //     email: "as@a.com",
-  //     name: "as",
-  //     phone: "+9617646699991",
-  //     subject: "as",
-  //     message: "as",
-  //     date: "2021-09-16 22:18:31",
-  //   },
-  //   {
-  //     _id: "614397edc9177d8c8",
-  //     email: "amine@amine.com",
-  //     name: "amine",
-  //     phone: "+334343439393993",
-  //     subject: "1234",
-  //     message: "3434",
-  //     date: "2021-09-16 22:15:57",
-  //   },
-  //   {
-  //     _id: "6143be67dfca4985c",
-  //     email: "dominique.amine@gmail.com",
-  //     name: "Dominique",
-  //     phone: "+96189904686",
-  //     subject: "Dev ",
-  //     message: "Ohmaga",
-  //     date: "2021-09-16 21:33:04",
-  //   },
-  //   {
-  //     _id: "61141e57a7dbd8a189e",
-  //     email: "amineamine19961996@gmail.com",
-  //     name: "amine amine",
-  //     phone: "+96176776341",
-  //     subject: "qw",
-  //     message: "qw",
-  //     date: "2021-08-11 22:00:39",
-  //   },
 ];
 
 export default function Exemple({
@@ -204,9 +168,6 @@ export default function Exemple({
       day: '2-digit',
       month: '2-digit',
       year: 'numeric', 
-      // hour: 'numeric', 
-      // minute: 'numeric', 
-      // hour12: true 
     };
     const formattedISTDateTime = istDate.toLocaleString("en-US", options);
   
@@ -232,6 +193,10 @@ export default function Exemple({
     return data.sort((a, b) => b.lead_id - a.lead_id);
   };
 
+  const calculateTAT = (currentDate,addedDate)=>{
+
+  }
+
   let tempData = [];
   useEffect(() => {
     const region = JSON.parse(localStorage.getItem("regionType"));
@@ -244,6 +209,8 @@ export default function Exemple({
       const tempGarage = claim?.AssignedGarage?.split(",").map((item) =>
         item.trim()
       );
+    
+    
       const updatedRow = {
         lead_id: claim.LeadID,
         reference_id: claim.ReferenceID,
