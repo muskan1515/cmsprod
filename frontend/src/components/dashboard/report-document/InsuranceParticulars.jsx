@@ -687,10 +687,10 @@ const InsuranceParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
-          <td style={{ width: "25%" }} className="text-start">
+          <td style={{ width: "35%" }} className="d-flex align-item-start">
             <span>(e) Insured</span>
           </td>
-          <td style={{ width: "5%" }} className="text-start">
+          <td style={{ width: "5%" }} className="">
             <span>:</span>
           </td>
           <td style={{ width: "40%" }} className="text-start">

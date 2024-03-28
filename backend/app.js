@@ -18,6 +18,7 @@ const misSheetRoutes=require("./Routes/misSheetRoutes");
 const insurerRoutes=require("./Routes/InsurerRoute");
 const uploadReportDoc = require("./Routes/reportDocumentUpload");
 const fetchRoutes = require("./Routes/fetchRoutes")
+const commentRoute = require("./Routes/commentsRoute")
 const multer = require("multer");
 
 
@@ -69,6 +70,7 @@ app.use("/Insurers",insurerRoutes);
 
 app.use("/reportDocument",uploadReportDoc);
 
+app.use("/comments",commentRoute)
 
 app.use("/fetch",fetchRoutes);
 

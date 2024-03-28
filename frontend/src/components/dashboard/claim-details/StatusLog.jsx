@@ -116,7 +116,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
 
   //function to update the status on documents validation
   const checkIsValidated = ()=>{
-    if(String(stat) === "10" || String(stat) === "1"){
+    if(String(stat) === "10" || String(stat) === "11" || String(stat) === "1"){
       return true;
     }
       let arr = new Array(data.length + 1).fill(0);
@@ -135,7 +135,6 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
        }
       })
       
-      console.log(upperValue,arr,canUpdateStatus);
       return canUpdateStatus;
 
       
@@ -160,12 +159,10 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
         inside = index;
       }
     })
+
     return id === 10 ? inside : 1;
   }
 
-  const isFound = (allValues,id)=>{
-
-  }
   const onSubmitHandler = ()=>{
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -175,7 +172,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
 
     const canUpdate = checkIsValidated();
  
-    if(!canUpdate && stat>1 && !isValid){
+    if((!canUpdate && stat>1) || !isValid){
       toast.error("Cannot update Status as documents are filled !");
     }
     else{
@@ -186,7 +183,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
       Status :  (stat) ,
       subStage : subStage ?Number(subStage) : Number(3),
       token : Number(userInfo[0].Token)
-    };
+    }; 
 
     toast.loading("updating the status!!", {
       // position: toast.POSITION.BOTTOM_LEFT,

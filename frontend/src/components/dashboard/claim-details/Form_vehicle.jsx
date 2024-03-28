@@ -75,9 +75,7 @@ const Form_vehicle = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
-
-  console.log("LLL", CubicCapacity);
-
+  
   return (
     <>
       <div className="col-lg-12 m-2">

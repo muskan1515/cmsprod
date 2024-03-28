@@ -318,14 +318,6 @@ const Index = ({}) => {
     return cleanedString;
   }
 
-  useEffect(() => {
-    // const oneYearLater = (policyStartDate);
-    // oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-    // oneYearLater.setMonth(oneYearLater.getMonth());
-    // oneYearLater.setDate(oneYearLater.getDate() - 1);
-    // const formattedOneYearLater = oneYearLater.toISOString().split("T")[0];
-    // setPolicyEndDate(formattedOneYearLater);
-  }, [policyStartDate]);
 
   useEffect(() => {
     setPolicyIssuingOffice(
@@ -953,7 +945,6 @@ const Index = ({}) => {
       IsRcDetailsFetched,
       GarageMailAddress,
       BrokerMailAddress,
-
       PlaceOfLoss,
       PlaceOfSurvey,
       DateOfAccident : formatDate2(DateOfAccident),
@@ -1899,7 +1890,7 @@ const Index = ({}) => {
                                 marginBottom: "5px",
                               }}
                             ></div>
-                            <ChatboxContent />
+                            <ChatboxContent leadId={leadId} />
                           </div>
                           {/* <hr /> */}
                           <div className="row mt-2 my_dashboard_review bgc-f6">

@@ -117,15 +117,7 @@ const Form = ({
   const [editVechile, setEditVechile] = useState(false);
   const [details, setDetails] = useState();
   const [vehicleFetchDetails, setvehicleFetchDetails] = useState({});
-  //   const togglePasswordVisibility = () => {
-  //     setPasswordVisible(!passwordVisible);
-  //   };
-
-  //   const togglePasswordVisibility_01 = () => {
-  //     setPasswordVisible_01(!passwordVisible_01);
-  //   };
-  console.log("MakerModel", MakerModel);
-
+ 
   const closeFunction = () => {
     setEditCase_01(false);
     setisUpdateVehicleLoading(false);
@@ -146,17 +138,19 @@ const Form = ({
 
   const handleFetchData = async (req, res) => {
     if (!claim?.vehicleDetails?.RegisteredNumber) {
-      alert("Please fill Registered Number first!");
+      toast.error("Please fill Registered Number first!", {
+        // position: toast.POSITION.BOTTOM_LEFT,
+        className: "toast-loading-message",
+      });
+      
     }
     if (claim?.vehicleOnlineDetails) {
       const details = claim?.vehicleOnlineDetails;
 
       setVehicleModel(details?.MakerModel),
-        setVehicleRegisteredOwner(details?.RegisteredOwner),
-        // setDateRegistration(details?.rc_regn_dt),
-        setVehicleChassisNumber(details?.ChassisNumber),
-        //New Fields
-        setVehicleChassisNumber(details?.ChassisNumber);
+      setVehicleRegisteredOwner(details?.RegisteredOwner),
+      setVehicleChassisNumber(details?.ChassisNumber),
+      setVehicleChassisNumber(details?.ChassisNumber);
       setDateRegistration(details?.DateOfRegistration);
       setVehicleRegisteredNumber(details?.RegisteredNumber);
       setEngineNumber(details?.EngineNumber); //is it same as ClassOfVehicle ?
@@ -226,7 +220,10 @@ const Form = ({
       setVehicleRegistedAt(details?.VehicleRegistedAt);
       setVehicleInsuranceCompany(details?.VehicleInsuranceCompany);
 
-      alert("Successfully fetched!!");
+      toast.dismiss()
+      toast.success("Successfully fetched !", {
+        className: "toast-loading-message",
+      });
     } else {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -284,16 +281,6 @@ const Form = ({
                 <h4 className="">Vehicle Details</h4>
               </button>
             </h2>
-            {/* <div
-              className=" bg-dark"
-              style={{
-                width: "100%",
-                height: "3px",
-                color: "blue",
-                border: "1px solid",
-                marginBottom: "5px",
-              }}
-            ></div> */}
             <div
               id="collapseThree"
               class="accordion-collapse collapse"
@@ -357,6 +344,9 @@ const Form = ({
                   <Loader />
                 ) : editCase_01 ? (
                   <div className="row">
+
+
+
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -364,10 +354,8 @@ const Form = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Vehicle Model
@@ -381,314 +369,6 @@ const Form = ({
                             value={VehicleModel}
                             onChange={(e) => setVehicleModel(e.target.value)}
                             disabled={false}
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/*<div className="col-lg-6">
-                    <div className="row mt-1">
-                      <div className="col-lg-5 my_profile_setting_input form-group">
-                        <label
-                          htmlFor=""
-                          className="text-color"
-                          style={{
-                            // paddingTop: "15px",
-                            color: "#1560bd",
-                            fontWeight: "",
-                            // marginTop: "-13px",
-                          }}
-                        >
-                          Registered Number 
-                        </label>
-                      </div>
-                      <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          value={VehicleRegisteredNumber }
-                          
-                          // placeholder="Enter Registration No."
-                        />
-                      </div>
-                    </div>
-                        </div>*/}
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Registered Owner
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              VehicleRegisteredOwner &&
-                              VehicleRegisteredOwner !== "null"
-                                ? VehicleRegisteredOwner
-                                : ""
-                            }
-                            onChange={(e) =>
-                              setVehicleRegisteredOwner(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Date of Registration
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <DatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            dateFormat="dd/MM/yyyy"
-                            selected={
-                              DateRegistration !== null &&
-                              !isNaN(new Date(DateRegistration))
-                                ? new Date(DateRegistration)
-                                : ""
-                            }
-                            onChange={(date) => setDateRegistration(date)}
-                          />
-
-                          {/* <MyDatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            selectedDate={
-                              DateRegistration !== null && !DateRegistration
-                                ? new Date(DateRegistration)
-                                : ""
-                            }
-                            setSelectedDate={setDateRegistration}
-
-                            // placeholder="Enter Registration No."
-                          /> */}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/*<div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            PUC Number
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={PUCNumber}
-                            onChange={(e) => setPUCNumber(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>*/}
-
-                    {/*<div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // margin Top: "-13px",
-                            }}
-                          >
-                            Transfer Date 
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <DatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            selected={
-                              TransferDate !== null &&
-                              !isNaN(new Date(TransferDate))
-                                ? new Date(TransferDate)
-                                : ""
-                            }
-                            onChange={(date) => setTransferDate(date)}
-                          />
-                        </div>
-                      </div>
-                          </div>*/}
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Engine Number
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              EngineNumber && EngineNumber !== "null"
-                                ? EngineNumber
-                                : ""
-                            }
-                            onChange={(e) => setEngineNumber(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/*<div className="col-lg-6">
-                          <div className="row mt-1">
-                            <div className="col-lg-5 my_profile_setting_input form-group">
-                              <label
-                                htmlFor=""
-                                className="text-color"
-                                style={{
-                                  // paddingTop: "15px",
-                                  color: "#1560bd",
-                                  fontWeight: "",
-                                  // marginTop: "-13px",
-                                }}
-                              >
-                                Added By 
-                              </label>
-                            </div>
-                            <div className="col-lg-7">
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="propertyTitle"
-                                value={AddedBy}
-                                onChange={(e) => setAddedBy(e.target.value)}
-
-                                // placeholder="Enter Registration No."
-                              />
-                            </div>
-                          </div>
-                              </div>*/}
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Chassis Number
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              VehicleChassisNumber &&
-                              VehicleChassisNumber !== "null"
-                                ? VehicleChassisNumber
-                                : ""
-                            }
-                            onChange={(e) =>
-                              setVehicleChassisNumber(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Fuel Type
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              VehicleFuelType && VehicleFuelType !== "null"
-                                ? VehicleFuelType
-                                : ""
-                            }
-                            onChange={(e) => setVehicleFuelType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -719,70 +399,6 @@ const Form = ({
                             onChange={(e) =>
                               setVehicleRegisteredNumber(e.target.value)
                             }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/*<div className="col-lg-6">
-                          <div className="row mt-1">
-                            <div className="col-lg-5 my_profile_setting_input form-group">
-                              <label
-                                htmlFor=""
-                                className="text-color"
-                                style={{
-                                  // paddingTop: "15px",
-                                  color: "#1560bd",
-                                  fontWeight: "",
-                                  // marginTop: "-13px",
-                                }}
-                              >
-                                Rc Rto Code 
-                              </label>
-                            </div>
-                            <div className="col-lg-7">
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="propertyTitle"
-                                value={RcRtoCode}
-                                onChange={(e) => setRcRtoCode(e.target.value)}
-
-                                // placeholder="Enter Registration No."
-                              />
-                            </div>
-                          </div>
-                              </div>*/}
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Bancs Vehicle Segment
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={BancsVehicleSegment}
-                            onChange={(e) =>
-                              setBancsVehicleSegment(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -795,75 +411,11 @@ const Form = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
-                            Bancs Vehicle Class
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={BancsVehicleClass}
-                            onChange={(e) =>
-                              setBancsVehicleClass(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Bancs Body Type
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={BancsBodyType}
-                            onChange={(e) => setBancsBodyType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Bancs Fuel Type
+                            Registered Owner
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -872,49 +424,20 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={
-                              VehicleFuelType && VehicleFuelType !== "null"
-                                ? VehicleFuelType
+                              VehicleRegisteredOwner &&
+                              VehicleRegisteredOwner !== "null"
+                                ? VehicleRegisteredOwner
                                 : ""
                             }
-                            onChange={(e) => setVehicleFuelType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Bancs Subtype Code
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={BancsSubtypeCode}
                             onChange={(e) =>
-                              setBancsSubtypeCode(e.target.value)
+                              setVehicleRegisteredOwner(e.target.value)
                             }
-
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
                     </div>
+
+                 
 
                     <div className="col-lg-6">
                       <div className="row mt-1">
@@ -923,213 +446,222 @@ const Form = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
+                              fontWeight: ""
                             }}
                           >
-                            Bancs Make Code
+                            Date of Registration
                           </label>
                         </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={BancsMakeCode}
-                            onChange={(e) => setBancsMakeCode(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Bancs Model Code
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={BancsModelCode}
-                            onChange={(e) => setBancsModelCode(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Vehicle Type
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={
-                              RcVehicleType && RcVehicleType !== "null"
-                                ? RcVehicleType
-                                : ""
-                            }
-                            onChange={(e) => setRcVehicleType(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Vehicle Rc Status
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={VehicleRcStatus}
-                            onChange={(e) => setVehicleRcStatus(e.target.value)}
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Vehicle Black ListStatus{" "}
-                          </label>
-                        </div>
-
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={VehicleBlackListStatus}
-                            onChange={(e) =>
-                              setVehicleBlackListStatus(e.target.value)
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Vehicle Registed At
-                          </label>
-                        </div>
-
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            value={VehicleRegistedAt ? VehicleRegistedAt : ""}
-                            onChange={(date) => setVehicleRegistedAt(date)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Vehicle Insurance Upto{" "}
-                          </label>
-                        </div>
-
                         <div className="col-lg-7">
                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
+                            dateFormat="dd/MM/yyyy"
                             selected={
-                              RcInsuranceUpto !== null &&
-                              !isNaN(new Date(RcInsuranceUpto))
-                                ? new Date(RcInsuranceUpto)
+                              DateRegistration !== null &&
+                              !isNaN(new Date(DateRegistration))
+                                ? new Date(DateRegistration)
                                 : ""
                             }
-                            onChange={(date) => setRcInsuranceUpto(date)}
+                            onChange={(date) => setDateRegistration(date)}
+                          />
+
+                        </div>
+                      </div>
+                    </div>
+
+                   
+                 
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Engine Number
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              EngineNumber && EngineNumber !== "null"
+                                ? EngineNumber
+                                : ""
+                            }
+                            onChange={(e) => setEngineNumber(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                  
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Chassis Number
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleChassisNumber &&
+                              VehicleChassisNumber !== "null"
+                                ? VehicleChassisNumber
+                                : ""
+                            }
+                            onChange={(e) =>
+                              setVehicleChassisNumber(e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Maker desc.
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={MakerDesc}
+                            onChange={(e) =>
+                              setMakerDesc(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Maker Model
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={MakerModel}
+                            onChange={(e) =>
+                              setMakerModel(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Manufacture Month Year
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={ManufactureMonthYear}
+                            onChange={(e) =>
+                              setManufactureMonthYear(e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Cubic Capacity
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          {console.log("MakerModel", MakerModel)}
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={CubicCapacity}
+                            onChange={(e) => setCubicCapacity(e.target.value)}
+                            disabled={false}
+                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -1181,18 +713,84 @@ const Form = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Cubic Capacity
+                            Permanent Address
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          {console.log("MakerModel", MakerModel)}
                           <input
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            value={CubicCapacity}
-                            onChange={(e) => setCubicCapacity(e.target.value)}
-                            disabled={false}
+                            value={PermanentAddress}
+                            onChange={(e) =>
+                              setPermanentAddress(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Class Of Vehicle
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={ClassOfVehicle}
+                            onChange={(e) =>
+                              setClassOfVehicle(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Paisa Model Code
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={PasiaModelCode}
+                            onChange={(e) =>
+                              setPasiaModelCode(e.target.value)
+                            }
+
                             // placeholder="Enter Registration No."
                           />
                         </div>
@@ -1231,6 +829,328 @@ const Form = ({
                         </div>
                       </div>
                     </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Insurance Upto{" "}
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <DatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            selected={
+                              RcInsuranceUpto !== null &&
+                              !isNaN(new Date(RcInsuranceUpto))
+                                ? new Date(RcInsuranceUpto)
+                                : ""
+                            }
+                            onChange={(date) => setRcInsuranceUpto(date)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+                    
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Registed At
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={VehicleRegistedAt ? VehicleRegistedAt : ""}
+                            onChange={(date) => setVehicleRegistedAt(date)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Black ListStatus{" "}
+                          </label>
+                        </div>
+
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={VehicleBlackListStatus}
+                            onChange={(e) =>
+                              setVehicleBlackListStatus(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Rc Status
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={VehicleRcStatus}
+                            onChange={(e) => setVehicleRcStatus(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Vehicle Type
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              RcVehicleType && RcVehicleType !== "null"
+                                ? RcVehicleType
+                                : ""
+                            }
+                            onChange={(e) => setRcVehicleType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Make Code
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={BancsMakeCode}
+                            onChange={(e) => setBancsMakeCode(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Model Code
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={BancsModelCode}
+                            onChange={(e) => setBancsModelCode(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Fuel Type
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              VehicleFuelType && VehicleFuelType !== "null"
+                                ? VehicleFuelType
+                                : ""
+                            }
+                            onChange={(e) => setVehicleFuelType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Body Type
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={BancsBodyType}
+                            onChange={(e) => setBancsBodyType(e.target.value)}
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="row mt-1">
+                        <div className="col-lg-5 my_profile_setting_input form-group">
+                          <label
+                            htmlFor=""
+                            className="text-color"
+                            style={{
+                              // paddingTop: "15px",
+                              color: "#1560bd",
+                              fontWeight: "",
+                              // marginTop: "-13px",
+                            }}
+                          >
+                            Bancs Vehicle Segment
+                          </label>
+                        </div>
+                        <div className="col-lg-7">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={BancsVehicleSegment}
+                            onChange={(e) =>
+                              setBancsVehicleSegment(e.target.value)
+                            }
+
+                            // placeholder="Enter Registration No."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                 
                   </div>
                 ) : (
                   <div className="row">

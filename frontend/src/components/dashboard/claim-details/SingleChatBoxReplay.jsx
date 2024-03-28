@@ -1,6 +1,7 @@
+import moment from "moment";
 import Image from "next/image";
 
-const SingleChatBoxReply = () => {
+const SingleChatBoxReply = ({allComments}) => {
   const replyContent = [
     {
       id: 1,
@@ -14,24 +15,48 @@ const SingleChatBoxReply = () => {
     },
   ];
 
+  const getRandomColor = () => {
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
+  };
+
+  const formatDate = (datetimeString)=>{
+    const date = moment(datetimeString);
+    const today = moment().startOf('day');
+    const yesterday = moment().subtract(1, 'days').startOf('day');
+
+    let convertedDateTime;
+
+    if (date.isSame(today, 'day')) {
+      convertedDateTime = 'Today';
+    } else if (date.isSame(yesterday, 'day')) {
+      convertedDateTime = 'Yesterday';
+    } else {
+      convertedDateTime = date.format('DD MMM YYYY');
+    }
+
+    date.add(5, 'hours').add(30, 'minutes');
+
+    convertedDateTime += ' at ' + date.format('hh:mm A');
+
+    return convertedDateTime
+  }
+
   return (
     <>
-      {replyContent.map((user) => (
-        <li className="media sent" key={user.id}>
-          <span className="contact-status busy"></span>
-          <Image
-            width={57}
-            height={57}
-            className="img-fluid align-self-start mr-3"
-            src="/assets/images/team/s6.jpg"
-            alt="s6.jpg"
-          />
+      {allComments.map((user,index) => (
+        <li className="media sent" key={user.index}>
+          <div
+            className="avatar"
+            style={{ backgroundColor: "gray",padding:"4%",borderRadius:"50%",color:"white"}}
+          >
+            {user.UserName.charAt(0)}
+          </div>
           <div className="media-body">
-            <div className="date_time">Today, 10:51</div>
-            <p>{user.message}</p>
+            <div className="date_time">{formatDate(user.AddedDate)}</div>
+            <p >{user.Comment}</p>
           </div>
 
-          {user.reply}
+          {user.UserName}
         </li>
       ))}
     </>

@@ -644,7 +644,7 @@ const VehicleParticulars = ({ allInfo }) => {
             <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </td>
         </tr>
-        <tr>
+        {/* <tr>
           <td style={{ width: "30%" }} className="text-start">
             <span>Owner Serial No. / Transfer Date </span>
           </td>
@@ -659,7 +659,7 @@ const VehicleParticulars = ({ allInfo }) => {
                 : "-"}
             </span>
           </td>
-        </tr>
+        </tr> */}
         <tr>
           <td style={{ width: "30%" }} className="text-start">
             <span>(c) Date of Registration</span>

@@ -1,6 +1,77 @@
+import { useEffect, useState } from "react";
 import SingleChatBoxReply from "./SingleChatBoxReplay";
+import axios from "axios";
+import { Toaster ,toast} from "react-hot-toast";
 
-const ChatboxContent = () => {
+const ChatboxContent = ({leadId}) => {
+
+  const [comment,setComment]=useState("");
+
+  const [allComments,setAllComments]=useState([]);
+
+  const [change,setChange]=useState(false);
+  const [disable,setDisable] = useState(false);
+
+  useEffect(()=>{
+
+    setComment("")
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    
+    axios.get("/api/getAllComments",{
+      headers:{
+        Authorization:`Bearer ${userInfo[0].token}`
+      },
+      params:{
+        leadId : leadId
+      }
+    })
+    .then((res)=>{
+      toast.dismiss();
+      setAllComments(res.data.data.results)
+    })
+    .catch((err)=>{
+      toast.dismiss();
+      
+    })
+    setChange(false)
+  },[change])
+
+  const addComment = (event)=>{
+    event.preventDefault();
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    
+    const payload = {
+      LeadID : Number(leadId),
+      Comment : comment,
+      UserName :  userInfo[0]?.Username
+    }
+
+    toast.loading("Adding comment!!", {
+      className: "toast-loading-message",
+    });
+    axios.post("/api/addComment",
+    payload,
+    {
+      headers:{
+        Authorization:`Bearer ${userInfo[0].token}`
+      },
+    })
+    .then(()=>{
+      toast.dismiss();
+      toast.success("Successfully added the comment!", {
+        className: "toast-loading-message",
+      });
+    })
+    .catch((err)=>{
+      toast.dismiss();
+      toast.error("Try Again!!", {
+        className: "toast-loading-message",
+      });
+    })
+    setComment("");
+    setChange(true)
+  }
   return (
     <>
       <div className="mi_text mt-2">
@@ -12,9 +83,10 @@ const ChatboxContent = () => {
               cols="40"
               rows="3"
               wrap="hard"
+              onChange={(e)=>setComment(e.target.value)}
               required
             />
-            <button className="btn btn-color w-100 mt-3" type="submit">
+            <button className="btn btn-color w-100 mt-3" onClick={(e)=>addComment(e)}>
               Add Comment
             </button>
           </form>
@@ -25,11 +97,10 @@ const ChatboxContent = () => {
         style={{ border: "1px solid #f2f2f2", borderRadius: "5px" }}
       >
         <ul className="chatting_content">
-          <SingleChatBoxReply />
+          <SingleChatBoxReply  allComments={allComments}/>
         </ul>
       </div>
 
-      {/* End inbox_chatting_box */}
     </>
   );
 };

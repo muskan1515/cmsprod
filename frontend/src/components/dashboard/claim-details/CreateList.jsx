@@ -698,7 +698,7 @@ const CreateList = ({
               <DatePicker
                   className="form-control"
                   id="propertyTitle"
-                  dateFormat="dd/MM/yyyy"
+                  dateFormat="dd-MM-yyyy"
                   selected={
                     policyStartDate !== null && !isNaN(new Date(policyStartDate))
                       ? new Date(policyStartDate)
@@ -745,7 +745,7 @@ const CreateList = ({
               <DatePicker
                 className="form-control"
                 id="propertyTitle"
-                dateFormat="dd/MM/yyyy"
+                dateFormat="dd-MM-yyyy"
                 selected={
                   policyEndDate !== null && !isNaN(new Date(policyEndDate))
                     ? new Date(policyEndDate)

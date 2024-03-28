@@ -1,7 +1,7 @@
 import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import AccidentViewForm from "./AccidentViewForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyDatePicker from "../../common/MyDatePicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -52,6 +52,10 @@ const AccidentEditableForm = ({
       return "";
     }
   }
+
+  useEffect(()=>{
+    setDateOfAccident(formatDate(DateOfAccident))
+  },[claim])
   return (
     <>
       <div className="faq_according row mt-2">
