@@ -372,7 +372,7 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Date of Accident
+                    {/* Date of Accident */}
                   </label>
                 </div>
                 <div className="col-lg-8">

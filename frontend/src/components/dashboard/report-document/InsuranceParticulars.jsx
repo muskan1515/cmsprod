@@ -690,7 +690,7 @@ const InsuranceParticulars = ({ allInfo }) => {
           <td style={{ width: "35%" }} className="d-flex align-item-start">
             <span>(e) Insured</span>
           </td>
-          <td style={{ width: "5%" }} className="">
+          <td style={{ width: "5%", marginTop: "-10px" }} className="">
             <span>:</span>
           </td>
           <td style={{ width: "40%" }} className="text-start">
@@ -712,8 +712,19 @@ const InsuranceParticulars = ({ allInfo }) => {
           </td>
         </tr>
         <tr>
+          <td style={{ width: "35%" }} className="d-flex align-item-start">
+            <span>(f) Address</span>
+          </td>
+          <td style={{ width: "5%" }} className="">
+            <span>:</span>
+          </td>
+          <td style={{ width: "40%" }} className="text-start">
+            <span>{allInfo?.vehicleOnlineDetails?.PermanentAddress}</span>
+          </td>
+        </tr>
+        <tr>
           <td style={{ width: "25%" }} className="text-start">
-            <span>(f) H.P.A. </span>
+            <span>(g) H.P.A. </span>
           </td>
           <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
@@ -729,7 +740,7 @@ const InsuranceParticulars = ({ allInfo }) => {
         </tr>
         <tr>
           <td style={{ width: "25%" }} className="text-start">
-            <span>(g) Appointed By </span>
+            <span>(h) Appointed By </span>
           </td>
           <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
