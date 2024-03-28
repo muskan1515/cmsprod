@@ -104,6 +104,8 @@ const Index = ({}) => {
       year: "numeric",
     };
 
+
+
     const formattedDate = new Date(dateString).toLocaleDateString(
       "en-US",
       options
@@ -111,6 +113,14 @@ const Index = ({}) => {
     return formattedDate;
   };
 
+
+  const formatDate2 = (val) => {
+    const date = new Date(val);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Note: Month is zero-indexed
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
   const [InsuredName, setInsuredName] = useState("");
   const [InsuredMailAddress, setInsuredMailAddress] = useState("");
   const [InsuredMobileNo1, setInsuredMobileNo1] = useState("");
@@ -946,7 +956,7 @@ const Index = ({}) => {
 
       PlaceOfLoss,
       PlaceOfSurvey,
-      DateOfAccident,
+      DateOfAccident : formatDate2(DateOfAccident),
       TimeOfAccident,
       PlaceOfLoss,
       Pin,

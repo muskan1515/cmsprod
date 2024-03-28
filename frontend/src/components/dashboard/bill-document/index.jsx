@@ -88,6 +88,7 @@ const Index = () => {
         <header className="bg-gray-800 text-white"></header>
         <main className="flex-grow p-4">
           {" "}
+          
           <div className="col-lg-12">
             <ErrorPageContent feeReport={feeReport} />
           </div>
@@ -107,8 +108,7 @@ const Index = () => {
                 style={{ display: "flex", alignItems: "center" }}
               >
                 <h5 className="text-dark" style={{ fontSize: "12px" }}>
-                  H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
-                  Ganganagar(Raj.)-335001
+                69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan 335001
                 </h5>
                 {/* <h5
                   className="text-center text-dark"
@@ -118,7 +118,7 @@ const Index = () => {
                   Mountville,Sector-79,Gurugram(Hr)
                 </h5> */}
               </div>
-              <div className="" style={{ marginTop: "" }}>
+              {/* <div className="" style={{ marginTop: "" }}>
                 <div className="text-end">
                   <Image
                     width={201}
@@ -129,7 +129,7 @@ const Index = () => {
                     alt="1.jpg"
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </footer>

@@ -158,7 +158,8 @@ const ErrorPageContent = ({ feeReport }) => {
     const wordsWholePart = convert(wholePart);
     const wordsDecimalPart = convert(decimalPart);
 
-    return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+    const string = wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+    return string.toUpperCase();
   }
 
   const calculateTheTotalBillWithoutGST = () => {
@@ -478,7 +479,7 @@ const ErrorPageContent = ({ feeReport }) => {
             </td>
             <td>
               <div>
-                <h5 className="text-decoration-underline m-2">Final</h5>
+                <h5 className="text-decoration-underline m-2">{feeReport?.feeDetails?.Type}</h5>
                 <span style={{ paddingLeft: "10px" }}>
                   Professional Fee :{" "}
                   <span style={{ marginLeft: "40px", fontWeight: "lighter" }}>
@@ -689,13 +690,13 @@ const ErrorPageContent = ({ feeReport }) => {
               {feeReport?.feeDetails?.BillTo !== "Insured" && (
                 <span className="text-dark">
                   <span className="fw-bold">GSTIN </span>:{" "}
-                  {selectedServicingOffice?.GST_No} State : (
+                  08AAPCM1051K1Z9 State : (
                   {selectedServicingOffice?.StateCode})
                 </span>
               )}
               <br />
               <span className="text-dark">
-                <span className="fw-bold">PAN </span> : AAPCN1051K
+                <span className="fw-bold">PAN </span> : AAPCM1051K
               </span>
 
               <div className="d-flex gap-3 text-dark">
@@ -730,6 +731,19 @@ const ErrorPageContent = ({ feeReport }) => {
                 <span style={{ color: "black", marginLeft: "50%" }}>
                   Insurance Surveyors & Loss assessors Pvt. Ltd.
                 </span>
+              </div>
+
+              <div className="" style={{  }}>
+                <div className="text-end">
+                  <Image
+                    width={201}
+                    height={54}
+                    priority
+                    className="w50"
+                    src="/assets/images/stamp.jpg"
+                    alt="1.jpg"
+                  />
+                </div>
               </div>
             </td>
           </tr>

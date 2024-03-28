@@ -201,7 +201,7 @@ const Index = () => {
     fetchData(); 
     const intervalId = setInterval(() => {
       fetchData();
-    }, 15 * 60 * 1000);
+    },  5 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, []);
 

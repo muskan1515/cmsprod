@@ -44,8 +44,7 @@ const PrintComponent = ({ children }) => {
                 style={{ display: "flex", alignItems: "center" }}
               >
                 <h5 className="text-dark" style={{ fontSize: "12px", paddingLeft:"10px" }}>
-                  H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School ,Sri
-                  Ganganagar(Raj.)-335001
+                69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan 335001
                 </h5>
                 {/* <h5
                   className="text-center text-dark"

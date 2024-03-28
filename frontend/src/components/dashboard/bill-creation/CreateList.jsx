@@ -264,7 +264,7 @@ const CreateList = ({ allInfo, leadID }) => {
     console.log("info",allInfo.VehicleOnlineDetails?.VehicleType)
     if (String(allInfo?.VehicleOnlineDetails?.VehicleType) === "2W")
       return (500);
-    if (String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W")
+    else
     return (700);
   };
 
@@ -291,7 +291,7 @@ const CreateList = ({ allInfo, leadID }) => {
 
   const getTotalValue = () => {
 
-    const professionalFees =
+    const professionalFees = 
       Number(calculateProfessionalFees())
 
     const totalKM =
@@ -352,8 +352,35 @@ const CreateList = ({ allInfo, leadID }) => {
     return total + calculate_cgst + calculate_igst + calculate_sgst;
   };
 
+  useEffect(()=>{
+    const professionalFees = 
+    all
+    String(allInfo?.VehicleOnlineDetails?.VehicleType) === "2W" ? 500 : 700;
+
+    const Conveyance = 
+    allInfo?.feesDetails?.Conveyance !== undefined 
+    && allInfo?.feesDetails?.Conveyance !== null 
+    && allInfo?.feesDetails?.Conveyance !=="" 
+    ? allInfo?.feesDetails?.Conveyance : 0;
+
+    const PhotoCD = 
+    allInfo?.feesDetails?.Photos_cd !== undefined 
+    && allInfo?.feesDetails?.Photos_cd !== null 
+    && allInfo?.feesDetails?.Photos_cd !=="" 
+    ? allInfo?.feesDetails?.Photos_cd : 0;
+
+    const total =
+      Number(professionalFees) + Number(Conveyance) + Number(PhotoCD);
+
+    const calculate_cgst = (Number(total) * Number(CGST)) / 100;
+    const calculate_igst = (Number(total) * Number(IGST)) / 100;
+
+    const calculate_sgst = (Number(total) * Number(SGST)) / 100; 
+    setNetPay(total +calculate_cgst +calculate_igst+calculate_sgst)
+      },[allInfo]);
+
   useEffect(() => {
-    getTotalValue();
+    setNetPay(getTotalValue());
   }, [CGST, IGST, SGST]);
 
   const onSubmitHnadler = () => {
