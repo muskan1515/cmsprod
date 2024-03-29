@@ -412,14 +412,31 @@ const SummaryOfAssessment = ({
   const getTotalLabourAssessed = () => {
     let total = 0;
     allInfo?.labourDetails?.map((part, index) => {
-      const assessed = Number(part.Assessed);
+      const dep = String(part.JobType) === "1" ? Number(Number(part.Assessed) * Number(12.5))/100 : 0;
+      const assessed = Number(part.Assessed)-dep;
 
+      
+      const assessedvalue = (assessed * Number(part.GSTPercentage)) ;
+      const gst = (Number(assessedvalue)) / 100;
       if (part.LabourIsActive) {
-        total = total + assessed;
+        total = total + (assessed + gst);
       }
     });
     return total;
   };
+
+  const calculateLabourDepreciations = ()=>{
+    let totalDep = 0;
+    allInfo?.labourDetails?.map((labour,index)=>{
+    if(String(labour.JobType) === "1"){
+     const dep = Number(Number(labour.Assessed) * Number(12.5))/100;
+
+     console.log("dep",dep)
+     totalDep += (Number(totalDep) + Number(dep));
+    }
+    })
+    return totalDep;
+ }
 
   const getTotalLabourEstimateGST = () => {
     let total = 0;
@@ -434,18 +451,6 @@ const SummaryOfAssessment = ({
     return total;
   };
 
-  const getTotalLabourAssessedGST = () => {
-    let total = 0;
-    allInfo?.labourDetails?.map((part, index) => {
-      const assessed = Number(part.Assessed);
-
-      const gst = (assessed * Number(part.GSTPercentage)) / 100;
-      if (part.LabourIsActive) {
-        total = total + gst;
-      }
-    });
-    return total;
-  };
 
   //*************SUMMARY**************** *//
 
@@ -454,8 +459,7 @@ const SummaryOfAssessment = ({
 
   const getSummaryTotalWithLessExcess = () => {
     return (
-      getTotalLabourAssessed() +
-      getTotalLabourAssessedGST() +
+      getTotalLabourAssessedGST() +( getTotalLabourAssessed() - calculateLabourDepreciations())+
       getTotalEvaluationOfAssessedForNewParts() +
       lessExcess
     );
@@ -476,9 +480,8 @@ const SummaryOfAssessment = ({
 
   const getSummaryTotalWithLessSalvage = () => {
     return (
-      getTotalLabourAssessed() +
-      getTotalLabourAssessedGST() +
-      getTotalEvaluationOfAssessedForNewParts() +
+      getTotalLabourAssessedGST() +( getTotalLabourAssessed() - calculateLabourDepreciations())+
+                  getTotalEvaluationOfAssessedForNewParts()+
       lessExcess +
       lessSalvage
     );
@@ -507,8 +510,9 @@ const SummaryOfAssessment = ({
     let typeTotalValue = 0;
     allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
-      total = total + part.NewPartsIsActive ? assessed : 0;
-      typeTotalValue = typeTotalValue + (part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type) ? assessed : 0);
+      const gst = (Number(assessed) * Number(part.NewPartsGSTPct))/100;
+      total = total + part.NewPartsIsActive ? assessed  + gst : 0;
+      typeTotalValue = typeTotalValue + (part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type) ? assessed + gst: 0);
     });
 
     console.log("type",type,total,typeTotalValue)
@@ -682,6 +686,22 @@ const SummaryOfAssessment = ({
       return result.trim();
     };
 
+    const getTotalLabourAssessedGST = () => {
+      let total = 0;
+      allInfo?.labourDetails?.map((part, index) => {
+        const dep = String(part.JobType) === "1" ? Number(Number(part.Assessed) * Number(12.5))/100 : 0;
+        const assessed = Number(part.Assessed)-dep;
+  
+        
+        const assessedvalue = (assessed * Number(part.GSTPercentage)) ;
+        const gst = (Number(assessedvalue)) / 100;
+        if (part.LabourIsActive) {
+          total = total + gst;
+        }
+      });
+      return total;
+    };
+
     const roundedNumber = roundOff(number);
 
     const wholePart = Math.floor(roundedNumber);
@@ -692,6 +712,23 @@ const SummaryOfAssessment = ({
 
     return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
   }
+
+  
+  const getTotalLabourAssessedGST = () => {
+    let total = 0;
+    allInfo?.labourDetails?.map((part, index) => {
+      const dep = String(part.JobType) === "1" ? Number(Number(part.Assessed) * Number(12.5))/100 : 0;
+      const assessed = Number(part.Assessed)-dep;
+
+      
+      const assessedvalue = (assessed * Number(part.GSTPercentage)) ;
+      const gst = (Number(assessedvalue)) / 100;
+      if (part.LabourIsActive) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
 
   //*************************** */
   return (
@@ -738,7 +775,7 @@ const SummaryOfAssessment = ({
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
-              roundOff(getTotalLabourAssessed() + getTotalLabourAssessedGST())
+              roundOff(getTotalLabourAssessedGST() +( getTotalLabourAssessed() - calculateLabourDepreciations()))
             )}
           </td>
         </tr>
@@ -748,8 +785,10 @@ const SummaryOfAssessment = ({
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
           {addCommasToNumber(
-                roundOff(getOverallTotalEstimateNewParts(0) + getOverallTotalEstimateGST(0))
-              )}
+                roundOff(
+                  getOverallTotalEstimateNewParts(0) +
+                    getOverallTotalEstimateGST(0)
+          ))}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
@@ -772,8 +811,7 @@ const SummaryOfAssessment = ({
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessed() +
-                  getTotalLabourAssessedGST() +
+                getTotalLabourAssessedGST() +( getTotalLabourAssessed() - calculateLabourDepreciations())+
                   getTotalEvaluationOfAssessedForNewParts()
               )
             )}

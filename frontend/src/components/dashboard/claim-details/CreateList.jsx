@@ -136,23 +136,22 @@ const CreateList = ({
 
 
   useEffect(() => {
-    if (
-      policyEndDate == "null" ||
-      policyEndDate == null ||
-      policyEndDate == ""
-    ) {
+    
       if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
         const oneYearLater = new Date(policyStartDate);
         oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
         oneYearLater.setDate(oneYearLater.getDate() - 1);
 
         const formattedOneYearLater = oneYearLater.toLocaleDateString("en-US");
-        console.log("policyStartDate", policyStartDate);
-        console.log("formattedOneYearLater", formattedOneYearLater);
-
-        setPolicyEndDate(formattedOneYearLater);
+        const dateObj = new Date(formattedOneYearLater);
+        const yyyy = dateObj.getFullYear();
+        const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const dd = String(dateObj.getDate()).padStart(2, '0');
+        const formattedDate = `${yyyy}-${mm}-${dd}`;
+        console.log("formattedDate",formattedDate)
+        setPolicyEndDate(formattedDate);
       }
-    }
+    
   }, [policyStartDate]);
 
 
@@ -215,6 +214,14 @@ const CreateList = ({
     }
   };
 
+  const setDate = (newDate,settingFunc)=>{
+     const dateObj = new Date(newDate);
+  const yyyy = dateObj.getFullYear();
+  const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const dd = String(dateObj.getDate()).padStart(2, '0');
+  const formattedDate = `${yyyy}-${mm}-${dd}`;
+  settingFunc(formattedDate);
+  }
  
 
 
@@ -704,7 +711,7 @@ const CreateList = ({
                       ? new Date(policyStartDate)
                       : ""
                   }
-                  onChange={(date) => setPolicyStartDate(date)}
+                  onChange={(date) => {setDate(date,setPolicyStartDate)}}
                 />
               
             </div>
@@ -751,7 +758,7 @@ const CreateList = ({
                     ? new Date(policyEndDate)
                     : ""
                 }
-                onChange={(date) => setPolicyEndDate(date)}
+                onChange={(date) => {setDate(date,setPolicyEndDate)}}
               />
             </div>
           </div>
@@ -827,7 +834,7 @@ const CreateList = ({
             </div>
           </div>
               </div>*/}
-        <div className="col-lg-6">
+        {/* <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">
               <label
@@ -852,7 +859,7 @@ const CreateList = ({
               />
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="col-lg-6">
           <div className="row mt-1">
             <div className="col-lg-4 my_profile_setting_input form-group">

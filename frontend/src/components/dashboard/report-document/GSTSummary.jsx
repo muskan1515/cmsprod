@@ -8,6 +8,77 @@ import { useRef, useState } from "react";
 const GSTSummary = ({ allInfo }) => {
   const pdfRef = useRef();
 
+  const [allGST, setGST] = useState([]);
+
+  const [noGST, setNoGST] = useState([]);
+
+  const [allGSTType, setAllGSTType] = useState([]);
+
+  useEffect(() => {
+    let array = [];
+    const newParts = allInfo?.newPartsDetails;
+    newParts?.map((part, index) => {
+      let indexValue = -1;
+      array?.map((temp, idx) => {
+        if (String(temp.field) === String(part.NewPartsGSTPct)) {
+          indexValue = idx;
+        }
+      });
+
+      if (indexValue === -1) {
+        const newField = {
+          field: part.NewPartsGSTPct,
+          value: 1,
+        };
+        array.push(newField);
+      }
+    });
+
+    array.sort((a, b) => parseFloat(a.field) - parseFloat(b.field));
+    console.log("array", array);
+    setAllGSTType(array);
+  }, [allInfo]);
+
+
+  useEffect(() => {
+    let array = [],
+      array2 = [];
+    const labours = allInfo?.labourDetails;
+    labours?.map((part, index) => {
+      if (Number(part.IsGSTIncluded) % 2 === 0) {
+        const newRow = {
+          ...part,
+          pos : index + 1
+        }
+        array.push(newRow);
+      } else {
+        const newRow = {
+          ...part,
+          pos : index + 1
+        }
+        array2.push(newRow);
+      }
+    });
+    setNoGST(array);
+    setGST(array2);
+  }, [allInfo]);
+
+  const sortFunction = (array,type) => {
+    
+    const updatedArray =  array.sort((a, b) => parseFloat(a.SNO) - parseFloat(b.SNO));
+    let newRevisedArray = [];
+    updatedArray.map((row,index)=>{
+      if(String(row.NewPartsGSTPct) === String(type)){
+        const newRow ={
+          ...row,
+          pos : index +1
+        }
+        newRevisedArray.push(newRow)
+      }
+    })
+    return newRevisedArray;
+  };
+
   const downloadPDF = () => {
     const input = pdfRef.current;
     const pdf = new jsPDF("p", "mm", "a4", true);
@@ -65,6 +136,7 @@ const GSTSummary = ({ allInfo }) => {
 
     generateAllPages();
   };
+
 
   //   const input = pdfRef.current;
 
@@ -374,10 +446,14 @@ const GSTSummary = ({ allInfo }) => {
   const getTotalLabourAssessed = () => {
     let total = 0;
     allInfo?.labourDetails?.map((part, index) => {
-      const assessed = Number(part.Assessed);
+      const dep = String(part.JobType) === "1" ? Number(Number(part.Assessed) * Number(12.5))/100 : 0;
+      const assessed = Number(part.Assessed)-dep;
 
+      
+      const assessedvalue = (assessed * Number(part.GSTPercentage)) ;
+      const gst = (Number(assessedvalue)) / 100;
       if (part.LabourIsActive) {
-        total = total + assessed;
+        total = total + (assessed + gst);
       }
     });
     return total;
@@ -396,12 +472,16 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
+
   const getTotalLabourAssessedGST = () => {
     let total = 0;
     allInfo?.labourDetails?.map((part, index) => {
-      const assessed = Number(part.Assessed);
+      const dep = String(part.JobType) === "1" ? Number(Number(part.Assessed) * Number(12.5))/100 : 0;
+      const assessed = Number(part.Assessed)-dep;
 
-      const gst = (assessed * Number(part.GSTPercentage)) / 100;
+      
+      const assessedvalue = (assessed * Number(part.GSTPercentage)) ;
+      const gst = (Number(assessedvalue)) / 100;
       if (part.LabourIsActive) {
         total = total + gst;
       }
@@ -422,6 +502,19 @@ const GSTSummary = ({ allInfo }) => {
       lessExcess
     );
   };
+
+  const calculateLabourDepreciations = ()=>{
+    let totalDep = 0;
+    allInfo?.labourDetails?.map((labour,index)=>{
+    if(String(labour.JobType) === "1"){
+     const dep = Number(Number(labour.Assessed) * Number(12.5))/100;
+
+     console.log("dep",dep)
+     totalDep += (Number(totalDep) + Number(dep));
+    }
+    })
+    return totalDep;
+ }
 
   function convertToProperHTML(htmlString) {
     // Create a new DOMParser
@@ -455,9 +548,8 @@ const GSTSummary = ({ allInfo }) => {
 
   const getSummaryTotalWithLessSalvage = () => {
     return (
-      getTotalLabourAssessed() +
-      getTotalLabourAssessedGST() +
-      getTotalEvaluationOfAssessedForNewParts() +
+      getTotalLabourAssessedGST() +( getTotalLabourAssessed() - calculateLabourDepreciations())+
+                  getTotalEvaluationOfAssessedForNewParts()+
       lessExcess +
       lessSalvage
     );
@@ -620,7 +712,8 @@ const GSTSummary = ({ allInfo }) => {
     const wordsWholePart = convert(wholePart);
     const wordsDecimalPart = convert(decimalPart);
 
-    return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+    const wordss=  wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+    return wordss.toUpperCase()
   }
   const [splitText, setSplitText] = useState([]);
 
@@ -641,7 +734,7 @@ const GSTSummary = ({ allInfo }) => {
     <>
       <div className="" style={{ marginTop: "10px" }}>
         <h5 className="text-dark" style={{ color: "black" }}>
-          GST Summary Tax Wise
+          GST Summary Tax Wise (New Parts)
         </h5>
         <table style={{ width: "100%" }}>
           <tr>
@@ -709,14 +802,47 @@ const GSTSummary = ({ allInfo }) => {
               Total
             </th>
           </tr>
-          <tr>
+
+          {allGSTType?.map((field, index) => {
+            return (
+              <>
+                <tr>
+                  <th colSpan={2}>Parts with {field.field} % GST</th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                  <th
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  ></th>
+                </tr>
+            
+                {sortFunction(allInfo?.newPartsDetails,field.field).map((part, index) => {
+                  return part.NewPartsIsActive === 1 &&
+                    String(part.NewPartsGSTPct) === String(field.field) ? (
+                     <>
+              <tr>
             <td
               style={{
                 border: "1px solid black",
                 paddingRight: "5px",
               }}
             >
-              1
+              {part.pos}
             </td>
             <td
               style={{
@@ -796,6 +922,11 @@ const GSTSummary = ({ allInfo }) => {
               )}
             </td>
           </tr>
+            </>) : null
+          })}
+                    </>
+            )})}
+          
           <tr>
             <td
               style={{
@@ -1052,7 +1183,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              0000
+              {"  "}---
             </td>
             <td
               style={{
@@ -1112,7 +1243,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              0000
+              {"  "}---
             </td>
             <td
               style={{

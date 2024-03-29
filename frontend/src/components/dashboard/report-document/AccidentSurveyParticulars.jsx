@@ -660,10 +660,8 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           </td>
           <td style={{ width: "55%" }} className="text-start">
             <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.SurveyAllotmentDate
-                ? formatDate(allInfo?.otherInfo[0]?.SurveyAllotmentDate)
-                : "--"}
+            {" "}
+              {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}
             </span>
           </td>
         </tr>
@@ -676,10 +674,9 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           </td>
           <td style={{ width: "55%" }} className="text-start">
             <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.SurveyConductedDate
-                ? formatDate(allInfo?.otherInfo[0]?.SurveyConductedDate)
-                : "-"}
+            {" "}
+              {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)},{" "}
+              {convertToReadable(allInfo?.otherInfo[0]?.AddedDateTime)}
             </span>
           </td>
         </tr>

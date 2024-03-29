@@ -53,9 +53,15 @@ const AccidentEditableForm = ({
     }
   }
 
-  useEffect(()=>{
-    setDateOfAccident(formatDate(DateOfAccident))
-  },[claim])
+  const setDate = (newDate,settingFunc)=>{
+    const dateObj = new Date(newDate);
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    settingFunc(formattedDate);
+    }
+
   return (
     <>
       <div className="faq_according row mt-2">
@@ -149,13 +155,13 @@ const AccidentEditableForm = ({
                         <DatePicker
                           className="form-control"
                           id="propertyTitle"
-                          dateFormat="dd-MM-yyyy"
+                          dateFormat="dd/MM/yyyy"
                           selected={
                             DateOfAccident !== null && !isNaN(new Date(DateOfAccident))
                               ? new Date(DateOfAccident)
                               : ""
                           }
-                          onChange={(date) => setDateOfAccident(date)}
+                          onChange={(date) => setDate(date,setDateOfAccident)}
                         />
                         </div>
                       </div>

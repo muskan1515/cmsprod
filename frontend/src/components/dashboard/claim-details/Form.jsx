@@ -260,6 +260,16 @@ const Form = ({
     }
   };
 
+  const setDate = (newDate,settingFunc)=>{
+    const dateObj = new Date(newDate);
+ const yyyy = dateObj.getFullYear();
+ const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+ const dd = String(dateObj.getDate()).padStart(2, '0');
+ const formattedDate = `${yyyy}-${mm}-${dd}`;
+ settingFunc(formattedDate);
+ }
+
+
   const [isUpdateVehicleLoading, setisUpdateVehicleLoading] = useState(false);
   //permanenet Address
   return (
@@ -464,7 +474,7 @@ const Form = ({
                                 ? new Date(DateRegistration)
                                 : ""
                             }
-                            onChange={(date) => setDateRegistration(date)}
+                            onChange={(date) => setDate(date,setDateRegistration)}
                           />
 
                         </div>
@@ -851,13 +861,14 @@ const Form = ({
                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
+                            dateFormat="dd/MM/yyyy"
                             selected={
                               RcInsuranceUpto !== null &&
                               !isNaN(new Date(RcInsuranceUpto))
                                 ? new Date(RcInsuranceUpto)
                                 : ""
                             }
-                            onChange={(date) => setRcInsuranceUpto(date)}
+                            onChange={(date) => setDate(date,setRcInsuranceUpto)}
                           />
                         </div>
                       </div>

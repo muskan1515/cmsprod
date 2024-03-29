@@ -15,10 +15,6 @@ const SingleChatBoxReply = ({allComments}) => {
     },
   ];
 
-  const getRandomColor = () => {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
-  };
-
   const formatDate = (datetimeString)=>{
     const date = moment(datetimeString);
     const today = moment().startOf('day');
@@ -34,7 +30,6 @@ const SingleChatBoxReply = ({allComments}) => {
       convertedDateTime = date.format('DD MMM YYYY');
     }
 
-    date.add(5, 'hours').add(30, 'minutes');
 
     convertedDateTime += ' at ' + date.format('hh:mm A');
 

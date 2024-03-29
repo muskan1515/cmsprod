@@ -133,6 +133,15 @@ const Form_01 = ({
     return formattedDate;
   };
 
+  const setDate = (newDate,settingFunc)=>{
+    const dateObj = new Date(newDate);
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    settingFunc(formattedDate);
+    }
+
   return (
     <>
       <div className="faq_according row mt-2">
@@ -486,7 +495,7 @@ const Form_01 = ({
                                 ? new Date(DateOfBirth)
                                 : ""
                             }
-                            onChange={(date) => setDateOfBirth(date)}
+                            onChange={(date) => setDate(date,setDateOfBirth)}
                           />
                         </div>
                       </div>
@@ -548,7 +557,7 @@ const Form_01 = ({
                                 ? new Date(DateOfIssue)
                                 : ""
                             }
-                            onChange={(date) => setDateOfIssue(date)}
+                            onChange={(date) => setDate(date,setDateOfIssue)}
                           />
                         </div>
                       </div>
@@ -571,17 +580,6 @@ const Form_01 = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                          {/* <MyDatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            setSelectedDate={setValidUpto}
-                            selectedDate={
-                              ValidUpto || ValidUpto!== "undefined" ? new Date(ValidUpto) : ""
-                            }
-
-                            // placeholder="Enter Registration No."
-                          /> */}
-                          {console.log("ValidUpto+++++++++", ValidUpto)}
                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
@@ -591,7 +589,7 @@ const Form_01 = ({
                                 ? new Date(ValidUpto)
                                 : ""
                             }
-                            onChange={(date) => setValidUpto(date)}
+                            onChange={(date) => setDate(date,setValidUpto)}
                           />
                         </div>
                       </div>
