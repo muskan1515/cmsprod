@@ -605,12 +605,19 @@ const AccidentDetails = ({ allInfo }) => {
 
     return wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
   }
+  function removeHtmlTags(html) {
+    return html?.replace(/<(\/?[^>]+)>/g, function(match, p1) {
+        return p1?.startsWith('/') ? "</b>" : "<b>";
+    });
+}
 
+  
   //*************************** */
   return (
     <div>
       <h6 className="text-dark">CAUSE & NATURE OF ACCIDENT :</h6>
-      <span>{allInfo?.otherInfo[0]?.CauseOfAccident} , causing damages.</span>
+      {/* <span>{removeHtmlTags(allInfo?.otherInfo[0]?.CauseOfAccident)} , causing damages.</span> */}
+        <span dangerouslySetInnerHTML={{ __html: removeHtmlTags(allInfo?.otherInfo[0]?.CauseOfAccident) }}></span>
       <div
         style={{
           border: "1px solid black",

@@ -1185,9 +1185,9 @@ const GSTSummary = ({ allInfo }) => {
         <ul>
           <div>
             {splitText.map((part, index) => (
-              <div key={index}>
-                <p className="text-dark fw-bold">{part}</p>
-              </div>
+              <li key={index}>
+              {part.replace(/\n/g, '')}
+            </li>
             ))}
           </div>
 
@@ -1252,6 +1252,7 @@ const GSTSummary = ({ allInfo }) => {
           </div>
         </div>
       </div>
+    
     </>
   );
 };

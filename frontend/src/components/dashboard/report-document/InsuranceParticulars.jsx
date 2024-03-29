@@ -700,14 +700,14 @@ const InsuranceParticulars = ({ allInfo }) => {
               {allInfo?.driverOnlineDetails?.FatherName
                 ? String(allInfo?.driverOnlineDetails?.Gender) === "Female"
                   ? ` D/o ${allInfo?.driverOnlineDetails?.FatherName}`
-                  : `S/o ${allInfo?.driverOnlineDetails?.FatherName}`
+                  : ` S/o ${allInfo?.driverOnlineDetails?.FatherName}`
                 : "-"}
               ,{" "}
               {allInfo?.driverOnlineDetails?.Mobile === null
                 ? allInfo?.driverOnlineDetails?.Mobile
                 : allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
               <br />
-              {allInfo?.vehicleOnlineDetails?.PermanentAddress}
+              {/* {allInfo?.vehicleOnlineDetails?.PermanentAddress} */}
             </span>
           </td>
         </tr>

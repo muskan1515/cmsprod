@@ -824,7 +824,7 @@ const LossDamagesDetails = ({ allInfo }) => {
           In accordance with the instructions received from{" "}
           <b>
             {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}{" "}
-            {allInfo?.otherInfo[0]?.ClaimServicingOffice}- SGNR
+            {allInfo?.otherInfo[0]?.ClaimServicingOffice}
           </b>{" "}
           dated <b>{formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}</b> I
           visited <b>{allInfo?.otherInfo[0]?.GarageNameAndAddress}</b> and

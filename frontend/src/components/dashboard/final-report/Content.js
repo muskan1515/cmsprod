@@ -25,7 +25,7 @@ function convertHtmlToString(htmlString) {
 }
 
 export const otherContent = () => {
-  return 'No,As stated by Insurer';
+  return 'No,As stated by Insurerd.';
 };
 
 

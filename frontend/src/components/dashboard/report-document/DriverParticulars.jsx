@@ -163,9 +163,12 @@ const DriverParticulars = ({ allInfo }) => {
   };
 
   const changeFormat = (string) => {
-    string = string?.replace(/\//g, "-");
+    if (string && string.includes("/")) {
+        string = string.replace(/\//g, "-");
+    }
     return string;
-  }
+}
+
 
   const getTotalEstimate = () => {
     let total = 0;
@@ -691,8 +694,8 @@ const DriverParticulars = ({ allInfo }) => {
             </span>
             <span style={{ marginLeft: "60px" }}>Valid upto (NTV) : 
             {" "}
-              {allInfo?.otherInfo[0]?.ValidFrom !== "undefined"
-                ? changeFormat(allInfo?.otherInfo[0]?.ValidUntilNtv)
+            {allInfo?.otherInfo[0]?.ValidUpto
+                ? changeFormat(allInfo?.otherInfo[0]?.ValidUpto)
                 : "-"}
             </span>
           </td>
