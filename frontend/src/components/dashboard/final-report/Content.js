@@ -25,7 +25,7 @@ function convertHtmlToString(htmlString) {
 }
 
 export const otherContent = () => {
-  return 'No,As stated by Insurerd.';
+  return 'No,As stated by Insured.';
 };
 
 
@@ -48,7 +48,7 @@ export const AccidentContent = (InsuredName) => {
 export const getDocumentList = (data, leadId) => {
   let documentString = `Driving license,Certificate of registration,Repair Estimate 
   Claim form, Insurance Policy,Damage vehicle,AadhaarCard ,Pan card,Cancel Cheque,Satisfaction voucher,Dishcharge voucher
-  Dismantle photographs,Renspection photographs,Repair invoice,Payment/cash receipt,Images,Videos`
+  Dismantle photographs,Renspection photographs,Repair invoice,Payment/cash receipt.`
   return documentString;
 };
 
@@ -67,8 +67,7 @@ export const summaryNotes = () => {
     <li>03. The loss or damage or liability has arisen  <br> proximately caused by the insured perils. <br></li>
     <li>04. The prices are recommended exclusive of all taxes, duties, octroi etc.</li>
     <li>05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.</li>
-    <li>06. Chassis No., As per RC: **CASSISNUMBER** , As per Policy: **POLICYNUMBER** , it is for your information please.</li>
-    <li>07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
+    <li>06. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.</li>
   </ul>`);
 };
 

@@ -242,8 +242,6 @@ const Summary = ({
       03. The loss or damage or liability has arisen  proximately caused by the insured perils.<br> 
       04. The prices are recommended exclusive of all taxes, duties, octroi etc.<br>
       05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.<br>
-      06. Chassis No., As per RC: **CASSISNUMBER** , As per Policy: **POLICYNUMBER** , it is for your information please.<br>
-      07. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report.<br>
       `))
     }
   },[documents,Endurance,FinalReportNotes])

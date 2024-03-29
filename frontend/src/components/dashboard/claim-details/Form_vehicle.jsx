@@ -75,6 +75,24 @@ const Form_vehicle = ({
     const formattedDate = date.toLocaleDateString("en-GB");
     return formattedDate;
   };
+
+  
+  const setDate = (inputString)=>{
+    let modifiedString = inputString;
+
+        // Check if inputString is in "dd/mm/yyyy" format
+        if (/^\d{2}\/\d{2}\/\d{4}$/.test(inputString)) {
+            modifiedString = inputString.replace(/\//g, '-');
+        }
+
+        // Check if inputString is in "yyyy-mm-dd" format
+        if (/^\d{4}-\d{2}-\d{2}$/.test(inputString)) {
+            const [year, month, day] = inputString.split('-');
+            modifiedString = `${day}-${month}-${year}`;
+        }
+        return modifiedString;
+
+  }
   
   return (
     <>
@@ -223,7 +241,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DateRegistration && DateRegistration!=="null" ? formatDate(DateRegistration) : ""}
+                      {DateRegistration && DateRegistration!=="null" ? setDate(DateRegistration) : ""}
                     </label>
                   </div>
                 </td>
@@ -608,7 +626,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcInsuranceUpto ? formatDate(RcInsuranceUpto) : ""}
+                      {RcInsuranceUpto ? setDate(RcInsuranceUpto) : ""}
                     </label>
                   </div>
                 </td>

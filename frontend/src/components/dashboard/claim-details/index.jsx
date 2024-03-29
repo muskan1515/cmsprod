@@ -1003,6 +1003,15 @@ const Index = ({}) => {
   
   };
 
+  const setDate = (newDate,settingFunc)=>{
+    const dateObj = new Date(newDate);
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    settingFunc(formattedDate);
+  }
+
   const editHandler = (value) => {
     if (value === 1) {
       setEditCase((prop) => !prop);

@@ -29,7 +29,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
 
   useEffect(()=>{
 
-    setSubject(defaultSubjectContent(type,vehicleNo,policyNo,Insured,date))
+    setSubject((defaultSubjectContent(type,vehicleNo,policyNo,Insured,date)))
     
     let requiredString = ""
  
@@ -56,7 +56,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
     
     const getData = ()=>{
       const newContent = defaultContent(type,vehicleNo,policyNo,Insured,new Date());
-      setBody(newContent)
+      setBody((newContent))
     }
 
     getData()
@@ -105,15 +105,15 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
     const mainUrl=window.location.href
     const leadUrl = mainUrl?.split("/send-mail/")[1]
     const requiredLeadId = leadUrl?.split("?")[0]
-    // /console.log(selectedItems);
+    console.log("selectedItems",selectedItems);
     const payload = {
       toMail: emailAddress ? emailAddress : email,
       PolicyNo: policyNos ? policyNos : policyNo,
       Date: date ? date : new Date(),
       vehicleNo: vehicleNo,
       Insured: Insured,
-      content: createStringFromSelectedItems(selectedItems),
-      content2: createStringFromSelectedItems2(selectedItems),
+      content: selectedItems.length > 0  ?  createStringFromSelectedItems(selectedItems) : String(type) === "2" || String(type) === "3"  ? "1) Images\n" : "",
+      content2: selectedItems.length > 0 ? createStringFromSelectedItems2(selectedItems) :String(type) === "2" || String(type) === "3"  ? "Images," : "",
       leadId: requiredLeadId,
       subject: subject,
       body: body,

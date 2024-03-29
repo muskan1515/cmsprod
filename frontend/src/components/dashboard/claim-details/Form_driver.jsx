@@ -57,7 +57,22 @@ const Form_driver = ({
     const formattedDate = new Date(date).toLocaleDateString('en-GB', options);
     return formattedDate;
   }
+  const setDate = (inputString)=>{
+    let modifiedString = inputString;
 
+        // Check if inputString is in "dd/mm/yyyy" format
+        if (/^\d{2}\/\d{2}\/\d{4}$/.test(inputString)) {
+            modifiedString = inputString.replace(/\//g, '-');
+        }
+
+        // Check if inputString is in "yyyy-mm-dd" format
+        if (/^\d{4}-\d{2}-\d{2}$/.test(inputString)) {
+            const [year, month, day] = inputString.split('-');
+            modifiedString = `${day}-${month}-${year}`;
+        }
+        return modifiedString;
+
+  }
   const statusOptions = [
     {
       id: 1,
@@ -211,7 +226,7 @@ const Form_driver = ({
                       }}
                     >
                       {claim?.driverDetails?.ValidUpto&&claim?.driverDetails?.ValidUpto!=="null"?
-                      (claim?.driverDetails?.ValidUpto):""}
+                      setDate(claim?.driverDetails?.ValidUpto):""}
                     </label>
                   </div>
                 </td>
@@ -519,7 +534,7 @@ const Form_driver = ({
                       }}
                     >
                       {(claim?.driverDetails?.DateOfBirth&&claim?.driverDetails?.DateOfBirth!=="null"?
-                      (claim?.driverDetails?.DateOfBirth):"")}
+                      setDate(claim?.driverDetails?.DateOfBirth):"")}
                     </label>
                   </div>
                 </td>
@@ -576,7 +591,7 @@ const Form_driver = ({
                       }}
                     >
                       {claim?.driverDetails?.DateOfIssue&&claim?.driverDetails?.DateOfIssue!=="null"?
-                      (claim?.driverDetails?.DateOfIssue):""}
+                      setDate(claim?.driverDetails?.DateOfIssue):""}
                     </label>
                   </div>
                 </td>

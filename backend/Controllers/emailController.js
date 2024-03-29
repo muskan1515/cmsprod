@@ -69,26 +69,35 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
         const emailContent = `
       Dear Sir/Madam,
   
-      Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
+      Greeting from the MT Engineers Legal Investigator Pvt. Ltd., <br/>
   
-        We are Appointed for the survey of vehicle no.${vehicleNo}, Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} from the United India 
-      Insurance co. Ltd., So we request you please provide the complete contact deatils & mails of Repairer/insured. So that we 
-      can procedd further in your case and we also request 
-      you to provide the following details as follows:-
+        We are Appointed for the survey of vehicle no.${vehicleNo}, <br/>
+         Insured:${Insured} & Policy No.-${PolicyNo}  <br/>
+         on ${Date} from the United India Insurance co. Ltd., <br/>
+         So we request you please provide the complete contact <br/>
+         deatils & mails of Repairer/insured. So that we <br/>
+      can procedd further in your case and we also request <br/>
+      you to provide the following details as follows:- <br/>
 
-      ${content}
+      <strong> ${content} </strong>
 
-      Please provide the clear copy of all the documents so that the claim processing can be fast or
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+      Please provide the clear copy of all the documents so that <br/>
+      the claim processing can be fast or <br/>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p> <br/>
 
-      Please provide the clear Vahicle Videos so that the claim processing can be fast or
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
+      Please provide the clear Vahicle Videos so that the claim <br/>
+      processing can be fast or <br/>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
 
-      Please provide the  all the clear Images of the Vehicle so that the claim processing can be fast or
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
+      Please provide the  all the clear Images of the Vehicle so  <br/>
+      that the claim processing can be fast or <br/>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
 
-    Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the
-          claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
+    Note:- <strong> <br/>
+      If We Cannot get the response with in 02 days we will inform <br/>
+      the insurer that the insured is not interseted in the <br/>
+      claim. So close the file as"No Claim" in non copperation <br/>
+       & non submission of the documents. <br/></strong>
 
   `;
 
@@ -196,37 +205,37 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           }
   
           const emailContent = `
-        Dear Sir/Madam,
-  
-        Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
-  
-        We are Appointed for the survey of vehicle no.${vehicleNo},
-        Insured:${Insured} & Policy No.-${PolicyNo} on 
-        ${Date} from the United India Insurance co. Ltd.,
-        So we request you please provide the complete 
-        contact deatils & mails of Repairer/insured. So that we 
-        can procedd further in your case and we also request 
-        you to provide the following details as follows:-
-  
-        ${content}
-  
-        Please provide the clear copy of all the documents so that 
-        the claim processing can be fast or
-        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
-  
-        Please provide the clear Vahicle Videos so that the claim 
-        processing can be fast or
-        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p>
-  
-        Please provide the  all the clear Images of the Vehicle so 
-        that the claim processing can be fast or
-        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p>
-  
-      Note:-  If We Cannot get the response with in 02 days we will 
-      inform the insurer that the insured is not interseted in the
-      claim. So close the file as"No Claim" in non copperation & non
-      submission of the documents. 
-  
+            Dear Sir/Madam,
+      
+            Greeting from the MT Engineers Legal Investigator Pvt. Ltd., <br/>
+      
+            We are Appointed for the survey of vehicle no.${vehicleNo}, <br/>
+            Insured:${Insured} & Policy No.-${PolicyNo} on  <br/>
+            ${Date} from the United India Insurance co. Ltd., <br/>
+            So we request you please provide the complete <br/>
+            contact deatils & mails of Repairer/insured. So that we  <br/>
+            can procedd further in your case and we also request <br/>
+            you to provide the following details as follows:- <br/>
+      
+            <strong>${content}</strong><br/>
+      
+            Please provide the clear copy of all the documents so that  <br/>
+            the claim processing can be fast or <br/>
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+      
+            Please provide the clear Vahicle Videos so that the claim <br/>
+            processing can be fast or <br/>
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+      
+            Please provide the  all the clear Images of the Vehicle so  <br/>
+            that the claim processing can be fast or <br/>
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+      
+          Note:- <strong> If We Cannot get the response with in 02 days we will <br/>
+          inform the insurer that the insured is not interseted in the <br/>
+          claim. So close the file as"No Claim" in non copperation & non <br/>
+          submission of the documents. </strong> <br/>
+      
     `;
           
           const currentMailAddress = Region === "Delhi" ?
@@ -300,6 +309,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
       Region
     } = req.body;
 
+
     const emailArray = csvStringToArray(toMail);
 
     const sql = "SELECT Token FROM ClaimDetails WHERE LeadId =?";
@@ -325,15 +335,29 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             return;
           }
 
-          const formattedString = convertHtmlToString(
-            `Please provide the clear copy of all the documents so that the claim processing can be fast or <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&type=${1}&content=${encodeURIComponent(content2)} target="_blank">Click me</a> to fill the documents information .</p>
-    
-            Note:-  If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in theclaim. So close the file as"No Claim" in non copperation & non submission of the documents.`)
-  
+       
           const emailContent = `
           ${body}
-          ${content}
-          ${formattedString}
+          <br/>
+  
+          <strong>${content}</strong>
+
+          <br/>
+    
+          Please provide the clear copy of all the documents so that
+           the claim processing can be fast or
+          <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${
+            generatedToken
+          }&type=${1}&content=${encodeURIComponent(
+            content2
+          )} target="_blank">Click me</a> to fill the documents information .</p>
+    
+          <br/>
+           Note:- 
+            <strong>If We Cannot get the response with in 02 days we will 
+              inform the insurer that the insured is not interseted in the claim. 
+              So close the file as"No Claim" in non copperation & non submission
+              of the documents. </strong>
           
         `;
   
@@ -343,7 +367,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             from: fromEmail,
             to: email,
             subject: subject,
-            text: emailContent,
+            html: emailContent,
           };
 
           const currentMailAddress = Region === "Delhi" ?
@@ -366,6 +390,9 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             },
           });
 
+          console.log(mailOptions)
+           return
+
   
           transporter2.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -383,21 +410,29 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
        else {
         const emailContent = `
         ${body}
+        <br/>
   
-        ${content}
+        <strong>${content}</strong>
+
+        <br/>
   
         Please provide the clear copy of all the documents so that
          the claim processing can be fast or
+        <br/>
+
         <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${
           result2[0].Token
         }&type=${1}&content=${encodeURIComponent(
           content2
         )} target="_blank">Click me</a> to fill the documents information .</p>
   
-        Note:- If We Cannot get the response with in 02 days we will 
-        inform the insurer that the insured is not interseted in the claim. 
-        So close the file as"No Claim" in non copperation & non submission
-        of the documents. 
+        <br/>
+
+        Note:- 
+            <strong>If We Cannot get the response with in 02 days we will 
+            inform the insurer that the insured is not interseted in the claim. 
+            So close the file as"No Claim" in non copperation & non submission
+            of the documents.</strong>
   
       `;
   
@@ -406,7 +441,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           from: fromEmail,
           to: email,
           subject: subject,
-          text: emailContent,
+          html: emailContent,
         };
 
         const currentMailAddress = Region === "Delhi" ?
@@ -429,6 +464,10 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           },
         });
 
+        console.log(mailOptions)
+        return
+
+        
         transporter2.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error(error);

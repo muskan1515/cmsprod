@@ -899,7 +899,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={VehicleRegistedAt ? VehicleRegistedAt : ""}
-                            onChange={(date) => setVehicleRegistedAt(date)}
+                            onChange={(e) => setVehicleRegistedAt(e.target.value)}
                           />
                         </div>
                       </div>
