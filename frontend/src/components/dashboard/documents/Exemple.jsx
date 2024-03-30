@@ -336,11 +336,14 @@ export default function Exemple({
       data.map((row, index) => {
         const isUploaded = checkIsUploaded(row.doc_name);
         const isDone = checkAlreadyDone(row.doc_name);
+        const isVideoImagesIncluede = ((String(content) === "" && String(row.doc_name) !== "Images") || (String(content) === "" && String(row.doc_name) !== "Videos"))
         const isAccordingToStatus = content
 
           ? checkWithinTheContent(row)
           : checkId(status, row);
-        console.log(isAccordingToStatus);
+
+
+        console.log("isAccordingToStatus",isAccordingToStatus && isVideoImagesIncluede);
         if (!isDone && isAccordingToStatus) {
           const updatedRow = {
             _id: index + 1,
@@ -421,7 +424,15 @@ export default function Exemple({
               </CldUploadWidget>
             ),
           };
-          tempData.push(updatedRow);
+
+          console.log("row",content,row.doc_name)
+          if(((String(content) === "" && String(row.doc_name) === "Images") || (String(content) === "" && String(row.doc_name) === "Videos"))){
+           
+          }
+          else{
+            tempData.push(updatedRow)
+          }
+          
         }
       });
       return tempData;

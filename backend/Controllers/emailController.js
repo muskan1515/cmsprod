@@ -83,15 +83,15 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
 
       Please provide the clear copy of all the documents so that <br/>
       the claim processing can be fast or <br/>
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
 
       Please provide the clear Vahicle Videos so that the claim <br/>
       processing can be fast or <br/>
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
 
       Please provide the  all the clear Images of the Vehicle so  <br/>
       that the claim processing can be fast or <br/>
-      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+      <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
 
     Note:- <strong> <br/>
       If We Cannot get the response with in 02 days we will inform <br/>
@@ -131,7 +131,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           cc: ccContent,
           subject: `Survey Request for Claim of
           Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."} policy Number - ${PolicyNo}`,
-          text: emailContent,
+          html: emailContent,
         };
 
       
@@ -221,15 +221,15 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
       
             Please provide the clear copy of all the documents so that  <br/>
             the claim processing can be fast or <br/>
-            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
       
             Please provide the clear Vahicle Videos so that the claim <br/>
             processing can be fast or <br/>
-            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
       
             Please provide the  all the clear Images of the Vehicle so  <br/>
             that the claim processing can be fast or <br/>
-            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click me</a> to fill the documents information .</p> <br/>
+            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
       
           Note:- <strong> If We Cannot get the response with in 02 days we will <br/>
           inform the insurer that the insured is not interseted in the <br/>
@@ -263,7 +263,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             cc: `${GarageMailAddress},${BrokerMailAddress}`,
             subject: `Survey Request for Claim of
             Vehicle Number - ${vehicleNo} A/c ${Insured ? Insured : "N.A."}  policy Number - ${PolicyNo}`,
-            text: emailContent,
+            html: emailContent,
           };
   
           transporter2.sendMail(mailOptions, (error, info) => {
@@ -350,7 +350,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             generatedToken
           }&type=${1}&content=${encodeURIComponent(
             content2
-          )} target="_blank">Click me</a> to fill the documents information .</p>
+          )} target="_blank">Click Here</a> to fill the documents information .</p>
     
           <br/>
            Note:- 
@@ -424,7 +424,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           result2[0].Token
         }&type=${1}&content=${encodeURIComponent(
           content2
-        )} target="_blank">Click me</a> to fill the documents information .</p>
+        )} target="_blank">Click Here</a> to fill the documents information .</p>
   
         <br/>
 
@@ -508,7 +508,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
        3) LH Fender- Denting-250, Painting-2200
        
        Further approval will be provided after dismentaling of the vehicle.
-           <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+           <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click Here</a> to fill the documents information .</p>
   
        Note:- Pleasae consider that the the claim is payable  subject to 
         policy terms & conditions & Cashless facility will be allowed 
@@ -520,7 +520,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
       from: "infosticstech@gmail.com",
       to: toMail,
       subject: "Survey Request for Vehicle Claim",
-      text: emailContent,
+      html: emailContent,
     };
   
     // Send the email
@@ -557,7 +557,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
         7) Pan Card
         8) Please destorey the items properly in the RI, Otherwise we will treat the part is repaired
 
-        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click me</a> to fill the documents information .</p>
+        <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click Here</a> to fill the documents information .</p>
   
           
         Please provide the clear copy of all the documents so that the claim processing can be fast
@@ -570,7 +570,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
       from: "infosticstech@gmail.com",
       to: toMail,
       subject: "Survey Request for Vehicle Claim",
-      text: emailContent,
+      html: emailContent,
     };
   
     // Send the email

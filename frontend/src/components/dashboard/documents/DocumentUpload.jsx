@@ -629,11 +629,15 @@ export default function DocumentUpload({
           setisVIdeoDisable(row.doc_name !== "Images");
 
         const isUploaded = checkIsUploaded(row.doc_name);
+        const isVideoImagesIncluede = ((String(content) === "" && String(row.doc_name) === "Images") || (String(content) === "" && String(row.doc_name) === "Videos"))
+       
+
         const isAccordingToStatus = content !==""
           ? checkWithinTheContent(row)
           : true;
-          console.log('ROWW>>>>',row.doc_name,isAccordingToStatus,row);
-        if (isAccordingToStatus) {
+
+          console.log("content",content,row.doc_name)
+        if (isAccordingToStatus && !isVideoImagesIncluede) {
           const updatedRow = {
             _id: index + 1,
             serial_num: row.serial_num,
