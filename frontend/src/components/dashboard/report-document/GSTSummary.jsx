@@ -79,6 +79,132 @@ const GSTSummary = ({ allInfo }) => {
     return newRevisedArray;
   };
 
+  const calculateGSTSectionVauesWithGST = (gstPct)=>{
+
+    let total = 0;
+    
+    allInfo?.newPartsDetails?.map((part,index)=>{
+
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const dep =((assessed) * Number(part?.NewPartsDepreciationPct))/100;
+      
+      if(String(part?.NewPartsIsActive) === "1" && String(part?.NewPartsGSTPct) === String(gstPct)){
+        console.log("partss",gstPct,part)
+        total = total +  ((assessed) - dep)
+      }
+    })
+    
+    return total;
+  }
+
+  const calculateGSTWholeSectionVauesWithGST = ()=>{
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+      const gst = ((assessed - dep)* Number(part?.NewPartsGSTPct))/100;
+  
+      if(String(part?.NewPartsIsActive) === "1"){
+        total = (total + assessed);
+      }
+    })
+    
+    return total;
+  }
+
+  const calculateGSTSectionGST = (gstPct)=>{
+    
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part,index)=>{
+
+    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+    const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+    const gst = ((assessed-dep) * Number(part?.NewPartsGSTPct))/100;
+
+    if(String(part?.NewPartsIsActive) === "1" && String(part?.NewPartsGSTPct) === String(gstPct)){
+      total  +=  gst;
+      console.log("total",total)
+    }
+  })
+    
+  return total;
+}
+
+
+  const calculateGSTWholeSectionGST = ()=>{
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+      const gst = ((assessed - dep)* Number(part?.NewPartsGSTPct))/100;
+  
+      if(String(part?.NewPartsIsActive) === "1"){
+        total = (total + gst);
+      }
+    })
+    
+    return total;
+  }
+
+
+
+
+  const calculateGSTSectionVauesWithGSTlabour = (part)=>{
+    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+    const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+    const gst = (assessed * Number(part?.NewPartsGSTPct))/100;
+
+    if(String(part?.NewPartsIsActive) === "1"){
+      return (assessed) - dep;
+    }
+    return 0;
+  }
+
+  const calculateGSTWholeSectionVauesWithGSTLabour = ()=>{
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+      const gst = ((assessed - dep)* Number(part?.NewPartsGSTPct))/100;
+  
+      if(String(part?.NewPartsIsActive) === "1"){
+        total = (total + assessed);
+      }
+    })
+    
+    return total;
+  }
+
+  const calculateGSTSectionGSTLabour = (part)=>{
+    const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+    const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+    const gst = ((assessed-dep) * Number(part?.NewPartsGSTPct))/100;
+
+    if(String(part?.NewPartsIsActive) === "1"){
+      return gst;
+    }
+    return 0;
+  }
+
+  const calculateGSTWholeSectionGSTLabour = ()=>{
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part,index)=>{
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const dep =(assessed * Number(part?.NewPartsDepreciationPct))/100;
+      const gst = ((assessed - dep)* Number(part?.NewPartsGSTPct))/100;
+  
+      if(String(part?.NewPartsIsActive) === "1"){
+        total = (total + gst);
+      }
+    })
+    
+    return total;
+  }
+
+
+
+
+
   const downloadPDF = () => {
     const input = pdfRef.current;
     const pdf = new jsPDF("p", "mm", "a4", true);
@@ -723,16 +849,21 @@ const GSTSummary = ({ allInfo }) => {
   // Using useState to store the split text
 
   useEffect(() => {
-    // Splitting the text based on the pattern
     const regex = /\s(?=\d{2}\s)/g; // Lookahead regex to split where there's a number (two digits) followed by a space
     const splitParts = text.split(regex).map((part) => part.trim()); // Splitting and trimming the parts
     setSplitText(splitParts);
   }, [text]);
-
-  //*************************** */
   return (
     <>
       <div className="" style={{ marginTop: "10px" }}>
+
+      {allInfo?.otherInfo[0]?.PolicyType !== "Regular" && <h5 className="text-dark" style={{ color: "black" }}>
+          Depreciations({
+          addCommasToNumber(roundOff(getTotalDepreciation("Glass", false)+
+          getTotalDepreciation("Metal", false)+
+          getTotalNonMetaDepreciation()))
+          }) is not deducted being <span style={{fontWeight:"bold"}}>NIL DEPRECIATION</span> policy.
+        </h5>}
         <h5 className="text-dark" style={{ color: "black" }}>
           GST Summary Tax Wise (New Parts)
         </h5>
@@ -805,35 +936,8 @@ const GSTSummary = ({ allInfo }) => {
 
           {allGSTType?.map((field, index) => {
             return (
-              <>
-                <tr>
-                  <th colSpan={2}>Parts with {field.field} % GST</th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                  <th
-                    style={{ border: "1px solid black", padding: "10px" }}
-                  ></th>
-                </tr>
-            
-                {sortFunction(allInfo?.newPartsDetails,field.field).map((part, index) => {
-                  return part.NewPartsIsActive === 1 &&
-                    String(part.NewPartsGSTPct) === String(field.field) ? (
+              sortFunction(allInfo?.newPartsDetails,field.field).length > 0 && <>
+               
                      <>
               <tr>
             <td
@@ -842,7 +946,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {part.pos}
+              {index + 1}
             </td>
             <td
               style={{
@@ -850,7 +954,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(newPartsGST()))}
+              {field.field} %
             </td>
             <td
               style={{
@@ -860,9 +964,7 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  calculateOtherTypeNewPartsGST() +
-                    getTotalOtherMetalAssesses() -
-                    getTotalNonMetaDepreciation()
+                  calculateGSTSectionVauesWithGST(field.field)
                 )
               )}
             </td>
@@ -874,11 +976,8 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  (calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST()) /
-                    2
-                )
+                  calculateGSTSectionGST(field.field)/2)
+                
               )}
             </td>
             <td
@@ -887,13 +986,10 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(
+                {addCommasToNumber(
                 roundOff(
-                  (calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST()) /
-                    2
-                )
+                  calculateGSTSectionGST(field.field)/2)
+                
               )}
             </td>
             <td
@@ -912,19 +1008,15 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST() +
-                    calculateOtherTypeNewPartsGST() +
-                    getTotalOtherMetalAssesses() -
-                    getTotalNonMetaDepreciation()
+                  calculateGSTSectionVauesWithGST(field.field)+
+                  calculateGSTSectionGST(field.field)
                 )
               )}
             </td>
           </tr>
-            </>) : null
-          })}
-                    </>
+            </>
+          
+              </>
             )})}
           
           <tr>
@@ -951,9 +1043,7 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  calculateOtherTypeNewPartsGST() +
-                    getTotalOtherMetalAssesses() -
-                    getTotalNonMetaDepreciation()
+                  calculateGSTWholeSectionVauesWithGST()
                 )
               )}
             </td>
@@ -965,9 +1055,7 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  (calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST()) /
+                  (calculateGSTWholeSectionGST()) /
                     2
                 )
               )}
@@ -980,9 +1068,7 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  (calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST()) /
+                  (calculateGSTWholeSectionGST()) /
                     2
                 )
               )}
@@ -1003,12 +1089,8 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST() +
-                    calculateOtherTypeNewPartsGST() +
-                    getTotalOtherMetalAssesses() -
-                    getTotalNonMetaDepreciation()
+                  calculateGSTWholeSectionVauesWithGST()+
+                  calculateGSTWholeSectionGST()
                 )
               )}
             </td>
@@ -1044,9 +1126,7 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  calculateTypeNewPartsGST("Glass") +
-                    calculateTypeNewPartsGST("Metal") +
-                    calculateOtherTypeNewPartsGST()
+                  calculateGSTWholeSectionGST()
                 )
               )}
             </td>
@@ -1060,6 +1140,9 @@ const GSTSummary = ({ allInfo }) => {
         </table>
       </div>
       <div className="mt-2 mb-5">
+      <h5 className="text-dark" style={{ color: "black" }}>
+          GST Summary Tax Wise (labour)
+        </h5>
         <table style={{ width: "100%" }}>
           <tr>
             <th

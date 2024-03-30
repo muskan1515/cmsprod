@@ -6,13 +6,7 @@ import jsPDF from "jspdf";
 import { useRef, useState } from "react";
 
 const SummaryOfAssessment = ({
-  allInfo,
-  //   lessExcess,
-  //   lessSalvage,
-  //   getTotalLabourEstimate,
-  //   getTotalLabourAssessed,
-  //   calculateEstimateNewPartsGST,
-  //   getTotalEvaluationOfAssessedForNewParts,
+  allInfo
 }) => {
   const pdfRef = useRef();
 

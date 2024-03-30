@@ -78,7 +78,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
       array2 = [];
     const labours = allInfo?.labourDetails;
     labours?.map((part, index) => {
-      if (Number(part.IsGSTIncluded) % 2 === 0) {
+      if (Number(part.JobType)  === 0) {
         const newRow = {
           ...part,
           pos : index + 1
@@ -133,6 +133,43 @@ const LabourRepairsDetails = ({ allInfo }) => {
      }
      })
      return totalDep;
+  }
+
+  const calculateTotalPaintingEstimate = ()=>{
+    let total = 0;
+    allInfo?.labourDetails?.map((labour,index)=>{
+      const estimate = Number(labour.Estimate);
+      if(String(labour.JobType) === "1"){
+        total = (total + estimate);
+      }
+    })
+    return total;
+  }
+
+
+  const getFirstPaintingPos = ()=>{
+    let pos =0;
+    let found = false;
+    allInfo?.labourDetails?.map((labour,index)=>{
+      const assessed = Number(labour.Assessed);
+      if(String(labour.JobType) === "1" && !found) {
+        pos = index + 1;
+        found = true;
+      }
+    })
+    return pos;
+  }
+
+
+  const calculateTotalPaintingAssessed = ()=>{
+    let total = 0;
+    allInfo?.labourDetails?.map((labour,index)=>{
+      const assessed = Number(labour.Assessed);
+      if(String(labour.JobType) === "1"){
+        total = (total + assessed);
+      }
+    })
+    return total;
   }
 
   const formatDate = (dateString) => {
@@ -205,6 +242,20 @@ const LabourRepairsDetails = ({ allInfo }) => {
     }
     return 0;
   };
+
+  const calculateGSTNoGSTLabour = ()=>{
+    let nonPainting =0 , Painting = 0;
+    allInfo?.labourDetails?.map((labour,index)=>{
+      if(String(labour.JobType) === "1"){
+        Painting += 1;
+      }
+      else{
+        nonPainting +=1 ;
+      }
+    })
+
+    return {nonPainting,Painting}
+  }
 
   const getTotalEstimate = () => {
     let total = 0;
@@ -685,15 +736,12 @@ const LabourRepairsDetails = ({ allInfo }) => {
           </th>
         </tr>
 
-        <tr>
-          <th colSpan={2}>Parts without GST</th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-        </tr>
+        {
+          calculateGSTNoGSTLabour().nonPainting > 0 &&
+        <>
+        
         {noGST?.map((labour, index) => {
-          return labour.LabourIsActive === 1 ? (
+          return labour.LabourIsActive === 1 && String(labour.JobType)  === "0" ? (
             <tr>
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {labour.pos}
@@ -716,23 +764,39 @@ const LabourRepairsDetails = ({ allInfo }) => {
             </tr>
           ) : null;
         })}
+        </>
+      }
 
         
-
+      { 
+          calculateGSTNoGSTLabour().Painting > 0 &&
+        <>
+        
         <tr>
-          <th colSpan={2}>
-            Parts with {allInfo?.labourDetails[0]?.GSTPercentage} % GST
-          </th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-          <th style={{ border: "1px solid black", padding: "10px" }}></th>
-        </tr>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+              {getFirstPaintingPos()}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+              
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                100% Painting for :
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {roundOff(calculateTotalPaintingEstimate())}
+              </td>
+              <td style={{ border: "1px solid black", padding: "5px" }}>
+                {roundOff(calculateTotalPaintingAssessed())}
+              </td>
+            </tr>
         {allGST?.map((labour, index) => {
-          return labour.LabourIsActive === 1 ? (
+          return labour.LabourIsActive === 1 && labour.JobType === 1 ? (
             <tr>
               <td style={{ border: "1px solid black", padding: "5px" }}>
-                {labour.pos}
+                
               </td>
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {labour.SAC}
@@ -740,18 +804,21 @@ const LabourRepairsDetails = ({ allInfo }) => {
               <td style={{ border: "1px solid black", padding: "5px" }}>
                 {labour.BillSr}
               </td>
-              <td style={{ border: "1px solid black", padding: "5px" }}>
-                {labour.Description}
+              <td style={{ border: "1px solid black", padding: "5px" ,display:"flex",justifyContent:"space-between"}}>
+                <label>{labour.Description} {"    "}</label>
+                <label>{labour.Estimate} {"-"} {labour.Assessed}</label>
               </td>
               <td style={{ border: "1px solid black", padding: "5px" }}>
-                {roundOff(labour.Estimate)}
+                ---
               </td>
               <td style={{ border: "1px solid black", padding: "5px" }}>
-                {roundOff(labour.Assessed)}
+                ---
               </td>
             </tr>
           ) : null;
         })}
+        </>
+      }
         {/*<tr>
             <td style={{ border: "1px solid black", padding: "5px" }}>1</td>
             <td style={{ border: "1px solid black", padding: "5px" }}></td>

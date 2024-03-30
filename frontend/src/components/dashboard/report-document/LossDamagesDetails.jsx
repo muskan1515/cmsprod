@@ -121,6 +121,8 @@ const LossDamagesDetails = ({ allInfo }) => {
     return formattedDate;
   };
 
+
+
   //*******************functions******************************//
 
   const calculateGlassDept = (part) => {
@@ -135,6 +137,22 @@ const LossDamagesDetails = ({ allInfo }) => {
     }
     return 0;
   };
+
+
+  const calculateMetalDepreciationWithoutValue = () => {
+   let depPct = 0;
+    allInfo?.newPartsDetails?.map((part,index)=>{
+   if (
+      String(part.NewPartsTypeOfMaterial) === "Metal" &&
+      part.NewPartsIsActive
+    ) {
+      depPct =  Number(part.NewPartsDepreciationPct);
+    }
+  })
+    return depPct;
+  };
+
+  
 
   const calculateMetalDept = (part) => {
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
@@ -912,7 +930,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               Glass/ 2nd Hand/ Repair
             </th>
             <th style={{ border: "1px solid black", padding: "10px" }}>
-              Metal (40)
+              Metal ({calculateMetalDepreciationWithoutValue()}%)
             </th>
             <th style={{ border: "1px solid black", padding: "10px" }}>
               Non Metal
@@ -997,7 +1015,7 @@ const LossDamagesDetails = ({ allInfo }) => {
                     style={{ border: "none", padding: "5px" }}
                     className="text-end"
                   >
-                    <span className="mt-0">Total : </span>
+                    <span className="mt-0">Sub Total : </span>
                     <br />
                   </td>
                   <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1077,7 +1095,7 @@ const LossDamagesDetails = ({ allInfo }) => {
                     style={{ borderBottom: "1px solid black", padding: "5px" }}
                     className="text-end"
                   >
-                    <span className="mt-0">Net Total : </span>
+                    <span className="mt-0"> Total : </span>
                     <br />
                   </td>
                   <td style={{ border: "1px solid black", padding: "5px" }}>
