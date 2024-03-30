@@ -43,8 +43,12 @@ const PrintComponent = ({ children }) => {
                 className=""
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <h5 className="text-dark" style={{ fontSize: "12px", paddingLeft:"10px" }}>
-                69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan 335001
+                <h5
+                  className="text-dark"
+                  style={{ fontSize: "12px", paddingLeft: "10px" }}
+                >
+                  69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan
+                  335001
                 </h5>
                 {/* <h5
                   className="text-center text-dark"
@@ -75,7 +79,39 @@ const PrintComponent = ({ children }) => {
           <tr>
             <th>
               {/* <img src={logo} height={"40px"} width={"40px"} alt="logo" /> */}
-              {/* <div>{"Page Header"}</div> */}
+              <div>
+                {" "}
+                {/* common header for all page */}
+                <div
+                  className="col-lg-12 d-flex justify-content-between"
+                  style={{
+                    width: "95%",
+                    color: "black",
+                    fontSize: "12px",
+                    fontFamily: "arial",
+                    marginLeft: "15px",
+                  }}
+                >
+                  <div>
+                    <span> CHD/24-03/493</span>
+                  </div>
+                  <div>
+                    <span>MT Engineer</span>
+                  </div>
+                  <div>
+                    <span>Page No.</span>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    border: "1px solid black",
+                    width: "95%",
+                    marginLeft: "15px",
+                  }}
+                  className="mb-1"
+                ></div>
+                {/* common header for all page */}
+              </div>
             </th>
           </tr>
         </thead>

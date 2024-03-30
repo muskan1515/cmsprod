@@ -121,8 +121,6 @@ const LossDamagesDetails = ({ allInfo }) => {
     return formattedDate;
   };
 
-
-
   //*******************functions******************************//
 
   const calculateGlassDept = (part) => {
@@ -138,21 +136,18 @@ const LossDamagesDetails = ({ allInfo }) => {
     return 0;
   };
 
-
   const calculateMetalDepreciationWithoutValue = () => {
-   let depPct = 0;
-    allInfo?.newPartsDetails?.map((part,index)=>{
-   if (
-      String(part.NewPartsTypeOfMaterial) === "Metal" &&
-      part.NewPartsIsActive
-    ) {
-      depPct =  Number(part.NewPartsDepreciationPct);
-    }
-  })
+    let depPct = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      if (
+        String(part.NewPartsTypeOfMaterial) === "Metal" &&
+        part.NewPartsIsActive
+      ) {
+        depPct = Number(part.NewPartsDepreciationPct);
+      }
+    });
     return depPct;
   };
-
-  
 
   const calculateMetalDept = (part) => {
     const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
@@ -714,19 +709,20 @@ const LossDamagesDetails = ({ allInfo }) => {
   }
 
   //Sort function
-  const sortFunction = (array,type) => {
-    
-    const updatedArray =  array.sort((a, b) => parseFloat(a.SNO) - parseFloat(b.SNO));
+  const sortFunction = (array, type) => {
+    const updatedArray = array.sort(
+      (a, b) => parseFloat(a.SNO) - parseFloat(b.SNO)
+    );
     let newRevisedArray = [];
-    updatedArray.map((row,index)=>{
-      if(String(row.NewPartsGSTPct) === String(type)){
-        const newRow ={
+    updatedArray.map((row, index) => {
+      if (String(row.NewPartsGSTPct) === String(type)) {
+        const newRow = {
           ...row,
-          pos : index +1
-        }
-        newRevisedArray.push(newRow)
+          pos: index + 1,
+        };
+        newRevisedArray.push(newRow);
       }
-    })
+    });
     return newRevisedArray;
   };
 
@@ -963,64 +959,84 @@ const LossDamagesDetails = ({ allInfo }) => {
                     style={{ border: "1px solid black", padding: "10px" }}
                   ></th>
                 </tr>
-            
-                {sortFunction(allInfo?.newPartsDetails,field.field).map((part, index) => {
-                  return part.NewPartsIsActive === 1 &&
-                    String(part.NewPartsGSTPct) === String(field.field) ? (
-                    <tr key={index}>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {part.pos}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {part.NewPartsItemName}
-                      </td>
-                      <td
-                        style={{ border: "1px solid black", padding: "5px" }}
-                      ></td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {part.NewPartsBillSr}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {part.NewPartsRemark}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {roundOff(part.NewPartsEstimate)}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {String(part.NewPartsTypeOfMaterial) === "Glass"
-                          ? roundOff(calculateGlassDept(part))
-                          : 0}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {String(part.NewPartsTypeOfMaterial) === "Metal"
-                          ? roundOff(calculateMetalDept(part))
-                          : 0}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-                        String(part.NewPartsTypeOfMaterial) !== "Glass"
-                          ? roundOff(calculateNonMetalDept(part))
-                          : 0}
-                      </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                        {" "}
-                        {roundOff(part.NewPartsGSTPct)}.00
-                      </td>
-                    </tr>
-                  ) : null;
-                })}
+
+                {sortFunction(allInfo?.newPartsDetails, field.field).map(
+                  (part, index) => {
+                    return part.NewPartsIsActive === 1 &&
+                      String(part.NewPartsGSTPct) === String(field.field) ? (
+                      <tr key={index}>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {part.pos}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {part.NewPartsItemName}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        ></td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {part.NewPartsBillSr}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {part.NewPartsRemark}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {roundOff(part.NewPartsEstimate)}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {String(part.NewPartsTypeOfMaterial) === "Glass"
+                            ? roundOff(calculateGlassDept(part))
+                            : 0}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {String(part.NewPartsTypeOfMaterial) === "Metal"
+                            ? roundOff(calculateMetalDept(part))
+                            : 0}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+                          String(part.NewPartsTypeOfMaterial) !== "Glass"
+                            ? roundOff(calculateNonMetalDept(part))
+                            : 0}
+                        </td>
+                        <td
+                          style={{ border: "1px solid black", padding: "5px" }}
+                        >
+                          {" "}
+                          {roundOff(part.NewPartsGSTPct)}.00
+                        </td>
+                      </tr>
+                    ) : null;
+                  }
+                )}
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     style={{ border: "none", padding: "5px" }}
                     className="text-end"
                   >
-                    <span className="mt-0">Sub Total : </span>
+                    <span className="mt-0 fw-bold">Sub Total : </span>
                     <br />
                   </td>
-                  <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {/* <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(roundOff(getTotalEstimate(field.field)))}
-                  </td>
+                  </td> */}
                   <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(
                       roundOff(
@@ -1056,18 +1072,20 @@ const LossDamagesDetails = ({ allInfo }) => {
                 </tr>
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     style={{ border: "none", padding: "5px" }}
                     className="text-end"
                   >
-                    <span className="mt-0">Gst @ {field.field} % : </span>
+                    <span className="mt-0 fw-bold">
+                      Gst @ {field.field} % :{" "}
+                    </span>
                     <br />
                   </td>
-                  <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {/* <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(
                       roundOff(calculateEstimateNewPartsGST(field.field))
                     )}
-                  </td>
+                  </td> */}
                   <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(
                       roundOff(
@@ -1090,22 +1108,22 @@ const LossDamagesDetails = ({ allInfo }) => {
                 </tr>
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     // rowSpan={6}
                     style={{ borderBottom: "1px solid black", padding: "5px" }}
                     className="text-end"
                   >
-                    <span className="mt-0"> Total : </span>
+                    <span className="mt-0 fw-bold"> Total : </span>
                     <br />
                   </td>
-                  <td style={{ border: "1px solid black", padding: "5px" }}>
+                  {/* <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(
                       roundOff(
                         getTotalEstimate(field.field) +
                           calculateEstimateNewPartsGST(field.field)
                       )
                     )}
-                  </td>
+                  </td> */}
                   <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(
                       roundOff(
@@ -1165,7 +1183,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               style={{ borderTop: "1px solid black", padding: "5px" }}
               className="text-end"
             >
-              <span className="mt-0">Total : </span>
+              <span className="mt-0 fw-bold">Total : </span>
               <br />
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1191,7 +1209,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
-              <span className="mt-0">Less: Depreciation : </span>
+              <span className="mt-0 fw-bold">Less: Depreciation : </span>
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1214,7 +1232,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
-              <span className="mt-0">Total : </span>
+              <span className="mt-0 fw-bold">Total : </span>
               <br />
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1248,7 +1266,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
-              <span className="mt-0">Add : Applicable GST : </span>
+              <span className="mt-0 fw-bold">Add : Applicable GST : </span>
               <br />
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1271,7 +1289,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
-              <span className="mt-0">Net Total F : </span>
+              <span className="mt-0 fw-bold">Net Total F : </span>
               <br />
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -1317,7 +1335,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               style={{ border: "none", padding: "5px" }}
               className="text-end"
             >
-              <span className="mt-0">Grand Total F : </span>
+              <span className="mt-0 fw-bold">Grand Total F : </span>
               <br />
               {/* Less: Depreciation : <br />
               Total : <br />
