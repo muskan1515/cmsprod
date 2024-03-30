@@ -206,7 +206,7 @@ export default function Exemple({
       month: 'numeric',
       day: 'numeric',
     };
-    const today = new Date().toLocaleString('en-IN');
+    const today = new Date();
     console.log('today',today)
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID);
