@@ -200,7 +200,14 @@ export default function Exemple({
   let tempData = [];
   useEffect(() => {
     const region = JSON.parse(localStorage.getItem("regionType"));
-    const today = new Date();
+    const options = {
+      timeZone: 'Asia/Kolkata', // Specify Indian timezone
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    };
+    const today = new Date().toLocaleString('en-IN');
+    console.log('today',today)
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID);
       // const addedDate = new Date(claim.AddedDate);
