@@ -201,8 +201,14 @@ export default function Exemple({
     const today = new Date();
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID);
-      const addedDate = new Date(claim.AddedDate);
-      const tatInDays = Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+      // const addedDate = new Date(claim.AddedDate.toDateString());
+      const formatdate_ = new Date(claim.AddedDate);
+      const day = formatdate_.getDate().toString().padStart(2, '0'); // Get day and pad with leading zero if needed
+      const month = (formatdate_.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based) and pad with leading zero if needed
+      const year = formatdate_.getFullYear(); // Get full year
+
+      const addedDate = `${day}/${month}/${year}`;
+      const tatInDays = claim?.tat;
       const tempGarage = claim?.AssignedGarage?.split(",").map((item) =>
         item.trim()
       );
