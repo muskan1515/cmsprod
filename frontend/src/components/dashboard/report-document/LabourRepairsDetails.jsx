@@ -122,11 +122,9 @@ const LabourRepairsDetails = ({ allInfo }) => {
   const calculateLabourDepreciations = () => {
     let totalDep = 0;
     allInfo?.labourDetails?.map((labour, index) => {
-      if (String(labour.JobType) === "1") {
-        const dep = Number(Number(labour.Assessed) * Number(12.5)) / 100;
-
-        console.log("dep", dep);
-        totalDep += Number(totalDep) + Number(dep);
+      if (String(labour.JobType) === "1" && labour.LabourIsActive ) {
+        const dep = Number(Number(labour.Assessed) * (12.5)) / 100;
+        totalDep = (Number(totalDep) + Number(dep));
       }
     });
     return totalDep;
@@ -136,7 +134,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
     let total = 0;
     allInfo?.labourDetails?.map((labour, index) => {
       const estimate = Number(labour.Estimate);
-      if (String(labour.JobType) === "1") {
+      if (String(labour.JobType) === "1" && labour.LabourIsActive ) {
         total = total + estimate;
       }
     });
@@ -148,7 +146,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
     let found = false;
     allInfo?.labourDetails?.map((labour, index) => {
       const assessed = Number(labour.Assessed);
-      if (String(labour.JobType) === "1" && !found) {
+      if (String(labour.JobType) === "1" && labour.LabourIsActive  && !found) {
         pos = index + 1;
         found = true;
       }
@@ -160,7 +158,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
     let total = 0;
     allInfo?.labourDetails?.map((labour, index) => {
       const assessed = Number(labour.Assessed);
-      if (String(labour.JobType) === "1") {
+      if (String(labour.JobType) === "1" && labour?.LabourIsActive)  {
         total = total + assessed;
       }
     });
@@ -242,7 +240,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
     let nonPainting = 0,
       Painting = 0;
     allInfo?.labourDetails?.map((labour, index) => {
-      if (String(labour.JobType) === "1") {
+      if (String(labour.JobType) === "1" && labour.LabourIsActive ) {
         Painting += 1;
       } else {
         nonPainting += 1;
@@ -493,21 +491,25 @@ const LabourRepairsDetails = ({ allInfo }) => {
   };
 
   const getTotalLabourAssessedGST = () => {
-    let total = 0;
-    allInfo?.labourDetails?.map((part, index) => {
-      const dep =
-        String(part.JobType) === "1"
-          ? Number(Number(part.Assessed) * Number(12.5)) / 100
-          : 0;
-      const assessed = Number(part.Assessed) - dep;
+    // let total = 0;
+    // allInfo?.labourDetails?.map((part, index) => {
+    //   const dep =
+    //     String(part.JobType) === "1"
+    //       ? Number(Number(part.Assessed) * (12.5)) / 100
+    //       : 0;
+    //   const assessed = Number(part.Assessed) - dep;
 
-      const assessedvalue = assessed * Number(part.GSTPercentage);
-      const gst = Number(assessedvalue) / 100;
-      if (part.LabourIsActive) {
-        total = total + gst;
-      }
-    });
-    return total;
+    //   const assessedvalue = assessed * Number(part.GSTPercentage);
+    //   const gst = Number(assessedvalue) / 100;
+    //   if (part.LabourIsActive) {
+    //     total = total + gst;
+    //   }
+    // });
+    // return total;
+    const currentLabourGST = allInfo?.labourDetails[0].GSTPercentage;
+    const overAllValueWithoutGST = getTotalLabourAssessed() - calculateLabourDepreciations();
+    const gstValue = (Number(overAllValueWithoutGST) * Number(currentLabourGST)) / 100;
+    return gstValue
   };
 
   //*************SUMMARY**************** *//

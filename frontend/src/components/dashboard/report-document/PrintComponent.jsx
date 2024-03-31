@@ -1,9 +1,11 @@
 // import logo from "./../logo.svg";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const PrintComponent = ({ children }) => {
+const PrintComponent = ({ children , allInfo}) => {
   const footerRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   useEffect(() => {
     const handlePrint = () => {
@@ -20,6 +22,12 @@ const PrintComponent = ({ children }) => {
       window.onbeforeprint = null;
     };
   }, []);
+
+  useEffect(() => {
+    // Increment currentPage whenever children change
+    setCurrentPage(currentPage + 1);
+  }, [children]);
+
   const printAction = () => {
     window.print();
   };
@@ -29,6 +37,7 @@ const PrintComponent = ({ children }) => {
         {"Print Preview"}
       </button> */}
       <div className="page-footer">
+        <div>
         <footer ref={footerRef} className="bg-gray-800 text-white" style={{}}>
           <div
             style={{
@@ -50,13 +59,7 @@ const PrintComponent = ({ children }) => {
                   69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan
                   335001
                 </h5>
-                {/* <h5
-                  className="text-center text-dark"
-                  style={{ fontSize: "12px" }}
-                >
-                  Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
-                  Mountville,Sector-79,Gurugram(Hr)
-                </h5> */}
+                
               </div>
               <div className="" style={{ marginTop: "" }}>
                 <div className="text-end">
@@ -73,17 +76,19 @@ const PrintComponent = ({ children }) => {
             </div>
           </div>
         </footer>
+        </div>
       </div>
       <table className="print-component">
         <thead>
           <tr>
             <th>
               {/* <img src={logo} height={"40px"} width={"40px"} alt="logo" /> */}
-              <div>
+              <div >
                 {" "}
                 {/* common header for all page */}
                 <div
-                  className="col-lg-12 d-flex justify-content-between"
+                
+                  className="col-lg-12 d-flex justify-content-between "
                   style={{
                     width: "95%",
                     color: "black",
@@ -93,14 +98,14 @@ const PrintComponent = ({ children }) => {
                   }}
                 >
                   <div>
-                    <span> CHD/24-03/493</span>
+                    <span>{allInfo?.otherInfo[0]?.ReferenceNo}</span>
                   </div>
                   <div>
                     <span>MT Engineer</span>
                   </div>
-                  <div>
-                    <span>Page No.</span>
-                  </div>
+                  {/* <div>
+                    <span>Page No. {currentPage}</span>
+                  </div> */}
                 </div>
                 <div
                   style={{
@@ -110,7 +115,6 @@ const PrintComponent = ({ children }) => {
                   }}
                   className="mb-1"
                 ></div>
-                {/* common header for all page */}
               </div>
             </th>
           </tr>
@@ -123,48 +127,6 @@ const PrintComponent = ({ children }) => {
         <tfoot className="table-footer" style={{}}>
           <tr>
             <td>
-              {/* {
-                <footer
-                  ref={footerRef}
-                  className="bg-gray-800 text-white"
-                  style={{}}
-                >
-                  <hr style={{ border: "2px solid black" }} />
-                  <div className="">
-                    <div className="d-flex gap-5">
-                      <div className="">
-                        <h5
-                          className="text-center text-dark"
-                          style={{ fontSize: "12px" }}
-                        >
-                          H.O. Address : 58-Gandhi Nagar,Near Bal Niketan School
-                          ,Sri Ganganagar(Raj.)-335001
-                        </h5>
-                        <h5
-                          className="text-center text-dark"
-                          style={{ fontSize: "12px" }}
-                        >
-                          Ofce: B-43,NFL Society,Sector-PI,Gr
-                          Noida-201310./E-201,MAPSKO
-                          Mountville,Sector-79,Gurugram(Hr)
-                        </h5>
-                      </div>
-                      <div className="" style={{ marginTop: "0px" }}>
-                        <div className="text-end">
-                          <Image
-                            width={261}
-                            height={69}
-                            priority
-                            className="w50"
-                            src="/assets/images/stamp.jpg"
-                            alt="1.jpg"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              } */}
               <div className="page-footer-space"></div>
             </td>
           </tr>

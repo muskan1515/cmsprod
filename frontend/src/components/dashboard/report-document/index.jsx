@@ -90,11 +90,10 @@ const Index = () => {
   return (
     <>
       <div>
-        <PrintComponent>
+        <PrintComponent allInfo={allInfo} >
           <Toaster/>
           <div>
             {
-              // <section className="" style={{ paddingTop: "" }}>
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12" >
@@ -102,10 +101,9 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              // </section>
             }
           </div>
-        </PrintComponent>
+        </PrintComponent >
       </div>
     </>
   );

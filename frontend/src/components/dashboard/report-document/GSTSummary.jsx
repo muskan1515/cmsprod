@@ -98,16 +98,10 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
-  const calculateGSTWholeSectionVauesWithGST = () => {
+  const calculateGSTWholeSectionVauesWithGST2 = () => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part, index) => {
-      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-      const dep = (assessed * Number(part?.NewPartsDepreciationPct)) / 100;
-      const gst = ((assessed - dep) * Number(part?.NewPartsGSTPct)) / 100;
-
-      if (String(part?.NewPartsIsActive) === "1") {
-        total = total + assessed;
-      }
+    allInfo?.GSTSummaryNewParts?.map((part, index) => {
+        total += Number(part.TotalAssessed)
     });
 
     return total;
@@ -132,16 +126,10 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
-  const calculateGSTWholeSectionGST = () => {
+  const calculateGSTWholeSectionGST2 = () => {
     let total = 0;
-    allInfo?.newPartsDetails?.map((part, index) => {
-      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-      const dep = (assessed * Number(part?.NewPartsDepreciationPct)) / 100;
-      const gst = ((assessed - dep) * Number(part?.NewPartsGSTPct)) / 100;
-
-      if (String(part?.NewPartsIsActive) === "1") {
-        total = total + gst;
-      }
+    allInfo?.GSTSummaryNewParts?.map((part, index) => {
+        total += Number(Number(part.CGST) + Number(part.SGST))
     });
 
     return total;
@@ -491,7 +479,12 @@ const GSTSummary = ({ allInfo }) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+    
+      const Depreciation =
+      String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+      (assessed * Number(part.NewPartsDepreciationPct)) / 100 : 0;
+   
+      const gst = ((assessed - Depreciation) * Number(part.NewPartsGSTPct)) / 100;
 
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
@@ -562,25 +555,16 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
-  const getTotalLabourAssessed = () => {
+  const getTotalLabourAssessed2 = () => {
     let total = 0;
-    allInfo?.labourDetails?.map((part, index) => {
-      const dep =
-        String(part.JobType) === "1"
-          ? Number(Number(part.Assessed) * Number(12.5)) / 100
-          : 0;
-      const assessed = Number(part.Assessed) - dep;
-
-      const assessedvalue = assessed * Number(part.GSTPercentage);
-      const gst = Number(assessedvalue) / 100;
-      if (part.LabourIsActive) {
-        total = total + (assessed + gst);
-      }
+    allInfo?.GSTSummaryLabour?.map((part, index) => {
+        total += Number(part.TotalAssessed)
     });
+
     return total;
   };
 
-  const getTotalLabourEstimateGST = () => {
+  const getTotalLabourEstimateGST2 = () => {
     let total = 0;
     allInfo?.labourDetails?.map((part, index) => {
       const estimate = Number(part.Estimate);
@@ -593,21 +577,12 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
-  const getTotalLabourAssessedGST = () => {
+  const getTotalLabourAssessedGST2 = () => {
     let total = 0;
-    allInfo?.labourDetails?.map((part, index) => {
-      const dep =
-        String(part.JobType) === "1"
-          ? Number(Number(part.Assessed) * Number(12.5)) / 100
-          : 0;
-      const assessed = Number(part.Assessed) - dep;
-
-      const assessedvalue = assessed * Number(part.GSTPercentage);
-      const gst = Number(assessedvalue) / 100;
-      if (part.LabourIsActive) {
-        total = total + gst;
-      }
+    allInfo?.GSTSummaryLabour?.map((part, index) => {
+        total += Number(Number(part.CGST) + Number(part.SGST))
     });
+
     return total;
   };
 
@@ -628,11 +603,9 @@ const GSTSummary = ({ allInfo }) => {
   const calculateLabourDepreciations = () => {
     let totalDep = 0;
     allInfo?.labourDetails?.map((labour, index) => {
-      if (String(labour.JobType) === "1") {
-        const dep = Number(Number(labour.Assessed) * Number(12.5)) / 100;
-
-        console.log("dep", dep);
-        totalDep += Number(totalDep) + Number(dep);
+      if (String(labour.JobType) === "1" && labour.LabourIsActive) {
+        const dep = Number(Number(labour.Assessed) * (12.5)) / 100;
+        totalDep = (Number(totalDep) + Number(dep));
       }
     });
     return totalDep;
@@ -668,12 +641,39 @@ const GSTSummary = ({ allInfo }) => {
     return string;
   };
 
+  const getTotalLabourAssessedGST = () => {
+    const currentLabourGST = allInfo?.labourDetails[0].GSTPercentage;
+    const overAllValueWithoutGST = getTotalLabourAssessed() - calculateLabourDepreciations();
+    const gstValue = (Number(overAllValueWithoutGST) * Number(currentLabourGST)) / 100;
+    return gstValue
+  };
+
+
+  const getTotalLabourAssessed = () => {
+    let total = 0;
+    allInfo?.labourDetails?.map((part, index) => {
+      const dep =
+        String(part.JobType) === "1"
+          ? Number(Number(part.Assessed) * Number(12.5)) / 100
+          : 0;
+      const assessed = Number(part.Assessed) - dep;
+
+      const assessedvalue = assessed * Number(part.GSTPercentage);
+      const gst = Number(assessedvalue) / 100;
+      if (part.LabourIsActive) {
+        total = total + (assessed + gst);
+      }
+    });
+    return total;
+  };
+
+
   const getSummaryTotalWithLessSalvage = () => {
     return (
       getTotalLabourAssessedGST() +
       (getTotalLabourAssessed() - calculateLabourDepreciations()) +
       getTotalEvaluationOfAssessedForNewParts() +
-      lessExcess +
+      lessExcess -
       lessSalvage
     );
   };
@@ -938,10 +938,9 @@ const GSTSummary = ({ allInfo }) => {
             </th>
           </tr>
 
-          {allGSTType?.map((field, index) => {
+          {allInfo?.GSTSummaryNewParts.map((field, index) => {
             return (
-              sortFunction(allInfo?.newPartsDetails, field.field).length >
-                0 && (
+              true && (
                 <>
                   <>
                     <tr>
@@ -959,7 +958,7 @@ const GSTSummary = ({ allInfo }) => {
                           paddingRight: "5px",
                         }}
                       >
-                        {field.field} %
+                        {field.GSTPct} %
                       </td>
                       <td
                         style={{
@@ -967,9 +966,7 @@ const GSTSummary = ({ allInfo }) => {
                           paddingRight: "5px",
                         }}
                       >
-                        {addCommasToNumber(
-                          roundOff(calculateGSTSectionVauesWithGST(field.field))
-                        )}
+                        {field.TotalAssessed}
                       </td>
                       <td
                         style={{
@@ -977,9 +974,7 @@ const GSTSummary = ({ allInfo }) => {
                           paddingRight: "5px",
                         }}
                       >
-                        {addCommasToNumber(
-                          roundOff(calculateGSTSectionGST(field.field) / 2)
-                        )}
+                        {field.CGST}
                       </td>
                       <td
                         style={{
@@ -987,9 +982,7 @@ const GSTSummary = ({ allInfo }) => {
                           paddingRight: "5px",
                         }}
                       >
-                        {addCommasToNumber(
-                          roundOff(calculateGSTSectionGST(field.field) / 2)
-                        )}
+                        {field.SGST}
                       </td>
                       <td
                         style={{
@@ -1005,12 +998,7 @@ const GSTSummary = ({ allInfo }) => {
                           paddingRight: "5px",
                         }}
                       >
-                        {addCommasToNumber(
-                          roundOff(
-                            calculateGSTSectionVauesWithGST(field.field) +
-                              calculateGSTSectionGST(field.field)
-                          )
-                        )}
+                        {field.GrandTotalAssessed}
                       </td>
                     </tr>
                   </>
@@ -1043,7 +1031,7 @@ const GSTSummary = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                roundOff(calculateGSTWholeSectionVauesWithGST())
+                roundOff(calculateGSTWholeSectionVauesWithGST2())
               )}
             </td>
             <td
@@ -1052,7 +1040,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST() / 2))}
+              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST2() / 2))}
             </td>
             <td
               style={{
@@ -1060,7 +1048,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST() / 2))}
+              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST2() / 2))}
             </td>
             <td
               style={{
@@ -1078,8 +1066,8 @@ const GSTSummary = ({ allInfo }) => {
             >
               {addCommasToNumber(
                 roundOff(
-                  calculateGSTWholeSectionVauesWithGST() +
-                    calculateGSTWholeSectionGST()
+                  calculateGSTWholeSectionVauesWithGST2() +
+                    calculateGSTWholeSectionGST2()
                 )
               )}
             </td>
@@ -1114,7 +1102,7 @@ const GSTSummary = ({ allInfo }) => {
                 textAlign: "center",
               }}
             >
-              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST()))}
+              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST2()))}
             </td>
             <td
               style={{
@@ -1204,14 +1192,16 @@ const GSTSummary = ({ allInfo }) => {
               Total
             </th>
           </tr>
-          <tr>
+          {allInfo?.GSTSummaryLabour?.map((parts,index)=>{
+            return true ?  
+            <><tr>
             <td
               style={{
                 border: "1px solid black",
                 paddingRight: "5px",
               }}
             >
-              1
+              {index + 1}
             </td>
             <td
               colSpan={2}
@@ -1220,7 +1210,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(labourGST()))}
+              {parts.GSTPercentage} %
             </td>
             <td
               style={{
@@ -1228,7 +1218,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
+             {parts.TotalAssessed} 
             </td>
             <td
               style={{
@@ -1236,7 +1226,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
+              {parts.CGST}
             </td>
             <td
               style={{
@@ -1244,7 +1234,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
+              {parts.SGST}
             </td>
             <td
               style={{
@@ -1260,11 +1250,12 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(
-                roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed())
-              )}
+              {parts.GrandTotalAssessed}
             </td>
           </tr>
+          </> : null
+          })}
+         
           <tr>
             <td
               style={{
@@ -1289,7 +1280,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
+              {addCommasToNumber(roundOff(getTotalLabourAssessed2()))}
             </td>
             <td
               style={{
@@ -1297,7 +1288,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST2() / 2))}
             </td>
             <td
               style={{
@@ -1305,7 +1296,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST() / 2))}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST2() / 2))}
             </td>
             <td
               style={{
@@ -1322,7 +1313,7 @@ const GSTSummary = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                roundOff(getTotalLabourAssessedGST() + getTotalLabourAssessed())
+                roundOff(getTotalLabourAssessedGST2() + getTotalLabourAssessed2())
               )}
             </td>
           </tr>
@@ -1357,7 +1348,7 @@ const GSTSummary = ({ allInfo }) => {
                 textAlign: "center",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST()))}
+              {addCommasToNumber(roundOff(getTotalLabourAssessedGST2()))}
             </td>
             <td
               style={{
