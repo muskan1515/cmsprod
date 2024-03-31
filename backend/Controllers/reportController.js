@@ -41,6 +41,15 @@ const getAllInfo = async(req,res)=>{
         "CALL GetOtherTables(?)",
         [leadId]
       );
+
+      const GSTSummaryNewParts = await executeQuery(
+        "CALL CMSDB.GenerateGSTSummaryForParts(?)",
+        [leadId]
+      );
+      const GSTSummaryLabour = await executeQuery(
+        "CALL CMSDB.GenerateGSTSummaryLabour(?)",
+        [leadId]
+      );
      
   
       const combinedResult = {
@@ -49,7 +58,9 @@ const getAllInfo = async(req,res)=>{
         otherInfo,
         vehicleOnlineDetails,
         driverOnlineDetails,
-        summaryReport
+        summaryReport,
+        GSTSummaryLabour,
+        GSTSummaryNewParts
       };
   
    
