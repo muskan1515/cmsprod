@@ -158,8 +158,7 @@ const ErrorPageContent = ({ feeReport }) => {
     const wordsWholePart = convert(wholePart);
     const wordsDecimalPart = convert(decimalPart);
 
-    const string =
-      wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+    const string = wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
     return string.toUpperCase();
   }
 
@@ -267,7 +266,7 @@ const ErrorPageContent = ({ feeReport }) => {
         <div className="">
           <h5>To,</h5>
           <div className="d-flex text-dark gap-5 fw-bold">
-            {/* <div className="">
+            <div className="">
               {feeReport?.feeDetails?.BillTo === "Insured" ? (
                 <>
                   <span style={{ marginLeft: "25px" }}>
@@ -324,260 +323,35 @@ const ErrorPageContent = ({ feeReport }) => {
                   </span>
                 </>
               )}
-            </div> */}
-            <div className="container" style={{ marginLeft: "px" }}>
-              <table style={{ width: "100%" }}>
-                <tr>
-                  <td rowSpan={3}>
-                    <div className="">
-                      {feeReport?.feeDetails?.BillTo === "Insured" ? (
-                        <>
-                          <span style={{ marginLeft: "25px" }}>
-                            {feeReport?.vehicleOnlineDetails?.RegisteredOwner} (
-                            {selectedServicingOffice?.Designation} )
-                          </span>
-                          <br />
-                          <span style={{ marginLeft: "25px" }}>
-                            {feeReport?.vehicleOnlineDetails?.PermanentAddress}
-                          </span>
-                        </>
-                      ) : feeReport?.feeDetails?.BillTo === "Insurer" ? (
-                        <>
-                          <span style={{ marginLeft: "25px" }}>
-                            {
-                              feeReport?.claimDetails
-                                ?.InsuranceCompanyNameAddress
-                            }{" "}
-                            ,
-                          </span>
-                          <br />
-                          <span style={{ marginLeft: "25px" }}>
-                            {selectedServicingOffice?.OfficeNameWithCode}
-                          </span>
-                          <br />
-                          <span style={{ marginLeft: "25px" }}>
-                            {selectedServicingOffice?.State}
-                          </span>
-                          <br />
-                          <div
-                            className="d-flex gap-5"
-                            style={{ marginLeft: "25px" }}
-                          >
-                            <span style={{ marginLeft: "" }}>
-                              GSTIN : {selectedServicingOffice?.GST_No}
-                            </span>
-                            <br />
-                            <span style={{ marginLeft: "" }}>
-                              State Code : {selectedServicingOffice?.StateCode}
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <span style={{ marginLeft: "25px" }}>
-                            {
-                              feeReport?.claimDetails
-                                ?.InsuranceCompanyNameAddress
-                            }{" "}
-                            ,
-                          </span>
-                          <br />
-                          <span style={{ marginLeft: "25px" }}>
-                            {selectedServicingOffice?.OfficeNameWithCode}
-                          </span>
-                          <br />
-                          <span style={{ marginLeft: "25px" }}>
-                            {selectedServicingOffice?.State}
-                          </span>
-                          <br />
-                          <div
-                            className="container"
-                            style={{ marginLeft: "10px" }}
-                          >
-                            <table style={{ width: "45%" }}>
-                              <tr>
-                                <td>
-                                  <span>GSTIN</span>
-                                </td>
-                                <td>:</td>
-                                <td>
-                                  <span>
-                                    {" "}
-                                    {selectedServicingOffice?.GST_No}
-                                  </span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <span>State Code</span>
-                                </td>
-                                <td>:</td>
-                                <td>
-                                  <span>
-                                    {" "}
-                                    {selectedServicingOffice?.StateCode}
-                                  </span>
-                                </td>
-                              </tr>
-                            </table>
-                            {/* <span style={{ marginLeft: "" }}>
-                              GSTIN : {selectedServicingOffice?.GST_No}
-                            </span> */}
-                            {/* <br />
-                            <span style={{ marginLeft: "" }}>
-                              State Code : {selectedServicingOffice?.StateCode}
-                            </span> */}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </td>
-                  <td style={{ marginBottom: "-10px" }}>
-                    <span>Bill No.</span>
-                  </td>
-                  <td style={{ width: "5%" }}>:</td>
-                  <td style={{ width: "" }}>
-                    <span> MTE-{feeReport?.feeDetails?.BillSno}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Date</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>
-                      {feeReport?.feeDetails?.BillDate
-                        ? formatDate(new Date(feeReport?.feeDetails?.BillDate))
-                        : "-"}
-                    </span>{" "}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Code</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>2300012369</span>
-                  </td>
-                </tr>
-              </table>
+            </div>
+            <div className="" style={{ marginLeft: "px" }}>
+              <div className="d-flex text-dark gap-5">
+                <span>Bill No.</span>
+                <span>:</span>
+                <span> {feeReport?.feeDetails?.BillSno}</span>
+              </div>
+              <div className="d-flex text-dark gap-5">
+                <span>Date</span>
+                <span style={{ marginLeft: "17px" }}>:</span>
+                <span>
+                  {feeReport?.feeDetails?.BillDate
+                    ? formatDate(new Date(feeReport?.feeDetails?.BillDate))
+                    : "-"}
+                </span>{" "}
+              </div>
+              <div className="d-flex text-dark gap-5">
+                <span>Code</span>
+                <span style={{ marginLeft: "13px" }}>:</span>
+                <span>2300012369</span>
+              </div>
             </div>
           </div>
           <div
             className="d-flex text-dark fw-bold mb-1"
             style={{ marginLeft: "25px" }}
           >
-            <div className="container">
-              <table style={{ width: "100%" }}>
-                <tr>
-                  <td style={{ width: "20%" }}>
-                    <span>Report Ref No</span>
-                  </td>
-                  <td style={{ width: "2%" }}>:</td>
-                  <td style={{ width: "20%" }}>
-                    <span>{feeReport?.claimDetails?.ReferenceNo}</span>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Vehicle No</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>
-                      {feeReport?.vehicleOnlineDetails?.RegisteredNumber}
-                    </span>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Insured Name </span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>{feeReport?.insuredDetails?.InsuredName} </span>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Date Of Accident</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>
-                      {feeReport?.accidentDetails?.DateOfAccident
-                        ? formatDate(feeReport?.accidentDetails?.DateOfAccident)
-                        : "--"}
-                    </span>
-                  </td>
-                  <td>
-                    <span>Assessed</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>
-                      ₹{" "}
-                      {addCommasToNumber(
-                        roundOff(Number(feeReport?.feeDetails?.AssessedAmt))
-                      )}
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Policy/cover note no</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>{feeReport?.claimDetails?.PolicyNumber}</span>
-                  </td>
-                  <td>
-                    <span>Estimate</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span>
-                      ₹{" "}
-                      {addCommasToNumber(
-                        roundOff(Number(feeReport?.feeDetails?.EstimateAmt))
-                      )}
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Claim No</span>
-                  </td>
-                  <td>:</td>
-                  <td>
-                    <span> {feeReport?.claimDetails?.ClaimNumber}</span>
-                  </td>
-                  <td style={{ width: "10%" }}>
-                    <span>IDV</span>
-                  </td>
-                  <td style={{ width: "2%" }}>:</td>
-                  <td style={{ width: "20%" }}>
-                    <span>
-                      ₹{" "}
-                      {addCommasToNumber(
-                        roundOff(Number(feeReport?.claimDetails?.IDV))
-                      )}
-                    </span>
-                  </td>
-                </tr>
-              </table>
-              {/* <div className="d-flex text-dark gap-1">
+            <div className="">
+              <div className="d-flex text-dark gap-1">
                 <span>Report Ref No</span>
                 <span style={{ marginLeft: "43px" }}>:</span>
                 <span>{feeReport?.claimDetails?.ReferenceNo}</span>
@@ -610,9 +384,9 @@ const ErrorPageContent = ({ feeReport }) => {
                 <span>Claim No</span>
                 <span style={{ marginLeft: "81px" }}>:</span>
                 <span> {feeReport?.claimDetails?.ClaimNumber}</span>
-              </div> */}
+              </div>
             </div>
-            {/* <div className="mt-5" style={{ marginLeft: "40px" }}>
+            <div className="mt-5" style={{ marginLeft: "40px" }}>
               <div className="d-flex text-dark gap-3 text-dark">
                 <span>Assessed</span>
                 <span>:</span>
@@ -643,7 +417,7 @@ const ErrorPageContent = ({ feeReport }) => {
                   )}
                 </span>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
@@ -705,9 +479,7 @@ const ErrorPageContent = ({ feeReport }) => {
             </td>
             <td>
               <div>
-                <h5 className="text-decoration-underline m-2">
-                  {feeReport?.feeDetails?.Type}
-                </h5>
+                <h5 className="text-decoration-underline m-2">{feeReport?.feeDetails?.Type}</h5>
                 <span style={{ paddingLeft: "10px" }}>
                   Professional Fee :{" "}
                   <span style={{ marginLeft: "40px", fontWeight: "lighter" }}>
@@ -791,7 +563,6 @@ const ErrorPageContent = ({ feeReport }) => {
               {" "}
               <span>Sub Total : ₹</span>
               <br />
-              <br />
               <span>
                 C GST @{" "}
                 {addCommasToNumber(
@@ -824,13 +595,12 @@ const ErrorPageContent = ({ feeReport }) => {
                 // paddingLeft: "20px",
               }}
             >
-              <span className="text-underline">
+              <span>
                 {" "}
                 ₹{" "}
                 {addCommasToNumber(roundOff(calculateTheTotalBillWithoutGST()))}
               </span>{" "}
-              <br />
-              <br />
+              <br /> <hr />
               <span>₹ {addCommasToNumber(roundOff(calculateCGST()))}</span>
               <br />
               <span>₹ {addCommasToNumber(roundOff(calculateSGST()))}</span>
@@ -910,17 +680,18 @@ const ErrorPageContent = ({ feeReport }) => {
                 // paddingLeft: "20px",
               }}
             >
-              <h5 className="text-dark mt-2">
+              <h5 className="text-dark">
                 In words : ₹. {numberToWords(grandTotalWithGST())}
               </h5>
             </td>
           </tr>
-          <tr className="container" style={{ border: "1px solid black" }}>
-            {/* <td colSpan={2} style={{ padding: "5px" }}>
+          <tr style={{ border: "1px solid black" }}>
+            <td colSpan={2} style={{ padding: "5px" }}>
               {feeReport?.feeDetails?.BillTo !== "Insured" && (
                 <span className="text-dark">
-                  <span className="fw-bold">GSTIN </span>: 08AAPCM1051K1Z9 State
-                  : ({selectedServicingOffice?.StateCode})
+                  <span className="fw-bold">GSTIN </span>:{" "}
+                  08AAPCM1051K1Z9 State : (
+                  {selectedServicingOffice?.StateCode})
                 </span>
               )}
               <br />
@@ -938,86 +709,31 @@ const ErrorPageContent = ({ feeReport }) => {
                 <span style={{ marginLeft: "30px" }}>:</span>
                 <span>50200064600220</span>
               </div>
+              {/*<div className="d-flex gap-3 text-dark">
+                <span>MICR No</span>
+                <span style={{ marginLeft: "16px" }}>:</span>
+                <span>335019002</span>
+            </div>*/}
               <div className="d-flex gap-3 text-dark">
                 <span>IFS Code</span>
                 <span style={{ marginLeft: "16px" }}>:</span>
                 <span>HDFC0000505</span>
               </div>
-            </td> */}
+            </td>
           </tr>
-        </table>
-        {feeReport?.feeDetails?.BillTo !== "Insured" && (
-          <table
-            style={{ width: "100%", border: "1px solid black", color: "black" }}
-          >
-            <tr>
-              <td style={{ width: "20%", paddingLeft: "5px" }}>
-                <span className="fw-bold">GSTIN</span>
-              </td>
-              <td style={{ width: "3%" }}>:</td>
-              <td style={{ width: "30%" }}>
-                <span> 08AAPCM1051K1Z9</span>
-              </td>
-              <td>
-                <span className="fw-bold">State</span>
-                <span style={{ marginLeft: "10px" }}>:</span>
-                <span style={{ marginLeft: "10px" }}>
-                  ({selectedServicingOffice?.StateCode})
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ width: "10%", paddingLeft: "5px" }}>
-                <span className="fw-bold">PAN</span>
-              </td>
-              <td>:</td>
-              <td>
-                <span>AAPCM1051K</span>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ width: "10%", paddingLeft: "5px" }}>
-                <span className="fw-bold">Bank Name</span>
-              </td>
-              <td>:</td>
-              <td>
-                <span style={{ marginLeft: "10px" }}>HDFC BANK</span>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ width: "10%", paddingLeft: "5px" }}>
-                <span>A/c No.</span>
-              </td>
-              <td>:</td>
-              <td>
-                <span>50200064600220</span>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ width: "10%", paddingLeft: "5px" }}>
-                <span>IFS Code</span>s
-              </td>
-              <td>:</td>
-              <td>
-                <span>HDFC0000505</span>
-              </td>
-            </tr>
-          </table>
-        )}
-        <table style={{ width: "100%", border: "1px solid black" }}>
           <tr style={{ border: "1px solid black" }}>
             <td></td>
             <td colSpan={2} className="">
               <div>
-                {/* <h5 className="" style={{ marginLeft: "63%" }}>
+                <h5 className="" style={{ marginLeft: "63%" }}>
                   For MT ENGINEER{" "}
-                </h5>{" "} */}
-                {/* <span style={{ color: "black", marginLeft: "50%" }}>
+                </h5>{" "}
+                <span style={{ color: "black", marginLeft: "50%" }}>
                   Insurance Surveyors & Loss assessors Pvt. Ltd.
-                </span> */}
+                </span>
               </div>
 
-              <div className="" style={{}}>
+              <div className="" style={{  }}>
                 <div className="text-end">
                   <Image
                     width={201}

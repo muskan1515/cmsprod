@@ -132,7 +132,21 @@ const db = require("../Config/dbConfig");
         return res.status(500).send("Internal Server Error");
       }
   
+      db.query("CALL InsertIntobillIDTable(?)",[LeadId], (error, result12) => {
+        if (error) {
+          console.error(
+            "Error while updating the billId",
+            error
+          );
+          return res.status(500).json({
+            error:  "Error while updating the billId",
+          });
+        }
+
         return res.status(200).json({ message: "Successfully uploaded the fee report! ",result });
+
+      });
+        
       
     });
   });

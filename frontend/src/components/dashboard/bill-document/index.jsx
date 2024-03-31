@@ -14,6 +14,7 @@ const Index = () => {
   const router = useRouter();
 
   useEffect(() => {
+    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
@@ -32,6 +33,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    
     let userData = {};
     userData = JSON.parse(localStorage.getItem("userInfo"));
     if (!userData) {
@@ -82,10 +84,11 @@ const Index = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Toaster />
+        <Toaster/>
         <header className="bg-gray-800 text-white"></header>
         <main className="flex-grow p-4">
           {" "}
+          
           <div className="col-lg-12">
             <ErrorPageContent feeReport={feeReport} />
           </div>
@@ -99,11 +102,22 @@ const Index = () => {
             }}
           ></div>
           <div className="">
-            <div className="d-flex align-item-center justify-content-center">
-              <h5 className="text-dark" style={{ fontSize: "12px" }}>
-                69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan
-                335001
-              </h5>
+            <div className="d-flex gap-3 align-item-center">
+              <div
+                className=""
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <h5 className="text-dark" style={{ fontSize: "12px" }}>
+                69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan 335001
+                </h5>
+                {/* <h5
+                  className="text-center text-dark"
+                  style={{ fontSize: "12px" }}
+                >
+                  Ofce: B-43,NFL Society,Sector-PI,Gr Noida-201310./E-201,MAPSKO
+                  Mountville,Sector-79,Gurugram(Hr)
+                </h5> */}
+              </div>
               {/* <div className="" style={{ marginTop: "" }}>
                 <div className="text-end">
                   <Image

@@ -67,15 +67,15 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
 
      
         const emailContent = `
-      Dear Sir/Madam,
+      Dear Sir/Madam,<br/>
   
       Greeting from the MT Engineers Legal Investigator Pvt. Ltd., <br/>
   
-        We are Appointed for the survey of vehicle no.${vehicleNo}, <br/>
-         Insured:${Insured} & Policy No.-${PolicyNo}  <br/>
-         on ${Date} from the United India Insurance co. Ltd., <br/>
-         So we request you please provide the complete contact <br/>
-         deatils & mails of Repairer/insured. So that we <br/>
+      We are Appointed for the survey of vehicle no.${vehicleNo}, <br/>
+      Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} <br/>
+      from the United India Insurance co. Ltd.<br/>
+      So we request you please provide the complete contact <br/>
+      deatils & mails of Repairer/insured. So that we <br/>
       can procedd further in your case and we also request <br/>
       you to provide the following details as follows:- <br/>
 

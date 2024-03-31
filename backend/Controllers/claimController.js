@@ -35,14 +35,12 @@ const addClaim =  (req, res) => {
       EstimatedLoss,
     } = req.body;
 
-
-   
-  
     const authorizationHeader = req.headers.authorization;
   
     const token = authorizationHeader.substring("Bearer ".length);
   
     const generatedToken = generateUniqueToken();
+
     const insertClaimDetails = `
       INSERT INTO ClaimDetails (
         SurveyType,
@@ -98,8 +96,8 @@ const addClaim =  (req, res) => {
               .status(500)
               .json({ error: "Error inserting data into ClaimDetails." });
           }
-          console.log(results);
           const addLeadId = results[0].LeadId;
+        
 
           const newReferenceNo = ReferenceNo+`/${parseInt(results[0].LeadId)}`;
         
@@ -276,6 +274,21 @@ const addClaim =  (req, res) => {
                       });
                     }
                   });
+
+                  db.query("CALL InsertIntoIDTable()", (error, result12) => {
+                    if (error) {
+                      console.error(
+                        "Error inserting reference no",
+                        error
+                      );
+                      return res.status(500).json({
+                        error: "Error inserting reference no",
+                      });
+                    }
+        
+                  });
+
+                 
 
                   db.query(statusDetails, (error, results) => {
                     db.query(insertDriverDetails, (error, results) => {
@@ -954,9 +967,6 @@ const getSpecificClaim = async (req, res) => {
     WHERE LeadId = ${LeadId};
   `;
 
- 
- 
-
    db.query(updateClaimDetails, (error, results) => {
     if (error) {
       console.error(`Error updating data in ${LeadId} specific CLAIM details:`, error);
@@ -1097,6 +1107,9 @@ const getSpecificClaim = async (req, res) => {
       WHERE LeadID = ${LeadId};
     `;
 
+
+    console.log(updateAccidentDetails);
+  
       db.query(updateAccidentDetails, (err, result2) => {
         if (err) {
           console.error(err);

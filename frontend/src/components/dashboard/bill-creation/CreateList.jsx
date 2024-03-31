@@ -595,7 +595,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={'MTE-'+`${allInfo?.feesDetails?.BillSno}`}
+                  value={allInfo?.feesDetails?.BillSno }
                 />
               </div>
               <div className="col-lg-1 my_profile_setting_input form-group">
