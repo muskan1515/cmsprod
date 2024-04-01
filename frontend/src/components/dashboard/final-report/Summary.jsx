@@ -248,9 +248,10 @@ const Summary = ({
   
 
   useEffect(()=>{
-    console.log(totalMetalRows)
-    setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
-  },[MetalPercent,totalMetalRows,ExpectedSalvage,])
+    if(MetalPercent == 0 ){
+      setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
+    } 
+  },[MetalPercent,totalMetalRows])
 
   
 

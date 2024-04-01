@@ -625,6 +625,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setTotalLabor(claim?.summaryDetails?.TotalLabor  !==null ? claim?.summaryDetails?.TotalLabor : 0 );
     setTotalEstimateSum( claim?.summaryDetails?.TotalEstimate  !==null ? claim?.summaryDetails?.TotalEstimate : 0);
     setLessExcess(claim?.summaryDetails?.LessExcess  !==null? claim?.summaryDetails?.LessExcess : 0);
+    setLessExcessSum(claim?.summaryDetails?.LessExcess  !==null? claim?.summaryDetails?.LessExcess : 0)
     setExpectedSalvage( claim?.summaryDetails?.ExpectedSalvage  !==null ? claim?.summaryDetails?.ExpectedSalvage : 0);
     setMetalPercent(claim?.summaryDetails?.MetalPercent  !==null?claim?.summaryDetails?.MetalPercent:0);
     setRemarkOnSalvage(claim?.summaryDetails?.RemarkOnSalvage  !==null?claim?.summaryDetails?.RemarkOnSalvage:"");
@@ -861,6 +862,9 @@ const [AccidentTime,setAccidentTime]=useState("");
     toast.success("Updating  the final report!")
     setDisable(true)
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log("LessExcess",LessExcess)
+    // return
+
     const payload = {
       PolicyType: policyType,
       IDV: IDV ? IDV : claim?.claimDetails?.IDV,
