@@ -5,19 +5,19 @@
 
     if(val === 1){
         return `
-        1. Driving Licence
-        2. Certificate of registration
-        3. Repair Estimate
-        4. Claim form
-        5. Insurance policy
-        6. Damage vehicle photographs/video
-        7. Aadhar Card
-        8. Pan Card
-        9. Cancel Cheque
-        10. Satisfaction voucher
-        11. Previous year policy
-        12. Preinspection (if break in insurance)
-        13. NCB confirmation
+        1. Driving Licence <br/>
+        2. Certificate of registration <br/>
+        3. Repair Estimate <br/>
+        4. Claim form <br/>
+        5. Insurance policy <br/>
+        6. Damage vehicle photographs/video <br/>
+        7. Aadhar Card <br/>
+        8. Pan Card <br/>
+        9. Cancel Cheque <br/>
+        10. Satisfaction voucher <br/>
+        11. Previous year policy <br/>
+        12. Preinspection (if break in insurance) <br/>
+        13. NCB confirmation <br/>
         `
     }
     return '';

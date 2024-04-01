@@ -78,26 +78,24 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
       deatils & mails of Repairer/insured. So that we <br/>
       can procedd further in your case and we also request <br/>
       you to provide the following details as follows:- <br/>
-
+      <br/>
       <strong> ${content} </strong>
 
       Please provide the clear copy of all the documents so that <br/>
-      the claim processing can be fast or <br/>
+      the claim processing can be fast or
       <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${InsuredToken}&type=${1}&content=${""} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
 
       Please provide the clear Vahicle Videos so that the claim <br/>
-      processing can be fast or <br/>
+      processing can be fast or 
       <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${ImageToken}&type=${2}&content=${"Images"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
 
       Please provide the  all the clear Images of the Vehicle so  <br/>
-      that the claim processing can be fast or <br/>
+      that the claim processing can be fast or 
       <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
 
     Note:- <strong> <br/>
-      If We Cannot get the response with in 02 days we will inform <br/>
-      the insurer that the insured is not interseted in the <br/>
-      claim. So close the file as"No Claim" in non copperation <br/>
-       & non submission of the documents. <br/></strong>
+      If We Cannot get the response with in 02 days we will inform the insurer that the insured is not interseted in the <br/>
+      claim. So close the file as"No Claim" in non copperation & non submission of the documents. <br/></strong>
 
   `;
 
@@ -205,16 +203,15 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           }
   
           const emailContent = `
-            Dear Sir/Madam,
+            Dear Sir/Madam,<br/>
       
             Greeting from the MT Engineers Legal Investigator Pvt. Ltd., <br/>
       
             We are Appointed for the survey of vehicle no.${vehicleNo}, <br/>
-            Insured:${Insured} & Policy No.-${PolicyNo} on  <br/>
-            ${Date} from the United India Insurance co. Ltd., <br/>
-            So we request you please provide the complete <br/>
-            contact deatils & mails of Repairer/insured. So that we  <br/>
-            can procedd further in your case and we also request <br/>
+            Insured:${Insured} & Policy No.-${PolicyNo} on ${Date} <br/>
+            from the United India Insurance co. Ltd. So we request <br/>
+            you please provide the complete contact deatils & mails of Repairer/insured.<br/>
+            So that we  can procedd further in your case and we also request <br/>
             you to provide the following details as follows:- <br/>
       
             <strong>${content}</strong><br/>
@@ -231,10 +228,8 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             that the claim processing can be fast or <br/>
             <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${VideoToken}&type=${3}&content=${"Videos"} target="_blank">Click Here</a> to fill the documents information .</p> <br/>
       
-          Note:- <strong> If We Cannot get the response with in 02 days we will <br/>
-          inform the insurer that the insured is not interseted in the <br/>
-          claim. So close the file as"No Claim" in non copperation & non <br/>
-          submission of the documents. </strong> <br/>
+          Note:- <strong> If We Cannot get the response with in 02 days we will inform the insurer that the insured <br/>
+          is not interseted in the claim. So close the file as"No Claim" in non copperation & non submission of the documents. </strong> <br/>
       
     `;
           
@@ -345,7 +340,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           <br/>
     
           Please provide the clear copy of all the documents so that
-           the claim processing can be fast or
+          the claim processing can be fast or
           <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${
             generatedToken
           }&type=${1}&content=${encodeURIComponent(
