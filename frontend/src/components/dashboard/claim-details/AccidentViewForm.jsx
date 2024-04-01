@@ -99,6 +99,19 @@ const AccidentViewForm = ({
   };
 
 
+  function convertDateFormat(inputDate) {
+    const dateParts = inputDate?.split("-");
+    if (dateParts?.length === 3) {
+        const yyyy = dateParts[0];
+        const mm = dateParts[1];
+        const dd = dateParts[2];
+        const formattedDate = `${dd}-${mm}-${yyyy}`;
+        return formattedDate;
+    }
+    return ""
+   
+}
+
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -129,7 +142,7 @@ const AccidentViewForm = ({
                       }}
                     >
                       {claim?.accidentDetails?.DateOfAccident !== null ? 
-                      (claim?.accidentDetails?.DateOfAccident) : ""}
+                      convertDateFormat(claim?.accidentDetails?.DateOfAccident) : ""}
                     </label>
                   </div>
                 </td>

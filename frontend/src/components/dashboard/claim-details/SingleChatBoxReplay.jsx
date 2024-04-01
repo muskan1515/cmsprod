@@ -2,18 +2,6 @@ import moment from "moment";
 import Image from "next/image";
 
 const SingleChatBoxReply = ({allComments}) => {
-  const replyContent = [
-    {
-      id: 1,
-      message: `Hello, John!`,
-      reply: <></>,
-    },
-    {
-      id: 3,
-      message: `Let's go!`,
-      reply: <></>,
-    },
-  ];
 
   const formatDate = (datetimeString) => {
     const date = moment(datetimeString);

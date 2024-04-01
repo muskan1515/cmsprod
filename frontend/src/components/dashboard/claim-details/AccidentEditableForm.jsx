@@ -33,6 +33,21 @@ const AccidentEditableForm = ({
     setisUpdateVehicleLoading(false);
   };
 
+ console.log("newDate",DateOfAccident)
+
+  function localDate(dateString) {
+    if (dateString && dateString !== "null") {
+      return new Date(dateString).toLocaleDateString("fr-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Kolkata",
+      });
+    } else {
+      return "";
+    }
+  }
+
   const formatDate = (val) => {
     const date = new Date(val);
     const day = date.getDate().toString().padStart(2, '0');
@@ -61,7 +76,21 @@ const AccidentEditableForm = ({
     const formattedDate = `${yyyy}-${mm}-${dd}`;
     settingFunc(formattedDate);
     }
+    const convertDateFormat = (inputDate) => {
+      const dateParts = inputDate.split("-");
+      if (dateParts.length === 3) {
+          const yyyy = dateParts[2];
+          const mm = dateParts[1];
+          const dd = dateParts[0];
+          const formattedDate = `${yyyy}-${mm}-${dd}`;
+          return (formattedDate);
+      }
+      
+  }
 
+  useEffect(()=>{
+    setDate(DateOfAccident,setDateOfAccident)
+  },[])
   return (
     <>
       <div className="faq_according row mt-2">
@@ -152,17 +181,17 @@ const AccidentEditableForm = ({
                           </label>
                         </div>
                         <div className="col-lg-7">
-                        <DatePicker
-                          className="form-control"
-                          id="propertyTitle"
-                          dateFormat="dd/MM/yyyy"
-                          selected={
-                            DateOfAccident !== null && !isNaN(new Date(DateOfAccident))
-                              ? new Date(DateOfAccident)
-                              : ""
-                          }
-                          onChange={(date) => setDate(date,setDateOfAccident)}
-                        />
+                          <DatePicker
+                            className="form-control"
+                            id="propertyTitle"
+                            dateFormat="dd-MM-yyyy"
+                            selected={
+                              DateOfAccident !== null && !isNaN(new Date(DateOfAccident))
+                                ? new Date(DateOfAccident)
+                                : ""
+                            }
+                            onChange={(date) => {setDate(date,setDateOfAccident)}}
+                          />
                         </div>
                       </div>
                       

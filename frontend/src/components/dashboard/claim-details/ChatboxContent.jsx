@@ -83,6 +83,7 @@ const ChatboxContent = ({leadId}) => {
               cols="40"
               rows="3"
               wrap="hard"
+              value={comment}
               onChange={(e)=>setComment(e.target.value)}
               required
             />

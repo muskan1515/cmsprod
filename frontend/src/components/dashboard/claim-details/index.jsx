@@ -947,7 +947,7 @@ const Index = ({}) => {
       BrokerMailAddress,
       PlaceOfLoss,
       PlaceOfSurvey,
-      DateOfAccident : formatDate2(DateOfAccident),
+      DateOfAccident : (DateOfAccident),
       TimeOfAccident,
       PlaceOfLoss,
       Pin,
