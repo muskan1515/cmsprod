@@ -35,7 +35,6 @@ function ExcelTable({ allRows }) {
         "S.No.",
         "Ref No.",
         "Policy No.",
-        "Row No.",
         "Veh. No.",
         "Insured",
         "Insured GST No.",
@@ -54,16 +53,15 @@ function ExcelTable({ allRows }) {
         index + 1,
         res.ReferenceNo,
         res.PolicyNumber,
-        res.ClaimNumber,
         res.RegisteredNumber,
-        res.Insured,
-        res.InsuredGSTNumber,
+        res.InsuredName,
+        res.GST_No,
         res.SurveyType,
         formatDate(res.DateOfIntimation),
         formatDate(res.DateOfSurvey),
         addCommasToNumber(res.EstimateAmt),
         addCommasToNumber(res.AssessedAmt),
-        0, // TAT
+        res.TAT, // TAT
         res.Remarks,
         res.BillNo,
         addCommasToNumber(res.BillTotal),
@@ -75,9 +73,9 @@ function ExcelTable({ allRows }) {
     XLSX.writeFile(wb, "table.xls");
   }
 
-  const calculateTAT = (today,addedDate)=>{
-    return  Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
-  }
+  // const calculateTAT = (today,addedDate)=>{
+  //   return  Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+  // }
 
   return (
     <div className="">
@@ -93,6 +91,7 @@ function ExcelTable({ allRows }) {
         {isExportClicked && (
           <table className="table" id="table-to-xls">
             <thead className="thead-dark">
+              {console.log("exportTAT",row.TAT)}
               <tr>
                 <th>S.No.</th>
                 <th>Ref No.</th>
@@ -128,7 +127,7 @@ function ExcelTable({ allRows }) {
                   <td>{res.EstimateAmt}</td>
                   <td>{res.AssessedAmt}</td>
                   <td>{formatDate(res.BillDate)}</td>
-                  <td>{calculateTAT(new Date(),new Date(res.DateOfIntimation))}</td>
+                  <td>{res.TAT}</td>
                   <td>{res.Remarks}</td>
                   <td>{res.BillNo}</td>
                   <td>{res.BillTotal}</td>

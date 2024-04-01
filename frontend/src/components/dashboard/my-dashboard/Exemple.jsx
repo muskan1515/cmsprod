@@ -200,14 +200,7 @@ export default function Exemple({
   let tempData = [];
   useEffect(() => {
     const region = JSON.parse(localStorage.getItem("regionType"));
-    const options = {
-      timeZone: 'Asia/Kolkata', // Specify Indian timezone
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    };
     const today = new Date();
-    console.log('today',today)
     claims?.map((claim, index) => {
       const tempValue = getValue(claim.LeadID);
       // const addedDate = new Date(claim.AddedDate);
@@ -241,7 +234,7 @@ export default function Exemple({
         state: tempGarage ? tempGarage[2] : "N.A.",
         assigned_garage: tempGarage ? tempGarage[0] : "N.A.",
         case_age: "N.A.",
-        tat: `${tatInDays} days`,
+        tat: `${claim.TAT} days`,
         repairer_mail_id: claim.RepairerMailId ? claim.RepairerMailId : "N.A.",
         document:
           claim.IsDocumentUploaded > 0 ? (

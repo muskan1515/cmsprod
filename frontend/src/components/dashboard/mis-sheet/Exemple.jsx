@@ -244,7 +244,7 @@ export default function Exemple({
         estimate_amt: addCommasToNumber(row.EstimateAmt),
         assessed_amt: addCommasToNumber(row.AssessedAmt),
         date_of_submit: formatDateUpdated(row.date_of_survey),
-        tat: tatInDays,
+        tat: row.TAT,
         remarks: row.Remarks,
         bill_no: row.BillNo,
         bill_total: addCommasToNumber(row.BillTotal),
