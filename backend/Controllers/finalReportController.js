@@ -217,8 +217,7 @@ const updateFinalReport = (req,res)=>{
     SET
     GarageNameAndAddress = '${GarageNameAndAddress}',
     GarageContactNo1 = '${GarageContactNo1}',
-    AddedBy='${GarageAddedBy}',
-    GarageNameAndAddress= '${PlaceOfSurvey}'
+    AddedBy='${GarageAddedBy}'
     WHERE LeadID = ${leadId};
   `;
 
