@@ -420,6 +420,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly={!isEdit}
                     value={roundOff(totalPartsAssessed)}
                     // placeholder="Enter Registration No."
                   />
@@ -446,6 +447,7 @@ const Summary = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
+                    readOnly={!isEdit}
                       value={roundOff(totalLabrorAssessed + totalPartsAssessed)}
                       // placeholder="Enter Registration No."
                     />
@@ -472,6 +474,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       value={LessExcess}
+                    readOnly={!isEdit}
                       onChange={(e) => setLessExcessSum(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
@@ -498,6 +501,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       value={LessImposed}
+                    readOnly={!isEdit}
                       onChange={(e) => setLessImposedSum(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
@@ -619,6 +623,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={MetalPercent}
+                    readOnly={!isEdit}
                     onChange={(e)=>setMetalPercent(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -647,6 +652,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={ExpectedSalvage
                     }
+                    readOnly={!isEdit}
                     onChange={(e)=>setExpectedSalvage(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
@@ -673,6 +679,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly={!isEdit}
                     // placeholder="Enter Registration No."
                     value={!RemarkOnSalvage || !RemarkOnSalvage == 'undefined'  ? RemarkOnSalvage : "This is a metal salvage depreciation %"}
                     onChange={(e)=>setRemarkOnSalvage(e.target.value)}
@@ -709,6 +716,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
+                    readOnly={!isEdit}
                     value={
                       roundOff(DepreciationValue)
                     }
@@ -746,6 +754,7 @@ const Summary = ({
                         -Number(LessExcess ? LessExcess : 0)-Number(LessImposed ? LessImposed : 0)+Number(Other ? Other : 0)
                         -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) - DepreciationValue)
                       }
+                    readOnly={!isEdit}
                     // placeholder="Enter Registration No."
                   />
                 </div>
