@@ -16,7 +16,7 @@ const db = require("../Config/dbConfig");
 
   const updateStatus = (req, res) => {
     const { LeadId, Status, subStage } = req.body;
-    Status = Number(Status) < 1 ? 1 : Number(Status);
+    const NewStatus = Number(Status) < 1 ? 1 : Number(Status);
 
     const sql = "SELECT * FROM DocumentList WHERE LeadId =?";
     db.query(sql, [LeadId], (err, result) => {
@@ -27,7 +27,7 @@ const db = require("../Config/dbConfig");
       const statusDetails = `
       UPDATE ClaimStatus
       SET
-      Status = '${Status}',
+      Status = '${NewStatus}',
       SubStatus = '${1}'
       WHERE LeadId = ${LeadId};
     `;

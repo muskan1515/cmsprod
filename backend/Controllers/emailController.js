@@ -385,9 +385,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
             },
           });
 
-          console.log(mailOptions)
-           return
-
+        
   
           transporter2.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -459,10 +457,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           },
         });
 
-        console.log(mailOptions)
-        return
-
-        
+     
         transporter2.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error(error);

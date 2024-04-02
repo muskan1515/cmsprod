@@ -213,8 +213,10 @@ const LossDamagesDetails = ({ allInfo }) => {
   //calculate New Parts overall calculation with all type gst values
   const getOverallTotalEstimateGST = () => {
     let total = 0;
-    allGSTType.map((gst, index) => {
-      total = total + calculateEstimateNewPartsGST(gst.field);
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const estimatedValue = Number(part.NewPartsEstimate) * Number(part.QE);
+      const gst  = String(part.NewPartsWithTax) === "1" || String(part.NewPartsWithTax) === "2" ? (estimatedValue * Number(part.NewPartsGSTPct))/100 : 0;
+      total = total + gst
     });
     return total;
   };
@@ -558,10 +560,14 @@ const LossDamagesDetails = ({ allInfo }) => {
     return total;
   };
 
+
+
+
   const getTotalEvaluationOfAssessedForNewParts = () => {
     const glassValue =
       calculateTypeNewPartsGST("Glass") +
       getTotalGlassAssessed() -
+      
       getTotalDepreciation("Glass", false);
     const metalValue =
       calculateTypeNewPartsGST("Metal") +

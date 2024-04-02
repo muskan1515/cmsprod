@@ -450,6 +450,8 @@ const GSTSummary = ({ allInfo }) => {
 
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
+        String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
+        
         part.NewPartsIsActive
       ) {
         total = total + Depreciation;
@@ -467,6 +469,8 @@ const GSTSummary = ({ allInfo }) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
+        
         part.NewPartsIsActive
       ) {
         total = total + Depreciation;
@@ -505,6 +509,7 @@ const GSTSummary = ({ allInfo }) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        
         part.NewPartsIsActive
       ) {
         total = total + gst;
@@ -670,9 +675,8 @@ const GSTSummary = ({ allInfo }) => {
 
   const getSummaryTotalWithLessSalvage = () => {
     return (
-      getTotalLabourAssessedGST() +
       (getTotalLabourAssessed() - calculateLabourDepreciations()) +
-      getTotalEvaluationOfAssessedForNewParts() +
+      getTotalEvaluationOfAssessedForNewParts() -
       lessExcess -
       lessSalvage
     );
@@ -1364,8 +1368,8 @@ const GSTSummary = ({ allInfo }) => {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            ₹ {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}{" "}
-            <br /> ({numberToWords(roundOff(getSummaryTotalWithLessSalvage()))}){" "}
+            ₹ {addCommasToNumber(Math.ceil(getSummaryTotalWithLessSalvage()))}{" "}
+            <br /> ({numberToWords(Math.ceil(getSummaryTotalWithLessSalvage()))}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
           conditions of the policy of insurance.

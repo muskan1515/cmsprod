@@ -121,9 +121,13 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
       fromEmail: fromEmail,
     };
 
-    if (!payload.toMail || String(payload.toMail) === "None") {
+    if (!payload.toMail || String(payload.toMail) === "None" || payload.toMail === "undefined") {
       toast.error("Email is required field !!");
-    } else if (!payload.PolicyNo) {
+    } 
+    else if (!payload.fromEmail) {
+      toast.error("Email is required field !!");
+    } 
+    else if (!payload.PolicyNo) {
       toast.error("PolicyNo is required field !!");
     } else if ((!payload.content || !payload.content2) && String(type) === "1") {
       toast.error("Please select the documents to be passed over email!");
@@ -134,6 +138,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
         className: "toast-loading-message",
       });
 
+    
       axios
         .post("/api/sendCustomEmail", payload, {
           headers: {

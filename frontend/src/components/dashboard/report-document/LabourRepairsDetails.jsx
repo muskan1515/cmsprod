@@ -459,6 +459,24 @@ const LabourRepairsDetails = ({ allInfo }) => {
     return total;
   };
 
+  const getTotalLabourAssessedSum = () => {
+    let total = 0;
+    allInfo?.labourDetails?.map((part, index) => {
+      const dep =
+        String(part.JobType) === "1"
+          ? Number(Number(part.Assessed) * Number(12.5)) / 100
+          : 0;
+      const assessed = Number(part.Assessed) - dep;
+
+      const assessedvalue = assessed * Number(part.GSTPercentage);
+      const gst = Number(assessedvalue) / 100;
+      if (part.LabourIsActive) {
+        total = total + (assessed );
+      }
+    });
+    return total;
+  };
+
   const getTotalLabourAssessed = () => {
     let total = 0;
     allInfo?.labourDetails?.map((part, index) => {
@@ -887,7 +905,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
             {addCommasToNumber(roundOff(getTotalLabourEstimate()))}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(roundOff(getTotalLabourAssessed()))}
+            {addCommasToNumber(roundOff(getTotalLabourAssessedSum()))}
           </td>
         </tr>
         <tr>
@@ -932,7 +950,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
             Add : GST on ₹{" "}
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessed() - calculateLabourDepreciations()
+                getTotalLabourAssessedSum()
               )
             )}{" "}
             @ 18.00% : <br />
@@ -940,10 +958,10 @@ const LabourRepairsDetails = ({ allInfo }) => {
             Total Labour Charges : ₹ */}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(roundOff(getTotalLabourEstimateGST()))}
+            0
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(roundOff(getTotalLabourAssessedGST()))}
+            {addCommasToNumber(roundOff(getTotalLabourAssessed() - getTotalLabourAssessedSum()))}
           </td>
         </tr>
         <tr>
@@ -963,13 +981,12 @@ const LabourRepairsDetails = ({ allInfo }) => {
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
-              roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())
+              roundOff(getTotalLabourEstimate() )
             )}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessedGST() +
                   (getTotalLabourAssessed() - calculateLabourDepreciations())
               )
             )}

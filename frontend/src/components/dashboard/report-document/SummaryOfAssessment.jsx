@@ -316,6 +316,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
         part.NewPartsIsActive
       ) {
         total = total + Depreciation;
@@ -344,6 +345,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
     });
     return total;
   };
+
 
   const calculateOtherTypeNewPartsGST = () => {
     let total = 0;
@@ -453,7 +455,6 @@ const SummaryOfAssessment = ({ allInfo }) => {
 
   const getSummaryTotalWithLessExcess = () => {
     return (
-      getTotalLabourAssessedGST() +
       (getTotalLabourAssessed() - calculateLabourDepreciations()) +
       getTotalEvaluationOfAssessedForNewParts() -
       lessExcess
@@ -475,9 +476,8 @@ const SummaryOfAssessment = ({ allInfo }) => {
 
   const getSummaryTotalWithLessSalvage = () => {
     return (
-      getTotalLabourAssessedGST() +
       (getTotalLabourAssessed() - calculateLabourDepreciations()) +
-      getTotalEvaluationOfAssessedForNewParts() +
+      getTotalEvaluationOfAssessedForNewParts() -
       lessExcess -
       lessSalvage
     );
@@ -526,8 +526,10 @@ const SummaryOfAssessment = ({ allInfo }) => {
   //calculate New Parts overall calculation with all type gst values
   const getOverallTotalEstimateNewParts = () => {
     let total = 0;
-    allGSTType.map((gst, index) => {
-      total = total + getTotalEstimate2(gst.field);
+    allInfo?.newPartsDetails.map((labour, index) => {
+      const estimatedValue = Number(labour.NewPartsEstimate) * Number(labour.QE);
+      const gst  = String(labour.NewPartsWithTax) === "1" || String(labour.NewPartsWithTax) === "2" ? (estimatedValue * Number(labour.NewPartsGSTPct))/100 : 0;
+      total = total + (estimatedValue + gst)
     });
     return total;
   };
@@ -757,13 +759,12 @@ const SummaryOfAssessment = ({ allInfo }) => {
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
-              roundOff(getTotalLabourEstimate() + getTotalLabourEstimateGST())
+              roundOff(getTotalLabourEstimate() )
             )}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessedGST() +
                 (getTotalLabourAssessed() - calculateLabourDepreciations())
               )
             )}
@@ -782,8 +783,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               roundOff(
-                getOverallTotalEstimateNewParts(0) +
-                getOverallTotalEstimateGST(0)
+                getOverallTotalEstimateNewParts(0) 
               )
             )}
           </td>
@@ -808,7 +808,6 @@ const SummaryOfAssessment = ({ allInfo }) => {
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessedGST() +
                 (getTotalLabourAssessed() - calculateLabourDepreciations()) +
                 getTotalEvaluationOfAssessedForNewParts()
               )
