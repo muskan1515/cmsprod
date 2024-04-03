@@ -1093,8 +1093,10 @@ const PolicyDetails = ({
                         type="text"
                         className="form-control"
                         id="propertyTitle"
-                        value={claim.claimDetails?.ClaimNumber ? claim.claimDetails.ClaimNumber : ''}
+                        // value={claim.claimDetails?.ClaimNumber ? claim.claimDetails.ClaimNumber : ''}
+                        value={ClaimNumber}
                         readOnly={!isEditMode}
+                        onChange={(e) => setClaimNumber(e.target.value)}
 
                         // placeholder="Enter Registration No."
                       />
