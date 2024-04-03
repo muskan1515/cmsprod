@@ -437,7 +437,7 @@ const ErrorPageContent = ({ feeReport }) => {
                   </td>
                   <td style={{ width: "5%" }}>:</td>
                   <td style={{ width: "" }}>
-                    <span> MTE-{feeReport?.feeDetails?.BillSno}</span>
+                    <span> {feeReport?.feeDetails?.BillSno}</span>
                   </td>
                 </tr>
                 <tr>
