@@ -126,29 +126,21 @@ const db = require("../Config/dbConfig");
      
       const query = result.length > 0 ?  updateQuery : insertQuery;
     
-    db.query(query,  (err, result) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Internal Server Error");
-      }
-  
-      db.query("CALL InsertIntobillIDTable(?)",[LeadId], (error, result12) => {
-        if (error) {
-          console.error(
-            "Error while updating the billId",
-            error
-          );
-          return res.status(500).json({
-            error:  "Error while updating the billId",
-          });
-        }
-
-        return res.status(200).json({ message: "Successfully uploaded the fee report! ",result });
-
-      });
-        
+      if (result.length ==0) {
+        db.query("CALL InsertIntobillIDTable(?)", [LeadId], (error, result12) => {
+          if (error) {
+            console.error("Error while updating the billId", error);
+            return res.status(500).json({
+              error: "Error while updating the billId",
+            });
+          }
       
-    });
+          return res.status(200).json({
+            message: "Successfully uploaded the fee report!",
+            result,
+          });
+        });
+      }
   });
     
   };
