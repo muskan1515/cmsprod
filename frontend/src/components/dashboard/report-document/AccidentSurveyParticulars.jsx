@@ -675,8 +675,9 @@ const AccidentSurveyParticulars = ({ allInfo }) => {
           <td style={{ width: "55%" }} className="text-start">
             <span>
             {" "}
-              {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)},{" "}
-              {convertToReadable(allInfo?.otherInfo[0]?.AddedDateTime)}
+              {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}
+              {/* ,{" "}
+              {convertToReadable(allInfo?.otherInfo[0]?.AddedDateTime)} */}
             </span>
           </td>
         </tr>
