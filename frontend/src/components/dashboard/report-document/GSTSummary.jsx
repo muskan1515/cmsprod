@@ -1035,7 +1035,7 @@ const GSTSummary = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                Math.round(calculateGSTWholeSectionVauesWithGST2())
+                calculateGSTWholeSectionVauesWithGST2()
               )}
             </td>
             <td
@@ -1044,7 +1044,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(Math.round(calculateGSTWholeSectionGST2() / 2))}
+              {addCommasToNumber(calculateGSTWholeSectionGST2() / 2)}
             </td>
             <td
               style={{
@@ -1052,7 +1052,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(Math.round(calculateGSTWholeSectionGST2() / 2))}
+              {addCommasToNumber(calculateGSTWholeSectionGST2() / 2)}
             </td>
             <td
               style={{
@@ -1292,7 +1292,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(Math.round(getTotalLabourAssessedGST2() / 2))}
+              {addCommasToNumber(getTotalLabourAssessedGST2() / 2)}
             </td>
             <td
               style={{
@@ -1300,7 +1300,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(Math.round(getTotalLabourAssessedGST2() / 2))}
+              {addCommasToNumber(getTotalLabourAssessedGST2() / 2)}
             </td>
             <td
               style={{
