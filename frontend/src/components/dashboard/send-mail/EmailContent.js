@@ -42,15 +42,15 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
         We are Appointed for the survey of vehicle no.-${vehicleNo}, 
         Insured:-${Insured} & Policy No.-${PolicyNo} on 
         ${formatDate(date)} and the approval
-        is as follows;-
-        1) What is the Status of the said vheicle
-        2) How much time it will take to repair the vehicle
-        3) Please provide UR & RI Snaps
-        4) Invoice Bill duly signed & stamped of dealer
-        5) Payment receipt duly signed & stamped of dealer
-        6) Previous Year Policy
-        7) Pan Card
-        8) Please destory the items properly in the RI, Otherwise we will treat the part is repaired.      
+        is as follows:-<br/>
+        1) What is the Status of the said vheicle<br/>
+        2) How much time it will take to repair the vehicle<br/>
+        3) Please provide UR & RI Snaps<br/>
+        4) Invoice Bill duly signed & stamped of dealer<br/>
+        5) Payment receipt duly signed & stamped of dealer<br/>
+        6) Previous Year Policy<br/>
+        7) Pan Card<br/>
+        8) Please destory the items properly in the RI, Otherwise we will treat the part is repaired. <br/>     
         `
     }
     else if(String(type) === '3'){
