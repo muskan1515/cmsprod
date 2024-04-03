@@ -1035,7 +1035,7 @@ const GSTSummary = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                roundOff(calculateGSTWholeSectionVauesWithGST2())
+                Math.round(calculateGSTWholeSectionVauesWithGST2())
               )}
             </td>
             <td
@@ -1044,7 +1044,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST2() / 2))}
+              {addCommasToNumber(Math.round(calculateGSTWholeSectionGST2() / 2))}
             </td>
             <td
               style={{
@@ -1052,7 +1052,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(calculateGSTWholeSectionGST2() / 2))}
+              {addCommasToNumber(Math.round(calculateGSTWholeSectionGST2() / 2))}
             </td>
             <td
               style={{
@@ -1069,7 +1069,7 @@ const GSTSummary = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                roundOff(
+                Math.round(
                   calculateGSTWholeSectionVauesWithGST2() +
                     calculateGSTWholeSectionGST2()
                 )
@@ -1284,7 +1284,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessed2()))}
+              {addCommasToNumber(Math.round(getTotalLabourAssessed2()))}
             </td>
             <td
               style={{
@@ -1292,7 +1292,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST2() / 2))}
+              {addCommasToNumber(Math.round(getTotalLabourAssessedGST2() / 2))}
             </td>
             <td
               style={{
@@ -1300,7 +1300,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(roundOff(getTotalLabourAssessedGST2() / 2))}
+              {addCommasToNumber(Math.round(getTotalLabourAssessedGST2() / 2))}
             </td>
             <td
               style={{
@@ -1317,7 +1317,7 @@ const GSTSummary = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                roundOff(getTotalLabourAssessedGST2() + getTotalLabourAssessed2())
+                Math.round(getTotalLabourAssessedGST2() + getTotalLabourAssessed2())
               )}
             </td>
           </tr>
@@ -1368,8 +1368,8 @@ const GSTSummary = ({ allInfo }) => {
           Based on details provided above, the liability under the subject
           policy of insurance works out to{" "}
           <b>
-            ₹ {addCommasToNumber(Math.ceil(getSummaryTotalWithLessSalvage()))}{" "}
-            <br /> ({numberToWords(Math.ceil(getSummaryTotalWithLessSalvage()))}){" "}
+            ₹ {addCommasToNumber(Math.round(getSummaryTotalWithLessSalvage()))}{" "}
+            <br /> ({numberToWords(Math.round(getSummaryTotalWithLessSalvage()))}){" "}
           </b>{" "}
           The assessment of loss, as detailed above, is subject to the terms and
           conditions of the policy of insurance.

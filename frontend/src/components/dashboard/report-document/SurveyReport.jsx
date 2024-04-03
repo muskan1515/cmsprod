@@ -654,7 +654,7 @@ const SurveyReport = ({ allInfo }) => {
             </label>
             <span className="text-dark">
               {" "}
-              {formatDate(allInfo?.otherInfo[0]?.AddedDateTime)}
+              {formatDate(new Date())}
             </span>
           </div>
         </div>

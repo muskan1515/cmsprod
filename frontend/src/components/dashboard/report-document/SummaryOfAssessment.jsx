@@ -878,7 +878,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
             <span style={{ fontWeight: "bold" }}>Net Assessed Amount ₹</span>
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(roundOff(getSummaryTotalWithLessSalvage()))}
+            {addCommasToNumber(Math.round(getSummaryTotalWithLessSalvage()))}
           </td>
         </tr>
       </table>

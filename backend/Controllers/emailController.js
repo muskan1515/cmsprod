@@ -486,16 +486,18 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
   
         We are Appointed for the survey of vehicle no.-${vehicleNo},
        Insured:-${Insured} & Policy No.-${PolicyNo} on ${Date} and 
-       the approval is as follows;-
-       Parts
-       1) Fr Bumper- New Allowed
-       2) FR Grill- New Allowed
-       3) LH Head LIght- new Allowed
-       4) LH Fender0- Repair Allowed
-       Labour
-       1) Fr Bumper- R/R-150, Painting-2500
-       2) LH Head Light- R/R-100
-       3) LH Fender- Denting-250, Painting-2200
+       the approval is as follows:-<br/>
+       <br/>
+       Parts<br/>
+       1) Fr Bumper- New Allowed<br/>
+       2) FR Grill- New Allowed<br/>
+       3) LH Head LIght- new Allowed<br/>
+       4) LH Fender0- Repair Allowed<br/>
+       <br/>
+       Labour<br/>
+       1) Fr Bumper- R/R-150, Painting-2500<br/>
+       2) LH Head Light- R/R-100<br/>
+       3) LH Fender- Denting-250, Painting-2200 <br/>
        
        Further approval will be provided after dismentaling of the vehicle.
            <p><a href=https://cmsprod.vercel.app/documents/${leadId}?token=${generatedToken}&content=${""} target="_blank">Click Here</a> to fill the documents information .</p>

@@ -60,16 +60,17 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
     
         We are Appointed for the survey of vehicle no.-${vehicleNo},
         Insured:-${Insured} & Policy No.-${PolicyNo} on 
-        ${formatDate(date)} and the approval is as follows;- 
-         Parts 
-         1) Fr Bumper- New Allowed 
-         2) FR Grill- New Allowed 
-         3) LH Head LIght- new Allowed 
-         4) LH Fender0- Repair Allowed 
-         Labour 
-         1) Fr Bumper- R/R-150, Painting-2500 
-         2) LH Head Light- R/R-100 
-         3) LH Fender- Denting-250, Painting-2200. 
+        ${formatDate(date)} and the approval is as follows:- <br/>
+        <br/>
+         Parts  <br/>
+         1) Fr Bumper- New Allowed  <br/>
+         2) FR Grill- New Allowed  <br/>
+         3) LH Head LIght- new Allowed  <br/>
+         4) LH Fender0- Repair Allowed  <br/>
+         Labour  <br/>
+         1) Fr Bumper- R/R-150, Painting-2500  <br/>
+         2) LH Head Light- R/R-100  <br/>
+         3) LH Fender- Denting-250, Painting-2200.  <br/>
         `
     }
     else{
@@ -80,10 +81,10 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
         Pvt. Ltd.,We are Appointed for the survey of 
         vehicle no.${vehicleNo},Insured:${Insured} 
         & Policy No.-${PolicyNo} on  ${formatDate(date)} 
-        from the United India Insurance co. Ltd., 
+        from the United India Insurance co. Ltd.
         So we request you please provide the complete contact
          deatils & mails of Repairer/insured. 
-        So that we can procedd further in your case and we 
+        So that we can proceed further in your case and we 
         also request you to provide the following details as 
         follows:-
        `

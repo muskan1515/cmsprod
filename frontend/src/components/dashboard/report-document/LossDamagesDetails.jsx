@@ -1343,7 +1343,7 @@ const LossDamagesDetails = ({ allInfo }) => {
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
-                roundOff(
+                Math.round(
                   getOverallTotalEstimateNewParts(0) +
                     getOverallTotalEstimateGST(0)
                 )
@@ -1358,7 +1358,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                roundOff(getTotalEvaluationOfAssessedForNewParts())
+                Math.round(getTotalEvaluationOfAssessedForNewParts())
               )}
             </td>
           </tr>

@@ -981,12 +981,12 @@ const LabourRepairsDetails = ({ allInfo }) => {
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
-              roundOff(getTotalLabourEstimate() )
+              Math.round(getTotalLabourEstimate() )
             )}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
-              roundOff(
+              Math.round(
                   (getTotalLabourAssessed() - calculateLabourDepreciations())
               )
             )}
