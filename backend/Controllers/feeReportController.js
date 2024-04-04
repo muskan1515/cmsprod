@@ -120,14 +120,14 @@ const db = require("../Config/dbConfig");
 
 
 
-    db.query("SELECT * FROM BillReportFees WHERE BillSno=?",[BillID],  (err, result_1) => {
+    db.query("SELECT * FROM BillReportFees WHERE LeadID=?",[LeadId],  (err, result_1) => {
       if (err) {
         console.error(err);
         return res.status(500).send("Internal Server Error");
       }
   
      
-      const query = result_1.length > 0 ?  updateQuery : insertQuery;
+      
       db.query(query,  (err, result) => {
       if (err) {
         console.error(err);
