@@ -24,6 +24,7 @@
     "aws-sdk": "^2.1570.0",
     "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
+    "number-to-words": "^1.2.4",
     "canvas": "^2.6.1",
     "chart.js": "^4.0.1",
     "date-fns": "^3.3.1",
