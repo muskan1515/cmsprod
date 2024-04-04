@@ -54,7 +54,7 @@ const ErrorPageContent = ({ feeReport }) => {
   }, [feeReport]);
 
   const roundOff = (value) => {
-    const roundedValue = parseFloat(value).toFixed(2);
+    const roundedValue = parseFloat(value).toFixed();
     return roundedValue;
   };
   function numberToWords(number) {
