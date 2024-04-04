@@ -280,11 +280,12 @@ const CreateList = ({ allInfo, leadID }) => {
 
   const calculateProfessionalFees = () => {
     let prof = 0;
-    if (!allInfo?.VehicleOnlineDetails) {
-      return 0;
-    }
-    console.log("info",allInfo.VehicleOnlineDetails?.VehicleType)
-    if (String(allInfo?.VehicleOnlineDetails?.VehicleType) === "2W")
+    // if (!allInfo?.VehicleDetails) {
+    //   return 0;
+    // }
+    console.log("information",allInfo)
+    const is2W = ["2w"].includes(String(allInfo?.otherInfo?.VehicleType).toLowerCase());
+    if (is2W)
       return (500);
     else
     return (700);
