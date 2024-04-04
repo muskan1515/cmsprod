@@ -4,6 +4,7 @@ import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
+import { numberToWords } from "number-to-words";
 
 const GSTSummary = ({ allInfo }) => {
   const pdfRef = useRef();
@@ -740,109 +741,109 @@ const GSTSummary = ({ allInfo }) => {
     return ageString;
   }
 
-  function numberToWords(number) {
-    const units = [
-      "",
-      "one",
-      "two",
-      "three",
-      "four",
-      "five",
-      "six",
-      "seven",
-      "eight",
-      "nine",
-    ];
-    const teens = [
-      "",
-      "eleven",
-      "twelve",
-      "thirteen",
-      "fourteen",
-      "fifteen",
-      "sixteen",
-      "seventeen",
-      "eighteen",
-      "nineteen",
-    ];
-    const tens = [
-      "",
-      "ten",
-      "twenty",
-      "thirty",
-      "forty",
-      "fifty",
-      "sixty",
-      "seventy",
-      "eighty",
-      "ninety",
-    ];
+  // function numberToWords(number) {
+  //   const units = [
+  //     "",
+  //     "one",
+  //     "two",
+  //     "three",
+  //     "four",
+  //     "five",
+  //     "six",
+  //     "seven",
+  //     "eight",
+  //     "nine",
+  //   ];
+  //   const teens = [
+  //     "",
+  //     "eleven",
+  //     "twelve",
+  //     "thirteen",
+  //     "fourteen",
+  //     "fifteen",
+  //     "sixteen",
+  //     "seventeen",
+  //     "eighteen",
+  //     "nineteen",
+  //   ];
+  //   const tens = [
+  //     "",
+  //     "ten",
+  //     "twenty",
+  //     "thirty",
+  //     "forty",
+  //     "fifty",
+  //     "sixty",
+  //     "seventy",
+  //     "eighty",
+  //     "ninety",
+  //   ];
 
-    const convertLessThanThousand = (num) => {
-      if (num === 0) {
-        return "";
-      }
+  //   const convertLessThanThousand = (num) => {
+  //     if (num === 0) {
+  //       return "";
+  //     }
 
-      let result = "";
+  //     let result = "";
 
-      if (num >= 100) {
-        result += units[Math.floor(num / 100)] + " hundred ";
-        num %= 100;
-      }
+  //     if (num >= 100) {
+  //       result += units[Math.floor(num / 100)] + " hundred ";
+  //       num %= 100;
+  //     }
 
-      if (num >= 11 && num <= 19) {
-        result += teens[num - 11];
-      } else {
-        result += tens[Math.floor(num / 10)];
-        num %= 10;
+  //     if (num >= 11 && num <= 19) {
+  //       result += teens[num - 11];
+  //     } else {
+  //       result += tens[Math.floor(num / 10)];
+  //       num %= 10;
 
-        if (num > 0) {
-          result += " " + units[num];
-        }
-      }
+  //       if (num > 0) {
+  //         result += " " + units[num];
+  //       }
+  //     }
 
-      return result;
-    };
+  //     return result;
+  //   };
 
-    const convert = (num) => {
-      if (num === 0) {
-        return "zero";
-      }
+  //   const convert = (num) => {
+  //     if (num === 0) {
+  //       return "zero";
+  //     }
 
-      let result = "";
+  //     let result = "";
 
-      if (num >= 1e9) {
-        result += convertLessThanThousand(Math.floor(num / 1e9)) + " billion ";
-        num %= 1e9;
-      }
+  //     if (num >= 1e9) {
+  //       result += convertLessThanThousand(Math.floor(num / 1e9)) + " billion ";
+  //       num %= 1e9;
+  //     }
 
-      if (num >= 1e6) {
-        result += convertLessThanThousand(Math.floor(num / 1e6)) + " million ";
-        num %= 1e6;
-      }
+  //     if (num >= 1e6) {
+  //       result += convertLessThanThousand(Math.floor(num / 1e6)) + " million ";
+  //       num %= 1e6;
+  //     }
 
-      if (num >= 1e3) {
-        result += convertLessThanThousand(Math.floor(num / 1e3)) + " thousand ";
-        num %= 1e3;
-      }
+  //     if (num >= 1e3) {
+  //       result += convertLessThanThousand(Math.floor(num / 1e3)) + " thousand ";
+  //       num %= 1e3;
+  //     }
 
-      result += convertLessThanThousand(num);
+  //     result += convertLessThanThousand(num);
 
-      return result.trim();
-    };
+  //     return result.trim();
+  //   };
 
-    const roundedNumber = roundOff(number);
+  //   const roundedNumber = roundOff(number);
 
-    const wholePart = Math.floor(roundedNumber);
-    const decimalPart = Math.round((roundedNumber - wholePart) * 100);
+  //   const wholePart = Math.floor(roundedNumber);
+  //   const decimalPart = Math.round((roundedNumber - wholePart) * 100);
 
-    const wordsWholePart = convert(wholePart);
-    const wordsDecimalPart = convert(decimalPart);
+  //   const wordsWholePart = convert(wholePart);
+  //   const wordsDecimalPart = convert(decimalPart);
 
-    const wordss =
-      wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
-    return wordss.toUpperCase();
-  }
+  //   const wordss =
+  //     wordsWholePart + " Rupees and " + wordsDecimalPart + " paisa";
+  //   return wordss.toUpperCase();
+  // }
   const [splitText, setSplitText] = useState([]);
 
   const text = convertToProperHTML(
@@ -1369,8 +1370,9 @@ const GSTSummary = ({ allInfo }) => {
           policy of insurance works out to{" "}
           <b>
             ₹ {addCommasToNumber(Math.round(getSummaryTotalWithLessSalvage()))}{" "}
-            <br /> ({numberToWords(Math.round(getSummaryTotalWithLessSalvage()))}){" "}
+            <br /> ({numberToWords.toWords((Math.round(getSummaryTotalWithLessSalvage()))).toUpperCase()}){" "}
           </b>{" "}
+          {/* {console.log('---1374----',numberToWords(Math.round(getSummaryTotalWithLessSalvage())))} */}
           The assessment of loss, as detailed above, is subject to the terms and
           conditions of the policy of insurance.
         </span>
