@@ -651,7 +651,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={ExpectedSalvage
+                    value={roundOff(ExpectedSalvage)
                     }
                     readOnly={!isEdit}
                     onChange={(e)=>setExpectedSalvage(e.target.value)}

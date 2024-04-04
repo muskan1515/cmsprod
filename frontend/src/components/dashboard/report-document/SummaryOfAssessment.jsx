@@ -828,7 +828,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
             Less : Excess : ₹<br />
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {lessExcess}
+            {addCommasToNumber(roundOff(lessExcess))}
           </td>
         </tr>
         <tr>
@@ -862,7 +862,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
             Less : Salvage : ₹
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {lessSalvage}
+            {addCommasToNumber(roundOff(lessSalvage))}
           </td>
         </tr>
         <tr>
@@ -878,7 +878,7 @@ const SummaryOfAssessment = ({ allInfo }) => {
             <span style={{ fontWeight: "bold" }}>Net Assessed Amount ₹</span>
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(Math.round(getSummaryTotalWithLessSalvage()))}
+            {addCommasToNumber((Math.round(getSummaryTotalWithLessSalvage())))}
           </td>
         </tr>
       </table>

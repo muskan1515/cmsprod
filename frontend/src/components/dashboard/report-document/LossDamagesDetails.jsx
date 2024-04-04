@@ -1136,7 +1136,7 @@ const LossDamagesDetails = ({ allInfo }) => {
                   <td style={{ border: "1px solid black", padding: "5px" }}>
                     {addCommasToNumber(
                       roundOff(
-                        calculateTypeNewPartsGSTType("Glass", field.field) +
+                        calculateTypeNewPartsGSTType("Glass", field.field,false) +
                           getTotalGlassAssessedWithGSTType(field.field) 
                       )
                     )}

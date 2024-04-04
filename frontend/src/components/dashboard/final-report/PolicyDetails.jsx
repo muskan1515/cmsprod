@@ -2975,7 +2975,7 @@ const PolicyDetails = ({
                     <div className="col-lg-7">
                       <input
                         style={{ marginLeft: "-10px" }}
-                        type="number"
+                        type="text"
                         className="form-control"
                         id="propertyTitle"
                         readOnly={!isEditMode}
