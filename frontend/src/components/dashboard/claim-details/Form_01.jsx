@@ -75,7 +75,7 @@ const Form_01 = ({
       claim?.driverDetails?.LicenseNumber === "null"
     ) {
       alert("Please fill License Number first!");
-    } else if (claim?.driverOnlineDetails) {
+    } else if (claim?.driverOnlineDetails && String(claim?.driverOnlineDetails?.LicenseNumber) === String(claim?.driverDetails?.LicenseNumber) ) {
       const details = claim?.driverOnlineDetails;
       setFatherName(details?.FatherName);
       setBloodGroup(details?.BloodGroup);

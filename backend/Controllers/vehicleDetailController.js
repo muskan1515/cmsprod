@@ -43,7 +43,6 @@ const getSpecificVehicleDetails = async (req, res) => {
   const vehicleNo=req.query.vehicleNo;
   const leadId = req.query.leadId;
 
-
     axios.get("https://api.apiseva.co.in/api/verification_pv2/rc_verify",{
       params:{
         apikey:process.env.API_KEY_VEHICLE_DETAIL,
@@ -153,6 +152,9 @@ const getSpecificVehicleDetails = async (req, res) => {
     );
     `;
 
+
+
+
         const updateVehicleDetails = `
         UPDATE VehicleDetails
           SET
@@ -202,7 +204,13 @@ const getSpecificVehicleDetails = async (req, res) => {
 
     
       console.log(insertVehicleDetails,updateVehicleDetails);
-    
+      db.query("DELETE FROM VehicleDetailsOnline WHERE LeadId=?",[leadId],(error, results) => {
+        if (error) {
+          console.error("Error updating data in driver Details:", error);
+          return res
+            .status(500)
+            .json({ error: "Error updating data in driver Details." });
+        }
         db.query(insertVehicleDetails, (error, results) => {
           if (error) {
             console.error("Error updating data in driver Details:", error);
@@ -228,6 +236,7 @@ const getSpecificVehicleDetails = async (req, res) => {
             });
               
           });
+        });
          
         });
         })

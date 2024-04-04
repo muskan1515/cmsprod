@@ -144,7 +144,7 @@ const Form = ({
       });
       
     }
-    if (claim?.vehicleOnlineDetails) {
+    if (claim?.vehicleOnlineDetails && String(claim?.vehicleOnlineDetails?.RegisteredNumber) === String(VehicleRegisteredNumber)) {
       const details = claim?.vehicleOnlineDetails;
 
       setVehicleModel(details?.MakerModel),

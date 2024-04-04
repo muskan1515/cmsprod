@@ -331,22 +331,18 @@ useEffect(()=>{
   let dep = 0;
 
     let total =0;
-  allNewParts.map((row,index)=>{
-    if(String(row.type) === "Metal"){
-      const assessed = Number(row.assessed)*Number(row.qa);
-      const gst = Number(assessed * Number(row.gst))/100;
-      const add = row.isActive ? assessed+gst:0;
-      total = total +  add;
-    }
+
     
-    else{
+  allNewParts.map((row,index)=>{
       const assessed = Number(row.assessed)*Number(row.qa);
-      const gst = Number(assessed * Number(12.5))/100;
-      const add = row.isActive ? assessed+gst:0;
-      dep = dep +  add;
-    }
+      
+      const dep = Number(assessed * Number(row.dep))/100;
+      const add = row.isActive ? dep:0;
+      total +=  add;
+    
   })
-  setDepreciationValue(claim?.claimDetails?.PolicyType === "Regular" ? dep : 0);
+      
+  setDepreciationValue(claim?.claimDetails?.PolicyType === "Regular" ? total : 0);
 },[allNewParts]);
 
 

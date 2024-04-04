@@ -189,6 +189,7 @@ const CreateList = ({ allInfo, leadID }) => {
           requiredStateCode = office.StateCode;
           }
       })
+      console.log("requiredStateCode",requiredStateCode)
       if(String(requiredStateCode) === "8"){
         setCGST(9);
         setSGST(9);
@@ -206,13 +207,24 @@ const CreateList = ({ allInfo, leadID }) => {
         setSGST(0);
         setIGST(0);  
      }
-  },[BillTo]);
+  },[BillTo,allInfo]);
 
+  
+  function addCommasToNumber(number) {
+    if (Number(number) <= 100 || number === undefined) return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+
+
+  const roundOff = (number) => {
+    return Math.round(number * 100) / 100;
+  };
 
 
   const calculateTotalAssessed = () => {
-    let total_assessed = 0,
-      total_estimate = 0;
+    let total_assessed = 0,total_assessed2 = 0,
+      total_estimate = 0,total_estimate2 = 0;
     const allNewParts = allInfo?.newPartsDetails;
     const allLabourer = allInfo?.labourDetails;
 
@@ -221,21 +233,25 @@ const CreateList = ({ allInfo, leadID }) => {
       const assessed = part.NewPartsIsActive
         ? Number(part.NewPartsAssessed) * Number(part.QA)
         : 0;
-      const depreciation =
-        String(part.NewPartsPolicyType) === "1"
-          ? (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100
-          : 0;
-      const assessed_gst =
-        (Number(assessed) * Number(part.NewPartsGSTPct)) / 100;
-      const current_Assessed = assessed - depreciation + assessed_gst;
+      const depreciation = (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100;
+      
+      const assessed_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 3 ) ?
+        (Number(assessed) * Number(part.NewPartsGSTPct)) / 100 : 0;
+      const current_Assessed = (assessed) + assessed_gst;
       total_assessed = total_assessed + current_Assessed;
 
       //estimate
       const current_Estimate = part.NewPartsIsActive
         ? Number(part.NewPartsEstimate) * Number(part.QE)
         : 0;
-      total_estimate = total_estimate + current_Estimate;
+        const estimate_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 2) ?
+        (Number(current_Estimate) * Number(part.NewPartsGSTPct)) / 100 : 0;
+      const current_EstimateValue = (current_Estimate) + estimate_gst;
+      
+      total_estimate = total_estimate + current_EstimateValue;
     });
+
+    console.log("TotalAssessed",total_assessed,total_estimate)
 
     allLabourer?.map((part, index) => {
       //assessed
@@ -243,17 +259,23 @@ const CreateList = ({ allInfo, leadID }) => {
       const depreciation_of_paint =
         String(part.JobType) === "1" ? (Number(assessed) * 12.5) / 100 : 0;
       const assessed_gst =
-        (Number(assessed) * Number(part.GSTPercentage)) / 100;
-      const current_Assessed = assessed - depreciation_of_paint + assessed_gst;
-      total_assessed = total_assessed + current_Assessed;
+      (part.IsGSTIncluded % 2 !== 0 ) ?
+        (Number(assessed-depreciation_of_paint) * Number(part.GSTPercentage)) / 100 : 0;
+      const current_Assessed = (assessed - depreciation_of_paint) + assessed_gst;
+      total_assessed2 = total_assessed2 + current_Assessed;
 
       //estimate
       const current_Estimate = part.LabourIsActive ? Number(part.Estimate) : 0;
-      total_estimate = total_estimate + current_Estimate;
+      const estimate_gst =(part.IsGSTIncluded % 2 !== 0 ) ?
+      (Number(current_Estimate) * Number(part.GSTPercentage)) / 100 : 0;
+    const current_EstimateValue = (current_Estimate) + estimate_gst;
+    
+      total_estimate2 = total_estimate2 + current_EstimateValue;
     });
 
-    setAssessed(total_assessed);
-    setEstimate(total_estimate);
+
+    setAssessed(total_assessed2 + total_assessed);
+    setEstimate(total_estimate2 + total_estimate);
   };
 
   const calculateProfessionalFees = () => {
@@ -449,6 +471,7 @@ const CreateList = ({ allInfo, leadID }) => {
       BillTo: BillTo,
       Others: Others,
       BillDate: BillDate,
+      BillId :allInfo?.feesDetails?  allInfo?.feesDetails?.BillSno : null 
     };
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -775,7 +798,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={Estimate}
+                  value={addCommasToNumber(roundOff(Estimate))}
                 />
               </div>
               <div className="col-lg-3 my_profile_setting_input form-group text-end">
@@ -820,7 +843,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={Assessed}
+                  value={addCommasToNumber(roundOff(Assessed))}
                 />
               </div>
               <div className="col-lg-3 my_profile_setting_input form-group text-end">

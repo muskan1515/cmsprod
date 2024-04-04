@@ -133,6 +133,15 @@ SET
 WHERE
     LeadID = ${leadId};`;
 
+
+    db.query("DELETE FROM DriverDetailsOnline WHERE LeadID=?",[leadId],(error, results) => {
+      if (error) {
+        console.error("Error updating data in driver Details:", error);
+        return res
+          .status(500)
+          .json({ error: "Error updating data in driver Details." });
+      }
+
     db.query(insertDriverDetails, (error, results) => {
       if (error) {
         console.log( error);
@@ -151,6 +160,7 @@ WHERE
       });
      
     });
+  });
     })
     .catch((Err)=>{
       console.log(Err)

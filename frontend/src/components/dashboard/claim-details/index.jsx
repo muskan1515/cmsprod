@@ -1902,7 +1902,7 @@ const Index = ({}) => {
                             <ChatboxContent leadId={leadId} />
                           </div>
                           {/* <hr /> */}
-                          <div className="row mt-2 my_dashboard_review bgc-f6">
+                          {/* <div className="row mt-2 my_dashboard_review bgc-f6">
                             <div className="col-lg-12">
                               <h4 className="mb10">Previous Year Policy</h4>
                             </div>
@@ -1916,7 +1916,7 @@ const Index = ({}) => {
                                 marginBottom: "5px",
                               }}
                             ></div>
-                          </div>
+                          </div> */}
 
                           {isStatusModal && (
                             <div className="modal">

@@ -29,9 +29,11 @@ const db = require("../Config/dbConfig");
   Branch,
   BillTo,
   Others,
-  BillDate
+  BillDate,
+  BillId
     } = req.body;
 
+ 
     const insertQuery = 
     `INSERT INTO BillReportFees (
       Type,
@@ -117,6 +119,7 @@ const db = require("../Config/dbConfig");
 
 
 
+
     db.query("SELECT * FROM BillReportFees WHERE BillSno=?",[BillID],  (err, result_1) => {
       if (err) {
         console.error(err);
@@ -132,7 +135,8 @@ const db = require("../Config/dbConfig");
       }});
 
       
-      if (result_1.length ==0) {
+      let finalResult = {}
+      if (BillId === null) {
         db.query("CALL InsertIntobillIDTable(?)", [LeadId], (error, result12) => {
           if (error) {
             console.error("Error while updating the billId", error);
@@ -140,13 +144,16 @@ const db = require("../Config/dbConfig");
               error: "Error while updating the billId",
             });
           }
-      
-          return res.status(200).json({
-            message: "Successfully uploaded the fee report!",
-            result12,
-          });
+          console.log("inside the id table");
+          finalResult = result12
         });
       }
+          return res.status(200).json({
+            message: "Successfully uploaded the fee report!",
+            finalResult,
+          });
+       
+      
   });
     
   };
@@ -180,6 +187,14 @@ const db = require("../Config/dbConfig");
         "SELECT * FROM VehicleDetailsOnline WHERE LeadId=?",
         [leadId]
       );
+      const labourDetails = await executeQuery(
+        "CALL GetLabourReport(?)",
+        [leadId]
+      );
+      const newPartsDetails = await executeQuery(
+        "CALL GetNewPartsReport(?)",
+        [leadId]
+      );
       const vehicleDetails = await executeQuery(
         "SELECT * FROM VehicleDetails WHERE LeadId=?",
         [leadId]
@@ -203,6 +218,8 @@ const db = require("../Config/dbConfig");
       const combinedResult = {
         feeDetails,
         driverDetails,
+        labourDetails,
+        newPartsDetails,
         claimDetails,
         vehicleDetails,
         vehicleOnlineDetails,

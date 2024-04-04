@@ -183,10 +183,84 @@ const ErrorPageContent = ({ feeReport }) => {
     return CGST;
   };
 
+
+  const [Assessed,setAssessed]=useState(0);
+  const [Estimate,setEstimate]=useState(0)
+
+    
   function addCommasToNumber(number) {
     if (Number(number) <= 100 || number === undefined) return number;
     return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+
+
+
+
+
+  const calculateTotalAssessed = () => {
+    let total_assessed = 0,total_assessed2 = 0,
+      total_estimate = 0,total_estimate2 = 0;
+    const allNewParts = feeReport?.newPartsDetails;
+    const allLabourer = feeReport?.labourDetails;
+
+    allNewParts?.map((part, index) => {
+      //assessed
+      const assessed = part.NewPartsIsActive
+        ? Number(part.NewPartsAssessed) * Number(part.QA)
+        : 0;
+      const depreciation = (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100;
+      
+      const assessed_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 3 ) ?
+        (Number(assessed) * Number(part.NewPartsGSTPct)) / 100 : 0;
+      const current_Assessed = (assessed) + assessed_gst;
+      total_assessed = total_assessed + current_Assessed;
+
+      //estimate
+      const current_Estimate = part.NewPartsIsActive
+        ? Number(part.NewPartsEstimate) * Number(part.QE)
+        : 0;
+        const estimate_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 2) ?
+        (Number(current_Estimate) * Number(part.NewPartsGSTPct)) / 100 : 0;
+      const current_EstimateValue = (current_Estimate) + estimate_gst;
+      
+      total_estimate = total_estimate + current_EstimateValue;
+    });
+
+    console.log("TotalAssessed",total_assessed,total_estimate)
+
+    allLabourer?.map((part, index) => {
+      //assessed
+      const assessed = part.LabourIsActive ? Number(part.Assessed) : 0;
+      const depreciation_of_paint =
+        String(part.JobType) === "1" ? (Number(assessed) * 12.5) / 100 : 0;
+      const assessed_gst =
+      (part.IsGSTIncluded % 2 !== 0 ) ?
+        (Number(assessed-depreciation_of_paint) * Number(part.GSTPercentage)) / 100 : 0;
+      const current_Assessed = (assessed - depreciation_of_paint) + assessed_gst;
+      total_assessed2 = total_assessed2 + current_Assessed;
+
+      //estimate
+      const current_Estimate = part.LabourIsActive ? Number(part.Estimate) : 0;
+      const estimate_gst =(part.IsGSTIncluded % 2 !== 0 ) ?
+      (Number(current_Estimate) * Number(part.GSTPercentage)) / 100 : 0;
+    const current_EstimateValue = (current_Estimate) + estimate_gst;
+    
+      total_estimate2 = total_estimate2 + current_EstimateValue;
+    });
+
+
+    setAssessed(total_assessed2 + total_assessed);
+    setEstimate(total_estimate2 + total_estimate);
+  };
+
+  function addCommasToNumber(number) {
+    if (Number(number) <= 100 || number === undefined) return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  useEffect(()=>{
+    calculateTotalAssessed()
+  },[feeReport])
 
   const calculateSGST = () => {
     const total = calculateTheTotalBillWithoutGST();
@@ -529,7 +603,7 @@ const ErrorPageContent = ({ feeReport }) => {
                     <span>
                       ₹{" "}
                       {addCommasToNumber(
-                        roundOff(Number(feeReport?.feeDetails?.AssessedAmt))
+                        roundOff(Number(Assessed))
                       )}
                     </span>
                   </td>
@@ -550,7 +624,7 @@ const ErrorPageContent = ({ feeReport }) => {
                     <span>
                       ₹{" "}
                       {addCommasToNumber(
-                        roundOff(Number(feeReport?.feeDetails?.EstimateAmt))
+                        roundOff(Number(Estimate))
                       )}
                     </span>
                   </td>
@@ -714,7 +788,7 @@ const ErrorPageContent = ({ feeReport }) => {
                     {" "}
                     Estimate Amount ₹{" "}
                     {addCommasToNumber(
-                      roundOff(Number(feeReport?.feeDetails?.EstimateAmt))
+                      roundOff(Number(Estimate))
                     )}
                   </span>
                 </span>
