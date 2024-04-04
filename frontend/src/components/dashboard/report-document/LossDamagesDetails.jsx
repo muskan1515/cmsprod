@@ -493,10 +493,34 @@ const LossDamagesDetails = ({ allInfo }) => {
   };
 
   const calculateOtherTypeNewPartsGST = () => {
+    
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      
       const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
+        part.NewPartsIsActive
+      ) {
+        total = total + gst;
+      }
+    });
+    return total;
+  };
+
+  const calculateOtherTypeNewPartsGSTVijay = () => {
+    
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+      String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+      (assessed * Number(part.NewPartsDepreciationPct)) / 100 : 0;
+
+      const gst = ((assessed-Depreciation) * Number(part.NewPartsGSTPct)) / 100;
 
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
@@ -1276,7 +1300,7 @@ const LossDamagesDetails = ({ allInfo }) => {
               {addCommasToNumber(roundOff(calculateTypeNewPartsGST("Metal")))}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGST()))}
+              {addCommasToNumber(roundOff(calculateOtherTypeNewPartsGSTVijay()))}
             </td>
           </tr>
           <tr>
@@ -1318,7 +1342,7 @@ const LossDamagesDetails = ({ allInfo }) => {
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
                 roundOff(
-                  calculateOtherTypeNewPartsGST() +
+                  calculateOtherTypeNewPartsGSTVijay() +
                     getTotalOtherMetalAssesses() -
                     getTotalNonMetaDepreciation()
                 )
