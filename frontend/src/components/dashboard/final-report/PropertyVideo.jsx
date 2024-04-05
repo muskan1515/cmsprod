@@ -853,10 +853,10 @@ const [AccidentTime,setAccidentTime]=useState("");
     return formattedDate;
   };
 
-  const saveHandler = () => {
+  const saveHandler = (setFunc) => {
     
     setDisable(true)
-
+    setFunc(true)
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload = {
       PolicyType: policyType,
@@ -1020,6 +1020,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       });
     })
     setDisable(false)
+    setFunc(false)
   }
 
 

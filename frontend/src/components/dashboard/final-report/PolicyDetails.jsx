@@ -220,9 +220,11 @@ const PolicyDetails = ({
   phyCheck,
   setphyCheck,
 }) => {
-  console.log("disable123",disable);
+ 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
+
+    console.log("hidehide",hide)
 
     // Allow only numeric input
     const numericValue = inputValue.replace(/\D/g, "");
@@ -443,6 +445,12 @@ const PolicyDetails = ({
   // };
   const [startDate, setStartDate] = useState("");
 
+  const [hide,setHide] = useState(false)
+
+
+
+  console.log("hidehide",hide)
+
   const handleCancelHnadler = () => {
     setIsEditMode(false);
   };
@@ -596,12 +604,16 @@ const PolicyDetails = ({
               >
                 Cancel
               </button>
-              {!disable && <button disabled={!isEditMode} className="btn btn-color m-1" onClick={handleUpdateClick}>
+              { <button disabled={disable} className="btn btn-color m-1" 
+              onClick={()=>{
+                setHide(true)
+                handleUpdateClick(setIsEditMode)
+              }}>
                 Update
               </button>}
             </>
           ) : (
-            <button className="btn btn-color m-1" onClick={handleEditClick}>
+            !hide && <button className="btn btn-color m-1" onClick={handleEditClick}>
               Edit
             </button>
           )}

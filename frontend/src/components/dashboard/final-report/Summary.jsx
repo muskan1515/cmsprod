@@ -263,15 +263,12 @@ const Summary = ({
   },[documents,Endurance,FinalReportNotes])
   
 
+  const [hide,setHide] = useState(false)
   useEffect(()=>{
-    if(MetalPercent == 0 ){
-      setExpectedSalvage(roundOff((totalMetalRows*MetalPercent)/100) );
-    } 
+    console.log("metalPercent",MetalPercent,totalMetalRows)
+      setExpectedSalvage(roundOff((Number(totalMetalRows)*Number(MetalPercent))/100) );
+    
   },[MetalPercent,totalMetalRows])
-
-  
-
-  
 
 
 
@@ -666,7 +663,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(ExpectedSalvage)
+                    value={isEdit ? (ExpectedSalvage) : roundOff(ExpectedSalvage)
                     }
                     readOnly={!isEdit}
                     onChange={(e)=>setExpectedSalvage(e.target.value)}
@@ -786,10 +783,15 @@ const Summary = ({
             </div>
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
               
-            {!isEdit ? <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
+            {!isEdit ? !hide && <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
             : 
             !disable && (<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
-                <button className="btn btn-color m-1" disabled={disable} onClick={saveHandler}>Update</button>
+                <button className="btn btn-color m-1" disabled={disable} 
+                 onClick={()=>{
+                  setHide(true)
+                  saveHandler(setIsEdit)
+                }}>
+                  Update</button>
                 </> )}
              
               {/* <button className="btn btn-color m-1">Add</button> */}

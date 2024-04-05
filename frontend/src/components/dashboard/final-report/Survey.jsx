@@ -145,6 +145,8 @@ const Servey = ({
   SaveHandler,
   claim,
 }) => {
+
+  const [hide,setHide] = useState(false)
   const formatDate = (dateString) => {
     const options = {
         day: "2-digit",
@@ -752,12 +754,16 @@ const Servey = ({
                   >
                     Cancel
                   </button>
-                  <button disabled={disable} className="btn btn-color m-1" onClick={SaveHandler}>
+                  <button disabled={disable} className="btn btn-color m-1" 
+                  onClick={()=>{
+                    setHide(true)
+                    SaveHandler(setIsEditMode)
+                  }}>
                     Update
                   </button>
                 </>
               ) : (
-                <button className="btn btn-color m-1" onClick={editHandler}>
+                 !hide && <button className="btn btn-color m-1" onClick={editHandler}>
                   Edit
                 </button>
               )}

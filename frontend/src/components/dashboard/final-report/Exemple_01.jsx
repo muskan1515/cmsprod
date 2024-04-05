@@ -296,6 +296,7 @@ export default function Exemple_01({
       });
   };
 
+  const [hide,setHide] = useState(false)
   const sliceVal = (val) => {
     return val.slice(-1, 1);
   };
@@ -540,6 +541,9 @@ export default function Exemple_01({
       disable={disable}
       updateHandler={onSaveHandler}
       edit={edit}
+      setEdit={setEdit}
+      hide={hide}
+      setHide={setHide}
     />
   );
 }

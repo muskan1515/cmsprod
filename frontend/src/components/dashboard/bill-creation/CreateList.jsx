@@ -233,10 +233,9 @@ const CreateList = ({ allInfo, leadID }) => {
       const assessed = part.NewPartsIsActive
         ? Number(part.NewPartsAssessed) * Number(part.QA)
         : 0;
-      const depreciation = (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100;
-      
-      const assessed_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 3 ) ?
-        (Number(assessed) * Number(part.NewPartsGSTPct)) / 100 : 0;
+     
+      const assessed_gst = (String(part.NewPartsWithTax ) === "1" || String(part.NewPartsWithTax) === "3" ) ?
+        (Number(assessed ) * Number(part.NewPartsGSTPct)) / 100 : 0;
       const current_Assessed = (assessed) + assessed_gst;
       total_assessed = total_assessed + current_Assessed;
 
@@ -244,14 +243,12 @@ const CreateList = ({ allInfo, leadID }) => {
       const current_Estimate = part.NewPartsIsActive
         ? Number(part.NewPartsEstimate) * Number(part.QE)
         : 0;
-        const estimate_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 2) ?
+        const estimate_gst = (String(part.NewPartsWithTax) === "1" || String(part.NewPartsWithTax) === "2") ?
         (Number(current_Estimate) * Number(part.NewPartsGSTPct)) / 100 : 0;
       const current_EstimateValue = (current_Estimate) + estimate_gst;
       
       total_estimate = total_estimate + current_EstimateValue;
     });
-
-    console.log("TotalAssessed",total_assessed,total_estimate)
 
     allLabourer?.map((part, index) => {
       //assessed
@@ -274,7 +271,8 @@ const CreateList = ({ allInfo, leadID }) => {
     });
 
 
-    setAssessed(total_assessed2 + total_assessed);
+
+    setAssessed(total_assessed + total_assessed2);
     setEstimate(total_estimate2 + total_estimate);
   };
 
@@ -293,7 +291,7 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(() => {
     const fees =
-      String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W" ? 700 : 500;
+      String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W" || String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes("4W")  ? 700 : 500;
     setFinalProfFees(fees);
   }, [allInfo]);
 

@@ -217,19 +217,19 @@ function SmartTable(props) {
           )}
           <div className="row">
             <div className="col-lg-12 text-end">
-              <button
+             { !props.hide && <button
                 className="btn"
                 onClick={() => props.handleAddRow()}
                 title="Add Row"
               >
                 <span className="flaticon-plus"></span>
-              </button>
-              {props.edit && !props.disable  ? (
-                <button className="btn" disabled={props.disable} onClick={() => props.updateHandler()}>
-                  Save
+              </button>}
+              {props.edit  ? (
+                   !props.hide && <button className="btn" disabled={props.disable} onClick={() =>{ props.setHide(true); props.updateHandler(props.setEdit)}}>
+                    Save
                 </button>
               ) : (
-                <button
+                !props.hide && <button
                   className="btn"
                   onClick={() => props.editHandler()}
                   title=""

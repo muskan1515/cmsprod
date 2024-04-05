@@ -671,7 +671,7 @@ const GSTSummary = ({ allInfo }) => {
         totalDep = (Number(totalDep) + Number(dep));
       }
     });
-    return String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? totalDep: 0;
+    return   totalDep;
   };
 
   const calculateTotalPaintingEstimate = () => {
@@ -953,7 +953,8 @@ const GSTSummary = ({ allInfo }) => {
               roundOff(
                 getTotalDepreciationValueOnly("Glass", false) +
                   getTotalDepreciationValueOnly("Metal", false) +
-                  getTotalNonMetaDepreciationValueOnly()
+                  getTotalNonMetaDepreciationValueOnly() +
+                  calculateLabourDepreciations()
               )
             )}
             ) is not deducted being{" "}

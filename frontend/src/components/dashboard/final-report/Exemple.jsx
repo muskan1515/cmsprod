@@ -1052,6 +1052,8 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
+  const [hide,setHide] =useState(false)
+
   const handleGSTChange = (index, val, field) => {
     setChange2(true);
     let oldRow = allRows;
@@ -1479,6 +1481,9 @@ export default function Exemple_01({
       difference={totalEstimate - totalAssessed}
       calculateDepreciationOnMetal={calculateDepreciationOnMetal}
       edit={edit}
+      setHide={setHide}
+      hide={hide}
+      setEdit = {setEdit}
       setCurrentType={setCurrentType}
       changeTotalAccordingToPolicyType={changeTotalAccordingToPolicyType}
     />
