@@ -12,7 +12,8 @@ const Summary = ({
   isEditMode,
   metaldepPct,
   ageOfVehicleTotal,
-  claim,disable,
+  claim,
+  disable,
   DepreciationValue,
   FinalReportNotes,
   setFinalReportNotes,
@@ -92,6 +93,20 @@ const Summary = ({
    BillAmount,
    setBillAmount
 }) => {
+
+  useEffect(()=>{
+    if(LessExcess === undefined || LessExcess === null || LessExcess === "undefined" || LessExcess === "null"){
+      setLessExcess(0)
+    }
+    if(LessImposed === undefined || LessImposed === null || LessImposed === "undefined" || LessImposed === "null"){
+      setLessImposed(0)
+    }
+    if(ExpectedSalvage === undefined || ExpectedSalvage === null || ExpectedSalvage === "undefined" || ExpectedSalvage === "null"){
+      setExpectedSalvage(0)
+    }
+    
+  },[lessExcess,lessImposed,ExpectedSalvage]);
+  console.log("setTotalLabrorAssessed",totalLabrorAssessed,totalPartsAssessed,LessExcess,LessImposed,ExpectedSalvage,DepreciationOnParts)
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -752,8 +767,8 @@ const Summary = ({
                     id="propertyTitle"
                     value={ roundOff(Number(totalLabrorAssessed) +
                       Number(totalPartsAssessed) 
-                        -Number(LessExcess ? LessExcess : 0)-Number(LessImposed ? LessImposed : 0)+Number(Other ? Other : 0)
-                        -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) - DepreciationValue)
+                        -(LessExcess ? LessExcess : 0)-(LessImposed ? LessImposed : 0)+(Other ? Other : 0)
+                        -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) - (DepreciationValue ))
                       }
                     readOnly={!isEdit}
                     // placeholder="Enter Registration No."
@@ -772,9 +787,10 @@ const Summary = ({
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
               
             {!isEdit ? <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
-            :<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
+            : 
+            !disable && (<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
                 <button className="btn btn-color m-1" disabled={disable} onClick={saveHandler}>Update</button>
-                </>}
+                </> )}
              
               {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>

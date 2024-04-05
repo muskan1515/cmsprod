@@ -744,7 +744,7 @@ const Servey = ({
               <hr />
             </div>
             <div className="col-lg-6 text-end">
-              {isEditMode ? (
+              {isEditMode  && !disable ? (
                 <>
                   <button
                     className="btn btn-color m-1"

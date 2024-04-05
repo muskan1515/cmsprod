@@ -52,7 +52,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   const [InspectionDate,setInspectionDate]=useState("");
   const [totalAssessed, setTotalAssessed] = useState(0);
-  const [disable,setDisable]=useState(false)
   const [totalEstimate, setTotalEstimate] = useState(0);
 
   const [taxAmount, setTaxAmount] = useState(0);
@@ -136,7 +135,7 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
   useEffect(() => {
 
     toast.loading("fetchig the final report!");
-    setDisable(true)
+    
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     axios
       .get("/api/getSpecificClaim", {
@@ -229,7 +228,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
           toast.error("Error while fetchign the details")
           console.log(err);
         });
-        setDisable(false)
   }, []);
 
 
@@ -422,6 +420,8 @@ useEffect(()=>{
 
 
   const [subType, setSubType] = useState("Motor");
+
+  const [disable,setDisable]=useState(false)
 
   const [ReferenceNo, setReferenceNo] = useState("");
   const [InsuredMailAddress, setInsuredMailAddress] = useState("");
@@ -854,13 +854,10 @@ const [AccidentTime,setAccidentTime]=useState("");
   };
 
   const saveHandler = () => {
-
-    toast.success("Updating  the final report!")
+    
     setDisable(true)
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    console.log("LessExcess",LessExcess)
-    // return
 
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const payload = {
       PolicyType: policyType,
       IDV: IDV ? IDV : claim?.claimDetails?.IDV,
@@ -994,10 +991,9 @@ const [AccidentTime,setAccidentTime]=useState("");
       ValidUpto,
       leadId,
     };
-
-
+    
+    
     toast.loading("Updating the final Report!!", {
-      // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
 
@@ -1012,9 +1008,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     })
     .then((res)=>{
       toast.dismiss();
-      // toast.success("Successfully Updated");
       toast.success("Successfully updated !", {
-        // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
       });
       window.location.reload();
@@ -1022,7 +1016,6 @@ const [AccidentTime,setAccidentTime]=useState("");
     .catch((Err)=>{
       toast.dismiss();
       toast.error("Caught into Error ! Try Again.", {
-        // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
       });
     })
@@ -1037,6 +1030,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       setIncludeDepreciation(true);
     }
   }, [policyType]);
+
   return (
     <>
       <ModalVideo
@@ -1480,15 +1474,14 @@ const [AccidentTime,setAccidentTime]=useState("");
         >
           <div className="property_video">
             <div className="thumb">
-              {/* <EditableTable /> */}
-              {/* <Table data={materials} /> */}
               <div className="row">
                 <Exemple
-                 disable={disable}
-                allNewParts={allNewParts}
-                setallNewParts={setallNewParts}
-                DateRegistration={DateRegistration}
-                AccidentAddedDateTime={AccidentAddedDateTime}
+                  
+                  disable={disable}
+                  allNewParts={allNewParts}
+                  setallNewParts={setallNewParts}
+                  DateRegistration={DateRegistration}
+                  AccidentAddedDateTime={AccidentAddedDateTime}
                   LeadId={leadId}
                   claim={claim}
                   settotalMetalRows={settotalMetalRows}

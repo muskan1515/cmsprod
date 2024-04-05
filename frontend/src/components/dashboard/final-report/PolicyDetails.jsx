@@ -220,7 +220,7 @@ const PolicyDetails = ({
   phyCheck,
   setphyCheck,
 }) => {
-  console.log(DateOfBirth, DateOfIssue, DateRegistration, ValidUpto, OwnerSRST);
+  console.log("disable123",disable);
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -536,18 +536,9 @@ const PolicyDetails = ({
                 />
               )}
 
-              {/*<input 
-              readOnly={!isEditMode}
-              type={isEditMode ? "date" : "text"}
-              value={formatDate(ClaimAddedDateTime)}
-              onChange={(e)=>setMailRecieveDate(e.target.value)}
-              className="form-control" 
-            id="propertyTitle" />*/}
+             
             </div>
-            {/* <span
-              className="col-lg-1 flaticon-calendar text-dark fs-6"
-              style={{ marginLeft: "-20px" }}
-            ></span> */}
+            
           </div>
         </div>
 
@@ -576,11 +567,9 @@ const PolicyDetails = ({
                   id="propertyTitle"
                   readOnly={true}
                   value={VehicleType ? VehicleType : ""}
-                  // placeholder="Enter Registration No."
                 />
               ) : (
                 <select
-                  // style={{ marginTop: "5px" }}
                   style={{ padding: "2px", marginTop: "3px" }}
                   className="selectpicker form-select"
                   data-live-search="true"
@@ -597,13 +586,9 @@ const PolicyDetails = ({
               )}
             </div>
           </div>
-          {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
         </div>
         <div className="col-lg-4 text-end">
-          {isEditMode ? (
+          {isEditMode  ? (
             <>
               <button
                 className="btn btn-color m-1"
@@ -611,21 +596,15 @@ const PolicyDetails = ({
               >
                 Cancel
               </button>
-              <button disabled={!isEditMode} className="btn btn-color m-1" onClick={handleUpdateClick}>
+              {!disable && <button disabled={!isEditMode} className="btn btn-color m-1" onClick={handleUpdateClick}>
                 Update
-              </button>
+              </button>}
             </>
           ) : (
             <button className="btn btn-color m-1" onClick={handleEditClick}>
               Edit
             </button>
           )}
-          {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
-            Add
-          </button> */}
-          {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
-            Modify
-          </button> */}
         </div>
         <hr />
       </div>
@@ -821,7 +800,7 @@ const PolicyDetails = ({
                         //     ? InsuredAddress
                         //     : ""
                         // }/
-                        value={claim?.vehicleDetails?.PermanentAddress}
+                        value={InsuredAddress}
                         onChange={(e) => setInsuredAddress(e.target.value)}
                         readOnly={!isEditMode}
 

@@ -244,7 +244,7 @@ function SmartTable(props) {
               >
                 <span className="flaticon-minus"></span>
               </button> */}
-              {props.edit ? (
+              {props.edit && !props.disable ? (
                 <button className="btn" disabled={props.disable} onClick={() => props.updateHandler()}>
                   Save
                 </button>
