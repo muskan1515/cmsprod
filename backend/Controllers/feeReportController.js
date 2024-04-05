@@ -128,7 +128,6 @@ const upload = (req, res) => {
      
      const query = result_1.length > 0 ?  updateQuery : insertQuery;
   
-     
      db.query(query,  (err, result) => {
      if (err) {
        console.error(err);

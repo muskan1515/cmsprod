@@ -134,6 +134,8 @@ const updateFinalReport = (req,res)=>{
       phyCheck
     } = req.body;
 
+    
+
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
@@ -351,7 +353,7 @@ const updateFinalReport = (req,res)=>{
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
   });
@@ -359,7 +361,7 @@ const updateFinalReport = (req,res)=>{
   db.query(updateAccidentDetails, (err, result2) => {
     if (err) {
       console.error(err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("Internal Server Error",err);
       return;
     }
    
@@ -367,7 +369,7 @@ const updateFinalReport = (req,res)=>{
     db.query(updateDriverDetails, (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
      
@@ -375,7 +377,7 @@ const updateFinalReport = (req,res)=>{
     db.query(updateGarageDetails, (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
      
@@ -384,7 +386,7 @@ const updateFinalReport = (req,res)=>{
     db.query(updateInsuredDetails, (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
      
@@ -392,7 +394,7 @@ const updateFinalReport = (req,res)=>{
     db.query(updateVehicleDetails, (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
      
@@ -403,7 +405,7 @@ const updateFinalReport = (req,res)=>{
     db.query("SELECT * FROM SummaryReport WHERE LeadId=?",[leadId], (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
      
@@ -413,7 +415,7 @@ const updateFinalReport = (req,res)=>{
       db.query(query, (err, result2) => {
         if (err) {
           console.error(err);
-          res.status(500).send("Internal Server Error");
+          res.status(500).send("Internal Server Error",err);
           return;
         }
         
@@ -425,7 +427,7 @@ const updateFinalReport = (req,res)=>{
     db.query("SELECT * FROM CommercialVehicleDetails WHERE LeadID=?",[leadId], (err, result2) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error",err);
         return;
       }
      
@@ -434,7 +436,7 @@ const updateFinalReport = (req,res)=>{
       db.query(query, (err, result2) => {
         if (err) {
           console.error(err);
-          res.status(500).send("Internal Server Error");
+          res.status(500).send("Internal Server Error",err);
           return;
         }
         

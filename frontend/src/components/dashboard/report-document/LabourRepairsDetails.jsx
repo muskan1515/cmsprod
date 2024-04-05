@@ -127,7 +127,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
         totalDep = (Number(totalDep) + Number(dep));
       }
     });
-    return totalDep;
+    return String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? totalDep: 0;
   };
 
   const calculateTotalPaintingEstimate = () => {
@@ -466,7 +466,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
         String(part.JobType) === "1"
           ? Number(Number(part.Assessed) * Number(12.5)) / 100
           : 0;
-      const assessed = Number(part.Assessed) - dep;
+      const assessed = Number(part.Assessed) ;
 
       const assessedvalue = assessed * Number(part.GSTPercentage);
       const gst = Number(assessedvalue) / 100;
@@ -481,7 +481,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
     let total = 0;
     allInfo?.labourDetails?.map((part, index) => {
       const dep =
-        String(part.JobType) === "1"
+        String(part.JobType) === "1" && String(allInfo?.otherInfo[0]?.PolicyType) === "Regular"
           ? Number(Number(part.Assessed) * Number(12.5)) / 100
           : 0;
       const assessed = Number(part.Assessed) - dep;
@@ -494,6 +494,25 @@ const LabourRepairsDetails = ({ allInfo }) => {
     });
     return total;
   };
+
+  const getTotalLabourAssessedGSTValuess = () => {
+    let total = 0;
+    allInfo?.labourDetails?.map((part, index) => {
+      const dep =
+        String(part.JobType) === "1" && String(allInfo?.otherInfo[0]?.PolicyType) === "Regular"
+          ? Number(Number(part.Assessed) * Number(12.5)) / 100
+          : 0;
+      const assessed = Number(part.Assessed) - dep;
+
+      const assessedvalue = assessed * Number(part.GSTPercentage);
+      const gst = Number(assessedvalue) / 100;
+      if (part.LabourIsActive) {
+        total = total + ( + gst);
+      }
+    });
+    return total;
+  };
+
 
   const getTotalLabourEstimateGST = () => {
     let total = 0;
@@ -950,7 +969,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
             Add : GST on ₹{" "}
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessedSum()
+                getTotalLabourAssessedSum() - calculateLabourDepreciations()
               )
             )}{" "}
             @ 18.00% : <br />
@@ -961,7 +980,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
             0
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(roundOff(getTotalLabourAssessed() - getTotalLabourAssessedSum()))}
+            {addCommasToNumber(roundOff(getTotalLabourAssessedGSTValuess()))}
           </td>
         </tr>
         <tr>
@@ -987,7 +1006,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               Math.round(
-                  (getTotalLabourAssessed() - calculateLabourDepreciations())
+                  (getTotalLabourAssessedSum() - calculateLabourDepreciations())+ getTotalLabourAssessedGSTValuess()
               )
             )}
           </td>

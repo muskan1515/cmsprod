@@ -257,7 +257,7 @@ const CreateList = ({ allInfo, leadID }) => {
       //assessed
       const assessed = part.LabourIsActive ? Number(part.Assessed) : 0;
       const depreciation_of_paint =
-        String(part.JobType) === "1" ? (Number(assessed) * 12.5) / 100 : 0;
+        String(part.JobType) === "1" && String(allInfo?.otherInfo[0].PolicyType) === "Regular" ? (Number(assessed) * 12.5) / 100 : 0;
       const assessed_gst =
       (part.IsGSTIncluded % 2 !== 0 ) ?
         (Number(assessed-depreciation_of_paint) * Number(part.GSTPercentage)) / 100 : 0;
