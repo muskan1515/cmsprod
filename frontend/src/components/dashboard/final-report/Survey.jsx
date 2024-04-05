@@ -763,7 +763,7 @@ const Servey = ({
                   </button>
                 </>
               ) : (
-                 !hide && <button className="btn btn-color m-1" onClick={editHandler}>
+                 !hide && claim?.accidentDetails && <button className="btn btn-color m-1" onClick={editHandler}>
                   Edit
                 </button>
               )}

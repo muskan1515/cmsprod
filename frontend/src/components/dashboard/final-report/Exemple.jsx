@@ -1481,6 +1481,7 @@ export default function Exemple_01({
       difference={totalEstimate - totalAssessed}
       calculateDepreciationOnMetal={calculateDepreciationOnMetal}
       edit={edit}
+      claim={claim}
       setHide={setHide}
       hide={hide}
       setEdit = {setEdit}

@@ -783,7 +783,7 @@ const Summary = ({
             </div>
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
               
-            {!isEdit ? !hide && <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
+            {!isEdit ? !hide && claim?.summaryDetails && <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
             : 
             !disable && (<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
                 <button className="btn btn-color m-1" disabled={disable} 

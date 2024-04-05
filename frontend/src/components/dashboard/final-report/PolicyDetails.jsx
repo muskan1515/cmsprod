@@ -613,7 +613,7 @@ const PolicyDetails = ({
               </button>}
             </>
           ) : (
-            !hide && <button className="btn btn-color m-1" onClick={handleEditClick}>
+            !hide && claim?.claimDetails && <button className="btn btn-color m-1" onClick={handleEditClick}>
               Edit
             </button>
           )}
