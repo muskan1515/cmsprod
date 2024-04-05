@@ -2,7 +2,6 @@ import axios, { all } from "axios";
 import { use, useEffect, useReducer } from "react";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import MyDatePicker from "../../common/MyDatePicker";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
@@ -183,13 +182,13 @@ const CreateList = ({ allInfo, leadID }) => {
     if(String(BillTo) === "Appointing Office" || String(BillTo) === "Insurer")
     {
       let requiredStateCode = {}
-      let searchCode =String(BillTo) === "Appointing Office" ? allInfo?.otherInfo[0]?.ClaimServicingOffice : allInfo?.otherInfo[0]?.PolicyIssuingOffice 
+      let searchCode =String(BillTo) === "Appointing Office" ? allInfo?.otherInfo[0]?.ClaimServicingOffice : String(BillTo) === "Insurer" ? allInfo?.otherInfo[0]?.PolicyIssuingOffice : "" 
       allServicingOffice.map((office,index)=>{
         if(String(office.OfficeNameWithCode) === String(searchCode)){
           requiredStateCode = office.StateCode;
           }
       })
-      console.log("requiredStateCode",requiredStateCode)
+      console.log("requiredStateCode",requiredStateCode,searchCode)
       if(String(requiredStateCode) === "8"){
         setCGST(9);
         setSGST(9);
@@ -207,19 +206,13 @@ const CreateList = ({ allInfo, leadID }) => {
         setSGST(0);
         setIGST(0);  
      }
-  },[BillTo,allInfo]);
+  },[BillTo,allInfo,allServicingOffice]);
 
   
   function addCommasToNumber(number) {
     if (Number(number) <= 100 || number === undefined) return number;
     return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-
-
-
-  const roundOff = (number) => {
-    return Math.round(number * 100) / 100;
-  };
 
 
   const calculateTotalAssessed = () => {
@@ -261,7 +254,6 @@ const CreateList = ({ allInfo, leadID }) => {
       const current_Assessed = (assessed - depreciation_of_paint) + assessed_gst;
       total_assessed2 = total_assessed2 + current_Assessed;
 
-      //estimate
       const current_Estimate = part.LabourIsActive ? Number(part.Estimate) : 0;
       const estimate_gst =(part.IsGSTIncluded % 2 !== 0 ) ?
       (Number(current_Estimate) * Number(part.GSTPercentage)) / 100 : 0;
@@ -278,9 +270,6 @@ const CreateList = ({ allInfo, leadID }) => {
 
   const calculateProfessionalFees = () => {
     let prof = 0;
-    // if (!allInfo?.VehicleDetails) {
-    //   return 0;
-    // }
     console.log("information",allInfo)
     const is2W = ["2w"].includes(String(allInfo?.otherInfo?.VehicleType).toLowerCase());
     if (is2W)
@@ -291,10 +280,20 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(() => {
     const fees =
-      String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes("4W")  ? 700 : 500;
+       String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes(("4W").toLowerCase())  ? 700 : 500;
     setFinalProfFees(fees);
   }, [allInfo]);
 
+  const roundOff = (value) => {
+    const roundedValue = parseFloat(value).toFixed();
+    return roundedValue;
+  };
+
+  
+  function addCommasToNumber(number) {
+    if (Number(number) <= 100 || number === undefined) return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   const generateRegion = (region) => {
     const firstThreeLetters = Branch?.slice(0, 3);
 
@@ -369,8 +368,8 @@ const CreateList = ({ allInfo, leadID }) => {
     setCGSTValue(calculate_cgst);
     setSGSTValue(calculate_sgst);
 
-    setNetPay(total + calculate_cgst + calculate_igst + calculate_sgst);
-    return total + calculate_cgst + calculate_igst + calculate_sgst;
+    setNetPay(total + calculate_cgst + calculate_igst + calculate_sgst + Number(OtherTotal));
+    return total + calculate_cgst + calculate_igst + calculate_sgst + Number(OtherTotal);
   };
 
   useEffect(()=>{
@@ -402,7 +401,7 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(() => {
     setNetPay(getTotalValue());
-  }, [CGST, IGST, SGST]);
+  }, [CGST, IGST, SGST,OtherTotal]);
 
   const onSubmitHnadler = () => {
 
@@ -1590,7 +1589,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={OtherTotal}
+                  value={((OtherTotal))}
                   onChange={(e) => setOtherTotal(e.target.value)}
                 />
               </div>
@@ -1635,7 +1634,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={CGSTValue}
+                  value={addCommasToNumber(roundOff(CGSTValue))}
                 />
               </div>
             </div>
@@ -1658,7 +1657,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={SGST}
+                  value={addCommasToNumber(roundOff(SGST))}
                   onChange={(e) => setSGST(e.target.value)}
                 />
               </div>
@@ -1679,7 +1678,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={SGSTValue}
+                  value={addCommasToNumber(roundOff(SGSTValue))}
                 />
               </div>
             </div>
@@ -1702,7 +1701,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={IGST}
+                  value={((IGST))}
                   onChange={(e) => setIGST(e.target.value)}
                 />
               </div>
@@ -1723,7 +1722,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={IGSTValue}
+                  value={addCommasToNumber(roundOff(IGSTValue))}
                 />
               </div>
             </div>
@@ -1758,7 +1757,7 @@ const CreateList = ({ allInfo, leadID }) => {
                   type="text"
                   className="form-control"
                   id="broker_mail_id"
-                  value={NetPay}
+                  value={addCommasToNumber(roundOff(NetPay))}
                 />
               </div>
             </div>
