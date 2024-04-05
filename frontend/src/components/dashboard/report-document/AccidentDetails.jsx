@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
+import {addVariables} from './ContentFile'
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
 
@@ -617,7 +618,7 @@ const AccidentDetails = ({ allInfo }) => {
     <div>
       <h6 className="text-dark">CAUSE & NATURE OF ACCIDENT :</h6>
       {/* <span>{removeHtmlTags(allInfo?.otherInfo[0]?.CauseOfAccident)} , causing damages.</span> */}
-        <span dangerouslySetInnerHTML={{ __html: removeHtmlTags(allInfo?.otherInfo[0]?.CauseOfAccident) }}></span>
+        <span dangerouslySetInnerHTML={{ __html: removeHtmlTags(addVariables(allInfo?.otherInfo[0]?.CauseOfAccident,allInfo))}}></span>
       <div
         style={{
           border: "1px solid black",

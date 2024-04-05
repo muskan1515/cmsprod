@@ -391,6 +391,23 @@ const LossDamagesDetails = ({ allInfo }) => {
     return total;
   };
 
+  const getTotalDepreciationValueOnly = (type, other) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+
+      if (
+        String(part.NewPartsTypeOfMaterial) === String(type) &&
+        part.NewPartsIsActive 
+      ) {
+        total = total + Depreciation;
+      }
+    });
+    return total;
+  };
+
   const getTotalDepreciationWithGSTType = (type, other, gstType) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
@@ -410,6 +427,8 @@ const LossDamagesDetails = ({ allInfo }) => {
     return total;
   };
 
+
+
   const getTotalNonMetaDepreciation = (type) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
@@ -420,6 +439,24 @@ const LossDamagesDetails = ({ allInfo }) => {
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
+        part.NewPartsIsActive
+      ) {
+        total = total + Depreciation;
+      }
+    });
+
+    return total;
+  };
+
+  const getTotalNonMetaDepreciationValueOnly = (type) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         part.NewPartsIsActive
       ) {
         total = total + Depreciation;
@@ -1235,16 +1272,16 @@ const LossDamagesDetails = ({ allInfo }) => {
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
-                roundOff(getTotalDepreciation("Glass", false))
+                roundOff(getTotalDepreciationValueOnly("Glass", false))
               )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
               {addCommasToNumber(
-                roundOff(getTotalDepreciation("Metal", false))
+                roundOff(getTotalDepreciationValueOnly("Metal", false))
               )}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalNonMetaDepreciation()))}
+              {addCommasToNumber(roundOff(getTotalNonMetaDepreciationValueOnly()))}
             </td>
           </tr>
           <tr>

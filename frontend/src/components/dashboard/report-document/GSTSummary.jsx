@@ -442,6 +442,25 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
+  const getTotalDepreciationValueOnly = (type, other) => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+
+      if (
+        String(part.NewPartsTypeOfMaterial) === String(type) &&
+        
+        part.NewPartsIsActive
+      ) {
+        total = total + Depreciation;
+      }
+    });
+    return total;
+  };
+
+
   const getTotalDepreciation = (type, other) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
@@ -471,6 +490,24 @@ const GSTSummary = ({ allInfo }) => {
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
+        
+        part.NewPartsIsActive
+      ) {
+        total = total + Depreciation;
+      }
+    });
+    return total;
+  };
+
+  const getTotalNonMetaDepreciationValueOnly = () => {
+    let total = 0;
+    allInfo?.newPartsDetails?.map((part, index) => {
+      const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
+      const Depreciation =
+        (assessed * Number(part.NewPartsDepreciationPct)) / 100;
+      if (
+        String(part.NewPartsTypeOfMaterial) !== "Glass" &&
+        String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         
         part.NewPartsIsActive
       ) {
@@ -914,9 +951,9 @@ const GSTSummary = ({ allInfo }) => {
             Depreciations(
             {addCommasToNumber(
               roundOff(
-                getTotalDepreciation("Glass", false) +
-                  getTotalDepreciation("Metal", false) +
-                  getTotalNonMetaDepreciation()
+                getTotalDepreciationValueOnly("Glass", false) +
+                  getTotalDepreciationValueOnly("Metal", false) +
+                  getTotalNonMetaDepreciationValueOnly()
               )
             )}
             ) is not deducted being{" "}

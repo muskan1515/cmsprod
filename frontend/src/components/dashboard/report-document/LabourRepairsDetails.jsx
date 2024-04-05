@@ -127,7 +127,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
         totalDep = (Number(totalDep) + Number(dep));
       }
     });
-    return String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? totalDep: 0;
+    return   totalDep;
   };
 
   const calculateTotalPaintingEstimate = () => {
@@ -969,7 +969,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
             Add : GST on ₹{" "}
             {addCommasToNumber(
               roundOff(
-                getTotalLabourAssessedSum() - calculateLabourDepreciations()
+                getTotalLabourAssessedSum() - (String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? calculateLabourDepreciations() : 0)
               )
             )}{" "}
             @ 18.00% : <br />
@@ -1006,7 +1006,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
           <td style={{ border: "1px solid black", padding: "5px" }}>
             {addCommasToNumber(
               Math.round(
-                  (getTotalLabourAssessedSum() - calculateLabourDepreciations())+ getTotalLabourAssessedGSTValuess()
+                  (getTotalLabourAssessedSum() - (String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? calculateLabourDepreciations() : 0))+ getTotalLabourAssessedGSTValuess()
               )
             )}
           </td>
