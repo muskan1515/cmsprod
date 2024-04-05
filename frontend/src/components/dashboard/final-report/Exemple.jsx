@@ -299,7 +299,7 @@ export default function Exemple_01({
         settotalMetalRows(metalParts)
         setMetalSalvageValue(total_metal);
         setTotaAssessed(total_assessed);
-        setTotalPartsAssessed(total_estimate);
+        setTotalPartsAssessed(total_assessed);
         setTotalPartsEstimate(total_estimate);
         setTotalEstimate(total_estimate);
         setCurrentType(type);
