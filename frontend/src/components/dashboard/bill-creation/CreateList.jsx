@@ -271,7 +271,7 @@ const CreateList = ({ allInfo, leadID }) => {
   const calculateProfessionalFees = () => {
     let prof = 0;
     console.log("information",allInfo)
-    const is2W = ["2w"].includes(String(allInfo?.otherInfo?.VehicleType).toLowerCase());
+    const is2W = ["2w"].includes(String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase());
     if (is2W)
       return (500);
     else
@@ -282,6 +282,8 @@ const CreateList = ({ allInfo, leadID }) => {
     const fees =
        String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes(("4W").toLowerCase())  ? 700 : 500;
     setFinalProfFees(fees);
+    setReInsprectionProfFees(fees);
+    setSpotProfFees(fees);
   }, [allInfo]);
 
   const roundOff = (value) => {
@@ -401,7 +403,12 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(() => {
     setNetPay(getTotalValue());
-  }, [CGST, IGST, SGST,OtherTotal]);
+  }, [CGST, IGST, SGST,OtherTotal,currentSelectedInsprectiontype]);
+
+
+  useEffect(()=>{
+    
+  },[currentSelectedInsprectiontype])
 
   const onSubmitHnadler = () => {
 
@@ -477,6 +484,7 @@ const CreateList = ({ allInfo, leadID }) => {
       // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
+  
     axios
       .post("/api/uploadFeeReport", payload, {
         headers: {
