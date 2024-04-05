@@ -291,7 +291,7 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(() => {
     const fees =
-      String(allInfo?.VehicleOnlineDetails?.VehicleType) === "4W" || String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes("4W")  ? 700 : 500;
+      String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes("4W")  ? 700 : 500;
     setFinalProfFees(fees);
   }, [allInfo]);
 
