@@ -148,7 +148,7 @@ import SmartTable from "./SmartTable";
     },
   ];
 
-  export default function Exemple({ documents,leadId  }) {
+  export default function Exemple({ finalDisable, documents,leadId  }) {
     const [updatedCode, setUpdatedCode] = useState([]);
     const [selectedFile, setSelectedFile] = useState([]);
     const [uploadedFiles,setUploadedFiles]=useState([]);
@@ -704,7 +704,7 @@ const getFileName = (idx)=>{
         file: alllinks,
         action: <>
         <input type="file" id="fileInput" style={{ display: 'none' }} onChange={(e)=>handleFileInputChange(e,index,docs.doc_name)} ></input>
-        <button  disabled={disable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.doc_name)}
+        <button  disabled={finalDisable} className="btn btn-thm" onClick={()=>handleButtonClick(docs.doc_name)}
         >
         <FaUpload /></button>
         <p>{ fileName? `Selected File: ${fileName?.name}` : "Choose File"}</p>

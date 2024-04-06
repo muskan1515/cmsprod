@@ -8,6 +8,7 @@ import { Value } from "sass";
 const CreateList = ({
   claim,
   disable,
+  finalDisable,
   InsuredName,
   setInsuredName,
   InsuredMailAddress,

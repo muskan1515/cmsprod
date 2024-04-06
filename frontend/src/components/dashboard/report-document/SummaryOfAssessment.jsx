@@ -321,6 +321,8 @@ const SummaryOfAssessment = ({ allInfo }) => {
       ) {
         total = total + Depreciation;
       }
+
+
     });
     return total;
   };
@@ -351,7 +353,12 @@ const SummaryOfAssessment = ({ allInfo }) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+      
+      const Depreciation =
+      String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+      (assessed * Number(part.NewPartsDepreciationPct)) / 100 : 0;
+   
+      const gst = ((assessed - Depreciation) * Number(part.NewPartsGSTPct)) / 100;
 
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&

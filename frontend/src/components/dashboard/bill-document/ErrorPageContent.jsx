@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
-const ErrorPageContent = ({ feeReport }) => {
+const ErrorPageContent = ({ feeReport , allOffices }) => {
   const pdfRef = useRef();
 
   console.log(feeReport);
@@ -26,32 +26,31 @@ const ErrorPageContent = ({ feeReport }) => {
       dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
     return formattedDate;
   };
+  
   const [selectedServicingOffice, setSelectedServicingOffice] = useState([]);
+  
 
-  useEffect(() => {
-    axios
-      .get("/api/getClaimServicingOffice")
-      .then((res) => {
-        const allOffice = res.data.data.results;
-        const name =
+  useEffect(()=>{
+    const name =
           String(feeReport?.feeDetails?.BillTo) === "Insurer"
             ? feeReport?.claimDetails?.PolicyIssuingOffice
             : feeReport?.claimDetails?.ClaimServicingOffice;
 
         let requiredOffice = {};
-        allOffice.map((office, index) => {
-          if (String(office.OfficeNameWithCode) === String(name)) {
+        
+        allOffices.map((office, index) => {
+          const stateCodeString = String((office.OfficeName)).toLowerCase()
+          const nameString = String(name).toLowerCase().split(" - ")[0]
+          
+          if (stateCodeString.includes(nameString)) {
+          
             requiredOffice = office;
           }
         });
 
-        console.log(requiredOffice);
+        
         setSelectedServicingOffice(requiredOffice);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [feeReport]);
+  },[allOffices,feeReport])
 
   const roundOff = (value) => {
     const roundedValue = parseFloat(value).toFixed();
@@ -208,25 +207,25 @@ const ErrorPageContent = ({ feeReport }) => {
       const assessed = part.NewPartsIsActive
         ? Number(part.NewPartsAssessed) * Number(part.QA)
         : 0;
-      const depreciation = (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100;
+      const depreciation = String(feeReport?.claimDetails?.PolicyType) === "Regular" ?
+      (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100 :0;
       
-      const assessed_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 3 ) ?
-        (Number(assessed) * Number(part.NewPartsGSTPct)) / 100 : 0;
-      const current_Assessed = (assessed) + assessed_gst;
+      const assessed_gst = (String(part.NewPartsWithTax ) === '1' || String(part.NewPartsWithTax) === '3' ) ?
+        (Number(assessed  - depreciation) * Number(part.NewPartsGSTPct)) / 100 : 0;
+      const current_Assessed = (assessed - depreciation) + assessed_gst;
       total_assessed = total_assessed + current_Assessed;
 
       //estimate
       const current_Estimate = part.NewPartsIsActive
         ? Number(part.NewPartsEstimate) * Number(part.QE)
         : 0;
-        const estimate_gst = (part.NewPartsWithTax === 1 || part.NewPartsWithTax === 2) ?
+        const estimate_gst = (String(part.NewPartsWithTax) === "1" || String(part.NewPartsWithTax) === "2") ?
         (Number(current_Estimate) * Number(part.NewPartsGSTPct)) / 100 : 0;
       const current_EstimateValue = (current_Estimate) + estimate_gst;
       
       total_estimate = total_estimate + current_EstimateValue;
     });
 
-    console.log("TotalAssessed",total_assessed,total_estimate)
 
     allLabourer?.map((part, index) => {
       //assessed
@@ -249,7 +248,11 @@ const ErrorPageContent = ({ feeReport }) => {
     });
 
 
-    setAssessed(total_assessed2 + total_assessed);
+    const LessExcess = Number(feeReport?.SummaryDetails?.LessExcess);
+    const lessImposed = Number(feeReport?.SummaryDetails?.LessImposed);
+    const expectedSalvage = Number(feeReport?.SummaryDetails?.ExpectedSalvage);
+
+    setAssessed( total_assessed + total_assessed2 - (lessImposed + LessExcess + expectedSalvage));
     setEstimate(total_estimate2 + total_estimate);
   };
 

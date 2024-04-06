@@ -10,7 +10,7 @@ import Image from "next/image";
 import EstimateList_01 from "./EstimateList_01";
 // import toast from "react-hot-toast";
 
-const EstimateList = ({ edit, onSaveHandler }) => {
+const EstimateList = ({ edit, finalDisable , onSaveHandler }) => {
   const router = useRouter();
 
   const editHandler = () => {
@@ -61,6 +61,7 @@ const EstimateList = ({ edit, onSaveHandler }) => {
                         <button
                           className="btn-thm m-1"
                           style={{}}
+                          disabled={finalDisable}
                           onClick={() => onSaveHandler(setEditCase_10)}
                         >
                           Save

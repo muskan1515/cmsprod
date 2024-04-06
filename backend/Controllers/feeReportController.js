@@ -32,7 +32,6 @@ const upload = (req, res) => {
  BillDate,
  BillId
    } = req.body;
-   console.log(req.body)
 
    const insertQuery = 
    `INSERT INTO BillReportFees (
@@ -117,8 +116,6 @@ const upload = (req, res) => {
    WHERE LeadID = ${LeadId};
 `;
 
-
-  // console.log(req.body)
 
    db.query("SELECT * FROM BillReportFees WHERE LeadID=?",[LeadId],  (err, result_1) => {
      if (err) {
@@ -213,6 +210,11 @@ const upload = (req, res) => {
        "SELECT * FROM InsuredDetails WHERE LeadId=?",
        [leadId]
      );
+
+     const SummaryDetails = await executeQuery(
+      "SELECT * FROM SummaryReport WHERE LeadId=?",
+      [leadId]
+    );
     
    
      const combinedResult = {
@@ -225,6 +227,7 @@ const upload = (req, res) => {
        vehicleOnlineDetails,
        feeDetails,
        insuredDetails,
+       SummaryDetails,
        accidentDetails : accidentDetails,
      };
 

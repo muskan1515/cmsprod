@@ -12,6 +12,7 @@ const Form = ({
   edit,
   setReload,
   reload,
+  finalDisable,
   GarageNameAndAddress,
   setGarageNameAndAddress,
   GarageContactNo1,
@@ -70,6 +71,7 @@ const Form = ({
                         <button
                           className="btn-thm m-1"
                           style={{}}
+                          disabled={!editCase_03 || finalDisable}
                           onClick={() => {
                             setisUpdateVehicleLoading(true);
                             onSaveHandler(4, closeFunction, closeFunction);

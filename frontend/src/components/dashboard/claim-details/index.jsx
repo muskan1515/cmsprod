@@ -54,6 +54,7 @@ const Index = ({}) => {
     useState("");
   const [insuredAddedBy, setInsuredAddedBy] = useState("");
 
+  const [finalDisable,setFinalDisable] = useState(false)
   const [disable,setDisable]=useState(false)
 
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
@@ -88,11 +89,11 @@ const Index = ({}) => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 600000) {
+      if (timeSinceLastActivity > 1200000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }
-    }, 60000);
+    }, 30000);
     return () => clearInterval(inactivityCheckInterval);
   }, [lastActivityTimestamp]);
 
@@ -824,6 +825,7 @@ const Index = ({}) => {
   }
 
   const onFinalSubmitHandler = (APItype, func, func2) => {
+    setFinalDisable(true)
     const type = calculateTheUpdateType(APItype);
     console.log(insuranceCompanyNameAddress);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -992,6 +994,7 @@ const Index = ({}) => {
     }
 
     setDisable(false)
+    setFinalDisable(false)
     func(false);
     func2(false);
     window.location.reload();
@@ -1077,6 +1080,7 @@ const Index = ({}) => {
 
   useEffect(() => {
     setDisable(true);
+    setFinalDisable(true)
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     if (!userInfo) {
@@ -1195,6 +1199,7 @@ const Index = ({}) => {
         });
     }
     setDisable(false)
+    setFinalDisable(false)
   }, [leadId]);
 
   useEffect(() => {
@@ -1296,6 +1301,7 @@ const Index = ({}) => {
                                   <button
                                     className="btn-thm m-1"
                                     style={{}}
+                                    disabled={finalDisable}
                                     onClick={() => {
                                       setIsClaimLoading(true);
                                       onSaveHandler(
@@ -1345,6 +1351,7 @@ const Index = ({}) => {
                             <div className="col-lg-12">
                               <CreateList_02
                                 disable={disable}
+                                finalDisable={finalDisable}
                                 claim={claim}
                                 InsuredName={InsuredName}
                                 inspectionType={inspectionType}
@@ -1399,6 +1406,7 @@ const Index = ({}) => {
                           ) : (
                             <CreateList
                               claim={claim}
+                              finalDisable={finalDisable}
                               disable={disable}
                               inspectionType={inspectionType}
                               setInspectionType={setInspectionType}
@@ -1562,7 +1570,9 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                             <Form
+                              setFinalDisable={setFinalDisable}
                              disable={disable}
+                             finalDisable={finalDisable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
                               edit={editCase_01}
@@ -1688,6 +1698,8 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                             <Form_01
+                              setFinalDisable={setFinalDisable}
+                               finalDisable={finalDisable}
                                disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
@@ -1760,6 +1772,7 @@ const Index = ({}) => {
                           }}
                         ></div> */}
                             <Form_02
+                               finalDisable={finalDisable}
                                disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
@@ -1783,6 +1796,7 @@ const Index = ({}) => {
                           <div className="col-lg-12">
                            
                             <AccidentEditableForm
+                               finalDisable={finalDisable}
                                disable={disable}
                               onSaveHandler={onSaveHandler}
                               claim={claim}
@@ -1807,7 +1821,7 @@ const Index = ({}) => {
                           style={{ marginLeft: "-15px" }}
                         >
                           <div className="col-lg-12">
-                            <EstimateList  disable={disable} onSaveHandler={onSaveHandler} />
+                            <EstimateList  finalDisable={finalDisable}  disable={disable} onSaveHandler={onSaveHandler} />
                           </div>
                         </div>
 
@@ -1817,7 +1831,7 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <Exemple  disable={disable} documents={documents} leadId={leadId} />
+                            <Exemple  finalDisable={finalDisable}  disable={disable} documents={documents} leadId={leadId} />
                           </div>
                         </div>
                         {/*<div
@@ -1846,7 +1860,7 @@ const Index = ({}) => {
                         >
                           <div className="col-lg-12 text-center">
                             {/* <ErrorPageContent /> */}
-                            <PaymentDetails />
+                            <PaymentDetails finalDisable={finalDisable} />
                           </div>
                         </div>
                         {/* <div className="row mb-2" style={{ marginLeft: "-15px" }}>
@@ -1875,6 +1889,7 @@ const Index = ({}) => {
                               }}
                             ></div>
                             <StatusLog
+                               finalDisable={finalDisable}
                               leadId={leadId}
                               status={status}
                               statusOptions={statusOptions}
@@ -1899,7 +1914,7 @@ const Index = ({}) => {
                                 marginBottom: "5px",
                               }}
                             ></div>
-                            <ChatboxContent leadId={leadId} />
+                            <ChatboxContent finalDisable={finalDisable} leadId={leadId} />
                           </div>
                           {/* <hr /> */}
                           {/* <div className="row mt-2 my_dashboard_review bgc-f6">

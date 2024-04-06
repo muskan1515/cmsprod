@@ -6,7 +6,8 @@ const getMISSheet = async (req, res) => {
     const startDate = req.query.startDate;
     const EndDate=req.query.EndDate;
     const DateType = req.query.DateType;
-
+    console.log('-----',startDate, EndDate);
+    // return;
     const executeQuery = (query, values) => {
       return new Promise((resolve, reject) => {
         db.query(query, values, (err, result) => {

@@ -226,10 +226,11 @@ const CreateList = ({ allInfo, leadID }) => {
       const assessed = part.NewPartsIsActive
         ? Number(part.NewPartsAssessed) * Number(part.QA)
         : 0;
-     
+        const depreciation =String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?  (Number(assessed) * Number(part.NewPartsDepreciationPct)) / 100 : 0;
+      
       const assessed_gst = (String(part.NewPartsWithTax ) === "1" || String(part.NewPartsWithTax) === "3" ) ?
-        (Number(assessed ) * Number(part.NewPartsGSTPct)) / 100 : 0;
-      const current_Assessed = (assessed) + assessed_gst;
+        (Number(assessed - depreciation) * Number(part.NewPartsGSTPct)) / 100 : 0;
+      const current_Assessed = (assessed - depreciation) + assessed_gst;
       total_assessed = total_assessed + current_Assessed;
 
       //estimate
@@ -264,18 +265,19 @@ const CreateList = ({ allInfo, leadID }) => {
 
 
 
-    setAssessed(total_assessed + total_assessed2);
+    const LessExcess = Number(allInfo?.SummaryDetails?.LessExcess);
+    const lessImposed = Number(allInfo?.SummaryDetails?.LessImposed);
+    
+    const expectedSalvage = Number(allInfo?.SummaryDetails?.ExpectedSalvage);
+
+    setAssessed( total_assessed + total_assessed2 - (lessImposed + LessExcess + expectedSalvage));
     setEstimate(total_estimate2 + total_estimate);
   };
 
   const calculateProfessionalFees = () => {
     let prof = 0;
     console.log("information",allInfo)
-    const is2W = ["2w"].includes(String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase());
-    if (is2W)
-      return (500);
-    else
-    return (700);
+   return String(allInfo?.otherInfo[0]?.VehicleType).toLowerCase().includes(("4W").toLowerCase())  ? 700 : 500;
   };
 
   useEffect(() => {

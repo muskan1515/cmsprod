@@ -9,7 +9,7 @@ import Exemple from "./Exemple_01";
 import PaymentDetails_01 from "./PaymentsDetails_01";
 import { useState } from "react";
 
-const PaymentDetails = ({ edit, onSaveHandler }) => {
+const PaymentDetails = ({ edit, finalDisable , onSaveHandler }) => {
   const router = useRouter();
 
   const [editCase_11, setEditCase_11] = useState(false);
@@ -60,6 +60,7 @@ const PaymentDetails = ({ edit, onSaveHandler }) => {
                         <button
                           className="btn-thm m-1"
                           style={{}}
+                          disabled={finalDisable}
                           onClick={() => onSaveHandler(setEditCase_11)}
                         >
                           Save

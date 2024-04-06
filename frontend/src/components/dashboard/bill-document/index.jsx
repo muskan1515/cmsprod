@@ -31,6 +31,8 @@ const Index = () => {
     };
   }, []);
 
+  const [allOffices,setAllOffices]=useState([])
+
   useEffect(() => {
     let userData = {};
     userData = JSON.parse(localStorage.getItem("userInfo"));
@@ -40,16 +42,28 @@ const Index = () => {
     const inactivityCheckInterval = setInterval(() => {
       const currentTime = Date.now();
       const timeSinceLastActivity = currentTime - lastActivityTimestamp;
-      if (timeSinceLastActivity > 600000) {
+      if (timeSinceLastActivity > 1200000) {
         localStorage.removeItem("userInfo");
         router.push("/login");
       }
-    }, 60000);
+    }, 30000);
     return () => clearInterval(inactivityCheckInterval);
   }, [lastActivityTimestamp]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    
+    axios
+    .get("/api/getClaimServicingOffice")
+    .then((res) => {
+      const allOffice = res.data.data.results;
+      setAllOffices(allOffice)
+      
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     const url = window.location.pathname;
     const leadId = url.split("/bill-document/")[1];
     toast.loading("Fetching bill documents!!", {
@@ -78,6 +92,7 @@ const Index = () => {
         toast.dismiss();
         toast.error("Got error while fetching the bill information!");
       });
+
   }, []);
   return (
     <>
@@ -87,7 +102,7 @@ const Index = () => {
         <main className="flex-grow p-4">
           {" "}
           <div className="col-lg-12">
-            <ErrorPageContent feeReport={feeReport} />
+            <ErrorPageContent feeReport={feeReport} allOffices={allOffices}/>
           </div>
         </main>
         <footer className="bg-gray-800 text-white">

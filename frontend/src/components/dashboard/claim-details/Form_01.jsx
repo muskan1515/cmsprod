@@ -18,6 +18,8 @@ const Form_01 = ({
   claim,
   editHandler,
   edit,
+  finalDisable,
+  setFinalDisable,
   DriverName,
   setDriverName,
   DriverAddedDate,
@@ -98,6 +100,12 @@ const Form_01 = ({
 
       const dl_number = claim?.driverDetails?.LicenseNumber;
 
+      if(dl_number === ""){
+        toast.error("Record Not found for empty License Number");  
+      }
+      else{
+      setFinalDisable(true)
+      setEditCase_02(false)
       toast.loading("Fetching the driver details!!");
       axios
         .get("/api/getOnlineDriverData", {
@@ -111,14 +119,17 @@ const Form_01 = ({
           },
         })
         .then(() => {
-          toast.success("Successfully fetched!!");
           toast.dismiss();
+          toast.success("Successfully fetched!!");
+         
           window.location.reload();
         })
         .catch((err) => {
           toast.dismiss();
           toast.error("Record Not found or Server Issue!!");
         });
+        setFinalDisable(false)
+      }
     }
   };
   const [isUpdateVehicleLoading, setisUpdateVehicleLoading] = useState(false);
@@ -181,7 +192,7 @@ const Form_01 = ({
                                 setisUpdateVehicleLoading(true);
                                 onSaveHandler(3, closeFunction, closeFunction);
                               }}
-                              disabled={!editCase_02}
+                              disabled={!editCase_02 || finalDisable}
                             >
                               Save
                             </button>{" "}

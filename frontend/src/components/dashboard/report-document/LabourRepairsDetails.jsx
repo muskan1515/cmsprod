@@ -948,7 +948,8 @@ const LabourRepairsDetails = ({ allInfo }) => {
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>0</td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(roundOff(calculateLabourDepreciations()))}
+            {String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+            addCommasToNumber(roundOff(calculateLabourDepreciations())) : 0}
           </td>
         </tr>
         <tr>

@@ -504,7 +504,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return total;
+    return  String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? total :0;
   };
 
   const calculateTypeNewPartsGSTType = (type, gstType,deductDep) => {
@@ -515,7 +515,8 @@ const LossDamagesDetails = ({ allInfo }) => {
       String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
       (assessed * Number(part.NewPartsDepreciationPct)) / 100 : 0;
    
-      const finalAssessedValue = deductDep ? assessed - Depreciation : assessed;
+      
+      const finalAssessedValue = deductDep ? (assessed - Depreciation) : assessed;
       const gst = (finalAssessedValue * Number(part.NewPartsGSTPct)) / 100;
 
       if (
@@ -526,7 +527,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return total;
+    return String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?  total : 0;
   };
 
   const calculateOtherTypeNewPartsGST = () => {
@@ -545,7 +546,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return total;
+    return  String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? total : 0;
   };
 
   const calculateOtherTypeNewPartsGSTVijay = () => {
@@ -567,7 +568,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return total;
+    return  String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? total : 0;
   };
 
   const calculateOtherTypeNewPartsGSTType = (type) => {
@@ -1271,17 +1272,20 @@ const LossDamagesDetails = ({ allInfo }) => {
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>----</td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(
+              {String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+              addCommasToNumber(
                 roundOff(getTotalDepreciationValueOnly("Glass", false))
-              )}
+              ) :0}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(
+              {String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+              addCommasToNumber(
                 roundOff(getTotalDepreciationValueOnly("Metal", false))
-              )}
+              ) : 0}
             </td>
             <td style={{ border: "1px solid black", padding: "5px" }}>
-              {addCommasToNumber(roundOff(getTotalNonMetaDepreciationValueOnly()))}
+              {String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+              addCommasToNumber(roundOff(getTotalNonMetaDepreciationValueOnly())) : 0}
             </td>
           </tr>
           <tr>

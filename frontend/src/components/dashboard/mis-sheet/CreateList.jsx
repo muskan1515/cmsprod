@@ -115,7 +115,7 @@ const CreateList = ({
                   value={RegionType}
                   onChange={(e) => handleRegionType(e.target.value)}
                 >
-                  <option value={""}></option>
+                  <option value={"All"}>All</option>
                   <option value={"Delhi"}>Delhi</option>
                   <option value={"Chandigarh"}>Chandigarh</option>
                   <option value={"Jodhpur"}>Jodhpur</option>

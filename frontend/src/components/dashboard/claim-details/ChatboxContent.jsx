@@ -3,7 +3,7 @@ import SingleChatBoxReply from "./SingleChatBoxReplay";
 import axios from "axios";
 import { Toaster ,toast} from "react-hot-toast";
 
-const ChatboxContent = ({leadId}) => {
+const ChatboxContent = ({leadId,finalDisable}) => {
 
   const [comment,setComment]=useState("");
 
@@ -87,7 +87,7 @@ const ChatboxContent = ({leadId}) => {
               onChange={(e)=>setComment(e.target.value)}
               required
             />
-            <button className="btn btn-color w-100 mt-3" onClick={(e)=>addComment(e)}>
+            <button className="btn btn-color w-100 mt-3" disabled={finalDisable} onClick={(e)=>addComment(e)}>
               Add Comment
             </button>
           </form>

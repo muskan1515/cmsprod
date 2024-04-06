@@ -365,7 +365,6 @@ const GSTSummary = ({ allInfo }) => {
     });
     return total;
   };
-
   const getTotalMetalAssessed = () => {
     let total = 0;
     allInfo?.newPartsDetails.map((part, index) => {
@@ -442,6 +441,7 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
+
   const getTotalDepreciationValueOnly = (type, other) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
@@ -471,8 +471,7 @@ const GSTSummary = ({ allInfo }) => {
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
         String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
-        
-        part.NewPartsIsActive
+        part.NewPartsIsActive 
       ) {
         total = total + Depreciation;
       }
@@ -490,11 +489,12 @@ const GSTSummary = ({ allInfo }) => {
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
-        
         part.NewPartsIsActive
       ) {
         total = total + Depreciation;
       }
+
+
     });
     return total;
   };
@@ -517,7 +517,7 @@ const GSTSummary = ({ allInfo }) => {
     return total;
   };
 
-  const calculateTypeNewPartsGST = (type) => {
+ const calculateTypeNewPartsGST = (type) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
@@ -542,12 +542,16 @@ const GSTSummary = ({ allInfo }) => {
     let total = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       const assessed = Number(part.NewPartsAssessed) * Number(part.QA);
-      const gst = (assessed * Number(part.NewPartsGSTPct)) / 100;
+      
+      const Depreciation =
+      String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?
+      (assessed * Number(part.NewPartsDepreciationPct)) / 100 : 0;
+   
+      const gst = ((assessed - Depreciation) * Number(part.NewPartsGSTPct)) / 100;
 
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        
         part.NewPartsIsActive
       ) {
         total = total + gst;
@@ -662,6 +666,7 @@ const GSTSummary = ({ allInfo }) => {
     });
     return total;
   };
+
   
   const calculateLabourDepreciations = () => {
     let totalDep = 0;
@@ -766,7 +771,7 @@ const GSTSummary = ({ allInfo }) => {
       ((getTotalLabourAssessedSum() - calculateLabourDepreciations())+ getTotalLabourAssessedGSTValuess())  +
       getTotalEvaluationOfAssessedForNewParts() -
       lessExcess -
-      lessSalvage
+      lessSalvage 
     );
   };
 

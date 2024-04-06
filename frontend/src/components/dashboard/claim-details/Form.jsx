@@ -18,7 +18,8 @@ const Form = ({
   claim,
   edit,
   editHandler,
-
+  finalDisable,
+  setFinalDisable,
   VehicleModel,
   setVehicleModel,
   VehicleRegisteredNumber,
@@ -123,6 +124,8 @@ const Form = ({
     setisUpdateVehicleLoading(false);
   };
 
+  const [hide,setHide] = useState(false)
+
   const formatDate = (val) => {
     const date = new Date(val);
     const formattedDate = date.toLocaleDateString("en-GB");
@@ -225,13 +228,21 @@ const Form = ({
         className: "toast-loading-message",
       });
     } else {
+
+      
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
       const vehicleNo = claim?.vehicleDetails?.RegisteredNumber;
+      if(vehicleNo === ""){
+        toast.error("Record Not found for empty Registration Number");  
+      }
+      else{
       if (!userInfo) {
         router.push("/login");
       } else {
         try {
+          setFinalDisable(true);
+          setEditCase_01(false)
           toast.loading("Fetching Vehicle Details!!");
           const response = axios
             .get("/api/getOnlineVehicleData", {
@@ -247,16 +258,22 @@ const Form = ({
             .then((res) => {
               toast.success("Successfully fetched!");
               toast.dismiss();
+              console.log(res);
               window.location.reload();
             })
             .catch((err) => {
-              toast.error("Record Not found or Server Error");
+              console.log(err);
               toast.dismiss();
+              toast.error("Record Not found or Server Error");
+              
             });
         } catch (error) {
           toast.error("Record Not found or Server Error");
         }
+        setFinalDisable(false)
+        window.location.reload()
       }
+    }
     }
   };
 
@@ -307,9 +324,10 @@ const Form = ({
                             <button
                               className="btn-thm m-1"
                               style={{}}
-                              disabled={!editCase_01}
+                              disabled={!editCase_01 || finalDisable}
                               onClick={() => {
                                 setisUpdateVehicleLoading(true);
+                                setHide(true)
                                 onSaveHandler(2, closeFunction, closeFunction);
                               }}
                             >
@@ -335,7 +353,7 @@ const Form = ({
                       </>
                     ) : (
                       claim?.claimDetails?.PolicyNumber && (
-                        <button
+                        !hide && <button
                           className="btn-thm"
                           style={{}}
                           onClick={() => setEditCase_01(true)}

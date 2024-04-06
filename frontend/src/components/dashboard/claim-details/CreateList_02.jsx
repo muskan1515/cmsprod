@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const CreateList_02 = ({
   claim,
+  finalDisable,
   InsuredName,
   RegisteredNumber,
   subType,

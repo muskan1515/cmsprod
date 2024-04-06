@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
+const StatusLog = ({leadId,finalDisable,status,statusOptions,subStatus,claim,documents}) => {
 
   const [stat , setStat] = useState(0);
   const [subStage,setSubStage] = useState(0);
@@ -248,7 +248,7 @@ const StatusLog = ({leadId,status,statusOptions,subStatus,claim,documents}) => {
         
           <div className="col-lg-12 text-center mt-2">
             <div className="my_profile_setting_input">
-              <button className="btn btn-color w-100" onClick={onSubmitHandler}>Update Status</button>
+              <button className="btn btn-color w-100" disabled={finalDisable} onClick={onSubmitHandler}>Update Status</button>
             </div>
           </div>
         </div>

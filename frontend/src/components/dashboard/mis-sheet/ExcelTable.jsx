@@ -5,7 +5,7 @@ function ExcelTable({ allRows }) {
   const [isExportClicked, setIsExportClicked] = useState(false);
 
   function formatDate(dateString) {
-    if(dateString === "" || dateString === null){
+    if(dateString === "" || dateString === null  || dateString === "undefined"){
       return "-"
     }
     const options = {
@@ -39,10 +39,11 @@ function ExcelTable({ allRows }) {
         "Insured",
         "Insured GST No.",
         "Survey Type",
-        "Date Of Information",
+        "Date Of Intimation",
         "Date of Survey",
         "Estimate Amt.",
         "Assessed Amt.",
+        "Date Of Submit",
         "TAT",
         "Remarks",
         "Bill No.",
@@ -61,9 +62,10 @@ function ExcelTable({ allRows }) {
         formatDate(res.DateOfSurvey),
         addCommasToNumber(res.EstimateAmt),
         addCommasToNumber(res.AssessedAmt),
+        formatDate(res.BillDate),
         res.TAT, // TAT
         res.Remarks,
-        res.BillNo,
+        res.BillNo !== "undefined" ? res.BillNo : "-",
         addCommasToNumber(res.BillTotal),
         formatDate(res.BillDate),
       ]),

@@ -51,6 +51,8 @@ const getAllInfo = async(req,res)=>{
         [leadId]
       );
      
+      
+      
   
       const combinedResult = {
         labourDetails,
@@ -111,6 +113,10 @@ const getBillInfo = async(req,res)=>{
       [leadId]
     );
   
+    const SummaryDetails = await executeQuery(
+      "SELECT * FROM SummaryReport WHERE LeadId=?",
+      [leadId]
+    );
    
 
     const combinedResult = {
@@ -118,7 +124,8 @@ const getBillInfo = async(req,res)=>{
       newPartsDetails,
       otherInfo,
       feesDetails,
-      VehicleOnlineDetails
+      VehicleOnlineDetails,
+      SummaryDetails
     };
 
  

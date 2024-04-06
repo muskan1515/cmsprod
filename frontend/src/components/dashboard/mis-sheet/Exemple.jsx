@@ -153,10 +153,10 @@ export default function Exemple({
   const getRegionByReferenceNo=(referenceNo,Region)=>{
 
 
-    if(RegionType === ""){
+    if(RegionType === "" || RegionType === "All"){
       return true;
     }
-    const defaultRegion=referenceNo.split("/")[0];
+    const defaultRegion=referenceNo?.split("/")[0];
     if(String(defaultRegion) === "DLH" && String(Region) === "Delhi")
      return true;
     if(String(defaultRegion) === "CHD" && String(Region) === "Chandigarh")
@@ -243,10 +243,10 @@ export default function Exemple({
         date_of_survey: formatDateUpdated(row.DateOfSurvey),
         estimate_amt: addCommasToNumber(row.EstimateAmt),
         assessed_amt: addCommasToNumber(row.AssessedAmt),
-        date_of_submit: formatDateUpdated(row.date_of_survey),
+        date_of_submit: formatDateUpdated(row.BillDate),
         tat: row.TAT,
         remarks: row.Remarks,
-        bill_no: row.BillNo,
+        bill_no: row.BillNo !== "undefined" ? row.BillNo : "-",
         bill_total: addCommasToNumber(row.BillTotal),
         bill_date: formatDateUpdated(row.BillDate),
       };
