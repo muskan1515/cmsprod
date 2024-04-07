@@ -579,6 +579,10 @@ const [AccidentTime,setAccidentTime]=useState("");
     return withLineBreaks;
   };
 
+  const replaceSingleQuoteToDoubleQuotes = (string) => {
+    string = string.replace(/'/g, '"'); // Use a regular expression with the 'g' flag to replace all occurrences
+    return string;
+}
   useEffect(()=>{
 
     setGrandTotal(totalLabrorAssessed+totalPartsAssessed-lessExcess-lessImposed-Other)
@@ -943,12 +947,12 @@ const [AccidentTime,setAccidentTime]=useState("");
       Authorization,
       AreasOfoperation,
       commercialRemark,
-      FinalReportNotes : convertHtmlToString(FinalReportNotes) ,
-      DetailsOfLoads,
-      CauseOfAccident,
-      PoliceAction,
-      ThirdPartyLoss,
-      Assessment,
+      FinalReportNotes : replaceSingleQuoteToDoubleQuotes(convertHtmlToString(FinalReportNotes)) ,
+      DetailsOfLoads : replaceSingleQuoteToDoubleQuotes(DetailsOfLoads),
+      CauseOfAccident : replaceSingleQuoteToDoubleQuotes(CauseOfAccident),
+      PoliceAction : replaceSingleQuoteToDoubleQuotes(PoliceAction),
+      ThirdPartyLoss : replaceSingleQuoteToDoubleQuotes(ThirdPartyLoss),
+      Assessment : replaceSingleQuoteToDoubleQuotes(Assessment),
       AccidentTime,
       InspectionDate,
       TotalLabor:totalLabrorAssessed,
@@ -1715,6 +1719,7 @@ const [AccidentTime,setAccidentTime]=useState("");
                disable={disable}
               leadId={leadId}
               documents={documents}
+              allNewParts={allNewParts}
               totalMetalRows={totalMetalRows}
               claim={claim}
               DepreciationValue={DepreciationValue}
