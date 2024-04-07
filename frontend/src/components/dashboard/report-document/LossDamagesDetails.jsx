@@ -1423,7 +1423,17 @@ const LossDamagesDetails = ({ allInfo }) => {
               }}
             >
               {addCommasToNumber(
-                Math.round(getTotalEvaluationOfAssessedForNewParts())
+                Math.round( 
+                calculateOtherTypeNewPartsGSTVijay() +
+                getTotalOtherMetalAssesses() -
+                getTotalNonMetaDepreciation() +
+                calculateTypeNewPartsGST("Metal") +
+                getTotalMetalAssessed() -
+                getTotalDepreciation("Metal", false) +
+                calculateTypeNewPartsGST("Glass") +
+                getTotalGlassAssessed() -
+                getTotalDepreciation("Glass", false)
+              )
               )}
             </td>
           </tr>
