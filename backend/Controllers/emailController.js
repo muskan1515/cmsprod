@@ -480,7 +480,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
     const generatedToken = generateUniqueToken();
   
     const emailContent = `
-      Dear Sir/Madam,
+      Dear Sir/Madam,<br/>
   
       Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
   
@@ -534,12 +534,12 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
     const generatedToken = generateUniqueToken();
   
     const emailContent = `
-      Dear Sir/Madam,
+      Dear Sir/Madam,<br/>
   
       Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
   
       We are Appointed for the survey of vehicle no.-${vehicleNo}, Insured:-${Insured} & Policy No.-${PolicyNo} on ${Date} and the approval
-      is as follows;-
+      is as follows:- <br/>
         1) What is the Status of the said vheicle
         2) How much time it will take to repair the vehicle
         3) Please provide UR & RI Snaps

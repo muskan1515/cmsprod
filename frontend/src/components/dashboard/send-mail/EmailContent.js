@@ -35,7 +35,7 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
     console.log("type",type)
     if(String(type) === '2'){
         return `
-        Dear Sir/Madam,
+        Dear Sir/Madam,<br/>
   
         Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
     
@@ -43,6 +43,7 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
         Insured:-${Insured} & Policy No.-${PolicyNo} on 
         ${formatDate(date)} and the approval
         is as follows:-<br/>
+        <br/>
         1) What is the Status of the said vheicle<br/>
         2) How much time it will take to repair the vehicle<br/>
         3) Please provide UR & RI Snaps<br/>
@@ -54,7 +55,7 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
         `
     }
     else if(String(type) === '3'){
-        return `Dear Sir/Madam,
+        return `Dear Sir/Madam,<br/>
   
         Greeting from the MT Engineers Legal Investigator Pvt. Ltd.,
     
@@ -75,7 +76,7 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
     }
     else{
         return `
-        Dear Sir/Madam,
+        Dear Sir/Madam,<br/>
 
         Greeting from the MT Engineers Legal Investigator 
         Pvt. Ltd.,We are Appointed for the survey of 
