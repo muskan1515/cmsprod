@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Pagination = ({ setStart , setEnd,properties}) => {
+const Pagination = ({start,end, setStart , setEnd,properties}) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  
+
+  useEffect(()=>{
+    setCurrentPage(1)
+    setStart(0)
+    setEnd(10)
+  },[properties])
   
   const propertiesPerPage = 10;
 

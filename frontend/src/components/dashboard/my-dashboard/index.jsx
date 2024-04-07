@@ -1,9 +1,7 @@
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu_01";
 import MobileMenu from "../../common/header/MobileMenu";
-import Activities from "./Activities";
 import AllStatistics from "./AllStatistics";
-import StatisticsChart from "./StatisticsChart";
 import Exemple from "./Exemple";
 import CreateList from "./CreateList";
 import { toast } from "react-hot-toast";
@@ -14,6 +12,7 @@ import { useRouter } from "next/router";
 
 const Index = () => {
   const [start, setStart] = useState(0);
+  const [currentPage,setCurrentPage] = useState(1)
 
   const [properties, setProperties] = useState([]);
   const [allClaims, setAllClaims] = useState([]);
@@ -88,8 +87,6 @@ const Index = () => {
     }
     setFilterClaims(filterClaim);
   }, [searchInput]);
-  console.log("regionSearchValue", regionSearchValue);
-  console.log('selectedcard', selectedCard);
 
   const [filterAccordingClaim, setFilterAccordingClaim] = useState([]);
   const [showRegionClaim, setShowRegionClaim] = useState(false);
@@ -97,7 +94,6 @@ const Index = () => {
     const region = JSON.parse(localStorage.getItem("regionType"));
     if (region) {
       setShowRegionClaim(true);
-
       const filterAccordingToRegion = allClaims.filter((claim) => {
         console.log("all Claims", claim.Region, region);
         if (claim.Region == region) {
@@ -116,7 +112,6 @@ const Index = () => {
   console.log("isRegionChange", isRegionChange);
   useEffect(() => {
     let filterClaim;
-
     filterClaim = allClaims.filter(
       (claim, index) =>
         claim?.PolicyNo?.toLowerCase().includes(majorSearch.toLowerCase()) ||
@@ -133,7 +128,6 @@ const Index = () => {
         claim?.Region?.toLowerCase().includes(majorSearch.toLowerCase())
     );
 
-    // console.log("claims",filterClaim);
     setFilterClaims(filterClaim);
   }, [majorSearch]);
 
@@ -196,7 +190,6 @@ const Index = () => {
     }
   };
 
-  //Auto reloading for the dashboard cards
   useEffect(() => {
     fetchData(); 
     const intervalId = setInterval(() => {
@@ -219,7 +212,6 @@ const Index = () => {
         }
       });
     }
-
     setFilterCardClaim(temp);
   }, [selectedCard,allClaims]);
   return (
@@ -338,12 +330,7 @@ const Index = () => {
                   setMajorSearch={setMajorSearch}
                   status={status}
                 />
-                {/* <div className="col-xl-5">
-                  <div className="recent_job_activity">
-                    <h4 className="title mb-4">Recent Activities</h4>
-                    <Activities />
-                  </div>
-                </div> */}
+                
               </div>
               {/* End .row  */}
 
@@ -351,8 +338,11 @@ const Index = () => {
                 <div className="col-lg-12 mt20">
                   <div className="mbp_pagination">
                     <Pagination
+                      
                       setStart={setStart}
                       setEnd={setEnd}
+                      start={start}
+                      end={end}
                       properties={
                         searchInput || majorSearch || isRegionChange
                           ? filterClaims
