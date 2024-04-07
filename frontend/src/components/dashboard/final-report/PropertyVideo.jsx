@@ -580,7 +580,7 @@ const [AccidentTime,setAccidentTime]=useState("");
   };
 
   const replaceSingleQuoteToDoubleQuotes = (string) => {
-    string = string.replace(/'/g, '"'); // Use a regular expression with the 'g' flag to replace all occurrences
+    string = string.replace(/'/g, "\\'"); // Use '\\'' to represent the escaped sequence for single quote
     return string;
 }
   useEffect(()=>{
