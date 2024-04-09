@@ -661,7 +661,7 @@ const SurveyReport = ({ allInfo }) => {
         <div className="text-center">
           <h5 style={{ fontFamily: "sans-serif", color: "black" }}>
           MOTOR {" "}
-            {allInfo?.otherInfo[0]?.InspectionType} SURVEY REPORT (
+            {String(allInfo?.otherInfo[0]?.InspectionType).toUpperCase()} SURVEY REPORT (
             {Number(allInfo?.summaryReport[0]?.CashLess) === 1
               ? "CASH LESS"
               : "NON CASHLESS"}

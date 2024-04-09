@@ -37,7 +37,7 @@ function ExcelTable({ allRows }) {
         "Policy No.",
         "Veh. No.",
         "Insured",
-        "Insured GST No.",
+        "Insurer GST No.",
         "Survey Type",
         "Date Of Intimation",
         "Date of Survey",
@@ -100,7 +100,7 @@ function ExcelTable({ allRows }) {
                 <th>Policy No.</th>
                 <th>Veh. No.</th>
                 <th>Insured</th>
-                <th>Insured GST No.</th>
+                <th>Insurer GST No.</th>
                 <th>Survey Type</th>
                 <th>Date Of Information</th>
                 <th>Date of Survey</th>

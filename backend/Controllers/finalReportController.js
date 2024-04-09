@@ -118,6 +118,7 @@ const updateFinalReport = (req,res)=>{
       AnyFurtherConversation,
       RepairingPhotoDate,
       ReinspectionDate,
+      isActive,
     
       SalveDestroy,
       BillNo,
@@ -133,8 +134,6 @@ const updateFinalReport = (req,res)=>{
       ValidUpto,
       phyCheck
     } = req.body;
-
-    
 
     const updateDriverDetails = `
     UPDATE DriverDetails
@@ -266,6 +265,7 @@ const updateFinalReport = (req,res)=>{
       Authorization,
       AreasOfoperation,
       Remark,
+      IsActive,
       LeadID 
     ) VALUES (
       '${FitnessCertificate}',
@@ -278,6 +278,7 @@ const updateFinalReport = (req,res)=>{
       '${Authorization}',
       '${AreasOfoperation}',
       '${commercialRemark}',
+      ${isActive},
       '${(leadId)}'
     );
     `;
@@ -294,7 +295,8 @@ const updateFinalReport = (req,res)=>{
           TypeOfPermit='${TypeOfPermit}',
           Authorization='${Authorization}',
           AreasOfoperation='${AreasOfoperation}',
-          Remark='${commercialRemark}'
+          Remark='${commercialRemark}',
+          IsActive = ${isActive}
           WHERE LeadID = ${leadId};
     `;
 
@@ -346,9 +348,6 @@ const updateFinalReport = (req,res)=>{
         '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}','${FinalReportNotes}'
       );
     `;
-
-
-
 
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {

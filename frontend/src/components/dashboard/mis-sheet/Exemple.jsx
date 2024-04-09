@@ -39,7 +39,7 @@ const headCells = [
   {
     id: "insured_gst_no",
     numeric: false,
-    label: "Insured GST No.",
+    label: "Insurer GST No.",
     width: 180,
   },
   {

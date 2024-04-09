@@ -27,6 +27,8 @@ const PolicyDetails = ({
   disable,
   handleUpdateClick,
   IDV,
+  setShowInReport,
+  showInreport,
   setIDV,
   PolicyPeriodEnd,
   setPolicyPeriodEnd,
@@ -2758,6 +2760,14 @@ const PolicyDetails = ({
                 Commercial Vehicle Details :
               </h4>
               <hr />
+              <div style={{display:"flex",justifyContent:"flex-end",padding:"6px"}}>
+              <input type="checkbox"
+                disabled={!isEditMode}
+               checked={showInreport}
+               onChange={(e)=>setShowInReport(!showInreport)}/>
+              <label>{"  "} Show In Print</label>
+              </div>
+              
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row mt-1">

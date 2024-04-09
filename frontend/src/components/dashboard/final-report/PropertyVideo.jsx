@@ -88,8 +88,6 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   useEffect(()=>{
 
-    console.log("allNewParts",allNewParts);
-
       let total =0;
     allNewParts.map((row,index)=>{
       if(String(row.type) === "Metal"){
@@ -518,6 +516,7 @@ const [AccidentTime,setAccidentTime]=useState("");
   const [Authorization, setAuthorization] = useState("");
   const [AreasOfoperation, setAreasOfoperation] = useState("");
   const [commercialRemark, setcommercialRemark] = useState("");
+  const [ showInreport, setShowInReport ] = useState(0)
 
   const [MailRecieveDate, setMailRecieveDate] = useState("");
 
@@ -580,7 +579,7 @@ const [AccidentTime,setAccidentTime]=useState("");
   };
 
   const replaceSingleQuoteToDoubleQuotes = (string) => {
-    string = string.replace(/'/g, "\\'"); // Use '\\'' to represent the escaped sequence for single quote
+    string = string.replace(/'/g, '"'); // Use a regular expression with the 'g' flag to replace all occurrences
     return string;
 }
   useEffect(()=>{
@@ -790,6 +789,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setTotalLoss(claim?.claimDetails?.TotalLoss !==null ? claim?.claimDetails?.TotalLoss : "")
     setIMT(claim?.claimDetails?.IMT !==null ? claim?.claimDetails?.IMT : "")
     setphyCheck(claim?.vehicleDetails?.phyCheck !==null ? claim?.vehicleDetails?.phyCheck : "" )
+    setShowInReport(claim?.commercialVehicleDetails?.IsActive)
   }, [claim]);
 
   // console.log("PolicyPeriodStart-----------",PolicyPeriodStart,claim?.claimDetails?.PolicyPeriodStart);
@@ -947,6 +947,7 @@ const [AccidentTime,setAccidentTime]=useState("");
       Authorization,
       AreasOfoperation,
       commercialRemark,
+      isActive : showInreport ? 1 : 0 ,
       FinalReportNotes : replaceSingleQuoteToDoubleQuotes(convertHtmlToString(FinalReportNotes)) ,
       DetailsOfLoads : replaceSingleQuoteToDoubleQuotes(DetailsOfLoads),
       CauseOfAccident : replaceSingleQuoteToDoubleQuotes(CauseOfAccident),
@@ -1130,6 +1131,8 @@ const [AccidentTime,setAccidentTime]=useState("");
                 setIsEditMode={setIsEditMode}
                 IDV={IDV}
                 setIDV={setIDV}
+                setShowInReport={setShowInReport}
+                showInreport={showInreport}
                 PolicyPeriodEnd={PolicyPeriodEnd}
                 setPolicyPeriodEnd={setPolicyPeriodEnd}
                 setPolicyPeriodStart={setPolicyPeriodStart}

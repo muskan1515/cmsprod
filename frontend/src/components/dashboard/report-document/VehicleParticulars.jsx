@@ -608,6 +608,21 @@ const VehicleParticulars = ({ allInfo }) => {
 
   //*************************** */
 
+  const changeFormat = (dateString) => {
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+  
+      const dateParts = new Date(dateString)
+        .toLocaleDateString("en-GB", options)
+        .split("/");
+      const formattedDate =
+        dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
+      return formattedDate;
+    };
+
   return (
     <div>
       <div className="d-flex gap-5">
@@ -786,6 +801,83 @@ const VehicleParticulars = ({ allInfo }) => {
             <span> {formatDate(allInfo?.otherInfo[0]?.TaxParticulars)}</span>
           </td>
         </tr>
+        { 
+        allInfo?.otherInfo[0]?.commercial_status ? <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span>(n) Fitness Certificate Number </span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {allInfo?.otherInfo[0]?.FitnessCertificate}{" "}
+            </span>
+          </td>
+        </tr> : ""}
+        {allInfo?.otherInfo[0]?.commercial_status ?
+            <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span style={{ marginLeft: "20px" }}>Valid Upto </span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.DateOfIssue
+                ? changeFormat(allInfo?.otherInfo[0]?.PermitTo)
+                : "-"}
+            </span>
+           
+          </td>
+        </tr> : ""}
+        
+        { allInfo?.otherInfo[0]?.commercial_status ?  <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span>(p) Permit Number </span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.PermitNo}</span>
+          </td>
+        </tr> : ""}
+        { allInfo?.otherInfo[0]?.commercial_status ?  <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span>(q) Authorization / validity </span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>{allInfo?.otherInfo[0]?.Authorization}</span>
+          </td>
+        </tr> : ""}
+        { allInfo?.otherInfo[0]?.commercial_status ?   <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span> (r) Route / Areas of Operation</span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.AreasOfOperation}</span>
+          </td>
+        </tr> : ""}
+        { allInfo?.otherInfo[0]?.commercial_status ? <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span> (t) Commercial Remark</span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span> {allInfo?.otherInfo[0]?.Remark}</span>
+          </td>
+        </tr> : ""}
       </table>
       {/* <div className="text-start d-flex gap-5">
         <div className="d-flex gap-5">

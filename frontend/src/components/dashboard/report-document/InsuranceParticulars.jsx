@@ -683,7 +683,7 @@ const InsuranceParticulars = ({ allInfo }) => {
             <span>:</span>
           </td>
           <td style={{ width: "40%" }} className="text-start">
-            <span> {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
+            <span> {String(allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress).toUpperCase()}</span>
           </td>
         </tr>
         <tr>
