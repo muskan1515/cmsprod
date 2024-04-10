@@ -826,17 +826,18 @@ const VehicleParticulars = ({ allInfo }) => {
           <td style={{ width: "55%" }} className="text-start">
             <span>
               {" "}
-              {allInfo?.otherInfo[0]?.DateOfIssue
-                ? changeFormat(allInfo?.otherInfo[0]?.PermitTo)
+              {allInfo?.otherInfo[0]?.FitnessTo
+                ? changeFormat(allInfo?.otherInfo[0]?.FitnessTo)
                 : "-"}
             </span>
            
           </td>
         </tr> : ""}
+
         
         { allInfo?.otherInfo[0]?.commercial_status ?  <tr>
           <td style={{ width: "36%" }} className="text-start">
-            <span>(p) Permit Number </span>
+            <span>(o) Permit Number </span>
           </td>
           <td style={{ width: "7%" }} className="text-start">
             <span>:</span>
@@ -845,6 +846,59 @@ const VehicleParticulars = ({ allInfo }) => {
             <span> {allInfo?.otherInfo[0]?.PermitNo}</span>
           </td>
         </tr> : ""}
+       
+        {allInfo?.otherInfo[0]?.commercial_status ?
+            <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span style={{ marginLeft: "20px" }}>Valid Upto </span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.PermitTo
+                ? changeFormat(allInfo?.otherInfo[0]?.PermitTo)
+                : "-"}
+            </span>
+
+            <span>
+              {"        "}
+            </span>
+
+            <span>&nbsp;&nbsp;&nbsp;w.e.f&nbsp;&nbsp;&nbsp;</span>
+
+
+            <span>
+              {"         "}
+            </span>
+
+            <span>
+              {" "}
+              {allInfo?.otherInfo[0]?.PermitFrom
+                ? changeFormat(allInfo?.otherInfo[0]?.PermitFrom)
+                : "-"}
+            </span>
+           
+          </td>
+        </tr> : ""}
+
+        {allInfo?.otherInfo[0]?.commercial_status ? <tr>
+          <td style={{ width: "36%" }} className="text-start">
+            <span>(p) Type Of Permit </span>
+          </td>
+          <td style={{ width: "7%" }} className="text-start">
+            <span>:</span>
+          </td>
+          <td style={{ width: "55%" }} className="text-start">
+            <span className="fw-bold text-dark">
+              {allInfo?.otherInfo[0]?.TypeOfPermit}{" "}
+            </span>
+          </td>
+        </tr> : ""}
+        
+        
         { allInfo?.otherInfo[0]?.commercial_status ?  <tr>
           <td style={{ width: "36%" }} className="text-start">
             <span>(q) Authorization / validity </span>
