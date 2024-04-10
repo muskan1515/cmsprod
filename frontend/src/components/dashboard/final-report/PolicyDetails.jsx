@@ -2760,12 +2760,13 @@ const PolicyDetails = ({
                 Commercial Vehicle Details :
               </h4>
               <hr />
-              <div style={{display:"flex",justifyContent:"flex-start",padding:"6px"}}>
+              <div style={{display:"flex"}}>
               <input type="checkbox"
+                style={{width:"18px"}}
                 disabled={!isEditMode}
                checked={showInreport}
                onChange={(e)=>setShowInReport(!showInreport)}/>
-              <label>{"  "} Show In Print</label>
+              <label style={{marginLeft:"5px"}}>{"  "} Show In Print</label>
               </div>
               
               <div className="row">
