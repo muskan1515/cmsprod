@@ -106,6 +106,12 @@ const CreateList = ({
     },
   ];
 
+  const claimRegions = [
+    { id : 1 , title : "Delhi" , value : "Delhi" },
+    { id : 2 , title : "Jodhpur" , value : "Jodhpur" },
+    { id : 3 , title : "Chandigarh" , value : "Chandigarh" }
+  ]
+
   const getNextYear = () => {
     // if (policyStartDate && !isNaN(new Date(policyStartDate).getTime())) {
     const oneYearLater = new Date(policyStartDate);
@@ -597,15 +603,19 @@ const CreateList = ({
               </label>
             </div>
             <div className="col-lg-7">
-              <input
+            <select
                 type="text"
-                className="form-control"
+                className="form-control form-control-add-claim"
                 id="propertyTitle"
                 value={claimRegion}
                 onChange={(e) => setClaimRegion(e.target.value)}
-
-                // placeholder="Enter Registration No."
-              />
+              >
+                {claimRegions?.map((region,index)=>{
+                    return <option key={region.id} value={region.value}>
+                      {region.title}
+                    </option>
+                })}
+              </select>
             </div>
           </div>
         </div>
