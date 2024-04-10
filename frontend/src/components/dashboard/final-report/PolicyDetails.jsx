@@ -2760,7 +2760,7 @@ const PolicyDetails = ({
                 Commercial Vehicle Details :
               </h4>
               <hr />
-              <div style={{display:"flex",justifyContent:"flex-end",padding:"6px"}}>
+              <div style={{display:"flex",justifyContent:"flex-start",padding:"6px"}}>
               <input type="checkbox"
                 disabled={!isEditMode}
                checked={showInreport}
