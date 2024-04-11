@@ -504,7 +504,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return  String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? total :0;
+    return  total;
   };
 
   const calculateTypeNewPartsGSTType = (type, gstType,deductDep) => {
@@ -527,7 +527,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ?  total : 0;
+    return total;
   };
 
   const calculateOtherTypeNewPartsGST = () => {
@@ -546,7 +546,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return  String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? total : 0;
+    return  total;
   };
 
   const calculateOtherTypeNewPartsGSTVijay = () => {
@@ -568,7 +568,7 @@ const LossDamagesDetails = ({ allInfo }) => {
         total = total + gst;
       }
     });
-    return  String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? total : 0;
+    return total;
   };
 
   const calculateOtherTypeNewPartsGSTType = (type) => {

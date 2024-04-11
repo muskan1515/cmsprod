@@ -676,7 +676,7 @@ const GSTSummary = ({ allInfo }) => {
         totalDep = (Number(totalDep) + Number(dep));
       }
     });
-    return   totalDep;
+    return String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" ? totalDep: 0;
   };
 
   const calculateTotalPaintingEstimate = () => {
