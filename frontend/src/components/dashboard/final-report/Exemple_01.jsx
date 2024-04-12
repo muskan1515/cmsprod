@@ -416,11 +416,11 @@ export default function Exemple_01({
                 <input
                   className="form-control"
                   type="text"
-                  // placeholder="job description"
-                  // value={row.description}
-                  // onChange={(e) =>
-                  //   handleChange(index, e.target.value, "description")
-                  // }
+                  placeholder="Bill Serial No"
+                  value={row.bill_sr}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "bill_sr")
+                  }
                   required
                   disabled={!edit}
                   id="terms"
