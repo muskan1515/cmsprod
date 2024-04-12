@@ -72,7 +72,7 @@ const getSpecificNewParts = (req,res)=>{
               Assessed = '${row.assessed}',
               QA='${row.qa}',
               QE = '${row.qe}',
-              BillSr = '${row.Bill_sr}',
+              BillSr = '${row.bill_sr}',
               GSTPct='${row.gst}',
               TypeOfMaterial='${row.type}',
               WithTax='${row.total}',
@@ -89,8 +89,9 @@ const getSpecificNewParts = (req,res)=>{
               reject(err);
               return;
             }
-            console.log("result",result2);
+            
             const check = getLeadBYSNO(result2,row.sno);
+            
             if (result2.length > 0 ) {
               console.log("update query",updateQuery)
               db.query(updateQuery, (err) => {
