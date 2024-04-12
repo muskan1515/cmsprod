@@ -76,6 +76,11 @@ const Form_vehicle = ({
     return formattedDate;
   };
 
+  function convertDateFormat(originalDate) {
+    const parts = originalDate.split('-');
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+  }
+
   
   const setDate = (inputString)=>{
     let modifiedString = inputString;
@@ -241,7 +246,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DateRegistration && DateRegistration!=="null" ? setDate(DateRegistration) : ""}
+                      {DateRegistration && DateRegistration!=="null" ? convertDateFormat(DateRegistration) : ""}
                     </label>
                   </div>
                 </td>
@@ -405,7 +410,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {ManufactureMonthYear&&ManufactureMonthYear!=="Null"?ManufactureMonthYear:""}
+                      {ManufactureMonthYear&&ManufactureMonthYear!=="Null"?convertDateFormat(ManufactureMonthYear):""}
                     </label>
                   </div>
                 </td>
@@ -626,7 +631,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcInsuranceUpto ? setDate(RcInsuranceUpto) : ""}
+                      {RcInsuranceUpto ? convertDateFormat(RcInsuranceUpto) : ""}
                     </label>
                   </div>
                 </td>

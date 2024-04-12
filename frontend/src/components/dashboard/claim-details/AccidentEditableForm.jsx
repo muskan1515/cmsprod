@@ -89,9 +89,6 @@ const AccidentEditableForm = ({
       
   }
 
-  useEffect(()=>{
-    setDate(DateOfAccident,setDateOfAccident)
-  },[])
   return (
     <>
       <div className="faq_according row mt-2">
@@ -185,7 +182,7 @@ const AccidentEditableForm = ({
                           <DatePicker
                             className="form-control"
                             id="propertyTitle"
-                            dateFormat="dd-MM-yyyy"
+                            dateFormat="dd/MM/yyyy"
                             selected={
                               DateOfAccident !== null && !isNaN(new Date(DateOfAccident))
                                 ? new Date(DateOfAccident)

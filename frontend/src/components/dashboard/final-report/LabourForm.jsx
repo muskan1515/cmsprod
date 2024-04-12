@@ -7,6 +7,7 @@ import {
 
 const LabourForm = ({
   currentGst,
+  allLabour,
   setTotalAssessed,
   totalRemainingAssessed,
   totalAssessed,
@@ -30,6 +31,7 @@ const LabourForm = ({
   loadBody,
   setLoadBody,
   cabin,
+  leadId,
   depMetal,
   ageOfVehicle,
   setCabin,
@@ -39,6 +41,25 @@ const LabourForm = ({
   ageOfVehicleTotal,
   metaldepPct,
 }) => {
+
+  const [totalLabourSum, setTotalLabourSum] = useState(0)
+  useEffect(()=>{
+
+    
+    
+    let total = 0;
+    allLabour.map((labour,index)=>{
+      const assessed = Number(labour.assessed);
+      if(labour.isActive){
+        
+       total += assessed;
+      }
+    })
+
+
+    setTotalLabourSum(total)
+  },[allLabour])
+
   const calculateVehicleAge = () => {
     if (
       !claim.vehicleDetails?.DateOfRegistration  ||
@@ -58,6 +79,11 @@ const LabourForm = ({
     const a = (Number(totalAssessed) * Number(currentGst)) / 100;
     const b = totalAssessed + a;
   };
+
+  const calculateAssessedTotal = ()=>{
+    let total = 0;
+    claims
+  }
 
   const roundOff = (value)=>{
     const roundedValue = parseFloat(value).toFixed(2);
@@ -101,7 +127,7 @@ const LabourForm = ({
                   </div>
                   <div className="col-lg-6">
                     <div className="col-lg-12 text-end">Assessed:</div>
-                    <div className="col-lg-12 text-end">{roundOff(totalAssessed)}</div>
+                    <div className="col-lg-12 text-end">{roundOff(totalLabourSum)}</div>
                   </div>
                   {"   "}
                 </div>

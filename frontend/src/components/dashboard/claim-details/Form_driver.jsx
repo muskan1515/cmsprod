@@ -132,6 +132,12 @@ const Form_driver = ({
     return status;
   };
 
+  function convertDateFormat(originalDate) {
+    const parts = originalDate.split('-');
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+  }
+
+  console.log("ValidUpto",ValidUpto)
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -226,7 +232,7 @@ const Form_driver = ({
                       }}
                     >
                       {claim?.driverDetails?.ValidUpto&&claim?.driverDetails?.ValidUpto!=="null"?
-                      setDate(claim?.driverDetails?.ValidUpto):""}
+                      convertDateFormat(claim?.driverDetails?.ValidUpto):""}
                     </label>
                   </div>
                 </td>
@@ -534,7 +540,7 @@ const Form_driver = ({
                       }}
                     >
                       {(claim?.driverDetails?.DateOfBirth&&claim?.driverDetails?.DateOfBirth!=="null"?
-                      setDate(claim?.driverDetails?.DateOfBirth):"")}
+                      convertDateFormat(claim?.driverDetails?.DateOfBirth):"")}
                     </label>
                   </div>
                 </td>
@@ -591,7 +597,7 @@ const Form_driver = ({
                       }}
                     >
                       {claim?.driverDetails?.DateOfIssue&&claim?.driverDetails?.DateOfIssue!=="null"?
-                      setDate(claim?.driverDetails?.DateOfIssue):""}
+                      convertDateFormat(claim?.driverDetails?.DateOfIssue):""}
                     </label>
                   </div>
                 </td>

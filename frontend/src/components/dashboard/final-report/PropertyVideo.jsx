@@ -31,6 +31,9 @@ const materials = [
 const PropertyVideo = ({ SomeComponent, leadId }) => {
   const [isOpen, setOpen] = useState(false);
 
+
+  const [allLabour, setAllLabour] = useState([])
+
   const [policyType, setPolicyType] = useState('');
   const [includeDepreciation, setIncludeDepreciation] = useState(true);
 
@@ -605,6 +608,87 @@ const [AccidentTime,setAccidentTime]=useState("");
   return formattedDateString;
   }
 
+  function getMonthNumber(monthName) {
+    const months = {
+        "jan": "01", "feb": "02", "mar": "03", "apr": "04", "may": "05", "jun": "06",
+        "jul": "07", "aug": "08", "sep": "09", "oct": "10", "nov": "11", "dec": "12",
+        "january": "01", "february": "02", "march": "03", "april": "04", "may": "05", 
+        "june": "06", "july": "07", "august": "08", "september": "09", "october": "10", 
+        "november": "11", "december": "12"
+    };
+
+     const cleanedMonthName = monthName.trim().toLowerCase();
+    if (months.hasOwnProperty(cleanedMonthName)) {
+        return months[cleanedMonthName];
+    } else {
+        return monthName;
+    }
+}
+
+function checkDateFormat(dateString) {
+    // Regular expressions to match yyyy-mm-dd and dd-mm-yyyy formats
+    const yyyy_mm_dd_regex = /^\d{4}-\d{2}-\d{2}$/;
+    const dd_mm_yyyy_regex = /^\d{2}-\d{2}-\d{4}$/;
+
+    if (yyyy_mm_dd_regex.test(dateString)) {
+        return true
+    } return false
+    
+}
+
+function isValidDateFormat(dateString) {
+  // Create a regex pattern to match the format
+  var pattern = /^\d{2}\/\d{2}\/\d{4}$/;
+
+  // Test if the dateString matches the pattern
+  return pattern.test(dateString);
+}
+
+// Function to convert date string from "dd/mm/yyyy" to "yyyy-mm-dd" format
+function convertToYYYYMMDD(dateString) {
+  // Split the dateString by "/"
+  var parts = dateString.split('/');
+
+  // Rearrange the parts to form "yyyy-mm-dd" format
+  var yyyy_mm_dd = parts[2] + '-' + parts[1] + '-' + parts[0];
+
+  return yyyy_mm_dd;
+}
+
+
+const formatDateFinal = (inputDate2,type) => {
+
+  const inputDate = isValidDateFormat(inputDate2) ? convertToYYYYMMDD(inputDate2) : inputDate2;
+ 
+    if (!inputDate) return inputDate; 
+    if(checkDateFormat(inputDate))
+     return inputDate;
+
+    let dateParts = inputDate.split(/[-/ ]/);
+    let year, month, day;
+
+    if (dateParts.length === 3) {
+        day = dateParts[0];
+        month = getMonthNumber(dateParts[1]);
+        year = dateParts[2];
+    } else if (dateParts.length === 2 && dateParts[1].length === 4) {
+        day = '01'; 
+        month = getMonthNumber(dateParts[0]);
+        year = dateParts[1];
+    } else if (dateParts.length === 3 && isNaN(dateParts[1])) {
+        day = dateParts[0];
+        month = getMonthNumber(dateParts[1]);
+        year = dateParts[2];
+    } else {
+        return inputDate;
+    }
+
+    day = day.padStart(2, '0');
+    month = month.padStart(2, '0');
+
+   return `${year}-${month}-${day}`;
+}
+
 
   useEffect(() => {
 
@@ -613,7 +697,7 @@ const [AccidentTime,setAccidentTime]=useState("");
     setTotalLoss(claim?.claimDetails?.TotalLoss ? claim?.claimDetails?.TotalLoss : 0); 
     setIMT(claim?.claimDetails?.IMT ? claim?.claimDetails?.IMT : 0); 
 
-    setDateOfBirth((claim?.driverDetails?.DateOfBirth) || "");
+    setDateOfBirth(formatDateFinal(claim?.driverDetails?.DateOfBirth) || "");
     //summary states
 
 
@@ -637,16 +721,16 @@ const [AccidentTime,setAccidentTime]=useState("");
     console.log(String(claim?.summaryDetails?.CashLess) === "1.00")
     setCashLess(String(claim?.summaryDetails?.CashLess) === "1.00"?1:0);
     setNoteOfSelf(claim?.summaryDetails?.NoteOfSelf  !==null ? claim?.summaryDetails?.NoteOfSelf:"");
-    setRepairAutoDate(claim?.summaryDetails?.RepairAutoDate  !==null ? claim?.summaryDetails?.RepairAutoDate:"");
-    setRepairCompletionDate(claim?.summaryDetails?.RepairCompletionDate  !==null ? claim?.summaryDetails?.RepairCompletionDate:"");
+    setRepairAutoDate(claim?.summaryDetails?.RepairAutoDate  !==null ? formatDateFinal(claim?.summaryDetails?.RepairAutoDate):"");
+    setRepairCompletionDate(claim?.summaryDetails?.RepairCompletionDate  !==null ? formatDateFinal(claim?.summaryDetails?.RepairCompletionDate):"");
     setPartyAgreed(claim?.summaryDetails?.PartyAgreed  !==null ? claim?.summaryDetails?.PartyAgreed:"");
     setReasonThereofDelay(claim?.summaryDetails?.ReasonThereofDelay  !==null ? claim?.summaryDetails?.ReasonThereofDelay:"");
     setAnyFurtherConversation(claim?.summaryDetails?.AnyFurtherConversation  !==null ? claim?.summaryDetails?.AnyFurtherConversation:"");
     setRepairingPhotoDate(claim?.summaryDetails?.AnyFurtherConversation  !==null ?  claim?.summaryDetails?.AnyFurtherConversation:"");
-    setReinspectionDate(claim?.accidentDetails?.ReinspectionDate  !==null ? claim?.summaryDetails?.ReinspectionDate:"");
+    setReinspectionDate(claim?.accidentDetails?.ReinspectionDate  !==null ? formatDateFinal(claim?.summaryDetails?.ReinspectionDate):"");
     setSalveDestroy(claim?.summaryDetails?.SalveDestroy  !==null ? claim?.summaryDetails?.SalveDestroy:"");
     setBillNo(claim?.summaryDetails?.BillNo  !==null ? claim?.summaryDetails?.BillNo:"");
-    setBillDate(claim?.summaryDetails?.BillDate  !==null ? claim?.summaryDetails?.BillDate:"");
+    setBillDate(claim?.summaryDetails?.BillDate  !==null ? formatDateFinal(claim?.summaryDetails?.BillDate):"");
     setBillAmount(claim?.summaryDetails?.BillAmount  !==null ? claim?.summaryDetails?.BillAmount:"");
     setLessImposedSum(claim?.summaryDetails?.LessImposed  !==null ? claim?.summaryDetails?.LessImposed:0);
     setEndurance(claim?.summaryDetails?.Endurance  !==null ? claim?.summaryDetails?.Endurance:"");
@@ -663,8 +747,8 @@ const [AccidentTime,setAccidentTime]=useState("");
     setVehicleUpto(claim?.vehicleDetails?.Upto !==null ? claim?.vehicleDetails?.Upto : "");
     setClaimNumber(claim?.claimDetails?.ClaimNumber !==null ? claim?.claimDetails?.ClaimNumber : "" );
     setEngineType(claim?.vehicleDetails?.ModeOfCheck!==null ? claim?.vehicleDetails?.ModeOfCheck : "" );
-    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration!==null ? claim?.vehicleDetails?.DateOfRegistration : "" );
-    setTransferDate(claim?.vehicleDetails?.TransferDate !=null ? claim?.vehicleDetails?.TransferDate : "" );
+    setDateRegistration(claim?.vehicleDetails?.DateOfRegistration!==null ? formatDateFinal(claim?.vehicleDetails?.DateOfRegistration) : "" );
+    setTransferDate(claim?.vehicleDetails?.TransferDate !=null ? formatDateFinal(claim?.vehicleDetails?.TransferDate) : "" );
     setAddedBy(claim?.vehicleDetails?.AddedBy!=null ? claim?.vehicleDetails?.AddedBy : "" );
     setVerification(claim?.driverDetails?.TypeOfVerification!==null ? claim?.driverDetails?.TypeOfVerification : "" );
     setGarageNameAndAddress(claim?.garageDetails?.GarageNameAndAddress !==null ? claim?.garageDetails?.GarageNameAndAddress : "" );
@@ -685,8 +769,8 @@ const [AccidentTime,setAccidentTime]=useState("");
 
     setLessImposed(claim?.summaryDetails?.LessImposed !==null ? claim?.summaryDetails?.LessImposed : "")
 
-    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration !==null ? convertStringTime(claim?.vehicleDetails?.DateOfRegistration ):"");
-    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate!==null ? claim?.claimDetails?.MailRecieveDate : "" );
+    setDateOfRegistration(claim?.vehicleDetails?.DateOfRegistration !==null ? formatDateFinal(claim?.vehicleDetails?.DateOfRegistration ):"");
+    setMailRecieveDate(claim?.claimDetails?.MailRecieveDate!==null ? formatDateFinal(claim?.claimDetails?.MailRecieveDate) : "" );
     setOwnerSRST(claim?.vehicleDetails?.OwnerSrDate !==null ? claim?.vehicleDetails?.OwnerSrDate  : "");
     setClaimRegion(claim?.claimDetails?.ClaimRegion !==null ? claim?.claimDetails?.ClaimRegion : "" );
     setInsuredName(claim?.insuredDetails?.InsuredName!==null ? claim?.insuredDetails?.InsuredName : "" );
@@ -697,13 +781,13 @@ const [AccidentTime,setAccidentTime]=useState("");
 
 
     setDriverRemark(claim?.driverDetails?.Remark!==null ? claim?.driverDetails?.Remark : "");
-    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident!==null ? claim?.accidentDetails?.DateOfAccident :"");
+    setAccidentAddedDateTime(claim?.accidentDetails?.DateOfAccident!==null ? formatDateFinal(claim?.accidentDetails?.DateOfAccident):"");
     setPlaceOfLoss(claim?.accidentDetails?.PlaceOfLoss!==null ? claim?.accidentDetails?.PlaceOfLoss : "");
     setSurveyAllotmentDate((claim?.claimDetails?.AddedDateTime)!==null ? claim?.claimDetails?.AddedDateTime : "");
-    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate !=null ? claim?.accidentDetails?.SurveyConductedDate : "");
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate !=null ? formatDateFinal(claim?.accidentDetails?.SurveyConductedDate) : "");
     //Drivers Details
     setDriverName(claim?.driverDetails?.DriverName!==null ? claim?.driverDetails?.DriverName : "");
-    setDriverAddedDate(claim?.driverDetails?.DriverAddedDate!=null ? claim?.driverDetails?.DriverAddedDate : "");
+    setDriverAddedDate(claim?.driverDetails?.DriverAddedDate!=null ? formatDateFinal(claim?.driverDetails?.DriverAddedDate) : "");
     setIssuingAuthority(claim?.driverDetails?.RtoName !=null ? claim?.driverDetails?.RtoName : "");
     setLicenseNumber(claim?.driverDetails?.LicenseNumber!=null ? claim?.driverDetails?.LicenseNumber : "");
     setLicenseType(claim?.driverDetails?.LicenseType!==null ? claim?.driverDetails?.LicenseType : "");
@@ -713,13 +797,13 @@ const [AccidentTime,setAccidentTime]=useState("");
     setVehicleRegisteredNumber(claim?.vehicleDetails?.RegisteredNumber!=null ? claim?.vehicleDetails?.RegisteredNumber : "");
     setVehicleEngineNumber(claim?.vehicleDetails?.EngineNumber || "");
     setAntiTheft(claim?.vehicleDetails?.AntiTheft !=null ? claim?.vehicleDetails?.AntiTheft : "");
-    setVehicleDateOfRegistration(claim?.claimDetails?.DateOfRegistration!=null ? claim?.claimDetails?.DateOfRegistration : "");
+    setVehicleDateOfRegistration(claim?.claimDetails?.DateOfRegistration!=null ? formatDateFinal(claim?.claimDetails?.DateOfRegistration) : "");
     setInsuranceCompanyNameAddress(
       claim?.claimDetails?.InsuranceCompanyNameAddress ||
         "United India Insurance Company Limited"
     );
-    setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd!=null ? claim?.claimDetails?.PolicyPeriodEnd : "");
-    setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart!=null ? claim?.claimDetails?.PolicyPeriodStart : "");
+    setPolicyPeriodEnd(claim?.claimDetails?.PolicyPeriodEnd!=null ? formatDateFinal(claim?.claimDetails?.PolicyPeriodEnd) : "");
+    setPolicyPeriodStart(claim?.claimDetails?.PolicyPeriodStart!=null ? formatDateFinal(claim?.claimDetails?.PolicyPeriodStart) : "");
     setVehicleMakeVariantModelColor(
       claim?.vehicleDetails?.MakerDesc? claim?.vehicleDetails?.MakerModel : VehicleMakeVariantModelColor
     );
@@ -744,10 +828,10 @@ const [AccidentTime,setAccidentTime]=useState("");
     setVehicleClassOfVehicle(claim?.vehicleDetails?.VehicleClassDescription !=null ? claim?.vehicleDetails?.VehicleClassDescription : "");
     setVehicleFuelType(claim?.vehicleDetails?.FuelType!=null ? claim?.vehicleDetails?.FuelType:"");
     setVehicleOdometerReading(claim?.vehicleDetails?.OdometerReading!=null ? claim?.vehicleDetails?.OdometerReading : "");
-    setDateOfIssue(claim?.driverDetails?.DateOfIssue!=null ? claim?.driverDetails?.DateOfIssue : "");
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue!=null ? formatDateFinal(claim?.driverDetails?.DateOfIssue) : "");
     setVehiclePreAccidentCondition(claim?.vehicleDetails?.PreAccidentCondition !=null ? claim?.vehicleDetails?.PreAccidentCondition : "");
-    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate !=null ? claim?.accidentDetails?.SurveyConductedDate : "");
-    setVehicleTaxParticulars(claim?.vehicleDetails?.FitUpto !==null ? claim?.vehicleDetails?.FitUpto : "");
+    setSurveyConductedDate(claim?.accidentDetails?.SurveyConductedDate !=null ? formatDateFinal(claim?.accidentDetails?.SurveyConductedDate) : "");
+    setVehicleTaxParticulars(claim?.vehicleDetails?.FitUpto !==null ? formatDateFinal(claim?.vehicleDetails?.FitUpto) : "");
     setPUCNumber(claim?.vehicleDetails?.PucNumber !=null ? claim?.vehicleDetails?.PucNumber : "");
     setVehicleSeatingCapacity(claim?.vehicleDetails?.SeatingCapacity !==null ? claim?.vehicleDetails?.SeatingCapacity : 0);
     setClaimServicingOffice(claim?.claimDetails?.ClaimServicingOffice!=null ? claim?.claimDetails?.ClaimServicingOffice : "");
@@ -769,22 +853,22 @@ const [AccidentTime,setAccidentTime]=useState("");
     setThirdPartyLoss(claim?.accidentDetails?.ThirdPartyLoss!==null ? claim?.accidentDetails?.ThirdPartyLoss : "");
     setAssessment(claim?.accidentDetails?.Assessment!==null ? claim?.accidentDetails?.Assessment : "");
 
-    setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv !==null ? claim?.driverDetails?.ValidUntilNtv : "");
-    setValidUntilTv(claim?.driverDetails?.ValidUntilTv !==null ? claim?.driverDetails?.ValidUntilTv : "");
-    setValidFrom(claim?.driverDetails?.VaildUpto !==null ? claim?.driverDetails?.VaildUpto : "");
-    setDateOfIssue(claim?.driverDetails?.DateOfIssue!==null ? claim?.driverDetails?.DateOfIssue : "");
+    setValidUntilNtv(claim?.driverDetails?.ValidUntilNtv !==null ? formatDateFinal(claim?.driverDetails?.ValidUntilNtv) : "");
+    setValidUntilTv(claim?.driverDetails?.ValidUntilTv !==null ? formatDateFinal(claim?.driverDetails?.ValidUntilTv) : "");
+    setValidFrom(claim?.driverDetails?.VaildUpto !==null ? formatDateFinal(claim?.driverDetails?.VaildUpto) : "");
+    setDateOfIssue(claim?.driverDetails?.DateOfIssue!==null ? formatDateFinal(claim?.driverDetails?.DateOfIssue) : "");
     //commercial
     setFitnessCertificate(claim?.commercialVehicleDetails?.FitnessCertificate!==null ? claim?.commercialVehicleDetails?.FitnessCertificate : "");
-    setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom!==null ? claim?.commercialVehicleDetails?.FitnessFrom : "");
-    setFitnessTo(claim?.commercialVehicleDetails?.FitnessTo!==null ? claim?.commercialVehicleDetails?.FitnessTo : "");
+    setFitnessFrom(claim?.commercialVehicleDetails?.FitnessFrom!==null ? formatDateFinal(claim?.commercialVehicleDetails?.FitnessFrom) : "");
+    setFitnessTo(claim?.commercialVehicleDetails?.FitnessTo!==null ? formatDateFinal(claim?.commercialVehicleDetails?.FitnessTo) : "");
     setPermitNo(claim?.commercialVehicleDetails?.PermitNo!==null ? claim?.commercialVehicleDetails?.PermitNo : "");
-    setPermitFrom(claim?.commercialVehicleDetails?.PermitFrom!==null ? claim?.commercialVehicleDetails?.PermitFrom : "");
-    setPermitTo(claim?.commercialVehicleDetails?.PermitTo!==null ? claim?.commercialVehicleDetails?.PermitTo :  "");
+    setPermitFrom(claim?.commercialVehicleDetails?.PermitFrom!==null ? formatDateFinal(claim?.commercialVehicleDetails?.PermitFrom) : "");
+    setPermitTo(claim?.commercialVehicleDetails?.PermitTo!==null ? formatDateFinal(claim?.commercialVehicleDetails?.PermitTo) :  "");
     setTypeOfPermit(claim?.commercialVehicleDetails?.TypeOfPermit!==null ? claim?.commercialVehicleDetails?.TypeOfPermit : "");
     setAuthorization(claim?.commercialVehicleDetails?.Authorization!==null ? claim?.commercialVehicleDetails?.Authorization : "");
     setAreasOfoperation(claim?.commercialVehicleDetails?.AreasOfOperation!==null ? claim?.commercialVehicleDetails?.AreasOfOperation : "" );
     setcommercialRemark(claim?.commercialVehicleDetails?.Remark!==null ? claim?.commercialVehicleDetails?.Remark : "");
-    setValidUpto(claim?.driverDetails?.ValidUpto!==null ? claim?.driverDetails?.ValidUpto : "");
+    setValidUpto(claim?.driverDetails?.ValidUpto!==null ? formatDateFinal(claim?.driverDetails?.ValidUpto) : "");
     setPolicyType(claim?.claimDetails?.PolicyType!==null ? claim?.claimDetails?.PolicyType : "")
     setTotalLoss(claim?.claimDetails?.TotalLoss !==null ? claim?.claimDetails?.TotalLoss : "")
     setIMT(claim?.claimDetails?.IMT !==null ? claim?.claimDetails?.IMT : "")
@@ -1537,6 +1621,7 @@ const [AccidentTime,setAccidentTime]=useState("");
                   <Exemple_01
                    disable={disable}
                     claim={claim}
+                    setAllLabour={setAllLabour}
                     currentGst={currentGst}
                     setTotalAssessed={setTotalAssessed}
                     totalAssessed={totalAssessed}
@@ -1567,6 +1652,8 @@ const [AccidentTime,setAccidentTime]=useState("");
                 <div className="col-lg-3">
                   <LabourForm
                    disable={disable}
+                   leadId={leadId}
+                   allLabour = {allLabour}
                   AccidentAddedDateTime={AccidentAddedDateTime}
                   DateRegistration={DateRegistration}
                     totalRemainingAssessed={totalRemainingAssessed}

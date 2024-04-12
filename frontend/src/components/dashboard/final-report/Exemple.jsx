@@ -239,7 +239,11 @@ export default function Exemple_01({
         newPart.map((part, index) => {
           if (String(part.LeadID) === String(LeadID)) {
             
-            const overall = Number(part.Assessed) * Number(part.QA);
+            let overall = Number(part.Assessed) * Number(part.QA);
+        
+            const dep = String(claim?.claimDetails?.PolicyType) === "Regular" ?
+            (Number(overall) * Number(part.DepreciationPct)) /100:0;
+            overall -= dep;
             const overall_e = Number(part.Estimate) * Number(part.QE);
             const GSTT_e = (overall_e * Number(part.GSTPct)) / 100;
             const GSTT = (overall * Number(part.GSTPct)) / 100;

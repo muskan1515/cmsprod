@@ -1,6 +1,7 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
 const convertObjectToString = require("../Config/getObjectToString");
+const { formatDate } = require("../Config/getFormattedDate");
 
 const getSpecificVehicleDetails = async (req, res) => {
   const leadId = req.query.LeadId;
@@ -52,15 +53,18 @@ const getSpecificVehicleDetails = async (req, res) => {
       }
     })
     .then((result)=>{
-      console.log(result.data.vehicleDetails?.Data.result);
+      
       const details = result.data.vehicleDetails?.Data.result;
       const stringformat = convertObjectToString(details);
       
-      console.log("results",result);
       const additionalInfo = result?.data?.additionalInfo;
       const stringformat2 = convertObjectToString(additionalInfo);
-      console.log("details",stringformat);
-      console.log("additionalInfo",stringformat2);
+      
+      const formattedDateOfRegistration = formatDate(details?.rc_regn_dt);
+      const formattedFitUpto = formatDate(details?.rc_fit_upto);
+      const formattedMonthYear = formatDate(details?.rc_manu_month_yr);
+      const formattedInsuranceUpto = formatDate(details?.rc_insurance_upto);
+      const formattedTaxParticulars = formatDate(additionalInfo?.vehicleTaxUpto)
 
       const surveyType = details?.VehicleType === "2W" ? "Motor2W" : "Motor4W";
       
@@ -112,7 +116,7 @@ const getSpecificVehicleDetails = async (req, res) => {
     VALUES (
       '${details?.rc_regn_no}',
         '${additionalInfo?.bodyType}',
-        '${details?.rc_regn_dt}',
+        '${formattedDateOfRegistration}',
         '${details?.rc_eng_no}',
         '${details?.rc_chasi_no}',
         '${details?.bancs_Fuel_Type}',
@@ -120,7 +124,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         '${details?.rc_maker_model}',
         '${details?.rc_cubic_cap}',
         '${details?.rc_seat_cap}',
-        '${details?.rc_fit_upto}',
+        '${formattedFitUpto}',
         '${details?.rc_pasia_model_code}',
         '${details?.rc_vehicle_type}',
         '${details?.bancs_model_code}',
@@ -133,16 +137,16 @@ const getSpecificVehicleDetails = async (req, res) => {
         '${details?.rc_status}',
         '${details?.rc_blacklist_status}',
         '${details?.rc_registered_at}',
-        '${details?.rc_manu_month_yr}',
+        '${formattedMonthYear}',
         '${details?.rc_permanent_address}',
         '${details?.bancs_Vehicle_class}',
         '${details?.rc_owner_name}',
-        '${details?.rc_insurance_upto}',
+        '${formattedInsuranceUpto}',
         '${stringformat}',
         '${additionalInfo?.puccUpto}',
         '${additionalInfo?.puccNumber}',
         '${additionalInfo?.vehicleColour}',
-        '${additionalInfo?.vehicleTaxUpto}',
+        '${formattedTaxParticulars}',
         '${details?.rc_gvw}',
         '${details?.rc_vh_class_desc}',
         '${details?.state_cd}',
@@ -160,7 +164,7 @@ const getSpecificVehicleDetails = async (req, res) => {
           SET
         RegisteredNumber = '${details?.rc_regn_no}',
         TypeOfBody = '${details?.bancs_Body_Type}',
-        DateOfRegistration = '${details?.rc_regn_dt}',
+        DateOfRegistration = '${formattedDateOfRegistration}',
         EngineNumber = '${details?.rc_eng_no}',
         ChassisNumber = '${details?.rc_chasi_no}',
         FuelType = '${details?.bancs_Fuel_Type}',
@@ -168,7 +172,7 @@ const getSpecificVehicleDetails = async (req, res) => {
         MakerModel = '${details?.rc_maker_model}',
         CubicCapacity = '${details?.rc_cubic_cap}',
         SeatingCapacity = '${details?.rc_seat_cap}',
-        FitUpto = '${details?.rc_fit_upto}',
+        FitUpto = '${formattedFitUpto}',
         PasiaModelCode = '${details?.rc_pasia_model_code}',
         VehicleType = '${details?.rc_vehicle_type}',
         BancsModelCode = '${details?.bancs_model_code}',
@@ -182,15 +186,15 @@ const getSpecificVehicleDetails = async (req, res) => {
         VehicleBlackListStatus = '${details?.rc_blacklist_status}',
         VehicleRegistedAt = '${details?.rc_registered_at}',
         VehicleInsuranceCompany = '${details?.rc_insurance_comp}',
-        ManufactureMonthYear = '${details?.rc_manu_month_yr}',
+        ManufactureMonthYear = '${formattedMonthYear}',
         PermanentAddress = '${details?.rc_permanent_address}',
         ClassOfVehicle = '${details?.bancs_Vehicle_class}',
         RegisteredOwner = '${details?.rc_owner_name}',
-        VehicleInsuranceUpto ='${details?.rc_insurance_upto}',
+        VehicleInsuranceUpto ='${formattedInsuranceUpto}',
         PucValidUntil='${additionalInfo?.puccUpto}',
         PucNumber='${additionalInfo?.puccNumber}',
         MakeVariantModelColor='${additionalInfo?.vehicleColour}',
-        TaxParticulars='${additionalInfo?.vehicleTaxUpto}',
+        TaxParticulars='${formattedTaxParticulars}',
         RegLadenWt='${details?.rc_gvw}',
         VehicleClassDescription='${details?.rc_vh_class_desc}',
         Remark='${'Verified from Online'}',
@@ -202,8 +206,6 @@ const getSpecificVehicleDetails = async (req, res) => {
 
 
 
-    
-      console.log(insertVehicleDetails,updateVehicleDetails);
       db.query("DELETE FROM VehicleDetailsOnline WHERE LeadId=?",[leadId],(error, results) => {
         if (error) {
           console.error("Error updating data in driver Details:", error);

@@ -320,6 +320,72 @@ const Index = ({}) => {
   }
 
 
+  function getMonthNumber(monthName) {
+    const months = {
+        "jan": "01", "feb": "02", "mar": "03", "apr": "04", "may": "05", "jun": "06",
+        "jul": "07", "aug": "08", "sep": "09", "oct": "10", "nov": "11", "dec": "12",
+        "january": "01", "february": "02", "march": "03", "april": "04", "may": "05", 
+        "june": "06", "july": "07", "august": "08", "september": "09", "october": "10", 
+        "november": "11", "december": "12"
+    };
+
+     const cleanedMonthName = monthName.trim().toLowerCase();
+    if (months.hasOwnProperty(cleanedMonthName)) {
+        return months[cleanedMonthName];
+    } else {
+        return monthName;
+    }
+}
+
+function checkDateFormat(dateString) {
+    // Regular expressions to match yyyy-mm-dd and dd-mm-yyyy formats
+    const yyyy_mm_dd_regex = /^\d{4}-\d{2}-\d{2}$/;
+    const dd_mm_yyyy_regex = /^\d{2}-\d{2}-\d{4}$/;
+
+    if (yyyy_mm_dd_regex.test(dateString)) {
+        return true
+    } return false
+    
+}
+
+
+
+const formatDateFinal = (inputDate,type) => {
+ 
+  
+    if (!inputDate) return inputDate; // Check if inputDate is falsy
+    if(checkDateFormat(inputDate))
+     return inputDate;
+
+    let dateParts = inputDate.split(/[-/ ]/);
+    let year, month, day;
+
+    if (dateParts.length === 3) {
+        // Case: dd/mm/yyyy or dd-mm-yyyy
+        day = dateParts[0];
+        month = getMonthNumber(dateParts[1]);
+        year = dateParts[2];
+    } else if (dateParts.length === 2 && dateParts[1].length === 4) {
+        // Case: jan-yyyy or jan/yyyy
+        day = '01'; // Assuming the first day of the month
+        month = getMonthNumber(dateParts[0]);
+        year = dateParts[1];
+    } else if (dateParts.length === 3 && isNaN(dateParts[1])) {
+        // Case: dd-jan-yyyy
+        day = dateParts[0];
+        month = getMonthNumber(dateParts[1]);
+        year = dateParts[2];
+    } else {
+        return inputDate;
+    }
+
+    day = day.padStart(2, '0');
+    month = month.padStart(2, '0');
+
+    console.log("inputdATE",inputDate,type,`${year}-${month}-${day}`)
+    return `${year}-${month}-${day}`;
+}
+
   useEffect(() => {
     setPolicyIssuingOffice(
       claim?.claimDetails?.PolicyIssuingOffice
@@ -338,12 +404,12 @@ const Index = ({}) => {
     setMobile(claim?.driverDetails?.Mobile ? claim?.driverDetails?.Mobile : "");
     setPolicyStartDate(
       claim?.claimDetails?.PolicyPeriodStart
-        ? claim?.claimDetails?.PolicyPeriodStart
+        ? formatDateFinal(claim?.claimDetails?.PolicyPeriodStart)
         : policyStartDate
     );
     setPolicyEndDate(
       claim?.claimDetails?.PolicyPeriodEnd
-        ? claim?.claimDetails?.PolicyPeriodEnd
+        ? formatDateFinal(claim?.claimDetails?.PolicyPeriodEnd)
         : policyEndDate
     );
 
@@ -430,7 +496,7 @@ const Index = ({}) => {
     );
     setDateRegistration(
       claim?.vehicleDetails?.DateOfRegistration
-        ? claim?.vehicleDetails?.DateOfRegistration
+        ? formatDateFinal(claim?.vehicleDetails?.DateOfRegistration)
         : DateRegistration
     );
     setPUCNumber(
@@ -523,7 +589,7 @@ const Index = ({}) => {
     );
     setManufactureMonthYear(
       claim?.vehicleDetails?.ManufactureMonthYear
-        ? claim?.vehicleDetails?.ManufactureMonthYear
+        ? formatDateFinal(claim?.vehicleDetails?.ManufactureMonthYear)
         : ManufactureMonthYear
     );
     setVehicleGvw(
@@ -600,7 +666,7 @@ const Index = ({}) => {
     );
     setRcInsuranceUpto(
       claim?.vehicleDetails?.VehicleInsuranceUpto
-        ? claim?.vehicleDetails?.VehicleInsuranceUpto
+        ? formatDateFinal(claim?.vehicleDetails?.VehicleInsuranceUpto)
         : VehicleInsuranceUpto
     );
     setRcVehicleType(
@@ -660,19 +726,19 @@ const Index = ({}) => {
     setPhoto(claim?.driverDetails?.Photo ? claim?.driverDetails?.Photo : Photo);
     setValidUpto(
       claim.driverDetails?.ValidUpto
-        ? formatDate(claim.driverDetails?.ValidUpto)
+        ? formatDateFinal(claim.driverDetails?.ValidUpto,"valid")
         : ValidUpto
     );
 
     setDateOfBirth(
       claim?.driverDetails?.DateOfBirth
-        ? formatDate(claim?.driverDetails?.DateOfBirth)
-        : DateOfBirth
+        ? formatDateFinal(claim?.driverDetails?.DateOfBirth,"Date O f")
+        : (DateOfBirth)
     );
     setDateOfIssue(
       claim?.driverDetails?.DateOfIssue
-        ? formatDate(claim?.driverDetails?.DateOfIssue)
-        : DateOfIssue
+        ? formatDateFinal(claim?.driverDetails?.DateOfIssue,"doi")
+        : (DateOfIssue)
     );
 
     setIsDriverDetailsFetched(
@@ -716,7 +782,7 @@ const Index = ({}) => {
 
     setDateOfAccident(
       claim?.accidentDetails?.DateOfAccident
-      ? claim?.accidentDetails?.DateOfAccident
+      ? formatDateFinal(claim?.accidentDetails?.DateOfAccident)
       : DateOfAccident
     );
 
@@ -1740,7 +1806,7 @@ const Index = ({}) => {
                                 updateHandlerAfterFetching
                               }
                               setPhoto={setPhoto}
-                              DateOfBirth={DateOfBirth}
+                              DateOfBirth={(DateOfBirth)}
                               setDateOfBirth={setDateOfBirth}
                               setDateOfIssue={setDateOfIssue}
                               DateOfIssue={DateOfIssue}

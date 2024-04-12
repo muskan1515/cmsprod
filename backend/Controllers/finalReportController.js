@@ -1,5 +1,6 @@
 
 const db = require("../Config/dbConfig");
+const { formatDate } = require("../Config/getFormattedDate");
 
 const updateFinalReport = (req,res)=>{
 
@@ -135,22 +136,61 @@ const updateFinalReport = (req,res)=>{
       phyCheck
     } = req.body;
 
+
+    //Claim Dates
+    const formattedPolicyEnd = formatDate(PolicyPeriodEnd)
+    const formattedPolicyStart = formatDate(PolicyPeriodStart)
+    const formattedMailRecevingDate = formatDate(MailRecieveDate);
+    const formattedClaimAddedDate = formatDate(AddedDateTime);
+
+    //Vehicle Dates
+    const formattedDateOfRegistration = formatDate(DateOfRegistration);
+    const formattedTransferDate = formatDate(TransferDate);
+    const formattedTaxParticulars = formatDate(VehicleTaxParticulars)
+
+    //Driver Dates
+    const formattedDateOfbirth = formatDate(DateOfBirth)
+    const formattedDateOfIssue = formatDate(DateOfIssue)
+    const formattedValidUntilNtv = formatDate(ValidUntilNtv)
+    const formattedValidUntilTv = formatDate(ValidUntilTv)
+    const formattedValidupto = formatDate(ValidFrom)
+    const formattedDriverAddedDate = formatDate(DriverAddedDate)
+
+
+    //Accident Dates
+    const formattedDateOfAccident = formatDate(AccidentAddedDateTime)
+    const formattedSurveyConductedDate = formatDate(SurveyConductedDate);
+    const formattedInspectionDate = formatDate(InspectionDate);
+
+    //Commercial Vehicle Details
+    const formattedFitnessFrom = formatDate(FitnessFrom);
+    const formattedFittnessTo = formatDate(FitnessTo);
+    const formattedPermitTo = formatDate(PermitTo);
+    const formattedPermitFrom = formatDate(PermitFrom);
+
+    //summary Dates
+    const formattedRepairAutoDate = formatDate(RepairAutoDate);
+    const formattedRepairCompletionDate = formatDate(RepairCompletionDate);
+    const formattedReparingPhotoDate = formatDate(RepairingPhotoDate);
+    const formattedReInspectionDate = formatDate(ReinspectionDate);
+    const formattedBillDate = formatDate(BillDate);
+
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
-    AddedDate = '${DriverAddedDate}' ,
+    AddedDate = '${formattedDriverAddedDate}' ,
     DriverName = '${DriverName}',
     LicenseNumber='${LicenseNumber}',
     LicenseType='${LicenseType}',
     IssuingAuthority = '${IssuingAuthority}',
-    DateOfIssue = '${DateOfIssue}',
+    DateOfIssue = '${formattedDateOfIssue}',
     ValidFrom='${ValidFrom}',
-    ValidUntilNtv = '${ValidUntilNtv}',
-    ValidUntilTv = '${ValidUntilTv}',
+    ValidUntilNtv = '${formattedValidUntilNtv}',
+    ValidUntilTv = '${formattedValidUntilTv}',
     BadgeNumber='${BadgeNumber}',
     Remark='${driverRemark}',
-    DateOfBirth='${DateOfBirth}',
-    ValidUpto='${ValidUpto}'
+    DateOfBirth='${formattedDateOfbirth}',
+    ValidUpto='${formattedValidupto}'
     WHERE LeadID = ${leadId};
   `;
 
@@ -162,16 +202,16 @@ const updateFinalReport = (req,res)=>{
     SurveyType = '${""}',
     PolicyIssuingOffice='${PolicyIssuingOffice}',
     PolicyNumber = '${PolicyNumber}',
-    PolicyPeriodStart='${PolicyPeriodStart}',
-    PolicyPeriodEnd='${ PolicyPeriodEnd}' ,
+    PolicyPeriodStart='${formattedPolicyStart}',
+    PolicyPeriodEnd='${ formattedPolicyEnd}' ,
     ClaimNumber = '${ClaimNumber}',
     ClaimServicingOffice='${ClaimServicingOffice}',
     InspectionType = '${""}',
     PolicyType='${PolicyType}',
     IDV='${IDV}',
-    MailRecieveDate='${MailRecieveDate}',
+    MailRecieveDate='${formattedMailRecevingDate}',
     HPA='${HPA}',
-    AddedDateTime = '${AddedDateTime}',
+    AddedDateTime = '${formattedClaimAddedDate}',
     TotalLoss = ${(TotalLoss) ? 1 : 0},
     IMT = ${(IMT) ? 1 : 0}
     WHERE LeadID = ${leadId};
@@ -187,8 +227,8 @@ const updateFinalReport = (req,res)=>{
     TypeOfVerification = '${Verification}',
     RegisteredNumber = '${VehicleRegisteredNumber}',
     RegisteredOwner='${RegisteredOwner}',
-    TransferDate = '${TransferDate}',
-    DateOfRegistration = '${DateRegistration}',
+    TransferDate = '${formattedTransferDate}',
+    DateOfRegistration = '${formattedDateOfRegistration}',
     MakeVariantModelColor = '${VehicleMakeVariantModelColor}',
     EngineNumber='${EngineNumber}',
     ChassisNumber = '${VehicleChassisNumber}',
@@ -198,7 +238,7 @@ const updateFinalReport = (req,res)=>{
     SeatingCapacity = '${VehicleSeatingCapacity}',
     CubicCapacity = '${VehicleCubicCapacity}',
     FuelType = '${VehicleFuelType}',
-    TaxParticulars='${VehicleTaxParticulars}',
+    TaxParticulars='${formattedTaxParticulars}',
     OdometerReading = '${VehicleOdometerReading}',
     PucNumber='${PUCNumber}',
     OwnerSrDate='${OwnerSRST}',
@@ -239,16 +279,16 @@ const updateFinalReport = (req,res)=>{
     UPDATE AccidentDetails
     SET
     PlaceOfLoss = '${PlaceOfLoss}',
-    SurveyConductedDate ='${SurveyConductedDate}',
+    SurveyConductedDate ='${formattedSurveyConductedDate}',
     Pin='${Pin}',
-    InspectionDate='${InspectionDate}',
+    InspectionDate='${formattedInspectionDate}',
     PlaceOfSurvey='${PlaceOfSurvey}',
     DetailsOfLoads='${DetailsOfLoads}',
     CauseOfAccident='${CauseOfAccident}',
     PoliceAction='${PoliceAction}',
     ThirdPartyLoss='${ThirdPartyLoss}',
     Assessment='${Assessment}',
-    DateOfAccident='${AccidentAddedDateTime}',
+    DateOfAccident='${formattedDateOfAccident}',
     TimeOfAccident='${AccidentTime}'
     WHERE LeadID = ${leadId};
   `;
@@ -269,11 +309,11 @@ const updateFinalReport = (req,res)=>{
       LeadID 
     ) VALUES (
       '${FitnessCertificate}',
-     '${FitnessFrom}',
-     '${FitnessTo }', 
-     '${PermitTo}',
+     '${formattedFitnessFrom}',
+     '${formattedFittnessTo }', 
+     '${formattedPermitTo}',
       '${PermitNo}',
-     '${PermitFrom}',
+     '${formattedPermitFrom}',
       '${TypeOfPermit}',
       '${Authorization}',
       '${AreasOfoperation}',
@@ -287,11 +327,11 @@ const updateFinalReport = (req,res)=>{
     UPDATE CommercialVehicleDetails
           SET
           FitnessCertificate = '${FitnessCertificate}',
-          FitnessFrom ='${FitnessFrom}' ,
-          FitnessTo='${FitnessTo}',
+          FitnessFrom ='${formattedFitnessFrom}' ,
+          FitnessTo='${formattedFittnessTo}',
           PermitTo='${PermitTo}',
-          PermitNo='${PermitNo}',
-          PermitFrom='${PermitFrom}',
+          PermitNo='${formattedPermitTo}',
+          PermitFrom='${formattedPermitFrom}',
           TypeOfPermit='${TypeOfPermit}',
           Authorization='${Authorization}',
           AreasOfoperation='${AreasOfoperation}',
@@ -317,16 +357,16 @@ const updateFinalReport = (req,res)=>{
           SavageDepreciationDetails='${SavageDepreciationDetails}',
           CashLess=${CashLess?1:0},
           NoteOfSelf='${NoteOfSelf}',
-          RepairAutoDate='${RepairAutoDate}',
-          RepairCompletionDate='${RepairCompletionDate}',
+          RepairAutoDate='${formattedRepairAutoDate}',
+          RepairCompletionDate='${formattedRepairCompletionDate}',
           PartyAgreed='${PartyAgreed}', 
           ReasonThereofDelay='${ReasonThereofDelay}',
           AnyFurtherConversation='${AnyFurtherConversation}',
-          RepairingPhotoDate='${RepairingPhotoDate}',
-          ReinspectionDate='${ReinspectionDate}',
+          RepairingPhotoDate='${formattedReparingPhotoDate}',
+          ReinspectionDate='${formattedReInspectionDate}',
           SalveDestroy='${SalveDestroy}',
           BillNo='${BillNo}',
-          BillDate='${BillDate}',
+          BillDate='${formattedBillDate}',
           BillAmount='${BillAmount}',
           Endurance='${Endurance}',
           OtherRemark='${OtherRemark}',
@@ -343,11 +383,12 @@ const updateFinalReport = (req,res)=>{
       ) VALUES (
         ${leadId}, ${TotalLabor}, ${TotalEstimate}, ${TotalCostOfParts}, '${LessExcess}', '${ExpectedSalvage}', ${MetalPercent},
         '${RemarkOnSalvage}', '${Other}', ${GrandTotal}, ${DepreciationOnParts}, ${NetAssessedAmount},
-        '${SavageDepreciationDetails}', '${CashLess}', '${NoteOfSelf}', '${RepairAutoDate}', '${RepairCompletionDate}',
-        '${PartyAgreed}', '${ReasonThereofDelay}', '${AnyFurtherConversation}', '${RepairingPhotoDate}', '${ReinspectionDate}',
-        '${SalveDestroy}', '${BillNo}', '${BillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}','${FinalReportNotes}'
+        '${SavageDepreciationDetails}', '${CashLess}', '${NoteOfSelf}', '${formattedRepairAutoDate}', '${formattedRepairCompletionDate}',
+        '${PartyAgreed}', '${ReasonThereofDelay}', '${AnyFurtherConversation}', '${formattedReparingPhotoDate}', '${formattedReInspectionDate}',
+        '${SalveDestroy}', '${BillNo}', '${formattedBillDate}', '${BillAmount}', '${Endurance}','${OtherRemark}','${FinalReportNotes}'
       );
     `;
+
 
     db.query(updateClaimDetails, (err, result2) => {
       if (err) {

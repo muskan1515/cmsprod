@@ -71,6 +71,8 @@ const Form_01 = ({
   const [change, setChange] = useState(false);
 
 
+
+
   const handleFetchData = () => {
     if (
       !claim?.driverDetails?.LicenseNumber ||
@@ -144,6 +146,8 @@ const Form_01 = ({
     return formattedDate;
   };
 
+
+
   const setDate = (newDate,settingFunc)=>{
     const dateObj = new Date(newDate);
     const yyyy = dateObj.getFullYear();
@@ -152,6 +156,8 @@ const Form_01 = ({
     const formattedDate = `${yyyy}-${mm}-${dd}`;
     settingFunc(formattedDate);
     }
+
+    console.log("datess",DateOfBirth)
 
   return (
     <>

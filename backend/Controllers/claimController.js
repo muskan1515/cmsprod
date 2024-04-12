@@ -3,6 +3,7 @@ const db = require("../Config/dbConfig");
 const axios = require('axios');
 
 const generateUniqueToken = require("../Config/generateToken");
+const { formatDate } = require("../Config/getFormattedDate");
 
 const addClaim =  (req, res) => {
     const {
@@ -41,6 +42,10 @@ const addClaim =  (req, res) => {
   
     const generatedToken = generateUniqueToken();
 
+    const formattedPolicyStart = formatDate(PolicyPeriodStart);
+    const formattedPolicyEnd = formatDate(PolicyPeriodEnd);
+    
+
     const insertClaimDetails = `
       INSERT INTO ClaimDetails (
         SurveyType,
@@ -63,8 +68,8 @@ const addClaim =  (req, res) => {
         '${SurveyType}',
         '${ReferenceNo}',
         '${PolicyNumber}',
-        '${PolicyPeriodStart}',
-        '${PolicyPeriodEnd}',
+        '${formattedPolicyStart}',
+        '${formattedPolicyEnd}',
         '${ClaimServicingOffice}',
         '${(AddedBy)}',
       '${ClaimNumber}',
@@ -78,7 +83,7 @@ const addClaim =  (req, res) => {
         ${parseInt(IsActive)}
       );
     `;
-  
+
     db.query(insertClaimDetails, (error, results) => {
       if (error) {
         console.error("Error inserting data into ClaimDetails:", error);
@@ -654,6 +659,18 @@ const getSpecificClaim = async (req, res) => {
   } = req.body;
 
 
+  const formattedPolicyEnd = formatDate(PolicyPeriodEnd)
+  const formattedPolicyStart = formatDate(PolicyPeriodStart)
+  const formattedDateOfRegistration = formatDate(VehicleDateOfRegistration);
+  const formattedTransferDate = format(VehicleTransferDate);
+  const formattedFitUpto = formatDate(FitUpto)
+  const formattedInsuranceUpto = formatDate(RcInsuranceUpto);
+  const formattedMonthYear = formatDate(ManufactureMonthYear);
+  const formattedDateOfbirth = formatDate(DateOfBirth)
+  const formattedDateOfIssue = formatDate(DateOfIssue)
+  const formattedValidupto = formatDate(ValidFrom)
+  const formattedDriverAddedDate = formatDate(DriverAddedDate)
+
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -662,8 +679,8 @@ const getSpecificClaim = async (req, res) => {
     ClaimServicingOffice = ${ClaimServicingOffice ? `${ClaimServicingOffice}` : ''},
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
-    PolicyPeriodStart = ${PolicyPeriodStart ? `${PolicyPeriodStart}` : ''},
-    PolicyPeriodEnd = ${PolicyPeriodEnd ? `${PolicyPeriodEnd}` : ''},
+    PolicyPeriodStart = ${formattedPolicyStart ? `${formattedPolicyStart}` : ''},
+    PolicyPeriodEnd = ${formattedPolicyEnd ? `${formattedPolicyEnd}` : ''},
     IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
     IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : ''},
     InsuranceCompanyNameAddress = ${InsuranceCompanyNameAddress ? `${InsuranceCompanyNameAddress}` : ''}
@@ -679,11 +696,11 @@ const getSpecificClaim = async (req, res) => {
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    AddedDate = ${DriverAddedDate ? `${DriverAddedDate}` : ''},
+    AddedDate = ${formattedDriverAddedDate ? `${formattedDriverAddedDate}` : ''},
     Pht = ${Pht ? `${Pht}` : ''},
     Photo = ${Photo ? `${Photo}` : ''},
     Vov = ${Vov ? `${Vov}` : ''},
-    ValidUpto = ${ValidFrom ? `${ValidFrom}` : ''},
+    ValidUpto = ${formattedValidupto ? `${formattedValidupto}` : ''},
     RtoName = ${RtoName ? `${RtoName}` : ''},
     Address = ${Address ? `${Address}` : ''},
     Mobile = ${Mobile ? `${Mobile}` : ''},
@@ -691,10 +708,9 @@ const getSpecificClaim = async (req, res) => {
     Gender = ${Gender ? `${Gender}` : ''},
     FatherName = ${FatherName ? `${FatherName}` : ''},
     BadgeNumber='${BadgeNumber}',
-    DateOfBirth = ${DateOfBirth ? `${DateOfBirth}` : ''},
-    DateOfIssue = ${DateOfIssue ? `${DateOfIssue}` : ''},
-    TypeOfVerification = '${DriverTypeOfVerification}',
-    DateOfBirth='${DateOfBirth}'
+    DateOfBirth = ${formattedDateOfbirth ? `${formattedDateOfbirth}` : ''},
+    DateOfIssue = ${formattedDateOfIssue ? `${formattedDateOfIssue}` : ''},
+    TypeOfVerification = '${DriverTypeOfVerification}'
     WHERE LeadID = ${LeadId};
   `;
   
@@ -705,8 +721,8 @@ const getSpecificClaim = async (req, res) => {
     RegisteredNumber = ${VehicleRegisteredNumber ? `${VehicleRegisteredNumber}` : ''},
     MakeVariantModelColor = ${VehicleMakeVariantModelColor ? `${VehicleMakeVariantModelColor}` : ''},
     TypeOfBody = ${VehicleTypeOfBody ? `${VehicleTypeOfBody}` : ''},
-    DateOfRegistration = ${VehicleDateOfRegistration ? `${VehicleDateOfRegistration}` : ''},
-    TransferDate = ${VehicleTransferDate ? `${VehicleTransferDate}` : ''},
+    DateOfRegistration = ${formattedDateOfRegistration ? `${formattedDateOfRegistration}` : ''},
+    TransferDate = ${formattedTransferDate ? `${formattedTransferDate}` : ''},
     EngineNumber = ${VehicleEngineNumber ? `${VehicleEngineNumber}` : ''},
     AddedBy = ${VehicleAddedBy ? `${VehicleAddedBy}` : ''},
     ChassisNumber = ${VehicleChassisNumber ? `${VehicleChassisNumber}` : ''},
@@ -714,7 +730,7 @@ const getSpecificClaim = async (req, res) => {
     MakerDesc = ${MakerDesc ? `${MakerDesc}` : ''},
     MakerModel = ${MakerModel ? `${MakerModel}` : ''},
     CubicCapacity = ${CubicCapacity ? `${CubicCapacity}` : ''},
-    FitUpto = ${FitUpto ? `${FitUpto}` : ''},
+    FitUpto = ${formattedFitUpto ? `${formattedFitUpto}` : ''},
     PasiaModelCode = ${PasiaModelCode ? `${PasiaModelCode}` : ''},
     VehicleType = ${RcVehicleType ? `${RcVehicleType}` : ''},
     BancsModelCode = ${BancsModelCode ? `${BancsModelCode}` : ''},
@@ -728,12 +744,12 @@ const getSpecificClaim = async (req, res) => {
     VehicleBlackListStatus = ${VehicleBlackListStatus ? `${VehicleBlackListStatus}` : ''},
     VehicleRegistedAt = ${VehicleRegistedAt ? `${VehicleRegistedAt}` : ''},
     VehicleInsuranceCompany = ${VehicleInsuranceCompany ? `${VehicleInsuranceCompany}` : ''},
-    ManufactureMonthYear = ${ManufactureMonthYear ? `${ManufactureMonthYear}` : ''},
+    ManufactureMonthYear = ${formattedMonthYear ? `${formattedMonthYear}` : ''},
     PermanentAddress = ${PermanentAddress ? `${PermanentAddress}` : ''},
     ClassOfVehicle = ${ClassOfVehicle ? `${ClassOfVehicle}` : ''},
     RegisteredOwner = ${VehicleRegisteredOwner ? `${VehicleRegisteredOwner}` : ''},
     SeatingCapacity = ${SeatingCapacity ? `${SeatingCapacity}` : ''},
-    VehicleInsuranceUpto = ${RcInsuranceUpto ? `${RcInsuranceUpto}` : ''}
+    VehicleInsuranceUpto = ${formattedInsuranceUpto ? `${formattedInsuranceUpto}` : ''}
   WHERE LeadId = ${LeadId};
 `;
   
@@ -875,6 +891,11 @@ const getSpecificClaim = async (req, res) => {
       LeadId,
     } = req.body;
 
+    
+  const formattedDateOfbirth = formatDate(DateOfBirth)
+  const formattedDateOfIssue = formatDate(DateOfIssue)
+  const formattedValidupto = formatDate(ValidUpto)
+
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
@@ -882,20 +903,19 @@ const getSpecificClaim = async (req, res) => {
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    ValidUpto =' ${ValidUpto ? `${ValidUpto}` : ''}',
+    ValidUpto =' ${formattedValidupto ? `${formattedValidupto}` : ''}',
     RtoName = '${RtoName ? `${RtoName}` : ''}',
     Address =' ${Address ? `${Address}` : ''}',
     Mobile = '${Mobile ?`${(Mobile)}` : ''}',
     BloodGroup = '${BloodGroup ? `${BloodGroup}` : ''}',
     Gender = '${Gender ? `${Gender}` : ''}',
     FatherName = '${FatherName ? `${FatherName}` : ''}',
-    DateOfBirth =' ${DateOfBirth ? `${DateOfBirth}` : ''}',
-    DateOfIssue = '${DateOfIssue ? `${DateOfIssue}` : ''}',
+    DateOfBirth =' ${formattedDateOfbirth ? `${formattedDateOfbirth}` : ''}',
+    DateOfIssue = '${formattedDateOfIssue ? `${formattedDateOfIssue}` : ''}',
     TypeOfVerification = '${DriverTypeOfVerification}'
     WHERE LeadID = ${LeadId};
   `;
 
-  
 
   db.query(updateDriverDetails, (error, results) => {
     if (error) {
@@ -932,6 +952,8 @@ const getSpecificClaim = async (req, res) => {
       LeadId,
     } = req.body;
 
+    const formattedPolicyEnd = (PolicyPeriodEnd)
+    const formattedPolicyStart = (PolicyPeriodStart)
     const updateClaimDetails = `
     UPDATE ClaimDetails
     SET
@@ -941,8 +963,8 @@ const getSpecificClaim = async (req, res) => {
     InspectionType = '${InspectionType}',
     SurveyType = '${SurveyType}',
     BrokerMailAddress='${BrokerMailAddress?BrokerMailAddress : ''}',
-    PolicyPeriodStart = '${PolicyPeriodStart ? `${PolicyPeriodStart}`: ''}',
-    PolicyPeriodEnd ='${PolicyPeriodEnd ? `${PolicyPeriodEnd}` : ''}',
+    PolicyPeriodStart = '${formattedPolicyStart ? `${formattedPolicyStart}`: ''}',
+    PolicyPeriodEnd ='${formattedPolicyEnd ? `${formattedPolicyEnd}` : ''}',
     IsDriverDetailsFetched = ${IsDriverDetailsFetched ? IsDriverDetailsFetched : ''},
     IsRcDetailsFetched = ${IsRcDetailsFetched ? IsRcDetailsFetched : ''},
     InsuranceCompanyNameAddress = '${InsuranceCompanyNameAddress ? `${InsuranceCompanyNameAddress}` : ''}'
@@ -1034,6 +1056,11 @@ const getSpecificClaim = async (req, res) => {
       LeadId,
     } = req.body;
 
+  const formattedDateOfRegistration = formatDate(VehicleDateOfRegistration);
+  const formattedTransferDate = formatDate(VehicleTransferDate);
+  const formattedFitUpto = formatDate(FitUpto)
+  const formattedInsuranceUpto = formatDate(RcInsuranceUpto);
+  const formattedMonthYear = formatDate(ManufactureMonthYear);
    // Update VehicleDetails
    const updateVehicleDetails = `
    UPDATE VehicleDetails
@@ -1041,8 +1068,8 @@ const getSpecificClaim = async (req, res) => {
      RegisteredNumber = '${VehicleRegisteredNumber ? `${VehicleRegisteredNumber}` : ''}',
      MakeVariantModelColor ='${VehicleMakeVariantModelColor}',
      TypeOfBody = '${VehicleTypeOfBody ? `${VehicleTypeOfBody}` : ''}',
-     DateOfRegistration = '${VehicleDateOfRegistration ? `${VehicleDateOfRegistration}` : ''}',
-     TransferDate = '${VehicleTransferDate ? `${VehicleTransferDate}` : ''}',
+     DateOfRegistration = '${formattedDateOfRegistration ? `${formattedDateOfRegistration}` : ''}',
+     TransferDate = '${formattedTransferDate ? `${formattedTransferDate}` : ''}',
      EngineNumber = '${VehicleEngineNumber ? `${VehicleEngineNumber}` : ''}',
      AddedBy = '${VehicleAddedBy}',
      ChassisNumber = '${VehicleChassisNumber ? `${VehicleChassisNumber}` : ''}',
@@ -1050,7 +1077,7 @@ const getSpecificClaim = async (req, res) => {
      MakerDesc = '${MakerDesc ? `${MakerDesc}` : ''}',
      MakerModel = '${MakerModel ? `${MakerModel}` : ''}',
      CubicCapacity = '${parseInt(CubicCapacity)}',
-     FitUpto = '${FitUpto ?`${FitUpto}` : ''}',
+     FitUpto = '${formattedFitUpto ?`${formattedFitUpto}` : ''}',
      PasiaModelCode = '${PasiaModelCode ? `${PasiaModelCode}` : ''}',
      VehicleType =' ${RcVehicleType ? `${RcVehicleType}` : ''}',
      BancsModelCode = '${BancsModelCode ? `${BancsModelCode}` : ''}',
@@ -1064,15 +1091,16 @@ const getSpecificClaim = async (req, res) => {
      VehicleBlackListStatus = '${VehicleBlackListStatus ? `${VehicleBlackListStatus}` : ''}',
      VehicleRegistedAt = '${VehicleRegistedAt ? `${VehicleRegistedAt}`: ''}',
      VehicleInsuranceCompany = '${VehicleInsuranceCompany ? `${VehicleInsuranceCompany}` : ''}',
-     ManufactureMonthYear = '${ManufactureMonthYear ? `${ManufactureMonthYear}` : ''}',
+     ManufactureMonthYear = '${formattedMonthYear ? `${formattedMonthYear}` : ''}',
      PermanentAddress = '${PermanentAddress ? `${PermanentAddress}`: ''}',
      ClassOfVehicle = '${ClassOfVehicle ? `${ClassOfVehicle}` : ''}',
      RegisteredOwner = '${VehicleRegisteredOwner ? `${VehicleRegisteredOwner}` : ''}',
      SeatingCapacity = '${SeatingCapacity ? `${SeatingCapacity}` : ''}',
-     VehicleInsuranceUpto = '${RcInsuranceUpto ? `${RcInsuranceUpto}` : ''}'
+     VehicleInsuranceUpto = '${formattedInsuranceUpto ? `${formattedInsuranceUpto}` : ''}'
    WHERE LeadId = ${LeadId};
  `;
 
+ console.log(updateVehicleDetails);
   db.query(updateVehicleDetails, (error, results) => {
     if (error) {
       console.log(error)
@@ -1096,6 +1124,7 @@ const getSpecificClaim = async (req, res) => {
       LeadId
     } = req.body;
 
+
       const updateAccidentDetails = `
       UPDATE AccidentDetails
       SET
@@ -1107,8 +1136,6 @@ const getSpecificClaim = async (req, res) => {
       WHERE LeadID = ${LeadId};
     `;
 
-
-    console.log(updateAccidentDetails);
   
       db.query(updateAccidentDetails, (err, result2) => {
         if (err) {

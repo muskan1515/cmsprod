@@ -1,6 +1,8 @@
 const db = require("../Config/dbConfig");
 const axios = require("axios");
 const convertObjectToString = require("../Config/getObjectToString");
+const { formatDate } = require("../Config/getFormattedDate");
+const { breakString } = require("../Config/splitBase");
 
 const getSpecificDriverDetails = async (req, res) => {
   const leadId = req.query.LeadId;
@@ -63,8 +65,17 @@ function removeBase64Prefix(encodedImage) {
       }
     })
     .then((result)=>{
+
     const details=result?.data?.data?.data;
+    const formattedDateOfbirth = formatDate(details?.dob);
+    const formattedDateOfIssue = formatDate(details?.issuedate);
+    const formattedValidupto = formatDate(details?.vaildupto);
+
+    const formattedPhoto = breakString(details?.pht);
+    const formattedSign = breakString(details?.sign)
+    
     const stringformat = convertObjectToString(details);
+
     
 
     if(!details){
@@ -93,18 +104,18 @@ function removeBase64Prefix(encodedImage) {
   VALUES (
       '${details?.dlno}',
       '${details?.name}',
-      '${'photo'}',
-      '${'photo'}',
+      '${formattedSign}',
+      '${formattedPhoto}',
       '${details?.cov}',
-      '${details?.vaildupto}',
+      '${formattedValidupto}',
       '${details?.rtoname}',
       '${details?.address}',
       '${details?.mobile}',
       '${details?.bloodgroup}',
       '${details?.gender}',
       '${details?.fname}',
-      '${details?.dob}',
-     '${details?.issuedate}',
+      '${formattedDateOfbirth}',
+     '${formattedDateOfIssue}',
       '${stringformat}',
       '${leadId}'
   );
@@ -117,23 +128,24 @@ function removeBase64Prefix(encodedImage) {
 SET
     LicenseNumber = '${details?.dlno}',
     DriverName = '${details?.name}',
-    Pht = '${''}',
-    Photo = '${''}',
+    Pht = '${formattedSign}',
+    Photo = '${formattedPhoto}',
     LicenseType = '${details?.cov}',
-    ValidUpto = '${details?.vaildupto}',
+    ValidUpto = '${formattedValidupto}',
     RtoName = '${details?.rtoname}',
     Address = '${details?.address}',
     Mobile = '${details?.mobile}',
     BloodGroup = '${details?.bloodgroup}',
     Gender = '${details?.gender}',
     FatherName = '${details?.fname}',
-    DateOfBirth = '${details?.dob}',
-    DateOfIssue = '${details?.issuedate}',
+    DateOfBirth = '${formattedDateOfbirth}',
+    DateOfIssue = '${formattedDateOfIssue}',
     Remark='${'Verified from Online'}'
 WHERE
     LeadID = ${leadId};`;
 
 
+    console.log(insertDriverDetails,updateDriverQuery)
     db.query("DELETE FROM DriverDetailsOnline WHERE LeadID=?",[leadId],(error, results) => {
       if (error) {
         console.error("Error updating data in driver Details:", error);

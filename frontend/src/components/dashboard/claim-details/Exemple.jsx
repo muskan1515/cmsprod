@@ -10,15 +10,15 @@ import SmartTable from "./SmartTable";
   AWS.config.update({
     accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
-    region: process.env.NEXT_PUBLIC_REGION,
+    region: process.env.NEXT_PUBLIC_AWS_REGION,
   });
   
-  const S3_BUCKET = process.env.NEXT_PUBLIC_S3_BUCKET;
+  const S3_BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME;
   
-  const REGION ='ap-south-1';
-  console.log("AWS credentials:", process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY);
-  console.log("AWS region:", process.env.NEXT_PUBLIC_REGION);
-  console.log("S3 bucket:", S3_BUCKET);
+  const REGION =process.env.NEXT_PUBLIC_AWS_REGION;
+  // console.log("AWS credentials_manual_uplod:", process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY);
+  // console.log("AWS region:", process.env.NEXT_PUBLIC_AWS_REGION);
+  // console.log("S3 bucket:", S3_BUCKET);
   const myBucket= new AWS.S3({params:{Bucket:S3_BUCKET},region:REGION});
 
   const headCells = [
@@ -372,6 +372,7 @@ useEffect(()=>{
      
       myBucket.putObject(params).send((err,data)=>{
         if(err){
+          console.log("errorr",err)
           toast.error("Error while uploading!!");
         }
         else{

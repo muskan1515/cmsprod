@@ -309,18 +309,30 @@ const PolicyDetails = ({
   
 
   function localDate(dateString) {
-    console.log('================date',typeof dateString)
     if (dateString && dateString !== "null") {
-      return new Date(dateString).toLocaleDateString("fr-CA", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        timeZone: "Asia/Kolkata",
-      });
+      const date = new Date(dateString);
+      const options = { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric', 
+        timeZone: 'Asia/Kolkata' 
+      };
+      return date.toLocaleDateString("fr-CA", options).replace(/\//g, '-');
     } else {
       return "";
     }
   }
+
+  const convertDateFormatToDDMMYYYY = (dateString) => {
+    if(!dateString || dateString === undefined || dateString === null ||
+    dateString === "null" || dateString === "undefined"){
+      return dateString ;
+    }
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+  };
+
+  
   const formatDate = (dateString) => {
     if (!isvaliddate(dateString)) {
       console.error("Invalid date:", dateString);
@@ -369,6 +381,22 @@ const PolicyDetails = ({
     }
     return "";
   };
+
+  function convertDateFormat(inputDate) {
+    // Split the input date string based on "-" or "/"
+    const parts = inputDate.split(/[-/]/);
+    
+    // Rearrange the parts to form the "yyyy-mm-dd" format
+    const yyyy = parts[2];
+    const mm = parts[1];
+    const dd = parts[0];
+    
+    // Return the rearranged date parts joined with "-"
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+
+
 
   useEffect(() => {
     setPolicyPeriodEnd(getNextYear(PolicyPeriodStart));
@@ -2425,7 +2453,7 @@ const PolicyDetails = ({
                     <input
                       readOnly={!isEditMode}
                       type={"text"}
-                      value={DateOfBirth ? DateOfBirth : ""}
+                      value={DateOfBirth ? convertDateFormatToDDMMYYYY(DateOfBirth) : ""}
                       className="form-control"
                       id="propertyTitle"
                     />
@@ -2442,11 +2470,11 @@ const PolicyDetails = ({
                     //     onChange={(date) => setDateOfIssue(date)}
                     //   />
                     <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={DateOfBirth ? formatDateToISO(DateOfBirth) : ''}
-                      onChange={(e) => setDateOfBirth(e.target.value)}
-                    />
+                    type="date"
+                    disabled={!isEditMode}
+                    value={localDate(PolicyPeriodStart)}
+                    onChange={(e) => setPolicyPeriodStart(e.target.value)}
+                  />
                   )}
                 </div>
                 {/* <div className="col-lg-8">
@@ -2484,7 +2512,6 @@ const PolicyDetails = ({
                     className="form-control"
                     id="propertyTitle"
                   /> */}
-                  {console.log(DateOfIssue,'==============================')}
                   {!isEditMode ? (
                     <input
                       readOnly={!isEditMode}
@@ -2493,7 +2520,7 @@ const PolicyDetails = ({
                         DateOfIssue !== "null" &&
                         DateOfIssue !== "" &&
                         DateOfIssue !== null
-                          ? updatedFormatDate(DateOfIssue)
+                          ? convertDateFormatToDDMMYYYY(DateOfIssue)
                           : ""
                       }
                       className="form-control"
@@ -2514,7 +2541,7 @@ const PolicyDetails = ({
                     <input
                       type="date"
                       disabled={!isEditMode}
-                      value={localDate(formatDateUpdated(DateOfIssue))}
+                      value={localDate((DateOfIssue))}
                       onChange={(e) => setDateOfIssue(e.target.value)}
                     />
                   )}
@@ -2557,7 +2584,7 @@ const PolicyDetails = ({
                       readOnly={!isEditMode}
                       type={"text"}
                       value={
-                        ValidUpto ?ValidUpto: ''
+                        ValidUpto ? convertDateFormatToDDMMYYYY(ValidUpto): ''
                       }
                       className="form-control"
                       id="propertyTitle"
@@ -2593,11 +2620,11 @@ const PolicyDetails = ({
                     //   onChange={(date) => setValidFrom(date)}
                     // />
                     <input
-                      type="date"
-                      disabled={!isEditMode}
-                      value={ValidUpto ? `${ValidUpto.split('-')[2]}-${ValidUpto.split('-')[1]}-${ValidUpto.split('-')[0]}` : ''}
-                      onChange={(e) => setValidUpto(e.target.value)}
-                    />
+                    type="date"
+                    disabled={!isEditMode}
+                    value={localDate(PolicyPeriodStart)}
+                    onChange={(e) => setPolicyPeriodStart(e.target.value)}
+                  />
                   )}
                   {/* <input 
                   type={isEditMode ? "date" : "text"} 
@@ -2760,13 +2787,12 @@ const PolicyDetails = ({
                 Commercial Vehicle Details :
               </h4>
               <hr />
-              <div style={{display:"flex"}}>
+              <div style={{display:"flex",justifyContent:"flex-end",padding:"6px"}}>
               <input type="checkbox"
-                style={{width:"18px"}}
                 disabled={!isEditMode}
                checked={showInreport}
                onChange={(e)=>setShowInReport(!showInreport)}/>
-              <label style={{marginLeft:"5px"}}>{"  "} Show In Print</label>
+              <label>{"  "} Show In Print</label>
               </div>
               
               <div className="row">
@@ -2842,7 +2868,7 @@ const PolicyDetails = ({
                           type={"text"}
                           value={
                             FitnessFrom && FitnessFrom !== "null"
-                              ? formatDate(FitnessFrom)
+                              ? localDate(FitnessFrom)
                               : ""
                           }
                           className="form-control"
@@ -2918,7 +2944,7 @@ const PolicyDetails = ({
                           type={"text"}
                           value={
                             FitnessTo && FitnessTo !== "null"
-                              ? formatDate(FitnessTo)
+                              ? localDate(FitnessTo)
                               : ""
                           }
                           className="form-control"
@@ -3015,7 +3041,7 @@ const PolicyDetails = ({
                           readonly={!isEditMode}
                           value={
                             PermitFrom && PermitFrom !== "null"
-                              ? formatDate(PermitFrom)
+                              ? localDate(PermitFrom)
                               : ""
                           }
                         />
@@ -3081,7 +3107,7 @@ const PolicyDetails = ({
                           type={"text"}
                           value={
                             PermitTo && PermitTo !== "null"
-                              ? formatDate(PermitTo)
+                              ? localDate(PermitTo)
                               : ""
                           }
                           className="form-control"

@@ -24,8 +24,8 @@ import {
 dotenv.config({ path: ".env.development" });
 
 import AWS from "aws-sdk";
-const S3_BUCKET = "cmsdocs2024";
-const REGION = "ap-south-1";
+const S3_BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME;
+const REGION = process.env.NEXT_PUBLIC_AWS_REGION;
 
 AWS.config.update({
   accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
@@ -364,7 +364,6 @@ export default function DocumentUpload({
 
   const uploadFiles = () => {
 
-    console.log('Uploading media .......');
     toast.loading("Uploading the media!!", {
       className: "toast-loading-message",
     });
@@ -398,10 +397,7 @@ export default function DocumentUpload({
           const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(
             url.name
           )}`;
-          console.log("url", S3_URL);
-          console.log('Uploaded successs.......');
-
-
+         
           const newUploadData = {
             docName: currentLabel,
             index: index,

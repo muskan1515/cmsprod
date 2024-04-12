@@ -94,6 +94,7 @@ const Summary = ({
    setBillAmount
 }) => {
 
+  const [allNewParts,setAllNewParts] = useState([])
   useEffect(()=>{
     if(LessExcess === undefined || LessExcess === null || LessExcess === "undefined" || LessExcess === "null"){
       setLessExcess(0)
@@ -163,6 +164,34 @@ const Summary = ({
     setOtherSum(finalVal)
   }
 
+  const getNewpartAssessedTotalWithDepWithGST = ()=>{
+    console.log("getNewpartAssessedTotalWithDepWithGST",allNewParts)
+    
+    let total = 0 ;
+    allNewParts?.map((part,index)=>{
+      const totalAssess = Number(part.Assessed) * Number(part.QA);
+      const depreciation = (Number(totalAssess) * Number(part.DepreciationPct)) / 100;
+      const gst = part.WithTax === 1 || part.WithTax === 2 ? ((totalAssess - depreciation ) * Number(part.GSTPct)) / 100 : 0;
+
+      total += ((totalAssess - depreciation) + gst)
+    })
+
+    return total ;
+  }
+
+
+  const getNewpartAssessedTotalWithoutDepWithGST = ()=>{
+    console.log("getNewpartAssessedTotalWithoutDepWithGST",allNewParts)
+    let total = 0 ;
+    allNewParts?.map((part,index)=>{
+      const totalAssess = Number(part.Assessed) * Number(part.QA);
+      const gst = part.WithTax === 1 || part.WithTax === 2 ? ((totalAssess ) * Number(part.GSTPct)) / 100 : 0;
+
+      total += (totalAssess + gst)
+    })
+
+    return total ;
+  }
   // const Editor = SomeComponent.Editor;
   const [editorContent, setEditorContent] = useState("");
 
@@ -270,6 +299,34 @@ const Summary = ({
     
   },[MetalPercent,totalMetalRows])
 
+  useEffect(()=>{
+    const LeadID = window.location.pathname.split("/final-report/")[1];
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+    axios
+    .get("/api/getNewParts", {
+      headers: {
+        Authorization: `Bearer ${userInfo[0].Token}`,
+        "Content-Type": "application/json",
+      },
+      params: {
+        LeadId: LeadID,
+      },
+    })
+    .then((res) => {
+     const data = (res.data.userData);
+     let newData = []
+     data.map((row,index)=>{
+      if(String(row.LeadID) === LeadID){
+        newData.push(row)
+      }
+     })
+     setAllNewParts(newData)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  },[])
 
 
   return (
@@ -425,7 +482,7 @@ const Summary = ({
                       fontSize: "14px",
                     }}
                   >
-                    Total Cost of Parts
+                    Total Cost of Parts With GST (- Depreciations)
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -434,7 +491,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     readOnly={!isEdit}
-                    value={roundOff(totalPartsAssessed)}
+                    value={roundOff(getNewpartAssessedTotalWithDepWithGST())}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -467,8 +524,29 @@ const Summary = ({
                   </div>
                 </div>
               </div>
-              <div className="col-lg-12">
+              <div className="col-lg-12 d-flex flex-row">
                 <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Total Cost Of Parts With GST
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      value={roundOff(getNewpartAssessedTotalWithoutDepWithGST())}
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
                   <div className="col-lg-12 my_profile_setting_input form-group">
                     <label
                       htmlFor=""
@@ -495,6 +573,29 @@ const Summary = ({
                 </div>
               </div>
               <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontWeight: "",
+                      }}
+                    >
+                      Depreciations on Parts
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      value={DepreciationValue}
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div>
                 <div className="row mt-1 mb-1">
                   <div className="col-lg-12 my_profile_setting_input form-group">
                     <label
@@ -600,7 +701,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={
                       roundOff(Number(totalLabrorAssessed) +
-                      Number(totalPartsAssessed) 
+                      Number(getNewpartAssessedTotalWithDepWithGST()) 
                         -Number(LessExcess ? LessExcess : 0)-Number(LessImposed ? LessImposed: 0)+Number(Other ? Other : 0))
                       
                     }
@@ -612,7 +713,7 @@ const Summary = ({
           </div>
           <div className="row mt-5">
             <div className="col-lg-12">
-              <h5>Savage & Depreciation Details</h5>
+              <h5>Salvage  Details</h5>
               {/* <hr /> */}
             </div>
             <div className="col-lg-3">
@@ -706,7 +807,7 @@ const Summary = ({
             <hr />
             {/* <hr /> */}
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-8 text-end">
               <label
                 htmlFor=""
@@ -738,7 +839,7 @@ const Summary = ({
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-lg-8 text-end">
               <label
@@ -763,9 +864,8 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     value={ roundOff(Number(totalLabrorAssessed) +
-                      Number(totalPartsAssessed) 
-                        -(LessExcess ? LessExcess : 0)-(LessImposed ? LessImposed : 0)+(Other ? Other : 0)
-                        -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) - (DepreciationValue ))
+                      getNewpartAssessedTotalWithDepWithGST()                        -(LessExcess ? LessExcess : 0)-(LessImposed ? LessImposed : 0)+(Other ? Other : 0)
+                        -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) )
                       }
                     readOnly={!isEdit}
                     // placeholder="Enter Registration No."
