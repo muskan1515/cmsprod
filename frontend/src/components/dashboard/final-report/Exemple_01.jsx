@@ -412,15 +412,30 @@ export default function Exemple_01({
               ),
               sno: count,
               dep: row.dep,
+              // bill_sr: (
+              //   <input
+              //     className="form-control"
+              //     type="text"
+              //     // placeholder="job description"
+              //     // value={row.description}
+              //     // onChange={(e) =>
+              //     //   handleChange(index, e.target.value, "description")
+              //     // }
+              //     required
+              //     disabled={!edit}
+              //     id="terms"
+              //     style={{ border: "1px solid black" }}
+              //   />
+              // ),
               bill_sr: (
                 <input
                   className="form-control"
                   type="text"
-                  // placeholder="job description"
-                  // value={row.description}
-                  // onChange={(e) =>
-                  //   handleChange(index, e.target.value, "description")
-                  // }
+                  placeholder="Bill Serial No"
+                  value={row.bill_sr}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "bill_sr")
+                  }
                   required
                   disabled={!edit}
                   id="terms"
