@@ -57,7 +57,7 @@ const updateLabrorer = async (req, res) => {
               SAC='${row.sac}',
               Estimate = '${row.estimate}',
               Assessed = '${row.assessed}',
-              BillSr = '${row.Bill_sr}',
+              BillSr = '${row.bill_sr}',
               IsGSTIncluded='${row.gst}',
               GSTPercentage='${gstPct}',
               IsActive='${row.isActive}',
@@ -67,7 +67,6 @@ const updateLabrorer = async (req, res) => {
           `;
          
 
-          console.log(updateQuery);
           db.query("SELECT * FROM LabourReport WHERE SNO = ? AND LeadID=? ", [row.sno,leadId], (err, result2) => {
             if (err) {
               console.error(err);
@@ -77,6 +76,7 @@ const updateLabrorer = async (req, res) => {
   
             if (result2.length > 0) {
               
+               
               db.query(updateQuery, (err) => {
                 if (err) {
                   console.error(err);

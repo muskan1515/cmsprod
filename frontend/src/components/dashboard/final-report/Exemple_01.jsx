@@ -95,6 +95,7 @@ export default function Exemple_01({
   setToggleEstimate,
   reload,
   setReload,
+  setAllLabour,
   toggleLabor,
   setToggleLabor,
 
@@ -147,6 +148,7 @@ export default function Exemple_01({
 
         // setNewParts(res.data.userData);
         let newPart = res.data.userData;
+        
         let temp_row = [];
         let gst_pct = 0;
         newPart.map((part, index) => {
@@ -167,6 +169,7 @@ export default function Exemple_01({
             setLastIndex(part.ReportID);
           }
         });
+        setAllLabour(temp_row)
 
         setCurrentGST(Number(gst_pct) !== 0 ? Number(gst_pct) : 18 );
         setAllRows(temp_row);
@@ -416,11 +419,11 @@ export default function Exemple_01({
                 <input
                   className="form-control"
                   type="text"
-                  // placeholder="job description"
-                  // value={row.description}
-                  // onChange={(e) =>
-                  //   handleChange(index, e.target.value, "description")
-                  // }
+                  placeholder="Bill Serial No"
+                  value={row.bill_sr}
+                  onChange={(e) =>
+                    handleChange(index, e.target.value, "bill_sr")
+                  }
                   required
                   disabled={!edit}
                   id="terms"
