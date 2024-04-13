@@ -271,7 +271,7 @@ const Form = ({
           toast.error("Record Not found or Server Error");
         }
         setFinalDisable(false)
-        window.location.reload()
+        // window.location.reload()
       }
     }
     }
