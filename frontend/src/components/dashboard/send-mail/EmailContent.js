@@ -77,17 +77,18 @@ export const defaultContent = (type,vehicleNo,PolicyNo,Insured,date)=>{
     else{
         return `
         Dear Sir/Madam,<br/>
+        <br/>
 
         Greeting from the MT Engineers Legal Investigator 
-        Pvt. Ltd.,We are Appointed for the survey of 
+        Pvt. Ltd.,We are Appointed for the survey of <br/>
         vehicle no.${vehicleNo},Insured:${Insured} 
         & Policy No.-${PolicyNo} on  ${formatDate(date)} 
-        from the United India Insurance co. Ltd.
+        from the United India Insurance co. Ltd. <br/>
         So we request you please provide the complete contact
-         deatils & mails of Repairer/insured. 
+         deatils & mails of Repairer/insured.  <br/>
         So that we can proceed further in your case and we 
         also request you to provide the following details as 
-        follows:-
+        follows:- <br/>
        `
 
     }

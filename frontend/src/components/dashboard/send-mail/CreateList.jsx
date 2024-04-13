@@ -88,7 +88,7 @@ const CreateList = ({ leadId, email, policyNo, Insured, vehicleNo ,Region,Broker
       .map((item, index) => {
         return `${index + 1}) ${index > 0 ? ` ${item.value}` : item.value}`;
       })
-      .join("\n");
+      .join("<br/>");
   };
   const createStringFromSelectedItems2 = (selectedItems) => {
     return selectedItems
