@@ -85,7 +85,6 @@ const Index = () => {
       });
       setIsLoading(false)
     },[]);
-    console.log(driverDetails)
   return (
     <>
       <section className="" style={{ paddingTop: "10px" }}>

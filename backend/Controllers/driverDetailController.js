@@ -22,7 +22,7 @@ const getSpecificDriverDetails = async (req, res) => {
 
   try {
     const driverDetails = await executeQuery(
-      "SELECT * FROM DriverDetailsOnline WHERE LeadId=?",
+      "SELECT * FROM DriverDetails WHERE LeadId=?",
       [leadId]
     );
     

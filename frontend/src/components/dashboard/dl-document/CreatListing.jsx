@@ -13,13 +13,16 @@ import {
 } from "@react-pdf/renderer";
 import axios from "axios";
 import html2canvas from "html2canvas";
+import Image from "next/image";
 import jsPDF from "jspdf";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 
 const RCData = ({ DriverDetails }) => {
-  console.log(DriverDetails);
+  
 
+  const [sign,setSign] = useState("")
+  const [photo, setPhoto] = useState("")
 
   const rcDetails = {
     "Driver Name": "N.A.",
@@ -45,6 +48,8 @@ const RCData = ({ DriverDetails }) => {
   useEffect(() => {
     const addDefaultValue = (value) => (value !== undefined ? value : "N.A.");
 
+    setPhoto(`data:image/png;base64,${DriverDetails?.Photo}`);
+    setSign(`data:image/png;base64,${DriverDetails?.Pht}`);
 const rcDetailsUpdated = {
   "Driver Name": addDefaultValue(DriverDetails?.DriverName),
   "Father Name": addDefaultValue(DriverDetails?.FatherName),
@@ -76,6 +81,7 @@ const rcDetailsUpdated = {
     link.click();
   }
 
+  
   
 
   const pdfRef = useRef();
@@ -138,6 +144,9 @@ const rcDetailsUpdated = {
           </Dropdown.Menu>
        </Dropdown>
       </div>
+      <div>
+      
+      </div>
       <div style={{ width: "30%", margin: "0 auto" }}>
         <table
         id="dl-content"
@@ -183,6 +192,11 @@ const rcDetailsUpdated = {
                 </td>
               </tr>
             )):""}
+           
+           <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",margin:"2%"}}>
+           <Image style={{fontSize:"12px"}}  width={200} height={200} src={photo} alt={`${(DriverDetails?.DriverName).split(" ")[0]}_photo`}/>
+           <Image style={{fontSize:"12px",marginTop:"20%",marginLeft:"6%"}} width={300} height={100} src={sign} alt={`${(DriverDetails?.DriverName).split(" ")[0]}_sign`}/>
+           </div>
           </tbody>
         </table>
       </div>
