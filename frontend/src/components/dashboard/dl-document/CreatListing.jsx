@@ -194,8 +194,8 @@ const rcDetailsUpdated = {
             )):""}
            
            <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",margin:"2%"}}>
-           <Image style={{fontSize:"12px"}}  width={200} height={200} src={photo} alt={`${(DriverDetails?.DriverName).split(" ")[0]}_photo`}/>
-           <Image style={{fontSize:"12px",marginTop:"20%",marginLeft:"6%"}} width={300} height={100} src={sign} alt={`${(DriverDetails?.DriverName).split(" ")[0]}_sign`}/>
+           <Image style={{fontSize:"12px"}}  width={200} height={200} src={photo} alt={`${(DriverDetails?.DriverName)?.split(" ")[0]}_photo`}/>
+           <Image style={{fontSize:"12px",marginTop:"20%",marginLeft:"6%"}} width={300} height={100} src={sign} alt={`${(DriverDetails?.DriverName)?.split(" ")[0]}_sign`}/>
            </div>
           </tbody>
         </table>
