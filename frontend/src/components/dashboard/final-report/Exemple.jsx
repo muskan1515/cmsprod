@@ -31,19 +31,19 @@ const headCells = [
     id: "item_name",
     numeric: false,
     label: "Item Name",
-    width: 150,
+    width: 250,
   },
   {
     id: "hsh_code",
     numeric: false,
     label: "HSH Code",
-    width: 100,
+    width: 80,
   },
   {
     id: "remark",
     numeric: false,
     label: "Remark",
-    width: 100,
+    width: 120,
   },
   {
     id: "estimate",
@@ -61,25 +61,25 @@ const headCells = [
     id: "qe",
     numeric: false,
     label: "QE",
-    width: 100,
+    width: 50,
   },
   {
     id: "qa",
     numeric: false,
     label: "QA",
-    width: 100,
+    width: 50,
   },
   {
     id: "bill_sr",
     numeric: false,
     label: "Bill Sr.",
-    width: 100,
+    width: 70,
   },
   {
     id: "gst",
     numeric: false,
     label: "GST%",
-    width: 100,
+    width: 60,
   },
   {
     id: "total",
@@ -1153,10 +1153,10 @@ export default function Exemple_01({
     return overall_Value;
   }
 
-    function autoResize(event) {
-    event.target.style.height = "auto";
-    event.target.style.height = event.target.scrollHeight + "px";
-  }
+  //   function autoResize(event) {
+  //   event.target.style.height = "auto";
+  //   event.target.style.height = event.target.scrollHeight + "px";
+  // }
 
   useEffect(() => {
     let temp = [];
@@ -1213,7 +1213,20 @@ export default function Exemple_01({
               //     Add on Policy(Not Effective)
               //   </option>
               // </select>
-              // <input
+              <input
+                className="form-control form-control-table"
+                type="text"
+                value={row.description}
+                disabled={!edit}
+                onChange={(e) =>
+                  handleChange(index, e.target.value, "description")
+                }
+                required
+                // disabled={!edit}
+                id="terms"
+                style={{ border: "1px solid black" }}
+              />
+              // <textarea
               //   className="form-control form-control-table"
               //   type="text"
               //   value={row.description}
@@ -1222,23 +1235,10 @@ export default function Exemple_01({
               //     handleChange(index, e.target.value, "description")
               //   }
               //   required
-              //   // disabled={!edit}
-              //   id="terms"
-              //   style={{ border: "1px solid black" }}
-              // />
-              <textarea
-                // className="form-control form-control-table"
-                type="text"
-                value={row.description}
-                disabled={!edit}
-                onChange={(e) =>
-                  handleChange(index, e.target.value, "description")
-                }
-                required
-                rows={1}
-                onInput={autoResize}
-                style={{ border: "1px solid black", resize: "none", overflowY: "hidden", borderRadius:"5px" }}
-              ></textarea>
+              //   rows={1}
+              //   onInput={autoResize}
+              //   style={{ border: "1px solid black", resize: "none", overflowY: "hidden", borderRadius:"5px" }}
+              // ></textarea>
             ),
             // description: (
             //   <select
