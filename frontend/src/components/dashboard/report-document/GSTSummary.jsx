@@ -1138,7 +1138,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(calculateGSTWholeSectionGST2() / 2)}
+              {addCommasToNumber((calculateGSTWholeSectionGST2() / 2).toFixed(2))}
             </td>
             <td
               style={{
@@ -1146,7 +1146,7 @@ const GSTSummary = ({ allInfo }) => {
                 paddingRight: "5px",
               }}
             >
-              {addCommasToNumber(calculateGSTWholeSectionGST2() / 2)}
+              {addCommasToNumber((calculateGSTWholeSectionGST2() / 2).toFixed(2))}
             </td>
             <td
               style={{
