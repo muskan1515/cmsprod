@@ -29,13 +29,13 @@ const headCells = [
     id: "job_type",
     numeric: false,
     label: "Job Type",
-    width: 150,
+    width: 100,
   },
   {
     id: "description",
     numeric: false,
     label: "Description",
-    width: 150,
+    width: 290,
   },
   {
     id: "sac",
@@ -48,13 +48,13 @@ const headCells = [
     id: "estimate",
     numeric: false,
     label: "Estimate",
-    width: 100,
+    width: 80,
   },
   {
     id: "assessed",
     numeric: false,
     label: "Assessed",
-    width: 100,
+    width: 20,
   },
 
   {
@@ -394,10 +394,10 @@ export default function Exemple_01({
     return sortedArray;
   };
 
-    function autoResize(event) {
-    event.target.style.height = "auto";
-    event.target.style.height = event.target.scrollHeight + "px";
-  }
+  //   function autoResize(event) {
+  //   event.target.style.height = "auto";
+  //   event.target.style.height = event.target.scrollHeight + "px";
+  // }
 
   useEffect(() => {
     let temp = [];
@@ -434,38 +434,38 @@ export default function Exemple_01({
                 />
               ),
               description: (
-                // <input
-                //   className="form-control"
-                //   type="text"
-                //   placeholder="job description"
-                //   value={row.description}
-                //   onChange={(e) =>
-                //     handleChange(index, e.target.value, "description")
-                //   }
-                //   required
-                //   disabled={!edit}
-                //   id="terms"
-                //   style={{ border: "1px solid black" }}
-                // />
-                 <textarea
-                  // className="form-control form-control-table"
+                <input
+                  className="form-control"
                   type="text"
                   placeholder="job description"
                   value={row.description}
                   onChange={(e) =>
                     handleChange(index, e.target.value, "description")
                   }
-                  disabled={!edit}
                   required
-                  rows={1}
-                  onInput={autoResize}
-                  style={{
-                    border: "1px solid black",
-                    resize: "none",
-                    overflowY: "hidden",
-                    borderRadius: "5px",
-                  }}
-                ></textarea>
+                  disabled={!edit}
+                  id="terms"
+                  style={{ border: "1px solid black" }}
+                />
+                //  <textarea
+                //   // className="form-control form-control-table"
+                //   type="text"
+                //   placeholder="job description"
+                //   value={row.description}
+                //   onChange={(e) =>
+                //     handleChange(index, e.target.value, "description")
+                //   }
+                //   disabled={!edit}
+                //   required
+                //   rows={1}
+                //   onInput={autoResize}
+                //   style={{
+                //     border: "1px solid black",
+                //     resize: "none",
+                //     overflowY: "hidden",
+                //     borderRadius: "5px",
+                //   }}
+                // ></textarea>
               ),
               job_type: (
                 <select
