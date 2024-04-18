@@ -394,6 +394,11 @@ export default function Exemple_01({
     return sortedArray;
   };
 
+    function autoResize(event) {
+    event.target.style.height = "auto";
+    event.target.style.height = event.target.scrollHeight + "px";
+  }
+
   useEffect(() => {
     let temp = [];
     if (allRows) {
@@ -429,19 +434,38 @@ export default function Exemple_01({
                 />
               ),
               description: (
-                <input
-                  className="form-control"
+                // <input
+                //   className="form-control"
+                //   type="text"
+                //   placeholder="job description"
+                //   value={row.description}
+                //   onChange={(e) =>
+                //     handleChange(index, e.target.value, "description")
+                //   }
+                //   required
+                //   disabled={!edit}
+                //   id="terms"
+                //   style={{ border: "1px solid black" }}
+                // />
+                 <textarea
+                  // className="form-control form-control-table"
                   type="text"
                   placeholder="job description"
                   value={row.description}
                   onChange={(e) =>
                     handleChange(index, e.target.value, "description")
                   }
-                  required
                   disabled={!edit}
-                  id="terms"
-                  style={{ border: "1px solid black" }}
-                />
+                  required
+                  rows={1}
+                  onInput={autoResize}
+                  style={{
+                    border: "1px solid black",
+                    resize: "none",
+                    overflowY: "hidden",
+                    borderRadius: "5px",
+                  }}
+                ></textarea>
               ),
               job_type: (
                 <select

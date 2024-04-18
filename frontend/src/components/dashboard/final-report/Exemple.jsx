@@ -1153,6 +1153,11 @@ export default function Exemple_01({
     return overall_Value;
   }
 
+    function autoResize(event) {
+    event.target.style.height = "auto";
+    event.target.style.height = event.target.scrollHeight + "px";
+  }
+
   useEffect(() => {
     let temp = [];
 
@@ -1208,8 +1213,21 @@ export default function Exemple_01({
               //     Add on Policy(Not Effective)
               //   </option>
               // </select>
-              <input
-                className="form-control form-control-table"
+              // <input
+              //   className="form-control form-control-table"
+              //   type="text"
+              //   value={row.description}
+              //   disabled={!edit}
+              //   onChange={(e) =>
+              //     handleChange(index, e.target.value, "description")
+              //   }
+              //   required
+              //   // disabled={!edit}
+              //   id="terms"
+              //   style={{ border: "1px solid black" }}
+              // />
+              <textarea
+                // className="form-control form-control-table"
                 type="text"
                 value={row.description}
                 disabled={!edit}
@@ -1217,10 +1235,10 @@ export default function Exemple_01({
                   handleChange(index, e.target.value, "description")
                 }
                 required
-                // disabled={!edit}
-                id="terms"
-                style={{ border: "1px solid black" }}
-              />
+                rows={1}
+                onInput={autoResize}
+                style={{ border: "1px solid black", resize: "none", overflowY: "hidden", borderRadius:"5px" }}
+              ></textarea>
             ),
             // description: (
             //   <select
