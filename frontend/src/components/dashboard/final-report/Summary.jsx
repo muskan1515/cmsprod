@@ -250,9 +250,9 @@ const Summary = ({
     Number(totalPartsAssessed) -
     (Number(LessExcess) + Number(LessImposed) + Number(Other)));
     setMetalPercent(metalSalvageValue);
-  setExpectedSalvage( (Number(totalLabrorAssessed + totalPartsAssessed) *
-      Number(metalSalvageValue)) /
-    100);
+  // setExpectedSalvage( (Number(totalLabrorAssessed + totalPartsAssessed) *
+  //     Number(metalSalvageValue)) /
+  //   100);
     setDepreciationOnParts( (Number(totalLabrorAssessed + totalPartsAssessed) *
     Number(metalSalvageValue)) /
     100);
