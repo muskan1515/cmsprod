@@ -240,9 +240,9 @@ const PropertyVideo = ({ SomeComponent, leadId }) => {
 
   }
 
-  useEffect(()=>{
-    setExpectedSalvage(Number(totalMetalRows) * Number(MetalPercent)/100);
-  },[totalMetalRows])
+  // useEffect(()=>{
+  //   setExpectedSalvage(Number(totalMetalRows) * Number(MetalPercent)/100);
+  // },[totalMetalRows])
 
 
   const returnTotal = () => {
@@ -1081,11 +1081,12 @@ const formatDateFinal = (inputDate2,type) => {
       leadId,
     };
     
+    console.log('----1084',payload);
     
     toast.loading("Updating the final Report!!", {
       className: "toast-loading-message",
     });
-
+    
     axios.put("/api/updateFinalReport",payload,{
       headers:{
         Authorization:`Bearer ${userInfo[0].Token}`,
