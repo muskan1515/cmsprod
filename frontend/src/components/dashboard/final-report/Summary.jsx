@@ -242,7 +242,9 @@ const Summary = ({
 
    console.log("Endurance",Endurance,getDocumentList())
     const summary = summaryNotes(claim)
-   
+    if (RemarkOnSalvage === 'undefined' || RemarkOnSalvage === null){
+      setRemarkOnSalvage("This is a metal salvage depreciation %")
+    }
     setTotalEstimate(totalPartsEstimate + totalLabrorEstimate);
     setTotalLabor(totalLabrorAssessed);
     setTotalCostOfParts(totalPartsAssessed);
@@ -295,6 +297,7 @@ const Summary = ({
   const [hide,setHide] = useState(false)
   useEffect(()=>{
     console.log("metalPercent",MetalPercent,totalMetalRows)
+    if (Number(MetalPercent)>0)
       setExpectedSalvage(roundOff((Number(totalMetalRows)*Number(MetalPercent))/100) );
     
   },[MetalPercent,totalMetalRows])
@@ -733,7 +736,7 @@ const Summary = ({
                 </div>
                 <div className="col-lg-12">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="propertyTitle"
                     value={MetalPercent}
@@ -795,7 +798,10 @@ const Summary = ({
                     id="propertyTitle"
                     readOnly={!isEdit}
                     // placeholder="Enter Registration No."
-                    value={!RemarkOnSalvage || !RemarkOnSalvage == 'undefined'  ? RemarkOnSalvage : "This is a metal salvage depreciation %"}
+                    // value={!RemarkOnSalvage || !RemarkOnSalvage == 'undefined'  ? RemarkOnSalvage : "This is a metal salvage depreciation %"}
+                    
+                    value={RemarkOnSalvage}
+
                     onChange={(e)=>setRemarkOnSalvage(e.target.value)}
                     placeholder="This is a metal salvage depreciation %"
                   />
