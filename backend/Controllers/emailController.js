@@ -356,11 +356,14 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           
         `;
   
+          const mainEmail = emailArray.length > 0 ? emailArray[0] : "";
+          const ccArray = emailArray.length > 2 ? `${emailArray[1]},${emailArray[2]}` : emailArray.length > 1 ? `${emailArray[1]}`: ""
 
-        emailArray.map((email,index)=>{
+          if(mainEmail){
           const mailOptions = {
             from: fromEmail,
-            to: email,
+            to: mainEmail,
+            cc : ccArray,
             subject: subject,
             html: emailContent,
           };
@@ -396,7 +399,8 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
               res.status(200).send("Email sent successfully");
             }
           });
-        })
+        }
+      
          
         });
       }
@@ -557,6 +561,7 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
     Note:- If We Cannot get the response with in 01 day we will inform the insurer that the insured is not interseted in the
             claim. So close the file as"No Claim" in non copperation & non submission of the documents. 
     `;
+    
   
     const mailOptions = {
       from: "infosticstech@gmail.com",
