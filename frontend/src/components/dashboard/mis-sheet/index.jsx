@@ -24,6 +24,7 @@ const Index = () => {
   const [startDate, setStartDate] = useState("");
   const [allInsurer, setAllInsurer] = useState([]);
   const [endDate, setEndDate] = useState("");
+  const [RegionType,setRegionType]=useState("All");
   const [DateType, setDateType] = useState("intimation");
 
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
@@ -180,7 +181,10 @@ const Index = () => {
                 {/* End .col */}
 
                 {/* End .col */}
-                <ExcelTable allRows={allRows} />
+                <ExcelTable 
+                RegionType={RegionType}
+                setRegionType={setRegionType}
+                allRows={allRows} />
 
                 <div className="col-lg-12">
                   <div className="my_dashboard_review mb40">
@@ -188,6 +192,8 @@ const Index = () => {
                       <div className="table-responsive mt0">
                         {/* <TableData /> */}
                         <Exemple
+                          RegionType={RegionType}
+                          setRegionType={setRegionType}
                           allRows={allRows}
                           setStartDate={setStartDate}
                           setEndDate={setEndDate}

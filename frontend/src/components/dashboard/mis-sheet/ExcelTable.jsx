@@ -1,8 +1,30 @@
 import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 
-function ExcelTable({ allRows }) {
+function ExcelTable({ 
+  RegionType,
+  setRegionType, 
+  allRows 
+}) {
   const [isExportClicked, setIsExportClicked] = useState(false);
+  const [dataRows,setDataRows]=useState([]);
+
+  useEffect(()=>{
+    let data = [];
+    console.log("allRows",allRows)
+    allRows.map((row,index)=>{
+      const isChandigarh = String(row.ReferenceNo).includes("CHD") && String(RegionType) === "Chandigarh";
+      const isDelhi = String(row.ReferenceNo).includes("DLH") && String(RegionType) === "Delhi";
+      const isJodhpur = String(row.ReferenceNo).includes("JDH") && String(RegionType) === "Jodhpur";
+
+      if(String(RegionType) === "All" || isChandigarh || isDelhi ||isJodhpur){
+        data.push(row)
+      }
+      
+    })
+    setDataRows(data);
+    console.log("dataa",data,RegionType)
+  },[allRows,RegionType])
 
   function formatDate(dateString) {
     if(dateString === "" || dateString === null  || dateString === "undefined"){
@@ -50,7 +72,7 @@ function ExcelTable({ allRows }) {
         "Bill Total",
         "Bill Date",
       ],
-      ...allRows.map((res, index) => [
+      ...dataRows.map((res, index) => [
         index + 1,
         res.ReferenceNo,
         res.PolicyNumber,
@@ -74,10 +96,6 @@ function ExcelTable({ allRows }) {
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, "table.xls");
   }
-
-  // const calculateTAT = (today,addedDate)=>{
-  //   return  Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
-  // }
 
   return (
     <div className="">
@@ -115,7 +133,7 @@ function ExcelTable({ allRows }) {
               </tr>
             </thead>
             <tbody>
-              {allRows.map((res, index) => (
+              {dataRows.map((res, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{res.ReferenceNo}</td>

@@ -119,6 +119,8 @@ export default function Exemple({
   allInsurer,
   startDate,
   DateType,
+  RegionType,
+  setRegionType,
   setDateType,
   endDate,
 }) {
@@ -131,7 +133,7 @@ export default function Exemple({
   const [changeInRegion,setChangeInRegion]=useState(false);
   
   const [InsurerType,setInsurerType]=useState("United India Insurance");
-  const [RegionType,setRegionType]=useState("");
+  
   const sortObjectsByOrderIdDescending = (data) => {
     return data.sort((a, b) => b.doi - a.doi);
   };
