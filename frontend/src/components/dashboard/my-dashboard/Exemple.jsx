@@ -227,13 +227,10 @@ export default function Exemple({
         registration_no: claim.RegistrationNo,
         region: claim.Region,
         added_date: updatedFormatDate(convertToIST(claim.AddedDate)),
-        // added_date: new Date(claim.AddedDate).toLocaleString(undefined, {
-        //   timeZone: "Asia/Kolkata",
-        // }),
         city: tempGarage ? tempGarage[1] : "N.Aa",
         state: tempGarage ? tempGarage[2] : "N.A.",
         assigned_garage: tempGarage ? tempGarage[0] : "N.A.",
-        case_age: "N.A.",
+        case_age: claim?.garageNumber,
         tat: `${claim.TAT} days`,
         repairer_mail_id: claim.RepairerMailId ? claim.RepairerMailId : "N.A.",
         document:
@@ -241,9 +238,7 @@ export default function Exemple({
             <span className="text-success" style={{ marginLeft: "40px" }}>
               <FaCheckCircle />
             </span>
-          ) : (
-            //   src="data:image/jpeg;base64,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"
-            <span
+          ) : (<span
               className="flaticon-close text-danger"
               style={{ marginLeft: "40px" }}
             ></span>
