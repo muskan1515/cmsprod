@@ -567,7 +567,7 @@ const ErrorPageContent = ({ feeReport , allOffices }) => {
                   <td>:</td>
                   <td>
                     <span>
-                      {feeReport?.vehicleOnlineDetails?.RegisteredNumber}
+                      {feeReport?.vehicleDetails?.RegisteredNumber}
                     </span>
                   </td>
                   <td></td>
