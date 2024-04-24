@@ -7,6 +7,7 @@ import {
   calculateDepreciationsPercenatge,
   getMonthsDifference,
 } from "./functions";
+import { getExpandedData } from "./extractFunction";
 
 const headCells = [
   {
@@ -93,18 +94,6 @@ const headCells = [
     label: "Type",
     width: 100,
   },
-  // {
-  //   id: "message",
-  //   numeric: false,
-  //   label: "Request Type",
-  //   width: 100,
-  // },
-  // {
-  //   id: "action",
-  //   numeric: false,
-  //   label: "Action",
-  //   width: 100,
-  // },
 ];
 
 export default function Exemple_01({
@@ -162,7 +151,6 @@ export default function Exemple_01({
     return result;
   };
 
-
   const [metalDep, setMetalDep] = useState(0);
   // const []
   const [change, setChange] = useState(false);
@@ -176,23 +164,28 @@ export default function Exemple_01({
   const [type, setType] = useState("");
   const [currentType, setCurrentType] = useState("Both");
   const [remark, setRemark] = useState("");
-  const [updatedSNO,setUpdatedSNO]=useState(0);
+  const [updatedSNO, setUpdatedSNO] = useState(0);
   const [gst, setGst] = useState(0);
   const [change2, setChange2] = useState(false);
 
   const [allRows, setAllRows] = useState([]);
   const [newParts, setNewParts] = useState([]);
 
-  const [allRemarks,setAllRemarks]=useState([
-    'Not allowed','Intact',' Repair allowed','IMT23',
-    'Not correlate','Not relevant','Damaged','Broken',
-    'As per PI','Burnt','Not payable'
+  const [allRemarks, setAllRemarks] = useState([
+    "Not allowed",
+    "Intact",
+    " Repair allowed",
+    "IMT23",
+    "Not correlate",
+    "Not relevant",
+    "Damaged",
+    "Broken",
+    "As per PI",
+    "Burnt",
+    "Not payable",
   ]);
 
   const [changeParts, setChangeParts] = useState(false);
-
-
-  console.log("alldeps",allDepreciations);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -225,8 +218,6 @@ export default function Exemple_01({
         },
       })
       .then((res) => {
-        console.log(res.data.userData);
-
         // setNewParts(res.data.userData);
         let newPart = res.data.userData;
         let temp_row = [];
@@ -235,21 +226,24 @@ export default function Exemple_01({
           total_estimate = 0,
           total_metal = 0;
         let type = "Both";
-        let metalParts=0;
+        let metalParts = 0;
         newPart.map((part, index) => {
           if (String(part.LeadID) === String(LeadID)) {
-            
             let overall = Number(part.Assessed) * Number(part.QA);
-        
-            const dep = String(claim?.claimDetails?.PolicyType) === "Regular" ?
-            (Number(overall) * Number(part.DepreciationPct)) /100:0;
+
+            const dep =
+              String(claim?.claimDetails?.PolicyType) === "Regular"
+                ? (Number(overall) * Number(part.DepreciationPct)) / 100
+                : 0;
             overall -= dep;
             const overall_e = Number(part.Estimate) * Number(part.QE);
             const GSTT_e = (overall_e * Number(part.GSTPct)) / 100;
             const GSTT = (overall * Number(part.GSTPct)) / 100;
 
-            const requiredTotal = part.WithTax === 1 || part.WithTax === 3   ? overall + GSTT : overall;
-            console.log("requiredTotal",requiredTotal)
+            const requiredTotal =
+              part.WithTax === 1 || part.WithTax === 3
+                ? overall + GSTT
+                : overall;
 
             snoId = Number(snoId) < Number(part.SNO) ? part.SNO : snoId;
             const temp = {
@@ -276,12 +270,13 @@ export default function Exemple_01({
                 : String(part.WithTax) === "2"
                 ? "Estimate"
                 : "Assessed";
-              
+
             if (part.IsActive === 1) {
               total_assessed = total_assessed + (overall + GSTT);
 
-              metalParts  += (part.TypeOfMaterial === "Metal")?(overall+GSTT):0;
-              console.log("metalParts",metalParts,overall+GSTT,index)
+              metalParts +=
+                part.TypeOfMaterial === "Metal" ? overall + GSTT : 0;
+
               total_metal =
                 total_metal +
                 (part.TypeOfMaterial === "Metal"
@@ -295,12 +290,9 @@ export default function Exemple_01({
             temp_row.push(temp);
           }
         });
-        console.log(temp_row);
-        console.log("totalRows in firat load",allRows);
         setAllRows(temp_row);
         setCurrentType(type);
-        console.log("metal",metalParts)
-        settotalMetalRows(metalParts)
+        settotalMetalRows(metalParts);
         setMetalSalvageValue(total_metal);
         setTotaAssessed(total_assessed);
         setTotalPartsAssessed(total_assessed);
@@ -309,23 +301,20 @@ export default function Exemple_01({
         setCurrentType(type);
         setChangeParts(true);
         const newSNO = snoId !== 0 ? snoId : generateSnoId();
-        setUpdatedSNO(newSNO)
+        setUpdatedSNO(newSNO);
       })
       .catch((Err) => {
         alert(Err);
       });
   }, []);
 
-
-  const roundOff = (value)=>{
+  const roundOff = (value) => {
     const roundedValue = parseFloat(value).toFixed(2);
-    return roundedValue
-  }
-  useEffect(()=>{
-  
-      setallNewParts(allRows);
-    
-  },[allRows]);
+    return roundedValue;
+  };
+  useEffect(() => {
+    setallNewParts(allRows);
+  }, [allRows]);
 
   function sortArrayOfObjects(array) {
     // Ensure the input is an array
@@ -333,31 +322,26 @@ export default function Exemple_01({
       console.error("Input is not an array.");
       return [];
     }
-  
+
     // Sort the array based on the PartType property
     const sortedArray = array.slice().sort((a, b) => {
       const partTypeA = a.PartType.toLowerCase();
       const partTypeB = b.PartType.toLowerCase();
-  
+
       if (partTypeA < partTypeB) return -1;
       if (partTypeA > partTypeB) return 1;
       return 0;
     });
-  
+
     return sortedArray;
   }
-  
-
-
-
-  useEffect(()=>{
-    let tempDep = sortArrayOfObjects(allDepreciations);
-    // setAllDepreciations(tempDep)
-
-  },[allDepreciations]);
 
   useEffect(() => {
-    console.log(currentType);
+    let tempDep = sortArrayOfObjects(allDepreciations);
+    // setAllDepreciations(tempDep)
+  }, [allDepreciations]);
+
+  useEffect(() => {
     changeTotalAccordingToPolicyType(currentType);
   }, [currentType]);
 
@@ -368,11 +352,8 @@ export default function Exemple_01({
     setTotaAssessed(calculateTotalAssessed);
     setTotalEstimate(calculateTotalEstimated);
     setTotalDifference(totalEstimate - totalAssessed);
-   
   }, [change2, currentType]);
   const openEditHandler = (idx) => {
-    // console.log(idx);
-
     const tempIdx = allRows[idx];
     setSac(tempIdx.sac);
     setDescription(tempIdx.description);
@@ -384,19 +365,15 @@ export default function Exemple_01({
     setOpenSave(true);
   };
 
-  console.log(policyType);
-
   useEffect(() => {
     calculateTotalAssessed();
     calculateTotalEstimated();
-   handleTotalChange();
+    handleTotalChange();
   }, [policyType]);
 
   const totalValue = () => {
     return gst + assessed;
   };
-
-  console.log(editIndex, openSave);
 
   const saveHandler = () => {
     setSac("");
@@ -411,12 +388,9 @@ export default function Exemple_01({
 
   let tempValue = 0;
 
-
   const handleAddRow = () => {
-
-    let newSNO = Number(updatedSNO) +1 ;
+    let newSNO = Number(updatedSNO) + 1;
     setUpdatedSNO(newSNO);
-    console.log("inside",newSNO);
     // Assuming a new row has a specific structure, adjust this as needed
     const newRow = {
       _id: allRows.length, // You may use a more robust ID generation logic
@@ -436,10 +410,8 @@ export default function Exemple_01({
       isActive: 1,
     };
 
-    
     const old = allRows;
     old.push(newRow);
-    console.log(old);
 
     setChange(true);
     setAllRows(old);
@@ -447,7 +419,7 @@ export default function Exemple_01({
 
   const calculateVehicleAge = () => {
     if (
-      !claim.vehicleDetails?.DateOfRegistration  ||
+      !claim.vehicleDetails?.DateOfRegistration ||
       !claim.claimDetails?.AddedDateTime
     ) {
       return "0";
@@ -455,9 +427,8 @@ export default function Exemple_01({
     const a = getMonthsDifference(DateRegistration);
 
     const b = getMonthsDifference(AccidentAddedDateTime);
-    console.log(DateRegistration,AccidentAddedDateTime,a-b)
-   
-    return `${a-b}`;
+
+    return `${a - b}`;
   };
 
   const calculatePolicyAge = () => {
@@ -469,12 +440,11 @@ export default function Exemple_01({
     } else return start;
   };
 
-  const sortNewParts=()=>{
-    let sortedArray =allRows;
-     sortedArray.sort((a, b) => a.sno - b.sno);
+  const sortNewParts = () => {
+    let sortedArray = allRows;
+    sortedArray.sort((a, b) => a.sno - b.sno);
     return sortedArray;
-
-  }
+  };
 
   const calculateDepreciationOnMetal = () => {
     const a = calculateDepreciationsPercenatge(
@@ -483,12 +453,10 @@ export default function Exemple_01({
       claim.vehicleDetails?.DateOfRegistration
     );
     setOverallMetailDep(a);
-    console.log(a);
-    return a;                            
+    return a;
   };
 
   const handleRemoveRow = (index) => {
-  
     let updatedRowsss = [];
     allRows.filter((row, i) => {
       const active = String(row.sno) === String(index) ? 0 : row.isActive;
@@ -518,115 +486,29 @@ export default function Exemple_01({
 
   const editHandler = () => {
     setEdit(true);
-    console.log(allRows);
   };
 
   const updateHandler = () => {
     setEdit(false);
   };
 
-  const handleChange = (index, val, field) => {
-    setChange2(true);
-    console.log(index, val, field);
+  const handleDescriptionChange = (index,value,field)=>{
+    let updatedRows = [];
+    allRows.map((row,idx)=>{
+      if(String(index) === String(idx)){
+        const expadedData = getExpandedData(row,value,field);
+        const newRow = {...expadedData};
+        updatedRows.push(newRow);
+      }
+      else{
+        updatedRows.push(row);
+      }
+      
+    })
+    setAllRows(updatedRows)
+  }
 
-    let oldRow = allRows;
-    const currentField = allRows[index];
-    const len = val.length;
-
-    const dep =
-      String(field) === "dep"
-        ? String(currentField.dep) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.dep;
-    const description =
-      String(field) === "description"
-        ? String(currentField.description) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.description;
-    const sac =
-      String(field) === "sac"
-        ? String(currentField.sac) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.sac;
-    const remark =
-      String(field) === "remark"
-        ? String(currentField.remark) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.remark;
-
-    const estimate =
-      String(field) === "estimate"
-        ? String(currentField.estimate) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.estimate;
-    const bill_sr =
-      String(field) === "bill_sr"
-        ? String(currentField.bill_sr) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.bill_sr;
-    const assessed =
-      String(field) === "assessed"
-        ? String(currentField.assessed) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.assessed;
-
-    const gst =
-      String(field) === "gst"
-        ? String(currentField.gst) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.gst;
-    const type =
-      String(field) === "type"
-        ? String(currentField.type) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.type;
-
-    const overall = Number(assessed) * Number(currentField.qa);
-    const subtract = 0;
-    const total_without = overall - subtract;
-    const total =
-      total_without +
-      (toggleGST % 2 !== 0
-        ? (total_without * Number(currentField.gst)) / 100
-        : 0);
-    console.log(total, total_without, overall, subtract);
-
-    const newOutput = {
-      _id: currentField._id, // You may use a more robust ID generation logic
-      sno: currentField.sno,
-      dep: dep, // Add default values or lea ve empty as needed
-      description: description,
-      sac: sac,
-      remark: remark,
-      estimate: estimate,
-      assessed: assessed,
-      qa: currentField.qa,
-      qe: currentField.qe,
-      bill_sr: bill_sr, // Assuming bill_sr increments with each new row
-      gst: gst,
-      total: total,
-      isActive: currentField.isActive,
-      type: type,
-    };
-
-    oldRow[index] = newOutput;
-    setAllRows(oldRow);
-    // console.log(allRows[index].field);
-    setChange(true);
-    // console.log(oldRow);
-  };
-
-
-
+ 
   const calculateTotalAssessed = () => {
     let without_gst = 0,
       with_gst = 0;
@@ -728,16 +610,15 @@ export default function Exemple_01({
   };
 
   const changeTotalAccordingToPolicyType = (policy) => {
-    console.log("currentType",policy,currentType)
     setCurrentType(policy);
 
     setPreRender(true);
     setToggleGST(2);
 
     const isIncludeGSTInAssessed =
-      String(policy) === "Assessed" || String(policy) === "Both" ;
+      String(policy) === "Assessed" || String(policy) === "Both";
     const isIncludeGSTInEstimate =
-    String(policy) === "Estimate" || String(policy) === "Both" ? true : false;
+      String(policy) === "Estimate" || String(policy) === "Both" ? true : false;
 
     let total_estimate = 0;
     let total_metal_sum = 0;
@@ -771,8 +652,11 @@ export default function Exemple_01({
       const overall = Number(row.assessed) * Number(row.qa);
       const subtract_before = 0;
       const subtract = overall - subtract_before;
-      const gst = (overall * Number(row.gst))/100;
-      const totalVal = String(policy)==="Both" || String(policy)==="Assessed"? overall +  gst : overall;
+      const gst = (overall * Number(row.gst)) / 100;
+      const totalVal =
+        String(policy) === "Both" || String(policy) === "Assessed"
+          ? overall + gst
+          : overall;
       updatedRow.total = totalVal;
       updatedOne.push(updatedRow);
     });
@@ -786,45 +670,6 @@ export default function Exemple_01({
     setChange2(true);
     setChange(true);
   };
-
-  // const handleToggleGSTHandler = () => {
-
-  //   console.log(currentType,toggleGST);
-
-  //   setPreRender(false);
-
-  //   const isIncludeGSTInAssessed = (toggleGST+1)%2 === 0 && currentType === "Assessed"  ? true : false;
-  //   const isIncludeGSTInEstimate = (toggleGST+1)%2 === 0 && currentType === "Estimate"  ? true : false;
-
-  //   let total_estimate =0;
-  //   let total_assessed=0;
-  //   let updatedOne = [];
-  //   allRows.map((row, index) => {
-
-  //   const updatedRow = row;
-
-  //   //for estimate calculate
-  //   const overall_estimate = Number(row.estimate) * Number(row.qe);
-  //   total_estimate = total_estimate + overall_estimate + (isIncludeGSTInEstimate ? (overall_estimate * Number(row.gst)) / 100 : 0);
-
-  //   //total assessed calculate
-  //   const overall_assessed = Number(row.assessed) * Number(row.qa);
-  //   const subtract_dep = 0;
-  //   const subtarct_final =  overall_assessed - subtract_dep;
-  //   total_assessed = total_assessed + subtarct_final  + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
-
-  //   //total calculation for every row
-  //   const total =
-  //   (Number(row.assessed)*Number(row.qa)) + (isIncludeGSTInAssessed ? (subtarct_final * Number(row.gst)) / 100 : 0);
-  //   updatedRow.total = total;
-  //   updatedOne.push(updatedRow)
-  //   });
-  //   setAllRows(updatedOne);
-  //   setTotaAssessed(total_assessed);
-  //   setTotalEstimate(total_estimate);
-  //   setToggleGST(toggleGST+1);
-  //   setChange(true)
-  // };
 
   const handleTotalChange = () => {
     let updatedOne = [];
@@ -842,25 +687,10 @@ export default function Exemple_01({
       updatedOne.push(updatedRow);
     });
 
-    console.log("updted", updatedOne);
     setAllRows(updatedOne);
     setToggleGST(toggleGST + 1);
     setChange(true);
   };
-
-  // DepreciationPct = '${row.dep}',
-  //   ItemName = '${row.description}',
-  //   HSNCode='${row.sac}',
-  //   Remark='${row.remark}',
-  //   Estimate = '${row.estimate}',
-  //   Assessed = '${row.assessed}',
-  //   QA='${row.qa}',
-  //   QE = '${row.qe}',
-  //   BillSr = '${row.Bill_sr}',
-  //   GSTPct='${row.gst}',
-  //   TypeOfMaterial='${row.type}',
-  //   WithoutTax='${row.total}'
-  //   WHERE ReportID = ${row.sno};
 
   const handleQeQaChange = (index, val, field) => {
     setChange2(true);
@@ -886,7 +716,7 @@ export default function Exemple_01({
       String(policyType) === "" || String(policyType) === "Regular"
         ? (overall * Number(currentField.dep)) / 100
         : 0;
-    // console.log(currentField.total,subtract);
+
     const total_without = overall - subtract;
     const total =
       Number(currentField.assessed) * Number(qa) +
@@ -895,9 +725,9 @@ export default function Exemple_01({
         : 0);
 
     const newOutput = {
-      _id: currentField._id, // You may use a more robust ID generation logic
+      _id: currentField._id,
       sno: currentField.sno,
-      dep: currentField.dep, // Add default values or lea ve empty as needed
+      dep: currentField.dep,
       description: currentField.description,
       sac: currentField.sac,
       remark: currentField.remark,
@@ -917,80 +747,43 @@ export default function Exemple_01({
     setAllRows(oldRow);
   };
 
-  // const handleGstChange=(index, val, field) => {
-
-  //   let oldRow = allRows;
-  //   const currentField = allRows[index];
-  //   const len = val.length;
-
-  //   const gst =
-  //   String(field) === "gst"
-  //     ? String(currentField.type) === val
-  //     ? val.slice(-1, 1)
-  //     : val
-  //   : currentField.gst;
-
-  //   const assessed_amount = (Number(currentField.assessed) * Number(val));
-  //   const total =  (assessed_amount + (Number(gst) * assessed_amount)/100) ;
-
-  //   const newOutput = {
-  //     _id: currentField._id, // You may use a more robust ID generation logic
-  //     sno: currentField.sno,
-  //     dep: currentField.dep, // Add default values or lea ve empty as needed
-  //     description: currentField.description,
-  //     sac: currentField.sac,
-  //     remark: currentField.remark,
-  //     estimate: currentField.estimate,
-  //     assessed: currentField.assessed,
-  //     qe: currentField.qe,
-  //     qa:currentField.qa,
-  //     bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
-  //     gst: gst,
-  //     total: total,
-  //     type: currentField.type,
-  //   };
-
-  //   oldRow[index] = newOutput;
-  //   setAllRows(oldRow);
-  //   // console.log(allRows[index].field);
-  //   setChange(true);
-  //   // console.log(oldRow);
-  // };
-
   const handleTypeChange = (index, val, field) => {
-
     setChange2(true);
-
 
     let oldRow = allRows;
     const currentField = allRows[index];
     const len = val.length;
 
-    const dep = claim?.vehicleDetails?.DateOfRegistration || claim?.vehicleDetails?.DateOfRegistration !=="undeifned" ? calculateDepreciationsPercenatge(
-      allDepreciations,
-      val,
-      DateOfRegistration
-    ) : 0;
+    const dep =
+      claim?.vehicleDetails?.DateOfRegistration ||
+      claim?.vehicleDetails?.DateOfRegistration !== "undeifned"
+        ? calculateDepreciationsPercenatge(
+            allDepreciations,
+            val,
+            DateOfRegistration
+          )
+        : 0;
 
     setMetalDep(dep);
 
     //calculate totlRows
     let totalMetalRows = 0;
-    allRows.map((row,idx)=>{
-      if((row.type === "Metal" && idx!==index) || (val === "Metal" && idx===index)){
-        const value = Number(row.assessed)*Number(row.qa);
-        const gst = (Number(value)*Number(row.gst))/100;
+    allRows.map((row, idx) => {
+      if (
+        (row.type === "Metal" && idx !== index) ||
+        (val === "Metal" && idx === index)
+      ) {
+        const value = Number(row.assessed) * Number(row.qa);
+        const gst = (Number(value) * Number(row.gst)) / 100;
 
-        const totalRowMetalValue = value+gst;
-        totalMetalRows =  totalMetalRows + totalRowMetalValue;
+        const totalRowMetalValue = value + gst;
+        totalMetalRows = totalMetalRows + totalRowMetalValue;
       }
- 
     });
 
     settotalMetalRows(totalMetalRows);
 
     //***** *//
-
 
     const type =
       String(field) === "type"
@@ -1004,7 +797,11 @@ export default function Exemple_01({
     const total_without = overall - subtract;
     const total =
       Number(currentField.assessed) * Number(currentField.qa) +
-      String(currentType === "Assessed"|| String(currentType) === "Both" ? (total_without * Number(gst)) / 100 : 0);
+      String(
+        currentType === "Assessed" || String(currentType) === "Both"
+          ? (total_without * Number(gst)) / 100
+          : 0
+      );
 
     const newOutput = {
       _id: currentField._id, // You may use a more robust ID generation logic
@@ -1056,7 +853,7 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
-  const [hide,setHide] =useState(false)
+  const [hide, setHide] = useState(false);
 
   const handleGSTChange = (index, val, field) => {
     setChange2(true);
@@ -1072,7 +869,9 @@ export default function Exemple_01({
         : currentField.gst;
 
     const isIncludeGSTInAssessed =
-      String(currentType) === "Assessed" || String(currentType) === "Both" ? true : false;
+      String(currentType) === "Assessed" || String(currentType) === "Both"
+        ? true
+        : false;
 
     //total assessed calculate
     const overall_assessed =
@@ -1116,18 +915,21 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
-  const calculateTotal = (id)=>{
+  const calculateTotal = (id) => {
     let row = {};
-    allRows.map((tempRow,index)=>{
-      if(String(tempRow.sno) === String(id)){
-        row=tempRow;
+    allRows.map((tempRow, index) => {
+      if (String(tempRow.sno) === String(id)) {
+        row = tempRow;
       }
     });
 
     const overall = Number(row?.assessed) * Number(row?.qe);
-    const gst = String(currentType) === "Both" ||  String(currentType) === "Assessed" ? overall * Number(18.5)/100 : 0;
+    const gst =
+      String(currentType) === "Both" || String(currentType) === "Assessed"
+        ? (overall * Number(18.5)) / 100
+        : 0;
     return overall + gst;
-  }
+  };
 
   console.log(toggleGST, currentType, "type");
 
@@ -1136,27 +938,26 @@ export default function Exemple_01({
     setChange(true);
   };
 
- const calculateRowTotal=(sno)=>{
+  const calculateRowTotal = (sno) => {
     let requiredRow = {};
-    allRows.map((row,index)=>{
-      if(String(row.sno) === String(sno)){
+    allRows.map((row, index) => {
+      if (String(row.sno) === String(sno)) {
         requiredRow = row;
       }
     });
 
-    const overall_Value = Number(requiredRow.assessed)*Number(requiredRow.qa);
-    const gstValue = (overall_Value * Number(requiredRow.gst))/100;
+    const overall_Value = Number(requiredRow.assessed) * Number(requiredRow.qa);
+    const gstValue = (overall_Value * Number(requiredRow.gst)) / 100;
 
-    if(String(currentType) === "" || String(currentType) === "Both" || String(currentType) === "Assessed"){
-      return overall_Value+gstValue;
+    if (
+      String(currentType) === "" ||
+      String(currentType) === "Both" ||
+      String(currentType) === "Assessed"
+    ) {
+      return overall_Value + gstValue;
     }
     return overall_Value;
-  }
-
-  //   function autoResize(event) {
-  //   event.target.style.height = "auto";
-  //   event.target.style.height = event.target.scrollHeight + "px";
-  // }
+  };
 
   useEffect(() => {
     let temp = [];
@@ -1165,13 +966,12 @@ export default function Exemple_01({
 
     const getData = () => {
       const sortedOne = sortNewParts();
-      console.log(sortedOne)
       sortedOne.map((row, index) => {
         // console.log(row);
         if (Number(row.isActive) === 1) {
           const newRow = {
-            _id: index + 1, 
-            row:(
+            _id: index + 1,
+            row: (
               <button
                 className="flaticon-minus"
                 onClick={() => handleRemoveRow(row.sno)}
@@ -1187,162 +987,80 @@ export default function Exemple_01({
                 id="terms"
                 style={{ border: "1px solid black" }}
               />
-            ), // Add default values or leave empty as needed
+            ),
             item_name: (
-              // <select
-              //   className="selectpicker form-select p-1"
-              //   style={{ fontSize: "smaller" }}
-              //   data-live-search="true"
-              //   data-width="100%"
-              //   value={row.description}
-              //   disabled={!edit}
-              //   onChange={(e) =>
-              //     handleChange(index, e.target.value, "description")
-              //   }
-              // >
-              //   <option data-tokens="Status1" value={"Regular"}>
-              //     Regular
-              //   </option>
-              //   <option data-tokens="Status2" value={"Add on Policy"}>
-              //     Add on Policy
-              //   </option>
-              //   <option
-              //     data-tokens="Status3"
-              //     value={"Add on Policy(Not Effective)"}
-              //   >
-              //     Add on Policy(Not Effective)
-              //   </option>
-              // </select>
               <input
                 className="form-control form-control-table"
                 type="text"
                 value={row.description}
                 disabled={!edit}
                 onChange={(e) =>
-                  handleChange(index, e.target.value, "description")
+                  handleDescriptionChange(index, e.target.value,"description")
                 }
                 required
-                // disabled={!edit}
-                id="terms"
+                id={`${row.sno}_'depscr`}
                 style={{ border: "1px solid black" }}
               />
-              // <textarea
-              //   className="form-control form-control-table"
-              //   type="text"
-              //   value={row.description}
-              //   disabled={!edit}
-              //   onChange={(e) =>
-              //     handleChange(index, e.target.value, "description")
-              //   }
-              //   required
-              //   rows={1}
-              //   onInput={autoResize}
-              //   style={{ border: "1px solid black", resize: "none", overflowY: "hidden", borderRadius:"5px" }}
-              // ></textarea>
             ),
-            // description: (
-            //   <select
-            //     style={{ marginTop: "-5px" }}
-            //     className="selectpicker form-select"
-            //     data-live-search="true"
-            //     data-width="100%"
-            //     value={row.description}
-            //     disabled={!edit}
-            //     onChange={(e) =>
-            //       handleChange(index, e.target.value, "description")
-            //     }
-            //   >
-            //     <option data-tokens="Status1" value={"Regular"}>
-            //       Regular
-            //     </option>
-            //     <option data-tokens="Status2" value={"Add on Policy"}>
-            //       Add on Policy
-            //     </option>
-            //     <option
-            //       data-tokens="Status3"
-            //       value={"Add on Policy(Not Effective)"}
-            //     >
-            //       Add on Policy(Not Effective)
-            //     </option>
-            //   </select>
-            // ),
+
             hsh_code: (
               <input
                 className="form-control form-control-table"
                 type="text"
                 value={row.sac}
-                onChange={(e) => handleChange(index, e.target.value, "sac")}
+                onChange={(e) => handleDescriptionChange(index, e.target.value, "sac")}
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_sac`}
                 style={{ border: "1px solid black" }}
               />
             ),
-           
+
             remark: (
-              // <input
-              //   className="form-control form-control-table"
-              //   type="text"
-              //   value={row.remark}
-              //   onChange={(e) => handleChange(index, e.target.value, "remark")}
-              //   required
-              //   disabled={!edit}
-              //   id="terms"
-              //   style={{ border: "1px solid black" }}
-              // />
               <select
                 style={{ marginTop: "-5px" }}
                 className="selectpicker form-select"
                 data-live-search="true"
                 data-width="100%"
                 value={row.remark}
-                onChange={(e) => handleChange(index, e.target.value, "remark")}
+                onChange={(e) => handleDescriptionChange(index, e.target.value, "remark")}
                 disabled={!edit}
               >
-               
-              <option data-tokens="Status1" value={" As per PI"}>
-              As per PI
-            </option>
-            <option data-tokens="Status2" value={"Burnt"}>
-              Burnt
-            </option>
-              <option data-tokens="Status1" value={"Broken"}>
-                Broken
-              </option>
-              <option data-tokens="Status2" value={"Damaged"}>
-              Damaged
-            </option>
-            <option data-tokens="Status1" value={"IMT23"}>
-              IMT23
-            </option>
-           
+                <option data-tokens="Status1" value={" As per PI"}>
+                  As per PI
+                </option>
+                <option data-tokens="Status2" value={"Burnt"}>
+                  Burnt
+                </option>
+                <option data-tokens="Status1" value={"Broken"}>
+                  Broken
+                </option>
+                <option data-tokens="Status2" value={"Damaged"}>
+                  Damaged
+                </option>
+                <option data-tokens="Status1" value={"IMT23"}>
+                  IMT23
+                </option>
+
                 <option data-tokens="Status1" value={"Intact"}>
                   Intact
                 </option>
-            <option data-tokens="Status1" value={"Regular"}>
-            Not allowed
-           </option>
-           <option data-tokens="Status1" value={"Not correlate"}>
-           Not correlate
-         </option>
-         <option
-         data-tokens="Status3"
-         value={"Not payable"}
-       >
-         Not payable
-       </option>
-         <option data-tokens="Status2" value={"Not relevant"}>
-           Not relevant
-         </option>
-        
-             
-         
-              
+                <option data-tokens="Status1" value={"Regular"}>
+                  Not allowed
+                </option>
+                <option data-tokens="Status1" value={"Not correlate"}>
+                  Not correlate
+                </option>
+                <option data-tokens="Status3" value={"Not payable"}>
+                  Not payable
+                </option>
+                <option data-tokens="Status2" value={"Not relevant"}>
+                  Not relevant
+                </option>
+
                 <option data-tokens="Status2" value={"Repair allowed"}>
                   Repair allowed
                 </option>
-               
-             
               </select>
             ),
             assessed: (
@@ -1351,11 +1069,11 @@ export default function Exemple_01({
                 type="number"
                 value={row.assessed}
                 onChange={(e) =>
-                  handleChange(index, e.target.value, "assessed")
+                  handleDescriptionChange(index, e.target.value, "assessed")
                 }
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_assessed`}
                 style={{ border: "1px solid black" }}
               />
             ),
@@ -1366,10 +1084,10 @@ export default function Exemple_01({
                 value={row.estimate}
                 disabled={!edit}
                 onChange={(e) =>
-                  handleChange(index, e.target.value, "estimate")
+                  handleDescriptionChange(index, e.target.value, "estimate")
                 }
                 required
-                id="terms"
+                id={`${row.sno}_estimate`}
                 style={{ border: "1px solid black" }}
               />
             ),
@@ -1382,7 +1100,7 @@ export default function Exemple_01({
                 onChange={(e) => handleQeQaChange(index, e.target.value, "qe")}
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_qe`}
                 style={{ border: "1px solid black" }}
               />
             ),
@@ -1394,7 +1112,7 @@ export default function Exemple_01({
                 onChange={(e) => handleQeQaChange(index, e.target.value, "qa")}
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_qa`}
                 style={{ border: "1px solid black" }}
               />
             ),
@@ -1403,10 +1121,10 @@ export default function Exemple_01({
                 className="form-control form-control-table"
                 type="number"
                 value={row.bill_sr}
-                onChange={(e) => handleChange(index, e.target.value, "bill_sr")}
+                onChange={(e) => handleDescriptionChange(index, e.target.value, "bill_sr")}
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_bill`}
                 style={{ border: "1px solid black" }}
               />
             ), // Assuming bill_sr increments with each new row
@@ -1418,7 +1136,7 @@ export default function Exemple_01({
                 onChange={(e) => handleGSTChange(index, e.target.value, "gst")}
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_gst`}
                 style={{ border: "1px solid black" }}
               />
             ),
@@ -1430,7 +1148,7 @@ export default function Exemple_01({
                 // onChange={(e)=>handleChange(index,e.target.value,"gst")}
                 required
                 disabled={!edit}
-                id="terms"
+                id={`${row.sno}_total`}
                 style={{ border: "1px solid black" }}
               />
             ),
@@ -1447,7 +1165,6 @@ export default function Exemple_01({
                 }
               >
                 {allDepreciations.map((dep, index) => {
-                  console.log("Dep",dep);
                   return index > 0 &&
                     allDepreciations[index]?.PartType ===
                       allDepreciations[index - 1]?.PartType ? null : (
@@ -1479,7 +1196,7 @@ export default function Exemple_01({
     setUpdatedCode(temp);
 
     setChange(false);
-  }, [change, edit, policyType, setAllRows, changeParts]);
+  }, [change, edit, policyType, allRows, changeParts]);
 
   return (
     <SmartTable
@@ -1506,7 +1223,7 @@ export default function Exemple_01({
       claim={claim}
       setHide={setHide}
       hide={hide}
-      setEdit = {setEdit}
+      setEdit={setEdit}
       setCurrentType={setCurrentType}
       changeTotalAccordingToPolicyType={changeTotalAccordingToPolicyType}
     />

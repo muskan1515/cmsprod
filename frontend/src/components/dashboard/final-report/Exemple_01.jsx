@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios, { all } from "axios";
 import { SERVER_DIRECTORY } from "next/dist/shared/lib/constants";
 import { ro } from "date-fns/locale";
+import { getExpandedData } from "./extractFunction";
 
 const headCells = [
   {
@@ -63,19 +64,6 @@ const headCells = [
     label: "GST%",
     width: 50,
   },
-
-  // {
-  //   id: "total",
-  //   numeric: false,
-  //   label: "Total Value",
-  //   width: 100,
-  // },
-  // {
-  //   id: "type",
-  //   numeric: false,
-  //   label: "Type",
-  //   width: 100,
-  // },
 ];
 
 export default function Exemple_01({
@@ -312,92 +300,27 @@ export default function Exemple_01({
     if (String(type) === "estimate") return row.sac;
   };
 
-  const handleChange = (index, val, field) => {
-    let oldRow = allRows;
-    const currentField = allRows[index];
-    const len = val.length;
-
-    const description =
-      String(field) === "description"
-        ? String(currentField.description) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.description;
-    const bill_sr =
-      String(field) === "bill_sr"
-        ? String(currentField.bill_sr) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.bill_sr;
-    const type =
-      String(field) === "type"
-        ? String(currentField.type) === val
-          ? val.slice(-1, 1)
-          : Number(val)
-        : currentField.type;
-    const sac =
-      String(field) === "sac"
-        ? String(currentField.sac) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.sac;
-    const estimate =
-      String(field) === "estimate"
-        ? String(currentField.estimate) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.estimate;
-    const assessed =
-      String(field) === "assessed"
-        ? String(currentField.assessed) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.assessed;
-
-    const gst =
-      String(field) === "gst"
-        ? String(currentField.gst) === val
-          ? val.slice(-1, 1)
-          : val
-        : currentField.gst;
-
-    const newOutput = {
-      _id: currentField._id, // You may use a more robust ID generation logic
-      sno: currentField.sno,
-      description: description,
-      sac: sac,
-      estimate: estimate,
-      assessed: assessed,
-      gst: gst,
-      bill_sr: bill_sr,
-      type: type,
-      isActive: currentField.isActive,
-      gstPct: currentField.gstPct,
-    };
-
-    // console.log(newOutput);
-
-    oldRow[index] = newOutput;
-    setAllRows(oldRow);
-    // console.log(allRows[index].field);
-    // setToggleEstimate(true);
-
-    setChange(true);
-    setReload(true);
-
-    // console.log(oldRow);
-  };
-
   const sortNewParts = () => {
     let sortedArray = allRows;
     sortedArray.sort((a, b) => a.sno - b.sno);
     return sortedArray;
   };
 
-  //   function autoResize(event) {
-  //   event.target.style.height = "auto";
-  //   event.target.style.height = event.target.scrollHeight + "px";
-  // }
+  const handleDescriptionChange = (index,value,field)=>{
+    let updatedRows = [];
+    allRows.map((row,idx)=>{
+      if(String(index) === String(idx)){
+        const expadedData = getExpandedData(row,value,field);
+        const newRow = {...expadedData};
+        updatedRows.push(newRow);
+      }
+      else{
+        updatedRows.push(row);
+      }
+      
+    })
+    setAllRows(updatedRows)
+  }
 
   useEffect(() => {
     let temp = [];
@@ -425,7 +348,7 @@ export default function Exemple_01({
                   placeholder="Bill Serial No"
                   value={row.bill_sr}
                   onChange={(e) =>
-                    handleChange(index, e.target.value, "bill_sr")
+                    handleDescriptionChange(index, e.target.value, "bill_sr")
                   }
                   required
                   disabled={!edit}
@@ -440,32 +363,13 @@ export default function Exemple_01({
                   placeholder="job description"
                   value={row.description}
                   onChange={(e) =>
-                    handleChange(index, e.target.value, "description")
+                    handleDescriptionChange(index, e.target.value, "description")
                   }
                   required
                   disabled={!edit}
                   id="terms"
                   style={{ border: "1px solid black" }}
                 />
-                //  <textarea
-                //   // className="form-control form-control-table"
-                //   type="text"
-                //   placeholder="job description"
-                //   value={row.description}
-                //   onChange={(e) =>
-                //     handleChange(index, e.target.value, "description")
-                //   }
-                //   disabled={!edit}
-                //   required
-                //   rows={1}
-                //   onInput={autoResize}
-                //   style={{
-                //     border: "1px solid black",
-                //     resize: "none",
-                //     overflowY: "hidden",
-                //     borderRadius: "5px",
-                //   }}
-                // ></textarea>
               ),
               job_type: (
                 <select
@@ -475,7 +379,7 @@ export default function Exemple_01({
                   data-width="100%"
                   value={row.type}
                   disabled={!edit}
-                  onChange={(e) => handleChange(index, e.target.value, "type")}
+                  onChange={(e) => handleDescriptionChange(index, e.target.value, "type")}
                 >
                   <option data-tokens="Status1" value={0}>
                     Non-Paint
@@ -490,7 +394,7 @@ export default function Exemple_01({
                   className="form-control"
                   type="text"
                   value={row.sac}
-                  onChange={(e) => handleChange(index, e.target.value, "sac")}
+                  onChange={(e) => handleDescriptionChange(index, e.target.value, "sac")}
                   required
                   disabled={!edit}
                   id="terms"
@@ -504,7 +408,7 @@ export default function Exemple_01({
                   value={row.estimate}
                   disabled={!edit}
                   onChange={(e) =>
-                    handleChange(index, e.target.value, "estimate")
+                    handleDescriptionChange(index, e.target.value, "estimate")
                   }
                   required
                   id="terms"
@@ -517,7 +421,7 @@ export default function Exemple_01({
                   type="text"
                   value={row.assessed}
                   onChange={(e) =>
-                    handleChange(index, e.target.value, "assessed")
+                    handleDescriptionChange(index, e.target.value, "assessed")
                   }
                   required
                   disabled={!edit}
@@ -532,7 +436,7 @@ export default function Exemple_01({
                     type="checkbox"
                     value={row.gst}
                     checked={row.gst % 2 !== 0}
-                    onChange={(e) => handleChange(index, row.gst + 1, "gst")}
+                    onChange={(e) => handleDescriptionChange(index, row.gst + 1, "gst")}
                     id="remeberMe"
                   />
                 </div>
