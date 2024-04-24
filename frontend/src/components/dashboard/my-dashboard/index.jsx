@@ -114,6 +114,9 @@ const Index = () => {
     let filterClaim;
     filterClaim = allClaims.filter(
       (claim, index) =>
+      String(claim?.LeadID)?.toLowerCase().includes(
+        majorSearch.toLowerCase()
+      ) ||
         claim?.PolicyNo?.toLowerCase().includes(majorSearch.toLowerCase()) ||
         claim?.PolicyHolder?.toLowerCase().includes(
           majorSearch.toLowerCase()
@@ -259,14 +262,8 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-                {/* End Dashboard Navigation */}
 
-                {/* <div className="col-lg-12 mb10">
-                  <div className="breadcrumb_content style2">
-                    <h2 className="breadcrumb_title">Howdy, Hasan</h2>
-                    <p>We are glad to see you again!</p>
-                  </div>
-                </div> */}
+               
               </div>
               {/* End .row */}
 
@@ -283,7 +280,6 @@ const Index = () => {
                   setSelectedCard={setSelectedCard}
                 />
               </div>
-              {/* End .row Dashboard top statistics */}
               <div
                 className=" bg-dark"
                 style={{
@@ -295,9 +291,10 @@ const Index = () => {
                   marginLeft: "-12px",
                 }}
               ></div>
-              <div className="row">
-                <CreateList IsLoading={IsLoading} setSearchInput={setSearchInput} setType={setType} />
-              </div>
+              <div
+                className="row my_profile_setting_input form-group"
+                style={{ marginLeft: "-25px" }}
+              ></div>
               <div
                 className="bg-dark"
                 style={{
@@ -309,13 +306,6 @@ const Index = () => {
                 }}
               ></div>
               <div className="row">
-                {/* <div className="col-xl-7">
-                  <div className="application_statics">
-                    <h4 className="mb-4">View Statistics</h4>
-                    <StatisticsChart />
-                  </div>
-                </div> */}
-                {/* End statistics chart */}
                 <Exemple
                   claims={
                     searchInput || majorSearch || isRegionChange
