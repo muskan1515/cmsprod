@@ -152,7 +152,7 @@ function SmartTable(props) {
             </div>
           </div>
           {props.data.length > 0 ? (
-            <div className="row mt-3">
+            <div className="row mt-1">
               <div className="smartTable-tableContainer">
                 <table
                   className={"smartTable-table table table-striped border"}
