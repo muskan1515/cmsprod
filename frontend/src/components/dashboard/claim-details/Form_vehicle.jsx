@@ -491,8 +491,8 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleOnlineDetails?.PermanentAddress&&claim?.vehicleOnlineDetails?.PermanentAddress!=="null"?
-                      claim?.vehicleOnlineDetails?.PermanentAddress:""}
+                      {claim?.vehicleDetails?.PermanentAddress&&claim?.vehicleDetails?.PermanentAddress!=="null"?
+                      claim?.vehicleDetails?.PermanentAddress:""}
                     </label>
                   </div>
                 </td>
@@ -547,8 +547,8 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleOnlineDetails?.VehicleClassDescription && claim?.vehicleOnlineDetails?.VehicleClassDescription!=="null"?
-                      claim?.vehicleOnlineDetails?.VehicleClassDescription:""}
+                      {claim?.vehicleDetails?.VehicleClassDescription && claim?.vehicleDetails?.VehicleClassDescription!=="null"?
+                      claim?.vehicleDetails?.VehicleClassDescription:""}
                     </label>
                   </div>
                 </td>
