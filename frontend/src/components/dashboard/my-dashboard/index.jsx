@@ -295,16 +295,7 @@ const Index = () => {
                 className="row my_profile_setting_input form-group"
                 style={{ marginLeft: "-25px" }}
               ></div>
-              <div
-                className="bg-dark"
-                style={{
-                  width: "101%",
-                  height: "3px",
-                  color: "blue",
-                  border: "1px solid blue",
-                  marginLeft: "-12px",
-                }}
-              ></div>
+             
               <div className="row">
                 <Exemple
                   claims={
