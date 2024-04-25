@@ -778,7 +778,7 @@ const VehicleParticulars = ({ allInfo }) => {
           <td style={{ width: "45%" }} className="text-start">
             <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
             <span style={{ marginLeft: "60px" }}>
-              Fuel Used : {allInfo?.vehicleOnlineDetails?.FuelType}
+              Fuel Used : {allInfo?.otherInfo[0]?.FuelType}
             </span>
           </td>
           {/* <td style={{ width: "20%" }}>
