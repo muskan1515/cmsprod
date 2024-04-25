@@ -118,13 +118,13 @@ const Form = ({
   const [editVechile, setEditVechile] = useState(false);
   const [details, setDetails] = useState();
   const [vehicleFetchDetails, setvehicleFetchDetails] = useState({});
- 
+
   const closeFunction = () => {
     setEditCase_01(false);
     setisUpdateVehicleLoading(false);
   };
 
-  const [hide,setHide] = useState(false)
+  const [hide, setHide] = useState(false);
 
   const formatDate = (val) => {
     const date = new Date(val);
@@ -145,15 +145,18 @@ const Form = ({
         // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
       });
-      
     }
-    if (claim?.vehicleOnlineDetails && String(claim?.vehicleOnlineDetails?.RegisteredNumber) === String(VehicleRegisteredNumber)) {
+    if (
+      claim?.vehicleOnlineDetails &&
+      String(claim?.vehicleOnlineDetails?.RegisteredNumber) ===
+        String(VehicleRegisteredNumber)
+    ) {
       const details = claim?.vehicleOnlineDetails;
 
       setVehicleModel(details?.MakerModel),
-      setVehicleRegisteredOwner(details?.RegisteredOwner),
-      setVehicleChassisNumber(details?.ChassisNumber),
-      setVehicleChassisNumber(details?.ChassisNumber);
+        setVehicleRegisteredOwner(details?.RegisteredOwner),
+        setVehicleChassisNumber(details?.ChassisNumber),
+        setVehicleChassisNumber(details?.ChassisNumber);
       setDateRegistration(details?.DateOfRegistration);
       setVehicleRegisteredNumber(details?.RegisteredNumber);
       setEngineNumber(details?.EngineNumber); //is it same as ClassOfVehicle ?
@@ -223,69 +226,64 @@ const Form = ({
       setVehicleRegistedAt(details?.VehicleRegistedAt);
       setVehicleInsuranceCompany(details?.VehicleInsuranceCompany);
 
-      toast.dismiss()
+      toast.dismiss();
       toast.success("Successfully fetched !", {
         className: "toast-loading-message",
       });
     } else {
-
-      
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
       const vehicleNo = claim?.vehicleDetails?.RegisteredNumber;
-      if(vehicleNo === ""){
-        toast.error("Record Not found for empty Registration Number");  
-      }
-      else{
-      if (!userInfo) {
-        router.push("/login");
+      if (vehicleNo === "") {
+        toast.error("Record Not found for empty Registration Number");
       } else {
-        try {
-          setFinalDisable(true);
-          setEditCase_01(false)
-          toast.loading("Fetching Vehicle Details!!");
-          const response = axios
-            .get("/api/getOnlineVehicleData", {
-              headers: {
-                Authorization: `Bearer ${userInfo[0]?.Token}`,
-                "Content-Type": "application/json",
-              },
-              params: {
-                vehicleNo: vehicleNo,
-                leadId: claim?.claimDetails?.LeadID,
-              },
-            })
-            .then((res) => {
-              toast.success("Successfully fetched!");
-              toast.dismiss();
-              console.log(res);
-              window.location.reload();
-            })
-            .catch((err) => {
-              console.log(err);
-              toast.dismiss();
-              toast.error("Record Not found or Server Error");
-              
-            });
-        } catch (error) {
-          toast.error("Record Not found or Server Error");
+        if (!userInfo) {
+          router.push("/login");
+        } else {
+          try {
+            setFinalDisable(true);
+            setEditCase_01(false);
+            toast.loading("Fetching Vehicle Details!!");
+            const response = axios
+              .get("/api/getOnlineVehicleData", {
+                headers: {
+                  Authorization: `Bearer ${userInfo[0]?.Token}`,
+                  "Content-Type": "application/json",
+                },
+                params: {
+                  vehicleNo: vehicleNo,
+                  leadId: claim?.claimDetails?.LeadID,
+                },
+              })
+              .then((res) => {
+                toast.success("Successfully fetched!");
+                toast.dismiss();
+                console.log(res);
+                window.location.reload();
+              })
+              .catch((err) => {
+                console.log(err);
+                toast.dismiss();
+                toast.error("Record Not found or Server Error");
+              });
+          } catch (error) {
+            toast.error("Record Not found or Server Error");
+          }
+          setFinalDisable(false);
+          // window.location.reload()
         }
-        setFinalDisable(false)
-        // window.location.reload()
       }
-    }
     }
   };
 
-  const setDate = (newDate,settingFunc)=>{
+  const setDate = (newDate, settingFunc) => {
     const dateObj = new Date(newDate);
- const yyyy = dateObj.getFullYear();
- const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
- const dd = String(dateObj.getDate()).padStart(2, '0');
- const formattedDate = `${yyyy}-${mm}-${dd}`;
- settingFunc(formattedDate);
- }
-
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const dd = String(dateObj.getDate()).padStart(2, "0");
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    settingFunc(formattedDate);
+  };
 
   const [isUpdateVehicleLoading, setisUpdateVehicleLoading] = useState(false);
   //permanenet Address
@@ -327,7 +325,7 @@ const Form = ({
                               disabled={!editCase_01 || finalDisable}
                               onClick={() => {
                                 setisUpdateVehicleLoading(true);
-                                setHide(true)
+                                setHide(true);
                                 onSaveHandler(2, closeFunction, closeFunction);
                               }}
                             >
@@ -352,8 +350,9 @@ const Form = ({
                         </div>
                       </>
                     ) : (
-                      claim?.claimDetails?.PolicyNumber && (
-                        !hide && <button
+                      claim?.claimDetails?.PolicyNumber &&
+                      !hide && (
+                        <button
                           className="btn-thm"
                           style={{}}
                           onClick={() => setEditCase_01(true)}
@@ -372,9 +371,6 @@ const Form = ({
                   <Loader />
                 ) : editCase_01 ? (
                   <div className="row">
-
-
-
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -465,8 +461,6 @@ const Form = ({
                       </div>
                     </div>
 
-                 
-
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -475,7 +469,7 @@ const Form = ({
                             className="text-color"
                             style={{
                               color: "#1560bd",
-                              fontWeight: ""
+                              fontWeight: "",
                             }}
                           >
                             Date of Registration
@@ -492,15 +486,14 @@ const Form = ({
                                 ? new Date(DateRegistration)
                                 : ""
                             }
-                            onChange={(date) => setDate(date,setDateRegistration)}
+                            onChange={(date) =>
+                              setDate(date, setDateRegistration)
+                            }
                           />
-
                         </div>
                       </div>
                     </div>
 
-                   
-                 
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -533,7 +526,6 @@ const Form = ({
                       </div>
                     </div>
 
-                  
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -591,9 +583,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={MakerDesc}
-                            onChange={(e) =>
-                              setMakerDesc(e.target.value)
-                            }
+                            onChange={(e) => setMakerDesc(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -623,9 +613,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={MakerModel}
-                            onChange={(e) =>
-                              setMakerModel(e.target.value)
-                            }
+                            onChange={(e) => setMakerModel(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -663,7 +651,6 @@ const Form = ({
                       </div>
                     </div>
 
-                    
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -760,7 +747,6 @@ const Form = ({
                       </div>
                     </div>
 
-
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -783,9 +769,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={ClassOfVehicle}
-                            onChange={(e) =>
-                              setClassOfVehicle(e.target.value)
-                            }
+                            onChange={(e) => setClassOfVehicle(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -815,9 +799,7 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={PasiaModelCode}
-                            onChange={(e) =>
-                              setPasiaModelCode(e.target.value)
-                            }
+                            onChange={(e) => setPasiaModelCode(e.target.value)}
 
                             // placeholder="Enter Registration No."
                           />
@@ -886,14 +868,14 @@ const Form = ({
                                 ? new Date(RcInsuranceUpto)
                                 : ""
                             }
-                            onChange={(date) => setDate(date,setRcInsuranceUpto)}
+                            onChange={(date) =>
+                              setDate(date, setRcInsuranceUpto)
+                            }
                           />
                         </div>
                       </div>
                     </div>
 
-
-                    
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -917,7 +899,9 @@ const Form = ({
                             className="form-control"
                             id="propertyTitle"
                             value={VehicleRegistedAt ? VehicleRegistedAt : ""}
-                            onChange={(e) => setVehicleRegistedAt(e.target.value)}
+                            onChange={(e) =>
+                              setVehicleRegistedAt(e.target.value)
+                            }
                           />
                         </div>
                       </div>
@@ -986,7 +970,6 @@ const Form = ({
                       </div>
                     </div>
 
-
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -1051,7 +1034,6 @@ const Form = ({
                       </div>
                     </div>
 
-
                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
@@ -1081,7 +1063,6 @@ const Form = ({
                         </div>
                       </div>
                     </div>
-
 
                     <div className="col-lg-6">
                       <div className="row mt-1">
@@ -1178,8 +1159,6 @@ const Form = ({
                         </div>
                       </div>
                     </div>
-
-                 
                   </div>
                 ) : (
                   <div className="row">

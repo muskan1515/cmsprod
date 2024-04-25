@@ -474,20 +474,16 @@ const VehicleParticulars = ({ allInfo }) => {
       return "Invalid date";
     }
 
-    // Split the birthDate string into day, month, and year components
     var dateComponents = birthDate?.split("/");
     var birthDay = parseInt(dateComponents[0]);
     var birthMonth = parseInt(dateComponents[1]);
     var birthYear = parseInt(dateComponents[2]);
 
-    // Get the current date
     var currentDate = new Date();
 
-    // Calculate the difference in years and months
     var yearsDiff = currentDate.getFullYear() - birthYear;
     var monthsDiff = currentDate.getMonth() - (birthMonth - 1);
 
-    // Adjust years and months if the current month is before the birth month
     if (
       monthsDiff < 0 ||
       (monthsDiff === 0 && currentDate.getDate() < birthDay)
@@ -496,7 +492,6 @@ const VehicleParticulars = ({ allInfo }) => {
       monthsDiff += 12;
     }
 
-    // Construct the age string
     var ageString = yearsDiff + " years ";
     if (monthsDiff > 0) {
       ageString += monthsDiff + " months";
@@ -659,22 +654,6 @@ const VehicleParticulars = ({ allInfo }) => {
             <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
           </td>
         </tr>
-        {/* <tr>
-          <td style={{ width: "30%" }} className="text-start">
-            <span>Owner Serial No. / Transfer Date </span>
-          </td>
-          <td style={{ width: "5%" }} className="text-start">
-            <span>:</span>
-          </td>
-          <td style={{ width: "45%" }} className="text-start">
-            <span>
-              {" "}
-              {allInfo?.otherInfo[0]?.TransferDate
-                ? formatDate(allInfo?.otherInfo[0]?.TransferDate)
-                : "-"}
-            </span>
-          </td>
-        </tr> */}
         <tr>
           <td style={{ width: "30%" }} className="text-start">
             <span>(c) Date of Registration</span>
@@ -781,14 +760,6 @@ const VehicleParticulars = ({ allInfo }) => {
               Fuel Used : {allInfo?.otherInfo[0]?.FuelType}
             </span>
           </td>
-          {/* <td style={{ width: "20%" }}>
-            {" "}
-            <div className="d-flex gap-1" style={{}}>
-              <label htmlFor=""> Fuel Used </label>
-              <span style={{ marginLeft: "px" }}>:</span>
-              <span>{allInfo?.vehicleOnlineDetails?.FuelType}</span>
-            </div>
-          </td> */}
         </tr>
         <tr>
           <td style={{ width: "30%" }} className="text-start">
@@ -933,113 +904,7 @@ const VehicleParticulars = ({ allInfo }) => {
           </td>
         </tr> : ""}
       </table>
-      {/* <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(a) Registered Number</label>
-          <span style={{ marginLeft: "100px" }}>:</span>
-          <span className="fw-bold text-dark">
-            {" "}
-            {allInfo?.otherInfo[0]?.RegisteredNumber}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(b) Registered Owner </label>
-          <span style={{ marginLeft: "106px" }}>:</span>
-          <span> {allInfo?.otherInfo[0]?.RegisteredOwner}</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">Owner Serial No. / Transfer Date</label>
-          <span style={{ marginLeft: "47px" }}>:</span>
-          <span>
-            {" "}
-            {allInfo?.otherInfo[0]?.TransferDate
-              ? formatDate(allInfo?.otherInfo[0]?.TransferDate)
-              : "-"}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(c) Date of Registration </label>
-          <span style={{ marginLeft: "97px" }}>:</span>
-          <span> {formatDate(allInfo?.otherInfo[0]?.DateOfRegistration)}</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(d) Chassis Number </label>
-          <span style={{ marginLeft: "115px" }}>:</span>
-          <span className="fw-bold text-dark">
-            {" "}
-            {allInfo?.otherInfo[0]?.ChassisNumber}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(e) Engine Number </label>
-          <span style={{ marginLeft: "120px" }}>:</span>
-          <span className="fw-bold text-dark">
-            {" "}
-            {allInfo?.otherInfo[0]?.EngineNumber}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex">
-        <div className="text-start d-flex gap-5">
-          <label htmlFor="">(f) Make / Variant/ Model /Color </label>
-          <span style={{ marginLeft: "52px" }}>:</span>
-          <span> {allInfo?.otherInfo[0]?.MakeVariantModelColor}</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(g) Type of Body and Class of vehicle</label>
-          <span style={{ marginLeft: "23px" }}>:</span>
-          <span>
-            {" "}
-            {allInfo?.otherInfo[0]?.TypeOfBody} (S) -{" "}
-            {allInfo?.otherInfo[0]?.ClassOfVehicle}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(h) Pre Accident Condition </label>
-          <span style={{ marginLeft: "80px" }}>:</span>
-          <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(k) Seating Capacity </label>
-          <span style={{ marginLeft: "113px" }}>:</span>
-          <span> {allInfo?.otherInfo[0]?.SeatingCapacity} Nos.</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(l) Cubic Capacity </label>
-          <span style={{ marginLeft: "126px" }}>:</span>
-          <span>{allInfo?.otherInfo[0]?.CubicCapacity} CC</span>
-        </div>
-        <div className="d-flex gap-5" style={{ marginLeft: "14px" }}>
-          <label htmlFor=""> Fuel Used </label>
-          <span style={{ marginLeft: "px" }}>:</span>
-          <span>{allInfo?.vehicleOnlineDetails?.FuelType}</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(m) Tax particulars </label>
-          <span style={{ marginLeft: "120px" }}>:</span>
-          <span> {formatDate(allInfo?.otherInfo[0]?.TaxParticulars)}</span>
-        </div>
-      </div> */}
+     
     </div>
   );
 };

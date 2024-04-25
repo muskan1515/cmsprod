@@ -1,8 +1,5 @@
-// import axios from "axios";
-// import { useRef, useState } from "react";
-// import { useReducer } from "react";
+
 import { FaEye } from "react-icons/fa";
-// import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
 import Form_driver from "./Form_driver";
 import { useEffect, useState } from "react";
@@ -280,10 +277,8 @@ const Form_01 = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Father Name
@@ -296,7 +291,6 @@ const Form_01 = ({
                             id="propertyTitle"
                             onChange={(e) => setFatherName(e.target.value)}
                             value={(FatherName)}
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -309,10 +303,8 @@ const Form_01 = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             License Type <span class="req-btn">*</span>
@@ -330,7 +322,6 @@ const Form_01 = ({
                             }
                             onChange={(e) => setLicenseType(e.target.value)}
 
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -363,7 +354,6 @@ const Form_01 = ({
                                 ? LicenseNumber
                                 : ""
                             }
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -376,10 +366,8 @@ const Form_01 = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Gender
@@ -392,7 +380,6 @@ const Form_01 = ({
                             id="propertyTitle"
                             onChange={(e) => setGender(e.target.value)}
                             value={Gender}
-                            // placeholder="Enter Registration No."
                           />
                         </div>
                       </div>
@@ -405,10 +392,8 @@ const Form_01 = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Blood Group
@@ -612,94 +597,7 @@ const Form_01 = ({
                       </div>
                     </div>
 
-                    {/*} <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Vov
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            onChange={(e) => setVov(e.target.value)}
-                            value={Vov}
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                          </div>*/}
-
-                    {/*<div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Photo
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="propertyTitle"
-                            onChange={(e) => setPhoto(e.target.value)}
-                            value={Photo}
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                          </div>*/}
-
-                    {/* <div className="col-lg-6">
-                      <div className="row mt-1">
-                        <div className="col-lg-5 my_profile_setting_input form-group">
-                          <label
-                            htmlFor=""
-                            className="text-color"
-                            style={{
-                              // paddingTop: "15px",
-                              color: "#1560bd",
-                              fontWeight: "",
-                              // marginTop: "-13px",
-                            }}
-                          >
-                            Added Date
-                          </label>
-                        </div>
-                        <div className="col-lg-7">
-                          <MyDatePicker
-                            className="form-control"
-                            id="propertyTitle"
-                            setSelectedDate={setDriverAddedDate}
-                            selectedDate={
-                              DriverAddedDate ? new Date(DriverAddedDate) : ""
-                            }
-
-                            // placeholder="Enter Registration No."
-                          />
-                        </div>
-                      </div>
-                          </div>*/}
+                  
 
                     <div className="col-lg-6">
                       <div className="row mt-1">

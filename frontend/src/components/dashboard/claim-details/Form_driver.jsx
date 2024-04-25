@@ -53,26 +53,25 @@ const Form_driver = ({
   };
 
   function formatDateToDDMMYYYY(date) {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    const formattedDate = new Date(date).toLocaleDateString('en-GB', options);
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    const formattedDate = new Date(date).toLocaleDateString("en-GB", options);
     return formattedDate;
   }
-  const setDate = (inputString)=>{
+  const setDate = (inputString) => {
     let modifiedString = inputString;
 
-        // Check if inputString is in "dd/mm/yyyy" format
-        if (/^\d{2}\/\d{2}\/\d{4}$/.test(inputString)) {
-            modifiedString = inputString.replace(/\//g, '-');
-        }
+    // Check if inputString is in "dd/mm/yyyy" format
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(inputString)) {
+      modifiedString = inputString.replace(/\//g, "-");
+    }
 
-        // Check if inputString is in "yyyy-mm-dd" format
-        if (/^\d{4}-\d{2}-\d{2}$/.test(inputString)) {
-            const [year, month, day] = inputString.split('-');
-            modifiedString = `${day}-${month}-${year}`;
-        }
-        return modifiedString;
-
-  }
+    // Check if inputString is in "yyyy-mm-dd" format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(inputString)) {
+      const [year, month, day] = inputString.split("-");
+      modifiedString = `${day}-${month}-${year}`;
+    }
+    return modifiedString;
+  };
   const statusOptions = [
     {
       id: 1,
@@ -133,11 +132,11 @@ const Form_driver = ({
   };
 
   function convertDateFormat(originalDate) {
-    const parts = originalDate.split('-');
+    const parts = originalDate.split("-");
     return `${parts[2]}-${parts[1]}-${parts[0]}`;
   }
 
-  console.log("ValidUpto",ValidUpto)
+  console.log("ValidUpto", ValidUpto);
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -170,8 +169,10 @@ const Form_driver = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.driverDetails?.DriverName&&claim?.driverDetails?.DriverName!=="null"?
-                        claim?.driverDetails?.DriverName:""}
+                        {claim?.driverDetails?.DriverName &&
+                        claim?.driverDetails?.DriverName !== "null"
+                          ? claim?.driverDetails?.DriverName
+                          : ""}
                       </label>
                     </div>
                   </div>
@@ -202,8 +203,6 @@ const Form_driver = ({
                         }}
                         value={DLStatus}
                       >
-                        {/* {(claim?.driverDetails?.TypeOfVerification&&claim?.driverDetails?.TypeOfVerification!=="null"?
-                        claim?.driverDetails?.TypeOfVerification :"Not Verified")} */}
                         {DLStatus}
                       </label>
                     </div>
@@ -231,37 +230,13 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.driverDetails?.ValidUpto&&claim?.driverDetails?.ValidUpto!=="null"?
-                      convertDateFormat(claim?.driverDetails?.ValidUpto):""}
+                      {claim?.driverDetails?.ValidUpto &&
+                      claim?.driverDetails?.ValidUpto !== "null"
+                        ? convertDateFormat(claim?.driverDetails?.ValidUpto)
+                        : ""}
                     </label>
                   </div>
                 </td>
-                {/*<td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-7 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Type of Verification
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-5 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.driverDetails?.TypeOfVerification}
-                    </label>
-                  </div>
-                    </td>*/}
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -289,8 +264,10 @@ const Form_driver = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.driverDetails?.LicenseNumber && claim?.driverDetails?.LicenseNumber!=="null"?
-                        claim?.driverDetails?.LicenseNumber:""}
+                        {claim?.driverDetails?.LicenseNumber &&
+                        claim?.driverDetails?.LicenseNumber !== "null"
+                          ? claim?.driverDetails?.LicenseNumber
+                          : ""}
                       </label>
                     </div>
                   </div>
@@ -382,8 +359,10 @@ const Form_driver = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {claim?.driverDetails?.LicenseType&&claim?.driverDetails?.LicenseType!=="null"?
-                        claim?.driverDetails?.LicenseType:""}
+                        {claim?.driverDetails?.LicenseType &&
+                        claim?.driverDetails?.LicenseType !== "null"
+                          ? claim?.driverDetails?.LicenseType
+                          : ""}
                       </label>
                     </div>
                   </div>
@@ -414,13 +393,14 @@ const Form_driver = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {String(claim?.driverDetails?.TypeOfverification) === "1" ?
-                        "Verified Manually" : "Verified by Online"}
+                        {String(claim?.driverDetails?.TypeOfverification) ===
+                        "1"
+                          ? "Verified Manually"
+                          : "Verified by Online"}
                       </label>
                     </div>
                   </div>
                 </td>
-
               </tr>
               <tr>
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
@@ -539,8 +519,10 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {(claim?.driverDetails?.DateOfBirth&&claim?.driverDetails?.DateOfBirth!=="null"?
-                      convertDateFormat(claim?.driverDetails?.DateOfBirth):"")}
+                      {claim?.driverDetails?.DateOfBirth &&
+                      claim?.driverDetails?.DateOfBirth !== "null"
+                        ? convertDateFormat(claim?.driverDetails?.DateOfBirth)
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -596,8 +578,10 @@ const Form_driver = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.driverDetails?.DateOfIssue&&claim?.driverDetails?.DateOfIssue!=="null"?
-                      convertDateFormat(claim?.driverDetails?.DateOfIssue):""}
+                      {claim?.driverDetails?.DateOfIssue &&
+                      claim?.driverDetails?.DateOfIssue !== "null"
+                        ? convertDateFormat(claim?.driverDetails?.DateOfIssue)
+                        : ""}
                     </label>
                   </div>
                 </td>

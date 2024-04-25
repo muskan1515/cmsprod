@@ -698,16 +698,15 @@ const InsuranceParticulars = ({ allInfo }) => {
               {" "}
               {allInfo?.otherInfo[0]?.InsuredName}
               {allInfo?.driverOnlineDetails?.FatherName
-                ? String(allInfo?.driverOnlineDetails?.Gender) === "Female"
-                  ? ` D/o ${allInfo?.driverOnlineDetails?.FatherName}`
-                  : ` S/o ${allInfo?.driverOnlineDetails?.FatherName}`
+                ? String(allInfo?.otherInfo[0]?.Gender) === "Female"
+                  ? ` D/o ${allInfo?.otherInfo[0]?.FatherName}`
+                  : ` S/o ${allInfo?.otherInfo[0]?.FatherName}`
                 : "-"}
               ,{" "}
-              {allInfo?.driverOnlineDetails?.Mobile === null
-                ? allInfo?.driverOnlineDetails?.Mobile
+              {allInfo?.otherInfo[0]?.InsuredMobileNo1 === null
+                ? allInfo?.otherInfo[0]?.InsuredMobileNo1
                 : allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
               <br />
-              {/* {allInfo?.vehicleOnlineDetails?.PermanentAddress} */}
             </span>
           </td>
         </tr>
@@ -750,91 +749,7 @@ const InsuranceParticulars = ({ allInfo }) => {
           </td>
         </tr>
       </table>
-      {/* <div className="text-start d-flex text-dark">
-        <div className="d-flex gap-5">
-          <label htmlFor="">(a) Policy / Cover Note No. </label>
-          <span> : </span>
-          <span className="fw-bold text-dark">
-            {allInfo?.otherInfo[0]?.PolicyNumber}
-          </span>
-        </div>
-        <div className="d-flex gap-4" style={{ marginLeft: "82px" }}>
-          <div>
-            <label htmlFor="">IDV</label>
-          </div>
-          <div>
-            <span>:</span>
-          </div>
-          <span> ₹ {addCommasToNumber(allInfo?.otherInfo[0]?.IDV)}</span>
-        </div>
-      </div>
-      <div className="d-flex gap-5">
-        <div className="d-flex gap-4">
-          <label htmlFor="">(b) Period of Insurance</label>
-          <span style={{ marginLeft: "42px" }}> : </span>
-          <span>
-            {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodStart)} to{" "}
-            {formatDate(allInfo?.otherInfo[0]?.PolicyPeriodEnd)}
-          </span>
-        </div>
-        <div className="d-flex gap-4" style={{ marginLeft: "20px" }}>
-          <label htmlFor="">Claim No. </label>
-          <span>:</span>
-          <span> {allInfo?.otherInfo[0]?.ClaimNumber} </span>
-        </div>
-      </div>
-      <div className="d-flex gap-5">
-        <div className="d-flex gap-4">
-          <label htmlFor="">(c) Endorsement </label>
-          <span style={{ marginLeft: "74px" }}>:</span>
-          <span> --</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-4">
-          <label htmlFor="">(d) Insurers </label>
-          <span style={{ marginLeft: "101px" }}>:</span>
-          <span> {allInfo?.otherInfo[0]?.InsuranceCompanyNameAddress}</span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-4">
-          <label htmlFor="">(e) Insured </label>
-          <span style={{ marginLeft: "105px" }}>:</span>
-          <span>
-            {" "}
-            {allInfo?.otherInfo[0]?.InsuredName}
-            {allInfo?.driverOnlineDetails?.FatherName
-              ? String(allInfo?.driverOnlineDetails?.Gender) === "Female"
-                ? ` D/o ${allInfo?.driverOnlineDetails?.FatherName}`
-                : `S/o ${allInfo?.driverOnlineDetails?.FatherName}`
-              : "-"}
-            ,{" "}
-            {allInfo?.driverOnlineDetails?.Mobile === null
-              ? allInfo?.driverOnlineDetails?.Mobile
-              : allInfo?.otherInfo[0]?.InsuredMobileNo1}{" "}
-            <br />
-            {allInfo?.vehicleOnlineDetails?.PermanentAddress}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-4">
-          <label htmlFor="">(f) H.P.A. </label>
-          <span style={{ marginLeft: "112px" }}>:</span>
-          <span>
-            {" "}
-            {allInfo?.otherInfo[0]?.HPA ? allInfo?.otherInfo[0]?.HPA : "-"}{" "}
-          </span>
-        </div>
-      </div>
-      <div className="text-start d-flex gap-5">
-        <div className="d-flex gap-4">
-          <label htmlFor="">(g) Appointed By </label>
-          <span style={{ marginLeft: "69px" }}>:</span>
-          <span> {allInfo?.otherInfo[0]?.ClaimServicingOffice}</span>
-        </div>
-      </div> */}
+    
     </div>
   );
 };

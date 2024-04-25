@@ -77,28 +77,26 @@ const Form_vehicle = ({
   };
 
   function convertDateFormat(originalDate) {
-    const parts = originalDate.split('-');
+    const parts = originalDate.split("-");
     return `${parts[2]}-${parts[1]}-${parts[0]}`;
   }
 
-  
-  const setDate = (inputString)=>{
+  const setDate = (inputString) => {
     let modifiedString = inputString;
 
-        // Check if inputString is in "dd/mm/yyyy" format
-        if (/^\d{2}\/\d{2}\/\d{4}$/.test(inputString)) {
-            modifiedString = inputString.replace(/\//g, '-');
-        }
+    // Check if inputString is in "dd/mm/yyyy" format
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(inputString)) {
+      modifiedString = inputString.replace(/\//g, "-");
+    }
 
-        // Check if inputString is in "yyyy-mm-dd" format
-        if (/^\d{4}-\d{2}-\d{2}$/.test(inputString)) {
-            const [year, month, day] = inputString.split('-');
-            modifiedString = `${day}-${month}-${year}`;
-        }
-        return modifiedString;
+    // Check if inputString is in "yyyy-mm-dd" format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(inputString)) {
+      const [year, month, day] = inputString.split("-");
+      modifiedString = `${day}-${month}-${year}`;
+    }
+    return modifiedString;
+  };
 
-  }
-  
   return (
     <>
       <div className="col-lg-12 m-2">
@@ -131,7 +129,9 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {VehicleModel && VehicleModel!=="null" ? VehicleModel : ""}
+                        {VehicleModel && VehicleModel !== "null"
+                          ? VehicleModel
+                          : ""}
                       </label>
                     </div>
                   </div>
@@ -158,7 +158,10 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleRegisteredNumber&&VehicleRegisteredNumber!=="null"?VehicleRegisteredNumber:""}
+                      {VehicleRegisteredNumber &&
+                      VehicleRegisteredNumber !== "null"
+                        ? VehicleRegisteredNumber
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -217,7 +220,10 @@ const Form_vehicle = ({
                           fontWeight: "bold",
                         }}
                       >
-                        {VehicleRegisteredOwner && VehicleRegisteredOwner!=="null"?VehicleRegisteredOwner:""}
+                        {VehicleRegisteredOwner &&
+                        VehicleRegisteredOwner !== "null"
+                          ? VehicleRegisteredOwner
+                          : ""}
                       </label>
                     </div>
                   </div>
@@ -246,7 +252,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {DateRegistration && DateRegistration!=="null" ? convertDateFormat(DateRegistration) : ""}
+                      {DateRegistration && DateRegistration !== "null"
+                        ? convertDateFormat(DateRegistration)
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -302,7 +310,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {EngineNumber&&EngineNumber!=="null"?EngineNumber:""}
+                      {EngineNumber && EngineNumber !== "null"
+                        ? EngineNumber
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -329,7 +339,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleChassisNumber&&VehicleChassisNumber!=="null"?VehicleChassisNumber:""}
+                      {VehicleChassisNumber && VehicleChassisNumber !== "null"
+                        ? VehicleChassisNumber
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -358,7 +370,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {MakerDesc&&MakerDesc!=="null"?MakerDesc:""}
+                      {MakerDesc && MakerDesc !== "null" ? MakerDesc : ""}
                     </label>
                   </div>
                 </td>
@@ -384,7 +396,7 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {MakerModel&&MakerModel!=="null"?MakerModel:""}
+                      {MakerModel && MakerModel !== "null" ? MakerModel : ""}
                     </label>
                   </div>
                 </td>
@@ -410,7 +422,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {ManufactureMonthYear&&ManufactureMonthYear!=="Null"?convertDateFormat(ManufactureMonthYear):""}
+                      {ManufactureMonthYear && ManufactureMonthYear !== "Null"
+                        ? convertDateFormat(ManufactureMonthYear)
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -439,7 +453,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {CubicCapacity&&CubicCapacity!=="null"?CubicCapacity:""}
+                      {CubicCapacity && CubicCapacity !== "null"
+                        ? CubicCapacity
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -465,7 +481,10 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleSeatingCapacity&&VehicleSeatingCapacity!=="null"?VehicleSeatingCapacity:""}
+                      {VehicleSeatingCapacity &&
+                      VehicleSeatingCapacity !== "null"
+                        ? VehicleSeatingCapacity
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -491,8 +510,10 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.PermanentAddress&&claim?.vehicleDetails?.PermanentAddress!=="null"?
-                      claim?.vehicleDetails?.PermanentAddress:""}
+                      {claim?.vehicleDetails?.PermanentAddress &&
+                      claim?.vehicleDetails?.PermanentAddress !== "null"
+                        ? claim?.vehicleDetails?.PermanentAddress
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -547,8 +568,10 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.VehicleClassDescription && claim?.vehicleDetails?.VehicleClassDescription!=="null"?
-                      claim?.vehicleDetails?.VehicleClassDescription:""}
+                      {claim?.vehicleDetails?.VehicleClassDescription &&
+                      claim?.vehicleDetails?.VehicleClassDescription !== "null"
+                        ? claim?.vehicleDetails?.VehicleClassDescription
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -575,7 +598,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {PasiaModelCode&&PasiaModelCode!=="null"?PasiaModelCode:""}
+                      {PasiaModelCode && PasiaModelCode !== "null"
+                        ? PasiaModelCode
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -601,8 +626,10 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.VehicleInsuranceCompany&&claim?.vehicleDetails?.VehicleInsuranceCompany!=="null"?
-                      claim?.vehicleDetails?.VehicleInsuranceCompany:""}
+                      {claim?.vehicleDetails?.VehicleInsuranceCompany &&
+                      claim?.vehicleDetails?.VehicleInsuranceCompany !== "null"
+                        ? claim?.vehicleDetails?.VehicleInsuranceCompany
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -631,7 +658,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {RcInsuranceUpto ? convertDateFormat(RcInsuranceUpto) : ""}
+                      {RcInsuranceUpto
+                        ? convertDateFormat(RcInsuranceUpto)
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -738,8 +767,10 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {claim?.vehicleDetails?.VehicleType&&claim?.vehicleDetails?.VehicleType!=="null"?
-                      claim?.vehicleDetails?.VehicleType:""}
+                      {claim?.vehicleDetails?.VehicleType &&
+                      claim?.vehicleDetails?.VehicleType !== "null"
+                        ? claim?.vehicleDetails?.VehicleType
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -821,8 +852,9 @@ const Form_vehicle = ({
                         fontWeight: "bold",
                       }}
                     >
-                      {VehicleFuelType&&VehicleFuelType!=="null"?
-                      VehicleFuelType:""}
+                      {VehicleFuelType && VehicleFuelType !== "null"
+                        ? VehicleFuelType
+                        : ""}
                     </label>
                   </div>
                 </td>
@@ -881,32 +913,6 @@ const Form_vehicle = ({
                     </label>
                   </div>
                 </td>
-                {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Rc Rto Code
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {RcRtoCode}
-                    </label>
-                  </div>
-                    </td>*/}
               </tr>
             </table>
           </div>
