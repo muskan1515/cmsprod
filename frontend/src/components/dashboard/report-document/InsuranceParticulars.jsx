@@ -719,7 +719,7 @@ const InsuranceParticulars = ({ allInfo }) => {
             <span>:</span>
           </td>
           <td style={{ width: "40%" }} className="text-start">
-            <span>{allInfo?.vehicleOnlineDetails?.PermanentAddress}</span>
+            <span>{allInfo?.otherInfo[0]?.PermanentAddress}</span>
           </td>
         </tr>
         <tr>
