@@ -128,7 +128,7 @@ function SmartTable(props) {
 
   console.log("isloading",props)
   return (
-    <div className="col-12 p-2">
+    <div className="col-12 p-2 pt-0">
       <div className="smartTable-container row">
         <div className="col-12">
           {loading && (
@@ -136,9 +136,11 @@ function SmartTable(props) {
               <div className="spinner-border" role="status"></div>
             </div>
           )}
-          <div className="row">
-            <div className="col-9 h3">{props.title}</div>
-            <div className="col-lg-3">
+         <div className="row mt-2">
+            <div className="col-9 mb-0">
+              <h3 className="mt-2 mb-0">{props.title}</h3>
+            </div>
+            <div className="col-lg-3 mb-0">
               <input
                 style={{ height: "40px" }}
                 type="text"
