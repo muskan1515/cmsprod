@@ -44,10 +44,11 @@ const Summary = ({
   leadId,
 
   TotalLabor,
-  setTotalLabor,TotalEstimate,
+  setTotalLabor,
+  TotalEstimate,
   setTotalEstimate,
-  LessExcess
-  ,setLessExcessSum,
+  LessExcess,
+  setLessExcessSum,
   ExpectedSalvage,
   setExpectedSalvage,
   MetalPercent,
@@ -85,61 +86,80 @@ const Summary = ({
   ReinspectionDate,
   setReinspectionDate,
   SalveDestroy,
-   setSalveDestroy,
-   BillNo,
-   setBillNo,
-   BillDate,
-   setBillDate,
-   BillAmount,
-   setBillAmount
+  setSalveDestroy,
+  BillNo,
+  setBillNo,
+  BillDate,
+  setBillDate,
+  BillAmount,
+  setBillAmount,
 }) => {
-
-  const [allNewParts,setAllNewParts] = useState([])
-  useEffect(()=>{
-    if(LessExcess === undefined || LessExcess === null || LessExcess === "undefined" || LessExcess === "null"){
-      setLessExcess(0)
+  const [allNewParts, setAllNewParts] = useState([]);
+  useEffect(() => {
+    if (
+      LessExcess === undefined ||
+      LessExcess === null ||
+      LessExcess === "undefined" ||
+      LessExcess === "null"
+    ) {
+      setLessExcess(0);
     }
-    if(LessImposed === undefined || LessImposed === null || LessImposed === "undefined" || LessImposed === "null"){
-      setLessImposed(0)
+    if (
+      LessImposed === undefined ||
+      LessImposed === null ||
+      LessImposed === "undefined" ||
+      LessImposed === "null"
+    ) {
+      setLessImposed(0);
     }
-    if(ExpectedSalvage === undefined || ExpectedSalvage === null || ExpectedSalvage === "undefined" || ExpectedSalvage === "null"){
-      setExpectedSalvage(0)
+    if (
+      ExpectedSalvage === undefined ||
+      ExpectedSalvage === null ||
+      ExpectedSalvage === "undefined" ||
+      ExpectedSalvage === "null"
+    ) {
+      setExpectedSalvage(0);
     }
-    
-  },[lessExcess,lessImposed,ExpectedSalvage]);
-  console.log("setTotalLabrorAssessed",totalLabrorAssessed,totalPartsAssessed,LessExcess,LessImposed,ExpectedSalvage,DepreciationOnParts)
+  }, [lessExcess, lessImposed, ExpectedSalvage]);
+  console.log(
+    "setTotalLabrorAssessed",
+    totalLabrorAssessed,
+    totalPartsAssessed,
+    LessExcess,
+    LessImposed,
+    ExpectedSalvage,
+    DepreciationOnParts
+  );
   const [applicantNumber, setApplicantNumber] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const [isEdit,setIsEdit]=useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
-  
-  const [videosList,setVideosList]=useState([]);
-  const [documents,setDocuments]=useState([])
+  const [videosList, setVideosList] = useState([]);
+  const [documents, setDocuments] = useState([]);
 
-  const [metalSalvageTotal,setmetalSalvageTotal]=useState(0);
+  const [metalSalvageTotal, setmetalSalvageTotal] = useState(0);
 
   const returnTotal = () => {
     const a =
       Number(totalLabrorAssessed) +
       Number(totalPartsAssessed) +
       (Number(LessExcess) - Number(LessImposed) + Number(Other));
-    const b =
-    ((totalMetalRows*MetalPercent)/100) 
+    const b = (totalMetalRows * MetalPercent) / 100;
 
     return a - b > 1 ? a - b : 0;
   };
-  
-  const roundOff = (value)=>{
+
+  const roundOff = (value) => {
     const roundedValue = parseFloat(value).toFixed(2);
-    return roundedValue
-  }
+    return roundedValue;
+  };
 
-  console.log(totalMetalRows,"total",metalSalvageValue)
+  console.log(totalMetalRows, "total", metalSalvageValue);
 
-  useEffect(()=>{
-    console.log(FinalReportNotes)
-  },[FinalReportNotes]);
+  useEffect(() => {
+    console.log(FinalReportNotes);
+  }, [FinalReportNotes]);
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -155,43 +175,49 @@ const Summary = ({
     setPhoneNumber(truncatedValue);
   };
 
-  console.log("summ",FinalReportNotes)
- 
-  console.log("meta",totalMetalRows)
+  console.log("summ", FinalReportNotes);
 
-  const handleOtherValue=(val)=>{
-    const finalVal = val===""?0 :val
-    setOtherSum(finalVal)
-  }
+  console.log("meta", totalMetalRows);
 
-  const getNewpartAssessedTotalWithDepWithGST = ()=>{
-    console.log("getNewpartAssessedTotalWithDepWithGST",allNewParts)
-    
-    let total = 0 ;
-    allNewParts?.map((part,index)=>{
+  const handleOtherValue = (val) => {
+    const finalVal = val === "" ? 0 : val;
+    setOtherSum(finalVal);
+  };
+
+  const getNewpartAssessedTotalWithDepWithGST = () => {
+    console.log("getNewpartAssessedTotalWithDepWithGST", allNewParts);
+
+    let total = 0;
+    allNewParts?.map((part, index) => {
       const totalAssess = Number(part.Assessed) * Number(part.QA);
-      const depreciation = (Number(totalAssess) * Number(part.DepreciationPct)) / 100;
-      const gst = part.WithTax === 1 || part.WithTax === 2 ? ((totalAssess - depreciation ) * Number(part.GSTPct)) / 100 : 0;
+      const depreciation =
+        (Number(totalAssess) * Number(part.DepreciationPct)) / 100;
+      const gst =
+        part.WithTax === 1 || part.WithTax === 2
+          ? ((totalAssess - depreciation) * Number(part.GSTPct)) / 100
+          : 0;
 
-      total += ((totalAssess - depreciation) + gst)
-    })
+      total += totalAssess - depreciation + gst;
+    });
 
-    return total ;
-  }
+    return total;
+  };
 
-
-  const getNewpartAssessedTotalWithoutDepWithGST = ()=>{
-    console.log("getNewpartAssessedTotalWithoutDepWithGST",allNewParts)
-    let total = 0 ;
-    allNewParts?.map((part,index)=>{
+  const getNewpartAssessedTotalWithoutDepWithGST = () => {
+    console.log("getNewpartAssessedTotalWithoutDepWithGST", allNewParts);
+    let total = 0;
+    allNewParts?.map((part, index) => {
       const totalAssess = Number(part.Assessed) * Number(part.QA);
-      const gst = part.WithTax === 1 || part.WithTax === 2 ? ((totalAssess ) * Number(part.GSTPct)) / 100 : 0;
+      const gst =
+        part.WithTax === 1 || part.WithTax === 2
+          ? (totalAssess * Number(part.GSTPct)) / 100
+          : 0;
 
-      total += (totalAssess + gst)
-    })
+      total += totalAssess + gst;
+    });
 
-    return total ;
-  }
+    return total;
+  };
   // const Editor = SomeComponent.Editor;
   const [editorContent, setEditorContent] = useState("");
 
@@ -232,53 +258,58 @@ const Summary = ({
   };
 
   const [text, setText] = useState("");
-  
 
-  useEffect(()=>{
+  useEffect(() => {
+    if (Endurance === undefined) {
+      setEndurance(getDocumentList());
+    }
 
-   if(Endurance === undefined ){
-    setEndurance(getDocumentList())
-   }
-
-   console.log("Endurance",Endurance,getDocumentList())
-    const summary = summaryNotes(claim)
-    if (RemarkOnSalvage === 'undefined' || RemarkOnSalvage === null){
-      setRemarkOnSalvage("This is a metal salvage depreciation %")
+    console.log("Endurance", Endurance, getDocumentList());
+    const summary = summaryNotes(claim);
+    if (RemarkOnSalvage === "undefined" || RemarkOnSalvage === null) {
+      setRemarkOnSalvage("This is a metal salvage depreciation %");
     }
     setTotalEstimate(totalPartsEstimate + totalLabrorEstimate);
     setTotalLabor(totalLabrorAssessed);
     setTotalCostOfParts(totalPartsAssessed);
-    setGrandTotal( Number(totalLabrorAssessed) +
-    Number(totalPartsAssessed) -
-    (Number(LessExcess) + Number(LessImposed) + Number(Other)));
+    setGrandTotal(
+      Number(totalLabrorAssessed) +
+        Number(totalPartsAssessed) -
+        (Number(LessExcess) + Number(LessImposed) + Number(Other))
+    );
     setMetalPercent(metalSalvageValue);
-  // setExpectedSalvage( (Number(totalLabrorAssessed + totalPartsAssessed) *
-  //     Number(metalSalvageValue)) /
-  //   100);
-    setDepreciationOnParts( (Number(totalLabrorAssessed + totalPartsAssessed) *
-    Number(metalSalvageValue)) /
-    100);
+    // setExpectedSalvage( (Number(totalLabrorAssessed + totalPartsAssessed) *
+    //     Number(metalSalvageValue)) /
+    //   100);
+    setDepreciationOnParts(
+      (Number(totalLabrorAssessed + totalPartsAssessed) *
+        Number(metalSalvageValue)) /
+        100
+    );
     setNetAssessedAmount(returnTotal());
 
-  console.log(LessExcess,LessImposed,Other)
-  },[]);
+    console.log(LessExcess, LessImposed, Other);
+  }, []);
 
-  useEffect(()=>{
-    if(Endurance === undefined ){
-      setEndurance(getDocumentList())
-     }
-  
-     console.log("Endurance",Endurance,getDocumentList())
-    
-  },[Endurance])
-
-  useEffect(()=>{
-    console.log(documents)
-    if(Endurance === "" || Endurance === "undefined"){
-      setEndurance(getDocumentList(documents,leadId))
+  useEffect(() => {
+    if (Endurance === undefined) {
+      setEndurance(getDocumentList());
     }
-    if(FinalReportNotes === "" || FinalReportNotes === null || FinalReportNotes === "undefined"){
-      setFinalReportNotes(  (`
+
+    console.log("Endurance", Endurance, getDocumentList());
+  }, [Endurance]);
+
+  useEffect(() => {
+    console.log(documents);
+    if (Endurance === "" || Endurance === "undefined") {
+      setEndurance(getDocumentList(documents, leadId));
+    }
+    if (
+      FinalReportNotes === "" ||
+      FinalReportNotes === null ||
+      FinalReportNotes === "undefined"
+    ) {
+      setFinalReportNotes(`
      01. The rates allowed above combination 
       of authorized dealer prices.<br>
       02. The cause, nature, and circumstances 
@@ -289,48 +320,47 @@ const Summary = ({
       04. The prices are recommended exclusive of all taxes, duties, octroi etc.<br>
       05. The used abbreviation as R.C. = Registration Certificate, D.L. = Driving License, N.A. = Not Allowed, R.A. = Repair Allowed, W&T = Wear & Tear, O.D. = Own Damaged, M.P. = Manipulated i.e. replaced by old material.<br>
       06. The above said vehicle was reinspected by us after repair. Now the vehicle is ready for roadworthy condition, and all the parts replaced and all repair work done as per the final survey report. <br>
-      `))
+      `);
     }
-  },[documents,Endurance,FinalReportNotes])
-  
+  }, [documents, Endurance, FinalReportNotes]);
 
-  const [hide,setHide] = useState(false)
-  useEffect(()=>{
-    console.log("metalPercent",MetalPercent,totalMetalRows)
-    if (Number(MetalPercent)>0)
-      setExpectedSalvage(roundOff((Number(totalMetalRows)*Number(MetalPercent))/100) );
-    
-  },[MetalPercent,totalMetalRows])
+  const [hide, setHide] = useState(false);
+  useEffect(() => {
+    console.log("metalPercent", MetalPercent, totalMetalRows);
+    if (Number(MetalPercent) > 0)
+      setExpectedSalvage(
+        roundOff((Number(totalMetalRows) * Number(MetalPercent)) / 100)
+      );
+  }, [MetalPercent, totalMetalRows]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const LeadID = window.location.pathname.split("/final-report/")[1];
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    
-    axios
-    .get("/api/getNewParts", {
-      headers: {
-        Authorization: `Bearer ${userInfo[0].Token}`,
-        "Content-Type": "application/json",
-      },
-      params: {
-        LeadId: LeadID,
-      },
-    })
-    .then((res) => {
-     const data = (res.data.userData);
-     let newData = []
-     data.map((row,index)=>{
-      if(String(row.LeadID) === LeadID){
-        newData.push(row)
-      }
-     })
-     setAllNewParts(newData)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  },[])
 
+    axios
+      .get("/api/getNewParts", {
+        headers: {
+          Authorization: `Bearer ${userInfo[0].Token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          LeadId: LeadID,
+        },
+      })
+      .then((res) => {
+        const data = res.data.userData;
+        let newData = [];
+        data.map((row, index) => {
+          if (String(row.LeadID) === LeadID) {
+            newData.push(row);
+          }
+        });
+        setAllNewParts(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -499,6 +529,52 @@ const Summary = ({
                   />
                 </div>
               </div>
+              <div className="row mb-1 mt-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Total Cost Of Parts With GST
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    value={roundOff(getNewpartAssessedTotalWithoutDepWithGST())}
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontWeight: "",
+                    }}
+                  >
+                    Depreciations on Parts
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                    value={DepreciationValue}
+                    // placeholder="Enter Registration No."
+                  />
+                </div>
+              </div>
             </div>
             <div className="col-lg-4">
               <div className="col-lg-12">
@@ -520,7 +596,7 @@ const Summary = ({
                       type="text"
                       className="form-control"
                       id="propertyTitle"
-                    readOnly={!isEdit}
+                      readOnly={!isEdit}
                       value={roundOff(totalLabrorAssessed + totalPartsAssessed)}
                       // placeholder="Enter Registration No."
                     />
@@ -529,27 +605,6 @@ const Summary = ({
               </div>
               <div className="col-lg-12 d-flex flex-row">
                 <div className="row mt-1 mb-1">
-                <div className="col-lg-12 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color mb-0"
-                      style={{
-                        color: "#2e008b",
-                        fontWeight: "",
-                      }}
-                    >
-                      Total Cost Of Parts With GST
-                    </label>
-                  </div>
-                  <div className="col-lg-12">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={roundOff(getNewpartAssessedTotalWithoutDepWithGST())}
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
                   <div className="col-lg-12 my_profile_setting_input form-group">
                     <label
                       htmlFor=""
@@ -568,7 +623,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       value={LessExcess}
-                    readOnly={!isEdit}
+                      readOnly={!isEdit}
                       onChange={(e) => setLessExcessSum(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
@@ -576,29 +631,6 @@ const Summary = ({
                 </div>
               </div>
               <div className="col-lg-12">
-              <div className="row mt-1 mb-1">
-                  <div className="col-lg-12 my_profile_setting_input form-group">
-                    <label
-                      htmlFor=""
-                      className="text-color mb-0"
-                      style={{
-                        color: "#2e008b",
-                        fontWeight: "",
-                      }}
-                    >
-                      Depreciations on Parts
-                    </label>
-                  </div>
-                  <div className="col-lg-12">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="propertyTitle"
-                      value={DepreciationValue}
-                      // placeholder="Enter Registration No."
-                    />
-                  </div>
-                </div>
                 <div className="row mt-1 mb-1">
                   <div className="col-lg-12 my_profile_setting_input form-group">
                     <label
@@ -618,7 +650,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       value={LessImposed}
-                    readOnly={!isEdit}
+                      readOnly={!isEdit}
                       onChange={(e) => setLessImposedSum(e.target.value)}
                       // placeholder="Enter Registration No."
                     />
@@ -649,7 +681,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={OtherRemark}
                     readOnly={!isEdit}
-                    onChange={(e)=>setOtherRemark(e.target.value)}
+                    onChange={(e) => setOtherRemark(e.target.value)}
                   />
                 </div>
               </div>
@@ -702,12 +734,13 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={
-                      roundOff(Number(totalLabrorAssessed) +
-                      Number(getNewpartAssessedTotalWithDepWithGST()) 
-                        -Number(LessExcess ? LessExcess : 0)-Number(LessImposed ? LessImposed: 0)+Number(Other ? Other : 0))
-                      
-                    }
+                    value={roundOff(
+                      Number(totalLabrorAssessed) +
+                        Number(getNewpartAssessedTotalWithDepWithGST()) -
+                        Number(LessExcess ? LessExcess : 0) -
+                        Number(LessImposed ? LessImposed : 0) +
+                        Number(Other ? Other : 0)
+                    )}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -716,7 +749,7 @@ const Summary = ({
           </div>
           <div className="row mt-5">
             <div className="col-lg-12">
-              <h5>Salvage  Details</h5>
+              <h5>Salvage Details</h5>
               {/* <hr /> */}
             </div>
             <div className="col-lg-3">
@@ -741,7 +774,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={MetalPercent}
                     readOnly={!isEdit}
-                    onChange={(e)=>setMetalPercent(e.target.value)}
+                    onChange={(e) => setMetalPercent(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -767,10 +800,9 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={isEdit ? (ExpectedSalvage) : roundOff(ExpectedSalvage)
-                    }
+                    value={isEdit ? ExpectedSalvage : roundOff(ExpectedSalvage)}
                     readOnly={!isEdit}
-                    onChange={(e)=>setExpectedSalvage(e.target.value)}
+                    onChange={(e) => setExpectedSalvage(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -799,10 +831,9 @@ const Summary = ({
                     readOnly={!isEdit}
                     // placeholder="Enter Registration No."
                     // value={!RemarkOnSalvage || !RemarkOnSalvage == 'undefined'  ? RemarkOnSalvage : "This is a metal salvage depreciation %"}
-                    
-                    value={RemarkOnSalvage}
 
-                    onChange={(e)=>setRemarkOnSalvage(e.target.value)}
+                    value={RemarkOnSalvage}
+                    onChange={(e) => setRemarkOnSalvage(e.target.value)}
                     placeholder="This is a metal salvage depreciation %"
                   />
                 </div>
@@ -869,10 +900,14 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={ roundOff(Number(totalLabrorAssessed) +
-                      getNewpartAssessedTotalWithDepWithGST()                        -(LessExcess ? LessExcess : 0)-(LessImposed ? LessImposed : 0)+(Other ? Other : 0)
-                        -(ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0) )
-                      }
+                    value={roundOff(
+                      Number(totalLabrorAssessed) +
+                        getNewpartAssessedTotalWithDepWithGST() -
+                        (LessExcess ? LessExcess : 0) -
+                        (LessImposed ? LessImposed : 0) +
+                        (Other ? Other : 0) -
+                        (ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0)
+                    )}
                     readOnly={!isEdit}
                     // placeholder="Enter Registration No."
                   />
@@ -888,18 +923,38 @@ const Summary = ({
               {/* <hr /> */}
             </div>
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
-              
-            {!isEdit ? !hide && claim?.claimDetails && <button className="btn btn-color m-1" onClick={()=>setIsEdit(true)}>Edit</button>
-            : 
-            !disable && (<> <button className="btn btn-color m-1" onClick={()=>setIsEdit(false)}>Cancel</button>
-                <button className="btn btn-color m-1" disabled={disable} 
-                 onClick={()=>{
-                  setHide(true)
-                  saveHandler(setIsEdit)
-                }}>
-                  Update</button>
-                </> )}
-             
+              {!isEdit
+                ? !hide &&
+                  claim?.claimDetails && (
+                    <button
+                      className="btn btn-color m-1"
+                      onClick={() => setIsEdit(true)}
+                    >
+                      Edit
+                    </button>
+                  )
+                : !disable && (
+                    <>
+                      {" "}
+                      <button
+                        className="btn btn-color m-1"
+                        onClick={() => setIsEdit(false)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="btn btn-color m-1"
+                        disabled={disable}
+                        onClick={() => {
+                          setHide(true);
+                          saveHandler(setIsEdit);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </>
+                  )}
+
               {/* <button className="btn btn-color m-1">Add</button> */}
               {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
             Modify
@@ -910,21 +965,23 @@ const Summary = ({
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
                   <div className="">
-                    <ReactEditor 
-                    index={8}
-                  readOnly={!isEdit}
-                  editorContent={addVariables(claim,
-                    FinalReportNotes,
-                    claim?.accidentDetails?.ClaimServicingOffice,
-                    claim?.accidentDetails?.SurveyAllotmentDate,
-                    claim?.accidentDetails?.DateOfAccident,
-                    claim?.accidentDetails?.PlaceOfLoss,
-                    claim?.claimDetails?.InsuredName,
-                    claim?.vehicleDetails?.ChassisNumber,
-                    claim?.claimDetails?.PolicyNumber,
-                    claim?.accidentDetails?.TimeOfAccident)}
-                  setEditorContent={setFinalReportNotes}
-                />
+                    <ReactEditor
+                      index={8}
+                      readOnly={!isEdit}
+                      editorContent={addVariables(
+                        claim,
+                        FinalReportNotes,
+                        claim?.accidentDetails?.ClaimServicingOffice,
+                        claim?.accidentDetails?.SurveyAllotmentDate,
+                        claim?.accidentDetails?.DateOfAccident,
+                        claim?.accidentDetails?.PlaceOfLoss,
+                        claim?.claimDetails?.InsuredName,
+                        claim?.vehicleDetails?.ChassisNumber,
+                        claim?.claimDetails?.PolicyNumber,
+                        claim?.accidentDetails?.TimeOfAccident
+                      )}
+                      setEditorContent={setFinalReportNotes}
+                    />
                   </div>
                 </div>
               </div>
@@ -938,39 +995,42 @@ const Summary = ({
             <div className="row">
               <span className="col-lg-7">Endurance :</span>
               <div className="col-lg-4">
-              {!isEdit  ?
-                <label> 
-                {CashLess ? "CashLess" : "With Cash"}
-                </label>
-                :
-                <>
-                 <label htmlFor="" className="m-1" >
-                 Cash Less
-                </label>
-               
-                 <input
-                  className="form-check-input mt-2"
-                  type="checkbox"
-                  value={CashLess}
-                  checked={CashLess}
-                  readOnly={!isEdit}
-                  onChange={(e)=>setCashLess(1-CashLess)}
-                  // value={row.gst}
-                  // onChange={(e) => handleChange(index, row.gst + 1, "gst")}
-                  id="remeberMe"
-                />
-                </>
-               }
+                {!isEdit ? (
+                  <label>{CashLess ? "CashLess" : "With Cash"}</label>
+                ) : (
+                  <>
+                    <label htmlFor="" className="m-1">
+                      Cash Less
+                    </label>
+
+                    <input
+                      className="form-check-input mt-2"
+                      type="checkbox"
+                      value={CashLess}
+                      checked={CashLess}
+                      readOnly={!isEdit}
+                      onChange={(e) => setCashLess(1 - CashLess)}
+                      // value={row.gst}
+                      // onChange={(e) => handleChange(index, row.gst + 1, "gst")}
+                      id="remeberMe"
+                    />
+                  </>
+                )}
               </div>
             </div>
             <div className="col-lg-12">
               <div className="row mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <textarea name="" id="" cols="50" rows="3" 
-                  value={Endurance}
-                  readOnly={!isEdit}
-                  onChange={(e)=>setEndurance(e.target.value)}></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="50"
+                    rows="3"
+                    value={Endurance}
+                    readOnly={!isEdit}
+                    onChange={(e) => setEndurance(e.target.value)}
+                  ></textarea>
                   {/* <div className="card">
                     <Editor />
                   </div> */}
@@ -987,10 +1047,15 @@ const Summary = ({
               <div className="row mb-1">
                 <div className="col-lg-12 my_profile_setting_input form-group"></div>
                 <div className="col-lg-12">
-                  <textarea name="" id="" cols="50" rows="3" 
-                  readOnly={!isEdit}
-                  value={NoteOfSelf} 
-                  onChange={(e)=>setNoteOfSelf(e.target.value)}></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="50"
+                    rows="3"
+                    readOnly={!isEdit}
+                    value={NoteOfSelf}
+                    onChange={(e) => setNoteOfSelf(e.target.value)}
+                  ></textarea>
                   {/* <div className="card">
                     <Editor />
                   </div> */}
@@ -1020,7 +1085,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={RepairAutoDate}
                     readOnly={!isEdit}
-                    onChange={(e)=>setRepairAutoDate(e.target.value)}
+                    onChange={(e) => setRepairAutoDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1047,7 +1112,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={RepairCompletionDate}
                     readOnly={!isEdit}
-                    onChange={(e)=>setRepairCompletionDate(e.target.value)}
+                    onChange={(e) => setRepairCompletionDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1074,7 +1139,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={PartyAgreed}
                     readOnly={!isEdit}
-                    onChange={(e)=>setPartyAgreed(e.target.value)}
+                    onChange={(e) => setPartyAgreed(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1101,7 +1166,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={ReasonThereofDelay}
                     readOnly={!isEdit}
-                    onChange={(e)=>setReasonThereofDelay(e.target.value)}
+                    onChange={(e) => setReasonThereofDelay(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1128,7 +1193,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={AnyFurtherConversation}
                     readOnly={!isEdit}
-                    onChange={(e)=>setAnyFurtherConversation(e.target.value)}
+                    onChange={(e) => setAnyFurtherConversation(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1155,7 +1220,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={RepairingPhotoDate}
                     readOnly={!isEdit}
-                    onChange={(e)=>setRepairingPhotoDate(e.target.value)}
+                    onChange={(e) => setRepairingPhotoDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1182,7 +1247,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={ReinspectionDate}
                     readOnly={!isEdit}
-                    onChange={(e)=>setReinspectionDate(e.target.value)}
+                    onChange={(e) => setReinspectionDate(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1209,7 +1274,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={SalveDestroy}
                     readOnly={!isEdit}
-                    onChange={(e)=>setSalveDestroy(e.target.value)}
+                    onChange={(e) => setSalveDestroy(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1236,7 +1301,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={BillNo}
                     readOnly={!isEdit}
-                    onChange={(e)=>setBillNo(e.target.value)}
+                    onChange={(e) => setBillNo(e.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1263,7 +1328,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={BillDate}
                     readOnly={!isEdit}
-                    onChange={(E)=>setBillDate(E.target.value)}
+                    onChange={(E) => setBillDate(E.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1290,7 +1355,7 @@ const Summary = ({
                     id="propertyTitle"
                     value={BillAmount}
                     readOnly={!isEdit}
-                    onChange={(E)=>setBillAmount(E.target.value)}
+                    onChange={(E) => setBillAmount(E.target.value)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -1405,6 +1470,5 @@ const Summary = ({
     </>
   );
 };
-
 
 export default Summary;
