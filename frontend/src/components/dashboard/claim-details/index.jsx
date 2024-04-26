@@ -1292,7 +1292,7 @@ const formatDateFinal = (inputDate,type) => {
             leadId={leadId}
             email={claim.insuredDetails?.InsuredMailAddress}
             policyNo={claim.claimDetails?.PolicyNumber}
-            vehicleNo={claim.vehicleDetails?.VehicleEngineNumber}
+            vehicleNo={claim.vehicleDetails?.RegisteredNumber}
             Insured={claim.insuredDetails?.InsuredName}
             Region={claim?.claimDetails?.Region}
             BrokerMailAddress={BrokerMailAddress}
