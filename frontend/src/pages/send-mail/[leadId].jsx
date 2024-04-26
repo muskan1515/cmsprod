@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 
 const Index = () => {
   const router = useRouter();
-  const { leadId, email, policyNo , vehicleNo,Insured,Region,BrokerMailAddress,GarageMailAddress } = router.query;
+  const { leadId, email, policyNo , vehicle,Insured,Region,BrokerMailAddress,GarageMailAddress } = router.query;
 
-  console.log(leadId,email,policyNo);
+  // console.log(leadId,email,policyNo);
   // console.log(leadId);
   return (
     <>
@@ -16,7 +16,7 @@ const Index = () => {
       policyNo={policyNo} 
       GarageMailAddress={GarageMailAddress}
       BrokerMailAddress={BrokerMailAddress}
-      vehicleNo={vehicleNo} 
+      vehicleNo={vehicle} 
       Insured={Insured} 
       Region={Region}/>
     </>
