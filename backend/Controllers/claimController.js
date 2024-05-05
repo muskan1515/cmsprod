@@ -854,9 +854,6 @@ const getSpecificClaim = async (req, res) => {
       const stat2 =  result2[0]?.ImageToken === token && String(type) === "2";
       const stat3 =  result2[0]?.VideoToken === token && String(type) === "3";
 
-      console.log("stat1",token,result2[0]?.InsuredToken,type);
-      console.log("stat2",token,result2[0]?.ImageToken,type);
-      console.log("stat3",token,result2[0]?.VideoToken,type);
       if (stat1 || stat2 || stat3) {
            res.status(200).send("Successfully found!!");
        
@@ -899,23 +896,22 @@ const getSpecificClaim = async (req, res) => {
     const updateDriverDetails = `
     UPDATE DriverDetails
     SET
-    IssuingAuthority = '${IssuingAuthority ? `${(IssuingAuthority)}` : ''}',
+    IssuingAuthority = '${IssuingAuthority ? IssuingAuthority : ''}',
     LicenseNumber = '${LicenseNumber}',
     LicenseType = '${LicenseType}',
     DriverName = '${DriverName}',
-    ValidUpto =' ${formattedValidupto ? `${formattedValidupto}` : ''}',
+    ValidUpto ='${formattedValidupto ? formattedValidupto : ''}',
     RtoName = '${RtoName ? `${RtoName}` : ''}',
     Address =' ${Address ? `${Address}` : ''}',
-    Mobile = '${Mobile ?`${(Mobile)}` : ''}',
-    BloodGroup = '${BloodGroup ? `${BloodGroup}` : ''}',
+    Mobile = '${Mobile ? Mobile : ''}',
+    BloodGroup = '${BloodGroup ? BloodGroup : ''}',
     Gender = '${Gender ? `${Gender}` : ''}',
-    FatherName = '${FatherName ? `${FatherName}` : ''}',
-    DateOfBirth =' ${formattedDateOfbirth ? `${formattedDateOfbirth}` : ''}',
-    DateOfIssue = '${formattedDateOfIssue ? `${formattedDateOfIssue}` : ''}',
+    FatherName = '${FatherName ? FatherName : ''}',
+    DateOfBirth ='${formattedDateOfbirth ? formattedDateOfbirth : ''}',
+    DateOfIssue = '${formattedDateOfIssue ? formattedDateOfIssue : ''}',
     TypeOfVerification = '${DriverTypeOfVerification}'
     WHERE LeadID = ${LeadId};
   `;
-
 
   db.query(updateDriverDetails, (error, results) => {
     if (error) {
