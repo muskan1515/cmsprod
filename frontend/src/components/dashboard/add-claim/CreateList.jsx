@@ -339,6 +339,12 @@ const formatDateFinal = (inputDate2,type) => {
                 <option data-tokens="Status3" value={"Jodhpur"}>
                   Jodhpur
                 </option>
+                <option data-tokens="Status4" value={"Jaipur"}>
+                  Jaipur
+                </option>
+                <option data-tokens="Status5" value={"Hero"}>
+                  Hero
+                </option>
               </select>
             </div>
           </div>

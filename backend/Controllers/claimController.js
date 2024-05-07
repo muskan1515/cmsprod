@@ -826,8 +826,11 @@ const getSpecificClaim = async (req, res) => {
 
   const getAllClaims = (req, res) => {
     const { Region1, Region2, Region3, CalimStatus } = req.query;
-    const sql = "CALL GetPolicyInfoByRegions(?, ?, ?, ?)";
-    const params = [Region1 || null, Region2 || null, Region3 || null, CalimStatus || null];
+    const Region4='Jaipur'
+    const Region5='Hero'
+    const sql = "CALL GetPolicyInfoByRegions(?, ?, ?, ?,?,?)";
+    const params = [Region1 || null, Region2 || null, Region3 || null,
+      Region4 || null, Region5 || null, CalimStatus || null];
 
     db.query(sql, params, (err, result) => {
       if (err) {
