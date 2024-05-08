@@ -1,50 +1,20 @@
 import { useEffect, useState } from "react";
 import CopyrightFooter from "../../common/footer/CopyrightFooter";
-import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/DefaultHeader";
 import MobileMenu from "../../common/header/MobileMenu_01";
-import Exemple from "./Exemple";
-import DocumentUpload from "./DocumentUpload"
+import DocumentUploadView from "./DocumentUploadView";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+import {type,calculateDocuments} from './functions/function'
 
-const Index = ({ leadId, token, content ,type}) => {
+const Index = ({ leadId, token, content, type }) => {
   const [check, setCheck] = useState(false);
-  const [leadToken, setLeadToken] = useState(token ? token : "");
-
-  console.log(content);
   const [status, setStatus] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [document, setDocument] = useState([]);
   const [uploadedData, setUpdatedData] = useState([]);
 
   const [isNotValidLink, setIsNotValidLink] = useState(true);
-
-
-
-  const router = useRouter();
-
-
-  const types = [
-    { name: "Driving licence" },
-    { name: "Certificate of registration" },
-    { name: "Repair Estimate" },
-    { name: "Claim form" },
-    { name: "Insurance policy" },
-    { name: "Damage vehicle photographs/video" },
-    { name: "Aadhar card" },
-    { name: "Pan card" },
-    { name: "Cancel cheque" },
-    { name: "Satisfaction voucher" },
-    { name: "Discharge voucher" },
-    { name: "Dismantle photographs" },
-    { name: "Reinspection photographs" },
-    { name: "Repair Invoice" },
-    { name: "Payment/cash receipt" },
-    { name: "Images" },
-    { name: "Videos" },
-  ];
 
   useEffect(() => {
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -60,7 +30,6 @@ const Index = ({ leadId, token, content ,type}) => {
       })
       .then((res) => {
         const temp = res.data.data;
-        console.log(temp);
         const updatedStatus = temp.filter((data, index) => {
           if (String(data.LeadId) === leadId) {
             return true;
@@ -89,7 +58,6 @@ const Index = ({ leadId, token, content ,type}) => {
       })
       .then((res) => {
         const temp = res.data.data;
-        console.log(temp);
         const updatedStatus = temp?.filter((data, index) => {
           if (String(data.LeadId) === leadId) {
             return true;
@@ -102,7 +70,7 @@ const Index = ({ leadId, token, content ,type}) => {
       })
       .catch((err) => {
         console.log(err);
-      });                               
+      });
 
     setIsLoading(false);
 
@@ -112,16 +80,14 @@ const Index = ({ leadId, token, content ,type}) => {
   useEffect(() => {
     const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    const current_url = window.location.href
-    const current_type = current_url?.split("&type=")[1]
-    const type_ = current_type?.split("&content=")[0]
-    console.log(type_, current_type,current_url )
+    const current_url = window.location.href;
+    const current_type = current_url?.split("&type=")[1];
+    const type_ = current_type?.split("&content=")[0];
     const payload = {
       token: token,
       leadId: Number(leadId),
-      type:Number(type_)
+      type: Number(type_),
     };
-    // console.log('22222222222222',payload)
     axios
       .post("/api/getClaimDetails", payload, {
         headers: {
@@ -131,28 +97,14 @@ const Index = ({ leadId, token, content ,type}) => {
       })
       .then((res) => {
         setIsNotValidLink(false);
-        // alert("Successfully found!!");
       })
       .catch((Err) => {
-        // alert(Err)
+        console.log(Err)
       });
     setCheck(false);
   }, [check]);
 
-
-  const calculateDocuments=()=>{
-    const url = window.location.pathname;
-    const inputString = url?.split("&content=")[1];
-    const numberOfCommas = (inputString?.split(",").length - 1);
-   if(inputString === "")
-    return 10;
-    return numberOfCommas;
-  }
-
-   const onSubmitHandler = () => {
-
-    console.log("uploaded",uploadedData);
-
+  const onSubmitHandler = () => {
     let data = [];
     for (let i = 0; i < 17; i = i + 1) {
       const temp = types[i].name;
@@ -171,25 +123,18 @@ const Index = ({ leadId, token, content ,type}) => {
         });
       }
     }
-
-    console.log(String(calculateDocuments()) !== String(data.length),data.length,data)
-    if (
-      !data)
-       {
-        toast.error("Please upload all the required data !!!");
-     
+    if (!data) {
+      toast.error("Please upload all the required data !!!");
     } else {
-
       const unserInfo = JSON.parse(localStorage.getItem("userInfo"));
-      
-      
-      const payload = JSON.stringify({type:type, data: data });
+
+      const payload = JSON.stringify({ type: type, data: data });
 
       toast.loading("Saving the media's to DB !!", {
-        // position: toast.POSITION.BOTTOM_LEFT,
         className: "toast-loading-message",
       });
-      axios.post("/api/uploadDocument", payload, {
+      axios
+        .post("/api/uploadDocument", payload, {
           headers: {
             Authorization: `Bearer ${""}`,
             "Content-Type": "application/json",
@@ -197,9 +142,7 @@ const Index = ({ leadId, token, content ,type}) => {
         })
         .then((res) => {
           toast.dismiss();
-          // toast.success("Successfully added");
           toast.success("Successfully Saved !", {
-            // position: toast.POSITION.BOTTOM_LEFT,
             className: "toast-loading-message",
           });
           window.location.reload();
@@ -212,11 +155,9 @@ const Index = ({ leadId, token, content ,type}) => {
   };
   return (
     <>
-      {/* <!-- Main Header Nav --> */}
       <Header />
-      <toaster/>
+      <toaster />
 
-      {/* <!--  Mobile Menu --> */}
       <MobileMenu />
 
       {isLoading ? (
@@ -249,7 +190,7 @@ const Index = ({ leadId, token, content ,type}) => {
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
-                <DocumentUpload
+                <DocumentUploadView
                   setUpdatedData={setUpdatedData}
                   uploadedData={uploadedData}
                   leadId={leadId}
@@ -265,17 +206,6 @@ const Index = ({ leadId, token, content ,type}) => {
           </div>
         </section>
       )}
-
-      {/* <!-- Our Footer --> */}
-      {/* <section className="footer_one">
-        <div className="container">
-          <div className="row">
-            <Footer />
-          </div>
-        </div>
-      </section> */}
-
-      {/* <!-- Our Footer Bottom Area --> */}
       <div className="footer_middle_area">
         <div className="container">
           <CopyrightFooter />
