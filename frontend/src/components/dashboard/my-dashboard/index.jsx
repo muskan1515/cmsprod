@@ -349,13 +349,7 @@ const Index = () => {
                       setEnd={setEnd}
                       start={start}
                       end={end}
-                      properties={searchInput || majorSearch || isRegionChange
-                        ? filterClaims
-                        : selectedCard > 0
-                        ? filterCardClaim
-                        : showRegionClaim
-                        ? filterAccordingClaim
-                        : allClaims}
+                      properties={filterClaims}
                     />
                   </div>
                 </div>
