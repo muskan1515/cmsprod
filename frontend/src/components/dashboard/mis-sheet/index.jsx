@@ -2,29 +2,20 @@ import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu_01";
 import MobileMenu from "../../common/header/MobileMenu";
-import Exemple from "./Exemple";
+import BaseView from "./BaseView";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
-import ExcelTable from "./ExcelTable";
+import ExportToExcel from "./ExportToExcel";
 import { useRouter } from "next/router";
+import { convertToYYYYMMDD } from "./functions";
 
 const Index = () => {
-
-  const convertToYYYYMMDD = (inputDate) => {
-    const date = new Date(inputDate);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  };
-
   const [allRows, setAllRows] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [allInsurer, setAllInsurer] = useState([]);
   const [endDate, setEndDate] = useState("");
-  const [RegionType,setRegionType]=useState("All");
+  const [RegionType, setRegionType] = useState("All");
   const [DateType, setDateType] = useState("intimation");
 
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
@@ -34,17 +25,14 @@ const Index = () => {
   const router = useRouter();
 
   useEffect(() => {
-   
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
 
-    // Attach event listeners for user activity
     window.addEventListener("mousemove", activityHandler);
     window.addEventListener("keydown", activityHandler);
     window.addEventListener("click", activityHandler);
 
-    // Cleanup event listeners when the component is unmounted
     return () => {
       window.removeEventListener("mousemove", activityHandler);
       window.removeEventListener("keydown", activityHandler);
@@ -69,15 +57,12 @@ const Index = () => {
     return () => clearInterval(inactivityCheckInterval);
   }, [lastActivityTimestamp]);
 
-
-  console.log("datetypeindex",DateType);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const Start = startDate ? convertToYYYYMMDD(startDate) : null;
     const End = endDate ? convertToYYYYMMDD(endDate) : null;
 
     toast.loading("Fetching the information!!", {
-      // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
     axios
@@ -93,15 +78,11 @@ const Index = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.userData.misSheetDetails);
         setAllRows(res.data.userData.misSheetDetails);
         toast.dismiss();
-        // toast.success("Successfully added");
         toast.success("Fetched  Successfully !", {
-          // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
-        // toast.success("Successfully Fetched !!")
       })
       .catch((err) => {
         toast.dismiss();
@@ -120,7 +101,6 @@ const Index = () => {
         },
       })
       .then((res) => {
-        console.log("insurerdata", res.data.InsurerData.result);
         setAllInsurer(res.data.InsurerData.result);
       })
       .catch((err) => {
@@ -130,11 +110,8 @@ const Index = () => {
   }, []);
   return (
     <>
-      {/* <!-- Main Header Nav --> */}
       <Header />
-      <Toaster/>
-
-      {/* <!--  Mobile Menu --> */}
+      <Toaster />
       <MobileMenu />
 
       <div className="dashboard_sidebar_menu">
@@ -147,15 +124,11 @@ const Index = () => {
           <SidebarMenu />
         </div>
       </div>
-      {/* End sidebar_menu */}
-
-      {/* <!-- Our Dashbord --> */}
       <section className="our-dashbord dashbord bgc-f6 pb50">
         <div className="container-fluid ovh">
           <div className="row">
             <div className="col-lg-12 maxw100flex-992">
               <div className="row">
-                {/* Start Dashboard Navigation */}
                 <div className="col-lg-12">
                   <div className="dashboard_navigationbar dn db-1024">
                     <div className="dropdown">
@@ -170,28 +143,18 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-                {/* End Dashboard Navigation */}
 
-                {/* <div className="col-lg-4 col-xl-4 mb10">
-                  <div className="breadcrumb_content style2 mb30-991">
-                    <h2 className="breadcrumb_title">My Favorites</h2>
-                    <p>We are glad to see you again!</p>
-                  </div>
-                </div> */}
-                {/* End .col */}
-
-                {/* End .col */}
-                <ExcelTable 
-                RegionType={RegionType}
-                setRegionType={setRegionType}
-                allRows={allRows} />
+                <ExportToExcel
+                  RegionType={RegionType}
+                  setRegionType={setRegionType}
+                  allRows={allRows}
+                />
 
                 <div className="col-lg-12">
                   <div className="my_dashboard_review mb40">
                     <div className="property_table">
                       <div className="table-responsive mt0">
-                        {/* <TableData /> */}
-                        <Exemple
+                        <BaseView
                           RegionType={RegionType}
                           setRegionType={setRegionType}
                           allRows={allRows}
@@ -204,19 +167,12 @@ const Index = () => {
                           endDate={endDate}
                         />
                       </div>
-                      {/* End .table-responsive */}
 
-                      <div className="mbp_pagination">
-                        {/* <Pagination /> */}
-                      </div>
-                      {/* End .mbp_pagination */}
+                      <div className="mbp_pagination"></div>
                     </div>
-                    {/* End .property_table */}
                   </div>
                 </div>
-                {/* End .col */}
               </div>
-              {/* End .row */}
 
               <div className="row mt50">
                 <div className="col-lg-12">
@@ -229,9 +185,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              {/* End .row */}
             </div>
-            {/* End .col */}
           </div>
         </div>
       </section>

@@ -1,32 +1,25 @@
-
-import DLData from "./CreatListing";
+import RCBaseLayout from "./RCBaseLayout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import toast, { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from "react-hot-toast";
 
 const Index = () => {
   const router = useRouter();
-  const [driverDetails,setDriverDetails]=useState({});
-  const [isLoading,setIsLoading]=useState(true)
-
+  const [driverDetails, setDriverDetails] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
     Date.now()
   );
 
   useEffect(() => {
-    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
-
-    // Attach event listeners for user activity
     window.addEventListener("mousemove", activityHandler);
     window.addEventListener("keydown", activityHandler);
     window.addEventListener("click", activityHandler);
-
-    // Cleanup event listeners when the component is unmounted
     return () => {
       window.removeEventListener("mousemove", activityHandler);
       window.removeEventListener("keydown", activityHandler);
@@ -51,14 +44,11 @@ const Index = () => {
     return () => clearInterval(inactivityCheckInterval);
   }, [lastActivityTimestamp]);
 
- 
   useEffect(() => {
-
     const url = window.location.pathname;
     const leadId = url.split("/dl-document/")[1];
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     toast.loading("Fetching dl Details!!", {
-      // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
     axios
@@ -72,9 +62,8 @@ const Index = () => {
         },
       })
       .then((res) => {
-        toast.dismiss()
+        toast.dismiss();
         toast.success("Successfully fetched !", {
-          // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
         setDriverDetails(res.data.data.driverDetails);
@@ -83,17 +72,16 @@ const Index = () => {
         toast.dismiss();
         toast.error("Got error while fetching details!");
       });
-      setIsLoading(false)
-    },[]);
+    setIsLoading(false);
+  }, []);
   return (
     <>
       <section className="" style={{ paddingTop: "10px" }}>
-        <Toaster/>
+        <Toaster />
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              {/* <ErrorPageContent allInfo={allInfo} /> */}
-              <DLData DriverDetails={driverDetails} />
+              <RCBaseLayout DriverDetails={driverDetails} />
             </div>
           </div>
         </div>

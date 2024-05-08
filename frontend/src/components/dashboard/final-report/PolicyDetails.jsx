@@ -4,7 +4,6 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import RcDetails from "./RcDetails";
 import { BsTypeH3 } from "react-icons/bs";
-import DateComponent from "./dateComponent";
 // import MyDatePicker from "../../common/MyDatePicker";
 
 import DatePicker from "react-datepicker";
@@ -306,9 +305,7 @@ const PolicyDetails = ({
     return formattedDate;
   };
   
-  function removeTrailingSpaces(date){
-    return date.trim();
-  }
+  
 
   function localDate(dateString) {
     if (dateString && dateString !== "null") {
@@ -319,7 +316,7 @@ const PolicyDetails = ({
         year: 'numeric', 
         timeZone: 'Asia/Kolkata' 
       };
-      return date.toLocaleDateString("fr-CA", options).replace(/\//g, '-').trim();
+      return date.toLocaleDateString("fr-CA", options).replace(/\//g, '-');
     } else {
       return "";
     }
@@ -1438,7 +1435,26 @@ const PolicyDetails = ({
                               id="propertyTitle"
                             />
                           ) : (
-                            
+                            // <MyDatePicker
+                            //   disable={!isEditMode}
+                            //   selectedDate={
+                            //     DateRegistration
+                            //       ? new Date(DateRegistration)
+                            //       : ""
+                            //   }
+                            //   setSelectedDate={setDateRegistration}
+                            // />
+                            // <DatePicker
+                            //   className="form-control"
+                            //   id="propertyTitle"
+                            //   selected={
+                            //     DateRegistration !== null &&
+                            //    (DateRegistration) // Example: YYYY-MM-DD format
+                            //       ? new Date(DateRegistration)
+                            //       : ''
+                            //   }
+                            //   onChange={(date) => setDateRegistration(date)}
+                            // />
                             <input
                               type="date"
                               disabled={!isEditMode}
@@ -1451,7 +1467,21 @@ const PolicyDetails = ({
                             />
                           )}
 
-                          
+                          {/* <input
+                            type={isEditMode ? "date" : "text"}
+                            readonly={!isEditMode}
+                            className="form-control"
+                            id="propertyTitle"
+                            value={
+                              isEditMode
+                                ? DateRegistration
+                                : formatDate(DateRegistration)
+                            }
+                            onChange={(e) =>
+                              setDateRegistration(e.target.value)
+                            }
+                            // placeholder="Enter Registration No."
+                          />*/}
                         </div>
                       </div>
                     </div>
@@ -1772,6 +1802,97 @@ const PolicyDetails = ({
                       </div>
                     </div>
 
+                    {/* <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                          fontSize: "15px",
+                        }}
+                      >
+                        Anti Theft
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        // value={VehicleCubicCapacity}
+                        readOnly={!isEditMode}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                          fontSize: "15px",
+                        }}
+                      >
+                        PUC Details
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        value={PUCNumber}
+                        readOnly={!isEditMode}
+                        onChange={(e) => setPUCNumber(e.target.value)}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div> */}
+
+                    {/* <div className="col-lg-12">
+                  <div className="row mt-1">
+                    <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                      <label
+                        htmlFor=""
+                        className="text-color"
+                        style={{
+                          // paddingTop: "15px",
+                          color: "#2e008b",
+                          fontWeight: "",
+                          // marginTop: "-13px",
+                          fontSize:"15px"
+                        }}
+                      >
+                        Remark
+                      </label>
+                    </div>
+                    <div className="col-lg-7">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        readOnly={!isEditMode}
+
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div> */}
                   </div>
                 </div>
                 <div className="col-lg-5">
@@ -1956,7 +2077,33 @@ const PolicyDetails = ({
                   </div>
 
                   <div className="col-lg-12">
-                   
+                    {/* <div className="row mt-1">
+                  <div className="col-lg-4 my_profile_setting_input form-group text-end">
+                    <label
+                      htmlFor=""
+                      className="text-color"
+                      style={{
+                        // paddingTop: "15px",
+                        color: "#2e008b",
+                        fontWeight: "",
+                        // marginTop: "-13px",
+                        fontSize:"14px"
+                      }}
+                    >
+                      Class Of Vehicle
+                    </label>
+                  </div>
+                  <div className="col-lg-7">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyTitle"
+                      readOnly={!isEditMode}
+                      value={VehicleClassOfVehicle}
+                      // placeholder="Enter Registration No."
+                    />
+                  </div>
+                </div> */}
                     <div className="row mt-1">
                       <div className="col-lg-7 my_profile_setting_input form-group text-end">
                         <label
@@ -2224,11 +2371,7 @@ const PolicyDetails = ({
                     readOnly={!isEditMode}
                     value={
                       DriverName && DriverName !== "null"
-                        ? 
-                        claim?.driverDetails?.FatherName === null || claim?.driverDetails?.FatherName === "null" ?
-                        DriverName
-                        : 
-                        (claim?.driverDetails?.Gender === "Male"
+                        ? claim?.driverDetails?.Gender === "Male"
                           ? removeMultipleSpaces(DriverName) +
                             " " +
                             "S/o" +
@@ -2242,7 +2385,7 @@ const PolicyDetails = ({
                             " " +
                             removeMultipleSpaces(
                               claim?.driverDetails?.FatherName
-                            ))
+                            )
                         : ""
                     }
                     onChange={(e) => setDriverName(e.target.value)}
@@ -2314,16 +2457,35 @@ const PolicyDetails = ({
                       id="propertyTitle"
                     />
                   ) : (
-                    
+                    //   <DatePicker
+                    //     className="form-control"
+                    //     id="propertyTitle"
+                    //     selected={
+                    //       DateOfIssue !== null &&
+                    //  (DateOfIssue) // Example: YYYY-MM-DD format
+                    //     ? new Date(DateOfIssue)
+                    //     : ''
+                    //     }
+                    //     onChange={(date) => setDateOfIssue(date)}
+                    //   />
                     <input
                     type="date"
                     disabled={!isEditMode}
-                    value={localDate(DateOfBirth)}
-                    onChange={(e) => setDateOfBirth(e.target.value)}
+                    value={localDate(PolicyPeriodStart)}
+                    onChange={(e) => setPolicyPeriodStart(e.target.value)}
                   />
                   )}
                 </div>
-                
+                {/* <div className="col-lg-8">
+                  <MyDatePicker
+
+                  // value={LicenseNumber}
+                  // readOnly={!isEditMode}
+                  // onChange={(e) => setLicenseNumber(e.target.value)}
+
+                  // placeholder="Enter Registration No."
+                  />
+                </div> */}
               </div>
             </div>
             <div className="col-lg-8">
@@ -2364,7 +2526,17 @@ const PolicyDetails = ({
                       id="propertyTitle"
                     />
                   ) : (
-                    
+                    //   <DatePicker
+                    //     className="form-control"
+                    //     id="propertyTitle"
+                    //     selected={
+                    //       DateOfIssue !== null &&
+                    //  (DateOfIssue) // Example: YYYY-MM-DD format
+                    //     ? new Date(DateOfIssue)
+                    //     : ''
+                    //     }
+                    //     onChange={(date) => setDateOfIssue(date)}
+                    //   />
                     <input
                       type="date"
                       disabled={!isEditMode}
@@ -2372,7 +2544,12 @@ const PolicyDetails = ({
                       onChange={(e) => setDateOfIssue(e.target.value)}
                     />
                   )}
-                 
+                  {/* <input 
+                  type={isEditMode ? "date" : "text"} 
+                  readonly={!isEditMode} 
+                  value={isEditMode ? DateOfIssue : formatDate(DateOfIssue)} 
+                onChange={(e)=>setDateOfIssue(e.target.value)}/> */}
+                  {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
             </div>
@@ -2395,7 +2572,12 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-10">
-               
+                  {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+
                   {!isEditMode ? (
                     <input
                       readOnly={!isEditMode}
@@ -2408,15 +2590,47 @@ const PolicyDetails = ({
                       // // disable={!isEdi
                     />
                   ) : (
-                   
+                    // <MyDatePickertMode}
+                    // // selectedDate={
+                    // //   ValidUntilNtv ? new Date(ValidUntilNtv) : ""
+                    // // }
+                    // // setSelectedDate={setValidUntilNtv}
+                    // />
+                    // <DatePicker
+                    //   className="form-control"
+                    //   id="propertyTitle"
+                    //   selected={
+                    //     ValidUntilNtv !== null &&
+                    //     !isNaN(new Date(ValidUntilNtv))
+                    //       ? new Date(ValidUntilNtv)
+                    //       : null
+                    //   }
+                    //   onChange={(date) => setValidUntilNtv(date)}
+                    // />
+                    //   <DatePicker
+                    //   className="form-control"
+                    //   id="propertyTitle"
+                    //   selected={
+                    //     ValidFrom !== null &&
+                    //    (ValidFrom) // Example: YYYY-MM-DD format
+                    //       ? new Date(ValidFrom)
+                    //       : ''
+                    //   }
+                    //   onChange={(date) => setValidFrom(date)}
+                    // />
                     <input
                     type="date"
                     disabled={!isEditMode}
-                    value={localDate(ValidUpto)}
-                    onChange={(e) => setValidUpto(e.target.value)}
+                    value={localDate(PolicyPeriodStart)}
+                    onChange={(e) => setPolicyPeriodStart(e.target.value)}
                   />
                   )}
-                  
+                  {/* <input 
+                  type={isEditMode ? "date" : "text"} 
+                  readonly={!isEditMode}
+                  value={isEditMode ? ValidUntilNtv: formatDate(ValidUntilNtv)} 
+          onChange={(e)=>setValidUntilNtv(e.target.value)}/>*/}
+                  {/* <span className="flaticon-calendar text-dark"></span> */}
                 </div>
               </div>
             </div>

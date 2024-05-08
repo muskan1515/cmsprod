@@ -7,7 +7,7 @@ const Index = () => {
   const router = useRouter();
   const { leadId, email, policyNo , vehicle,Insured,Region,BrokerMailAddress,GarageMailAddress } = router.query;
 
-  // console.log(leadId,email,policyNo);
+  console.log(leadId,email,policyNo);
   // console.log(leadId);
   return (
     <>

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-const Pagination = ({start,end, setStart , setEnd,properties}) => {
+const Pagination = ({ setStart, setEnd, properties }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  
+  useEffect(() => {
+    setCurrentPage(1);
+    setStart(0);
+    setEnd(10);
+  }, [properties]);
 
-  useEffect(()=>{
-    setCurrentPage(1)
-    setStart(0)
-    setEnd(10)
-  },[properties])
-  
   const propertiesPerPage = 10;
 
   const indexOfLastProperty = currentPage * propertiesPerPage;
   const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-  const currentProperties = properties.slice(indexOfFirstProperty, indexOfLastProperty);
+  const currentProperties = properties.slice(
+    indexOfFirstProperty,
+    indexOfLastProperty
+  );
 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(properties.length / propertiesPerPage); i++) {
@@ -27,11 +28,7 @@ const Pagination = ({start,end, setStart , setEnd,properties}) => {
     const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
     setStart(indexOfFirstProperty);
     setEnd(indexOfLastProperty);
-    // console.log(indexOfLastProperty,indexOfFirstProperty);
-    // const currentProperties = properties.slice(indexOfFirstProperty-1, indexOfLastProperty-1);
-    
   };
-
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -41,8 +38,7 @@ const Pagination = ({start,end, setStart , setEnd,properties}) => {
   return (
     <div>
       <ul className="page_navigation">
-        {/* Previous page button */}
-        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
           <a
             className="page-link"
             href="#"
@@ -54,22 +50,29 @@ const Pagination = ({start,end, setStart , setEnd,properties}) => {
           </a>
         </li>
 
-        {/* Page numbers */}
         {pageNumbers.map((number) => (
-          <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
-            <a 
+          <li
+            key={number}
+            className={`page-item ${currentPage === number ? "active" : ""}`}
+          >
+            <a
               className="page-link"
               href="#"
               onClick={() => handlePageChange(number)}
             >
               {number}
-              {currentPage === number && <span className="sr-only">(current)</span>}
+              {currentPage === number && (
+                <span className="sr-only">(current)</span>
+              )}
             </a>
           </li>
         ))}
 
-        {/* Next page button */}
-        <li className={`page-item ${currentPage === pageNumbers.length ? 'disabled' : ''}`}>
+        <li
+          className={`page-item ${
+            currentPage === pageNumbers.length ? "disabled" : ""
+          }`}
+        >
           <a
             className="page-link"
             href="#"

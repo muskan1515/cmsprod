@@ -133,13 +133,7 @@ function SmartTable(props) {
             >
               {props.title}
             </div>
-            {/* <div className="col-lg-3">
-              <div
-                className="btn btn-log btn-thm flaticon-pdf"
-                title="pdf zip download"
-                style={{ marginLeft: "250px" }}
-              ></div>
-            </div> */}
+           
           </div>
           {props.data.length > 0 ? (
             <div className="row mt-3">

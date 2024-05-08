@@ -17,20 +17,21 @@ const driverDetailsRoute=require("./Routes/driverDetailRoutes");
 const misSheetRoutes=require("./Routes/misSheetRoutes");
 const insurerRoutes=require("./Routes/InsurerRoute");
 const uploadReportDoc = require("./Routes/reportDocumentUpload");
-const fetchRoutes = require("./Routes/fetchRoutes")
-const commentRoute = require("./Routes/commentsRoute")
-const multer = require("multer");
+const fetchRoutes = require("./Routes/fetchRoutes");
+const commentRoute = require("./Routes/commentsRoute");
+const regionRoute = require("./Routes/regionRoutes");
+// const multer = require("multer");
 
 
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3006;
 const app = express();
 
-const storage = multer.memoryStorage(); // Store files in memory
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // Set your desired file size limit (e.g., 50MB)
-});
+// const storage = multer.memoryStorage(); // Store files in memory
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 50 * 1024 * 1024 }, // Set your desired file size limit (e.g., 50MB)
+// });
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -52,7 +53,7 @@ app.use("/newParts",newPartsRoute);
 
 app.use("/status",statusRoute);
 
-app.use("/upload",upload.array(),uploadRoute);
+app.use("/upload",uploadRoute);
 
 app.use("/report",reportRoutes);
 
@@ -73,6 +74,8 @@ app.use("/reportDocument",uploadReportDoc);
 app.use("/comments",commentRoute)
 
 app.use("/fetch",fetchRoutes);
+
+app.use("/region",regionRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello, this is your Express server!');

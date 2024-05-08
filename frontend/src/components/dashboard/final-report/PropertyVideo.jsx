@@ -1807,6 +1807,7 @@ const formatDateFinal = (inputDate2,type) => {
           <div className="property_video">
             <div className="thumb">
               <Summary
+              allLabour={allLabour}
                disable={disable}
               leadId={leadId}
               documents={documents}

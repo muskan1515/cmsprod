@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { convertTimestampToReadableTime,getLocationFromCoordinates } from "./functions/VideoViewFormFunctions";
 
 const Video = ({ videos }) => {
   const [open, setOpen] = useState(false);
@@ -12,20 +12,10 @@ const Video = ({ videos }) => {
   const [selectedVideo, setSelectedVideo] = useState(0);
   const [capturedImages, setCapturedImages] = useState([]);
 
-  const [noOfImages,setNoOfImages]=useState(2);
+  const [noOfImages, setNoOfImages] = useState(2);
 
   const [allLocations, setAllLocations] = useState([]);
 
-  const handleVideoEnded = () => {
-    setCapturedImages([]);
-    setOpen(false);
-  };
-
-  const handleVideoPause = () => {
-    setOpen(false);
-  };
-
-  console.log("videos", videos);
   const handleCaptureSnapshot = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -35,19 +25,10 @@ const Video = ({ videos }) => {
       return;
     }
 
-    // Get the context of the canvas
     const context = canvas.getContext("2d");
-
-    // Draw the current frame of the video onto the canvas
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Capture snapshot from canvas
     const snapshotImage = canvas.toDataURL("image/png");
-
-    // Update state with captured snapshot
     setCapturedImages((prevImages) => [...prevImages, snapshotImage]);
-
-    // Show custom popup
     setPopupContent("Snapshot captured successfully!");
     setShowPopup(true);
   };
@@ -57,50 +38,34 @@ const Video = ({ videos }) => {
     setOpen(true);
   };
 
-  console.log("selectedVideoIndex", selectedVideo, videos[selectedVideo]);
-
   const handleGeneratePDF = () => {
     if (!capturedImages || capturedImages.length === 0) {
       alert("First, please click the snapshots!!");
     } else {
       const pdf = new jsPDF();
-  
+
       const imagesPerPage = noOfImages; // Number of images to display per page
       let pageIndex = 1;
-  
+
       capturedImages.forEach((image, index) => {
         if (index % imagesPerPage === 0 && index > 0) {
           pdf.addPage();
           pageIndex++;
         }
-  
+
         const xOffset = (index % 2) * 100 + 10;
-        const yOffset = Math.floor(index / 2) % 2 * 100 + 10;
-  
+        const yOffset = (Math.floor(index / 2) % 2) * 100 + 10;
+
         pdf.addImage(image, "PNG", xOffset, yOffset, 90, 80);
-  
       });
-  
+
       // Save PDF
       pdf.save(`${videos[selectedVideo].name}_snapshots.pdf`);
-  
+
       // Show custom popup
       setPopupContent("PDF downloaded successfully!");
       setShowPopup(true);
-  
-      setCapturedImages([]);
-      setOpen(false);
-    }
-  };
-  
 
-  const handlePopupClose = () => {
-    setShowPopup(false);
-  };
-
-  const handleNextVideo = () => {
-    if (selectedVideo < videos.length - 1) {
-      setSelectedVideo((prevSelected) => prevSelected + 1);
       setCapturedImages([]);
       setOpen(false);
     }
@@ -122,70 +87,6 @@ const Video = ({ videos }) => {
 
     fetchLocations();
   }, [videos]);
-
-  console.log("allLoction", allLocations);
-
-  const handlePreviousVideo = () => {
-    if (selectedVideo > 0) {
-      setSelectedVideo((prevSelected) => prevSelected - 1);
-      setCapturedImages([]);
-      setOpen(false);
-    }
-  };
-
-  const convertTimestampToReadableTime = (timestamp) => {
-    // Create a new Date object using the timestamp
-    const date = new Date(timestamp);
-
-    // Get month names
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    // Extract individual components of the date
-    const day = date.getDate();
-    const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = ("0" + date.getHours()).slice(-2);
-    const minutes = ("0" + date.getMinutes()).slice(-2);
-    const period = date.getHours() < 12 ? "AM" : "PM";
-
-    // Format the time string
-    const formattedTime = `${day} ${month} ${year}, ${hours}:${minutes} ${period}`;
-
-    return formattedTime;
-  };
-
-  async function getLocationFromCoordinates(latitude, longitude) {
-    const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-
-      if (data.display_name) {
-        // Extract the formatted address
-        const formattedAddress = data.display_name;
-        return formattedAddress;
-      } else {
-        throw new Error("Failed to retrieve location information.");
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
-      return null;
-    }
-  }
 
   return (
     <>
@@ -303,29 +204,27 @@ const Video = ({ videos }) => {
                                   style={{ display: "none" }}
                                 ></canvas>
                               </>
-                            ) : (
-                              videos.length <=0 ?
+                            ) : videos.length <= 0 ? (
                               <p>No Videos Found !!</p>
-                              :
+                            ) : (
                               <>
-                              <Image
-                                width={492}
-                                height={190}
-                                className="pro_img w100 w-100 cover"
-                                src="/assets/images/background/7.jpg"
-                                alt="7.jpg"
-                              />
-                              <div className="overlay_icon">
-                                <div
-                                  onClick={() => setOpen(!open)}
-                                  role="button"
-                                  className="video_popup_btn red popup-youtube"
-                                >
-                                  <span className="flaticon-play"></span>
+                                <Image
+                                  width={492}
+                                  height={190}
+                                  className="pro_img w100 w-100 cover"
+                                  src="/assets/images/background/7.jpg"
+                                  alt="7.jpg"
+                                />
+                                <div className="overlay_icon">
+                                  <div
+                                    onClick={() => setOpen(!open)}
+                                    role="button"
+                                    className="video_popup_btn red popup-youtube"
+                                  >
+                                    <span className="flaticon-play"></span>
+                                  </div>
                                 </div>
-                              </div>
                               </>
-                             
                             )}
                           </div>
                         </div>
@@ -340,11 +239,13 @@ const Video = ({ videos }) => {
                           >
                             Capture
                           </button>
-                          <select onChange={(e)=>setNoOfImages(e.target.value)}>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                          <option value={4}>4</option>
-                          <option value={5}>5</option>
+                          <select
+                            onChange={(e) => setNoOfImages(e.target.value)}
+                          >
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
                           </select>
                           <button
                             className="btn btn-thm m-1"

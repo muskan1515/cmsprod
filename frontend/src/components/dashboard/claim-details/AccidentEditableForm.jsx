@@ -1,18 +1,15 @@
-import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import AccidentViewForm from "./AccidentViewForm";
-import { useEffect, useState } from "react";
-import MyDatePicker from "../../common/MyDatePicker";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../common/Loader";
 import TimePicker from "../../common/TimePicker";
+import { setDate, closeFunction } from "./functions/AccidentSectionFunctions";
 
 const AccidentEditableForm = ({
   claim,
-  edit,
   onSaveHandler,
-  disable,
   finalDisable,
   PlaceOfLoss,
   setPlaceOfLoss,
@@ -23,76 +20,15 @@ const AccidentEditableForm = ({
   DateOfAccident,
   setDateOfAccident,
   Pin,
-  setPin
+  setPin,
 }) => {
   const router = useRouter();
   const [editCase_03, setEditCase_03] = useState(false);
   const [isUpdateVehicleLoading, setisUpdateVehicleLoading] = useState(false);
 
-  const closeFunction = () => {
-    setEditCase_03(false);
-    setisUpdateVehicleLoading(false);
-  };
-
- console.log("newDate",DateOfAccident)
-
-  function localDate(dateString) {
-    if (dateString && dateString !== "null") {
-      return new Date(dateString).toLocaleDateString("fr-CA", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        timeZone: "Asia/Kolkata",
-      });
-    } else {
-      return "";
-    }
-  }
-
-  const formatDate = (val) => {
-    const date = new Date(val);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Note: Month is zero-indexed
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-  function localDate(dateString) {
-    if (dateString && dateString !== "null") {
-      return new Date(dateString).toLocaleDateString("fr-CA", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        timeZone: "Asia/Kolkata",
-      });
-    } else {
-      return "";
-    }
-  }
-
-  const setDate = (newDate,settingFunc)=>{
-    const dateObj = new Date(newDate);
-    const yyyy = dateObj.getFullYear();
-    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const dd = String(dateObj.getDate()).padStart(2, '0');
-    const formattedDate = `${yyyy}-${mm}-${dd}`;
-    settingFunc(formattedDate);
-    }
-    const convertDateFormat = (inputDate) => {
-      const dateParts = inputDate.split("-");
-      if (dateParts.length === 3) {
-          const yyyy = dateParts[2];
-          const mm = dateParts[1];
-          const dd = dateParts[0];
-          const formattedDate = `${yyyy}-${mm}-${dd}`;
-          return (formattedDate);
-      }
-      
-  }
-
   return (
     <>
       <div className="faq_according row mt-2">
-        {/* <h4 className="mb-3">Vehicle Details</h4> */}
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingTen">
@@ -152,11 +88,7 @@ const AccidentEditableForm = ({
                       )
                     )}
                   </div>
-                  <div className="col-lg-2 text-start">
-                    {/* <button className="btn-thm" style={{}}>
-                      Fetch Details
-                    </button> */}
-                  </div>
+                  <div className="col-lg-2 text-start"></div>
                 </div>
                 {isUpdateVehicleLoading ? (
                   <Loader />
@@ -169,10 +101,8 @@ const AccidentEditableForm = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Date Of Accident
@@ -184,15 +114,17 @@ const AccidentEditableForm = ({
                             id="propertyTitle"
                             dateFormat="dd/MM/yyyy"
                             selected={
-                              DateOfAccident !== null && !isNaN(new Date(DateOfAccident))
+                              DateOfAccident !== null &&
+                              !isNaN(new Date(DateOfAccident))
                                 ? new Date(DateOfAccident)
                                 : ""
                             }
-                            onChange={(date) => {setDate(date,setDateOfAccident)}}
+                            onChange={(date) => {
+                              setDate(date, setDateOfAccident);
+                            }}
                           />
                         </div>
                       </div>
-                      
                     </div>
 
                     <div className="col-lg-6">
@@ -202,64 +134,57 @@ const AccidentEditableForm = ({
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
-                           Time Of Accident
+                            Time Of Accident
                           </label>
                         </div>
                         <div className="col-lg-7">
-                        <TimePicker
-                          selectedTime={TimeOfAccident ? TimeOfAccident : ""}
-                          setSelectedTime={setTimeOfAccident}
-                        />
+                          <TimePicker
+                            selectedTime={TimeOfAccident ? TimeOfAccident : ""}
+                            setSelectedTime={setTimeOfAccident}
+                          />
                         </div>
                       </div>
                     </div>
 
-                     <div className="col-lg-6">
+                    <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Place Of Accident
                           </label>
                         </div>
                         <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          value={PlaceOfLoss ? PlaceOfLoss : ""}
-                          onChange={(e) => setPlaceOfLoss(e.target.value)}
-                          // placeholder="Enter Registration No."
-                        />
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={PlaceOfLoss ? PlaceOfLoss : ""}
+                            onChange={(e) => setPlaceOfLoss(e.target.value)}
+                          />
                         </div>
                       </div>
-                        </div>
+                    </div>
 
-                     <div className="col-lg-6">
+                    <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
                             Pin Code
@@ -272,47 +197,40 @@ const AccidentEditableForm = ({
                             id="propertyTitle"
                             value={Pin}
                             onChange={(e) => setPin(e.target.value)}
-  
                           />
                         </div>
                       </div>
-                      </div>
+                    </div>
 
-                     <div className="col-lg-6">
+                    <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
                             htmlFor=""
                             className="text-color"
                             style={{
-                              // paddingTop: "15px",
                               color: "#1560bd",
                               fontWeight: "",
-                              // marginTop: "-13px",
                             }}
                           >
-                           Place Of Survey
+                            Place Of Survey
                           </label>
                         </div>
                         <div className="col-lg-7">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="propertyTitle"
-                          value={PlaceOfSurvey ? PlaceOfSurvey : ""}
-                          onChange={(e) => setPlaceOfSurvey(e.target.value)}
-                          // placeholder="Enter Registration No."
-                        />
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="propertyTitle"
+                            value={PlaceOfSurvey ? PlaceOfSurvey : ""}
+                            onChange={(e) => setPlaceOfSurvey(e.target.value)}
+                          />
                         </div>
                       </div>
-                          </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="row">
-                    <AccidentViewForm
-                      claim={claim}
-                      
-                    />
+                    <AccidentViewForm claim={claim} />
                   </div>
                 )}
               </div>
@@ -320,7 +238,6 @@ const AccidentEditableForm = ({
           </div>
         </div>
       </div>
-      {/* End .row */}
     </>
   );
 };

@@ -153,7 +153,7 @@ const updateFinalReport = (req,res)=>{
     const formattedDateOfIssue = formatDate(DateOfIssue)
     const formattedValidUntilNtv = formatDate(ValidUntilNtv)
     const formattedValidUntilTv = formatDate(ValidUntilTv)
-    const formattedValidupto = formatDate(ValidUpto)
+    const formattedValidupto = formatDate(ValidFrom)
     const formattedDriverAddedDate = formatDate(DriverAddedDate)
 
 
@@ -665,6 +665,10 @@ const updateFinalReport = (req,res)=>{
       IMT = ${(IMT) ? 1 : 0}
       WHERE LeadID = ${leadId};
     `;
+  
+   
+  
+    // Update VehicleDetails query with CASE statement
      
     const updateVehicleDetails = `
       UPDATE VehicleDetails

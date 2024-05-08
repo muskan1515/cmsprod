@@ -2,17 +2,26 @@ import { useEffect, useState } from "react";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
-import CreateList from "./CreateList";
+import EmailBaseLayout from "./EmailBaseLayout";
 import { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 
-const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMailAddress,GarageMailAddress}) => {
-  const [LeadID,setLeadID]=useState("");
-  const [Policy,setPolicy]=useState("");
-  const [Email,setEmail]=useState("");
-  const [region,setRegion]=useState("Chandigarh");
-  const [name,setName]=useState("");
-  const [VehicleNo,setVehicleNo]=useState("");
+const Index = ({
+  leadId,
+  email,
+  policyNo,
+  Insured,
+  vehicleNo,
+  Region,
+  BrokerMailAddress,
+  GarageMailAddress,
+}) => {
+  const [LeadID, setLeadID] = useState("");
+  const [Policy, setPolicy] = useState("");
+  const [Email, setEmail] = useState("");
+  const [region, setRegion] = useState("Chandigarh");
+  const [name, setName] = useState("");
+  const [VehicleNo, setVehicleNo] = useState("");
 
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
     Date.now()
@@ -21,18 +30,13 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
   const router = useRouter();
 
   useEffect(() => {
-
-   
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
 
-    // Attach event listeners for user activity
     window.addEventListener("mousemove", activityHandler);
     window.addEventListener("keydown", activityHandler);
     window.addEventListener("click", activityHandler);
-
-    // Cleanup event listeners when the component is unmounted
     return () => {
       window.removeEventListener("mousemove", activityHandler);
       window.removeEventListener("keydown", activityHandler);
@@ -57,23 +61,17 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
     return () => clearInterval(inactivityCheckInterval);
   }, [lastActivityTimestamp]);
 
-
-  useEffect(()=>{
-      setEmail(email)
-      setPolicy(policyNo)
-      setVehicleNo(vehicleNo)
-      setName(Insured);
-      setRegion(Region)
-  },[leadId,vehicleNo,policyNo,Insured,region,email])
-
-  console.log(leadId,vehicleNo,policyNo,Insured,Region)
+  useEffect(() => {
+    setEmail(email);
+    setPolicy(policyNo);
+    setVehicleNo(vehicleNo);
+    setName(Insured);
+    setRegion(Region);
+  }, [leadId, vehicleNo, policyNo, Insured, region, email]);
   return (
     <>
       <Toaster />
-      {/* <!-- Main Header Nav --> */}
       <Header />
-
-      {/* <!--  Mobile Menu --> */}
       <MobileMenu />
 
       <div className="dashboard_sidebar_menu">
@@ -86,15 +84,11 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
           <SidebarMenu leadId={leadId} />
         </div>
       </div>
-      {/* End sidebar_menu */}
-
-      {/* <!-- Our Dashbord --> */}
       <section className="our-dashbord dashbord bgc-f7 pb50">
         <div className="container-fluid ovh">
           <div className="row">
             <div className="col-lg-12 maxw100flex-992">
               <div className="row">
-                {/* Start Dashboard Navigation */}
                 <div className="col-lg-12">
                   <div className="dashboard_navigationbar dn db-1024">
                     <div className="dropdown">
@@ -109,15 +103,10 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
                     </div>
                   </div>
                 </div>
-                {/* End Dashboard Navigation */}
 
                 <div className="col-lg-12 mb-2">
-                  <div className="style2">
-                    {/* <h4 className="breadcrumb_title">Case Details</h4> */}
-                    {/* <p>We are glad to see you again!</p> */}
-                  </div>
+                  <div className="style2"></div>
                 </div>
-                {/* End .col */}
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="my_dashboard_review bgc-f6">
@@ -135,7 +124,7 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
                             marginBottom: "5px",
                           }}
                         ></div>
-                        <CreateList
+                        <EmailBaseLayout
                           leadId={LeadID}
                           email={Email}
                           policyNo={Policy}
@@ -147,40 +136,10 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
                         />
                       </div>
                     </div>
-                    {/* <div className="my_dashboard_review mt30">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <h3 className="mb30">Location</h3>
-                      </div>
-
-                      <LocationField />
-                    </div>
-                  </div> */}
-                    {/* <div className="my_dashboard_review mt30">
-                      <div className="col-lg-12">
-                        <h3 className="mb30">Detailed Information</h3>
-                      </div>
-                      <DetailedInfo />
-                    </div> */}
-                    {/* <div className="my_dashboard_review mt30">
-                    <div className="col-lg-12">
-                      <h3 className="mb30">Property media</h3>
-                    </div>
-                    <PropertyMediaUploader />
-                  </div>
-                  <div className="my_dashboard_review mt30">
-                    <div className="col-lg-12">
-                      <h3 className="mb30">Floor Plans</h3>
-                      <button className="btn admore_btn mb30">Add More</button>
-                    </div>
-                    <FloorPlans />
-                  </div> */}
                   </div>
                   <div className="col-lg-3"></div>
                 </div>
-                {/* End .col */}
               </div>
-              {/* End .row */}
 
               <div className="row mt200">
                 <div className="col-lg-12">
@@ -193,9 +152,7 @@ const Index = ({ leadId, email, policyNo, Insured, vehicleNo , Region,BrokerMail
                   </div>
                 </div>
               </div>
-              {/* End .row */}
             </div>
-            {/* End .col */}
           </div>
         </div>
       </section>

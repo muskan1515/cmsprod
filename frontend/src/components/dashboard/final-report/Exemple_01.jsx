@@ -113,9 +113,25 @@ export default function Exemple_01({
   const [estimate, setEstimate] = useState(0);
   const [assessed, setAssessed] = useState(0);
   const [type, setType] = useState("");
+  const [tableHeaders,setTableHeaders] = useState([headCells]);
   const [remark, setRemark] = useState("");
   const [edit, setEdit] = useState(false);
 
+  useEffect(()=>{
+    if(claim?.claimDetails?.IMT){
+      let updatedHeadCells = [...headCells];
+      updatedHeadCells.push({
+        id: "imt",
+        numeric: false,
+        label: "IMT 23",
+        width: 100,
+      },);
+      setTableHeaders(updatedHeadCells);
+    }
+    else{
+      setTableHeaders(headCells)
+    }
+  },[claim]);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -150,6 +166,7 @@ export default function Exemple_01({
               bill_sr: part.BillSr,
               gst: part.IsGSTIncluded ? part.IsGSTIncluded : 0,
               type: part.JobType,
+              imt : part.IsImt,
               sno: part.SNO,
               isActive: Number(part.IsActive),
             };
@@ -194,6 +211,7 @@ export default function Exemple_01({
       bill_sr: "",
       gst: 0,
       type: 0,
+      imt : 0,
       gstPct: currentGst,
       isActive: 1,
     };
@@ -228,6 +246,7 @@ export default function Exemple_01({
         assessed: row.assessed,
         bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
         gst: row.gst,
+        imt: row.imt,
         gstPct: row.gstPct,
         type: row.type,
         isActive: Number(active),
@@ -256,6 +275,7 @@ export default function Exemple_01({
         estimate: row.estimate,
         sac: row.sac,
         gst: row.gst,
+        imt : row.imt,
         type: Number(row.type),
         bill_sr: row.bill_sr,
         isActive: row.isActive,
@@ -319,6 +339,25 @@ export default function Exemple_01({
       }
       
     })
+    setAllRows(updatedRows)
+  }
+
+  const handleImtChange = (index,value,field)=>{
+    let updatedRows = [];
+    allRows.map((row,idx)=>{
+      if(String(index) === String(idx)){
+       const newRow = {
+        ...row,
+        imt : Number(value)
+       }
+        updatedRows.push(newRow);
+      }
+      else{
+        updatedRows.push(row);
+      }
+      
+    })
+    
     setAllRows(updatedRows)
   }
 
@@ -441,6 +480,20 @@ export default function Exemple_01({
                   />
                 </div>
               ),
+              imt: (
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value={row.imt}
+                  checked={row.imt}
+                  disabled={!edit}
+                  required
+                  id="terms"
+                  onChange={(e) => handleImtChange(index, !row.imt, "imt")}
+                  
+                  style={{ border: "1px solid black", textAlign:"center" }}
+                />
+              ),
             };
             temp.push(newRow);
             count = count + 1;
@@ -457,7 +510,7 @@ export default function Exemple_01({
     <SmartTable_01
       title=""
       data={updatedCode}
-      headCells={headCells}
+      headCells={tableHeaders}
       setToggleEstimate={setToggleEstimate}
       toggleEstimate={toggleEstimate}
       totalAssessed={totalAssessed}
