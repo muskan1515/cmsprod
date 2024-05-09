@@ -14,6 +14,7 @@ import {
   handleInputChange,
   handleInputChange_01,
 } from "./functions";
+import { regionList } from "../../../utils/regionsList";
 
 const CreateView = () => {
   const [applicantNumber, setApplicantNumber] = useState("");
@@ -47,7 +48,7 @@ const CreateView = () => {
   const [garageNumber, setGarageNumber] = useState("");
   const [garageMailId, setGarageMailId] = useState("");
   const [claimNumber, setClaimNumber] = useState("");
-  const [allListedRegions, setAllListedRegions] = useState([]);
+  const [allListedRegions, setAllListedRegions] = useState(regionList);
 
   const [allServicingOffice, setAllServicingOffice] = useState([]);
   const [brokerMailId, setBrokerMailId] = useState("intimationmt@gmail.com");
@@ -65,12 +66,7 @@ const CreateView = () => {
       .catch((err) => {
         console.log(err);
       });
-    axios
-      .get("/api/getAllRegions")
-      .then((res) => {
-        setAllListedRegions(res.data.data);
-      })
-      .catch((err) => {});
+ 
   }, []);
 
   const submitHandler = () => {

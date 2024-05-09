@@ -3,6 +3,7 @@ import MyAccount from "./MyAccount";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { regionList } from "../../../../utils/regionsList";
 
 const HeaderMenuContent = ({
   setIsRegionChange,
@@ -12,7 +13,7 @@ const HeaderMenuContent = ({
 }) => {
   const route = useRouter();
   const [regionValue, setRegionValue] = useState("");
-  const [allListedRegions,setAllListedRegions] = useState([]);
+  const [allListedRegions,setAllListedRegions] = useState(regionList);
 
   const [name, setName] = useState("");
   const handlerChangeRegion = (val) => {
@@ -28,11 +29,11 @@ const HeaderMenuContent = ({
     const tempName = JSON.parse(localStorage.getItem("userInfo"));
     setName("");
     console.log(name);
-      axios.get("/api/getAllRegions")
-      .then((res)=>{
-        setAllListedRegions(res.data.data);
-      })
-      .catch((err)=>{})
+      // axios.get("/api/getAllRegions")
+      // .then((res)=>{
+      //   setAllListedRegions(res.data.data);
+      // })
+      // .catch((err)=>{})
   }, []);
 
   return (

@@ -10,6 +10,7 @@ import {
   createStringFromSelectedItems2,
   handleSelectChange,
 } from "./functions";
+import { regionList } from "../../../utils/regionsList";
 const EmailBaseLayout = ({
   leadId,
   email,
@@ -29,7 +30,7 @@ const EmailBaseLayout = ({
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [type, setType] = useState(1);
-  const [allRegions,setAllRegions] = useState([]);
+  const [allRegions,setAllRegions] = useState(regionList);
   const router = useRouter();
   useEffect(() => {
     if (!leadId) {
@@ -38,17 +39,17 @@ const EmailBaseLayout = ({
     
   }, []);
 
-  useEffect(()=>{
-    axios
-    .get("/api/getAllRegions")
-    .then((res) => {
-      const allRegionsInfo = res.data.data;
-      setAllRegions(allRegionsInfo);
-    })
-    .catch((err)=>{
+  // useEffect(()=>{
+  //   axios
+  //   .get("/api/getAllRegions")
+  //   .then((res) => {
+  //     const allRegionsInfo = res.data.data;
+  //     setAllRegions(allRegionsInfo);
+  //   })
+  //   .catch((err)=>{
 
-    })
-  },[]);
+  //   })
+  // },[]);
   useEffect(() => {
     setSubject(defaultSubjectContent(type, vehicleNo, policyNo, Insured, date));
 

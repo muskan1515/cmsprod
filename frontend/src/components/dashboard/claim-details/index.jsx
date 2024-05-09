@@ -34,6 +34,7 @@ import {
   closeStatusUpdateHandler,
 } from "./functions/index";
 import AccidentEditableForm from "./AccidentEditableForm";
+import { regionList } from "../../../utils/regionsList";
 
 const Index = ({}) => {
   const url = window.location.href;
@@ -172,7 +173,7 @@ const Index = ({}) => {
   const [CubicCapacity, setCubicCapacity] = useState(
     claim?.vehicleDetails?.VehicleCubicCapacity
   );
-  const [allListedRegions, setAllListedRegions] = useState([]);
+  const [allListedRegions, setAllListedRegions] = useState(regionList);
 
   const [BancsBodyType, setBancsBodyType] = useState("");
   const [BancsMakeCode, setBancsMakeCode] = useState("");
@@ -666,12 +667,12 @@ const Index = ({}) => {
           toast.error(err);
         });
 
-      axios
-        .get("/api/getAllRegions")
-        .then((res) => {
-          setAllListedRegions(res.data.data);
-        })
-        .catch((err) => {});
+      // axios
+      //   .get("/api/getAllRegions")
+      //   .then((res) => {
+      //     setAllListedRegions(res.data.data);
+      //   })
+      //   .catch((err) => {});
 
       axios
         .get("/api/getDocumentList", {
