@@ -5,7 +5,7 @@ import SVGArrowUp from "./icons/SVGArrowUp";
 import SVGChevronLeft from "./icons/SVGChevronLeft";
 import SVGChevronRight from "./icons/SVGChevronRight";
 
-function TabularView(props) {
+function SmartTable(props) {
   const [loading, setLoading] = useState(false);
   const [sortDesc, setSortDesc] = useState({});
   const [tableWidth, setTableWidth] = useState(1000);
@@ -293,7 +293,7 @@ function TabularView(props) {
   );
 }
 
-TabularView.propTypes = {
+SmartTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.Object),
   rowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
