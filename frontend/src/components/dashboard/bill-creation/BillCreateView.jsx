@@ -20,7 +20,7 @@ const BillCreateView = ({ allInfo, leadID }) => {
   const currentDate = new Date();
   const [disable, setDisable] = useState(false);
   const formattedDate = currentDate.toLocaleDateString("en-GB");
-  const [BillDate, setBillDate] = useState(new Date());
+  const [BillDate, setBillDate] = useState("");
   const [Insurer, setInsurer] = useState(
     "United India Insurance Company Limited"
   );
@@ -117,6 +117,7 @@ const BillCreateView = ({ allInfo, leadID }) => {
     if (!allInfo?.feesDetails) {
     } else {
       setBill(allInfo?.feesDetails?.BillSno);
+      setBillDate(allInfo?.feesDetails?.BillDate || new Date());
       setInsurer(allInfo?.feesDetails?.InsuranceCompanyName);
       setBillTo(allInfo?.feesDetails?.BillTo);
       setBranch(allInfo?.feesDetails?.Branch);
