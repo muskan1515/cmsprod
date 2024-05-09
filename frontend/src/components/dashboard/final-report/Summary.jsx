@@ -11,7 +11,6 @@ import axios from "axios";
 const Summary = ({
   isEditMode,
   allLabour,
-
   metaldepPct,
   ageOfVehicleTotal,
   claim,
@@ -313,9 +312,6 @@ const Summary = ({
         (Number(LessExcess) + Number(LessImposed) + Number(Other))
     );
     setMetalPercent(metalSalvageValue);
-    // setExpectedSalvage( (Number(totalLabrorAssessed + totalPartsAssessed) *
-    //     Number(metalSalvageValue)) /
-    //   100);
     setDepreciationOnParts(
       (Number(totalLabrorAssessed + totalPartsAssessed) *
         Number(metalSalvageValue)) /
@@ -397,6 +393,11 @@ const Summary = ({
       });
   }, []);
 
+  function addCommasToNumber(number) {
+    if (Number(number) <= 100 || number === undefined) return number;
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return (
     <>
       <div className="row mt-3">
@@ -425,7 +426,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(totalLabrorEstimate)}
+                    value={addCommasToNumber(roundOff(totalLabrorEstimate))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -450,7 +451,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(totalPartsEstimate)}
+                    value={addCommasToNumber(roundOff(totalPartsEstimate))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -475,35 +476,14 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(totalPartsEstimate + totalLabrorEstimate)}
+                    value={addCommasToNumber(roundOff(totalPartsEstimate + totalLabrorEstimate))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
               </div>
             </div>
             <div className="col-lg-12">
-              {/*} <div className="row mt-1 mb-1">
-                <div className="col-lg-12 my_profile_setting_input form-group">
-                  <label
-                    htmlFor=""
-                    className="text-color mb-0"
-                    style={{
-                      color: "#2e008b",
-                      fontWeight: "",
-                    }}
-                  >
-                    Estimate Date
-                  </label>
-                </div>
-                <div className="col-lg-12">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="propertyTitle"
-                    // placeholder="Enter Registration No."
-                  />
-                </div>
-                  </div>*/}
+             
             </div>
           </div>
           <hr />
@@ -533,7 +513,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(totalLabrorAssessed)}
+                    value={addCommasToNumber(roundOff(totalLabrorAssessed))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -559,7 +539,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     readOnly={!isEdit}
-                    value={roundOff(getNewpartAssessedTotalWithDepWithGST())}
+                    value={addCommasToNumber(roundOff(getNewpartAssessedTotalWithDepWithGST()))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -582,7 +562,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(getNewpartAssessedTotalWithoutDepWithGST())}
+                    value={addCommasToNumber(roundOff(getNewpartAssessedTotalWithoutDepWithGST()))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -605,7 +585,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={DepreciationValue}
+                    value={addCommasToNumber(roundOff(DepreciationValue))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -632,7 +612,7 @@ const Summary = ({
                       className="form-control"
                       id="propertyTitle"
                       readOnly={!isEdit}
-                      value={roundOff(totalLabrorAssessed + totalPartsAssessed)}
+                      value={addCommasToNumber(roundOff(totalLabrorAssessed + totalPartsAssessed))}
                       // placeholder="Enter Registration No."
                     />
                   </div>
@@ -769,12 +749,12 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(
+                    value={addCommasToNumber(roundOff(
                       Number(totalLabrorAssessed) +
                         Number(getNewpartAssessedTotalWithDepWithGST()) -
                         Number(LessExcess ? LessExcess : 0) -
                         Number(LessImposed ? LessImposed : 0) +
-                        Number(Other ? Other : 0)
+                        Number(Other ? Other : 0))
                     )}
                     // placeholder="Enter Registration No."
                   />
@@ -835,7 +815,7 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={isEdit ? ExpectedSalvage : roundOff(ExpectedSalvage)}
+                    value={isEdit ? addCommasToNumber(ExpectedSalvage) : addCommasToNumber(roundOff(ExpectedSalvage))}
                     readOnly={!isEdit}
                     onChange={(e) => setExpectedSalvage(e.target.value)}
                     // placeholder="Enter Registration No."
@@ -903,7 +883,7 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     readOnly={!isEdit}
-                    value={roundOff(DepreciationValue)}
+                    value={addCommasToNumber(roundOff(DepreciationValue))}
                     // placeholder="Enter Registration No."
                   />
                 </div>
@@ -933,14 +913,14 @@ const Summary = ({
                     type="text"
                     className="form-control"
                     id="propertyTitle"
-                    value={roundOff(
+                    value={addCommasToNumber(roundOff(
                       Number(totalLabrorAssessed) +
                         getNewpartAssessedTotalWithDepWithGST() -
                         (LessExcess ? LessExcess : 0) -
                         (LessImposed ? LessImposed : 0) +
                         (Other ? Other : 0) -
                         (ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0)
-                    )}
+                    ))}
                     readOnly={!isEdit}
                     // placeholder="Enter Registration No."
                   />
@@ -948,7 +928,7 @@ const Summary = ({
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-6">
               {claim?.claimDetails?.IMT ? <div className="row">
                 <div className="col-lg-5 text-end">
@@ -1022,7 +1002,7 @@ const Summary = ({
                 </div>
               </div>
             </div> : ""}
-          </div>
+          </div> */}
         </div>
         <div className="col-lg-5">
           <div className="row">

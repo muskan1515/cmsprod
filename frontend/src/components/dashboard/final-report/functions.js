@@ -20,9 +20,7 @@ export const getMonthsDifference = (givenDate) => {
 
 export const calculateDepreciationsPercenatge = (depreciations, type, time) => {
   const age = getMonthsDifference(time);
-  console.log(age);
-  let smaller = {},
-    greater = {};
+  let smaller = {};
   depreciations.map((dep, index) => {
     if (
       String(dep.PartType) === String(type) &&

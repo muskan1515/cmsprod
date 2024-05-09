@@ -762,7 +762,7 @@ export default function Exemple_01({
 
     const dep =
       claim?.vehicleDetails?.DateOfRegistration ||
-      claim?.vehicleDetails?.DateOfRegistration !== "undeifned"
+      claim?.vehicleDetails?.DateOfRegistration !== "undefined"
         ? calculateDepreciationsPercenatge(
             allDepreciations,
             val,
@@ -788,8 +788,6 @@ export default function Exemple_01({
     });
 
     settotalMetalRows(totalMetalRows);
-
-    //***** *//
 
     const type =
       String(field) === "type"
