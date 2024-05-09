@@ -99,16 +99,19 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
 
   `;
 
-          const currentMailAddress = String(Region) === "Delhi" ? 
-          process.env.NODEMAILER_DELHI_EMAIL : String(Region) === "Jodhpur" ?
-          process.env.NODEMAILER_JODHPUR_EMAIL
-          : process.env.NODEMAILER_CHANDIGARH_EMAIL;
+  const currentMailAddress = Region === "Delhi" ?
+  process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
+    process.env.NODEMAILER_JODHPUR_EMAIL : Region === "Jaipur" ?
+    process.env.NODEMAILER_JAIPUR_EMAIL : Region === "Hero" ?
+    process.env.NODEMAILER_HERO_EMAIL
+    : process.env.NODEMAILER_CHANDIGARH_EMAIL;
+const currentMailAddressPass = Region === "Delhi" ?
+  process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
+    process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD : Region === "Jaipur" ?
+    process.env.NODEMAILER_JAIPUR_EMAIL_PASSWORD : Region === "Hero" ?
+    process.env.NODEMAILER_HERO_EMAIL_PASSWORD
+    : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
 
-          
-          const currentMailAddressPass = String(Region) === "Delhi" ? 
-          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : String(Region) === "Jodhpur" ?
-          process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
-          : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
 
         const transporter2 = nodemailer.createTransport({
           service: 'gmail',
@@ -235,11 +238,15 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
           
           const currentMailAddress = Region === "Delhi" ?
             process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
-              process.env.NODEMAILER_JODHPUR_EMAIL
+              process.env.NODEMAILER_JODHPUR_EMAIL : Region === "Jaipur" ?
+              process.env.NODEMAILER_JAIPUR_EMAIL : Region === "Hero" ?
+              process.env.NODEMAILER_HERO_EMAIL
               : process.env.NODEMAILER_CHANDIGARH_EMAIL;
           const currentMailAddressPass = Region === "Delhi" ?
             process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
-              process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
+              process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD : Region === "Jaipur" ?
+              process.env.NODEMAILER_JAIPUR_EMAIL_PASSWORD : Region === "Hero" ?
+              process.env.NODEMAILER_HERO_EMAIL_PASSWORD
               : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
   
           const transporter2 = nodemailer.createTransport({
@@ -370,12 +377,16 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
 
           const currentMailAddress = Region === "Delhi" ?
           process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
-            process.env.NODEMAILER_JODHPUR_EMAIL
+            process.env.NODEMAILER_JODHPUR_EMAIL : Region === "Jaipur" ?
+            process.env.NODEMAILER_JAIPUR_EMAIL : Region === "Hero" ?
+            process.env.NODEMAILER_HERO_EMAIL
             : process.env.NODEMAILER_CHANDIGARH_EMAIL;
-          const currentMailAddressPass = Region === "Delhi" ?
-            process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
-              process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
-              : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+        const currentMailAddressPass = Region === "Delhi" ?
+          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
+            process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD : Region === "Jaipur" ?
+            process.env.NODEMAILER_JAIPUR_EMAIL_PASSWORD : Region === "Hero" ?
+            process.env.NODEMAILER_HERO_EMAIL_PASSWORD
+            : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
 
           const transporter2 = nodemailer.createTransport({
             service: 'gmail',
@@ -443,12 +454,17 @@ const { csvStringToArray } = require("../Config/getArrayFromCSVString");
 
         const currentMailAddress = Region === "Delhi" ?
         process.env.NODEMAILER_DELHI_EMAIL : Region === "Jodhpur" ?
-          process.env.NODEMAILER_JODHPUR_EMAIL
+          process.env.NODEMAILER_JODHPUR_EMAIL : Region === "Jaipur" ?
+          process.env.NODEMAILER_JAIPUR_EMAIL : Region === "Hero" ?
+          process.env.NODEMAILER_HERO_EMAIL
           : process.env.NODEMAILER_CHANDIGARH_EMAIL;
-        const currentMailAddressPass = Region === "Delhi" ?
-          process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
-            process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD
-            : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+      const currentMailAddressPass = Region === "Delhi" ?
+        process.env.NODEMAILER_DELHI_EMAIL_PASSWORD : Region === "Jodhpur" ?
+          process.env.NODEMAILER_JODHPUR_EMAIL_PASSWORD : Region === "Jaipur" ?
+          process.env.NODEMAILER_JAIPUR_EMAIL_PASSWORD : Region === "Hero" ?
+          process.env.NODEMAILER_HERO_EMAIL_PASSWORD
+          : process.env.NODEMAILER_CHANDIGARH_EMAIL_PASSWORD;
+
 
         const transporter2 = nodemailer.createTransport({
           service: 'gmail',

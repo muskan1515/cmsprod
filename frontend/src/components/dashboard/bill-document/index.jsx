@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import ErrorPageContent from "./ErrorPageContent";
+import BaseLayout from "./BaseLayout";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 const Index = () => {
@@ -17,13 +16,9 @@ const Index = () => {
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
-
-    // Attach event listeners for user activity
     window.addEventListener("mousemove", activityHandler);
     window.addEventListener("keydown", activityHandler);
     window.addEventListener("click", activityHandler);
-
-    // Cleanup event listeners when the component is unmounted
     return () => {
       window.removeEventListener("mousemove", activityHandler);
       window.removeEventListener("keydown", activityHandler);
@@ -31,7 +26,7 @@ const Index = () => {
     };
   }, []);
 
-  const [allOffices,setAllOffices]=useState([])
+  const [allOffices, setAllOffices] = useState([]);
 
   useEffect(() => {
     let userData = {};
@@ -53,21 +48,18 @@ const Index = () => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    
     axios
-    .get("/api/getClaimServicingOffice")
-    .then((res) => {
-      const allOffice = res.data.data.results;
-      setAllOffices(allOffice)
-      
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get("/api/getClaimServicingOffice")
+      .then((res) => {
+        const allOffice = res.data.data.results;
+        setAllOffices(allOffice);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     const url = window.location.pathname;
     const leadId = url.split("/bill-document/")[1];
     toast.loading("Fetching bill documents!!", {
-      // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
     axios
@@ -84,7 +76,6 @@ const Index = () => {
         toast.dismiss();
         setFeeReport(res.data.data);
         toast.success("Successfully Fetched !", {
-          // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
       })
@@ -92,7 +83,6 @@ const Index = () => {
         toast.dismiss();
         toast.error("Got error while fetching the bill information!");
       });
-
   }, []);
   return (
     <>
@@ -102,7 +92,7 @@ const Index = () => {
         <main className="flex-grow p-4">
           {" "}
           <div className="col-lg-12">
-            <ErrorPageContent feeReport={feeReport} allOffices={allOffices}/>
+            <BaseLayout feeReport={feeReport} allOffices={allOffices} />
           </div>
         </main>
         <footer className="bg-gray-800 text-white">
@@ -119,22 +109,9 @@ const Index = () => {
                 69 Model Town (1st) Behind UIT Office Sri Ganganagar Rajasthan
                 335001
               </h5>
-              {/* <div className="" style={{ marginTop: "" }}>
-                <div className="text-end">
-                  <Image
-                    width={201}
-                    height={54}
-                    priority
-                    className="w50"
-                    src="/assets/images/stamp.jpg"
-                    alt="1.jpg"
-                  />
-                </div>
-              </div> */}
             </div>
           </div>
         </footer>
-        {/* Print-specific styles */}
         <style>
           {`
           @media print {
@@ -149,15 +126,6 @@ const Index = () => {
         `}
         </style>
       </div>
-      {/* <section className="" style={{ paddingTop: "10px" }}>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <ErrorPageContent feeReport={feeReport} />
-            </div>
-          </div>
-        </div>
-      </section> */}
     </>
   );
 };

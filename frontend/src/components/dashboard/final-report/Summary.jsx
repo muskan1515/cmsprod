@@ -10,6 +10,8 @@ import axios from "axios";
 
 const Summary = ({
   isEditMode,
+  allLabour,
+
   metaldepPct,
   ageOfVehicleTotal,
   claim,
@@ -202,6 +204,39 @@ const Summary = ({
 
     return total;
   };
+
+  const getImtAmount = ()=>{
+    let totalAmount = 0;
+    console.log("getImtAmount",allLabour,allNewParts)
+    allNewParts.map((part,index)=>{
+      if(part.isActive && part.IsImt === 1){
+        const totalAssess = Number(part.Assessed) * Number(part.QA);
+        const depreciation =
+          (Number(totalAssess) * Number(part.DepreciationPct)) / 100;
+        const gst =
+          part.WithTax === 1 || part.WithTax === 2
+            ? ((totalAssess - depreciation) * Number(part.GSTPct)) / 100
+            : 0;
+  
+        totalAmount += (totalAssess - depreciation + gst)/2;
+      }
+    });
+    allLabour.map((part,index)=>{
+      if(part.isActive && part?.IsImt){
+        const totalAssess = Number(part.Assessed) ;
+        const depreciation =
+          String(part.JobType) === "1" ?
+          (Number(totalAssess) * Number(12.5)) / 100 : 0;
+        const gst =
+          Number((part.IsGSTIncluded) % 2) === 1 
+            ? ((totalAssess - depreciation) * Number(part.GSTPct)) / 100
+            : 0;
+  
+        totalAmount += (totalAssess - depreciation + gst)/2;
+      }
+    });
+    return totalAmount;
+  }
 
   const getNewpartAssessedTotalWithoutDepWithGST = () => {
     console.log("getNewpartAssessedTotalWithoutDepWithGST", allNewParts);
@@ -844,7 +879,7 @@ const Summary = ({
             <hr />
             {/* <hr /> */}
           </div>
-          {/* <div className="row">
+          <div className="row">
             <div className="col-lg-8 text-end">
               <label
                 htmlFor=""
@@ -868,15 +903,13 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     readOnly={!isEdit}
-                    value={
-                      roundOff(DepreciationValue)
-                    }
+                    value={roundOff(DepreciationValue)}
                     // placeholder="Enter Registration No."
                   />
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
           <div className="row">
             <div className="col-lg-8 text-end">
               <label
@@ -914,6 +947,81 @@ const Summary = ({
                 </div>
               </div>
             </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-6">
+              {claim?.claimDetails?.IMT ? <div className="row">
+                <div className="col-lg-5 text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      paddingTop: "10px",
+                      color: "#2e008b",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                    }}
+                  >
+                    IMT-23 Liability
+                  </label>
+                </div>
+                <div className="col-lg-6">
+                  <div className="row mt-1 mb-1">
+                    <div className="col-lg-12">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        value={roundOff(
+                          getImtAmount())}
+                        readOnly={!isEdit}
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div> : ""}
+            </div>
+            {claim?.claimDetails?.IMT ? <div className="col-lg-6">
+              <div className="row">
+                <div className="col-lg-7 text-end">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      paddingTop: "10px",
+                      color: "#2e008b",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Assessed Amount (IMT 23)
+                  </label>
+                </div>
+                <div className="col-lg-5">
+                  <div className="row mt-1 mb-1">
+                    <div className="col-lg-12 my_profile_setting_input form-group"></div>
+                    <div className="col-lg-12">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="propertyTitle"
+                        value={roundOff(
+                          Number(totalLabrorAssessed) +
+                            getNewpartAssessedTotalWithDepWithGST() -
+                            (LessExcess ? LessExcess : 0) -
+                            (LessImposed ? LessImposed : 0) +
+                            (Other ? Other : 0) -
+                            (ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0)
+                        )}
+                        readOnly={!isEdit}
+                        // placeholder="Enter Registration No."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> : ""}
           </div>
         </div>
         <div className="col-lg-5">

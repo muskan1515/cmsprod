@@ -22,6 +22,7 @@ const getSpecificNewParts = (req,res)=>{
       
       const data = JSON.parse(req.body.allRows);
  
+      console.log(data);
   
       const promises = data.map((row,index) => {
         return new Promise((resolve, reject) => {
@@ -41,6 +42,7 @@ const getSpecificNewParts = (req,res)=>{
               TypeOfMaterial,
               WithTax,
               IsActive,
+              IsImt,
               LeadID
             ) VALUES (
               '${row.dep}',
@@ -57,6 +59,7 @@ const getSpecificNewParts = (req,res)=>{
               '${row.type}',
               '${row.total}',
               '${row.isActive}',
+              ${row.imt},
               '${parseInt(leadId)}'
             );
           `;
@@ -76,7 +79,8 @@ const getSpecificNewParts = (req,res)=>{
               GSTPct='${row.gst}',
               TypeOfMaterial='${row.type}',
               WithTax='${row.total}',
-              IsActive='${row.isActive}'
+              IsActive='${row.isActive}',
+              IsImt=${row.imt}
             WHERE SNO = '${row.sno}' AND
             LeadID = '${leadId}';
           `;
@@ -93,7 +97,7 @@ const getSpecificNewParts = (req,res)=>{
             const check = getLeadBYSNO(result2,row.sno);
             
             if (result2.length > 0 ) {
-              console.log("update query",updateQuery)
+              // console.log("update query",updateQuery)
               db.query(updateQuery, (err) => {
                
                 if (err) {
@@ -104,7 +108,7 @@ const getSpecificNewParts = (req,res)=>{
                 resolve();
               });
             } else {
-              console.log("insert query",insertQuery);
+              // console.log("insert query",insertQuery);
               db.query(insertQuery, (err) => {
                 if (err) {
                   console.error(err);

@@ -94,6 +94,7 @@ const headCells = [
     label: "Type",
     width: 100,
   },
+  
 ];
 
 export default function Exemple_01({
@@ -102,41 +103,42 @@ export default function Exemple_01({
   disable,
   settotalMetalRows,
   setallNewParts,
-  allNewParts,
   DateOfRegistration,
   setOverallMetailDep,
-  setTotalAgeOfVehicle,
-  includeDepreciation,
   allDepreciations,
   setAllDepreciations,
-  ClaimAddedDateTime,
-  LeadId,
   AccidentAddedDateTime,
-  PolicyStartDate,
-  VehicleAddedDate,
 
   setMetalSalvageValue,
   DateRegistration,
-  ageOfVehicleTotal,
-  metaldepPct,
-  totalPartsEstimate,
-  totalLabrorEstimate,
-  totalPartsAssessed,
-  totalLabrorAssessed,
-
   setTotalPartsEstimate,
-  setTotalLabrorEstimate,
-  setTotalLabrorAssessed,
   setTotalPartsAssessed,
 }) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
+  const [tableHeaders,setTableHeaders] = useState([headCells]);
   const [totalEstimate, setTotalEstimate] = useState(0);
   const [totalAssessed, setTotaAssessed] = useState(0);
   const [totalDifference, setTotalDifference] = useState(0);
   const [currentPolicy, setCurrentPolicy] = useState("Regular");
   const [toggleGST, setToggleGST] = useState(2);
   const [preRender, setPreRender] = useState(true);
+
+  useEffect(()=>{
+    if(claim?.claimDetails?.IMT){
+      let updatedHeadCells = [...headCells];
+      updatedHeadCells.push({
+        id: "imt",
+        numeric: false,
+        label: "IMT 23",
+        width: 100,
+      },);
+      setTableHeaders(updatedHeadCells);
+    }
+    else{
+      setTableHeaders(headCells)
+    }
+  },[claim]);
 
   const generateSnoId = () => {
     const now = new Date();
@@ -197,7 +199,6 @@ export default function Exemple_01({
         },
       })
       .then((res) => {
-        // console.log('res.data',res.data.data.results);
         setAllDepreciations(res.data.data.results);
       })
       .catch((Err) => {
@@ -261,6 +262,7 @@ export default function Exemple_01({
               type: part.TypeOfMaterial,
               total: requiredTotal,
               sno: part.SNO,
+              imt : part.IsImt,
               isActive: Number(part.IsActive),
             };
 
@@ -407,6 +409,7 @@ export default function Exemple_01({
       gst: 0,
       total: 0,
       type: "",
+      imt : 0,
       isActive: 1,
     };
 
@@ -474,6 +477,7 @@ export default function Exemple_01({
         gst: row.gst,
         total: row.total,
         type: row.type,
+        imt : row.imt,
         isActive: Number(active),
       };
 
@@ -572,6 +576,7 @@ export default function Exemple_01({
         assessed: row.assessed,
         qa: row.qa,
         qe: row.qe,
+        imt : row.imt,
         bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
         gst: row.gst,
         total:
@@ -735,6 +740,7 @@ export default function Exemple_01({
       assessed: currentField.assessed,
       qe: qe,
       qa: qa,
+      imt : currentField.imt,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
@@ -815,6 +821,7 @@ export default function Exemple_01({
       assessed: currentField.assessed,
       qa: currentField.qa,
       qe: currentField.qe,
+      imt : currentField.imt,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
@@ -901,6 +908,7 @@ export default function Exemple_01({
       qe: currentField.qe,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
+      imt : currentField.imt,
       total: total,
       isActive: currentField.isActive,
       type: currentField.type,
@@ -914,6 +922,25 @@ export default function Exemple_01({
     setChange(true);
     // console.log(oldRow);
   };
+
+  const handleImtChange = (index,value,field)=>{
+    let updatedRows = [];
+    allRows.map((row,idx)=>{
+      if(String(index) === String(idx)){
+       const newRow = {
+        ...row,
+        imt : Number(value)
+       }
+        updatedRows.push(newRow);
+      }
+      else{
+        updatedRows.push(row);
+      }
+      
+    })
+    
+    setAllRows(updatedRows)
+  }
 
   const calculateTotal = (id) => {
     let row = {};
@@ -1175,14 +1202,18 @@ export default function Exemple_01({
                 })}
               </select>
             ),
-            verify: (
+            imt: (
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
+                value={row.imt}
+                checked={row.imt}
+                disabled={!edit}
                 required
                 id="terms"
-                style={{ border: "1px solid black" }}
+                onChange={(e) => handleImtChange(index, !row.imt, "imt")}
+                
+                style={{ border: "1px solid black", textAlign:"center" }}
               />
             ),
           };
@@ -1204,7 +1235,7 @@ export default function Exemple_01({
       disable={disable}
       ToggleGST={toggleGST}
       data={updatedCode}
-      headCells={headCells}
+      headCells={tableHeaders}
       dep={metalDep}
       handleAddRow={handleAddRow}
       handleRemoveRow={handleRemoveRow}

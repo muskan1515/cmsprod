@@ -4,7 +4,6 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import RcDetails from "./RcDetails";
 import { BsTypeH3 } from "react-icons/bs";
-import DateComponent from "./dateComponent";
 import MyDatePicker from "../../common/MyDatePicker";
 
 import DatePicker from "react-datepicker";

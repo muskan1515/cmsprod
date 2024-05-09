@@ -1,7 +1,10 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const HeaderMenuContent = ({ float = "" }) => {
+ 
   const route = useRouter();
 
   const home = [

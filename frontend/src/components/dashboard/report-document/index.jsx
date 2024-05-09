@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import ErrorPageContent from "./ErrorPageContent";
+import BaseLayout from "./BaseLayout";
 import axios from "axios";
-import Image from "next/image";
-import { useRef } from "react";
 import PrintComponent from "./PrintComponent";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -19,13 +17,9 @@ const Index = () => {
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
-
-    // Attach event listeners for user activity
     window.addEventListener("mousemove", activityHandler);
     window.addEventListener("keydown", activityHandler);
     window.addEventListener("click", activityHandler);
-
-    // Cleanup event listeners when the component is unmounted
     return () => {
       window.removeEventListener("mousemove", activityHandler);
       window.removeEventListener("keydown", activityHandler);
@@ -34,7 +28,6 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    
     let userData = {};
     userData = JSON.parse(localStorage.getItem("userInfo"));
     if (!userData) {
@@ -51,16 +44,14 @@ const Index = () => {
     return () => clearInterval(inactivityCheckInterval);
   }, [lastActivityTimestamp]);
 
-
   useEffect(() => {
-     let userData = {};
+    let userData = {};
     userData = JSON.parse(localStorage.getItem("userInfo"));
     const url = window.location.pathname;
     const leadId = url.split("/report-document/")[1];
 
     console.log(leadId);
     toast.loading("Loading the report!!", {
-      // position: toast.POSITION.BOTTOM_LEFT,
       className: "toast-loading-message",
     });
     axios
@@ -74,9 +65,7 @@ const Index = () => {
       })
       .then((res) => {
         toast.dismiss();
-        // toast.success("Successfully added");
         toast.success("Successfully loaded !", {
-          // position: toast.POSITION.BOTTOM_LEFT,
           className: "toast-loading-message",
         });
         setAllInfo(res.data.data);
@@ -90,20 +79,20 @@ const Index = () => {
   return (
     <>
       <div>
-        <PrintComponent allInfo={allInfo} >
-          <Toaster/>
+        <PrintComponent allInfo={allInfo}>
+          <Toaster />
           <div>
             {
               <div className="container-fluid">
                 <div className="row">
-                  <div className="col-lg-12" >
-                    <ErrorPageContent allInfo={allInfo} />
+                  <div className="col-lg-12">
+                    <BaseLayout allInfo={allInfo} />
                   </div>
                 </div>
               </div>
             }
           </div>
-        </PrintComponent >
+        </PrintComponent>
       </div>
     </>
   );

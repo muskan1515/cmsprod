@@ -1,9 +1,8 @@
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu_01";
 import MobileMenu from "../../common/header/MobileMenu";
-import AllStatistics from "./AllStatistics";
-import Exemple from "./Exemple";
-import CreateList from "./CreateList";
+import ClaimsHeadingCards from "./ClaimsHeadingCards";
+import BaseView from "./BaseView";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import axios, { all } from "axios";
@@ -12,9 +11,6 @@ import { useRouter } from "next/router";
 
 const Index = () => {
   const [start, setStart] = useState(0);
-  const [currentPage,setCurrentPage] = useState(1)
-
-  const [properties, setProperties] = useState([]);
   const [allClaims, setAllClaims] = useState([]);
   const [filterCardClaim, setFilterCardClaim] = useState([]);
   const [selectedCard, setSelectedCard] = useState(1);
@@ -22,30 +18,25 @@ const Index = () => {
   const [type, setType] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
-  const [IsLoading,setIsLoading]= useState(true)
+  const [IsLoading, setIsLoading] = useState(true);
   const [filterClaims, setFilterClaims] = useState([]);
   const [majorSearch, setMajorSearch] = useState("");
 
   const [status, setStatus] = useState([]);
   const [isRegionChange, setIsRegionChange] = useState(false);
-  const [regionSearchValue, setRegionSearchValue] = useState();
+  const [regionSearchValue, setRegionSearchValue] = useState("");
 
   const [lastActivityTimestamp, setLastActivityTimestamp] = useState(
     Date.now()
   );
 
   useEffect(() => {
-    
     const activityHandler = () => {
       setLastActivityTimestamp(Date.now());
     };
-
-    // Attach event listeners for user activity
     window.addEventListener("mousemove", activityHandler);
     window.addEventListener("keydown", activityHandler);
     window.addEventListener("click", activityHandler);
-
-    // Cleanup event listeners when the component is unmounted
     return () => {
       window.removeEventListener("mousemove", activityHandler);
       window.removeEventListener("keydown", activityHandler);
@@ -95,28 +86,27 @@ const Index = () => {
     if (region) {
       setShowRegionClaim(true);
       const filterAccordingToRegion = allClaims.filter((claim) => {
-        console.log("all Claims", claim.Region, region);
         if (claim.Region == region) {
           return true;
         } else {
           return false;
         }
       });
-      console.log(filterAccordingToRegion);
       setFilterClaims(filterAccordingToRegion);
       setFilterAccordingClaim(filterAccordingToRegion);
+      setFilterCardClaim(filterAccordingToRegion);
     } else {
       setShowRegionClaim(false);
     }
   }, [regionSearchValue]);
-  console.log("isRegionChange", isRegionChange);
+
   useEffect(() => {
     let filterClaim;
     filterClaim = allClaims.filter(
       (claim, index) =>
-      String(claim?.LeadID)?.toLowerCase().includes(
-        majorSearch.toLowerCase()
-      ) ||
+        String(claim?.LeadID)
+          ?.toLowerCase()
+          .includes(majorSearch.toLowerCase()) ||
         claim?.PolicyNo?.toLowerCase().includes(majorSearch.toLowerCase()) ||
         claim?.PolicyHolder?.toLowerCase().includes(
           majorSearch.toLowerCase()
@@ -136,29 +126,36 @@ const Index = () => {
 
   const fetchData = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-    console.log(userInfo);
     if (userInfo === "") {
       router.push("/login");
     } else {
-      const { Region1, Region2, Region3, CalimStatus } = userInfo[0];
-      console.log(userInfo[0])
+      const Region1 = userInfo[0]['Region1'];
+      const Region2 = userInfo[0]['Region2'];
+      const Region3 = userInfo[0]['Region3'];
+      const Region4 = userInfo[0]['Region4'];
+      const Region5 = userInfo[0]['Region5'];
+      const CalimStatus = userInfo[0]['CalimStatus'];
+      // const { Region1, Region2, Region3, Region4, Region5, CalimStatus } = userInfo[0];
+      console.log(Region1, Region2, Region3, Region4, Region5, CalimStatus);
       toast.loading("Loading the claims!!", {
         className: "toast-loading-message",
       });
+      // console.log('userInfo',userInfo[0]['Region1']);
       axios
-        .get("/api/getAllClaims", {
-          params: {
-            Region1,
-            Region2,
-            Region3,
-            CalimStatus,
-          },
-          headers: {
-            Authorization: `Bearer ${userInfo[0]?.Token}`,
-            "Content-Type": "application/json",
-          },
-        })
+    .get("/api/getAllClaims", {
+      params: {
+        Region1,
+        Region2,
+        Region3,
+        Region4,
+        Region5,
+        CalimStatus,
+      },
+      headers: {
+        Authorization: `Bearer ${userInfo[0]?.Token}`,
+        "Content-Type": "application/json",
+      },
+    })
         .then((res) => {
           toast.dismiss();
           toast.success("Successfully loaded all claims", {
@@ -194,38 +191,73 @@ const Index = () => {
   };
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
     const intervalId = setInterval(() => {
       fetchData();
-    },  5 * 60 * 1000);
+    }, 5 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, []);
 
-
   useEffect(() => {
     let temp = [];
+    let cardsDetails = [];
     if (selectedCard === 12) {
-      temp = allClaims;
+      allClaims.map((claim, index) => {
+        const isAccordingToStatus = String(claim?.Region)
+          .toLowerCase()
+          .includes(String(regionSearchValue).toLowerCase());
+        if (isAccordingToStatus) {
+          temp.push(claim);
+        }
+      });
     } else {
       temp = allClaims.filter((claim, index) => {
-        if (String(claim.CurrentStatus) === String(selectedCard)) {
+        const isAccordingToStatus = String(claim?.Region)
+          .toLowerCase()
+          .includes(String(regionSearchValue).toLowerCase());
+        if (
+          String(claim?.CurrentStatus) === String(selectedCard) &&
+          isAccordingToStatus
+        ) {
+          cardsDetails.push(claim);
           return true;
+        }
+        if (isAccordingToStatus) {
+          cardsDetails.push(claim);
+          return false;
         } else {
           return false;
         }
       });
     }
-    setFilterCardClaim(temp);
-  }, [selectedCard,allClaims]);
+    setFilterClaims(temp);
+    setFilterCardClaim(cardsDetails);
+  }, [selectedCard, regionSearchValue, allClaims]);
+
+  const getRequiredClaimsForPagination = () => {
+    let requiredClaims = [];
+    allClaims.map((claim, index) => {
+      const isAccordingToStatus = String(claim?.Region)
+        .toLowerCase()
+        .includes(String(regionSearchValue).toLowerCase());
+      if (
+        String(claim?.CurrentStatus) === String(selectedCard) &&
+        isAccordingToStatus
+      ) {
+        requiredClaims.push(claim);
+      }
+    });
+    return requiredClaims;
+  };
+
   return (
     <>
-      {/* <!-- Main Header Nav --> */}
       <Header
         setIsRegionChange={setIsRegionChange}
         isDashboard={true}
+        setSelectedCard={setSelectedCard}
         setRegionSearchValue={setRegionSearchValue}
       />
-      {/* <!--  Mobile Menu --> */}
       <MobileMenu />
 
       <div className="dashboard_sidebar_menu">
@@ -236,18 +268,14 @@ const Index = () => {
           data-bs-scroll="true"
         >
           <SidebarMenu />
-          {/* <Sidebar /> */}
         </div>
       </div>
-      {/* End sidebar_menu */}
 
-      {/* <!-- Our Dashbord --> */}
       <section className="our-dashbord dashbord bgc-f6 pb50">
         <div className="container-fluid ovh">
           <div className="row">
             <div className="col-lg-12 maxw100flex-992">
               <div className="row">
-                {/* Start Dashboard Navigation */}
                 <div className="col-lg-12">
                   <div className="dashboard_navigationbar dn db-1024">
                     <div className="dropdown">
@@ -262,21 +290,16 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-
-               
               </div>
-              {/* End .row */}
-
               <div
                 className="row mt-2"
                 style={{ justifyContent: "space-between" }}
               >
-                <AllStatistics
+                <ClaimsHeadingCards
                   allClaims={
-                    searchInput || majorSearch || isRegionChange
-                      ? filterClaims
-                      : allClaims
+                    selectedCard === 12 ? filterClaims : filterCardClaim
                   }
+                  regionSearchValue={regionSearchValue}
                   setSelectedCard={setSelectedCard}
                 />
               </div>
@@ -295,44 +318,37 @@ const Index = () => {
                 className="row my_profile_setting_input form-group"
                 style={{ marginLeft: "-25px" }}
               ></div>
-             
+              <div
+                className="bg-dark"
+                style={{
+                  width: "101%",
+                  height: "3px",
+                  color: "blue",
+                  border: "1px solid blue",
+                  marginLeft: "-12px",
+                }}
+              ></div>
               <div className="row">
-                <Exemple
-                  claims={
-                    searchInput || majorSearch || isRegionChange
-                      ? filterClaims
-                      : selectedCard
-                      ? filterCardClaim
-                      : filterCardClaim
-                  }
+                <BaseView
+                  claims={filterClaims}
                   IsLoading={IsLoading}
                   start={start}
+                  selectedCard={selectedCard}
                   end={end}
                   setMajorSearch={setMajorSearch}
                   status={status}
                 />
-                
               </div>
-              {/* End .row  */}
 
               <div className="row">
                 <div className="col-lg-12 mt20">
                   <div className="mbp_pagination">
                     <Pagination
-                      
                       setStart={setStart}
                       setEnd={setEnd}
                       start={start}
                       end={end}
-                      properties={
-                        searchInput || majorSearch || isRegionChange
-                          ? filterClaims
-                          : selectedCard > 0
-                          ? filterCardClaim
-                          : showRegionClaim
-                          ? filterAccordingClaim
-                          : allClaims
-                      }
+                      properties={filterClaims}
                     />
                   </div>
                 </div>
@@ -349,9 +365,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              {/* End .row */}
             </div>
-            {/* End .col */}
           </div>
         </div>
       </section>

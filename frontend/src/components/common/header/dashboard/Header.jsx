@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import HeaderMenuContent from "./HeaderMenuContent";
 import Image from "next/image";
 
-const Header = ({ setIsRegionChange, isDashboard, setRegionSearchValue }) => {
+const Header = ({ setIsRegionChange, setSelectedCard,isDashboard, setRegionSearchValue }) => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -45,16 +45,15 @@ const Header = ({ setIsRegionChange, isDashboard, setRegionSearchValue }) => {
             Claim Management
           </span>
         </Link>
-        {/* site logo brand */}
 
         <nav>
           <HeaderMenuContent
             setIsRegionChange={setIsRegionChange}
             isDashboard={isDashboard}
+            setSelectedCard={setSelectedCard}
             setRegionSearchValue={setRegionSearchValue}
           />
         </nav>
-        {/* End .navbar */}
       </div>
     </header>
     // {/* <!-- /.theme-main-menu --> */}

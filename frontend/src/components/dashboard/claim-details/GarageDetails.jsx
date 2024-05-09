@@ -4,8 +4,8 @@
 import { FaEye } from "react-icons/fa";
 // import { encryptionData } from "../../../utils/dataEncryption";
 import { useRouter } from "next/router";
-import Exemple from "./Exemple_01";
-import Form_garage from "./Form_garage";
+import Exemple from "./UploadReportTableView";
+import Form_garage from "./GarageDetailsViewForm";
 // import toast from "react-hot-toast";
 
 const GarageDetails = (edit, editHandler) => {
@@ -13,18 +13,6 @@ const GarageDetails = (edit, editHandler) => {
 
   const [editCase_03, setEditCase_03] = useState(false);
   const [editVechile, setEditVechile] = useState(false);
-
-  // const editHandler = () => {
-  //   setEdit(true);
-  // };
-
-  //   const togglePasswordVisibility = () => {
-  //     setPasswordVisible(!passwordVisible);
-  //   };
-
-  //   const togglePasswordVisibility_01 = () => {
-  //     setPasswordVisible_01(!passwordVisible_01);
-  //   };
 
   return (
     <>

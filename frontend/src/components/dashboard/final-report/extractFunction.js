@@ -11,6 +11,12 @@ export const getExpandedData = (row,value,field)=>{
             bill_sr : value
         }
     }
+    if(String(field) === "imt"){
+        return {
+            ...row,
+            imt : Number(!value)
+        }
+    }
     if(String(field) === "qa"){
         return {
             ...row,

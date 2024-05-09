@@ -1,12 +1,10 @@
 
 import { useRouter } from "next/router";
-import Exemple from "./Exemple_01";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Pako from "pako";
-
 import AWS from 'aws-sdk';
 import toast from "react-hot-toast";
+import { uploadReportTableHeaders } from "./DataHeaders";
 
 
 AWS.config.update({
@@ -43,7 +41,6 @@ const UploadReort = ({ leadId ,claim}) => {
       },
     })
     .then((res) => {
-        console.log("DocumentLabels",res.data.data.results);
         setALlDocumentLabels(res.data.data.results);
     })  
     .catch((err) => {
@@ -59,8 +56,6 @@ const UploadReort = ({ leadId ,claim}) => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLoc(latitude + "," + longitude);
-          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-          // You can use the latitude and longitude here as needed
         },
         (error) => {
           console.error("Error getting location:", error.message);
@@ -136,94 +131,7 @@ const UploadReort = ({ leadId ,claim}) => {
     setDisable(false)
   };
 
-  
-  let LabelData = [
-    {
-      _id: "6144145976c7fe",
-      serial_num: "1",
-      doc_name: "Driving licence",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "2",
-      doc_name: "Certificate of registration",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "3",
-      doc_name: "Repair Estimate",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "4",
-      doc_name: "Claim form",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "5",
-      doc_name: "Insurance policy",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "6",
-      doc_name: "Damage vehicle photographs/video",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "7",
-      doc_name: "Aadhar card",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "8",
-      doc_name: "Pan card"
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "9",
-      doc_name: " Cancel cheque",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "10",
-      doc_name: " Satisfaction voucher",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "11",
-      doc_name: "Discharge voucher",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "12",
-      doc_name: "Dismantle photographs",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "13",
-      doc_name: "Reinspection photographs",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "14",
-      doc_name: "Repair Invoice",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "15",
-      doc_name: "Payment/cash receipt",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "16",
-      doc_name: "Images",
-    },
-    {
-      _id: "6144145976c7fe",
-      serial_num: "17",
-      doc_name: "Videos",
-    },
-  ];
+
 
   
   const [data,setData]=useState([])
@@ -236,12 +144,11 @@ const UploadReort = ({ leadId ,claim}) => {
       }
     })
     .then((res)=>{
-      console.log("allDocLists",res);
       const tempAllDocsLabel = res.data.data.results;
-      const allLabelCount = LabelData.length
+      const allLabelCount = uploadReportTableHeaders.length
       let newAddOnLabels = []
 
-      LabelData.map((data,index)=>{
+      uploadReportTableHeaders.map((data,index)=>{
         newAddOnLabels.push(data)
       })
 
