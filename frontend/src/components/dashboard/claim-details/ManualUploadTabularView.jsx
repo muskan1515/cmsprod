@@ -15,9 +15,6 @@ AWS.config.update({
 const S3_BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME;
 
 const REGION = process.env.NEXT_PUBLIC_AWS_REGION;
-// console.log("AWS credentials_manual_uplod:", process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY);
-// console.log("AWS region:", process.env.NEXT_PUBLIC_AWS_REGION);
-// console.log("S3 bucket:", S3_BUCKET);
 const myBucket = new AWS.S3({ params: { Bucket: S3_BUCKET }, region: REGION });
 
 const headCells = [
@@ -164,8 +161,6 @@ export default function Exemple({ finalDisable, documents, leadId }) {
 
   const [loc, setLoc] = useState("");
 
-  console.log("leadId------>", leadId);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -188,7 +183,6 @@ export default function Exemple({ finalDisable, documents, leadId }) {
         },
       })
       .then((res) => {
-        console.log("allDocLists", res);
         const tempAllDocsLabel = res.data.data.results;
         const allLabelCount = LabelData.length;
         let newAddOnLabels = [];
@@ -217,7 +211,6 @@ export default function Exemple({ finalDisable, documents, leadId }) {
     let requiredInfo = [];
     documents.map((doc, index) => {
       if (String(doc.DocumentName) === String(label)) {
-        console.log(doc);
         if (doc.Photo1 !== "") {
           requiredInfo.push({
             name: doc.Attribute1,
@@ -261,18 +254,16 @@ export default function Exemple({ finalDisable, documents, leadId }) {
     });
     return requiredLinks;
   };
-  // console.log("selectedFile-------->",selectedFile);
 
   const getIndex = (docName, fileData) => {
     let index = -1;
-    console.log("getIndex", docName, fileData);
+
     fileData.map((file, idx) => {
-      console.log(String(docName) === String(file.docName));
       if (String(docName) === String(file.docName)) {
         index = idx;
       }
     });
-    console.log(index);
+
     return index;
   };
 
@@ -296,7 +287,6 @@ export default function Exemple({ finalDisable, documents, leadId }) {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLoc(latitude + "," + longitude);
-          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
           // You can use the latitude and longitude here as needed
         },
         (error) => {
@@ -340,29 +330,58 @@ export default function Exemple({ finalDisable, documents, leadId }) {
     setCurrentDoc(docCurrentName);
   }, [docCurrentName]);
 
+  function formatFilename(filename, leadId, extension) {
+    // Split the filename into base and extension parts
+    var parts = filename.split(".");
+    var base = parts.slice(0, -1).join(".");
+    var ext = parts[parts.length - 1];
+
+    // Concatenate the base filename, leadId, and extension with underscores
+    var formattedFilename = filename + "_" + leadId + "." + extension;
+
+    return formattedFilename;
+  }
+  function getNameAndExtension(filename) {
+    // Split the filename into base and extension parts
+    var parts = filename?.split(".");
+
+    // Extract the name and extension
+    var name = parts.slice(0, -1).join(".");
+    var extension = parts[parts.length - 1];
+
+    // Return an object containing the name and extension
+    return {
+      name: name,
+      extension: extension,
+    };
+  }
+
   const handleFileInputChange = async (e, idx, docs) => {
     location();
 
     setDisable(true);
 
     const selectedFileCurrent = e.target.files[idx];
+    const { name, extension } = getNameAndExtension(selectedFileCurrent.name);
+    const url = window.location.href;
+    const LeadId = url.split("claim-details?leadId=")[1];
 
+    const formattedName = formatFilename(name, LeadId, extension);
     const params = {
       ACL: "public-read",
       Body: selectedFileCurrent,
       Bucket: S3_BUCKET,
-      Key: selectedFileCurrent.name,
+      Key: formattedName,
       ContentType: "image/jpeg",
       ContentDisposition: "inline",
     };
 
     myBucket.putObject(params).send((err, data) => {
       if (err) {
-        console.log("errorr", err);
         toast.error("Error while uploading!!");
       } else {
         const S3_URL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${encodeURIComponent(
-          selectedFileCurrent.name
+          formattedName
         )}`;
 
         const payloadMain = {
@@ -391,7 +410,6 @@ export default function Exemple({ finalDisable, documents, leadId }) {
           .then((res) => {
             toast.dismiss();
             toast.success("Successfully updated !", {
-              // position: toast.POSITION.BOTTOM_LEFT,
               className: "toast-loading-message",
             });
             let oldFiles = uploadedFiles;
@@ -403,8 +421,8 @@ export default function Exemple({ finalDisable, documents, leadId }) {
               const oldFile = oldFiles[index];
               const oldData = oldFile.data;
               oldData.push({
-                name: getFileNameFromUrl(S3_URL),
-                url: res.data.userData,
+                name: selectedFileCurrent.name,
+                url: S3_URL,
                 Timestamp: currentTimeStamp,
                 Location: loc,
               });
@@ -414,13 +432,12 @@ export default function Exemple({ finalDisable, documents, leadId }) {
                 data: oldData,
               };
               oldFiles[index] = newUpload;
-              console.log(oldFiles);
               setChanges(true);
               setUploadedFiles(oldFiles);
             } else {
               let newData = [];
               newData.push({
-                name: getFileNameFromUrl(S3_URL),
+                name: selectedFileCurrent.name,
                 url: S3_URL,
                 Timestamp: currentTimeStamp,
                 Location: loc,
@@ -549,6 +566,9 @@ export default function Exemple({ finalDisable, documents, leadId }) {
   };
 
   const downloadAllFiles = async () => {
+    toast.loading("Downloading the zip. Please Wait !!", {
+      className: "toast-loading-message",
+    });
     try {
       const zip = new JSZip();
 
@@ -582,11 +602,16 @@ export default function Exemple({ finalDisable, documents, leadId }) {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-
-      toast.success("Successfully downloaded the zip!");
+      toast.dismiss();
+      toast.success("Successfully downloaded the zip!", {
+        className: "toast-loading-message",
+      });
     } catch (error) {
       console.log("Error during download:", error);
-      toast.error("Error during download. Please try again.");
+      toast.dismiss();
+      toast.error("Error during download. Please try again.", {
+        className: "toast-loading-message",
+      });
     }
   };
 
@@ -596,18 +621,17 @@ export default function Exemple({ finalDisable, documents, leadId }) {
     data.map((docs, index) => {
       const allInfo = getAllLabelLinks(docs.doc_name);
       const fileName = getFileName(index);
-      console.log(docs.doc_name, allInfo);
+
       const alllinks = (
         <div style={{ display: "flex", flexDirection: "column" }}>
           {allInfo?.map((info, idx) => (
-            <a href={info.url} key={idx} target="_blank">
-              {decodeURIComponent(info.name)}
+            <a href={decodeURIComponent(info.url)} key={idx} target="_blank">
+              {info.name}
             </a>
           ))}
         </div>
       );
 
-      console.log("alllinks", alllinks);
       const temp = {
         _id: docs._id,
         serial_num: docs.serial_num,
