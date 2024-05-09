@@ -20,7 +20,7 @@ const uploadReportDoc = require("./Routes/reportDocumentUpload");
 const fetchRoutes = require("./Routes/fetchRoutes");
 const commentRoute = require("./Routes/commentsRoute");
 const regionRoute = require("./Routes/regionRoutes");
-// const multer = require("multer");
+const multer = require("multer");
 
 
 const dotenv = require("dotenv").config();
