@@ -89,7 +89,7 @@ const setDate = (newDate, settingFunc) => {
   settingFunc(formattedDate);
 };
 
-const handleInputChange = (e) => {
+const handleInputChange = (e,setInsuredMobileNo1) => {
   const inputValue = e.target.value;
 
   // Allow only numeric input
@@ -101,7 +101,7 @@ const handleInputChange = (e) => {
   setInsuredMobileNo1(truncatedValue);
 };
 
-const handleInputChange_01 = (e) => {
+const handleInputChange_01 = (e,setInsuredMobileNo2) => {
   const inputValue = e.target.value;
 
   // Allow only numeric input

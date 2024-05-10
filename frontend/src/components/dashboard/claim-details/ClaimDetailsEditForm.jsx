@@ -204,7 +204,7 @@ const ClaimDetailsEditForm = ({
                 className="form-control"
                 id="propertyTitle"
                 value={InsuredMobileNo1}
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e,setInsuredMobileNo1)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
@@ -234,7 +234,7 @@ const ClaimDetailsEditForm = ({
                 className="form-control"
                 id="propertyTitle"
                 value={InsuredMobileNo2}
-                onChange={handleInputChange_01}
+                onChange={(e)=>handleInputChange_01(e,setInsuredMobileNo2)}
                 disabled={!edit}
                 // placeholder="Enter Registration No."
               />
