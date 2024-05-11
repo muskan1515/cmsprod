@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 const ClaimsHeadingCards = ({allClaims,regionSearchValue,setSelectedCard}) => {
   const ClaimsHeadingCards = [
     {
@@ -97,6 +99,8 @@ const ClaimsHeadingCards = ({allClaims,regionSearchValue,setSelectedCard}) => {
       color: "#E6E6FA",
     },
   ];
+
+  const [updatedode,setUpdatedCode] = useState([]);
   const getCount = (item) => {
     if (String(item.id) === '12'){
       return allClaims.length;
@@ -108,9 +112,11 @@ const ClaimsHeadingCards = ({allClaims,regionSearchValue,setSelectedCard}) => {
       return count;
     }, 0);
   };
-  return (
-    <>
-      {ClaimsHeadingCards.map((item,index) => (
+
+  useEffect(()=>{
+
+    const getData = ()=>{
+      const result =  ClaimsHeadingCards.map((item,index) => (
         <div
           className="col-xs-4 col-sm-2 col-md-6 col-lg-4 col-xl-1"
           key={item.id}
@@ -133,7 +139,40 @@ const ClaimsHeadingCards = ({allClaims,regionSearchValue,setSelectedCard}) => {
             </div>
           </div>
         </div>
-      ))}
+      ));
+      return result;
+    }
+    const temp = getData();
+  },[allClaims])
+
+  return (
+    <>
+      {
+      ClaimsHeadingCards.map((item,index) => (
+        <div
+          className="col-xs-4 col-sm-2 col-md-6 col-lg-4 col-xl-1"
+          key={item.id}
+          style={{ padding: "0px" }}
+          onClick={()=>setSelectedCard(index+1)}
+        >
+          <div
+            className={`ff_one ${item.blockStyle}`}
+            style={{ backgroundColor: item.color, marginRight: "5px" }}
+          >
+            <div className="detais">
+              <div className="timer fw-bold" style={{ fontSize: "32px" }}>
+                {getCount(item)}
+              </div>
+              <p
+                style={{ fontSize: "12px", color: "black", fontWeight: "bold" }}
+              >
+                {item.name}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))
+      }
     </>
   );
 };
