@@ -52,12 +52,12 @@ const LayoutView = ({
                       {feeReport?.feeDetails?.BillTo === "Insured" ? (
                         <>
                           <span style={{ marginLeft: "25px" }}>
-                            {feeReport?.vehicleOnlineDetails?.RegisteredOwner} (
+                            {feeReport?.vehicleDetails?.RegisteredOwner} (
                             {selectedServicingOffice?.Designation} )
                           </span>
                           <br />
                           <span style={{ marginLeft: "25px" }}>
-                            {feeReport?.vehicleOnlineDetails?.PermanentAddress}
+                            {feeReport?.vehicleDetails?.PermanentAddress}
                           </span>
                         </>
                       ) : feeReport?.feeDetails?.BillTo === "Insurer" ? (
@@ -400,7 +400,7 @@ const LayoutView = ({
                 )}{" "}
                 %{" "}
               </span>
-              <br />
+              <br/>
               <span>
                 I GST @{" "}
                 {addCommasToNumber(
