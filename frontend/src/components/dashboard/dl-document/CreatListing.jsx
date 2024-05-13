@@ -54,14 +54,13 @@ const rcDetailsUpdated = {
   "Driver Name": addDefaultValue(DriverDetails?.DriverName),
   "Father Name": addDefaultValue(DriverDetails?.FatherName),
   "Address": addDefaultValue(DriverDetails?.Address),
-  "Mobile": addDefaultValue(DriverDetails?.Mobile),
   "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
   "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
   "Gender": addDefaultValue(DriverDetails?.Gender),
   "Issuing Authority": addDefaultValue(DriverDetails?.RtoName),
   "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
   "License Type": addDefaultValue(DriverDetails?.LicenseType),
-  "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
+  // "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
   "Issued Date": addDefaultValue(DriverDetails?.DateOfIssue),
   "Vaild Upto": addDefaultValue(DriverDetails?.ValidUpto)
     };
@@ -195,7 +194,6 @@ const rcDetailsUpdated = {
            
            <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",margin:"2%"}}>
            <Image style={{fontSize:"12px"}}  width={200} height={200} src={photo} alt={`${(DriverDetails?.DriverName)?.split(" ")[0]}_photo`}/>
-           <Image style={{fontSize:"12px",marginTop:"20%",marginLeft:"6%"}} width={300} height={100} src={sign} alt={`${(DriverDetails?.DriverName)?.split(" ")[0]}_sign`}/>
            </div>
           </tbody>
         </table>
