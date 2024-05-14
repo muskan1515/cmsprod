@@ -378,8 +378,7 @@ const CreateList = ({ allInfo, leadID }) => {
 
   useEffect(()=>{
     const professionalFees = 
-    all
-    String(allInfo?.VehicleOnlineDetails?.VehicleType) === "2W" ? 500 : 700;
+    String(allInfo?.VehicleType).toLowerCase().includes("4w") ? 700 : 500;
 
     const Conveyance = 
     allInfo?.feesDetails?.Conveyance !== undefined 

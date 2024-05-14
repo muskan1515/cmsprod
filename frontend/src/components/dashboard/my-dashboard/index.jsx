@@ -129,33 +129,30 @@ const Index = () => {
     if (userInfo === "") {
       router.push("/login");
     } else {
-      const Region1 = userInfo[0]['Region1'];
-      const Region2 = userInfo[0]['Region2'];
-      const Region3 = userInfo[0]['Region3'];
-      const Region4 = userInfo[0]['Region4'];
-      const Region5 = userInfo[0]['Region5'];
-      const CalimStatus = userInfo[0]['CalimStatus'];
-      // const { Region1, Region2, Region3, Region4, Region5, CalimStatus } = userInfo[0];
-      console.log(Region1, Region2, Region3, Region4, Region5, CalimStatus);
+      const Region1 = userInfo[0]["Region1"];
+      const Region2 = userInfo[0]["Region2"];
+      const Region3 = userInfo[0]["Region3"];
+      const Region4 = userInfo[0]["Region4"];
+      const Region5 = userInfo[0]["Region5"];
+      const CalimStatus = userInfo[0]["CalimStatus"];
       toast.loading("Loading the claims!!", {
         className: "toast-loading-message",
       });
-      // console.log('userInfo',userInfo[0]['Region1']);
       axios
-    .get("/api/getAllClaims", {
-      params: {
-        Region1,
-        Region2,
-        Region3,
-        Region4,
-        Region5,
-        CalimStatus,
-      },
-      headers: {
-        Authorization: `Bearer ${userInfo[0]?.Token}`,
-        "Content-Type": "application/json",
-      },
-    })
+        .get("/api/getAllClaims", {
+          params: {
+            Region1,
+            Region2,
+            Region3,
+            Region4,
+            Region5,
+            CalimStatus,
+          },
+          headers: {
+            Authorization: `Bearer ${userInfo[0]?.Token}`,
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           toast.dismiss();
           toast.success("Successfully loaded all claims", {
@@ -297,8 +294,10 @@ const Index = () => {
               >
                 <ClaimsHeadingCards
                   allClaims={
-                    selectedCard === 12 ? filterClaims : filterCardClaim
+                    selectedCard === 12 || majorSearch !== ""? filterClaims : filterCardClaim
                   }
+                  majorSearch={majorSearch}
+                  selectedCard={selectedCard}
                   regionSearchValue={regionSearchValue}
                   setSelectedCard={setSelectedCard}
                 />

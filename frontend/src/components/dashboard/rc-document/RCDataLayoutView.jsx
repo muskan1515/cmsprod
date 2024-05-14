@@ -57,10 +57,10 @@ const RCDataLayoutView = ({ vehicleDetails }) => {
         vehicleDetails?.DateOfRegistration !== "undefined"
           ? vehicleDetails?.DateOfRegistration
           : "N.A.",
-      "Odometer Reading":
-        vehicleDetails?.OdometerReading !== "undefined"
-          ? vehicleDetails?.OdometerReading
-          : "N.A.",
+      // "Odometer Reading":
+      //   vehicleDetails?.OdometerReading !== "undefined"
+      //     ? vehicleDetails?.OdometerReading
+      //     : "N.A.",
       "Vehicle Type":
         vehicleDetails?.VehicleType !== "undefined"
           ? vehicleDetails?.VehicleType

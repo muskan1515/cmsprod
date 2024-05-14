@@ -218,7 +218,7 @@ const getTotalLabourAssessedGSTValuess = (allInfo) => {
     const assessed = Number(part.Assessed) - dep;
 
     const assessedvalue = assessed * Number(part.GSTPercentage);
-    const gst = Number(assessedvalue) / 100;
+    const gst = Number(part.IsGSTIncluded) %2 === 1 ?  Number(assessedvalue) / 100 : 0;
     if (part.LabourIsActive) {
       total = total + +gst;
     }

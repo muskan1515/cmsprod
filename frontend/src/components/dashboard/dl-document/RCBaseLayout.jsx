@@ -40,14 +40,14 @@ const RCBaseLayout = ({ DriverDetails }) => {
       "Driver Name": addDefaultValue(DriverDetails?.DriverName),
       "Father Name": addDefaultValue(DriverDetails?.FatherName),
       Address: addDefaultValue(DriverDetails?.Address),
-      Mobile: addDefaultValue(DriverDetails?.Mobile),
+      // Mobile: addDefaultValue(DriverDetails?.Mobile),
       "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
       "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
       Gender: addDefaultValue(DriverDetails?.Gender),
       "Issuing Authority": addDefaultValue(DriverDetails?.RtoName),
       "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
       "License Type": addDefaultValue(DriverDetails?.LicenseType),
-      "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
+      // "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),
       "Issued Date": addDefaultValue(DriverDetails?.DateOfIssue),
       "Vaild Upto": addDefaultValue(DriverDetails?.ValidUpto),
     };
@@ -198,13 +198,13 @@ const RCBaseLayout = ({ DriverDetails }) => {
                 src={photo}
                 alt={`${DriverDetails?.DriverName?.split(" ")[0]}_photo`}
               />
-              <Image
+              {/* <Image
                 style={{ fontSize: "12px", marginTop: "20%", marginLeft: "6%" }}
                 width={300}
                 height={100}
                 src={sign}
                 alt={`${DriverDetails?.DriverName?.split(" ")[0]}_sign`}
-              />
+              /> */}
             </div>
           </tbody>
         </table>

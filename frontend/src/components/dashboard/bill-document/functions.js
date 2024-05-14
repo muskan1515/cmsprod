@@ -124,9 +124,8 @@ const formatDate = (dateString) => {
   }
 
   const calculateTheTotalBillWithoutGST = (feeReport) => {
-    const propfessionalCharges = Number(
-      feeReport?.feeDetails?.ProfessionalFees
-    );
+    const is4W = String(feeReport?.vehicleDetails?.VehicleType).toLowerCase().includes("4w") ;
+    const propfessionalCharges = is4W ? 700 : 500 ;
     const photoCharges =
       Number(feeReport?.feeDetails?.Photos) *
       Number(feeReport?.feeDetails?.PhotsRate);

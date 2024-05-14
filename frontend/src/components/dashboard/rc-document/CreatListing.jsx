@@ -75,7 +75,7 @@ const RCData = ({ vehicleDetails }) => {
       "Maker Name": vehicleDetails?.MakerDesc !== "undefined" ? vehicleDetails?.MakerDesc : "N.A.",
       "Model Name": vehicleDetails?.MakerModel !== "undefined" ? vehicleDetails?.MakerModel : "N.A.",
       "Registration Date": vehicleDetails?.DateOfRegistration !== "undefined" ? vehicleDetails?.DateOfRegistration : "N.A.",
-      "Odometer Reading": vehicleDetails?.OdometerReading !== "undefined" ? vehicleDetails?.OdometerReading : "N.A.",
+      // "Odometer Reading": vehicleDetails?.OdometerReading !== "undefined" ? vehicleDetails?.OdometerReading : "N.A.",
       "Vehicle Type": vehicleDetails?.VehicleType !== "undefined" ? vehicleDetails?.VehicleType : "N.A.",
       "Type Of Body": vehicleDetails?.TypeOfBody !== "undefined" ? vehicleDetails?.TypeOfBody : "N.A.",
       "Fuel Type": vehicleDetails?.FuelType !== "undefined" ? vehicleDetails?.FuelType : "N.A.",
