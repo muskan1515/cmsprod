@@ -21,7 +21,7 @@
         "id": 4,
         "Region": "Jaipur",
         "RegionShortName": "JPR",
-        "MailAddress": "mtjaipurro@gmail.com"
+        "MailAddress": "mtjaipurro1@gmail.com"
     },
     {
         "id": 5,
