@@ -128,20 +128,22 @@ const getGSTSummaryLabourDetails = (allInfo) => {
   let totalAmountWOGST = 0,totalGSTValueWOGST = 0;
   let currentGST = 0;
   allInfo?.labourDetails?.map((labour, index) => {
+    const dep = Number(labour.JobType) === 1 && String(allInfo?.otherInfo[0]?.PolicyType).toLowerCase().includes("regular")? (Number(labour.Assessed) * 12.5)/100 : 0;
+    const assessedValue = Number(labour?.Assessed) - dep;
+      
     const totalGST =
       Number(labour?.IsGSTIncluded) % 2 === 1
-        ? (Number(labour?.Assessed) * Number(labour.GSTPercentage)) / 100
+        ? (Number(assessedValue) * Number(labour.GSTPercentage)) / 100
         : 0;
-      const assessedValue = Number(labour?.Assessed);
       currentGST = Number(labour?.GSTPercentage) !== 0 ? Number(labour?.GSTPercentage) : currentGST;
 
     if(labour?.LabourIsActive){
-     if(Number(labour?.IsGSTIncluded)%2 === 1){
-      totalAmountWithGST += assessedValue;
+     if(Number(labour?.IsGSTIncluded) % 2 === 1){
+      totalAmountWithGST += (assessedValue);
       totalGSTValueWithGST += totalGST;
      }
      else{
-      totalAmountWOGST += assessedValue;
+      totalAmountWOGST += (assessedValue);
       totalGSTValueWOGST += totalGST;
      }
     }
@@ -255,7 +257,7 @@ const getTotalEvaluationOfAssessedForNewParts = (allInfo) => {
 
 const getTotalLabourAssessedGST2 = (allInfo) => {
   let total = 0;
-  allInfo?.GSTSummaryLabour?.map((part, index) => {
+  getGSTSummaryLabourDetails(allInfo)?.map((part, index) => {
     total += Number(Number(part.CGST) + Number(part.SGST));
   });
 
@@ -370,7 +372,7 @@ const getTotalLabourAssessedSum = (allInfo) => {
 
 const getTotalLabourAssessed2 = (allInfo) => {
   let total = 0;
-  allInfo?.GSTSummaryLabour?.map((part, index) => {
+  getGSTSummaryLabourDetails(allInfo).map((part, index) => {
     total += Number(part.TotalAssessed);
   });
 
