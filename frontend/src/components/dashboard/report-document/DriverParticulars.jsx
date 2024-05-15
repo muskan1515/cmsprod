@@ -133,7 +133,7 @@ const DriverParticulars = ({ allInfo }) => {
             <span>{allInfo?.otherInfo[0]?.LicenseType}</span>
           </td>
         </tr>
-        <tr>
+        {/* <tr>
           <td style={{ width: "36%" }} className="text-start">
             <span> (e) Badge Number</span>
           </td>
@@ -143,7 +143,7 @@ const DriverParticulars = ({ allInfo }) => {
           <td style={{ width: "55%" }} className="text-start">
             <span> {allInfo?.otherInfo[0]?.BadgeNumber}</span>
           </td>
-        </tr>
+        </tr> */}
       </table>
     </div>
   );

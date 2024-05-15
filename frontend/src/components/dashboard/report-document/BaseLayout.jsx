@@ -1,7 +1,7 @@
 import { Dropdown } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import SurveyReport from "./SurveyReport";
 import InsuranceParticulars from "./InsuranceParticulars";
 import VehicleParticulars from "./VehicleParticulars";
@@ -13,9 +13,14 @@ import LabourRepairsDetails from "./LabourRepairsDetails";
 import SummaryOfAssessment from "./SummaryOfAssessment";
 import GSTSummary from "./GSTSummary";
 import toast from "react-hot-toast";
+import LiabilityUnderImt from "./LiabilityUnderImt";
+import TotalLossCalculation from "./TotalLossCalculation";
+import LiabilityUnderImtLabour from "./LiabilityUnderImtLabour";
 
 const BaseLayout = ({ allInfo }) => {
   const pdfRef = useRef();
+  const [totalIMTLabourValue,setTotalIMTLabourValue] = useState(0);
+  const [totalIMTNewPartValue,setTotalIMTNewPartValue] = useState(0);
 
   const downloadPDF = () => {
     toast.loading("Downloading the word document");
@@ -171,11 +176,15 @@ const BaseLayout = ({ allInfo }) => {
 
         <LossDamagesDetails allInfo={allInfo} />
         <br />
+      
         <LabourRepairsDetails allInfo={allInfo} />
+        {allInfo?.otherInfo[0]?.IMT && <LiabilityUnderImt totalIMTValue={totalIMTNewPartValue} setTotalIMTValue={setTotalIMTNewPartValue} allInfo={allInfo} />}
+        {allInfo?.otherInfo[0]?.IMT && <LiabilityUnderImtLabour TotalPartsValue={totalIMTNewPartValue} totalIMTValue={totalIMTLabourValue} setTotalIMTValue={setTotalIMTLabourValue} allInfo={allInfo}/>}
 
-        <SummaryOfAssessment allInfo={allInfo} />
+        <SummaryOfAssessment  totalIMTLabourValue={totalIMTLabourValue} totalIMTNewPartValue={totalIMTNewPartValue} allInfo={allInfo} />
 
-        <GSTSummary allInfo={allInfo} />
+        <GSTSummary allInfo={allInfo} totalIMTLabourValue={totalIMTLabourValue} totalIMTNewPartValue={totalIMTNewPartValue}/>
+        {allInfo?.otherInfo[0]?.TotalLoss && <TotalLossCalculation />}
       </div>
     </>
   );

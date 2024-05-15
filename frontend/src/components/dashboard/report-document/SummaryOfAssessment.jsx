@@ -11,7 +11,7 @@ import {
   roundOff,
   getTotalLabourAssessedSum,
 } from './functions/SummaryOfAssessmentFunctions';
-const SummaryOfAssessment = ({ allInfo }) => {
+const SummaryOfAssessment = ({ allInfo ,totalIMTLabourValue,totalIMTNewPartValue}) => {
   const [allGSTType, setAllGSTType] = useState([]);
 
   const lessExcess = Number(allInfo?.summaryReport[0]?.LessExcess) || 0;
@@ -40,6 +40,11 @@ const SummaryOfAssessment = ({ allInfo }) => {
     array.sort((a, b) => parseFloat(a.field) - parseFloat(b.field));
     setAllGSTType(array);
   }, [allInfo]);
+
+  const calculateTotalImt = ()=>{
+    const aggregatedValue = totalIMTNewPartValue + totalIMTLabourValue;
+    return aggregatedValue;
+  }
 
   return (
     <div className="" style={{ marginTop: "20px" }}>
@@ -207,6 +212,18 @@ const SummaryOfAssessment = ({ allInfo }) => {
           </td>
         </tr>
       </table>
+
+      {Number(allInfo?.otherInfo[0].IMT) === 1 && <div style={{margin: "20px",display:"flex",flexDirection:"column"}}>
+
+        <div style={{display:"flex",padding:"6px",justifyContent:"end"}}>
+          <span style={{fontSize:"14px",fontWeight:"bold"}}>NET LIABILITY UNDER IMT 23 : ₹</span>
+          <span style={{ fontSize:"14px",fontWeight:"bold",borderBottom: "2px solid black",paddingLeft:"16px",paddingRight:"16px",paddingBottom:"4px"}}>Rs. {addCommasToNumber(roundOff(calculateTotalImt()/2))}</span>
+        </div>
+        <div style={{display:"flex",padding:"6px",justifyContent:"end"}}>
+          <span style={{fontSize:"14px",fontWeight:"bold"}}>Grand Total : ₹</span>
+          <span style={{ fontSize:"14px",fontWeight:"bold",borderBottom: "2px solid black",paddingLeft:"16px",paddingRight:"16px",paddingBottom:"4px"}}>Rs. {addCommasToNumber(Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage)+calculateTotalImt()/2))}</span>
+        </div>
+      </div>}
     </div>
   );
 };

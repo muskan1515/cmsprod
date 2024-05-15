@@ -18,7 +18,7 @@ const formatDate = (dateString) => {
     const Depreciation =
       (assessed * Number(part.NewPartsDepreciationPct)) / 100;
     if (
-      String(part.NewPartsTypeOfMaterial === "Glass") &&
+      String(part.NewPartsTypeOfMaterial === "Glass") &&part.IsImt === 1 &&
       part.NewPartsIsActive
     ) {
       return assessed;
@@ -30,7 +30,7 @@ const formatDate = (dateString) => {
     let depPct = 0;
     allInfo?.newPartsDetails?.map((part, index) => {
       if (
-        String(part.NewPartsTypeOfMaterial) === "Metal" &&
+        String(part.NewPartsTypeOfMaterial) === "Metal"  &&part.IsImt === 1  &&
         part.NewPartsIsActive
       ) {
         depPct = Number(part.NewPartsDepreciationPct);
@@ -44,7 +44,7 @@ const formatDate = (dateString) => {
     const Depreciation =
       (assessed * Number(part.NewPartsDepreciationPct)) / 100;
     if (
-      String(part.NewPartsTypeOfMaterial === "Metal") &&
+      String(part.NewPartsTypeOfMaterial === "Metal")  &&part.IsImt === 1  &&
       part.NewPartsIsActive
     ) {
       return assessed;
@@ -58,10 +58,10 @@ const formatDate = (dateString) => {
       (assessed * Number(part.NewPartsDepreciationPct)) / 100;
     if (
       String(
-        part.NewPartsTypeOfMaterial !== "Glass" &&
+        part.NewPartsTypeOfMaterial !== "Glass" && 
           String(
             part.NewPartsTypeOfMaterial !== "Metal" && part.NewPartsIsActive
-          )
+          )  &&part.IsImt === 1 
       )
     ) {
       return assessed;
@@ -74,10 +74,10 @@ const formatDate = (dateString) => {
     let typeTotalValue = 0;
     allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
-      total = total + part.NewPartsIsActive ? assessed : 0;
+      total = total + part.NewPartsIsActive  && part.IsImt === 1  ? assessed : 0;
       typeTotalValue =
         typeTotalValue +
-        (part.NewPartsIsActive && String(part.NewPartsGSTPct) === String(type)
+        (part.NewPartsIsActive && part.IsImt === 1   &&  String(part.NewPartsGSTPct) === String(type)
           ? assessed
           : 0);
     });
@@ -93,7 +93,7 @@ const formatDate = (dateString) => {
     let total = 0;
     allInfo?.newPartsDetails.map((part, index) => {
       const assessed = Number(part.NewPartsEstimate) * Number(part.QE);
-      total = total + (part.NewPartsIsActive ? assessed : 0);
+      total = total + (part.NewPartsIsActive && part.IsImt === 1   ? assessed : 0);
     });
     return total;
   };
@@ -125,7 +125,7 @@ const formatDate = (dateString) => {
 
       if (
         String(part.NewPartsTypeOfMaterial) === "Glass" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + assessed;
       }
@@ -140,7 +140,7 @@ const formatDate = (dateString) => {
 
       if (
         String(part.NewPartsTypeOfMaterial) === "Glass" &&
-        part.NewPartsIsActive &&
+        part.NewPartsIsActive && part.IsImt === 1   && 
         String(part.NewPartsGSTPct) === String(type)
       ) {
         total = total + assessed;
@@ -157,7 +157,7 @@ const formatDate = (dateString) => {
         (assessed * Number(part.NewPartsDepreciationPct)) / 100;
       if (
         String(part.NewPartsTypeOfMaterial) === "Metal" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + assessed;
       }
@@ -173,7 +173,7 @@ const formatDate = (dateString) => {
         (assessed * Number(part.NewPartsDepreciationPct)) / 100;
       if (
         String(part.NewPartsTypeOfMaterial) === "Metal" &&
-        part.NewPartsIsActive &&
+        part.NewPartsIsActive && part.IsImt === 1   &&
         String(part.NewPartsGSTPct) === String(type)
       ) {
         total = total + assessed;
@@ -195,7 +195,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + assessed;
       }
@@ -212,7 +212,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        part.NewPartsIsActive &&
+        part.NewPartsIsActive && part.IsImt === 1   &&
         String(part.NewPartsGSTPct) === String(type)
       ) {
         total = total + assessed;
@@ -232,7 +232,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
         String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
-        part.NewPartsIsActive 
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + Depreciation;
       }
@@ -249,7 +249,7 @@ const formatDate = (dateString) => {
 
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
-        part.NewPartsIsActive 
+        part.NewPartsIsActive  && part.IsImt === 1  
       ) {
         total = total + Depreciation;
       }
@@ -267,7 +267,7 @@ const formatDate = (dateString) => {
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
         String(allInfo?.otherInfo[0]?.PolicyType) === "Regular" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + Depreciation;
       }
@@ -285,7 +285,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + Depreciation;
       }
@@ -307,7 +307,7 @@ const formatDate = (dateString) => {
 
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + gst;
       }
@@ -329,7 +329,7 @@ const formatDate = (dateString) => {
 
       if (
         String(part.NewPartsTypeOfMaterial) === String(type) &&
-        part.NewPartsIsActive &&
+        part.NewPartsIsActive && part.IsImt === 1   &&
         String(part.NewPartsGSTPct) === String(gstType)
       ) {
         total = total + gst;
@@ -349,7 +349,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + gst;
       }
@@ -371,7 +371,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        part.NewPartsIsActive
+        part.NewPartsIsActive && part.IsImt === 1  
       ) {
         total = total + gst;
       }
@@ -388,7 +388,7 @@ const formatDate = (dateString) => {
       if (
         String(part.NewPartsTypeOfMaterial) !== "Glass" &&
         String(part.NewPartsTypeOfMaterial) !== "Metal" &&
-        part.NewPartsIsActive &&
+        part.NewPartsIsActive && part.IsImt === 1   &&
         String(part.NewPartsGSTPct) === String(type)
       ) {
         total = total + gst;

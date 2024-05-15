@@ -12,10 +12,12 @@ import {calculateGSTWholeSectionVauesWithGST2,
   convertToProperHTML,
   addVariables,
   getTotalLabourAssessed2,
-  getSummaryTotalWithLessSalvage,
+  getGSTSummaryLabourDetails,
   roundOff} from './functions/GSTSummaryFunctions'
 
-const GSTSummary = ({ allInfo }) => {
+  import { getSummaryTotalWithLessSalvage } from "./functions/SummaryOfAssessmentFunctions";
+
+const GSTSummary = ({ totalIMTLabourValue,totalIMTNewPartValue,allInfo }) => {
   const pdfRef = useRef();
 
   const [allGST, setGST] = useState([]);
@@ -32,6 +34,13 @@ const GSTSummary = ({ allInfo }) => {
   const text = convertToProperHTML(
     addVariables(allInfo,allInfo?.summaryReport[0]?.SummaryNotes)
   );
+
+  const [totalValue,setTotalValue] = useState(0);
+
+  useEffect(()=>{
+    const sum = Number(totalIMTLabourValue) + Number(totalIMTNewPartValue);
+    setTotalValue(sum/2);
+  },[totalIMTLabourValue,totalIMTNewPartValue])
 
   useEffect(() => {
     let array = [];
@@ -99,7 +108,7 @@ const GSTSummary = ({ allInfo }) => {
                   getTotalNonMetaDepreciationValueOnly(allInfo) +
                   calculateLabourDepreciations(allInfo)
               )
-            )}
+            ) } %
             ) is not deducted being{" "}
             <span style={{ fontWeight: "bold" }}>NIL DEPRECIATION</span> policy.
           </h5>
@@ -434,7 +443,7 @@ const GSTSummary = ({ allInfo }) => {
               Total
             </th>
           </tr>
-          {allInfo?.GSTSummaryLabour?.map((parts, index) => {
+          {getGSTSummaryLabourDetails(allInfo).map((parts, index) => {
             return true ? (
               <>
                 <tr>
@@ -614,11 +623,11 @@ const GSTSummary = ({ allInfo }) => {
           <b>
             ₹{" "}
             {addCommasToNumber(
-              Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage))
+              Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage) + totalValue)
             )}{" "}
             <br /> (
             {numberToWords
-              .toWords(Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage)))
+              .toWords(Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage)) + totalValue)
               .toUpperCase()}
             ){" "}
           </b>{" "}

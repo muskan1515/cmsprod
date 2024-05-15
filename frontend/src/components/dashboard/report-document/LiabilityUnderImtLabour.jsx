@@ -12,10 +12,14 @@ import {
   getTotalLabourAssessedSum,
   getTotalLabourAssessedGSTValuess,
   roundOff,
-  isGstApplied
-} from "./functions/LabourRepairsDetailsFunctions";
+} from "./functions/IMTLabourFunctions";
 
-const LabourRepairsDetails = ({ allInfo }) => {
+const LiabilityUnderImtLabour = ({
+  totalIMTValue,
+  setTotalIMTValue,
+  TotalPartsValue,
+  allInfo,
+}) => {
   const [allGST, setGST] = useState([]);
   const [noGST, setNoGST] = useState([]);
 
@@ -42,8 +46,24 @@ const LabourRepairsDetails = ({ allInfo }) => {
     setGST(array2);
   }, [allInfo]);
 
+  useEffect(() => {
+    const totalvALUE =
+      getTotalLabourAssessedSum(allInfo) -
+      (String(allInfo?.otherInfo[0]?.PolicyType) === "Regular"
+        ? calculateLabourDepreciations(allInfo)
+        : 0) +
+      getTotalLabourAssessedGSTValuess(allInfo);
+    setTotalIMTValue(totalvALUE);
+  }, [allInfo]);
+
+  const calculateTotalImt = ()=>{
+    const aggregatedValue = totalIMTValue + TotalPartsValue;
+    return aggregatedValue;
+  }
+
   return (
     <div className="" style={{ marginTop: "" }}>
+      <h1>{"     "}</h1>
       <h5 className="text-dark">LABOUR & REPAIRS :</h5>
       <table style={{ width: "100%" }}>
         <tr>
@@ -73,6 +93,7 @@ const LabourRepairsDetails = ({ allInfo }) => {
           <>
             {noGST?.map((labour, index) => {
               return labour.LabourIsActive === 1 &&
+                labour.isImt === 1 &&
                 String(labour.JobType) === "0" ? (
                 <tr>
                   <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -118,7 +139,9 @@ const LabourRepairsDetails = ({ allInfo }) => {
               </td>
             </tr>
             {allGST?.map((labour, index) => {
-              return labour.LabourIsActive === 1 && labour.JobType === 1 ? (
+              return labour.LabourIsActive === 1 &&
+                Number(labour.IsImt) === 1 &&
+                labour.JobType === 1 ? (
                 <tr>
                   <td
                     style={{ border: "1px solid black", padding: "5px" }}
@@ -217,15 +240,15 @@ const LabourRepairsDetails = ({ allInfo }) => {
             }}
           >
             Add : GST on ₹{" "}
-            { addCommasToNumber(
+            {addCommasToNumber(
               roundOff(
                 getTotalLabourAssessedSum(allInfo) -
                   (String(allInfo?.otherInfo[0]?.PolicyType) === "Regular"
                     ? calculateLabourDepreciations(allInfo)
                     : 0)
               )
-            ) }{" "}
-            @ { isGstApplied(allInfo).applied ? isGstApplied(allInfo).gstValue : 0}% : <br />
+            )}{" "}
+            @ 18.00% : <br />
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>0</td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
@@ -250,20 +273,27 @@ const LabourRepairsDetails = ({ allInfo }) => {
             {addCommasToNumber(Math.round(getTotalLabourEstimate(allInfo)))}
           </td>
           <td style={{ border: "1px solid black", padding: "5px" }}>
-            {addCommasToNumber(
-              Math.round(
-                getTotalLabourAssessedSum(allInfo) -
-                  (String(allInfo?.otherInfo[0]?.PolicyType) === "Regular"
-                    ? calculateLabourDepreciations(allInfo)
-                    : 0) +
-                  getTotalLabourAssessedGSTValuess(allInfo)
-              )
-            )}
+            {addCommasToNumber(Math.round(totalIMTValue))}
           </td>
         </tr>
       </table>
+
+      <div style={{margin: "20px",display:"flex",flexDirection:"column"}}>
+        <div style={{display:"flex",padding:"6px",justifyContent:"end"}}>
+          <span style={{fontSize:"14px",fontWeight:"bold"}}>Total (Parts & Labour) :</span>
+          <span style={{ fontSize:"14px",fontWeight:"bold",borderBottom: "2px solid black",paddingLeft:"16px",paddingRight:"16px",paddingBottom:"4px"}}>Rs. {addCommasToNumber(roundOff(calculateTotalImt()))}</span>
+        </div>
+        <div style={{display:"flex",padding:"6px",justifyContent:"end"}}>
+          <span >Additional Deduction on Endorsement @ 50% :</span>
+          <span style={{borderBottom: "2px solid black",paddingLeft:"16px",paddingRight:"16px",paddingBottom:"4px"}}>Rs. {addCommasToNumber(roundOff(calculateTotalImt()/2))}</span>
+        </div>
+        <div style={{display:"flex",padding:"6px",justifyContent:"end"}}>
+          <span style={{fontSize:"14px",fontWeight:"bold"}}>NET LIABILITY UNDER IMT 23 :</span>
+          <span style={{ fontSize:"14px",fontWeight:"bold",borderBottom: "2px double black",borderBottomStyle:"double",paddingLeft:"16px",paddingRight:"16px",paddingBottom:"4px"}}>Rs. {addCommasToNumber(roundOff(calculateTotalImt()/2))}</span>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default LabourRepairsDetails;
+export default LiabilityUnderImtLabour;

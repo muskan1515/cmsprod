@@ -110,7 +110,7 @@ const VehicleParticulars = ({ allInfo }) => {
             </span>
           </td>
         </tr>
-        <tr>
+        {/* <tr>
           <td style={{ width: "30%" }} className="text-start">
             <span>(h) Pre Accident Condition</span>
           </td>
@@ -120,10 +120,10 @@ const VehicleParticulars = ({ allInfo }) => {
           <td style={{ width: "45%" }} className="text-start">
             <span> {allInfo?.otherInfo[0]?.PreAccidentCondition}</span>
           </td>
-        </tr>
+        </tr> */}
         <tr>
           <td style={{ width: "30%" }} className="">
-            <span> (k) Seating Capacity</span>
+            <span> (h) Seating Capacity</span>
           </td>
           <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
@@ -134,7 +134,7 @@ const VehicleParticulars = ({ allInfo }) => {
         </tr>
         <tr>
           <td style={{ width: "30%" }} className="text-start">
-            <span>(l) Cubic Capacity </span>
+            <span>(I) Cubic Capacity </span>
           </td>
           <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
@@ -148,7 +148,7 @@ const VehicleParticulars = ({ allInfo }) => {
         </tr>
         <tr>
           <td style={{ width: "30%" }} className="text-start">
-            <span>(m) Tax particulars</span>
+            <span>(k) Tax particulars</span>
           </td>
           <td style={{ width: "5%" }} className="text-start">
             <span>:</span>
@@ -160,7 +160,7 @@ const VehicleParticulars = ({ allInfo }) => {
         {allInfo?.otherInfo[0]?.commercial_status ? (
           <tr>
             <td style={{ width: "36%" }} className="text-start">
-              <span>(n) Fitness Certificate Number </span>
+              <span>(l) Fitness Certificate Number </span>
             </td>
             <td style={{ width: "7%" }} className="text-start">
               <span>:</span>
@@ -198,7 +198,7 @@ const VehicleParticulars = ({ allInfo }) => {
         {allInfo?.otherInfo[0]?.commercial_status ? (
           <tr>
             <td style={{ width: "36%" }} className="text-start">
-              <span>(o) Permit Number </span>
+              <span>(m) Permit Number </span>
             </td>
             <td style={{ width: "7%" }} className="text-start">
               <span>:</span>
@@ -248,7 +248,7 @@ const VehicleParticulars = ({ allInfo }) => {
         {allInfo?.otherInfo[0]?.commercial_status ? (
           <tr>
             <td style={{ width: "36%" }} className="text-start">
-              <span>(p) Type Of Permit </span>
+              <span>(n) Type Of Permit </span>
             </td>
             <td style={{ width: "7%" }} className="text-start">
               <span>:</span>
@@ -266,7 +266,7 @@ const VehicleParticulars = ({ allInfo }) => {
         {allInfo?.otherInfo[0]?.commercial_status ? (
           <tr>
             <td style={{ width: "36%" }} className="text-start">
-              <span>(q) Authorization / validity </span>
+              <span>(o) Authorization / validity </span>
             </td>
             <td style={{ width: "7%" }} className="text-start">
               <span>:</span>
@@ -281,7 +281,7 @@ const VehicleParticulars = ({ allInfo }) => {
         {allInfo?.otherInfo[0]?.commercial_status ? (
           <tr>
             <td style={{ width: "36%" }} className="text-start">
-              <span> (r) Route / Areas of Operation</span>
+              <span> (p) Route / Areas of Operation</span>
             </td>
             <td style={{ width: "7%" }} className="text-start">
               <span>:</span>
@@ -296,7 +296,7 @@ const VehicleParticulars = ({ allInfo }) => {
         {allInfo?.otherInfo[0]?.commercial_status ? (
           <tr>
             <td style={{ width: "36%" }} className="text-start">
-              <span> (t) Commercial Remark</span>
+              <span> (q) Commercial Remark</span>
             </td>
             <td style={{ width: "7%" }} className="text-start">
               <span>:</span>
