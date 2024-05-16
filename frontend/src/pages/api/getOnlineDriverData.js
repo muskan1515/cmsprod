@@ -31,7 +31,7 @@ async function handler(request, response) {
       console.error(statusCode, axiosError.message); 
       return response.status(statusCode).json({ error: axiosError.message });
     } else {
-      return response.status(500).json({ error: "Internal Server Error" });
+      return response.status(500).json({ err });
     }
   }
 }

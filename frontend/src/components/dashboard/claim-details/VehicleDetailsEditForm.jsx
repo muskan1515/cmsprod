@@ -239,7 +239,7 @@ const VehicleDetailsEditForm = ({
               .catch((err) => {
                 console.log(err);
                 toast.dismiss();
-                toast.error("Record Not found or Server Error");
+                toast.error(err.response.data);
               });
           } catch (error) {
             toast.error("Record Not found or Server Error");

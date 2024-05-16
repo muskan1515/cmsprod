@@ -57,7 +57,7 @@ const rcDetailsUpdated = {
   "Date Of Birth": addDefaultValue(DriverDetails?.DateOfBirth),
   "Blood Group": addDefaultValue(DriverDetails?.BloodGroup),
   "Gender": addDefaultValue(DriverDetails?.Gender),
-  "Issuing Authority": addDefaultValue(DriverDetails?.RtoName),
+  "Issuing Authority": addDefaultValue(DriverDetails?.IssuingAuthority),
   "License Number": addDefaultValue(DriverDetails?.LicenseNumber),
   "License Type": addDefaultValue(DriverDetails?.LicenseType),
   // "Badge Number": addDefaultValue(DriverDetails?.BadgeNumber),

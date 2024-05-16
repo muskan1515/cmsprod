@@ -287,7 +287,7 @@ const getOnlineVehicleData = (req, res) => {
       for LeadID : ${leadId} on ${new Date()}------------`);
       console.log(Err.response.data);
       console.log("-------------------------------------");
-      return res.status(500).send("Internal Server Error");
+      return res.status(500).send("Record Not Found!!");
     });
 };
 
