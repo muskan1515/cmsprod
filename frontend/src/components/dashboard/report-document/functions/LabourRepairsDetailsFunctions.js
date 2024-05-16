@@ -1,11 +1,14 @@
 const calculateLabourDepreciations = (allInfo) => {
   let totalDep = 0;
   allInfo?.labourDetails?.map((labour, index) => {
+    
     if (String(labour.JobType) === "1" && labour.LabourIsActive) {
       const dep = Number(Number(labour.Assessed) * 12.5) / 100;
-      totalDep = Number(totalDep) + Number(dep);
+     
+      totalDep += Number(dep);
     }
   });
+  
   return totalDep;
 };
 

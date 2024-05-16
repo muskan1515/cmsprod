@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { numberToWords } from "number-to-words";
-import {calculateGSTWholeSectionVauesWithGST2,
+import {
+  calculateGSTWholeSectionVauesWithGST2,
   calculateGSTWholeSectionGST2,
   addCommasToNumber,
   getTotalDepreciationValueOnly,
@@ -13,11 +14,12 @@ import {calculateGSTWholeSectionVauesWithGST2,
   addVariables,
   getTotalLabourAssessed2,
   getGSTSummaryLabourDetails,
-  roundOff} from './functions/GSTSummaryFunctions'
+  roundOff,
+} from "./functions/GSTSummaryFunctions";
 
-  import { getSummaryTotalWithLessSalvage } from "./functions/SummaryOfAssessmentFunctions";
+import { getSummaryTotalWithLessSalvage } from "./functions/SummaryOfAssessmentFunctions";
 
-const GSTSummary = ({ totalIMTLabourValue,totalIMTNewPartValue,allInfo }) => {
+const GSTSummary = ({ totalIMTLabourValue, totalIMTNewPartValue, allInfo }) => {
   const pdfRef = useRef();
 
   const [allGST, setGST] = useState([]);
@@ -32,15 +34,15 @@ const GSTSummary = ({ totalIMTLabourValue,totalIMTNewPartValue,allInfo }) => {
   const [splitText, setSplitText] = useState([]);
 
   const text = convertToProperHTML(
-    addVariables(allInfo,allInfo?.summaryReport[0]?.SummaryNotes)
+    addVariables(allInfo, allInfo?.summaryReport[0]?.SummaryNotes)
   );
 
-  const [totalValue,setTotalValue] = useState(0);
+  const [totalValue, setTotalValue] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     const sum = Number(totalIMTLabourValue) + Number(totalIMTNewPartValue);
-    setTotalValue(sum/2);
-  },[totalIMTLabourValue,totalIMTNewPartValue])
+    setTotalValue(sum / 2);
+  }, [totalIMTLabourValue, totalIMTNewPartValue]);
 
   useEffect(() => {
     let array = [];
@@ -108,8 +110,8 @@ const GSTSummary = ({ totalIMTLabourValue,totalIMTNewPartValue,allInfo }) => {
                   getTotalNonMetaDepreciationValueOnly(allInfo) +
                   calculateLabourDepreciations(allInfo)
               )
-            ) } %
-            ) is not deducted being{" "}
+            )}{" "}
+            % ) is not deducted being{" "}
             <span style={{ fontWeight: "bold" }}>NIL DEPRECIATION</span> policy.
           </h5>
         )}
@@ -622,12 +624,32 @@ const GSTSummary = ({ totalIMTLabourValue,totalIMTNewPartValue,allInfo }) => {
           policy of insurance works out to{" "}
           <b>
             ₹{" "}
-            {addCommasToNumber(
+            {/* {addCommasToNumber(
               Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage) + totalValue)
+            )}{" "} */}
+            {addCommasToNumber(
+              Math.round(
+                getSummaryTotalWithLessSalvage(
+                  allInfo,
+                  lessExcess,
+                  lessSalvage
+                ) 
+              )
             )}{" "}
             <br /> (
-            {numberToWords
+            {/* {numberToWords
               .toWords(Math.round(getSummaryTotalWithLessSalvage(allInfo,lessExcess,lessSalvage)) + totalValue)
+              .toUpperCase()} */}
+            {numberToWords
+              .toWords(
+                Math.round(
+                  getSummaryTotalWithLessSalvage(
+                    allInfo,
+                    lessExcess,
+                    lessSalvage
+                  )
+                ) 
+              )
               .toUpperCase()}
             ){" "}
           </b>{" "}

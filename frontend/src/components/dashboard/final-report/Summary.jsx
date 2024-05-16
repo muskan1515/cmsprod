@@ -11,6 +11,7 @@ import axios from "axios";
 const Summary = ({
   isEditMode,
   allLabour,
+  currentGst,
   metaldepPct,
   ageOfVehicleTotal,
   claim,
@@ -205,36 +206,34 @@ const Summary = ({
   };
 
   const getImtAmount = ()=>{
-    let totalAmount = 0;
-    console.log("getImtAmount",allLabour,allNewParts)
+    let totalAmount = 0,totalAmount2=0;
     allNewParts.map((part,index)=>{
-      if(part.isActive && part.IsImt === 1){
+      if(part.IsActive && part.IsImt === 1){
         const totalAssess = Number(part.Assessed) * Number(part.QA);
         const depreciation =
-          (Number(totalAssess) * Number(part.DepreciationPct)) / 100;
-        const gst =
-          part.WithTax === 1 || part.WithTax === 2
-            ? ((totalAssess - depreciation) * Number(part.GSTPct)) / 100
-            : 0;
+        String(claim?.claimDetails?.PolicyType).toLowerCase().includes("regular")
+        ?  (Number(totalAssess) * Number(part.DepreciationPct)) / 100 : 0;
+        const gst =((totalAssess - depreciation) * Number(part.GSTPct)) / 100;
   
-        totalAmount += (totalAssess - depreciation + gst)/2;
+        totalAmount += Number((totalAssess - depreciation) + gst);
       }
-    });
+    })
     allLabour.map((part,index)=>{
-      if(part.isActive && part?.IsImt){
-        const totalAssess = Number(part.Assessed) ;
+      if(part.isActive && part?.imt){
+        const totalAssess = Number(part.assessed) ;
         const depreciation =
-          String(part.JobType) === "1" ?
+          String(part.type) === "1" ?
           (Number(totalAssess) * Number(12.5)) / 100 : 0;
         const gst =
-          Number((part.IsGSTIncluded) % 2) === 1 
-            ? ((totalAssess - depreciation) * Number(part.GSTPct)) / 100
+          (Number(part.gst) % 2) === 1 
+            ? ((totalAssess - depreciation) * Number(currentGst)) / 100
             : 0;
   
-        totalAmount += (totalAssess - depreciation + gst)/2;
+        totalAmount2 += Number(((totalAssess - depreciation) + gst));
       }
     });
-    return totalAmount;
+    
+    return (totalAmount + totalAmount2) / 2;
   }
 
   const getNewpartAssessedTotalWithoutDepWithGST = () => {
@@ -844,9 +843,6 @@ const Summary = ({
                     className="form-control"
                     id="propertyTitle"
                     readOnly={!isEdit}
-                    // placeholder="Enter Registration No."
-                    // value={!RemarkOnSalvage || !RemarkOnSalvage == 'undefined'  ? RemarkOnSalvage : "This is a metal salvage depreciation %"}
-
                     value={RemarkOnSalvage}
                     onChange={(e) => setRemarkOnSalvage(e.target.value)}
                     placeholder="This is a metal salvage depreciation %"
@@ -857,7 +853,6 @@ const Summary = ({
           </div>
           <div className="row">
             <hr />
-            {/* <hr /> */}
           </div>
           <div className="row">
             <div className="col-lg-8 text-end">
@@ -884,7 +879,7 @@ const Summary = ({
                     id="propertyTitle"
                     readOnly={!isEdit}
                     value={addCommasToNumber(roundOff(DepreciationValue))}
-                    // placeholder="Enter Registration No."
+                    
                   />
                 </div>
               </div>
@@ -922,13 +917,13 @@ const Summary = ({
                         (ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0)
                     ))}
                     readOnly={!isEdit}
-                    // placeholder="Enter Registration No."
+                    
                   />
                 </div>
               </div>
             </div>
           </div>
-          {/* <div className="row">
+           {/* <div className="row">
             <div className="col-lg-6">
               {claim?.claimDetails?.IMT ? <div className="row">
                 <div className="col-lg-5 text-end">
@@ -987,12 +982,12 @@ const Summary = ({
                         className="form-control"
                         id="propertyTitle"
                         value={roundOff(
-                          Number(totalLabrorAssessed) +
+                          (Number(totalLabrorAssessed) +
                             getNewpartAssessedTotalWithDepWithGST() -
                             (LessExcess ? LessExcess : 0) -
                             (LessImposed ? LessImposed : 0) +
                             (Other ? Other : 0) -
-                            (ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0)
+                            (ExpectedSalvage !== "NaN" ? ExpectedSalvage : 0)) + getImtAmount()
                         )}
                         readOnly={!isEdit}
                         // placeholder="Enter Registration No."
@@ -1002,13 +997,12 @@ const Summary = ({
                 </div>
               </div>
             </div> : ""}
-          </div> */}
+          </div>  */}
         </div>
         <div className="col-lg-5">
           <div className="row">
             <div className="col-lg-6">
               <h4>Notes :</h4>
-              {/* <hr /> */}
             </div>
             <div className="col-lg-6 text-end" style={{ marginTop: "-20px" }}>
               {!isEdit
@@ -1043,10 +1037,7 @@ const Summary = ({
                     </>
                   )}
 
-              {/* <button className="btn btn-color m-1">Add</button> */}
-              {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
-            Modify
-          </button> */}
+              
             </div>
             <div className="col-lg-12">
               <div className="row mt-1 mb-1">
