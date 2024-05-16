@@ -6,6 +6,7 @@ async function handler(request, response) {
     const domain = process.env.BACKEND_DOMAIN;
 
     const dl_number =  request.query.dl_number;
+    const dob = request.query.dob;
     const leadId = request.query.leadId;
 
     const vehicle_data = await axios.get(`${domain}/driverDetails/getOnlineDriverDetails`, {
@@ -15,6 +16,7 @@ async function handler(request, response) {
       },
       params:{
         dl_number:dl_number,
+        dob:dob,
         leadId:leadId
       }
     });
