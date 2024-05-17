@@ -125,7 +125,7 @@ const DriverDetailsEditForm = ({
           .catch((err) => {
             toast.dismiss();
             console.log("drivererrorr",err,err.response.data)
-            toast.error(err.response.data);
+            toast.error("Record Not Found or Issue from server Side.");
           });
         setFinalDisable(false);
       }
