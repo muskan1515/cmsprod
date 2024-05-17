@@ -17,8 +17,8 @@ const nextConfig = {
   env: {
     //  BACKEND_DOMAIN: "https://cmsprod.onrender.com",
     // BACKEND_DOMAIN: "http://localhost:3006",
-    // BACKEND_DOMAIN: "http://13.126.213.200:3006",
-    BACKEND_DOMAIN: "https://cmsproduction.onrender.com",
+    BACKEND_DOMAIN: "http://13.126.213.200:3006",
+    // BACKEND_DOMAIN: "https://cmsproduction.onrender.com",
 
     CRYPTO_SECRET_KEY: "gjfdkhslbreif847593rewfdkjbcm34woebkdjcnx43oihefdkcnx",
     COOKIE_PASSWORD: "ierfkgj439802vfckdh5438909endck",
