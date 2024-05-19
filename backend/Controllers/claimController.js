@@ -440,6 +440,7 @@ const getSpecificClaim = async (req, res) => {
         TaxParticulars,
         TypeOfVerification,
         VehicleClassDescription,
+        ApiResponse,
         LeadId
          FROM VehicleDetailsOnline WHERE LeadId=?`,
       [leadId]
@@ -461,7 +462,8 @@ const getSpecificClaim = async (req, res) => {
         IssuingAuthority,
         BadgeNumber,
         Remark,
-        LicenseType
+        LicenseType,
+        ApiResponse
         FROM DriverDetailsOnline WHERE LeadID=?`,
       [leadId]
     );
@@ -514,6 +516,7 @@ const getSpecificClaim = async (req, res) => {
         AddedBy,
         VehicleClassDescription,
         LeadID
+
         FROM VehicleDetails WHERE LeadID=?`,
       [leadId]
     );

@@ -390,35 +390,7 @@ const VehicleDetailsViewForm = ({
               </tr>
 
               <tr>
-                {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
-                  <div className="row">
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Class Of Vehicle
-                    </label>
-                    <label
-                      htmlFor=""
-                      className="col-lg-6 text-color text-end"
-                      style={{
-                        color: "#1560bd",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {claim?.vehicleDetails?.VehicleClassDescription &&
-                      claim?.vehicleDetails?.VehicleClassDescription !== "null"
-                        ? claim?.vehicleDetails?.VehicleClassDescription
-                        : ""}
-                    </label>
-                  </div>
-                </td>
+                
 
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
@@ -447,7 +419,7 @@ const VehicleDetailsViewForm = ({
                         : ""}
                     </label>
                   </div>
-                </td> */}
+                </td> 
                 <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
@@ -503,7 +475,7 @@ const VehicleDetailsViewForm = ({
                     </label>
                   </div>
                 </td>
-                <td style={{ border: "1px solid grey", padding: "3px" }}>
+                {/* <td style={{ border: "1px solid grey", padding: "3px" }}>
                   <div className="row">
                     <label
                       htmlFor=""
@@ -531,7 +503,7 @@ const VehicleDetailsViewForm = ({
                         : ""}
                     </label>
                   </div>
-                </td>
+                </td> */}
               </tr>
 
               <tr>
@@ -612,6 +584,37 @@ const VehicleDetailsViewForm = ({
                       }}
                     >
                       {claim?.vehicleDetails?.VehicleBlackListStatus}
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+              <td style={{ border: "1px solid grey", padding: "3px" }}>
+                  <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Class Of Vehicle
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-6 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.vehicleDetails?.ClassOfVehicle &&
+                      claim?.vehicleDetails?.ClassOfVehicle !== "null"
+                        ? claim?.vehicleDetails?.ClassOfVehicle
+                        : ""}
                     </label>
                   </div>
                 </td>

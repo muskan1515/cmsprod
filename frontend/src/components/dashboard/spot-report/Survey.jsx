@@ -5,7 +5,12 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Calendar } from "primereact/calendar";
 // import RichTextEditor, { createEmptyValue } from "./RichTextEditor";
 import { Editor } from "primereact/editor";
-import { AccidentContent, AssessmentContent, addVariables, otherContent } from "./Content";
+import {
+  AccidentContent,
+  AssessmentContent,
+  addVariables,
+  otherContent,
+} from "./Content";
 import {
   calculateDepreciationsPercenatge,
   getMonthsDifference,
@@ -15,7 +20,6 @@ import getTime from "date-fns/getTime";
 import MyDatePickerTime from "../../common/MyDatePickerTime";
 import TimePicker from "../../common/TimePicker";
 import ReactEditor from "../../common/TextEditor";
-import toast from "react-hot-toast";
 
 const Servey = ({
   phoneNumber,
@@ -146,47 +150,21 @@ const Servey = ({
   SaveHandler,
   claim,
 }) => {
-
-
-  const [hide,setHide] = useState(false);
-  
-  const handleChangeAccidentDate = (value) =>{
-    const newDate = new Date(value);
-    const policyStartDate = new Date(claim?.claimDetails?.PolicyPeriodStart);
-    const policyEndDate = new Date(claim?.claimDetails?.PolicyPeriodEnd);
-
-    if((policyStartDate <= newDate && newDate <= policyEndDate) || newDate === ""){
-      setAccidentAddedDateTime((value));
-    }
-    else if (policyStartDate > newDate) {
-      toast.error("Update failed: The new accident date is before the policy start date.");
-    } else if (policyEndDate < newDate) {
-      toast.error("Update failed: The new accident date is after the policy end date.");
-    }
-  }
-
-  const handleChangeSurveyDate = (value) =>{
-    const newSurveyDate = new Date(value);
-    const intimationDate = new Date(claim?.claimDetails?.AddedDateTime);
-
-    if(intimationDate <= newSurveyDate || InspectionDate === ""){
-      setInspectionDate((value));
-    }
-    else {
-      toast.error("Update failed: The new survey allotment date is before the mentioned intimation date.");
-    } 
-  }
+  const [hide, setHide] = useState(false);
   const formatDate = (dateString) => {
     const options = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     };
 
-    const dateParts = new Date(dateString).toLocaleDateString("en-GB", options).split('/');
-    const formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
+    const dateParts = new Date(dateString)
+      .toLocaleDateString("en-GB", options)
+      .split("/");
+    const formattedDate =
+      dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2];
     return formattedDate;
-};
+  };
   function isvaliddate(date) {
     return (
       date !== null &&
@@ -236,16 +214,15 @@ const Servey = ({
   function convertHtmlToString(htmlString) {
     // Create a new DOMParser
     const parser = new DOMParser();
-  
+
     // Parse the HTML string
-    const doc = parser.parseFromString(htmlString, 'text/html');
-  
+    const doc = parser.parseFromString(htmlString, "text/html");
+
     // Extract the text content from the parsed document
     const plainText = doc.body.textContent || "";
-  
+
     return plainText;
   }
-  
 
   useEffect(() => {
     const accident = AccidentContent(claim?.driverDetails?.DriverName);
@@ -255,16 +232,16 @@ const Servey = ({
       claim?.accidentDetails?.DateOfAccident,
       claim?.accidentDetails?.PlaceOfLoss
     );
-    
+
     const other = otherContent();
-    console.log("assessment",assessment)
-    setCauseOfAccident(CauseOfAccident ? (CauseOfAccident) : accident);
-    setAssessment(Assessment ? (Assessment) : assessment);
-    setThirdPartyLoss(ThirdPartyLoss ? (ThirdPartyLoss) : other);
-    setPoliceAction(PoliceAction ? (PoliceAction) : other);
-    setDetailsOfLoads(DetailsOfLoads ? (DetailsOfLoads) : other);
+    console.log("assessment", assessment);
+    setCauseOfAccident(CauseOfAccident ? CauseOfAccident : accident);
+    setAssessment(Assessment ? Assessment : assessment);
+    setThirdPartyLoss(ThirdPartyLoss ? ThirdPartyLoss : other);
+    setPoliceAction(PoliceAction ? PoliceAction : other);
+    setDetailsOfLoads(DetailsOfLoads ? DetailsOfLoads : other);
   }, [CauseOfAccident]);
-   
+
   const calculateVehicleAge = () => {
     if (
       !claim.vehicleDetails?.DateOfRegistration ||
@@ -380,7 +357,7 @@ const Servey = ({
   const editHandler = () => {
     setIsEditMode(true);
   };
- 
+  console.log("AccidentAddedDateTime", AccidentAddedDateTime);
   return (
     <>
       <div className="row">
@@ -419,14 +396,22 @@ const Servey = ({
                     <input
                       type="date"
                       disabled={!isEditMode}
-                      value={
-                        localDate(AccidentAddedDateTime) 
-                      }
-                      // onChange={(e) => handleChangeAccidentDate(e.target.value)}
+                      value={localDate(AccidentAddedDateTime)}
                       onChange={(e) => setAccidentAddedDateTime(e.target.value)}
                     />
                   )}
-                 
+                  {/*<input
+                  type={isEditMode ? "datetime-local" : "text"}
+                className="form-control"
+                id="formGroupExampleInput3"
+                onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
+                value={isEditMode? AccidentAddedDateTime : formatDate(AccidentAddedDateTime)}
+                placeholder="MM-DD-YYYY"
+                min={AccidentAddedDateTime}
+                  
+                  readonly={!isEditMode}
+             
+                  /> */}
                 </div>
               </div>
             </div>
@@ -457,9 +442,9 @@ const Servey = ({
                 </div>
               </div>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-12">
               <div className="row">
-                <div className="col-lg-5 my_profile_setting_input form-group text-end">
+                <div className="col-lg-3 my_profile_setting_input form-group text-end">
                   <label
                     htmlFor=""
                     className="text-color mt-2"
@@ -470,7 +455,7 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Place of Accident
+                    Place of Accident / Survey
                   </label>
                 </div>
                 <div className="col-lg-7" style={{ marginRight: "-10px" }}>
@@ -490,7 +475,7 @@ const Servey = ({
           <input type="text" className="form-control" id="propertyTitle" />
         </div> */}
             </div>
-            <div className="col-lg-5">
+            <div className="col-lg-12">
               <div className="row">
                 <div className="col-lg-3 my_profile_setting_input form-group text-end">
                   <label
@@ -503,7 +488,7 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Pin
+                    Vehicle Shifted To :
                   </label>
                 </div>
                 <div className="col-lg-9">
@@ -536,7 +521,7 @@ const Servey = ({
                       // marginTop: "-13px",
                     }}
                   >
-                    Place of Survey
+                    Person Available on Spot :
                   </label>
                 </div>
                 <div className="col-lg-9">
@@ -560,7 +545,7 @@ const Servey = ({
           <hr />
 
           <div className="col-lg-12">
-            <h4>Survey Details :</h4>
+            <h4>Survey Receipt Details :</h4>
             <hr />
           </div>
           <div className="row">
@@ -581,12 +566,24 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-5">
-                 
+                  {/* <input
+              type="date"
+              className="form-control"
+              id="propertyTitle"
+            /> */}
+                  {/*<input
+                  type={isEditMode ? "date" : "text"}
+                    readonly={!isEditMode}
+
+                   value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
+          onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
                   <input
                     readOnly={!isEditMode}
                     type={"text"}
                     value={
-                      SurveyAllotmentDate ? formatDateUpdated(SurveyAllotmentDate) : ""
+                      SurveyAllotmentDate
+                        ? formatDateUpdated(SurveyAllotmentDate)
+                        : ""
                     }
                     className="form-control"
                     id="propertyTitle"
@@ -621,7 +618,6 @@ const Servey = ({
                         ? InspectionDate
                         : ""
                     }
-                    // onChange={(e) => handleChangeSurveyDate(e.target.value)}
                     onChange={(e) => setInspectionDate(e.target.value)}
                   />
                   {/* <span className="flaticon-calendar m-1 text-dark"></span> */}
@@ -640,31 +636,50 @@ const Servey = ({
                     paddingTop: "5px",
                     color: "#2e008b",
                     fontSize: "14px",
-                    // marginTop: "-13px",
+                    marginRight: "13px",
                   }}
                 >
-                  Spot Survey Recieved :
+                  CD's :
                 </label>
+                <input
+                  type="radio"
+                  id="huey"
+                  name="drone"
+                  value="huey"
+                  checked
+                />
+                <label
+                  htmlFor=""
+                  className="text-color"
+                  style={{
+                    paddingTop: "5px",
+                    color: "#2e008b",
+                    fontSize: "14px",
+                    marginRight: "13px",
+                    marginLeft: "13px",
+                  }}
+                >
+                  Photos :
+                </label>
+                <input
+                  type="radio"
+                  id="huey"
+                  name="drone"
+                  value="huey"
+                  checked
+                />
               </div>
               <div className="col-lg-8">
-                {/*} <input
-                type={isEditMode ? "date" : "text"}
-                readonly={!isEditMode}
-                value={ isEditMode ? SurveyConductedDate : formatDate(SurveyConductedDate)}
-                onChange={(e)=>setSurveyConductedDate(e.target.value)}
-                // placeholder="Enter Registration No."
-                />*/}
-
                 <input
-                  readOnly={!isEditMode}
+                  // readOnly={!isEditMode}
                   type="text"
-                  placeholder="Not conducted, As stated by insured"
-                  value={
-                    SurveyConductedDate && SurveyConductedDate !== "null"
-                      ? SurveyConductedDate
-                      : ""
-                  }
-                  onChange={(e) => setSurveyConductedDate(e.target.value)}
+                  placeholder=""
+                  // value={
+                  //   SurveyConductedDate && SurveyConductedDate !== "null"
+                  //     ? SurveyConductedDate
+                  //     : ""
+                  // }
+                  // onChange={(e) => setSurveyConductedDate(e.target.value)}
                 />
               </div>
             </div>
@@ -683,7 +698,8 @@ const Servey = ({
                 <ReactEditor
                   readOnly={!isEditMode}
                   index={1}
-                  editorContent={addVariables(claim,
+                  editorContent={addVariables(
+                    claim,
                     CauseOfAccident,
                     claim?.claimDetails?.ClaimServicingOffice,
                     SurveyAllotmentDate,
@@ -693,7 +709,7 @@ const Servey = ({
                     VehicleChassisNumber,
                     PolicyNumber,
                     AccidentTime
-                    )}
+                  )}
                   setEditorContent={setCauseOfAccident}
                 />
               </div>
@@ -734,7 +750,8 @@ const Servey = ({
               <ReactEditor
                 index={3}
                 readOnly={!isEditMode}
-                editorContent={addVariables(claim,
+                editorContent={addVariables(
+                  claim,
                   PoliceAction,
                   claim?.claimDetails?.ClaimServicingOffice,
                   SurveyAllotmentDate,
@@ -743,20 +760,57 @@ const Servey = ({
                   DriverName,
                   VehicleChassisNumber,
                   PolicyNumber,
-                  AccidentTime)}
+                  AccidentTime
+                )}
                 setEditorContent={setPoliceAction}
               />
+            </div>
+            <div className="row mt-1">
+              <div className="col-lg-3 my_profile_setting_input form-group text-end">
+                <label
+                  htmlFor=""
+                  className="text-color mt-2"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontSize: "14px",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Name of Police Station :
+                </label>
+              </div>
+              <div className="col-lg-3">
+                <input type="text" className="form-control" />
+              </div>
+              <div className="col-lg-3 my_profile_setting_input form-group text-end">
+                <label
+                  htmlFor=""
+                  className="text-color mt-2"
+                  style={{
+                    // paddingTop: "15px",
+                    color: "#2e008b",
+                    fontSize: "14px",
+                    // marginTop: "-13px",
+                  }}
+                >
+                  Station Diary No. (FIR) :
+                </label>
+              </div>
+              <div className="col-lg-3">
+                <input type="text" className="form-control" />
+              </div>
             </div>
           </div>
         </div>
         <div className="col-lg-6">
           <div className="row">
             <div className="col-lg-6">
-              <h4>Details of Loads / Passenger :</h4>
+              <h4>Loads / Challan Details :</h4>
               <hr />
             </div>
             <div className="col-lg-6 text-end">
-              {isEditMode  && !disable ? (
+              {isEditMode && !disable ? (
                 <>
                   <button
                     className="btn btn-color m-1"
@@ -764,121 +818,306 @@ const Servey = ({
                   >
                     Cancel
                   </button>
-                  <button disabled={disable} className="btn btn-color m-1" 
-                  onClick={()=>{
-                    setHide(true)
-                    SaveHandler(setIsEditMode)
-                  }}>
+                  <button
+                    disabled={disable}
+                    className="btn btn-color m-1"
+                    onClick={() => {
+                      setHide(true);
+                      SaveHandler(setIsEditMode);
+                    }}
+                  >
                     Update
                   </button>
                 </>
               ) : (
-                 !hide && claim?.accidentDetails && <button className="btn btn-color m-1" onClick={editHandler}>
-                  Edit
-                </button>
+                !hide &&
+                claim?.accidentDetails && (
+                  <button className="btn btn-color m-1" onClick={editHandler}>
+                    Edit
+                  </button>
+                )
               )}
-              {/* <button className="btn btn-color m-1">Add</button> */}
-              {/* <button className="btn btn-color m-1" onClick={handleEditClick}>
-            Modify
-          </button> */}
             </div>
           </div>
           <div className="row">
-            <div className="">
-              <ReactEditor
-                index={9}
-                readOnly={!isEditMode}
-                editorContent={DetailsOfLoads}
-                setEditorContent={setDetailsOfLoads}
-              />
+            <div className="col-lg-6">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Nature of Goods :
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Weight of Goods Carried :
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Origin - Destination :
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    L/R Invoice No & Date :
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Transporter's Name :
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-12">
+              <div className="row mt-1 mb-1">
+                <div className="col-lg-12 my_profile_setting_input form-group">
+                  <label
+                    htmlFor=""
+                    className="text-color mb-0"
+                    style={{
+                      color: "#2e008b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    No of Passengers
+                  </label>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="propertyTitle"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="col-lg-12">{/** <Editor /> */}</div>
           <div className="col-lg-12 mt-3">
-            <h4>Third Party Loss / Injuries :</h4>
+            <h4>Third Party Loss & Injuries Details :</h4>
             <hr />
             <div className="">
-              <ReactEditor
-                index={4}
-                readOnly={!isEditMode}
-                editorContent={addVariables(claim,
-                  ThirdPartyLoss,
-                  claim?.claimDetails?.ClaimServicingOffice,
-                  SurveyAllotmentDate,
-                  claim?.accidentDetails?.DateOfAccident,
-                  PlaceOfLoss,
-                  DriverName,
-                  VehicleChassisNumber,
-                  PolicyNumber,
-                  AccidentTime)}
-                setEditorContent={setThirdPartyLoss}
-              />
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Nature of Goods :
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <textarea
+                      id="form_message"
+                      name="form_message"
+                      className="form-control required"
+                      rows="4"
+                      maxLength={2000}
+                      style={
+                        {
+                          // paddingTop: "15px",
+                          // paddingBottom: "15px",
+                          // backgroundColor: "#E8F0FE",
+                          // //color: "white",
+                        }
+                      }
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Weight of Goods Carried :
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <textarea
+                      id="form_message"
+                      name="form_message"
+                      className="form-control required"
+                      rows="4"
+                      maxLength={2000}
+                      style={
+                        {
+                          // paddingTop: "15px",
+                          // paddingBottom: "15px",
+                          // backgroundColor: "#E8F0FE",
+                          // //color: "white",
+                        }
+                      }
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Origin - Destination :
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <textarea
+                      id="form_message"
+                      name="form_message"
+                      className="form-control required"
+                      rows="4"
+                      maxLength={2000}
+                      style={
+                        {
+                          // paddingTop: "15px",
+                          // paddingBottom: "15px",
+                          // backgroundColor: "#E8F0FE",
+                          // //color: "white",
+                        }
+                      }
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="row mt-1 mb-1">
+                  <div className="col-lg-12 my_profile_setting_input form-group">
+                    <label
+                      htmlFor=""
+                      className="text-color mb-0"
+                      style={{
+                        color: "#2e008b",
+                        fontSize: "14px",
+                      }}
+                    >
+                      L/R Invoice No & Date :
+                    </label>
+                  </div>
+                  <div className="col-lg-12">
+                    <textarea
+                      id="form_message"
+                      name="form_message"
+                      className="form-control required"
+                      rows="4"
+                      maxLength={2000}
+                      style={
+                        {
+                          // paddingTop: "15px",
+                          // paddingBottom: "15px",
+                          // backgroundColor: "#E8F0FE",
+                          // //color: "white",
+                        }
+                      }
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="col-lg-12">{/** <Editor /> */}</div>
-          <div className="col-lg-12 mt-3">
-            <h4>Assesment :</h4>
-            <hr />
-            {/* <div className="row">
-              <RichTextEditor
-                value={value}
-                onChange={this._onChange}
-                className="react-rte-demo"
-                placeholder="Tell a story"
-                toolbarClassName="demo-toolbar"
-                editorClassName="demo-editor"
-                readOnly={this.state.readOnly}
-                blockStyleFn={getTextAlignClassName}
-                customControls={[
-                  // eslint-disable-next-line no-unused-vars
-                  (setValue, getValue, editorState) => {
-                    let choices = new Map([
-                      ["1", { label: "1" }],
-                      ["2", { label: "2" }],
-                      ["3", { label: "3" }],
-                    ]);
-                    return (
-                      <ButtonGroup key={1}>
-                        <Dropdown
-                          choices={choices}
-                          selectedKey={getValue("my-control-name")}
-                          onChange={(value) =>
-                            setValue("my-control-name", value)
-                          }
-                        />
-                      </ButtonGroup>
-                    );
-                  },
-                  <ButtonGroup key={2}>
-                    <IconButton
-                      label="Remove Link"
-                      iconName="remove-link"
-                      focusOnClick={false}
-                      onClick={() => console.log("You pressed a button")}
-                    />
-                  </ButtonGroup>,
-                ]}
-              />
-            </div> */}
-            <div className="">
-              <ReactEditor
-                index={5}
-                readOnly={!isEditMode}
-                editorContent={addVariables(claim,
-                  Assessment,
-                  claim?.claimDetails?.ClaimServicingOffice,
-                  SurveyAllotmentDate,
-                  AccidentAddedDateTime,
-                  PlaceOfLoss,
-                  DriverName,
-                  VehicleChassisNumber,
-                  PolicyNumber,
-                  AccidentTime)}
-                setEditorContent={setAssessment}
-              />
-            </div>
-          </div>
-          <div className="col-lg-12 mb-2">{/** <Editor /> */}</div>
         </div>
         <hr />
       </div>

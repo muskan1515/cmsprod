@@ -8,7 +8,6 @@ import {
   getMonthsDifference,
 } from "./functions";
 import { getExpandedData } from "./extractFunction";
-import toast from "react-hot-toast";
 
 const headCells = [
   {
@@ -23,79 +22,78 @@ const headCells = [
     label: "#",
     width: 10,
   },
+  // {
+  //   id: "dep",
+  //   numeric: false,
+  //   label: "Dep%",
+  //   width: 50,
+  // },
   {
-    id: "dep",
+    id: "headings",
     numeric: false,
-    label: "Dep%",
-    width: 50,
-  },
-  {
-    id: "item_name",
-    numeric: false,
-    label: "Item Name",
+    label: "Headings",
     width: 250,
   },
+  // {
+  //   id: "hsh_code",
+  //   numeric: false,
+  //   label: "HSH Code",
+  //   width: 80,
+  // },
   {
-    id: "hsh_code",
+    id: "description",
     numeric: false,
-    label: "HSH Code",
-    width: 80,
-  },
-  {
-    id: "remark",
-    numeric: false,
-    label: "Remark",
+    label: "Description",
     width: 120,
   },
-  {
-    id: "estimate",
-    numeric: false,
-    label: "Estimate",
-    width: 100,
-  },
-  {
-    id: "assessed",
-    numeric: false,
-    label: "Assessed",
-    width: 100,
-  },
-  {
-    id: "qe",
-    numeric: false,
-    label: "QE",
-    width: 50,
-  },
-  {
-    id: "qa",
-    numeric: false,
-    label: "QA",
-    width: 50,
-  },
-  {
-    id: "bill_sr",
-    numeric: false,
-    label: "Bill Sr.",
-    width: 70,
-  },
-  {
-    id: "gst",
-    numeric: false,
-    label: "GST%",
-    width: 60,
-  },
-  {
-    id: "total",
-    numeric: false,
-    label: "Total",
-    width: 100,
-  },
-  {
-    id: "type",
-    numeric: false,
-    label: "Type",
-    width: 100,
-  },
-  
+  // {
+  //   id: "estimate",
+  //   numeric: false,
+  //   label: "Estimate",
+  //   width: 100,
+  // },
+  // {
+  //   id: "assessed",
+  //   numeric: false,
+  //   label: "Assessed",
+  //   width: 100,
+  // },
+  // {
+  //   id: "qe",
+  //   numeric: false,
+  //   label: "QE",
+  //   width: 50,
+  // },
+  // {
+  //   id: "qa",
+  //   numeric: false,
+  //   label: "QA",
+  //   width: 50,
+  // },
+  // {
+  //   id: "bill_sr",
+  //   numeric: false,
+  //   label: "Bill Sr.",
+  //   width: 70,
+  // },
+  // {
+  //   id: "gst",
+  //   numeric: false,
+  //   label: "GST%",
+  //   width: 60,
+  // },
+  // {
+  //   id: "total",
+  //   numeric: false,
+  //   label: "Total",
+  //   width: 100,
+  // },
+  // {
+  //   id: "type",
+  //   numeric: false,
+  //   label: "Type",
+  //   width: 100,
+  // },
 ];
 
 export default function Exemple_01({
@@ -104,42 +102,41 @@ export default function Exemple_01({
   disable,
   settotalMetalRows,
   setallNewParts,
+  allNewParts,
   DateOfRegistration,
   setOverallMetailDep,
+  setTotalAgeOfVehicle,
+  includeDepreciation,
   allDepreciations,
   setAllDepreciations,
+  ClaimAddedDateTime,
+  LeadId,
   AccidentAddedDateTime,
+  PolicyStartDate,
+  VehicleAddedDate,
 
   setMetalSalvageValue,
   DateRegistration,
+  ageOfVehicleTotal,
+  metaldepPct,
+  totalPartsEstimate,
+  totalLabrorEstimate,
+  totalPartsAssessed,
+  totalLabrorAssessed,
+
   setTotalPartsEstimate,
+  setTotalLabrorEstimate,
+  setTotalLabrorAssessed,
   setTotalPartsAssessed,
 }) {
   const [updatedCode, setUpdatedCode] = useState([]);
 
-  const [tableHeaders,setTableHeaders] = useState([headCells]);
   const [totalEstimate, setTotalEstimate] = useState(0);
   const [totalAssessed, setTotaAssessed] = useState(0);
   const [totalDifference, setTotalDifference] = useState(0);
   const [currentPolicy, setCurrentPolicy] = useState("Regular");
   const [toggleGST, setToggleGST] = useState(2);
   const [preRender, setPreRender] = useState(true);
-
-  useEffect(()=>{
-    if(claim?.claimDetails?.IMT){
-      let updatedHeadCells = [...headCells];
-      updatedHeadCells.push({
-        id: "imt",
-        numeric: false,
-        label: "IMT 23",
-        width: 100,
-      },);
-      setTableHeaders(updatedHeadCells);
-    }
-    else{
-      setTableHeaders(headCells)
-    }
-  },[claim]);
 
   const generateSnoId = () => {
     const now = new Date();
@@ -200,6 +197,7 @@ export default function Exemple_01({
         },
       })
       .then((res) => {
+        // console.log('res.data',res.data.data.results);
         setAllDepreciations(res.data.data.results);
       })
       .catch((Err) => {
@@ -263,7 +261,6 @@ export default function Exemple_01({
               type: part.TypeOfMaterial,
               total: requiredTotal,
               sno: part.SNO,
-              imt : part.IsImt,
               isActive: Number(part.IsActive),
             };
 
@@ -410,7 +407,6 @@ export default function Exemple_01({
       gst: 0,
       total: 0,
       type: "",
-      imt : 0,
       isActive: 1,
     };
 
@@ -478,7 +474,6 @@ export default function Exemple_01({
         gst: row.gst,
         total: row.total,
         type: row.type,
-        imt : row.imt,
         isActive: Number(active),
       };
 
@@ -497,25 +492,10 @@ export default function Exemple_01({
     setEdit(false);
   };
 
-  const getSpecificRow = (rowId) =>{
-    let requiredRow = {};
-    allRows.map((row,index)=>{
-      if(String(index) === String(rowId)){
-        requiredRow = row;
-      }
-    });
-    return requiredRow;
-  }
-
   const handleDescriptionChange = (index,value,field)=>{
-    
     let updatedRows = [];
     allRows.map((row,idx)=>{
       if(String(index) === String(idx)){
-        if((String(row.estimate) === "" && String(row.assessed) === "") ||
-        String(row.estimate) === ""){
-
-        }
         const expadedData = getExpandedData(row,value,field);
         const newRow = {...expadedData};
         updatedRows.push(newRow);
@@ -576,16 +556,12 @@ export default function Exemple_01({
 
   const onSaveHandler = () => {
     const LeadID = window.location.pathname.split("/final-report/")[1];
-    // console.log(LeadID);
-    let totalAssessed = 0, totalEstimate = 0;
-
+    // console.log(LeadID)
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     let tempRows = [];
     allRows.map((row, index) => {
-      totalAssessed += (Number(row.assessed) * Number(row.qa));
-      totalEstimate += (Number(row.estimate) * Number(row.qe));
       const r = {
         sno: row.sno,
         dep: row.dep, // Add default values or lea ve empty as needed
@@ -596,7 +572,6 @@ export default function Exemple_01({
         assessed: row.assessed,
         qa: row.qa,
         qe: row.qe,
-        imt : row.imt,
         bill_sr: row.bill_sr, // Assuming bill_sr increments with each new row
         gst: row.gst,
         total:
@@ -610,12 +585,6 @@ export default function Exemple_01({
       };
       tempRows.push(r);
     });
-
-    // if(Number(totalAssessed) > Number(totalEstimate)){
-    //   toast.error("Listed assessed amount(s) cannot be greater than estimate amount(s).");
-    //   setHide(false);
-    // }
-    // else{
 
     const payload = {
       allRows: JSON.stringify(tempRows),
@@ -638,7 +607,6 @@ export default function Exemple_01({
       .catch((Err) => {
         alert(Err);
       });
-    // }
   };
 
   const changeTotalAccordingToPolicyType = (policy) => {
@@ -767,7 +735,6 @@ export default function Exemple_01({
       assessed: currentField.assessed,
       qe: qe,
       qa: qa,
-      imt : currentField.imt,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
@@ -789,7 +756,7 @@ export default function Exemple_01({
 
     const dep =
       claim?.vehicleDetails?.DateOfRegistration ||
-      claim?.vehicleDetails?.DateOfRegistration !== "undefined"
+      claim?.vehicleDetails?.DateOfRegistration !== "undeifned"
         ? calculateDepreciationsPercenatge(
             allDepreciations,
             val,
@@ -815,6 +782,8 @@ export default function Exemple_01({
     });
 
     settotalMetalRows(totalMetalRows);
+
+    //***** *//
 
     const type =
       String(field) === "type"
@@ -846,7 +815,6 @@ export default function Exemple_01({
       assessed: currentField.assessed,
       qa: currentField.qa,
       qe: currentField.qe,
-      imt : currentField.imt,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: currentField.gst,
       total: total,
@@ -876,10 +844,13 @@ export default function Exemple_01({
 
     oldRow[index] = newOutput;
     setAllRows(oldRow);
+
     setMetalSalvageValue(total_metal);
     calculateTotalAssessed();
     calculateTotalEstimated();
     setChange(true);
+
+    // console.log(oldRow);
   };
 
   const [hide, setHide] = useState(false);
@@ -930,7 +901,6 @@ export default function Exemple_01({
       qe: currentField.qe,
       bill_sr: currentField.bill_sr, // Assuming bill_sr increments with each new row
       gst: gst,
-      imt : currentField.imt,
       total: total,
       isActive: currentField.isActive,
       type: currentField.type,
@@ -945,25 +915,23 @@ export default function Exemple_01({
     // console.log(oldRow);
   };
 
-  const handleImtChange = (index,value,field)=>{
-    let updatedRows = [];
-    allRows.map((row,idx)=>{
-      if(String(index) === String(idx)){
-       const newRow = {
-        ...row,
-        imt : Number(value)
-       }
-        updatedRows.push(newRow);
+  const calculateTotal = (id) => {
+    let row = {};
+    allRows.map((tempRow, index) => {
+      if (String(tempRow.sno) === String(id)) {
+        row = tempRow;
       }
-      else{
-        updatedRows.push(row);
-      }
-      
-    })
-    
-    setAllRows(updatedRows)
-  }
+    });
 
+    const overall = Number(row?.assessed) * Number(row?.qe);
+    const gst =
+      String(currentType) === "Both" || String(currentType) === "Assessed"
+        ? (overall * Number(18.5)) / 100
+        : 0;
+    return overall + gst;
+  };
+
+  console.log(toggleGST, currentType, "type");
 
   const gstToggleHandler = () => {
     setToggleGST(toggleGST + 1);
@@ -1207,18 +1175,14 @@ export default function Exemple_01({
                 })}
               </select>
             ),
-            imt: (
+            verify: (
               <input
                 className="form-check-input"
                 type="checkbox"
-                value={row.imt}
-                checked={row.imt}
-                disabled={!edit}
+                value=""
                 required
                 id="terms"
-                onChange={(e) => handleImtChange(index, !row.imt, "imt")}
-                
-                style={{ border: "1px solid black", textAlign:"center" }}
+                style={{ border: "1px solid black" }}
               />
             ),
           };
@@ -1240,7 +1204,7 @@ export default function Exemple_01({
       disable={disable}
       ToggleGST={toggleGST}
       data={updatedCode}
-      headCells={tableHeaders}
+      headCells={headCells}
       dep={metalDep}
       handleAddRow={handleAddRow}
       handleRemoveRow={handleRemoveRow}

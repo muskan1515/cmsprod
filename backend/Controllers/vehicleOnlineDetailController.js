@@ -2,6 +2,7 @@ const db = require("../Config/dbConfig");
 const axios = require("axios");
 const convertObjectToString = require("../Config/getObjectToString");
 const { formatDate } = require("../Config/getFormattedDate");
+const { getVehicleType } = require("../utils/vehicleTypeList");
 
 const getSpecificVehicleDetails = async (req, res) => {
   const leadId = req.query.LeadId;
@@ -70,11 +71,7 @@ const getOnlineVehicleData = (req, res) => {
       const formattedMonthYear = formatDate(details?.manufacturing_date);
       const formattedInsuranceUpto = formatDate(details?.insurance_upto);
       const formattedTaxParticulars = formatDate(details?.tax_upto);
-      const formattedVehicleType = String(details?.vehicle_category)
-        .toLowerCase()
-        .includes("2w")
-        ? "2W"
-        : "4W";
+      const formattedVehicleType = getVehicleType(details?.vehicle_category_description);
 
       //Commercial Vehicle Details
       const formattedPermitTo = formatDate(details?.permit_valid_upto);
@@ -114,6 +111,7 @@ const getOnlineVehicleData = (req, res) => {
         RegLadenWt,           
         VehicleInsuranceCompany, 
         OtherInfo,
+        ClassOfVehicle, 
         Remark,
         LeadId
     )
@@ -145,6 +143,7 @@ const getOnlineVehicleData = (req, res) => {
         '${details?.vehicle_gross_weight}',
         '${details?.insurance_company}',
         '${stringformat2}',
+        '${details?.vehicle_category}',
         '${"Verified from Online"}',
         ${leadId}
     );
@@ -174,10 +173,11 @@ const getOnlineVehicleData = (req, res) => {
         VehicleInsuranceUpto ='${formattedInsuranceUpto}',
         PucValidUntil='${details?.pucc_upto}',
         PucNumber='${details?.pucc_number}',
-        MakeVariantModelColor='${details?.variant}',
+        MakeVariantModelColor='${details?.variant},${details?.color}',
         TaxParticulars='${formattedTaxParticulars}',
         RegLadenWt='${details?.vehicle_gross_weight}',
         VehicleInsuranceCompany = '${details?.insurance_company}',
+        ClassOfVehicle = '${details?.vehicle_category}',
         Remark='${"Verified from Online"}'
         WHERE
             LeadId = ${leadId};

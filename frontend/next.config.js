@@ -25,8 +25,7 @@ const nextConfig = {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "dcrq3m6dx",
     CLOUDINARY_CLOUD_NAME: "dcrq3m6dx",
     NEXT_PUBLIC_CLOUDINARY_API_KEY: "121866971488326",
-  }
-  ,
+  },
   images: {
     domains: [
       "res.cloudinary.com",
