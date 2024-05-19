@@ -2572,18 +2572,14 @@ const PolicyDetails = ({
                   </label>
                 </div>
                 <div className="col-lg-10">
-                  {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
+                  {console.log("ValidUpto",ValidUpto)}
 
                   {!isEditMode ? (
                     <input
                       readOnly={!isEditMode}
                       type={"text"}
                       value={
-                        ValidUpto ? convertDateFormatToDDMMYYYY(ValidUpto): ''
+                       convertDateFormatToDDMMYYYY(ValidUpto)
                       }
                       className="form-control"
                       id="propertyTitle"
@@ -2621,8 +2617,8 @@ const PolicyDetails = ({
                     <input
                     type="date"
                     disabled={!isEditMode}
-                    value={localDate(PolicyPeriodStart)}
-                    onChange={(e) => setPolicyPeriodStart(e.target.value)}
+                    value={localDate(ValidUpto)}
+                    onChange={(e) => setValidUpto(e.target.value)}
                   />
                   )}
                   {/* <input 

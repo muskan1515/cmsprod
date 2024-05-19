@@ -400,18 +400,7 @@ const Servey = ({
                       onChange={(e) => setAccidentAddedDateTime(e.target.value)}
                     />
                   )}
-                  {/*<input
-                  type={isEditMode ? "datetime-local" : "text"}
-                className="form-control"
-                id="formGroupExampleInput3"
-                onChange={(e)=>setAccidentAddedDateTime(e.target.value)}
-                value={isEditMode? AccidentAddedDateTime : formatDate(AccidentAddedDateTime)}
-                placeholder="MM-DD-YYYY"
-                min={AccidentAddedDateTime}
-                  
-                  readonly={!isEditMode}
-             
-                  /> */}
+                 
                 </div>
               </div>
             </div>
@@ -470,10 +459,7 @@ const Servey = ({
                   />
                 </div>
               </div>
-              {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
+             
             </div>
             <div className="col-lg-12">
               <div className="row">
@@ -503,10 +489,7 @@ const Servey = ({
                   />
                 </div>
               </div>
-              {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
+              
             </div>
             <div className="col-lg-12">
               <div className="row">
@@ -536,10 +519,7 @@ const Servey = ({
                   />
                 </div>
               </div>
-              {/* <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyTitle">Property Title</label>
-          <input type="text" className="form-control" id="propertyTitle" />
-        </div> */}
+            
             </div>
           </div>
           <hr />
@@ -566,17 +546,7 @@ const Servey = ({
                   </label>
                 </div>
                 <div className="col-lg-5">
-                  {/* <input
-              type="date"
-              className="form-control"
-              id="propertyTitle"
-            /> */}
-                  {/*<input
-                  type={isEditMode ? "date" : "text"}
-                    readonly={!isEditMode}
-
-                   value={isEditMode? SurveyAllotmentDate : formatDate(SurveyAllotmentDate)} 
-          onChange={(e)=>setSurveyAllotmentDate(e.target.value)} />*/}
+               
                   <input
                     readOnly={!isEditMode}
                     type={"text"}
@@ -639,7 +609,7 @@ const Servey = ({
                     marginRight: "13px",
                   }}
                 >
-                  CD's :
+                  CD&apos;s :
                 </label>
                 <input
                   type="radio"
@@ -713,33 +683,11 @@ const Servey = ({
                   setEditorContent={setCauseOfAccident}
                 />
               </div>
-              {/*  <Editor/>*/}
-              {/* <textarea
-                value={editorContent}
-                onChange={(e) => setEditorContent(e.target.value)}
-                style={{ width: "100%", height: "150px" }}
-              /> */}
+             
               <br />
-              {/* <button onClick={() => formatText("bold")}>Bold</button>
-              <button onClick={() => formatText("italic")}>Italic</button>
-              <button onClick={() => formatText("justifyCenter")}>
-                Align Center
-              </button>
-              <button onClick={() => formatText("justifyRight")}>
-                Align Right
-              </button>
-              <button onClick={() => formatText("justifyLeft")}>
-                Align Left
-              </button> */}
+             
             </div>
-            {/* <textarea
-              className="form-control"
-              placeholder="Enter text here..."
-              cols="20"
-              rows="4"
-              wrap="hard"
-              required
-            /> */}
+            
           </div>
           <div className="col-lg-12 mb-3">
             <h4>Police Action :</h4>
@@ -943,7 +891,7 @@ const Servey = ({
                       fontSize: "14px",
                     }}
                   >
-                    Transporter's Name :
+                    Transporter&apos;s Name :
                   </label>
                 </div>
                 <div className="col-lg-12">
@@ -1125,35 +1073,7 @@ const Servey = ({
         <div className="row mt-1">
           <div className="col-lg-3"></div>
           <div className="col-lg-2">
-            {/*} <div className="row mt-1">
-              <div className="col-lg-7 my_profile_setting_input form-group text-end">
-                <label
-                  htmlFor=""
-                  className="text-color"
-                  style={{
-                    // paddingTop: "15px",
-                    color: "#2e008b",
-                    fontWeight: "",
-                    // marginTop: "-13px",
-                    fontSize: "13px",
-                  }}
-                >
-                  Age of Vehicle
-                </label>
-              </div>
-              <div className="col-lg-5">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="propertyTitle"
-                  // value={props.assessed}
-                  // readOnly={!isEditMode}
-                  // onChange={(e) => setLicenseType(e.target.value)}
-
-                  // placeholder="Enter Registration No."
-                />
-              </div>
-                </div>*/}
+           
           </div>
           <div className="col-lg-2">
             <div className="row mt-1">

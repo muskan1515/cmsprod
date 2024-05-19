@@ -144,6 +144,7 @@ const updateFinalReport = (req,res)=>{
       phyCheck
     } = req.body;
 
+
     //Claim Dates
     const formattedPolicyEnd = formatDate(PolicyPeriodEnd)
     const formattedPolicyStart = formatDate(PolicyPeriodStart)
@@ -160,7 +161,7 @@ const updateFinalReport = (req,res)=>{
     const formattedDateOfIssue = formatDate(DateOfIssue)
     const formattedValidUntilNtv = formatDate(ValidUntilNtv)
     const formattedValidUntilTv = formatDate(ValidUntilTv)
-    const formattedValidupto = formatDate(ValidFrom)
+    const formattedValidupto = formatDate(ValidUpto)
     const formattedDriverAddedDate = formatDate(DriverAddedDate)
 
 
