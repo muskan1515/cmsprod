@@ -19,7 +19,6 @@ const getReportDocument = (req, res) => {
 
 const getReportDocumentsLabels = (req, res) => {
   const LeadId = req.query.leadId;
-  //console.log("DcoList",LeadId)
   const sql = "SELECT * FROM DocumentNames WHERE LeadID = ?";
   db.query(sql, [LeadId],  (error, results) => {
     if (error) {
@@ -37,19 +36,15 @@ const getReportDocumentsLabels = (req, res) => {
 
 const getDocuments = (req, res) => {
   const LeadId = req.query.LeadId;
-  //console.log("get", LeadId);
   const sql = "SELECT DocumentName, Photo1 as doc_url, Attribute1 as file_name, Photo1Latitude as latitude, Photo1Longitude as longitude, Photo1Timestamp as timestamp FROM DocumentList WHERE LeadID = ?;";
   
   db.query(sql, [LeadId], (err, result) => {
     if (err) {
-      // console.error(err);
       res.status(500).send("Internal Server Error");
       return;
     } else {
-      //console.log('Documents result ', result);
     }
     
-    // Process the result to group files by DocumentName
     const groupedResult = {};
     result.forEach(doc => {
       const { DocumentName, doc_url, file_name, latitude, longitude, timestamp } = doc;
@@ -92,8 +87,6 @@ const uploadDocument = (req, res) => {
     res.status(500)
     .json({ error: "Error uploading documents ." });
   }
-  
-
       const Location = file.data[0].Location;
       const latitude= Location?.split(",")[0];
       const longitude = Location?.split(",")[1];
@@ -145,8 +138,6 @@ const addDocumentLabel = (req,res)=>{
   );
 `;
 
-//console.log(insertAddDocument)
-
   db.query(insertAddDocument, (error, results) => {
     if (error) {
       console.error("Error inserting data into DocumentNames:", error);
@@ -161,9 +152,6 @@ const addDocumentLabel = (req,res)=>{
 
 const uploadDocumentV2 = (req, res) => {
   const data = req.body;
-
-
-
   const type = data.type;
   const files = data.data;
 

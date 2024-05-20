@@ -77,7 +77,6 @@ const updateFinalReport = (req,res)=>{
       PlaceOfLoss,
       SurveyAllotmentDate,
       SurveyConductedDate,
-  
       FitnessCertificate,
       FitnessFrom,
       FitnessTo,
@@ -89,14 +88,12 @@ const updateFinalReport = (req,res)=>{
       AreasOfoperation,
       commercialRemark,
       FinalReportNotes,
-  
       DetailsOfLoads,
       CauseOfAccident,
       PoliceAction,
       ThirdPartyLoss,
       Assessment,
       leadId,
-
       TotalLabor,
       TotalEstimate,
       LessExcess,
@@ -104,7 +101,6 @@ const updateFinalReport = (req,res)=>{
       MetalPercent,
       RemarkOnSalvage,
       TotalCostOfParts,
-      AccidentInspectionDate,
       Other,
       GrandTotal,
       DepreciationOnParts,
@@ -120,30 +116,18 @@ const updateFinalReport = (req,res)=>{
       RepairingPhotoDate,
       ReinspectionDate,
       isActive,
-    
       SalveDestroy,
       BillNo,
       BillDate,
       BillAmount,
-      setVehicleUpto,
       AddedDateTime,
       Endurance,
       OtherRemark,
       TotalLoss,
       DateOfBirth,
       IMT,
-      ValidUpto,
-      CommTaxRatePct,
-      CashLoss,
-      SuspectedParts,
-      WreckValueWith,
-      WreckValueWithout,
-      RtiAmount,
-      MissingItem,
-      TotalLossEditor,
-      phyCheck
+      ValidUpto
     } = req.body;
-
 
     //Claim Dates
     const formattedPolicyEnd = formatDate(PolicyPeriodEnd)

@@ -298,7 +298,7 @@ const addClaim = (req, res) => {
                       });
                     }
 
-                    if (InsuredMailAddress !== "") {
+                    if (InsuredMailAddress !== "" && RegisteredNumber && addLeadId ) {
                       axios
                         .post(
                           `${process.env.BACKEND_DOMAIN}/email/sendEmail/1`,

@@ -36,6 +36,11 @@ const sendEmail1 = (req, res) => {
     Region,
   } = req.body;
 
+  if (leadId === undefined || !leadId) {
+    res.status(400).send("LeadId is empty");
+    return;
+  }
+
   const sql = "SELECT * FROM ClaimStatus WHERE LeadId =?";
   db.query(sql, [leadId], (err, result) => {
     if (err) {
@@ -340,6 +345,11 @@ const sendCustomEmail = (req, res) => {
     body,
     Region,
   } = req.body;
+
+  if (leadId === undefined || !leadId) {
+    res.status(400).send("LeadId is empty");
+    return;
+  }
 
   const emailArray = csvStringToArray(toMail);
 

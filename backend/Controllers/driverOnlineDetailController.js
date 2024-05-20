@@ -151,6 +151,7 @@ WHERE
     LeadID = ${leadId};`;
 
 
+    console.log("queries",insertDriverDetails,updateDriverQuery);
 
       db.query(
         "DELETE FROM DriverDetailsOnline WHERE LeadID=?",
