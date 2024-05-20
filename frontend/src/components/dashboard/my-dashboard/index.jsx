@@ -302,7 +302,7 @@ const Index = () => {
                   setSelectedCard={setSelectedCard}
                 />
               </div>
-              <div
+{/*               <div
                 className=" bg-dark"
                 style={{
                   width: "101%",
@@ -312,7 +312,7 @@ const Index = () => {
                   marginBottom: "5px",
                   marginLeft: "-12px",
                 }}
-              ></div>
+              ></div> */}
               <div
                 className="row my_profile_setting_input form-group"
                 style={{ marginLeft: "-25px" }}
