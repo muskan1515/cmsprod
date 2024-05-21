@@ -391,6 +391,37 @@ const DriverDetailsViewForm = ({ claim, DLStatus }) => {
                   </div>
                 </td>
               </tr>
+              <tr>
+                <td>
+                <div className="row">
+                    <label
+                      htmlFor=""
+                      className="col-lg-7 text-color"
+                      style={{
+                        color: "black",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Issuing Authority
+                    </label>
+                    <label
+                      htmlFor=""
+                      className="col-lg-5 text-color text-end"
+                      style={{
+                        color: "#1560bd",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {claim?.driverDetails?.IssuingAuthority &&
+                      claim?.driverDetails?.IssuingAuthority !== "null"
+                        ? (claim?.driverDetails?.IssuingAuthority)
+                        : ""}
+                    </label>
+                  </div>
+                </td>
+              </tr>
             </table>
           </div>
         </div>

@@ -1,11 +1,14 @@
 const VehicleType2WList = [
     "bike",
-    "scooty"
+    "scooty",
+    "scooter",
+    "2w"
 ];
 
 const VehicleType4WList = [
     "car",
-    "taxi"
+    "taxi",
+    "4w"
 ];
 
 const VehicleTypeCommercialList = [

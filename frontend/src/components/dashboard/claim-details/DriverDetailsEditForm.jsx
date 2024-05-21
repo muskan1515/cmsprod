@@ -400,7 +400,7 @@ const DriverDetailsEditForm = ({
                       </div>
                     </div>
 
-                    {/* <div className="col-lg-6">
+                     <div className="col-lg-6">
                       <div className="row mt-1">
                         <div className="col-lg-5 my_profile_setting_input form-group">
                           <label
@@ -413,7 +413,7 @@ const DriverDetailsEditForm = ({
                               // marginTop: "-13px",
                             }}
                           >
-                            Mobile
+                            Issuing Authority
                           </label>
                         </div>
                         <div className="col-lg-7">
@@ -421,13 +421,12 @@ const DriverDetailsEditForm = ({
                             type="text"
                             className="form-control"
                             id="propertyTitle"
-                            onChange={(e) => setMobile(e.target.value)}
-                            value={Mobile}
-                            // placeholder="Enter Registration No."
+                            onChange={(e) => setIssuingAuthority(e.target.value)}
+                            value={IssuingAuthority}
                           />
                         </div>
                       </div>
-                    </div> */}
+                    </div> 
 
                     <div className="col-lg-6">
                       <div className="row mt-1">
