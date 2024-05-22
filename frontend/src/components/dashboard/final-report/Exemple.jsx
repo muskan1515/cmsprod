@@ -307,6 +307,7 @@ export default function Exemple_01({
         setUpdatedSNO(newSNO);
       })
       .catch((Err) => {
+        console.log("newpartserror",Err)
         alert(Err);
       });
   }, []);
