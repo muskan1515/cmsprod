@@ -6,6 +6,7 @@ const getSpecificNewParts = (req,res)=>{
     const leadId = req.params.leadId;
     db.query("SELECT * FROM NewPartsReport", (err, result2) => {
       if (err) {
+        console.log(err);
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
@@ -89,6 +90,7 @@ const getSpecificNewParts = (req,res)=>{
          
           db.query("SELECT * FROM NewPartsReport WHERE SNO=? AND LeadID =?", [row.sno,leadId], (err, result2) => {
             if (err) {
+              console.log(err);
               console.error(err);
               reject(err);
               return;
@@ -101,6 +103,7 @@ const getSpecificNewParts = (req,res)=>{
               db.query(updateQuery, (err) => {
                
                 if (err) {
+                  console.log(err);
                   console.error(err);
                   reject(err);
                   return;
@@ -111,6 +114,7 @@ const getSpecificNewParts = (req,res)=>{
               // console.log("insert query",insertQuery);
               db.query(insertQuery, (err) => {
                 if (err) {
+                  console.log(err);
                   console.error(err);
                   reject(err);
                   return;
